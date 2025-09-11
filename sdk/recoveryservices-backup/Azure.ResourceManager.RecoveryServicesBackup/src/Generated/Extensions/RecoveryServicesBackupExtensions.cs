@@ -2110,20 +2110,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.ValidateProtectionIntent(string,PreValidateEnableBackupContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.ValidateProtectionIntent(AzureLocation,PreValidateEnableBackupContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Enable backup validation request on Virtual Machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<PreValidateEnableBackupResult>> ValidateProtectionIntentAsync(this SubscriptionResource subscriptionResource, string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<PreValidateEnableBackupResult>> ValidateProtectionIntentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateProtectionIntentAsync(azureRegion, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateProtectionIntentAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2151,20 +2150,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.ValidateProtectionIntent(string,PreValidateEnableBackupContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.ValidateProtectionIntent(AzureLocation,PreValidateEnableBackupContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Enable backup validation request on Virtual Machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static Response<PreValidateEnableBackupResult> ValidateProtectionIntent(this SubscriptionResource subscriptionResource, string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<PreValidateEnableBackupResult> ValidateProtectionIntent(this SubscriptionResource subscriptionResource, AzureLocation location, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateProtectionIntent(azureRegion, content, cancellationToken);
+            return GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateProtectionIntent(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -2185,20 +2183,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.GetBackupStatus(string,BackupStatusContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.GetBackupStatus(AzureLocation,BackupStatusContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<BackupStatusResult>> GetBackupStatusAsync(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<BackupStatusResult>> GetBackupStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).GetBackupStatusAsync(azureRegion, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).GetBackupStatusAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2219,20 +2216,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.GetBackupStatus(string,BackupStatusContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.GetBackupStatus(AzureLocation,BackupStatusContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static Response<BackupStatusResult> GetBackupStatus(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<BackupStatusResult> GetBackupStatus(this SubscriptionResource subscriptionResource, AzureLocation location, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).GetBackupStatus(azureRegion, content, cancellationToken);
+            return GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).GetBackupStatus(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -2253,20 +2249,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.ValidateFeatureSupport(string,FeatureSupportContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.ValidateFeatureSupport(AzureLocation,FeatureSupportContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<VmResourceFeatureSupportResult>> ValidateFeatureSupportAsync(this SubscriptionResource subscriptionResource, string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<VmResourceFeatureSupportResult>> ValidateFeatureSupportAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateFeatureSupportAsync(azureRegion, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2287,20 +2282,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.ValidateFeatureSupport(string,FeatureSupportContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupSubscriptionResource.ValidateFeatureSupport(AzureLocation,FeatureSupportContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static Response<VmResourceFeatureSupportResult> ValidateFeatureSupport(this SubscriptionResource subscriptionResource, string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<VmResourceFeatureSupportResult> ValidateFeatureSupport(this SubscriptionResource subscriptionResource, AzureLocation location, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateFeatureSupport(azureRegion, content, cancellationToken);
+            return GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateFeatureSupport(location, content, cancellationToken);
         }
     }
 }

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(EstimatedRemainingDurationValue))
             {
                 writer.WritePropertyName("estimatedRemainingDuration"u8);
-                writer.WriteStringValue(EstimatedRemainingDurationValue.Value, "P");
+                writer.WriteStringValue(EstimatedRemainingDurationValue);
             }
             if (Optional.IsDefined(DynamicErrorMessage))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IDictionary<string, string> propertyBag = default;
             IDictionary<string, string> internalPropertyBag = default;
             double? progressPercentage = default;
-            TimeSpan? estimatedRemainingDuration = default;
+            string estimatedRemainingDuration = default;
             string dynamicErrorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -181,11 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("estimatedRemainingDuration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    estimatedRemainingDuration = property.Value.GetTimeSpan("P");
+                    estimatedRemainingDuration = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dynamicErrorMessage"u8))

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ExtendedInfo))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    status = new RecoveryPointTierStatus(property.Value.GetString());
+                    status = property.Value.GetString().ToRecoveryPointTierStatus();
                     continue;
                 }
                 if (property.NameEquals("extendedInfo"u8))

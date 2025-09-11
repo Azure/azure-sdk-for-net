@@ -160,7 +160,6 @@ rename-mapping:
   DedupState: VaultDedupState
   EncryptionAtRestType: BackupEncryptionAtRestType
   EncryptionDetails: VmEncryptionDetails
-  ErrorDetail: BackupErrorDetail
   ExtendedProperties: IaasVmBackupExtendedProperties
   FabricName: BackupFabricName
   FetchTieringCostInfoForRehydrationRequest: FetchTieringCostInfoForRehydrationContent
@@ -255,7 +254,7 @@ rename-mapping:
   BackupResourceEncryptionConfigExtended.userAssignedIdentity: -|arm-id
   RestoreRequest: RestoreContent
   RestoreRequestResource: TriggerRestoreContent
-  RecoveryPointProperties.expiryTime: ExpireOn
+  RecoveryPointProperties.expiryTime: ExpireOn|datetime
   DataSourceType.SQLDataBase: SqlDatabase
   BackupItemType.SQLDataBase: SqlDatabase
   WorkloadType.SQLDataBase: SqlDatabase
@@ -304,8 +303,11 @@ rename-mapping:
   TargetDiskNetworkAccessOption: BackupTargetDiskNetworkAccessOption
   TargetDiskNetworkAccessSettings: BackupTargetDiskNetworkAccessSettings
   TargetDiskNetworkAccessSettings.targetDiskAccessId: -|arm-id
-  AzureIaaSVMJobExtendedInfo.estimatedRemainingDuration: estimatedRemainingDurationValue|duration
+  AzureIaaSVMJobExtendedInfo.estimatedRemainingDuration: estimatedRemainingDurationValue
   ClientDiscoveryForLogSpecification.blobDuration: -|duration
+  TieringPolicy.duration: durationValue
+  RecoveryPointRehydrationInfo.rehydrationRetentionDuration: -|duration
+  BMSBackupSummariesQueryObject.type: BackupManagementType
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -395,12 +397,12 @@ directive:
   - remove-operation: BackupOperationStatuses_Get
   - remove-operation: ProtectionPolicyOperationStatuses_Get
   - remove-operation: TieringCostOperationStatus_Get
-  - from: bms.json
-    where: $.definitions
-    transform: >
-      $.TieringPolicy.properties.duration['x-ms-client-name'] = 'durationValue';
-      $.BMSBackupSummariesQueryObject.properties.type['x-ms-client-name'] = 'BackupManagementType';
-      $.RecoveryPointRehydrationInfo.properties.rehydrationRetentionDuration['format'] = 'duration';
+  #- from: bms.json
+  #  where: $.definitions
+  #  transform: >
+  #    $.TieringPolicy.properties.duration['x-ms-client-name'] = 'durationValue';
+  #    $.BMSBackupSummariesQueryObject.properties.type['x-ms-client-name'] = 'BackupManagementType';
+  #    $.RecoveryPointRehydrationInfo.properties.rehydrationRetentionDuration['format'] = 'duration';
   #- from: bms.json
   #  where: $.parameters
   #  transform: >
@@ -489,10 +491,11 @@ directive:
     transform: >
       $.get['operationId'] = 'ResourceGuardProxy_List';
   # Here the format date-time isn't specified in swagger, hence adding it explicitly
-  - from: bms.json
-    where: $.definitions.RecoveryPointProperties.properties.expiryTime
-    transform: >
-      $["format"] = "date-time";
+  # move to name-mapping section
+  #- from: bms.json
+  #  where: $.definitions.RecoveryPointProperties.properties.expiryTime
+  #  transform: >
+  #    $["format"] = "date-time";
   # TODO: Remove this workaround once we have the swagger issue fixed
   - from: bms.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}']
@@ -502,4 +505,42 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}']
     transform: >
       $.put['x-ms-long-running-operation'] = true;
+  - from: bms.json
+    where: $.definitions.RecoveryPointTierStatus
+    transform: >
+      $['x-ms-enum']['modelAsString'] = false;
+  # Here the parameter format isn't specified in swagger, hence adding it explicitly
+  - from: bms.json
+    where: $.paths..parameters[?(@.name == 'azureRegion')]
+    transform: >
+      $["x-ms-format"] = 'azure-location';
+      $['x-ms-client-name'] = 'location';
+  # Delete NewErrorResponse and NewErrorResponseError, as they are related references not used elsewhere and conflict with the definition of ErrorDetail.
+  # Rename ErrorDetail to BackupErrorDetail
+  - from: bms.json
+    where: $.definitions
+    transform: >
+      delete $.NewErrorResponse;
+      delete $.NewErrorResponseError;
+      $.ErrorDetail['x-ms-client-name'] = 'BackupErrorDetail';
+  # Add missing enum values
+  - from: bms.json
+    where: $.definitions.BackupManagementType
+    transform: >
+      if (!$.enum) $.enum = [];
+      if ($.enum.indexOf('BackupProtectedItemCountSummary') === -1) {
+        $.enum.push('BackupProtectedItemCountSummary');
+      }
+      if ($.enum.indexOf('BackupProtectionContainerCountSummary') === -1) {
+        $.enum.push('BackupProtectionContainerCountSummary');
+      }
+      if (!$['x-ms-enum'].values) $['x-ms-enum'].values = [];
+      $['x-ms-enum'].values.push({
+        value: 'BackupProtectedItemCountSummary',
+        name: 'BackupProtectedItemCountSummary'
+      });
+      $['x-ms-enum'].values.push({
+        value: 'BackupProtectionContainerCountSummary', 
+        name: 'BackupProtectionContainerCountSummary'
+      });
 ```

@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string azureRegion, BackupStatusContent content)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, BackupStatusContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(azureRegion, true);
+            uri.AppendPath(location, true);
             uri.AppendPath("/backupStatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string azureRegion, BackupStatusContent content)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, BackupStatusContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(azureRegion, true);
+            uri.AppendPath(location, true);
             uri.AppendPath("/backupStatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -74,18 +74,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Get the container backup status. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupStatusResult>> GetAsync(string subscriptionId, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BackupStatusResult>> GetAsync(string subscriptionId, AzureLocation location, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetRequest(subscriptionId, azureRegion, content);
+            using var message = CreateGetRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -103,18 +102,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Get the container backup status. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupStatusResult> Get(string subscriptionId, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BackupStatusResult> Get(string subscriptionId, AzureLocation location, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetRequest(subscriptionId, azureRegion, content);
+            using var message = CreateGetRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
