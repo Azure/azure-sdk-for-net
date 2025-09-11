@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="Models.ExecuteDeleteContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resourcesIds"> The resources for the request. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
-        /// <param name="forceDeletion"> Forced delete resource item. </param>
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <param name="isForceDeletion"> Forced delete resource item. </param>
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
-        public static ExecuteDeleteContent ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters = null, IEnumerable<ResourceIdentifier> resourcesIds = null, string correlationid = null, bool? forceDeletion = null)
+        public static ExecuteDeleteContent ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters = null, IEnumerable<ResourceIdentifier> resourcesIds = null, string correlationId = null, bool? isForceDeletion = null)
         {
             resourcesIds ??= new List<ResourceIdentifier>();
 
-            return new ExecuteDeleteContent(executionParameters, resourcesIds != null ? new UserRequestResources(resourcesIds?.ToList(), serializedAdditionalRawData: null) : null, correlationid, forceDeletion, serializedAdditionalRawData: null);
+            return new ExecuteDeleteContent(executionParameters, resourcesIds != null ? new UserRequestResources(resourcesIds?.ToList(), serializedAdditionalRawData: null) : null, correlationId, isForceDeletion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeleteResourceOperationResult"/>. </summary>

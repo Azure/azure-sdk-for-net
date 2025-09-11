@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteObjectValue(ExecutionParameters, options);
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources, options);
-            if (Optional.IsDefined(Correlationid))
+            if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationid"u8);
-                writer.WriteStringValue(Correlationid);
+                writer.WriteStringValue(CorrelationId);
             }
-            if (Optional.IsDefined(ForceDeletion))
+            if (Optional.IsDefined(IsForceDeletion))
             {
                 writer.WritePropertyName("forceDeletion"u8);
-                writer.WriteBooleanValue(ForceDeletion.Value);
+                writer.WriteBooleanValue(IsForceDeletion.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

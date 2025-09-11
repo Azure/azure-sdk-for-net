@@ -718,8 +718,8 @@ priority = 0,
                 },
             }, new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3"), new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }))
             {
-                Correlationid = "dfe927c5-16a6-40b7-a0f7-8524975ed642",
-                ForceDeletion = false,
+                CorrelationId = "dfe927c5-16a6-40b7-a0f7-8524975ed642",
+                IsForceDeletion = false,
             };
             DeleteResourceOperationResult result = await subscriptionResource.VirtualMachinesExecuteDeleteScheduledActionAsync(locationparameter, content);
 

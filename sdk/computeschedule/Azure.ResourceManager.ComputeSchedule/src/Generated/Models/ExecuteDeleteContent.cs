@@ -62,15 +62,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ExecuteDeleteContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
-        /// <param name="forceDeletion"> Forced delete resource item. </param>
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <param name="isForceDeletion"> Forced delete resource item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationid, bool? forceDeletion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationId, bool? isForceDeletion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExecutionParameters = executionParameters;
             Resources = resources;
-            Correlationid = correlationid;
-            ForceDeletion = forceDeletion;
+            CorrelationId = correlationId;
+            IsForceDeletion = isForceDeletion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> CorrelationId item. </summary>
-        public string Correlationid { get; set; }
+        public string CorrelationId { get; set; }
         /// <summary> Forced delete resource item. </summary>
-        public bool? ForceDeletion { get; set; }
+        public bool? IsForceDeletion { get; set; }
     }
 }
