@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using MgmtTypeSpec.Models;
@@ -18,7 +17,10 @@ namespace MgmtTypeSpec
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BarData))]
+    [ModelReaderWriterBuildable(typeof(BarDeeplyNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarListResult))]
+    [ModelReaderWriterBuildable(typeof(BarMiddleNestedQuotaProperties))]
+    [ModelReaderWriterBuildable(typeof(BarNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarProperties))]
     [ModelReaderWriterBuildable(typeof(BarQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarQuotaResource))]
@@ -27,6 +29,10 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(BarSettingsProperties))]
     [ModelReaderWriterBuildable(typeof(BarSettingsResource))]
     [ModelReaderWriterBuildable(typeof(BarSettingsResourceData))]
+    [ModelReaderWriterBuildable(typeof(BazData))]
+    [ModelReaderWriterBuildable(typeof(BazListResult))]
+    [ModelReaderWriterBuildable(typeof(BazProperties))]
+    [ModelReaderWriterBuildable(typeof(BazResource))]
     [ModelReaderWriterBuildable(typeof(EndpointProperties))]
     [ModelReaderWriterBuildable(typeof(EndpointResource))]
     [ModelReaderWriterBuildable(typeof(EndpointResourceData))]
@@ -42,8 +48,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(FooSettingsPropertiesMetaData))]
     [ModelReaderWriterBuildable(typeof(FooSettingsResource))]
     [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

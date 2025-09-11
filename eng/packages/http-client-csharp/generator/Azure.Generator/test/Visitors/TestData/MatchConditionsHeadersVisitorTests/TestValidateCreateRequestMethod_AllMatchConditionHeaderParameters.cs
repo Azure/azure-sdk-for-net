@@ -19,12 +19,12 @@ namespace Samples
 
         internal global::Azure.Core.HttpMessage CreateFooRequest(global::Azure.RequestConditions requestConditions, global::Azure.RequestContext context)
         {
-            global::Azure.Core.HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            global::Azure.Core.Request request = message.Request;
-            request.Method = global::Azure.Core.RequestMethod.Get;
             global::Azure.Core.RawRequestUriBuilder uri = new global::Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            global::Azure.Core.HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            global::Azure.Core.Request request = message.Request;
             request.Uri = uri;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions);
