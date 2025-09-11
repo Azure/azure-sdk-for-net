@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
             string projectId = default;
             string branchId = default;
-            EntityType entityType = default;
+            PreflightCheckEntityType entityType = default;
             NeonBranchProperties branchProperties = default;
             NeonRoleProperties roleProperties = default;
             NeonDatabaseProperties databaseProperties = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 }
                 if (property.NameEquals("entityType"u8))
                 {
-                    entityType = new EntityType(property.Value.GetString());
+                    entityType = new PreflightCheckEntityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("branchProperties"u8))

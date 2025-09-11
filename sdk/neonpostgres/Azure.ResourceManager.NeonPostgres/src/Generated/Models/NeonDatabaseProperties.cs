@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="branchId"> The ID of the branch this database belongs to. </param>
         /// <param name="ownerName"> The name of the role that owns the database. </param>
         /// <param name="databaseName"> Name of the database. </param>
-        /// <param name="lastUpdated"> Timestamp indicating when the database was last updated. </param>
+        /// <param name="lastUpdatedOn"> Timestamp indicating when the database was last updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonDatabaseProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string branchId, string ownerName, string databaseName, string lastUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonDatabaseProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string branchId, string ownerName, string databaseName, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             BranchId = branchId;
             OwnerName = ownerName;
             DatabaseName = databaseName;
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -93,6 +93,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <summary> Name of the database. </summary>
         public string DatabaseName { get; set; }
         /// <summary> Timestamp indicating when the database was last updated. </summary>
-        public string LastUpdated { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("computeHours"u8);
                 writer.WriteStringValue(ComputeHours);
             }
-            if (options.Format != "W" && Optional.IsDefined(Protected))
+            if (options.Format != "W" && Optional.IsDefined(IsProtected))
             {
                 writer.WritePropertyName("protected"u8);
-                writer.WriteBooleanValue(Protected.Value);
+                writer.WriteBooleanValue(IsProtected.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {

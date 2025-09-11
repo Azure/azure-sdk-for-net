@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="endpointId"> Unique identifier for the compute endpoint. </param>
         /// <param name="computeName"> Name of the compute endpoint. </param>
         /// <param name="status"> The current status of the compute endpoint. </param>
-        /// <param name="lastActive"> The timestamp when the compute endpoint was last active. </param>
+        /// <param name="lastActiveOn"> The timestamp when the compute endpoint was last active. </param>
         /// <param name="size"> The compute units size range for autoscaling (MinCU-MaxCU). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonEndpointProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string branchId, EndpointType? endpointType, string endpointId, string computeName, EndpointStatus? status, string lastActive, NeonComputeAutoscalingSize size, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonEndpointProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string branchId, EndpointType? endpointType, string endpointId, string computeName, NeonComputeEndpointStatus? status, DateTimeOffset? lastActiveOn, NeonComputeAutoscalingSize size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             EndpointId = endpointId;
             ComputeName = computeName;
             Status = status;
-            LastActive = lastActive;
+            LastActiveOn = lastActiveOn;
             Size = size;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <summary> Name of the compute endpoint. </summary>
         public string ComputeName { get; set; }
         /// <summary> The current status of the compute endpoint. </summary>
-        public EndpointStatus? Status { get; }
+        public NeonComputeEndpointStatus? Status { get; }
         /// <summary> The timestamp when the compute endpoint was last active. </summary>
-        public string LastActive { get; }
+        public DateTimeOffset? LastActiveOn { get; }
         /// <summary> The compute units size range for autoscaling (MinCU-MaxCU). </summary>
         public NeonComputeAutoscalingSize Size { get; set; }
     }

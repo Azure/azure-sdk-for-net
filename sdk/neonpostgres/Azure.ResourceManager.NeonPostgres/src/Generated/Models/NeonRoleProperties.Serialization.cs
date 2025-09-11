@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdated);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Owns))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             IList<string> permissions = default;
             bool? isSuperUser = default;
             string roleName = default;
-            string lastUpdated = default;
+            DateTimeOffset? lastUpdated = default;
             string owns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -224,7 +224,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 }
                 if (property.NameEquals("lastUpdated"u8))
                 {
-                    lastUpdated = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("owns"u8))

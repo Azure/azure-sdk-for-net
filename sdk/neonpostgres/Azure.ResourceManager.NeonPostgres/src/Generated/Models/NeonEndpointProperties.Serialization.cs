@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastActive))
+            if (options.Format != "W" && Optional.IsDefined(LastActiveOn))
             {
                 writer.WritePropertyName("lastActive"u8);
-                writer.WriteStringValue(LastActive);
+                writer.WriteStringValue(LastActiveOn.Value, "O");
             }
             if (Optional.IsDefined(Size))
             {
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             EndpointType? endpointType = default;
             string endpointId = default;
             string computeName = default;
-            EndpointStatus? status = default;
-            string lastActive = default;
+            NeonComputeEndpointStatus? status = default;
+            DateTimeOffset? lastActive = default;
             NeonComputeAutoscalingSize size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -231,12 +231,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    status = new EndpointStatus(property.Value.GetString());
+                    status = new NeonComputeEndpointStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastActive"u8))
                 {
-                    lastActive = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastActive = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("size"u8))

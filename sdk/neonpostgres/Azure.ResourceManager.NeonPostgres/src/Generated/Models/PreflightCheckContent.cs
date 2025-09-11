@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="branchId"> Branch Id associated with this connection. </param>
         /// <param name="entityType"> Entity type to be validated for deletion. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectId"/> or <paramref name="branchId"/> is null. </exception>
-        public PreflightCheckContent(string projectId, string branchId, EntityType entityType)
+        public PreflightCheckContent(string projectId, string branchId, PreflightCheckEntityType entityType)
         {
             Argument.AssertNotNull(projectId, nameof(projectId));
             Argument.AssertNotNull(branchId, nameof(branchId));
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="databaseProperties"> The database properties - ONLY provided when entityType is 'database'. </param>
         /// <param name="endpointProperties"> The endpoint properties - ONLY provided when entityType is 'endpoint'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PreflightCheckContent(string projectId, string branchId, EntityType entityType, NeonBranchProperties branchProperties, NeonRoleProperties roleProperties, NeonDatabaseProperties databaseProperties, NeonEndpointProperties endpointProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PreflightCheckContent(string projectId, string branchId, PreflightCheckEntityType entityType, NeonBranchProperties branchProperties, NeonRoleProperties roleProperties, NeonDatabaseProperties databaseProperties, NeonEndpointProperties endpointProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectId = projectId;
             BranchId = branchId;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <summary> Branch Id associated with this connection. </summary>
         public string BranchId { get; }
         /// <summary> Entity type to be validated for deletion. </summary>
-        public EntityType EntityType { get; }
+        public PreflightCheckEntityType EntityType { get; }
         /// <summary> The branch properties - ONLY provided when entityType is 'branch'. </summary>
         public NeonBranchProperties BranchProperties { get; set; }
         /// <summary> The role properties - ONLY provided when entityType is 'role'. </summary>

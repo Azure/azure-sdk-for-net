@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdated);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             string branchId = default;
             string ownerName = default;
             string databaseName = default;
-            string lastUpdated = default;
+            DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 }
                 if (property.NameEquals("lastUpdated"u8))
                 {
-                    lastUpdated = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
