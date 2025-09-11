@@ -873,10 +873,10 @@
 # ServiceOwners:                                                   @shahbj79 @mit2nil @aygoya @ganganarayanan
 
 # PRLabel: %Synapse
-/sdk/synapse/                                                      @yanjungao718
+/sdk/synapse/                                                      @yanjungao718 @wanyang7
 
 # ServiceLabel: %Synapse
-# ServiceOwners:                                                   @yanjungao718
+# ServiceOwners:                                                   @yanjungao718 @wanyang7
 
 # PRLabel: %Tables
 /sdk/tables/                                                       @christothes @jorgerangel-msft
