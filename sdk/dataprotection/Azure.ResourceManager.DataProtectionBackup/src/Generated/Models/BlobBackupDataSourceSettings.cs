@@ -11,7 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Parameters to be used during configuration of backup of blobs. </summary>
+    /// <summary>
+    /// Parameters to be used during configuration of backup of blobs
+    /// Please note <see cref="BlobBackupDataSourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AdlsBlobBackupDataSourceSettings"/>.
+    /// </summary>
     public partial class BlobBackupDataSourceSettings : BackupDataSourceSettings
     {
         /// <summary> Initializes a new instance of <see cref="BlobBackupDataSourceSettings"/>. </summary>
