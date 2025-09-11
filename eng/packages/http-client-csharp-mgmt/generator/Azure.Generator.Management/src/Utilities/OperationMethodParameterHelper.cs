@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -17,6 +18,7 @@ namespace Azure.Generator.Management.Utilities
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             RequestPathPattern contextualPath,
+            TypeProvider? enclosingTypeProvider,
             bool forceLro = false)
         {
             var requiredParameters = new List<ParameterProvider>();
@@ -36,7 +38,17 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
-                if (!contextualPath.TryGetContextualParameter(outputParameter, out _))
+
+                // Check if parameter can be handled by contextual path or private field parameters
+                bool isHandledByContext = contextualPath.TryGetContextualParameter(outputParameter, out _);
+                bool isHandledByPrivateField = false;
+
+                if (!isHandledByContext && enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider)
+                {
+                    isHandledByPrivateField = collectionProvider.TryGetPrivateFieldParameter(outputParameter, out _);
+                }
+
+                if (!isHandledByContext && !isHandledByPrivateField)
                 {
                     if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
                     {

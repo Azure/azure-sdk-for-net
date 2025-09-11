@@ -36,7 +36,10 @@ namespace MgmtTypeSpec
             InnerProp2 = innerProp2;
             MiddleProp1 = middleProp1;
             Prop2 = prop2;
+<<<<<<< HEAD
             FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, new ChangeTrackingDictionary<string, string>(), new ChangeTrackingList<string>(), prop2);
+=======
+>>>>>>> 3f06ea04be7 (working in progress.)
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -50,8 +53,12 @@ namespace MgmtTypeSpec
         /// <param name="property"></param>
         /// <param name="anotherProperty"></param>
         /// <param name="flattenedNestedProperty"></param>
+<<<<<<< HEAD
         /// <param name="optionalFlattenProperty"></param>
         internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty) : base(id, name, resourceType, systemData)
+=======
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty) : base(id, name, resourceType, systemData)
+>>>>>>> 3f06ea04be7 (working in progress.)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -59,7 +66,10 @@ namespace MgmtTypeSpec
             Property = @property;
             AnotherProperty = anotherProperty;
             FlattenedNestedProperty = flattenedNestedProperty;
+<<<<<<< HEAD
             OptionalFlattenProperty = optionalFlattenProperty;
+=======
+>>>>>>> 3f06ea04be7 (working in progress.)
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -77,9 +87,12 @@ namespace MgmtTypeSpec
         /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
 
+<<<<<<< HEAD
         /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
         internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
 
+=======
+>>>>>>> 3f06ea04be7 (working in progress.)
         /// <summary> Gets or sets the InnerProp1. </summary>
         public int? InnerProp1
         {
@@ -136,8 +149,19 @@ namespace MgmtTypeSpec
         {
             get
             {
+<<<<<<< HEAD
                 return FlattenedNestedProperty.MiddleProp2;
             }
+=======
+                InitializeBarNestedQuotaProperties();
+                return FlattenedNestedProperty.MiddleProp2;
+            }
+            set
+            {
+                InitializeBarNestedQuotaProperties();
+                FlattenedNestedProperty.MiddleProp2 = value;
+            }
+>>>>>>> 3f06ea04be7 (working in progress.)
         }
 
         /// <summary> Gets the Prop1. </summary>
@@ -145,8 +169,19 @@ namespace MgmtTypeSpec
         {
             get
             {
+<<<<<<< HEAD
                 return FlattenedNestedProperty.Prop1;
             }
+=======
+                InitializeBarNestedQuotaProperties();
+                return FlattenedNestedProperty.Prop1;
+            }
+            set
+            {
+                InitializeBarNestedQuotaProperties();
+                FlattenedNestedProperty.Prop1 = value;
+            }
+>>>>>>> 3f06ea04be7 (working in progress.)
         }
 
         /// <summary> Gets or sets the Prop2. </summary>
@@ -201,12 +236,24 @@ namespace MgmtTypeSpec
             }
         }
 
+<<<<<<< HEAD
         /// <summary> Gets the RandomCollectionProp. </summary>
         public IList<string> OptionalFlattenPropertyRandomCollectionProp
         {
             get
             {
                 return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
+=======
+        private void InitializeBarNestedQuotaProperties()
+        {
+            if (FlattenedNestedProperty is null)
+            {
+                FlattenedNestedProperty = new BarNestedQuotaProperties
+                {
+                    MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
+                    Prop1 = new ChangeTrackingList<string>()
+                };
+>>>>>>> 3f06ea04be7 (working in progress.)
             }
         }
     }
