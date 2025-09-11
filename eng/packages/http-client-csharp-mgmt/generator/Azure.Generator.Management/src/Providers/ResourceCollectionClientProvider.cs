@@ -122,7 +122,7 @@ namespace Azure.Generator.Management.Providers
         {
             return PathParameterFields
                 .Select(f => new ParameterProvider(
-                    f.Name,
+                    f.Name.Substring(1), // Remove the underscore prefix
                     f.Description ?? $"The {f.Name.Substring(1)} for the parent resource.",
                     f.Type))
                 .ToList();
@@ -213,13 +213,8 @@ namespace Azure.Generator.Management.Providers
 
             var initializer = new ConstructorInitializer(true, baseParameters);
             var parameters = new List<ParameterProvider>(baseParameters);
-            var pathParameters = new List<ParameterProvider>();
+            var pathParameters = GetPathParameterProviders();
 
-            foreach (var pathField in _pathParameterFields)
-            {
-                var parameterName = pathField.Name.Substring(1); // Remove the underscore prefix
-                pathParameters.Add(new ParameterProvider(parameterName, $"The {parameterName} for the parent resource.", pathField.Type));
-            }
             parameters.AddRange(pathParameters);
 
             var signature = new ConstructorSignature(
@@ -239,12 +234,8 @@ namespace Azure.Generator.Management.Providers
             // Assign all path parameter fields by assigning from the path parameters
             foreach (var pathField in _pathParameterFields)
             {
-                var parameterName = pathField.Name.Substring(1); // Remove the underscore prefix
-                var matchingParameter = pathParameters.FirstOrDefault(p => p.Name == parameterName);
-                if (matchingParameter != null)
-                {
-                    bodyStatements.Add(pathField.Assign(matchingParameter).Terminate());
-                }
+                var matchingParameter = pathParameters.Single(p => p.Name == pathField.Name.Substring(1));
+                bodyStatements.Add(pathField.Assign(matchingParameter).Terminate());
             }
 
             // Initialize all client diagnostics and rest client fields
