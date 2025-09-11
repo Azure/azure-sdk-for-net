@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2025-09-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated the Computeschedule RP api-version from `2024-10-01` to the first stable version `2025-05-01`.
 
 ## 1.0.0 (2025-01-24)
 
