@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             : base(isAsync, RecordedTestMode.Playback)
         {
         }
-
+/*
         #region Tests
         [TestCase, Order(1)]
         [RecordedTest]
@@ -509,5 +509,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             return result;
         }
         #endregion
+*/
     }
 }

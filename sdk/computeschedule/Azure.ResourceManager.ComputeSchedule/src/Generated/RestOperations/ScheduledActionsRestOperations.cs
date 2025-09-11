@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-04-15-preview";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateSubmitVirtualMachineDeallocateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, SubmitDeallocateContent content)
+        internal RequestUriBuilder CreateSubmitVirtualMachineDeallocateRequestUri(string subscriptionId, AzureLocation locationparameter, SubmitDeallocateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitDeallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateSubmitVirtualMachineDeallocateRequest(string subscriptionId, AzureLocation azureLocationparameter, SubmitDeallocateContent content)
+        internal HttpMessage CreateSubmitVirtualMachineDeallocateRequest(string subscriptionId, AzureLocation locationparameter, SubmitDeallocateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitDeallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(string subscriptionId, AzureLocation azureLocationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(string subscriptionId, AzureLocation locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(string subscriptionId, AzureLocation azureLocationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(string subscriptionId, AzureLocation locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -128,20 +128,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateSubmitVirtualMachineHibernateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, SubmitHibernateContent content)
+        internal RequestUriBuilder CreateSubmitVirtualMachineHibernateRequestUri(string subscriptionId, AzureLocation locationparameter, SubmitHibernateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitHibernate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateSubmitVirtualMachineHibernateRequest(string subscriptionId, AzureLocation azureLocationparameter, SubmitHibernateContent content)
+        internal HttpMessage CreateSubmitVirtualMachineHibernateRequest(string subscriptionId, AzureLocation locationparameter, SubmitHibernateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitHibernate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -166,17 +166,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(string subscriptionId, AzureLocation azureLocationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(string subscriptionId, AzureLocation locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -194,17 +194,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(string subscriptionId, AzureLocation azureLocationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(string subscriptionId, AzureLocation locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -220,20 +220,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateSubmitVirtualMachineStartRequestUri(string subscriptionId, AzureLocation azureLocationparameter, SubmitStartContent content)
+        internal RequestUriBuilder CreateSubmitVirtualMachineStartRequestUri(string subscriptionId, AzureLocation locationparameter, SubmitStartContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitStart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateSubmitVirtualMachineStartRequest(string subscriptionId, AzureLocation azureLocationparameter, SubmitStartContent content)
+        internal HttpMessage CreateSubmitVirtualMachineStartRequest(string subscriptionId, AzureLocation locationparameter, SubmitStartContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitStart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -258,17 +258,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(string subscriptionId, AzureLocation azureLocationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(string subscriptionId, AzureLocation locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StartResourceOperationResult> SubmitVirtualMachineStart(string subscriptionId, AzureLocation azureLocationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public Response<StartResourceOperationResult> SubmitVirtualMachineStart(string subscriptionId, AzureLocation locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -312,20 +312,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateExecuteVirtualMachineDeallocateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeallocateContent content)
+        internal RequestUriBuilder CreateExecuteVirtualMachineDeallocateRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteDeallocateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteDeallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateExecuteVirtualMachineDeallocateRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeallocateContent content)
+        internal HttpMessage CreateExecuteVirtualMachineDeallocateRequest(string subscriptionId, AzureLocation locationparameter, ExecuteDeallocateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteDeallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -350,17 +350,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(string subscriptionId, AzureLocation locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -378,17 +378,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        public Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(string subscriptionId, AzureLocation locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -404,20 +404,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateExecuteVirtualMachineHibernateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteHibernateContent content)
+        internal RequestUriBuilder CreateExecuteVirtualMachineHibernateRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteHibernateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteHibernate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateExecuteVirtualMachineHibernateRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteHibernateContent content)
+        internal HttpMessage CreateExecuteVirtualMachineHibernateRequest(string subscriptionId, AzureLocation locationparameter, ExecuteHibernateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteHibernate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -442,17 +442,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(string subscriptionId, AzureLocation locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -470,17 +470,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(string subscriptionId, AzureLocation azureLocationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        public Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(string subscriptionId, AzureLocation locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -496,20 +496,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateExecuteVirtualMachineStartRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteStartContent content)
+        internal RequestUriBuilder CreateExecuteVirtualMachineStartRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteStartContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteStart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateExecuteVirtualMachineStartRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteStartContent content)
+        internal HttpMessage CreateExecuteVirtualMachineStartRequest(string subscriptionId, AzureLocation locationparameter, ExecuteStartContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteStart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -534,17 +534,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(string subscriptionId, AzureLocation locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -562,17 +562,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StartResourceOperationResult> ExecuteVirtualMachineStart(string subscriptionId, AzureLocation azureLocationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        public Response<StartResourceOperationResult> ExecuteVirtualMachineStart(string subscriptionId, AzureLocation locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -588,20 +588,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateVirtualMachinesExecuteCreateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteCreateContent content)
+        internal RequestUriBuilder CreateVirtualMachinesExecuteCreateRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteCreate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateVirtualMachinesExecuteCreateRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteCreateContent content)
+        internal HttpMessage CreateVirtualMachinesExecuteCreateRequest(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteCreate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -626,17 +626,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateAsync(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -654,17 +654,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CreateResourceOperationResult> VirtualMachinesExecuteCreate(string subscriptionId, AzureLocation azureLocationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public Response<CreateResourceOperationResult> VirtualMachinesExecuteCreate(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -680,20 +680,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateVirtualMachinesExecuteDeleteRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeleteContent content)
+        internal RequestUriBuilder CreateVirtualMachinesExecuteDeleteRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteDelete", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateVirtualMachinesExecuteDeleteRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeleteContent content)
+        internal HttpMessage CreateVirtualMachinesExecuteDeleteRequest(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteDelete", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -718,17 +718,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteAsync(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -746,17 +746,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeleteResourceOperationResult> VirtualMachinesExecuteDelete(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public Response<DeleteResourceOperationResult> VirtualMachinesExecuteDelete(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -772,20 +772,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateGetVirtualMachineOperationStatusRequestUri(string subscriptionId, AzureLocation azureLocationparameter, GetOperationStatusContent content)
+        internal RequestUriBuilder CreateGetVirtualMachineOperationStatusRequestUri(string subscriptionId, AzureLocation locationparameter, GetOperationStatusContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesGetOperationStatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetVirtualMachineOperationStatusRequest(string subscriptionId, AzureLocation azureLocationparameter, GetOperationStatusContent content)
+        internal HttpMessage CreateGetVirtualMachineOperationStatusRequest(string subscriptionId, AzureLocation locationparameter, GetOperationStatusContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesGetOperationStatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -810,17 +810,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(string subscriptionId, AzureLocation azureLocationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(string subscriptionId, AzureLocation locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -838,17 +838,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(string subscriptionId, AzureLocation azureLocationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(string subscriptionId, AzureLocation locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -864,20 +864,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateCancelVirtualMachineOperationsRequestUri(string subscriptionId, AzureLocation azureLocationparameter, CancelOperationsContent content)
+        internal RequestUriBuilder CreateCancelVirtualMachineOperationsRequestUri(string subscriptionId, AzureLocation locationparameter, CancelOperationsContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesCancelOperations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCancelVirtualMachineOperationsRequest(string subscriptionId, AzureLocation azureLocationparameter, CancelOperationsContent content)
+        internal HttpMessage CreateCancelVirtualMachineOperationsRequest(string subscriptionId, AzureLocation locationparameter, CancelOperationsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesCancelOperations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -902,17 +902,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(string subscriptionId, AzureLocation azureLocationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(string subscriptionId, AzureLocation locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -930,17 +930,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CancelOperationsResult> CancelVirtualMachineOperations(string subscriptionId, AzureLocation azureLocationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public Response<CancelOperationsResult> CancelVirtualMachineOperations(string subscriptionId, AzureLocation locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -956,20 +956,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateGetVirtualMachineOperationErrorsRequestUri(string subscriptionId, AzureLocation azureLocationparameter, GetOperationErrorsContent content)
+        internal RequestUriBuilder CreateGetVirtualMachineOperationErrorsRequestUri(string subscriptionId, AzureLocation locationparameter, GetOperationErrorsContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesGetOperationErrors", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetVirtualMachineOperationErrorsRequest(string subscriptionId, AzureLocation azureLocationparameter, GetOperationErrorsContent content)
+        internal HttpMessage CreateGetVirtualMachineOperationErrorsRequest(string subscriptionId, AzureLocation locationparameter, GetOperationErrorsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(azureLocationparameter, true);
+            uri.AppendPath(locationparameter, true);
             uri.AppendPath("/virtualMachinesGetOperationErrors", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -994,17 +994,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(string subscriptionId, AzureLocation azureLocationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(string subscriptionId, AzureLocation locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1022,17 +1022,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureLocationparameter"> The location name. </param>
+        /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(string subscriptionId, AzureLocation azureLocationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        public Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(string subscriptionId, AzureLocation locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, azureLocationparameter, content);
+            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1041,1543 +1041,6 @@ namespace Azure.ResourceManager.ComputeSchedule
                         GetOperationErrorsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetOperationErrorsResult.DeserializeGetOperationErrorsResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledActionData>> GetAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ScheduledActionData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledActionData> Get(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ScheduledActionData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, ScheduledActionData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, ScheduledActionData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Create a ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, ScheduledActionData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, scheduledActionName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Create a ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string scheduledActionName, ScheduledActionData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, scheduledActionName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, ScheduledActionPatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, ScheduledActionPatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Update a ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledActionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, ScheduledActionPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scheduledActionName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update a ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledActionData> Update(string subscriptionId, string resourceGroupName, string scheduledActionName, ScheduledActionPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scheduledActionName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Delete a ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete a ScheduledAction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List ScheduledAction resources by resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledActionListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List ScheduledAction resources by resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledActionListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List ScheduledAction resources by subscription ID. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledActionListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List ScheduledAction resources by subscription ID. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledActionListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListResourcesRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/resources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListResourcesRequest(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/resources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List resources attached to Scheduled Actions. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceListResponse>> ListResourcesAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateListResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceListResponse.DeserializeResourceListResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List resources attached to Scheduled Actions. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceListResponse> ListResources(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateListResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceListResponse.DeserializeResourceListResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateAttachResourcesRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourceAttachContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/attachResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateAttachResourcesRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourceAttachContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/attachResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecurringActionsResourceOperationResult>> AttachResourcesAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourceAttachContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateAttachResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecurringActionsResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RecurringActionsResourceOperationResult.DeserializeRecurringActionsResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecurringActionsResourceOperationResult> AttachResources(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourceAttachContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateAttachResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecurringActionsResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RecurringActionsResourceOperationResult.DeserializeRecurringActionsResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDetachResourcesRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourceDetachContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/detachResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDetachResourcesRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourceDetachContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/detachResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecurringActionsResourceOperationResult>> DetachResourcesAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourceDetachContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateDetachResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecurringActionsResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RecurringActionsResourceOperationResult.DeserializeRecurringActionsResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecurringActionsResourceOperationResult> DetachResources(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourceDetachContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateDetachResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecurringActionsResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RecurringActionsResourceOperationResult.DeserializeRecurringActionsResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreatePatchResourcesRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourcePatchContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/patchResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreatePatchResourcesRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourcePatchContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/patchResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecurringActionsResourceOperationResult>> PatchResourcesAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourcePatchContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreatePatchResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecurringActionsResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RecurringActionsResourceOperationResult.DeserializeRecurringActionsResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecurringActionsResourceOperationResult> PatchResources(string subscriptionId, string resourceGroupName, string scheduledActionName, ResourcePatchContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreatePatchResourcesRequest(subscriptionId, resourceGroupName, scheduledActionName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecurringActionsResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RecurringActionsResourceOperationResult.DeserializeRecurringActionsResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDisableRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDisableRequest(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DisableAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateDisableRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Disable(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateDisableRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateEnableRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateEnableRequest(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> EnableAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateEnableRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Enable(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateEnableRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCancelNextOccurrenceRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName, CancelOccurrenceContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/cancelNextOccurrence", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCancelNextOccurrenceRequest(string subscriptionId, string resourceGroupName, string scheduledActionName, CancelOccurrenceContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/cancelNextOccurrence", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecurringActionsResourceOperationResult>> CancelNextOccurrenceAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, CancelOccurrenceContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCancelNextOccurrenceRequest(subscriptionId, resourceGroupName, scheduledActionName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecurringActionsResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RecurringActionsResourceOperationResult.DeserializeRecurringActionsResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scheduledActionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecurringActionsResourceOperationResult> CancelNextOccurrence(string subscriptionId, string resourceGroupName, string scheduledActionName, CancelOccurrenceContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCancelNextOccurrenceRequest(subscriptionId, resourceGroupName, scheduledActionName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecurringActionsResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RecurringActionsResourceOperationResult.DeserializeRecurringActionsResourceOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateTriggerManualOccurrenceRequestUri(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/triggerManualOccurrence", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateTriggerManualOccurrenceRequest(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
-            uri.AppendPath(scheduledActionName, true);
-            uri.AppendPath("/triggerManualOccurrence", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OccurrenceData>> TriggerManualOccurrenceAsync(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateTriggerManualOccurrenceRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OccurrenceData.DeserializeOccurrenceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OccurrenceData> TriggerManualOccurrence(string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateTriggerManualOccurrenceRequest(subscriptionId, resourceGroupName, scheduledActionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OccurrenceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OccurrenceData.DeserializeOccurrenceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List ScheduledAction resources by resource group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledActionListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List ScheduledAction resources by resource group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledActionListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List ScheduledAction resources by subscription ID. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledActionListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List ScheduledAction resources by subscription ID. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledActionListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListResourcesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListResourcesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List resources attached to Scheduled Actions. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceListResponse>> ListResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateListResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, scheduledActionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceListResponse.DeserializeResourceListResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List resources attached to Scheduled Actions. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceListResponse> ListResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string scheduledActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
-
-            using var message = CreateListResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, scheduledActionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceListResponse.DeserializeResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
 {
     public static class RecurringScheduledActionUtils
     {
+/*
         public static readonly JsonSerializerSettings DefaultJsonSerializerSettings = new()
         {
             NullValueHandling = NullValueHandling.Ignore,
@@ -143,5 +144,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
 
             Assert.IsFalse(scheduledTime > utcNow, $"The triggered occurrence with id {triggeredOccurrenceData.Name} should be started right now at around {utcNow} but has schedule time {scheduledTime}");
         }
+*/
     }
 }

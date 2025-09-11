@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         }
 
         #endregion
-
+/*
         #region Recurring scheduledactions operations
 
         public static async Task<Response<ScheduledActionResource>> GetScheduledActions(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
@@ -566,5 +566,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             await GetScheduledActions(subid, client, scheduledActionName, rgResource, shouldThrow);
         }
         #endregion
+*/
     }
 }
