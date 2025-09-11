@@ -301,7 +301,7 @@ namespace Azure.Generator.Management.Visitors
                             var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(property, innerProperty);
                             var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
                             var flattenPropertyBody = new MethodPropertyBody(
-                                PropertyHelpers.BuildGetter(includeGetterNullCheck == true && !innerProperty.Type.IsCollection, property, modelProvider, innerProperty),
+                                PropertyHelpers.BuildGetter(includeGetterNullCheck, property, modelProvider, innerProperty),
                                 !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, property, innerProperty)
                             );
 
