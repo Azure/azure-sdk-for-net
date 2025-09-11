@@ -188,6 +188,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return item;
         }
 
+        protected async Task DeleteVirtualMachineAsync(List<VirtualMachineResource> vms)
+        {
+            foreach (VirtualMachineResource vm in vms)
+            {
+                await vm.DeleteAsync(WaitUntil.Completed, forceDeletion: true);
+            }
+        }
+
         protected static SubscriptionResource GenerateSubscriptionResource(ArmClient client, string subid)
         {
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subid);

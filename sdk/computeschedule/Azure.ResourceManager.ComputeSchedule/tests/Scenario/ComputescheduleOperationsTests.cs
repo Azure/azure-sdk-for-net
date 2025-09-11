@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
     {
         private static readonly int s_cancelOperationsDelayedDays = 5;
         public ComputescheduleOperationsTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, RecordedTestMode.Playback)
         //, RecordedTestMode.Record)
         {
         }
