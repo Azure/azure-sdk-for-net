@@ -574,7 +574,13 @@ namespace Azure.Storage.Blobs.Samples
                 string delimiter = "/";
 
                 #region Snippet:SampleSnippetsBlobMigration_ListHierarchy
-                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
+
+                GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+                {
+                    Prefix = blobPrefix,
+                    Delimiter = delimiter
+                };
+                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(options);
                 await foreach (BlobHierarchyItem item in results)
                 {
                     MyConsumeBlobItemFunc(item);
