@@ -1,12 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
 ## 1.1.0 (2025-09-12)
 
 ### Features Added
 
-- Updated the Computeschedule RP api-version from `2024-10-01` to the second stable version `2025-05-01`. This version includes endpoints to batch Create and Delete virtual machines.
+Updated the Computeschedule RP api-version from `2024-10-01` to the second stable version `2025-05-01`. This version includes endpoints to batch Create and Delete virtual machines.
 
 New endpoints were added include
 - VirtualMachinesExecuteCreate
