@@ -46,32 +46,36 @@ namespace Azure.AI.Translation.Text
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TranslationText"/>. </summary>
-        /// <param name="targetLanguage"> A string representing the language code of the target language. </param>
+        /// <param name="language"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="text"/> is null. </exception>
-        internal TranslationText(string targetLanguage, string text)
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/> or <paramref name="text"/> is null. </exception>
+        internal TranslationText(string language, string text)
         {
-            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
+            Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(text, nameof(text));
 
-            TargetLanguage = targetLanguage;
+            Language = language;
             Text = text;
         }
 
         /// <summary> Initializes a new instance of <see cref="TranslationText"/>. </summary>
-        /// <param name="targetLanguage"> A string representing the language code of the target language. </param>
+        /// <param name="language"> A string representing the language code of the target language. </param>
+        /// <param name="sourceCharacters"> An interger indicating the number of characters in the source text string. </param>
+        /// <param name="instructionTokens"> An interger indicating the number of tokens used in generating the translated text. </param>
+        /// <param name="sourceTokens"> An interger indicating the number of tokens used in the source sentence. </param>
+        /// <param name="responseTokens"> An interger indicating the number of tokens used in the translation response. </param>
+        /// <param name="targetTokens"> An interger indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
-        /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
-        /// <param name="alignment"> Alignment information. </param>
-        /// <param name="sentenceBoundaries"> Sentence boundaries in the input and output texts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationText(string targetLanguage, string text, TransliteratedText transliteration, TranslatedTextAlignment alignment, SentenceBoundaries sentenceBoundaries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationText(string language, int? sourceCharacters, int? instructionTokens, int? sourceTokens, int? responseTokens, int? targetTokens, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            TargetLanguage = targetLanguage;
+            Language = language;
+            SourceCharacters = sourceCharacters;
+            InstructionTokens = instructionTokens;
+            SourceTokens = sourceTokens;
+            ResponseTokens = responseTokens;
+            TargetTokens = targetTokens;
             Text = text;
-            Transliteration = transliteration;
-            Alignment = alignment;
-            SentenceBoundaries = sentenceBoundaries;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,14 +85,18 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> A string representing the language code of the target language. </summary>
-        public string TargetLanguage { get; }
+        public string Language { get; }
+        /// <summary> An interger indicating the number of characters in the source text string. </summary>
+        public int? SourceCharacters { get; }
+        /// <summary> An interger indicating the number of tokens used in generating the translated text. </summary>
+        public int? InstructionTokens { get; }
+        /// <summary> An interger indicating the number of tokens used in the source sentence. </summary>
+        public int? SourceTokens { get; }
+        /// <summary> An interger indicating the number of tokens used in the translation response. </summary>
+        public int? ResponseTokens { get; }
+        /// <summary> An interger indicating the number of tokens used in the target sentence. </summary>
+        public int? TargetTokens { get; }
         /// <summary> A string giving the translated text. </summary>
         public string Text { get; }
-        /// <summary> An object giving the translated text in the script specified by the toScript parameter. </summary>
-        public TransliteratedText Transliteration { get; }
-        /// <summary> Alignment information. </summary>
-        public TranslatedTextAlignment Alignment { get; }
-        /// <summary> Sentence boundaries in the input and output texts. </summary>
-        public SentenceBoundaries SentenceBoundaries { get; }
     }
 }

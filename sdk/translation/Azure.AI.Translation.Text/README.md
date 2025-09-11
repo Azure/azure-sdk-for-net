@@ -32,6 +32,7 @@ This table shows the relationship between SDK versions and supported API version
 |-------------|-----------------------------------------------------|
 |1.0.0-beta.1 | 3.0
 |1.0.0 | 3.0
+|1.1.0 | 2025-05-01-preview
 
 ### Prerequisites
 
@@ -281,95 +282,6 @@ For samples on using the `transliterate` endpoint refer to more samples [here][t
 
 Please refer to the service documentation for a conceptual discussion of [transliterate][transliterate_doc].
 
-### Break Sentence
-
-Identifies the positioning of sentence boundaries in a piece of text.
-
-```C# Snippet:FindTextSentenceBoundaries
-try
-{
-    string inputText = "How are you? I am fine. What did you do today?";
-
-    Response<IReadOnlyList<BreakSentenceItem>> response = client.FindSentenceBoundaries(inputText);
-    IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
-    BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
-
-    Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentencesLengths)}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-For samples on using the `break sentece` endpoint refer to more samples [here][breaksentence_sample].
-
-Please refer to the service documentation for a conceptual discussion of [break sentence][breaksentence_doc].
-
-### Dictionary Lookup
-
-Returns equivalent words for the source term in the target language.
-
-```C# Snippet:LookupDictionaryEntries
-try
-{
-    string sourceLanguage = "en";
-    string targetLanguage = "es";
-    string inputText = "fly";
-
-    Response<IReadOnlyList<DictionaryLookupItem>> response = client.LookupDictionaryEntries(sourceLanguage, targetLanguage, inputText);
-    IReadOnlyList<DictionaryLookupItem> dictionaryEntries = response.Value;
-    DictionaryLookupItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
-
-    Console.WriteLine($"For the given input {dictionaryEntry?.Translations?.Count} entries were found in the dictionary.");
-    Console.WriteLine($"First entry: '{dictionaryEntry?.Translations?.FirstOrDefault()?.DisplayTarget}', confidence: {dictionaryEntry?.Translations?.FirstOrDefault()?.Confidence}.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-For samples on using the `dictionary lookup` endpoint refer to more samples [here][dictionarylookup_sample].
-
-Please refer to the service documentation for a conceptual discussion of [dictionary lookup][dictionarylookup_doc].
-
-### Dictionary Examples
-
-Returns grammatical structure and context examples for the source term and target term pair.
-
-```C# Snippet:GetGrammaticalStructure
-try
-{
-    string sourceLanguage = "en";
-    string targetLanguage = "es";
-    IEnumerable<InputTextWithTranslation> inputTextElements = new[]
-    {
-        new InputTextWithTranslation("fly", "volar")
-    };
-
-    Response<IReadOnlyList<DictionaryExampleItem>> response = client.LookupDictionaryExamples(sourceLanguage, targetLanguage, inputTextElements);
-    IReadOnlyList<DictionaryExampleItem> dictionaryEntries = response.Value;
-    DictionaryExampleItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
-
-    Console.WriteLine($"For the given input {dictionaryEntry?.Examples?.Count} examples were found in the dictionary.");
-    DictionaryExample firstExample = dictionaryEntry?.Examples?.FirstOrDefault();
-    Console.WriteLine($"Example: '{string.Concat(firstExample.TargetPrefix, firstExample.TargetTerm, firstExample.TargetSuffix)}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-For samples on using the `dictionary examples` endpoint refer to more samples [here][dictionaryexamples_sample].
-
-Please refer to the service documentation for a conceptual discussion of [dictionary examples][dictionaryexamples_doc].
-
 ## Troubleshooting
 
 When you interact with the Translator Service using the Text Translation client library, errors returned by the Translator service correspond to the same HTTP status codes returned for REST API requests.
@@ -428,9 +340,6 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Languages][languages_sample]
 * [Translate][translate_sample]
 * [Transliterate][transliterate_sample]
-* [Break Sentence][breaksentence_sample]
-* [Dictionary Lookup][dictionarylookup_sample]
-* [Dictionary Examples][dictionaryexamples_sample]
 
 ## Contributing
 
@@ -457,17 +366,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [languages_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-languages
 [translate_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-translate
 [transliterate_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-transliterate
-[breaksentence_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-break-sentence
-[dictionarylookup_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-lookup
-[dictionaryexamples_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-examples
 
 [client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample0_CreateClient.md
 [languages_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample1_GetLanguages.md
 [translate_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample2_Translate.md
 [transliterate_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample3_Transliterate.md
-[breaksentence_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample4_BreakSentence.md
-[dictionarylookup_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample5_DictionaryLookup.md
-[dictionaryexamples_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample6_DictionaryExamples.md
 
 [translator_resource_create]: https://learn.microsoft.com/azure/cognitive-services/Translator/create-translator-resource
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md

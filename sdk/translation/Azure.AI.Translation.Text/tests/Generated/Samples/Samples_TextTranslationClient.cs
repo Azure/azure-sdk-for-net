@@ -6,8 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -105,6 +107,256 @@ namespace Azure.AI.Translation.Text.Samples
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_Translate_TranslateText()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+text = "This is a test.",
+script = "Latn",
+language = "en",
+textType = "Plain",
+targets = new object[]
+{
+new
+{
+language = "cs",
+script = "Latn",
+profanityAction = "NoAction",
+profanityMarker = "Asterisk",
+deploymentName = "gpt-4o-mini",
+allowFallback = true,
+grade = "basic",
+tone = "formal",
+gender = "neutral",
+adaptiveDatasetId = "21000",
+referenceTextPairs = new object[]
+{
+new
+{
+source = "Please test this out.",
+target = "Vyzkoušejte si to.",
+}
+},
+}
+},
+}
+            });
+            Response response = client.Translate(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_Translate_TranslateText_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+text = "This is a test.",
+script = "Latn",
+language = "en",
+textType = "Plain",
+targets = new object[]
+{
+new
+{
+language = "cs",
+script = "Latn",
+profanityAction = "NoAction",
+profanityMarker = "Asterisk",
+deploymentName = "gpt-4o-mini",
+allowFallback = true,
+grade = "basic",
+tone = "formal",
+gender = "neutral",
+adaptiveDatasetId = "21000",
+referenceTextPairs = new object[]
+{
+new
+{
+source = "Please test this out.",
+target = "Vyzkoušejte si to.",
+}
+},
+}
+},
+}
+            });
+            Response response = await client.TranslateAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_Translate_TranslateText_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(new TranslateBody[]
+            {
+new TranslateBody("This is a test.", new TranslateTarget[]
+{
+new TranslateTarget("cs")
+{
+Script = "Latn",
+ProfanityAction = ProfanityAction.NoAction,
+ProfanityMarker = ProfanityMarker.Asterisk,
+DeploymentName = "gpt-4o-mini",
+AllowFallback = true,
+Grade = "basic",
+Tone = "formal",
+Gender = "neutral",
+AdaptiveDatasetId = "21000",
+ReferenceTextPairs = {new ReferenceSentencePair("Please test this out.", "Vyzkoušejte si to.")},
+}
+})
+{
+Script = "Latn",
+Language = "en",
+TextType = TextType.Plain,
+}
+            });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_Translate_TranslateText_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(new TranslateBody[]
+            {
+new TranslateBody("This is a test.", new TranslateTarget[]
+{
+new TranslateTarget("cs")
+{
+Script = "Latn",
+ProfanityAction = ProfanityAction.NoAction,
+ProfanityMarker = ProfanityMarker.Asterisk,
+DeploymentName = "gpt-4o-mini",
+AllowFallback = true,
+Grade = "basic",
+Tone = "formal",
+Gender = "neutral",
+AdaptiveDatasetId = "21000",
+ReferenceTextPairs = {new ReferenceSentencePair("Please test this out.", "Vyzkoušejte si to.")},
+}
+})
+{
+Script = "Latn",
+Language = "en",
+TextType = TextType.Plain,
+}
+            });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_Translate_TranslateTextWithMinimumProperties()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+text = "This is a test.",
+targets = new object[]
+{
+new
+{
+language = "cs",
+}
+},
+}
+            });
+            Response response = client.Translate(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_Translate_TranslateTextWithMinimumProperties_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+text = "This is a test.",
+targets = new object[]
+{
+new
+{
+language = "cs",
+}
+},
+}
+            });
+            Response response = await client.TranslateAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_Translate_TranslateTextWithMinimumProperties_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(new TranslateBody[]
+            {
+new TranslateBody("This is a test.", new TranslateTarget[]
+{
+new TranslateTarget("cs")
+})
+            });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_Translate_TranslateTextWithMinimumProperties_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(new TranslateBody[]
+            {
+new TranslateBody("This is a test.", new TranslateTarget[]
+{
+new TranslateTarget("cs")
+})
+            });
         }
     }
 }
