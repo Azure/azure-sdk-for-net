@@ -11,14 +11,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
+    <ProjectReference Include="..\..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
     <ProjectReference Include="..\src\Azure.Communication.Sms.csproj" />
-    <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
-    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
+  </ItemGroup>
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\\ConnectionString.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\samples\Sample2_OptOutsApi.md" Link="samples\Sample2_OptOutsApi.md" />
-    <None Include="..\samples\Sample2_OptOutsApiAsync.md" Link="samples\Sample2_OptOutsApiAsync.md" />
-    <None Include="..\tests.yml" Link="\tests.yml" />
     <None Include="..\samples\README.md" Link="samples\README.md" />
     <None Include="..\samples\Sample1_SendSms.md" Link="samples\Sample1_SendSms.md" />
     <None Include="..\samples\Sample1_SendSmsAsync.md" Link="samples\Sample1_SendSmsAsync.md" />
