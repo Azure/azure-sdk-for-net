@@ -6,17 +6,23 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> Sanitizers. </summary>
     public partial class SanitizersToRemove
     {
-        /// <summary> Initializes a new instance of SanitizersToRemove. </summary>
+        /// <summary> Initializes a new instance of <see cref="SanitizersToRemove"/>. </summary>
         public SanitizersToRemove()
         {
             Sanitizers = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SanitizersToRemove"/>. </summary>
+        /// <param name="sanitizers"></param>
+        internal SanitizersToRemove(IList<string> sanitizers)
+        {
+            Sanitizers = sanitizers;
         }
 
         /// <summary> Gets the sanitizers. </summary>

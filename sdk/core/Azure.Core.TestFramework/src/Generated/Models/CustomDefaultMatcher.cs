@@ -10,9 +10,22 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> The CustomDefaultMatcher. </summary>
     public partial class CustomDefaultMatcher
     {
-        /// <summary> Initializes a new instance of CustomDefaultMatcher. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/>. </summary>
         public CustomDefaultMatcher()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/>. </summary>
+        /// <param name="excludedHeaders"></param>
+        /// <param name="compareBodies"></param>
+        /// <param name="ignoredHeaders"></param>
+        /// <param name="ignoredQueryParameters"></param>
+        internal CustomDefaultMatcher(string excludedHeaders, bool? compareBodies, string ignoredHeaders, string ignoredQueryParameters)
+        {
+            ExcludedHeaders = excludedHeaders;
+            CompareBodies = compareBodies;
+            IgnoredHeaders = ignoredHeaders;
+            IgnoredQueryParameters = ignoredQueryParameters;
         }
 
         /// <summary> Gets or sets the excluded headers. </summary>

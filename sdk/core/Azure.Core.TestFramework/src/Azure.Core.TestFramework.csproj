@@ -14,9 +14,6 @@
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
     <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'net47'" />
 
-    <!--Temporary solution to pin the version of generator here to workaround the issue in our pipelines that gets conflicts in git push -->
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="3.0.0-beta.20231107.1" PrivateAssets="All" />
-
     <!--
       Explicit references to pull in patched versions of ASP.NET Core packages
     -->
