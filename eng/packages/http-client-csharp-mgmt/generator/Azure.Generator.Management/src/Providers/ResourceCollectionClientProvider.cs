@@ -75,7 +75,7 @@ namespace Azure.Generator.Management.Providers
             {
                 if (string.IsNullOrEmpty(resourceMetadata.ResourceIdPattern))
                 {
-                    throw new ArgumentNullException(nameof(resourceMetadata.ResourceIdPattern), "Extension resource requires a resourceIdPattern.");
+                    throw new InvalidOperationException("Extension resource's IdPattern can't be empty or null.");
                 }
                 return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope, new RequestPathPattern(resourceMetadata.ResourceIdPattern));
             }

@@ -40,7 +40,7 @@ namespace Azure.Generator.Management.Models
                 ResourceScope.ManagementGroup => ManagementGroup,
                 ResourceScope.Extension =>
                     path is null
-                        ? throw new ArgumentNullException(nameof(path), "Extension scope requires a path parameter.")
+                        ? throw new InvalidOperationException("Extension scope requires a path parameter.")
                         : new RequestPathPattern(path._segments.Take(1)),
                 ResourceScope.Tenant => Tenant,
                 _ => throw new InvalidOperationException($"Unhandled scope {scope}"),

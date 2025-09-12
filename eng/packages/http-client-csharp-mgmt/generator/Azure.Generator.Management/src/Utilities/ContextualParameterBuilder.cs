@@ -60,7 +60,7 @@ namespace Azure.Generator.Management.Utilities
                 // using the reference name of the last segment as the parameter name, aka resourceGroupName
                 parameterStack.Push(new ContextualParameter(current[^2].Value, current[^1].VariableName, id => id.ResourceGroupName()));
             }
-            else if (current.Count == 1 && !current[0].IsConstant) // Extension resource case: single variable segment
+            else if (current.Count == 1 && !current[0].IsConstant) // Extension resource case: single variable segment. Here we assume the extension resource's requestPathPattern start with one and only one variable segment
             {
                 // Extension resource case: single variable segment
                 parameterStack.Push(new ContextualParameter(current[0].VariableName, current[0].VariableName, id => BuildParentInvocation(parentLayerCount, id)));
