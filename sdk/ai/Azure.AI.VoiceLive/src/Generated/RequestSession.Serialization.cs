@@ -217,7 +217,7 @@ namespace Azure.AI.VoiceLive
             TurnDetection turnDetection = default;
             AudioNoiseReduction inputAudioNoiseReduction = default;
             AudioEchoCancellation inputAudioEchoCancellation = default;
-            AvatarConfig avatar = default;
+            AvatarConfiguration avatar = default;
             AudioInputTranscriptionSettings inputAudioTranscription = default;
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
@@ -331,7 +331,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    avatar = AvatarConfig.DeserializeAvatarConfig(prop.Value, options);
+                    avatar = AvatarConfiguration.DeserializeAvatarConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("input_audio_transcription"u8))

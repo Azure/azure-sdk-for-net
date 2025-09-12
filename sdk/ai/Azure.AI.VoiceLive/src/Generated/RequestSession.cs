@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="toolChoice"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequestSession(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData serviceVoice, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RequestSession(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData serviceVoice, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -103,7 +103,7 @@ namespace Azure.AI.VoiceLive
         public AudioEchoCancellation InputAudioEchoCancellation { get; set; }
 
         /// <summary> Gets or sets the Avatar. </summary>
-        public AvatarConfig Avatar { get; set; }
+        public AvatarConfiguration Avatar { get; set; }
 
         /// <summary> Gets or sets the InputAudioTranscription. </summary>
         public AudioInputTranscriptionSettings InputAudioTranscription { get; set; }

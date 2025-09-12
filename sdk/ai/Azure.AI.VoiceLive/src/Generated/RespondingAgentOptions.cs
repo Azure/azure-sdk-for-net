@@ -10,31 +10,31 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The RespondingAgentConfig. </summary>
-    public partial class RespondingAgentConfig
+    /// <summary> The RespondingAgentOptions. </summary>
+    public partial class RespondingAgentOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RespondingAgentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RespondingAgentOptions"/>. </summary>
         /// <param name="name"></param>
         /// <param name="agentId"></param>
         /// <param name="threadId"></param>
-        internal RespondingAgentConfig(string name, string agentId, string threadId)
+        internal RespondingAgentOptions(string name, string agentId, string threadId)
         {
             Name = name;
             AgentId = agentId;
             ThreadId = threadId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RespondingAgentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RespondingAgentOptions"/>. </summary>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="agentId"></param>
         /// <param name="threadId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RespondingAgentConfig(string @type, string name, string description, string agentId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RespondingAgentOptions(string @type, string name, string description, string agentId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Name = name;

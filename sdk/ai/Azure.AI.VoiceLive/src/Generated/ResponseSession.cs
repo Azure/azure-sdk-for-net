@@ -55,7 +55,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="agent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseSession(string id, string model, IList<InputModality> modalities, string instructions, AnimationOptions animation, BinaryData voiceInternal, InputAudio inputAudio, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, int? inputAudioSamplingRate, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, BinaryData toolChoice, float? temperature, BinaryData maxResponseOutputTokens, RespondingAgentConfig agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseSession(string id, string model, IList<InputModality> modalities, string instructions, AnimationOptions animation, BinaryData voiceInternal, InputAudio inputAudio, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, int? inputAudioSamplingRate, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, BinaryData toolChoice, float? temperature, BinaryData maxResponseOutputTokens, RespondingAgentOptions agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Model = model;
@@ -118,7 +118,7 @@ namespace Azure.AI.VoiceLive
         public AudioEchoCancellation InputAudioEchoCancellation { get; }
 
         /// <summary> Gets the Avatar. </summary>
-        public AvatarConfig Avatar { get; }
+        public AvatarConfiguration Avatar { get; }
 
         /// <summary> Gets the InputAudioTranscription. </summary>
         public AudioInputTranscriptionSettings InputAudioTranscription { get; }
@@ -215,6 +215,6 @@ namespace Azure.AI.VoiceLive
         public BinaryData MaxResponseOutputTokens { get; }
 
         /// <summary> Gets the Agent. </summary>
-        public RespondingAgentConfig Agent { get; }
+        public RespondingAgentOptions Agent { get; }
     }
 }
