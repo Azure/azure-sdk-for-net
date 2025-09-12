@@ -49,7 +49,6 @@ namespace Azure.Communication.Sms.Tests.samples
                 options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                 {
                     Tag = "marketing", // custom tags
-                    DeliveryReportTimeoutInSeconds = 90
                 });
             foreach (SmsSendResult result in response.Value)
             {
@@ -91,8 +90,6 @@ namespace Azure.Communication.Sms.Tests.samples
                 options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                 {
                     Tag = "marketing", // custom tags
-                    DeliveryReportTimeoutInSeconds = 90,
-                    MessagingConnect = new MessagingConnectOptions("PartnerApiKey", "PartnerName")  // OPTIONAL
                 });
             foreach (SmsSendResult result in response.Value)
             {

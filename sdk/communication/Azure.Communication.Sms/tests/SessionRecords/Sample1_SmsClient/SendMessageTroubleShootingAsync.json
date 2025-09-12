@@ -1,0 +1,77 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/sms?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "319",
+        "Content-Type": "application/json",
+        "Date": "Tue, 09 Mar 2021 21:32:26 GMT",
+        "traceparent": "00-c7366c9413db4844b0c33c082f6230d6-bb08f7d30cb69e46-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20210309.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "1d7edf013305d3270371ff3fa6afcae5",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "from": "Sanitized",
+        "smsRecipients": [
+          {
+            "to": "Sanitized",
+            "repeatabilityRequestId": "Sanitized",
+            "repeatabilityFirstSent": "Sanitized"
+          },
+          {
+            "to": "Sanitized",
+            "repeatabilityRequestId": "Sanitized",
+            "repeatabilityFirstSent": "Sanitized"
+          }
+        ],
+        "message": "Weekly Promotion!",
+        "smsSendOptions": {
+          "enableDeliveryReport": true,
+          "tag": "marketing"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 09 Mar 2021 21:32:27 GMT",
+        "MS-CV": "mQYjsqvnd0ixjChL4ZEywQ.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0a\u002BlHYAAAAAALDwjL1hH2QYkDHedMjGYsRVdSMzBFREdFMDYyMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "476ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "to": "Sanitized",
+            "messageId": "Outgoing_20210309213227faaa1054-bc7b-403a-9fae-e56dc0611f9c_noam",
+            "httpStatusCode": 202,
+            "repeatabilityResult": "accepted",
+            "successful": true
+          },
+          {
+            "to": "Sanitized",
+            "messageId": "Outgoing_202103092132278f406294-cb8a-4ed3-bcb5-28918d8b9085_noam",
+            "httpStatusCode": 202,
+            "repeatabilityResult": "accepted",
+            "successful": true
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "AZURE_PHONE_NUMBER": "\u002B14255550123",
+    "RandomSeed": "1089614406"
+  }
+}
