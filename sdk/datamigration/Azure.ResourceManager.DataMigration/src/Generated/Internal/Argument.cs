@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SqlMigrationManagementClient
+namespace Azure.ResourceManager.DataMigration
 {
     internal static class Argument
     {

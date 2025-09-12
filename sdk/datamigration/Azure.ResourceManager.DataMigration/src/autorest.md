@@ -9,8 +9,8 @@ csharp: true
 library-name: DataMigration
 namespace: Azure.ResourceManager.DataMigration
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/86c6306649b02e542117adb46c61e8019dbd78e9/specification/datamigration/resource-manager/readme.md
-#tag: package-preview-2025-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/706f864d76b3969e919e006bc1c9c2a923ce1280/specification/datamigration/resource-manager/readme.md
+tag: package-2025-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
