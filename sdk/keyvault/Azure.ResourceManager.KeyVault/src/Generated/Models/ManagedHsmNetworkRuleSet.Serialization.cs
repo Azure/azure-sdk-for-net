@@ -56,6 +56,16 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ServiceTags))
+            {
+                writer.WritePropertyName("serviceTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
@@ -106,6 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             ManagedHsmNetworkRuleBypassOption? bypass = default;
             ManagedHsmNetworkRuleAction? defaultAction = default;
             IList<ManagedHsmIPRule> ipRules = default;
+            IList<ManagedHsmServiceTagRule> serviceTags = default;
             IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -143,6 +154,20 @@ namespace Azure.ResourceManager.KeyVault.Models
                     ipRules = array;
                     continue;
                 }
+                if (property.NameEquals("serviceTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ManagedHsmServiceTagRule> array = new List<ManagedHsmServiceTagRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ManagedHsmServiceTagRule.DeserializeManagedHsmServiceTagRule(item, options));
+                    }
+                    serviceTags = array;
+                    continue;
+                }
                 if (property.NameEquals("virtualNetworkRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -163,7 +188,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedHsmNetworkRuleSet(bypass, defaultAction, ipRules ?? new ChangeTrackingList<ManagedHsmIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<ManagedHsmVirtualNetworkRule>(), serializedAdditionalRawData);
+            return new ManagedHsmNetworkRuleSet(
+                bypass,
+                defaultAction,
+                ipRules ?? new ChangeTrackingList<ManagedHsmIPRule>(),
+                serviceTags ?? new ChangeTrackingList<ManagedHsmServiceTagRule>(),
+                virtualNetworkRules ?? new ChangeTrackingList<ManagedHsmVirtualNetworkRule>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -224,6 +255,29 @@ namespace Azure.ResourceManager.KeyVault.Models
                         foreach (var item in IPRules)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ipRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceTags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceTags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServiceTags))
+                {
+                    if (ServiceTags.Any())
+                    {
+                        builder.Append("  serviceTags: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServiceTags)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serviceTags: ");
                         }
                         builder.AppendLine("  ]");
                     }
