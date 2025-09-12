@@ -1823,6 +1823,13 @@
         "Akri",
         "Bucketized"
       ]
+    },
+    {
+      "filename": "**/sdk/workloadorchestration/**/*.cs",
+      "words": [
+        "Inprogress",
+        "Undeployed"
+       ]
     }
   ],
   "allowCompoundWords": true
