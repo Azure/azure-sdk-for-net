@@ -221,14 +221,7 @@ namespace Azure.Generator.Management.Providers
                 var collection = resource.ResourceCollection!;
                 var collectionMethodSignature = resource.FactoryMethodSignature;
                 var pathParameters = collection.PathParameters;
-                collectionMethodSignature = new MethodSignature(
-                    collectionMethodSignature.Name,
-                    collectionMethodSignature.Description,
-                    collectionMethodSignature.Modifiers,
-                    collectionMethodSignature.ReturnType,
-                    collectionMethodSignature.ReturnDescription,
-                    [.. collectionMethodSignature.Parameters, .. pathParameters],
-                    collectionMethodSignature.Attributes);
+                collectionMethodSignature.Update(parameters: [.. collectionMethodSignature.Parameters, .. pathParameters]);
 
                 var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, [client, This.As<ArmResource>().Id(), .. pathParameters])));
                 yield return new MethodProvider(
