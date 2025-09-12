@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// networks.  With a block blob, you can upload multiple blocks in
     /// parallel to decrease upload time.  Each block can include an MD5 hash
     /// to verify the transfer, so you can track upload progress and re-send
-    /// blocks as needed.You can upload blocks in any order, and determine
+    /// blocks as needed. You can upload blocks in any order, and determine
     /// their sequence in the final block list commitment step. You can also
     /// upload a new block to replace an existing uncommitted block of the
     /// same block ID.  You have one week to commit blocks to a blob before
@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// the new blocks with the existing blocks you want to keep using a
     /// single commit operation. To insert the same range of bytes in two
     /// different locations of the committed blob, you can commit the same
-    /// block in two places within the same commit operation.For any commit
+    /// block in two places within the same commit operation. For any commit
     /// operation, if any block is not found, the entire commitment operation
     /// fails with an error, and the blob is not modified. Any block commitment
     /// overwrites the blob’s existing properties and metadata, and discards
@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// When using base-64 encoding, the pre-encoded string must be 64 bytes
     /// or less.  Block ID values can be duplicated in different blobs.  A
     /// blob can have up to 100,000 uncommitted blocks, with a max total size
-    /// of appoximately 381.46 TiB (4,000 MB x 100,000 blocks)
+    /// of approximately 381.46 TiB (4,000 MB x 100,000 blocks)
     ///
     /// If you write a block for a blob that does not exist, a new block blob
     /// is created, with a length of zero bytes.  This blob will appear in
@@ -353,7 +353,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The transport pipeline used to send every request.
         /// </param>
         /// <returns>
-        /// New instanc of the <see cref="BlockBlobClient"/> class.
+        /// New instance of the <see cref="BlockBlobClient"/> class.
         /// </returns>
         protected static BlockBlobClient CreateClient(Uri blobUri, BlobClientOptions options, HttpPipeline pipeline)
         {
@@ -2068,7 +2068,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="CommitBlockListAsync(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)"/>
-        /// operation writes a blob bys pecifying the list of block IDs that make up the blob.
+        /// operation writes a blob by specifying the list of block IDs that make up the blob.
         /// In order to be written as part of a blob, a block must have been
         /// successfully written to the server in a prior <see cref="StageBlockAsync(string, Stream,  byte[], BlobRequestConditions, IProgress{long}, CancellationToken)"/>
         /// operation.  You can call <see cref="CommitBlockListAsync(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)"/>
@@ -2339,7 +2339,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region GetBlockList
         /// <summary>
-        /// The <see cref="GetBlockList"/> operation operation retrieves
+        /// The <see cref="GetBlockList"/> operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
