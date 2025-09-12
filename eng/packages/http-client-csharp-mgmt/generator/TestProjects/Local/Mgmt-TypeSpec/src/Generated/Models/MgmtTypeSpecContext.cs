@@ -17,7 +17,10 @@ namespace MgmtTypeSpec
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BarData))]
+    [ModelReaderWriterBuildable(typeof(BarDeeplyNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarListResult))]
+    [ModelReaderWriterBuildable(typeof(BarMiddleNestedQuotaProperties))]
+    [ModelReaderWriterBuildable(typeof(BarNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarProperties))]
     [ModelReaderWriterBuildable(typeof(BarQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarQuotaResource))]
@@ -46,6 +49,10 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(FooSettingsResource))]
     [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OptionalFlattenPropertyType))]
+    [ModelReaderWriterBuildable(typeof(SelfHelpResource))]
+    [ModelReaderWriterBuildable(typeof(SelfHelpResourceData))]
+    [ModelReaderWriterBuildable(typeof(SelfHelpResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

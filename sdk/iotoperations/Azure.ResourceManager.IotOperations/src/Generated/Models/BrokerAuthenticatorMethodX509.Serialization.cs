@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("trustedClientCaCert"u8);
                 writer.WriteStringValue(TrustedClientCaCert);
             }
+            if (Optional.IsDefined(AdditionalValidation))
+            {
+                writer.WritePropertyName("additionalValidation"u8);
+                writer.WriteStringValue(AdditionalValidation.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             IDictionary<string, BrokerAuthenticatorMethodX509Attributes> authorizationAttributes = default;
             string trustedClientCaCert = default;
+            BrokerAuthenticatorValidationMethod? additionalValidation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,13 +118,22 @@ namespace Azure.ResourceManager.IotOperations.Models
                     trustedClientCaCert = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("additionalValidation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalValidation = new BrokerAuthenticatorValidationMethod(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BrokerAuthenticatorMethodX509(authorizationAttributes ?? new ChangeTrackingDictionary<string, BrokerAuthenticatorMethodX509Attributes>(), trustedClientCaCert, serializedAdditionalRawData);
+            return new BrokerAuthenticatorMethodX509(authorizationAttributes ?? new ChangeTrackingDictionary<string, BrokerAuthenticatorMethodX509Attributes>(), trustedClientCaCert, additionalValidation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BrokerAuthenticatorMethodX509>.Write(ModelReaderWriterOptions options)
