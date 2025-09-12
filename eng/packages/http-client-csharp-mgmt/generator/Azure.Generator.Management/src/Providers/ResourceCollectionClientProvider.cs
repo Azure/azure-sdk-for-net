@@ -29,9 +29,9 @@ namespace Azure.Generator.Management.Providers
     internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
         private readonly ResourceMetadata _resourceMetadata;
-    private readonly IReadOnlyList<FieldProvider> _pathParameterFields;
-    private readonly IReadOnlyList<ParameterProvider> _pathParameters;
-    private readonly IReadOnlyList<(ParameterProvider Parameter, FieldProvider Field)> _pathParameterPairs;
+        private readonly IReadOnlyList<FieldProvider> _pathParameterFields;
+        private readonly IReadOnlyList<ParameterProvider> _pathParameters;
+        private readonly IReadOnlyList<(ParameterProvider Parameter, FieldProvider Field)> _pathParameterPairs;
         private readonly ResourceClientProvider _resource;
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
