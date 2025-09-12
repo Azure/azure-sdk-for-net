@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                 return Math.Min(intervalMs, 24 * 60 * 60 * 1_000); // Maximum 24 hours
             }
 
-            return 900_000; // Default: 15 minutes
+            return 60000; // 900_000; // TODO: Set Default: 15 minutes
         }
 
         public static string? GetDropReason(Exception exception)
@@ -193,7 +193,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
             {
                 string? dropCodeString = null;
 
-                if (dropCode > 0 && dropCode < 4)
+                if (dropCode > 0 && dropCode < 10)
                 {
                     DropCode enumValue = (DropCode)dropCode;
                     dropCodeString = enumValue.ToString();
@@ -258,7 +258,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
             {
                 string? retryCodeString = null;
 
-                if (retryCode > 0 && retryCode < 4)
+                if (retryCode > 0 && retryCode < 10)
                 {
                     DropCode enumValue = (DropCode)retryCode;
                     retryCodeString = enumValue.ToString();

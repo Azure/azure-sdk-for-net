@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Threading;
 using System.Timers;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
@@ -46,12 +47,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (_transmissionStateManager.State == TransmissionState.Closed && _blobProvider.TryGetBlob(out var blob) && blob.TryLease(120000))
                 {
+                    TelemetryCounter? telemetryCounter = new TelemetryCounter();
+
                     try
                     {
                         blob.TryRead(out var data);
 
+                        if (data != null)
+                        {
+                            try
+                            {
+                                var telemetryItems = Encoding.UTF8.GetString(data).Split('\n');
+                                var totalItems = telemetryItems.Length;
+
+                                if (totalItems == 0)
+                                {
+                                    continue;
+                                }
+
+                                for (int i = 0; i < totalItems; i++)
+                                {
+                                    var telemetryType = HttpPipelineHelper.GetTelemetryTypeFromJson(telemetryItems[i]);
+                                    HttpPipelineHelper.IncrementCounterByType(telemetryCounter, telemetryType);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                // TODO: Log the exception.
+                            }
+                        }
+
                         using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(data, CancellationToken.None).Result;
-                        var result = HttpPipelineHelper.IsSuccess(httpMessage);
+                        var result = HttpPipelineHelper.IsSuccess(httpMessage, telemetryCounter);
 
                         if (result == ExportResult.Success)
                         {
@@ -71,14 +98,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         else
                         {
                             _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-                            HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled);
+                            HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetryCounter);
                             break;
                         }
                     }
                     catch (Exception ex)
                     {
                         AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
-                        CustomerSdkStatsHelper.TrackDropped(null, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
+                        CustomerSdkStatsHelper.TrackDropped(telemetryCounter, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
                     }
                 }
                 else
