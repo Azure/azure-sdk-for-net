@@ -32,3 +32,6 @@ enum Versions {
 
 @@clientLocation(Bars.get, "Bar");
 @@clientLocation(Bars.update, "Bar");
+
+#suppress "deprecated"
+@@flattenProperty(BarSettingsResource.flattenedNestedProperty);

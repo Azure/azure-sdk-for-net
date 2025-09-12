@@ -74,6 +74,8 @@
     "cpus",
     "cref",
     "Dapr",
+    "decompile",
+    "decompiled",
     "deduplication",
     "deletesas",
     "deserializable",
@@ -1813,6 +1815,13 @@
         "Sasl",
         "Acks",
         "acks"
+      ]
+    },
+    {
+      "filename": "**/sdk/iotoperations/**/*.cs",
+      "words": [
+        "Akri",
+        "Bucketized"
       ]
     }
   ],

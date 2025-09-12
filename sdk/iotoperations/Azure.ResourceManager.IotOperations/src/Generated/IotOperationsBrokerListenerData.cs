@@ -52,13 +52,8 @@ namespace Azure.ResourceManager.IotOperations
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsBrokerListenerData"/>. </summary>
-        /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
-        public IotOperationsBrokerListenerData(IotOperationsExtendedLocation extendedLocation)
+        public IotOperationsBrokerListenerData()
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-
-            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsBrokerListenerData"/>. </summary>
@@ -74,11 +69,6 @@ namespace Azure.ResourceManager.IotOperations
             Properties = properties;
             ExtendedLocation = extendedLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotOperationsBrokerListenerData"/> for deserialization. </summary>
-        internal IotOperationsBrokerListenerData()
-        {
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
