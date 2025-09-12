@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Net;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,8 +46,21 @@ namespace Azure.AI.VoiceLive
                     clientWebSocket.Options.SetRequestHeader("Authorization", $"{token.TokenType} {token.Token}");
                 }
 
-                // Add any additional headers required by the VoiceLive service
-                clientWebSocket.Options.SetRequestHeader("User-Agent", "Azure-VoiceLive-SDK/.NET");
+                try
+                {
+                    clientWebSocket.Options.SetRequestHeader("User-Agent", "Azure-VoiceLive-SDK/.NET");
+                }
+                catch (System.ArgumentException)
+                {
+                    // On Net4.x you can't set the UserAgent for a websocket connection
+                }
+
+                var proxy = Environment.GetEnvironmentVariable("HTTPS_PROXY");
+
+                if (!string.IsNullOrEmpty(proxy))
+                {
+                    clientWebSocket.Options.Proxy = new WebProxy(proxy);
+                }
 
                 await clientWebSocket.ConnectAsync(_endpoint, cancellationToken).ConfigureAwait(false);
 

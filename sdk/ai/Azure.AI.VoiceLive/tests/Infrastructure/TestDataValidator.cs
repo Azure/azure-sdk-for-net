@@ -199,7 +199,7 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// </summary>
         public class ValidationResult
         {
-            public string FilePath { get; set; }
+            public string FilePath { get; set; } = string.Empty;
             public bool IsValid { get; set; }
             public List<string> Errors { get; } = new List<string>();
             public List<string> Warnings { get; } = new List<string>();

@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive.Tests
     /// </summary>
     [Category("Live")]
     [TestFixture]
-    public abstract class VoiceLiveTestBase : RecordedTestBase<Infrastructure.VoiceLiveTestEnvironment>
+    public abstract class VoiceLiveTestBase : TimeOutTestBase<Infrastructure.VoiceLiveTestEnvironment>
     {
         private readonly List<VoiceLiveSession> _sessions = new List<VoiceLiveSession>();
 

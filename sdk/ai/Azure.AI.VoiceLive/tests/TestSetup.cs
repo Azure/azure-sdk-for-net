@@ -72,12 +72,13 @@ namespace Azure.AI.VoiceLive.Tests
             if (!File.Exists(filePath))
             {
                 TestContext.WriteLine($"Generating speech pattern file: {filePath}");
-
+                /*
                 var audioData = TestAudioGenerator.GenerateMockAudioResponse(
                     (int)duration.TotalMilliseconds);
 
                 var wavData = TestAudioGenerator.WrapInWavHeader(audioData);
                 File.WriteAllBytes(filePath, wavData);
+                */
             }
         }
     }

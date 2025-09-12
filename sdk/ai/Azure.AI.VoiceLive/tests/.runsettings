@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+    <RunConfiguration>
+        <EnvironmentVariables>
+            <HTTPS_PROXY>http://localhost:8888</HTTPS_PROXY>
+            <HTTP_PROXY>http://localhost:8888</HTTP_PROXY>
+            <VOICELIVE_ENDPOINT>https://changfu-azure-ai-service.services.ai.azure.com/</VOICELIVE_ENDPOINT>
+            <VOICELIVE_TEST_AUDIO_PATH>d:\scratch\audio</VOICELIVE_TEST_AUDIO_PATH>
+        </EnvironmentVariables>
+    </RunConfiguration>
+</RunSettings>

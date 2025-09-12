@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerServiceBot", "sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.VoiceLive.Snippets", "samples\snippets\Azure.AI.VoiceLive.Snippets.csproj", "{1694BF5F-7AE7-9D41-44E7-A50680B5CA40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAssistantConsoleApp", "..\..\..\..\..\..\scratch\PersonalAssistantConsoleApp 2\PersonalAssistantConsoleApp\PersonalAssistantConsoleApp.csproj", "{00F935CF-CB87-9A36-8947-289BB69BFC29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{1694BF5F-7AE7-9D41-44E7-A50680B5CA40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1694BF5F-7AE7-9D41-44E7-A50680B5CA40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1694BF5F-7AE7-9D41-44E7-A50680B5CA40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00F935CF-CB87-9A36-8947-289BB69BFC29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00F935CF-CB87-9A36-8947-289BB69BFC29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00F935CF-CB87-9A36-8947-289BB69BFC29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00F935CF-CB87-9A36-8947-289BB69BFC29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
