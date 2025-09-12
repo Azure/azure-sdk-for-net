@@ -120,15 +120,6 @@ namespace MgmtTypeSpec
                     properties = PlaywrightQuotaProperties.DeserializePlaywrightQuotaProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("optionalFlattenProperty"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    optionalFlattenProperty = OptionalFlattenPropertyType.DeserializeOptionalFlattenPropertyType(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
