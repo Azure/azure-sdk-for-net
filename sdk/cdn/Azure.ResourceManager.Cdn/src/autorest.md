@@ -79,10 +79,10 @@ no-property-type-replacement:
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
   - FrontDoorCustomDomainHttpsContentSecret
   - FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
+
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
-  FrontDoorProfiles_CheckHostNameAvailability: CheckFrontDoorProfileHostNameAvailability
   LogAnalytics_GetLogAnalyticsMetrics: GetLogAnalyticsMetrics
   LogAnalytics_GetLogAnalyticsRankings: GetLogAnalyticsRankings
   LogAnalytics_GetLogAnalyticsResources: GetLogAnalyticsResources
@@ -90,14 +90,18 @@ override-operation-name:
   LogAnalytics_GetWafLogAnalyticsMetrics: GetWafLogAnalyticsMetrics
   LogAnalytics_GetWafLogAnalyticsRankings: GetWafLogAnalyticsRankings
   Profiles_ListResourceUsage: GetResourceUsages
-  CdnEndpoints_ListResourceUsage: GetResourceUsages
-  FrontDoorProfiles_ListResourceUsage: GetFrontDoorProfileResourceUsages
-  FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
-  FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
-  FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
   Profiles_CdnCanMigrateToAfd: CheckCdnMigrationCompatibility
   Profiles_CdnMigrateToAfd: MigrateCdnToAfd
   Profiles_MigrationAbort: AbortMigration
+  AFDProfiles_ValidateSecret: ValidateSecretFrontDoorProfile
+  AFDProfiles_CheckEndpointNameAvailability: CheckEndpointNameAvailabilityFrontDoorProfile
+  AFDProfiles_CheckHostNameAvailability: CheckFrontDoorProfileHostNameAvailability
+  AFDProfiles_Upgrade: UpgradeFrontDoorProfile
+  AFDProfiles_ListResourceUsage: GetFrontDoorProfileResourceUsages
+  RuleSets_ListResourceUsage: GetResourceUsages
+  AFDOriginGroups_ListResourceUsage: GetResourceUsages
+  AFDEndpoints_ListResourceUsage: GetResourceUsages
+  Endpoints_ListResourceUsage: GetResourceUsages
 
 rename-mapping:
   CacheType: CdnCacheLevel
@@ -365,6 +369,19 @@ rename-mapping:
   KeyVaultSigningKeyParametersType.KeyVaultSigningKeyParameters: KeyVaultSigningKey
 
 directive:
+  #   Add for reslove TypeSpec validation issue
+  - from: swagger-document
+    where: $.definitions.PolicySettingsDefaultCustomBlockResponseStatusCode
+    transform: >
+      $['type'] = 'integer';
+  - from: swagger-document
+    where: $.definitions.EndpointPropertiesUpdateParameters.properties.urlSigningKeys
+    transform: >
+      $['x-nullable'] = true;
+  - from: swagger-document
+    where: $.definitions.CustomerCertificateParameters.properties.subjectAlternativeNames
+    transform: >
+      $['readOnly'] = false;
   - from: swagger-document
     where: $.definitions..parameters
     transform: >
@@ -379,7 +396,6 @@ directive:
       $.DeliveryRuleAction.properties.name['x-ms-enum'].name = 'DeliveryRuleActionType';
       $.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.optimizationType['x-nullable'] = true;
-      $.EndpointPropertiesUpdateParameters.properties.urlSigningKeys['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.deliveryPolicy['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.webApplicationFirewallPolicyLink['x-nullable'] = true;
       $.DeepCreatedOriginGroupProperties.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-nullable'] = true;
@@ -453,9 +469,4 @@ directive:
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
       $.policySettings.properties.defaultCustomBlockResponseBody['x-nullable'] = true;
   - remove-operation: Validate_Secret
-#   Add for reslove TypeSpec validation issue
-  - from: swagger-document
-    where: $.definitions.PolicySettingsDefaultCustomBlockResponseStatusCode
-    transform: >
-      $['format'] = 'int32'
 ```

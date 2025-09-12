@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceUsage_AFDOriginGroupsListResourceUsage()
+        public async Task GetResourceUsages_AFDOriginGroupsListResourceUsage()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDOriginGroups_ListResourceUsage.json
             // this example is just showing the usage of "AFDOriginGroups_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn.Samples
             FrontDoorOriginGroupResource frontDoorOriginGroup = client.GetFrontDoorOriginGroupResource(frontDoorOriginGroupResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FrontDoorUsage item in frontDoorOriginGroup.GetResourceUsageAsync())
+            await foreach (FrontDoorUsage item in frontDoorOriginGroup.GetResourceUsagesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

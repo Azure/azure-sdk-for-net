@@ -434,11 +434,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRuleSetsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRuleSetsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsage", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -464,11 +464,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<FrontDoorUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRuleSetsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRuleSetsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsage", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

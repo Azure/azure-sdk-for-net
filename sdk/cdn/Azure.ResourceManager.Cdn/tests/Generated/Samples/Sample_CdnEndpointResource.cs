@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceUsage_EndpointsListResourceUsage()
+        public async Task GetResourceUsages_EndpointsListResourceUsage()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_ListResourceUsage.json
             // this example is just showing the usage of "Endpoints_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn.Samples
             CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CdnUsage item in cdnEndpoint.GetResourceUsageAsync())
+            await foreach (CdnUsage item in cdnEndpoint.GetResourceUsagesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

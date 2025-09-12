@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceUsage_RuleSetsListResourceUsage()
+        public async Task GetResourceUsages_RuleSetsListResourceUsage()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_ListResourceUsage.json
             // this example is just showing the usage of "RuleSets_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn.Samples
             FrontDoorRuleSetResource frontDoorRuleSet = client.GetFrontDoorRuleSetResource(frontDoorRuleSetResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FrontDoorUsage item in frontDoorRuleSet.GetResourceUsageAsync())
+            await foreach (FrontDoorUsage item in frontDoorRuleSet.GetResourceUsagesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

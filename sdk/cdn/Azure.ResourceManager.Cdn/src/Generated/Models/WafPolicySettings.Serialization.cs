@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
             {
                 writer.WritePropertyName("defaultCustomBlockResponseStatusCode"u8);
-                writer.WriteNumberValue(DefaultCustomBlockResponseStatusCode.Value.ToSerialSingle());
+                writer.WriteNumberValue(DefaultCustomBlockResponseStatusCode.Value.ToSerialInt32());
             }
             if (Optional.IsDefined(DefaultCustomBlockResponseBody))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    defaultCustomBlockResponseStatusCode = new PolicySettingsDefaultCustomBlockResponseStatusCode(property.Value.GetSingle());
+                    defaultCustomBlockResponseStatusCode = new PolicySettingsDefaultCustomBlockResponseStatusCode(property.Value.GetInt32());
                     continue;
                 }
                 if (property.NameEquals("defaultCustomBlockResponseBody"u8))

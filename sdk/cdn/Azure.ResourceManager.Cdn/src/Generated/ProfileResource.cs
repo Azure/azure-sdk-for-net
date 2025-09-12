@@ -1414,11 +1414,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAFDProfileAsync(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityFrontDoorProfileAsync(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityAFDProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityFrontDoorProfile");
             scope.Start();
             try
             {
@@ -1452,11 +1452,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailabilityAFDProfile(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailabilityFrontDoorProfile(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityAFDProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityFrontDoorProfile");
             scope.Start();
             try
             {
@@ -1490,11 +1490,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckHostNameAvailabilityAFDProfileAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckFrontDoorProfileHostNameAvailabilityAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckHostNameAvailabilityAFDProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
             try
             {
@@ -1528,11 +1528,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CdnNameAvailabilityResult> CheckHostNameAvailabilityAFDProfile(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CdnNameAvailabilityResult> CheckFrontDoorProfileHostNameAvailability(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckHostNameAvailabilityAFDProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
             try
             {
@@ -1567,11 +1567,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Profile upgrade input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProfileResource>> UpgradeAFDProfileAsync(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProfileResource>> UpgradeFrontDoorProfileAsync(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeAFDProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeFrontDoorProfile");
             scope.Start();
             try
             {
@@ -1609,11 +1609,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Profile upgrade input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ProfileResource> UpgradeAFDProfile(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProfileResource> UpgradeFrontDoorProfile(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeAFDProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeFrontDoorProfile");
             scope.Start();
             try
             {
@@ -1649,11 +1649,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsageAFDProfilesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FrontDoorUsage> GetFrontDoorProfileResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorProfilesRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorProfilesRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorProfilesClientDiagnostics, Pipeline, "ProfileResource.GetResourceUsageAFDProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorProfilesClientDiagnostics, Pipeline, "ProfileResource.GetFrontDoorProfileResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1675,11 +1675,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorUsage> GetResourceUsageAFDProfiles(CancellationToken cancellationToken = default)
+        public virtual Pageable<FrontDoorUsage> GetFrontDoorProfileResourceUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorProfilesRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorProfilesRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorProfilesClientDiagnostics, Pipeline, "ProfileResource.GetResourceUsageAFDProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorProfilesClientDiagnostics, Pipeline, "ProfileResource.GetFrontDoorProfileResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1702,11 +1702,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ValidateSecretResult>> ValidateSecretAFDProfileAsync(ValidateSecretContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateSecretResult>> ValidateSecretFrontDoorProfileAsync(ValidateSecretContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretAFDProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretFrontDoorProfile");
             scope.Start();
             try
             {
@@ -1740,11 +1740,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ValidateSecretResult> ValidateSecretAFDProfile(ValidateSecretContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ValidateSecretResult> ValidateSecretFrontDoorProfile(ValidateSecretContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretAFDProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretFrontDoorProfile");
             scope.Start();
             try
             {

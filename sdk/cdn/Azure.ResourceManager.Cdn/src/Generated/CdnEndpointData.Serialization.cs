@@ -108,13 +108,20 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsCollectionDefined(UriSigningKeys))
             {
-                writer.WritePropertyName("urlSigningKeys"u8);
-                writer.WriteStartArray();
-                foreach (var item in UriSigningKeys)
+                if (UriSigningKeys != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("urlSigningKeys"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in UriSigningKeys)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("urlSigningKeys");
+                }
             }
             if (Optional.IsDefined(DeliveryPolicy))
             {
@@ -377,6 +384,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                uriSigningKeys = null;
                                 continue;
                             }
                             List<UriSigningKey> array = new List<UriSigningKey>();

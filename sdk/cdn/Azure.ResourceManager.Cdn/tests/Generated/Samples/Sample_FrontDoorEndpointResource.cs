@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceUsage_AFDEndpointsListResourceUsage()
+        public async Task GetResourceUsages_AFDEndpointsListResourceUsage()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDEndpoints_ListResourceUsage.json
             // this example is just showing the usage of "AFDEndpoints_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn.Samples
             FrontDoorEndpointResource frontDoorEndpoint = client.GetFrontDoorEndpointResource(frontDoorEndpointResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FrontDoorUsage item in frontDoorEndpoint.GetResourceUsageAsync())
+            await foreach (FrontDoorUsage item in frontDoorEndpoint.GetResourceUsagesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Cdn.Models
     /// </summary>
     public readonly partial struct PolicySettingsDefaultCustomBlockResponseStatusCode : IEquatable<PolicySettingsDefaultCustomBlockResponseStatusCode>
     {
-        private readonly float _value;
+        private readonly int _value;
 
         /// <summary> Initializes a new instance of <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/>. </summary>
-        public PolicySettingsDefaultCustomBlockResponseStatusCode(float value)
+        public PolicySettingsDefaultCustomBlockResponseStatusCode(int value)
         {
             _value = value;
         }
 
-        private const float TwoHundredValue = 200F;
-        private const float FourHundredThreeValue = 403F;
-        private const float FourHundredFiveValue = 405F;
-        private const float FourHundredSixValue = 406F;
-        private const float FourHundredTwentyNineValue = 429F;
+        private const int TwoHundredValue = 200;
+        private const int FourHundredThreeValue = 403;
+        private const int FourHundredFiveValue = 405;
+        private const int FourHundredSixValue = 406;
+        private const int FourHundredTwentyNineValue = 429;
 
         /// <summary>
         /// 200
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredTwentyNine { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredTwentyNineValue);
 
-        internal float ToSerialSingle() => _value;
+        internal int ToSerialInt32() => _value;
 
         /// <summary> Determines if two <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/> values are the same. </summary>
         public static bool operator ==(PolicySettingsDefaultCustomBlockResponseStatusCode left, PolicySettingsDefaultCustomBlockResponseStatusCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/> values are not the same. </summary>
         public static bool operator !=(PolicySettingsDefaultCustomBlockResponseStatusCode left, PolicySettingsDefaultCustomBlockResponseStatusCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="float"/> to a <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/>. </summary>
-        public static implicit operator PolicySettingsDefaultCustomBlockResponseStatusCode(float value) => new PolicySettingsDefaultCustomBlockResponseStatusCode(value);
+        /// <summary> Converts a <see cref="int"/> to a <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/>. </summary>
+        public static implicit operator PolicySettingsDefaultCustomBlockResponseStatusCode(int value) => new PolicySettingsDefaultCustomBlockResponseStatusCode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
