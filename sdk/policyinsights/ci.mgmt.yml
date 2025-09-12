@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PolicyInsights
       safeName: AzureResourceManagerPolicyInsights
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.PolicyInsights
+      ExpectedWarningsFilepath: None
