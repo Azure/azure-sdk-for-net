@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Use `WithTenantId` instead of `WithTenantIdFromAuthority` for setting the tenant for the authentication session to prevent malformed Uris to the authority.
+- TenantId is now configured via MSAL's `WithTenantId` instead of `WithTenantIdFromAuthority` to prevent malformed Uris to the authority.
 
 ### Other Changes
 
