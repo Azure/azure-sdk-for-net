@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("encryptionComplianceStatus"u8);
                 writer.WriteStringValue(EncryptionComplianceStatus.Value.ToSerialString());
             }
+            if (Optional.IsDefined(ServiceLevelEncryptionKey))
+            {
+                writer.WritePropertyName("serviceLevelEncryptionKey"u8);
+                writer.WriteObjectValue(ServiceLevelEncryptionKey, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.Search.Models
             }
             SearchEncryptionWithCmkEnforcement? enforcement = default;
             SearchEncryptionComplianceStatus? encryptionComplianceStatus = default;
+            SearchResourceEncryptionKey serviceLevelEncryptionKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,13 +112,22 @@ namespace Azure.ResourceManager.Search.Models
                     encryptionComplianceStatus = property.Value.GetString().ToSearchEncryptionComplianceStatus();
                     continue;
                 }
+                if (property.NameEquals("serviceLevelEncryptionKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceLevelEncryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, serializedAdditionalRawData);
+            return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, serviceLevelEncryptionKey, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -153,6 +168,21 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     builder.Append("  encryptionComplianceStatus: ");
                     builder.AppendLine($"'{EncryptionComplianceStatus.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceLevelEncryptionKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceLevelEncryptionKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceLevelEncryptionKey))
+                {
+                    builder.Append("  serviceLevelEncryptionKey: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServiceLevelEncryptionKey, options, 2, false, "  serviceLevelEncryptionKey: ");
                 }
             }
 

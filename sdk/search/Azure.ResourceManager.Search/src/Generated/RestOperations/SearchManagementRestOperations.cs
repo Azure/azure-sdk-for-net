@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-05-01";
+            _apiVersion = apiVersion ?? "2025-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Gets the quota usage for a search SKU in the given subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Gets the quota usage for a search SKU in the given subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

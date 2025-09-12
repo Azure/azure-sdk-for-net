@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.Search
             return resource.GetCachedClient(client => new MockableSearchSubscriptionResource(client, resource.Id));
         }
 
+        private static MockableSearchTenantResource GetMockableSearchTenantResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableSearchTenantResource(client, resource.Id));
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SearchServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SearchServiceResource.CreateResourceIdentifier" /> to create a <see cref="SearchServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -139,7 +144,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +183,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +222,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +259,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +296,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +333,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,7 +370,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -374,7 +379,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -399,7 +404,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -408,7 +413,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -433,7 +438,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -442,7 +447,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -468,7 +473,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -477,7 +482,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -488,6 +493,70 @@ namespace Azure.ResourceManager.Search
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSearchSubscriptionResource(subscriptionResource).UsageBySubscriptionSku(location, skuName, searchManagementRequestOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the features and SKUs offered by the Azure AI Search service in each region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Search/offerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Offerings_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSearchTenantResource.GetOfferings(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="OfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OfferingsByRegion> GetOfferingsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSearchTenantResource(tenantResource).GetOfferingsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the features and SKUs offered by the Azure AI Search service in each region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Search/offerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Offerings_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSearchTenantResource.GetOfferings(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OfferingsByRegion> GetOfferings(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSearchTenantResource(tenantResource).GetOfferings(cancellationToken);
         }
     }
 }
