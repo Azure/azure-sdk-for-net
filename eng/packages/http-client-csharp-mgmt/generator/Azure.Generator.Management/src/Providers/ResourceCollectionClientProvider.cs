@@ -29,9 +29,7 @@ namespace Azure.Generator.Management.Providers
     internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
         private readonly ResourceMetadata _resourceMetadata;
-        private readonly IReadOnlyList<FieldProvider> _pathParameterFields;
-        private readonly IReadOnlyList<ParameterProvider> _pathParameters;
-        private readonly IReadOnlyList<(ParameterProvider Parameter, FieldProvider Field)> _pathParameterPairs;
+        private readonly Dictionary<ParameterProvider, FieldProvider> _pathParameterMap;
         private readonly ResourceClientProvider _resource;
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
@@ -51,10 +49,7 @@ namespace Azure.Generator.Management.Providers
             _contextualPath = GetContextualRequestPattern(resourceMetadata);
             _resource = resource;
 
-            var pathParameterInit = BuildPathParametersAndFields();
-            _pathParameterFields = pathParameterInit.Fields;
-            _pathParameters = pathParameterInit.Parameters;
-            _pathParameterPairs = pathParameterInit.Pairs;
+            _pathParameterMap = BuildPathParameterMap();
 
             // Initialize client info dictionary using extension method
             _clientInfos = resourceMetadata.CreateClientInfosMap(this);
@@ -119,8 +114,8 @@ namespace Azure.Generator.Management.Providers
         }
 
         public ResourceClientProvider Resource => _resource;
-        public IReadOnlyList<FieldProvider> PathParameterFields => _pathParameterFields;
-        public IReadOnlyList<ParameterProvider> PathParameters => _pathParameters;
+        public IReadOnlyList<FieldProvider> PathParameterFields => _pathParameterMap.Values.ToList();
+        public IReadOnlyList<ParameterProvider> PathParameters => _pathParameterMap.Keys.ToList();
         public RequestPathPattern ContextualPath => _contextualPath;
 
         internal string ResourceName => _resource.ResourceName;
@@ -161,16 +156,9 @@ namespace Azure.Generator.Management.Providers
             return [.. properties];
         }
 
-        private (
-            IReadOnlyList<FieldProvider> Fields,
-            IReadOnlyList<ParameterProvider> Parameters,
-            IReadOnlyList<(ParameterProvider Parameter, FieldProvider Field)> Pairs
-        ) BuildPathParametersAndFields()
+        private Dictionary<ParameterProvider, FieldProvider> BuildPathParameterMap()
         {
-            var fields = new List<FieldProvider>();
-            var parameters = new List<ParameterProvider>();
-            var pairs = new List<(ParameterProvider, FieldProvider)>();
-
+            var map = new Dictionary<ParameterProvider, FieldProvider>();
             var diff = ContextualPath.TrimAncestorFrom(Resource.ContextualPath);
             var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
             if (variableSegments.Count > 0)
@@ -179,16 +167,14 @@ namespace Azure.Generator.Management.Providers
             }
             foreach (var seg in variableSegments)
             {
-                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, Resource.GetPathParameterType(seg.VariableName), $"_{seg.VariableName}", this, description: $"The {seg.VariableName}.");
                 var parameter = new ParameterProvider(
                     seg.VariableName,
                     $"The {seg.VariableName} for the resource.",
                     Resource.GetPathParameterType(seg.VariableName));
-                fields.Add(field);
-                parameters.Add(parameter);
-                pairs.Add((parameter, field));
+                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, Resource.GetPathParameterType(seg.VariableName), $"_{seg.VariableName}", this, description: $"The {seg.VariableName}.");
+                map.Add(parameter, field);
             }
-            return (fields, parameters, pairs);
+            return map;
         }
 
         // BuildPathParameters is now handled by BuildPathParametersAndFields
@@ -201,7 +187,7 @@ namespace Azure.Generator.Management.Providers
                 fields.Add(clientInfo.DiagnosticsField);
                 fields.Add(clientInfo.RestClientField);
             }
-            return [ .. fields, .. _pathParameterFields];
+            return [ .. fields, .. _pathParameterMap.Values];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -219,7 +205,7 @@ namespace Azure.Generator.Management.Providers
             var initializer = new ConstructorInitializer(true, baseParameters);
             var parameters = new List<ParameterProvider>(baseParameters);
 
-            parameters.AddRange(_pathParameters);
+            parameters.AddRange(_pathParameterMap.Keys);
 
             var signature = new ConstructorSignature(
                 Type,
@@ -236,9 +222,9 @@ namespace Azure.Generator.Management.Providers
             bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
 
             // Assign all path parameter fields by assigning from the path parameters
-            foreach (var (parameter, field) in _pathParameterPairs)
+            foreach (var kvp in _pathParameterMap)
             {
-                bodyStatements.Add(field.Assign(parameter).Terminate());
+                bodyStatements.Add(kvp.Value.Assign(kvp.Key).Terminate());
             }
 
             // Initialize all client diagnostics and rest client fields
@@ -409,15 +395,9 @@ namespace Azure.Generator.Management.Providers
 
         public bool TryGetPrivateFieldParameter(ParameterProvider parameter, out FieldProvider? matchingField)
         {
-            matchingField = null;
-            foreach (var (param, field) in _pathParameterPairs)
-            {
-                if (param.Name.Equals(parameter.WireInfo.SerializedName, StringComparison.OrdinalIgnoreCase))
-                {
-                    matchingField = field;
-                    break;
-                }
-            }
+            matchingField = _pathParameterMap
+                .FirstOrDefault(kvp => kvp.Key.Name.Equals(parameter.WireInfo.SerializedName, StringComparison.OrdinalIgnoreCase))
+                .Value;
             return matchingField != null;
         }
     }
