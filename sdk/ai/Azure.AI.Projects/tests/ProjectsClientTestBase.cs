@@ -125,7 +125,7 @@ namespace Azure.AI.Projects.Tests
         /// <param name="expectedAuthenticationType">Expected authentication type name (optional).</param>
         /// <param name="expectedIsDefault">Expected is default value (optional).</param>
         public static void ValidateConnection(
-            ConnectionProperties connection,
+            AIProjectConnection connection,
             bool includeCredentials,
             ConnectionType? expectedConnectionType = null,
             string expectedConnectionName = null,
@@ -150,7 +150,7 @@ namespace Azure.AI.Projects.Tests
                     $"Expected IsDefault to be {expectedIsDefault.Value}");
             }
 
-            if (includeCredentials && connection.Credentials is ApiKeyCredentials apiKeyCredentials)
+            if (includeCredentials && connection.Credentials is AIProjectConnectionApiKeyCredential apiKeyCredentials)
             {
                 Assert.That(apiKeyCredentials.ApiKey, Is.Not.Null, "API key should not be null");
             }
@@ -164,7 +164,7 @@ namespace Azure.AI.Projects.Tests
         /// <param name="expectedModelDeploymentName">Expected model deployment name (optional).</param>
         /// <param name="expectedModelPublisher">Expected model publisher (optional).</param>
         public static void ValidateDeployment(
-            AssetDeployment deployment,
+            AIProjectDeployment deployment,
             string expectedModelName = null,
             string expectedModelDeploymentName = null,
             string expectedModelPublisher = null)
@@ -192,7 +192,7 @@ namespace Azure.AI.Projects.Tests
         /// <param name="expectedAiSearchConnectionName">Expected AI Search connection name (optional).</param>
         /// <param name="expectedAiSearchIndexName">Expected AI Search index name (optional).</param>
         public static void ValidateIndex(
-            SearchIndex index,
+            AIProjectIndex index,
             string expectedIndexType = null,
             string expectedIndexName = null,
             string expectedIndexVersion = null,

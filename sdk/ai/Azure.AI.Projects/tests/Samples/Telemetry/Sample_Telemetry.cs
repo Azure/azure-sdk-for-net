@@ -22,7 +22,7 @@ namespace Azure.AI.Projects.Tests
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine("Get the Application Insights connection string.");
             var connectionString = projectClient.Telemetry.GetApplicationInsightsConnectionString();
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Tests
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine("Get the Application Insights connection string.");
             var connectionString = await projectClient.Telemetry.GetApplicationInsightsConnectionStringAsync();
