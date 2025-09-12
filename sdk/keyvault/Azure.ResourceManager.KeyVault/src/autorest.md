@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
-require: https://github.com/Azure/azure-rest-api-specs/blob/b92fe44fbb8e415302342ecd6c2c5bb764da7949/specification/keyvault/resource-manager/readme.md
+# TODO: replace with the commit id merged from master - this is from a branch.
+require: https://github.com/Azure/azure-rest-api-specs/blob/7bfd643a4d8335725f2b1e9a3396162184c361ac/specification/keyvault/resource-manager/readme.md
 #tag: package-2023-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
