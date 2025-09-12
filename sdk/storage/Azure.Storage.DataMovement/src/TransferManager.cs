@@ -460,6 +460,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>A <see cref="ValueTask"/> of disposing the <see cref="TransferManager"/>.</returns>
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
+            _transfers.Clear();
             if (_jobsProcessor != default)
             {
                 await _jobsProcessor.TryCompleteAsync().ConfigureAwait(false);
