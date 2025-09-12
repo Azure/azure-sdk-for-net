@@ -132,7 +132,7 @@ function Set-ApiViewCommentForRelatedIssues {
   . ${PSScriptRoot}\..\common.ps1
   $issuesForCommit = $null
   try {
-    $issuesForCommit = Search-GitHubIssues -CommitHash $HeadCommitish
+    $issuesForCommit = Search-GitHubIssues -CommitHash $HeadCommitish -AuthToken $AuthToken
     if ($issuesForCommit.items.Count -eq 0) {
       LogInfo "No issues found for commit: $HeadCommitish"
       Write-Host "##vso[task.complete result=SucceededWithIssues;]DONE"
@@ -168,10 +168,16 @@ function Set-ApiViewCommentForPR {
   $apiviewEndpoint = "$APIViewHost/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$HeadCommitish"
   LogDebug "Get APIView information for PR using endpoint: $apiviewEndpoint"
 
+  $correlationId = [System.Guid]::NewGuid().ToString()
+  $headers = @{
+    "x-correlation-id" = $correlationId
+  }
+  LogInfo "Correlation ID: $correlationId"
+
   $commentText = @()
   $commentText += "## API Change Check"
   try {
-    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
+    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -Headers $headers -MaximumRetryCount 3
     LogInfo "OperationId: $($response.Headers['X-Operation-Id'])"
     if ($response.StatusCode -ne 200) {
       LogInfo "API changes are not detected in this pull request."
@@ -208,12 +214,12 @@ function Set-ApiViewCommentForPR {
 
   try {
     $existingComment = Get-GitHubIssueComments -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $PrNumber -AuthToken $AuthToken
-    $existingAPIViewComment = $existingComment | Where-Object { 
+    $existingAPIViewComment = $existingComment | Where-Object {
       $_.body.StartsWith("**API Change Check**", [StringComparison]::OrdinalIgnoreCase) -or $_.body.StartsWith("## API Change Check", [StringComparison]::OrdinalIgnoreCase) }
   } catch {
     LogWarning "Failed to get comments from Pull Request: $PrNumber in repo: $repoFullName"
   }
-  
+
   try {
     if ($existingAPIViewComment) {
       LogDebug "Updating existing APIView comment..."
@@ -235,7 +241,7 @@ function Set-ApiViewCommentForPR {
 # Helper function used to create API review requests for Spec generation SDKs pipelines
 function Create-API-Review {
   param (
-    [string]$apiviewEndpoint = "https://apiview.dev/PullRequest/DetectAPIChanges",
+    [string]$apiviewEndpoint = "https://apiview.dev/api/PullRequests/CreateAPIRevisionIfAPIHasChanges",
     [string]$specGenSDKArtifactPath,
     [string]$apiviewArtifactName,
     [string]$buildId,
@@ -245,7 +251,7 @@ function Create-API-Review {
   )
   $specGenSDKContent = Get-Content -Path $SpecGenSDKArtifactPath -Raw | ConvertFrom-Json
   $language = ($specGenSDKContent.language -split "-")[-1]
-  
+
   foreach ($requestData in $specGenSDKContent.apiViewRequestData) {
     $requestUri = [System.UriBuilder]$apiviewEndpoint
     $requestParam = [System.Web.HttpUtility]::ParseQueryString('')
@@ -256,12 +262,14 @@ function Create-API-Review {
     $requestParam.Add('pullRequestNumber', $pullRequestNumber)
     $requestParam.Add('packageName', $requestData.packageName)
     $requestParam.Add('filePath', $requestData.filePath)
+    if ($language -ieq "python") {
+      $requestParam.Add('codeFile', (Split-Path -Path $requestData.filePath -Leaf))
+    }
     $requestParam.Add('language', $language)
     $requestUri.query = $requestParam.toString()
     $correlationId = [System.Guid]::NewGuid().ToString()
 
     $headers = @{
-      "Content-Type"  = "application/json"
       "x-correlation-id" = $correlationId
     }
 
@@ -271,11 +279,20 @@ function Create-API-Review {
     try
     {
       $response = Invoke-WebRequest -Method 'GET' -Uri $requestUri.Uri -Headers $headers -MaximumRetryCount 3
-      if ($response.StatusCode -eq 201) {
-        LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully.`n$($response.Content)"
-      }
-      elseif ($response.StatusCode -eq 208) {
-        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version."
+      if ($response.StatusCode -eq 201 -or $response.StatusCode -eq 208) {
+        if ($response.StatusCode -eq 201) {
+          LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully"
+        }
+        elseif ($response.StatusCode -eq 208) {
+          LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version."
+        }
+        if ($response.Headers['Content-Type'] -like 'application/json*') {
+          $responseContent = $response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+          LogSuccess "Response:`n$($responseContent)"
+        }
+        else {
+          LogSuccess "Response: $($response.Content)"
+        }
       }
       else {
         LogError "Failed to create API review request. $($response)"

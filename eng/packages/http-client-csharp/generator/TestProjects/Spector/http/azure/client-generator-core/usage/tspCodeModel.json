@@ -1,847 +1,867 @@
 {
- "$id": "1",
- "name": "_Specs_.Azure.ClientGenerator.Core.Usage",
- "apiVersions": [],
- "enums": [],
- "models": [
-  {
-   "$id": "2",
-   "kind": "model",
-   "name": "InputModel",
-   "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
-   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.InputModel",
-   "usage": "Input,Output,Json",
-   "doc": "Usage override to roundtrip.",
-   "decorators": [],
-   "properties": [
+  "name": "_Specs_.Azure.ClientGenerator.Core.Usage",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
     {
-     "$id": "3",
-     "kind": "property",
-     "name": "name",
-     "serializedName": "name",
-     "type": {
-      "$id": "4",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
+      "$id": "1",
+      "kind": "constant",
+      "name": "inputToInputOutputContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
       "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.InputModel.name",
-     "serializationOptions": {
-      "$id": "5",
-      "json": {
-       "$id": "6",
-       "name": "name"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "7",
-   "kind": "model",
-   "name": "OutputModel",
-   "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
-   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.OutputModel",
-   "usage": "Input,Output,Json",
-   "doc": "Usage override to roundtrip.",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "8",
-     "kind": "property",
-     "name": "name",
-     "serializedName": "name",
-     "type": {
-      "$id": "9",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.OutputModel.name",
-     "serializationOptions": {
-      "$id": "10",
-      "json": {
-       "$id": "11",
-       "name": "name"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "12",
-   "kind": "model",
-   "name": "RoundTripModel",
-   "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
-   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.RoundTripModel",
-   "usage": "Input,Output,Json",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "13",
-     "kind": "property",
-     "name": "result",
-     "serializedName": "result",
-     "type": {
-      "$id": "14",
-      "kind": "model",
-      "name": "ResultModel",
-      "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
-      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.ResultModel",
-      "usage": "Output,Json",
-      "decorators": [],
-      "properties": [
-       {
-        "$id": "15",
-        "kind": "property",
-        "name": "name",
-        "serializedName": "name",
-        "type": {
-         "$id": "16",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "optional": false,
-        "readOnly": false,
-        "discriminator": false,
-        "flatten": false,
-        "decorators": [],
-        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.ResultModel.name",
-        "serializationOptions": {
-         "$id": "17",
-         "json": {
-          "$id": "18",
-          "name": "name"
-         }
-        }
-       }
-      ]
-     },
-     "optional": false,
-     "readOnly": true,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.RoundTripModel.result",
-     "serializationOptions": {
-      "$id": "19",
-      "json": {
-       "$id": "20",
-       "name": "result"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$ref": "14"
-  },
-  {
-   "$id": "21",
-   "kind": "model",
-   "name": "OrphanModel",
-   "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage",
-   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.OrphanModel",
-   "access": "public",
-   "usage": "Input",
-   "doc": "Not used anywhere, but access is override to public so still need to be generated and exported with serialization.",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "22",
-     "kind": "property",
-     "name": "modelName",
-     "serializedName": "name",
-     "type": {
-      "$id": "23",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.OrphanModel.name",
-     "serializationOptions": {
-      "$id": "24"
-     }
     },
     {
-     "$id": "25",
-     "kind": "property",
-     "name": "description",
-     "serializedName": "desc",
-     "type": {
-      "$id": "26",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
+      "$id": "3",
+      "kind": "constant",
+      "name": "outputToInputOutputContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
       "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.OrphanModel.description",
-     "serializationOptions": {
+    },
+    {
+      "$id": "5",
+      "kind": "constant",
+      "name": "modelInReadOnlyPropertyContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "7",
+      "kind": "constant",
+      "name": "modelInReadOnlyPropertyContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "9",
+      "kind": "constant",
+      "name": "orphanModelSerializableContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "10",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "11",
+      "kind": "model",
+      "name": "InputModel",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.InputModel",
+      "usage": "Input,Output,Json",
+      "doc": "Usage additive to roundtrip.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "12",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "13",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.InputModel.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "14",
+      "kind": "model",
+      "name": "OutputModel",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.OutputModel",
+      "usage": "Input,Output,Json",
+      "doc": "Usage additive to roundtrip.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "15",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "16",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.OutputModel.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "17",
+      "kind": "model",
+      "name": "RoundTripModel",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.RoundTripModel",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "18",
+          "kind": "property",
+          "name": "result",
+          "serializedName": "result",
+          "type": {
+            "$id": "19",
+            "kind": "model",
+            "name": "ResultModel",
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.ResultModel",
+            "usage": "Output,Json",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "20",
+                "kind": "property",
+                "name": "name",
+                "serializedName": "name",
+                "type": {
+                  "$id": "21",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.ResultModel.name",
+                "serializationOptions": {
+                  "json": {
+                    "name": "name"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.RoundTripModel.result",
+          "serializationOptions": {
+            "json": {
+              "name": "result"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "19"
+    },
+    {
+      "$id": "22",
+      "kind": "model",
+      "name": "OrphanModel",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.OrphanModel",
+      "access": "public",
+      "usage": "Input,Json",
+      "doc": "Not used anywhere, but access is override to public so still need to be generated and exported with serialization.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "23",
+          "kind": "property",
+          "name": "modelName",
+          "serializedName": "name",
+          "type": {
+            "$id": "24",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.OrphanModel.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "25",
+          "kind": "property",
+          "name": "description",
+          "serializedName": "desc",
+          "type": {
+            "$id": "26",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.OrphanModel.description",
+          "serializationOptions": {
+            "json": {
+              "name": "desc"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
       "$id": "27",
-      "json": {
-       "$id": "28",
-       "name": "desc"
-      }
-     }
+      "kind": "client",
+      "name": "UsageClient",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage",
+      "doc": "Test for internal decorator.",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "28",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "29",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "30",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "31",
+          "kind": "client",
+          "name": "ModelInOperation",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
+          "methods": [
+            {
+              "$id": "32",
+              "kind": "basic",
+              "name": "inputToInputOutput",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "Expected body parameter:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
+              "operation": {
+                "$id": "33",
+                "name": "inputToInputOutput",
+                "resourceName": "ModelInOperation",
+                "doc": "Expected body parameter:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "34",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput.contentType"
+                  },
+                  {
+                    "$id": "35",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "11"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/usage/inputToInputOutput",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput",
+                "decorators": []
+              },
+              "parameters": [
+                {
+                  "$id": "36",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "type": {
+                    "$ref": "11"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "37",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "1"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput"
+            },
+            {
+              "$id": "38",
+              "kind": "basic",
+              "name": "outputToInputOutput",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "Expected response body:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
+              "operation": {
+                "$id": "39",
+                "name": "outputToInputOutput",
+                "resourceName": "ModelInOperation",
+                "doc": "Expected response body:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "40",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "3"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.outputToInputOutput.accept"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "14"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/usage/outputToInputOutput",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.outputToInputOutput",
+                "decorators": []
+              },
+              "parameters": [
+                {
+                  "$id": "41",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "3"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.outputToInputOutput.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "14"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.outputToInputOutput"
+            },
+            {
+              "$id": "42",
+              "kind": "basic",
+              "name": "modelInReadOnlyProperty",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter:\n```json\n{\n}\n```\n\nExpected response body:\n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
+              "operation": {
+                "$id": "43",
+                "name": "modelInReadOnlyProperty",
+                "resourceName": "ModelInOperation",
+                "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter:\n```json\n{\n}\n```\n\nExpected response body:\n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "44",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "5"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.contentType"
+                  },
+                  {
+                    "$id": "45",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "7"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.accept"
+                  },
+                  {
+                    "$id": "46",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "17"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "17"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "PUT",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/usage/modelInReadOnlyProperty",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty",
+                "decorators": []
+              },
+              "parameters": [
+                {
+                  "$id": "47",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "type": {
+                    "$ref": "17"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "48",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "5"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "49",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "7"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "17"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty"
+            },
+            {
+              "$id": "50",
+              "kind": "basic",
+              "name": "orphanModelSerializable",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter:\n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
+              "operation": {
+                "$id": "51",
+                "name": "orphanModelSerializable",
+                "resourceName": "ModelInOperation",
+                "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter:\n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "52",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "9"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable.contentType"
+                  },
+                  {
+                    "$id": "53",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$id": "54",
+                      "kind": "unknown",
+                      "name": "unknown",
+                      "crossLanguageDefinitionId": "",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable.body"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "PUT",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/usage/orphanModelSerializable",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable",
+                "decorators": []
+              },
+              "parameters": [
+                {
+                  "$id": "55",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "type": {
+                    "$id": "56",
+                    "kind": "unknown",
+                    "name": "unknown",
+                    "crossLanguageDefinitionId": "",
+                    "decorators": []
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "57",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "9"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": false,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "58",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "59",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "60",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.endpoint"
+            }
+          ],
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "27"
+          }
+        }
+      ]
     }
-   ]
-  }
- ],
- "clients": [
-  {
-   "$id": "29",
-   "kind": "client",
-   "name": "UsageClient",
-   "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage",
-   "doc": "Test for internal decorator.",
-   "methods": [],
-   "parameters": [
-    {
-     "$id": "30",
-     "name": "endpoint",
-     "nameInRequest": "endpoint",
-     "doc": "Service host",
-     "type": {
-      "$id": "31",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "location": "Uri",
-     "isApiVersion": false,
-     "isContentType": false,
-     "isRequired": true,
-     "isEndpoint": true,
-     "skipUrlEncoding": false,
-     "explode": false,
-     "kind": "Client",
-     "defaultValue": {
-      "$id": "32",
-      "type": {
-       "$id": "33",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "value": "http://localhost:3000"
-     }
-    }
-   ],
-   "decorators": [],
-   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage",
-   "apiVersions": [],
-   "children": [
-    {
-     "$id": "34",
-     "kind": "client",
-     "name": "ModelInOperation",
-     "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
-     "methods": [
-      {
-       "$id": "35",
-       "kind": "basic",
-       "name": "inputToInputOutput",
-       "accessibility": "public",
-       "apiVersions": [],
-       "doc": "Expected body parameter: \n```json\n{\n  \"name\": \"Madge\"\n}\n```",
-       "operation": {
-        "$id": "36",
-        "name": "inputToInputOutput",
-        "resourceName": "ModelInOperation",
-        "doc": "Expected body parameter: \n```json\n{\n  \"name\": \"Madge\"\n}\n```",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "37",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "38",
-           "kind": "constant",
-           "valueType": {
-            "$id": "39",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "40",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "2"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "41",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/azure/client-generator-core/usage/inputToInputOutput",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "42",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "2"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "43",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "38"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "44"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput"
-      },
-      {
-       "$id": "45",
-       "kind": "basic",
-       "name": "outputToInputOutput",
-       "accessibility": "public",
-       "apiVersions": [],
-       "doc": "Expected response body: \n```json\n{\n  \"name\": \"Madge\"\n}\n```",
-       "operation": {
-        "$id": "46",
-        "name": "outputToInputOutput",
-        "resourceName": "ModelInOperation",
-        "doc": "Expected response body: \n```json\n{\n  \"name\": \"Madge\"\n}\n```",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "47",
-          "name": "accept",
-          "nameInRequest": "Accept",
-          "type": {
-           "$id": "48",
-           "kind": "constant",
-           "valueType": {
-            "$id": "49",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "50",
-          "statusCodes": [
-           200
-          ],
-          "bodyType": {
-           "$ref": "7"
-          },
-          "headers": [],
-          "isErrorResponse": false,
-          "contentTypes": [
-           "application/json"
-          ]
-         }
-        ],
-        "httpMethod": "GET",
-        "uri": "{endpoint}",
-        "path": "/azure/client-generator-core/usage/outputToInputOutput",
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.outputToInputOutput",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "51",
-         "name": "accept",
-         "nameInRequest": "accept",
-         "type": {
-          "$ref": "48"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "52",
-        "type": {
-         "$ref": "7"
-        }
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.outputToInputOutput"
-      },
-      {
-       "$id": "53",
-       "kind": "basic",
-       "name": "modelInReadOnlyProperty",
-       "accessibility": "public",
-       "apiVersions": [],
-       "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter: \n```json\n{\n}\n```\n\nExpected response body: \n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
-       "operation": {
-        "$id": "54",
-        "name": "modelInReadOnlyProperty",
-        "resourceName": "ModelInOperation",
-        "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter: \n```json\n{\n}\n```\n\nExpected response body: \n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "55",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "56",
-           "kind": "constant",
-           "valueType": {
-            "$id": "57",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "58",
-          "name": "accept",
-          "nameInRequest": "Accept",
-          "type": {
-           "$id": "59",
-           "kind": "constant",
-           "valueType": {
-            "$id": "60",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "61",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "12"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "62",
-          "statusCodes": [
-           200
-          ],
-          "bodyType": {
-           "$ref": "12"
-          },
-          "headers": [],
-          "isErrorResponse": false,
-          "contentTypes": [
-           "application/json"
-          ]
-         }
-        ],
-        "httpMethod": "PUT",
-        "uri": "{endpoint}",
-        "path": "/azure/client-generator-core/usage/modelInReadOnlyProperty",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "63",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "12"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "64",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "56"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "65",
-         "name": "accept",
-         "nameInRequest": "accept",
-         "type": {
-          "$ref": "59"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "66",
-        "type": {
-         "$ref": "12"
-        }
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty"
-      },
-      {
-       "$id": "67",
-       "kind": "basic",
-       "name": "orphanModelSerializable",
-       "accessibility": "public",
-       "apiVersions": [],
-       "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter: \n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
-       "operation": {
-        "$id": "68",
-        "name": "orphanModelSerializable",
-        "resourceName": "ModelInOperation",
-        "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter: \n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "69",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "70",
-           "kind": "constant",
-           "valueType": {
-            "$id": "71",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "72",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$id": "73",
-           "kind": "unknown",
-           "name": "unknown",
-           "crossLanguageDefinitionId": "",
-           "decorators": []
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "74",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "PUT",
-        "uri": "{endpoint}",
-        "path": "/azure/client-generator-core/usage/orphanModelSerializable",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": false,
-        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "75",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$id": "76",
-          "kind": "unknown",
-          "name": "unknown",
-          "crossLanguageDefinitionId": "",
-          "decorators": []
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "77",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "70"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "78"
-       },
-       "isOverride": false,
-       "generateConvenient": false,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable"
-      }
-     ],
-     "parameters": [
-      {
-       "$id": "79",
-       "name": "endpoint",
-       "nameInRequest": "endpoint",
-       "doc": "Service host",
-       "type": {
-        "$id": "80",
-        "kind": "url",
-        "name": "url",
-        "crossLanguageDefinitionId": "TypeSpec.url"
-       },
-       "location": "Uri",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isRequired": true,
-       "isEndpoint": true,
-       "skipUrlEncoding": false,
-       "explode": false,
-       "kind": "Client",
-       "defaultValue": {
-        "$id": "81",
-        "type": {
-         "$id": "82",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string"
-        },
-        "value": "http://localhost:3000"
-       }
-      }
-     ],
-     "decorators": [],
-     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
-     "apiVersions": [],
-     "parent": {
-      "$ref": "29"
-     }
-    }
-   ]
-  }
- ]
+  ]
 }

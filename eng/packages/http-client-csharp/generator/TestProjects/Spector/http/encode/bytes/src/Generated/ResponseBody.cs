@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Encode.Bytes
+namespace Encode.Bytes._ResponseBody
 {
     public partial class ResponseBody
     {

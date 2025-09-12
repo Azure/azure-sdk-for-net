@@ -27,16 +27,16 @@ namespace Azure.Generator.Providers
 
         // There is no non-generic Pageable type. Instead we use Pageable<T> with T = BinaryData.
         public override CSharpType ClientCollectionResponseType => new CSharpType(typeof(Pageable<>), typeof(BinaryData));
-        public override CSharpType ClientCollectionAsyncResponseType => new CSharpType(typeof(AsyncPageable<>));
+        public override CSharpType ClientCollectionAsyncResponseType => new CSharpType(typeof(AsyncPageable<>), typeof(BinaryData));
         public override CSharpType ClientCollectionResponseOfTType => new CSharpType(typeof(Pageable<>), typeof(BinaryData));
-        public override CSharpType ClientCollectionAsyncResponseOfTType => new CSharpType(typeof(AsyncPageable<>));
+        public override CSharpType ClientCollectionAsyncResponseOfTType => new CSharpType(typeof(AsyncPageable<>), typeof(BinaryData));
 
         public override TypeProvider CreateClientCollectionResultDefinition(ClientProvider client,
             InputPagingServiceMethod serviceMethod,
             CSharpType? type,
             bool isAsync)
         {
-            return new CollectionResultDefinition(client, serviceMethod, type, isAsync);
+            return new AzureCollectionResultDefinition(client, serviceMethod, type, isAsync);
         }
 
         public override CSharpType ClientResponseExceptionType => typeof(RequestFailedException);

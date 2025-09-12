@@ -2,18 +2,16 @@
 
 variables:
   - name: LINUXPOOL
-    value: azsdk-pool-mms-ubuntu-2004-general
+    value: azsdk-pool
   - name: WINDOWSPOOL
-    value: azsdk-pool-mms-win-2022-general
+    value: azsdk-pool
   - name: MACPOOL
     value: Azure Pipelines
 
   - name: LINUXVMIMAGE
-    value: azsdk-pool-mms-ubuntu-2004-1espt
-  - name: LINUXNEXTVMIMAGE
-    value: ubuntu-22.04
+    value: ubuntu-24.04
   - name: WINDOWSVMIMAGE
-    value: azsdk-pool-mms-win-2022-1espt
+    value: windows-2022
   - name: MACVMIMAGE
     value: macos-latest
 
@@ -24,4 +22,3 @@ variables:
     value: windows
   - name: MACOS
     value: macOS
-

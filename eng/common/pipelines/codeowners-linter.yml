@@ -19,6 +19,7 @@ pr:
 stages:
 - stage: Run
   variables:
+    Codeql.SkipTaskAutoInjection: true
     skipComponentGovernanceDetection: true
     nugetMultiFeedWarnLevel: 'none'
     baseBranchBaseline: ''
@@ -27,8 +28,8 @@ stages:
   - job: Run
     timeoutInMinutes: 120
     pool:
-      name: azsdk-pool-mms-ubuntu-2204-general
-      vmImage: ubuntu-22.04
+      name: azsdk-pool
+      demands: ImageOverride -equals ubuntu-24.04
 
     variables:
       CodeownersLinterVersion: '1.0.0-dev.20240926.2'
@@ -38,13 +39,10 @@ stages:
       UserOrgUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/user-org-visibility-blob"
 
     steps:
-      - task: DotNetCoreCLI@2
-        displayName: 'Install CodeownersLinter'
-        inputs:
-          command: custom
-          custom: 'tool'
-          arguments: 'install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"'
-          workingDirectory: '$(Build.SourcesDirectory)/eng/common'
+      - pwsh: |
+          dotnet tool install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"
+        displayName: Install CodeownersLinter
+        workingDirectory: '$(Agent.WorkFolder)' # Some directory outside of the source clone to avoid hitting global.json files when any version of dotnet will work for this install
 
       - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
         - pwsh: |
