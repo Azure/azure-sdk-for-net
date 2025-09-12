@@ -107,7 +107,7 @@ public class TestProxyProcess
 
             testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
-                $"test-proxy start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
+                $"tool run test-proxy start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
         }
 
         testProxyProcessInfo.UseShellExecute = false;
@@ -298,7 +298,7 @@ public class TestProxyProcess
     private static string? GetTestProxyPath()
     {
         // Look for environment variable override
-        var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_PATH");
+        var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_EXE_PATH");
         if (!string.IsNullOrEmpty(envPath))
         {
            return envPath;
