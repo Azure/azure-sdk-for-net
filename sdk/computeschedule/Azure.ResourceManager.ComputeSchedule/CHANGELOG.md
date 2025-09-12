@@ -6,9 +6,9 @@
 
 - Updated the Computeschedule RP api-version from `2025-05-01` to the preview version `2025-04-15-preview`.
     - New endpoints were added for the recurring scheduledactions feature which will allow customers to create recurring scheduledactions to perform actions on their virtual machines. These actions include:
-        - Creating and deleting of recurring starts, deallocates and hibernates on virtual machines
-        - Attaching and detaching virtual machines from recurring scheduledactions
-        - Cancelling and delaying scheduled/unscheduled occurrences of start/deallocate/hibernates on attached virtual machines attached to recurring scheduledactions
+        - Creating and deleting of recurring starts, deallocates and hibernates on virtual machines.
+        - Attaching and detaching virtual machines from recurring scheduledactions.
+        - Cancelling and delaying scheduled/unscheduled occurrences of start/deallocate/hibernates on attached virtual machines attached to recurring scheduledactions.
 
 ## 1.1.0 (2025-09-12)
 
