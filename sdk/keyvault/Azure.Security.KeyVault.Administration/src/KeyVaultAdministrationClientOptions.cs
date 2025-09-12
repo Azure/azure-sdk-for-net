@@ -63,6 +63,11 @@ namespace Azure.Security.KeyVault.Administration
             /// Service version "7.6-preview.1".
             /// </summary>
             V7_6 = 5,
+
+            /// <summary>
+            /// Service version "2025-06-01-preview".
+            /// </summary>
+            V2025_06_01_Preview = 6,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -80,6 +85,7 @@ namespace Azure.Security.KeyVault.Administration
                 ServiceVersion.V7_4 => "7.4",
                 ServiceVersion.V7_5 => "7.5",
                 ServiceVersion.V7_6 => "7.6",
+                ServiceVersion.V2025_06_01_Preview => "2025-06-01-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(Version), Version, null)
             };
         }

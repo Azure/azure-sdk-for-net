@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             KeyVaultSecret version2 = await Client.SetSecretAsync(secretName, "value2");
             await Client.SetSecretAsync(secretName, "value3");
 
-            KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version);
+            KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version, null);
 
             Assert.AreEqual("value2", secret.Value);
         }
@@ -232,7 +232,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             KeyVaultSecret version2 = await Client.SetSecretAsync(secretName, "value2");
             await Client.SetSecretAsync(secretName, "value3");
 
-            KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version);
+            KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version, null);
 
             Assert.AreEqual("value2", secret.Value);
         }

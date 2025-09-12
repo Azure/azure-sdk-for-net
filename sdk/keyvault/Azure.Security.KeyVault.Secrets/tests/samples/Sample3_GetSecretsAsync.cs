@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                     continue;
                 }
 
-                KeyVaultSecret oldBankSecret = await client.GetSecretAsync(secret.Name, secret.Version);
+                KeyVaultSecret oldBankSecret = await client.GetSecretAsync(secret.Name, secret.Version, null);
                 if (newBankSecretPassword == oldBankSecret.Value)
                 {
                     Debug.WriteLine($"Secret {secret.Name} reuses a password");

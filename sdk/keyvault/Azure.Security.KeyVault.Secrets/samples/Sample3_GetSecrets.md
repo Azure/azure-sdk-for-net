@@ -81,7 +81,7 @@ foreach (SecretProperties secret in secretVersions)
         continue;
     }
 
-    KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
+    KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version, null);
     if (newBankSecretPassword == oldBankSecret.Value)
     {
         Debug.WriteLine($"Secret {secret.Name} reuses a password");
