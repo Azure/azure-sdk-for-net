@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Use `WithTenantId` instead of `WithTenantIdFromAuthority` for setting the tenant for the authentication session to prevent malformed Uris to the authority.
+
 ### Other Changes
 
 ## 1.16.0 (2025-09-09)
