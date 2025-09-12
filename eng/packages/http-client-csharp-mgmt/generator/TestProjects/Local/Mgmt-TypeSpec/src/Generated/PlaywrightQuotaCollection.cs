@@ -40,7 +40,7 @@ namespace MgmtTypeSpec
         /// <summary> Initializes a new instance of <see cref="PlaywrightQuotaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal PlaywrightQuotaCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             TryGetApiVersion(PlaywrightQuotaResource.ResourceType, out string playwrightQuotaApiVersion);
