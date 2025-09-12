@@ -6,9 +6,11 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Customization;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Override
 {
+    [ModelReaderWriterBuildable(typeof(GroupParametersOptions))]
     public partial class _Specs_AzureClientGeneratorCoreOverrideContext : ModelReaderWriterContext
     {
     }

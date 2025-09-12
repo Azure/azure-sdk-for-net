@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("erasureOrDestructionCertificateSasKey"u8);
                 writer.WriteStringValue(ErasureOrDestructionCertificateSasKey);
             }
+            if (options.Format != "W" && Optional.IsDefined(SecureErasureCertificateSasKey))
+            {
+                writer.WritePropertyName("secureErasureCertificateSasKey"u8);
+                writer.WriteStringValue(SecureErasureCertificateSasKey);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             DataBoxStageStatus? deviceErasureStatus = default;
             string erasureOrDestructionCertificateSasKey = default;
+            string secureErasureCertificateSasKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,13 +107,18 @@ namespace Azure.ResourceManager.DataBox.Models
                     erasureOrDestructionCertificateSasKey = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("secureErasureCertificateSasKey"u8))
+                {
+                    secureErasureCertificateSasKey = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, serializedAdditionalRawData);
+            return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceErasureDetails>.Write(ModelReaderWriterOptions options)

@@ -37,12 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. Only used for V2. </param>
         /// <param name="connectionTimeout"> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. Only used for V2. </param>
         /// <param name="commandTimeout"> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. Only used for V2. </param>
-        /// <param name="password">
-        /// The Azure key vault secret reference of password in connection string. Type: string. Only used for V2.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
-        /// </param>
-        internal GreenplumLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference pwd, object encryptedCredential, GreenplumAuthenticationType? authenticationType, object host, object port, object username, object database, object sslMode, object connectionTimeout, object commandTimeout, SecretBase password) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
+        internal GreenplumLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference pwd, object encryptedCredential, GreenplumAuthenticationType? authenticationType, object host, object port, object username, object database, object sslMode, object connectionTimeout, object commandTimeout) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Pwd = pwd;
@@ -55,7 +50,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SslMode = sslMode;
             ConnectionTimeout = connectionTimeout;
             CommandTimeout = commandTimeout;
-            Password = password;
             Type = type ?? "Greenplum";
         }
 
@@ -81,11 +75,5 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ConnectionTimeout { get; set; }
         /// <summary> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. Only used for V2. </summary>
         public object CommandTimeout { get; set; }
-        /// <summary>
-        /// The Azure key vault secret reference of password in connection string. Type: string. Only used for V2.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
-        /// </summary>
-        public SecretBase Password { get; set; }
     }
 }
