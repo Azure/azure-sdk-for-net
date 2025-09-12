@@ -14,6 +14,11 @@
 
 ### Other Changes
 
+## 12.2.2 (2025-09-10)
+
+### Bugs Fixed
+- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
+
 ## 12.2.1 (2025-08-06)
 
 ### Bugs Fixed
