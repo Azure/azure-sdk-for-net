@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task CreateOrUpdate_SecurityPoliciesCreate()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/SecurityPolicies_Create.json
-            // this example is just showing the usage of "FrontDoorSecurityPolicies_Create" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SecurityPolicies_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,7 +74,7 @@ PatternsToMatch = {"/*"},
         public async Task Get_SecurityPoliciesGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/SecurityPolicies_Get.json
-            // this example is just showing the usage of "FrontDoorSecurityPolicies_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SecurityPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -108,7 +108,7 @@ PatternsToMatch = {"/*"},
         public async Task GetAll_SecurityPoliciesListByProfile()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/SecurityPolicies_ListByProfile.json
-            // this example is just showing the usage of "FrontDoorSecurityPolicies_ListByProfile" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SecurityPolicies_ListByProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -144,7 +144,7 @@ PatternsToMatch = {"/*"},
         public async Task Exists_SecurityPoliciesGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/SecurityPolicies_Get.json
-            // this example is just showing the usage of "FrontDoorSecurityPolicies_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SecurityPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -174,7 +174,7 @@ PatternsToMatch = {"/*"},
         public async Task GetIfExists_SecurityPoliciesGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/SecurityPolicies_Get.json
-            // this example is just showing the usage of "FrontDoorSecurityPolicies_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SecurityPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

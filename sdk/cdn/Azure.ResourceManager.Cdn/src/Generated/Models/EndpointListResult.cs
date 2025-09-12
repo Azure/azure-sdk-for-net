@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list endpoints. It contains a list of endpoint objects and a URL link to get the next set of results.
+    /// The response of a Endpoint list operation.
     /// Serialized Name: EndpointListResult
     /// </summary>
     internal partial class EndpointListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EndpointListResult"/>. </summary>
-        internal EndpointListResult()
+        /// <param name="value">
+        /// The Endpoint items on this page
+        /// Serialized Name: EndpointListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal EndpointListResult(IEnumerable<CdnEndpointData> value)
         {
-            Value = new ChangeTrackingList<CdnEndpointData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointListResult"/>. </summary>
         /// <param name="value">
-        /// List of CDN endpoints within a profile
+        /// The Endpoint items on this page
         /// Serialized Name: EndpointListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of endpoint objects if there is any.
+        /// The link to the next page of items
         /// Serialized Name: EndpointListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointListResult(IReadOnlyList<CdnEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EndpointListResult(IReadOnlyList<CdnEndpointData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EndpointListResult"/> for deserialization. </summary>
+        internal EndpointListResult()
+        {
+        }
+
         /// <summary>
-        /// List of CDN endpoints within a profile
+        /// The Endpoint items on this page
         /// Serialized Name: EndpointListResult.value
         /// </summary>
         public IReadOnlyList<CdnEndpointData> Value { get; }
         /// <summary>
-        /// URL to get the next set of endpoint objects if there is any.
+        /// The link to the next page of items
         /// Serialized Name: EndpointListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

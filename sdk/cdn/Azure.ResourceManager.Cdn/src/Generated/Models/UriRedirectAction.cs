@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.UriRedirect;
+            Name = DeliveryRuleActionName.UriRedirect;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriRedirectAction"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Defines the parameters for the action.
         /// Serialized Name: UrlRedirectAction.parameters
         /// </param>
-        internal UriRedirectAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, UriRedirectActionProperties properties) : base(name, serializedAdditionalRawData)
+        internal UriRedirectAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> serializedAdditionalRawData, UriRedirectActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;

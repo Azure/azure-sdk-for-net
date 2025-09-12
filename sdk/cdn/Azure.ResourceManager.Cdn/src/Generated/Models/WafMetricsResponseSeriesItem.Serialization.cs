@@ -46,20 +46,13 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(Groups))
             {
-                if (Groups != null)
+                writer.WritePropertyName("groups"u8);
+                writer.WriteStartArray();
+                foreach (var item in Groups)
                 {
-                    writer.WritePropertyName("groups"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Groups)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item, options);
                 }
-                else
-                {
-                    writer.WriteNull("groups");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Data))
             {
@@ -134,7 +127,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        groups = null;
                         continue;
                     }
                     List<WafMetricsResponseSeriesPropertiesItemsItem> array = new List<WafMetricsResponseSeriesPropertiesItemsItem>();

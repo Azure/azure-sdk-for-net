@@ -56,15 +56,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(CacheDuration))
             {
-                if (CacheDuration != null)
-                {
-                    writer.WritePropertyName("cacheDuration"u8);
-                    writer.WriteStringValue(CacheDuration.Value, "c");
-                }
-                else
-                {
-                    writer.WriteNull("cacheDuration");
-                }
+                writer.WritePropertyName("cacheDuration"u8);
+                writer.WriteStringValue(CacheDuration.Value, "c");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -148,7 +141,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cacheDuration = null;
                         continue;
                     }
                     cacheDuration = property.Value.GetTimeSpan("c");

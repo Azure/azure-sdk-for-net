@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorSecretCollection : ArmCollection, IEnumerable<FrontDoorSecretResource>, IAsyncEnumerable<FrontDoorSecretResource>
     {
-        private readonly ClientDiagnostics _frontDoorSecretClientDiagnostics;
-        private readonly FrontDoorSecretsRestOperations _frontDoorSecretRestClient;
+        private readonly ClientDiagnostics _frontDoorSecretSecretsClientDiagnostics;
+        private readonly SecretsRestOperations _frontDoorSecretSecretsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FrontDoorSecretCollection"/> class for mocking. </summary>
         protected FrontDoorSecretCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontDoorSecretCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorSecretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecretResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FrontDoorSecretResource.ResourceType, out string frontDoorSecretApiVersion);
-            _frontDoorSecretRestClient = new FrontDoorSecretsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecretApiVersion);
+            _frontDoorSecretSecretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecretResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(FrontDoorSecretResource.ResourceType, out string frontDoorSecretSecretsApiVersion);
+            _frontDoorSecretSecretsRestClient = new SecretsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecretSecretsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Create</description>
+        /// <description>Secrets_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
+            using var scope = _frontDoorSecretSecretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecretRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretClientDiagnostics, Pipeline, _frontDoorSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorSecretSecretsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretSecretsClientDiagnostics, Pipeline, _frontDoorSecretSecretsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Create</description>
+        /// <description>Secrets_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
+            using var scope = _frontDoorSecretSecretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _frontDoorSecretRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretClientDiagnostics, Pipeline, _frontDoorSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorSecretSecretsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretSecretsClientDiagnostics, Pipeline, _frontDoorSecretSecretsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <description>Secrets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
+            using var scope = _frontDoorSecretSecretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorSecretSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <description>Secrets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
+            using var scope = _frontDoorSecretSecretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken);
+                var response = _frontDoorSecretSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_ListByProfile</description>
+        /// <description>Secrets_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="FrontDoorSecretResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorSecretResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecretRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretSecretsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecretSecretsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretSecretsClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_ListByProfile</description>
+        /// <description>Secrets_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorSecretResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorSecretResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecretRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretSecretsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecretSecretsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretSecretsClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <description>Secrets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
+            using var scope = _frontDoorSecretSecretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorSecretSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <description>Secrets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
+            using var scope = _frontDoorSecretSecretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
             scope.Start();
             try
             {
-                var response = _frontDoorSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
+                var response = _frontDoorSecretSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <description>Secrets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
+            using var scope = _frontDoorSecretSecretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorSecretSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorSecretResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <description>Secrets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
+            using var scope = _frontDoorSecretSecretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _frontDoorSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
+                var response = _frontDoorSecretSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorSecretResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.ModifyResponseHeader;
+            Name = DeliveryRuleActionName.ModifyResponseHeader;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleResponseHeaderAction"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Defines the parameters for the action.
         /// Serialized Name: DeliveryRuleResponseHeaderAction.parameters
         /// </param>
-        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderActionProperties properties) : base(name, serializedAdditionalRawData)
+        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;
