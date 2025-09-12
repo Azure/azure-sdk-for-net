@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-09-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated the Neon Postgres api-version from `2025-03-01` to the version `2025-06-23-preview`.
 
 ## 1.0.0 (2025-05-22)
 

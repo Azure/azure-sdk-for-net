@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    /// <summary> The Neon compute endpoint resource type. </summary>
-    public partial class NeonEndpoint : ResourceData
+    /// <summary> The type used for update operations of the OrganizationResource. </summary>
+    public partial class NeonOrganizationPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,25 +45,26 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NeonEndpoint"/>. </summary>
-        public NeonEndpoint()
+        /// <summary> Initializes a new instance of <see cref="NeonOrganizationPatch"/>. </summary>
+        public NeonOrganizationPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonEndpoint"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="NeonOrganizationPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonEndpointProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NeonOrganizationPatch(IDictionary<string, string> tags, NeonOrganizationPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Tags = tags;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        public NeonEndpointProperties Properties { get; set; }
+        public NeonOrganizationPatchProperties Properties { get; set; }
     }
 }
