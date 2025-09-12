@@ -74,6 +74,8 @@
     "cpus",
     "cref",
     "Dapr",
+    "decompile",
+    "decompiled",
     "deduplication",
     "deletesas",
     "deserializable",
@@ -1228,6 +1230,17 @@
       ]
     },
     {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs",
+      "words": [
+        "tbps",
+        "scsv",
+        "sohsv",
+        "tsve",
+        "Openai",
+        "APACHEAVRO"
+      ]
+    },
+    {
       "filename": "**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs",
       "words": [
         "awsec"
@@ -1243,6 +1256,17 @@
       "filename": "**/sdk/provisioning/Azure.Provisioning.Storage/**/*.cs",
       "words": [
         "Mibps"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Network/**/*.cs",
+      "words": [
+        "Snat",
+        "Fqdns",
+        "Vxlan",
+        "Ipam",
+        "Dscp",
+        "Vnets"
       ]
     },
     {
@@ -1794,11 +1818,18 @@
       ]
     },
     {
+      "filename": "**/sdk/iotoperations/**/*.cs",
+      "words": [
+        "Akri",
+        "Bucketized"
+      ]
+    },
+    {
       "filename": "**/sdk/workloadorchestration/**/*.cs",
       "words": [
         "Inprogress",
         "Undeployed"
-      ]
+       ]
     }
   ],
   "allowCompoundWords": true

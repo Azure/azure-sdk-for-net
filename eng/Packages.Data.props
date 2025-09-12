@@ -152,7 +152,9 @@
     <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.3.2" />
     <PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.5" />
     <PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0" />
+    <PackageReference Update="Azure.ResourceManager.Kusto" Version="1.6.2" />
     <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.3.0" />
+    <PackageReference Update="Azure.ResourceManager.Network" Version="1.11.3" />
     <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.PostgreSql" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.Redis" Version="1.5.0" />
@@ -166,10 +168,12 @@
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.4.2" />
 
     <!-- CDK -->
-    <PackageReference Update="Azure.Provisioning" Version="1.2.0" />
+    <PackageReference Update="Azure.Provisioning" Version="1.3.0" />
     <PackageReference Update="Azure.Provisioning.AppService" Version="1.2.0" />
     <PackageReference Update="Azure.Provisioning.CognitiveServices" Version="1.1.0" />
+    <PackageReference Update="Azure.Provisioning.CosmosDB" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.EventGrid" Version="1.1.0" />
+    <PackageReference Update="Azure.Provisioning.EventHubs" Version="1.1.0" />
     <PackageReference Update="Azure.Provisioning.KeyVault" Version="1.1.0" />
     <PackageReference Update="Azure.Provisioning.ServiceBus" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.Storage" Version="1.1.1" />
@@ -451,13 +455,18 @@
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
+    <PackageReference Update="NUnit" Version="4.4.0" />
+    <PackageReference Update="Castle.Core" Version="5.1.0" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
   </ItemGroup>
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250805.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250904.1</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250911.3</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20250903.2</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Common;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -141,7 +142,8 @@ namespace Azure.Storage.DataMovement.Tests
             string directoryName = default,
             TransferManagerOptions transferManagerOptions = default,
             TransferOptions options = default,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            bool trailingSlash = false)
         {
             await SetupSourceDirectoryAsync(sourceContainer, sourcePrefix, itemSizes, cancellationToken);
 
@@ -157,7 +159,8 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             StorageResourceContainer sourceResource = GetStorageResourceContainer(sourceContainer, sourcePrefix);
-            StorageResourceContainer destinationResource = LocalFilesStorageResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
+            StorageResourceContainer destinationResource = LocalFilesStorageResourceProvider.FromDirectory(
+                disposingLocalDirectory.DirectoryPath + (trailingSlash ? Path.DirectorySeparatorChar : string.Empty));
 
             await new TransferValidator().TransferAndVerifyAsync(
                 sourceResource,
@@ -407,14 +410,28 @@ namespace Azure.Storage.DataMovement.Tests
                 string.Join("/", prefix, "space folder", "space file"),
             ];
 
-            CancellationTokenSource cts = new();
-            cts.CancelAfter(TimeSpan.FromSeconds(30));
+            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
             await DownloadDirectoryAndVerifyAsync(
                 test.Container,
                 prefix,
                 itemNames.Select(name => (name, Constants.KB)).ToList(),
                 directoryName: directoryName,
-                cancellationToken: cts.Token).ConfigureAwait(false);
+                cancellationToken: cancellationToken);
+        }
+
+        [Test]
+        public async Task DownloadDirectoryAsync_TrailingSlash()
+        {
+            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
+
+            string[] items = { "file1", "file2", "dir1/file1" };
+
+            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
+            await DownloadDirectoryAndVerifyAsync(
+                test.Container,
+                string.Empty,
+                items.Select(name => (name, Constants.KB)).ToList(),
+                cancellationToken: cancellationToken);
         }
         #endregion DirectoryDownloadTests
 

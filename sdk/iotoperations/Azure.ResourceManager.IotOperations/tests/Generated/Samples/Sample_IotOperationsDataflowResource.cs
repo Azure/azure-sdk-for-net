@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DataflowGet()
         {
-            // Generated from example definition: 2024-11-01/Dataflow_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Dataflow_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "DataflowResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DataflowDelete()
         {
-            // Generated from example definition: 2024-11-01/Dataflow_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Dataflow_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "DataflowResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DataflowCreateOrUpdateComplexContextualization()
         {
-            // Generated from example definition: 2024-11-01/Dataflow_CreateOrUpdate_ComplexContextualization.json
+            // Generated from example definition: 2025-07-01-preview/Dataflow_CreateOrUpdate_ComplexContextualization.json
             // this example is just showing the usage of "DataflowResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
             IotOperationsDataflowResource iotOperationsDataflow = client.GetIotOperationsDataflowResource(iotOperationsDataflowResourceId);
 
             // invoke the operation
-            IotOperationsDataflowData data = new IotOperationsDataflowData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsDataflowData data = new IotOperationsDataflowData
             {
                 Properties = new IotOperationsDataflowProperties(new DataflowOperationProperties[]
             {
@@ -129,6 +129,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("adx-endpoint", "
                 {
                     Mode = IotOperationsOperationalMode.Enabled,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsDataflowResource> lro = await iotOperationsDataflow.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsDataflowResource result = lro.Value;
@@ -144,7 +145,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("adx-endpoint", "
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DataflowCreateOrUpdateComplexEventHub()
         {
-            // Generated from example definition: 2024-11-01/Dataflow_CreateOrUpdate_ComplexEventHub.json
+            // Generated from example definition: 2025-07-01-preview/Dataflow_CreateOrUpdate_ComplexEventHub.json
             // this example is just showing the usage of "DataflowResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +164,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("adx-endpoint", "
             IotOperationsDataflowResource iotOperationsDataflow = client.GetIotOperationsDataflowResource(iotOperationsDataflowResourceId);
 
             // invoke the operation
-            IotOperationsDataflowData data = new IotOperationsDataflowData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsDataflowData data = new IotOperationsDataflowData
             {
                 Properties = new IotOperationsDataflowProperties(new DataflowOperationProperties[]
             {
@@ -207,6 +208,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("event-hub-endpoi
                 {
                     Mode = IotOperationsOperationalMode.Enabled,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsDataflowResource> lro = await iotOperationsDataflow.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsDataflowResource result = lro.Value;
@@ -222,7 +224,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("event-hub-endpoi
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DataflowCreateOrUpdateFilterToTopic()
         {
-            // Generated from example definition: 2024-11-01/Dataflow_CreateOrUpdate_FilterToTopic.json
+            // Generated from example definition: 2025-07-01-preview/Dataflow_CreateOrUpdate_FilterToTopic.json
             // this example is just showing the usage of "DataflowResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -241,7 +243,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("event-hub-endpoi
             IotOperationsDataflowResource iotOperationsDataflow = client.GetIotOperationsDataflowResource(iotOperationsDataflowResourceId);
 
             // invoke the operation
-            IotOperationsDataflowData data = new IotOperationsDataflowData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsDataflowData data = new IotOperationsDataflowData
             {
                 Properties = new IotOperationsDataflowProperties(new DataflowOperationProperties[]
             {
@@ -275,6 +277,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("aio-builtin-brok
                 {
                     Mode = IotOperationsOperationalMode.Enabled,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsDataflowResource> lro = await iotOperationsDataflow.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsDataflowResource result = lro.Value;
@@ -290,7 +293,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("aio-builtin-brok
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DataflowCreateOrUpdate()
         {
-            // Generated from example definition: 2024-11-01/Dataflow_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Dataflow_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "DataflowResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -309,7 +312,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("aio-builtin-brok
             IotOperationsDataflowResource iotOperationsDataflow = client.GetIotOperationsDataflowResource(iotOperationsDataflowResourceId);
 
             // invoke the operation
-            IotOperationsDataflowData data = new IotOperationsDataflowData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsDataflowData data = new IotOperationsDataflowData
             {
                 Properties = new IotOperationsDataflowProperties(new DataflowOperationProperties[]
             {
@@ -349,7 +352,9 @@ DestinationSettings = new DataflowDestinationOperationSettings("kybkchnzimerguek
             })
                 {
                     Mode = IotOperationsOperationalMode.Enabled,
+                    RequestDiskPersistence = IotOperationsOperationalMode.Disabled,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsDataflowResource> lro = await iotOperationsDataflow.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsDataflowResource result = lro.Value;
@@ -365,7 +370,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("kybkchnzimerguek
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DataflowCreateOrUpdateSimpleEventGrid()
         {
-            // Generated from example definition: 2024-11-01/Dataflow_CreateOrUpdate_SimpleEventGrid.json
+            // Generated from example definition: 2025-07-01-preview/Dataflow_CreateOrUpdate_SimpleEventGrid.json
             // this example is just showing the usage of "DataflowResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -384,7 +389,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("kybkchnzimerguek
             IotOperationsDataflowResource iotOperationsDataflow = client.GetIotOperationsDataflowResource(iotOperationsDataflowResourceId);
 
             // invoke the operation
-            IotOperationsDataflowData data = new IotOperationsDataflowData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsDataflowData data = new IotOperationsDataflowData
             {
                 Properties = new IotOperationsDataflowProperties(new DataflowOperationProperties[]
             {
@@ -402,6 +407,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("event-grid-endpo
                 {
                     Mode = IotOperationsOperationalMode.Enabled,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsDataflowResource> lro = await iotOperationsDataflow.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsDataflowResource result = lro.Value;
@@ -417,7 +423,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("event-grid-endpo
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DataflowCreateOrUpdateSimpleFabric()
         {
-            // Generated from example definition: 2024-11-01/Dataflow_CreateOrUpdate_SimpleFabric.json
+            // Generated from example definition: 2025-07-01-preview/Dataflow_CreateOrUpdate_SimpleFabric.json
             // this example is just showing the usage of "DataflowResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -436,7 +442,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("event-grid-endpo
             IotOperationsDataflowResource iotOperationsDataflow = client.GetIotOperationsDataflowResource(iotOperationsDataflowResourceId);
 
             // invoke the operation
-            IotOperationsDataflowData data = new IotOperationsDataflowData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsDataflowData data = new IotOperationsDataflowData
             {
                 Properties = new IotOperationsDataflowProperties(new DataflowOperationProperties[]
             {
@@ -462,6 +468,7 @@ DestinationSettings = new DataflowDestinationOperationSettings("fabric-endpoint"
                 {
                     Mode = IotOperationsOperationalMode.Enabled,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsDataflowResource> lro = await iotOperationsDataflow.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsDataflowResource result = lro.Value;
