@@ -12,28 +12,20 @@ namespace Azure.Communication.Sms.Models
     /// <summary> Recipient details for sending SMS messages. </summary>
     internal partial class SmsRecipient
     {
-        /// <summary> Initializes a new instance of <see cref="SmsRecipient"/>. </summary>
-        /// <param name="to"> The recipient's phone number in E.164 format. </param>
+        /// <summary> Initializes a new instance of SmsRecipient. </summary>
+        /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         public SmsRecipient(string to)
         {
-            Argument.AssertNotNull(to, nameof(to));
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
 
             To = to;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SmsRecipient"/>. </summary>
-        /// <param name="to"> The recipient's phone number in E.164 format. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, 36-character hexadecimal case-insensitive encoding of a UUID (GUID), identifier for the request. </param>
-        /// <param name="repeatabilityFirstSent"> MUST be sent by clients to specify that a request is repeatable. Repeatability-First-Sent is used to specify the date and time at which the request was first created.eg- Tue, 26 Mar 2019 16:06:51 GMT. </param>
-        internal SmsRecipient(string to, string repeatabilityRequestId, string repeatabilityFirstSent)
-        {
-            To = to;
-            RepeatabilityRequestId = repeatabilityRequestId;
-            RepeatabilityFirstSent = repeatabilityFirstSent;
-        }
-
-        /// <summary> The recipient's phone number in E.164 format. </summary>
+        /// <summary> The recipient&apos;s phone number in E.164 format. </summary>
         public string To { get; }
         /// <summary> If specified, the client directs that the request is repeatable; that is, the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, 36-character hexadecimal case-insensitive encoding of a UUID (GUID), identifier for the request. </summary>
         public string RepeatabilityRequestId { get; set; }

@@ -15,27 +15,19 @@ namespace Azure.Communication.Sms.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("to"u8);
+            writer.WritePropertyName("to");
             writer.WriteStringValue(To);
             if (Optional.IsDefined(RepeatabilityRequestId))
             {
-                writer.WritePropertyName("repeatabilityRequestId"u8);
+                writer.WritePropertyName("repeatabilityRequestId");
                 writer.WriteStringValue(RepeatabilityRequestId);
             }
             if (Optional.IsDefined(RepeatabilityFirstSent))
             {
-                writer.WritePropertyName("repeatabilityFirstSent"u8);
+                writer.WritePropertyName("repeatabilityFirstSent");
                 writer.WriteStringValue(RepeatabilityFirstSent);
             }
             writer.WriteEndObject();
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

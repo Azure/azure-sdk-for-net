@@ -8,8 +8,14 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfigurations:
+          - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
-          - $(sub-config-communication-services-sms-cloud-test-resources)
-    TestResourceDirectories:
-      - communication/
+      Int:
+        SubscriptionConfigurations:
+          - $(sub-config-communication-int-test-resources-common)
+          - $(sub-config-communication-int-test-resources-net)
+    Clouds: Public,Int
+    EnvVars:
+      # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
+      SKIP_PHONENUMBER_LIVE_TESTS: TRUE

@@ -15,7 +15,7 @@ namespace Azure.Communication.Sms
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="SmsSendResponseItemRepeatabilityResult"/>. </summary>
+        /// <summary> Determines if two <see cref="SmsSendResponseItemRepeatabilityResult"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SmsSendResponseItemRepeatabilityResult(string value)
         {
@@ -33,7 +33,7 @@ namespace Azure.Communication.Sms
         public static bool operator ==(SmsSendResponseItemRepeatabilityResult left, SmsSendResponseItemRepeatabilityResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmsSendResponseItemRepeatabilityResult"/> values are not the same. </summary>
         public static bool operator !=(SmsSendResponseItemRepeatabilityResult left, SmsSendResponseItemRepeatabilityResult right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SmsSendResponseItemRepeatabilityResult"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SmsSendResponseItemRepeatabilityResult"/>. </summary>
         public static implicit operator SmsSendResponseItemRepeatabilityResult(string value) => new SmsSendResponseItemRepeatabilityResult(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Communication.Sms
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }
