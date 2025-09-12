@@ -438,7 +438,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             List<TransferProgress> progressUpdates = progressHandler.Updates;
-            // We need to check if the transfer has any files that has reached 'InProgress' state when the Job Part Plan File is created.
+            // We need to check whether the transfer has any files that has reached 'InProgress' state
+            // before checking whether the Job Part Plan File exists.
             if (HasFileTransferReachedInProgressState(progressUpdates))
             {
                 // Check if Job Plan File exists in checkpointer path.
@@ -503,7 +504,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             List<TransferProgress> progressUpdates = progressHandler.Updates;
-            // We need to check if the transfer has any files that has reached 'InProgress' state when the Job Part Plan File is created.
+            // We need to check whether the transfer has any files that has reached 'InProgress' state
+            // before checking whether the Job Part Plan File exists.
             if (HasFileTransferReachedInProgressState(progressUpdates))
             {
                 // Check if Job Plan File exists in checkpointer path.
@@ -589,7 +591,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             List<TransferProgress> progressUpdates = progressHandler.Updates;
-            // We need to check if the transfer has any files that has reached 'InProgress' state when the Job Part Plan File is created.
+            // We need to check whether the transfer has any files that has reached 'InProgress' state
+            // before checking whether the Job Part Plan File exists.
             if (HasFileTransferReachedInProgressState(progressUpdates))
             {
                 // Check if Job Plan File exists in checkpointer path.
