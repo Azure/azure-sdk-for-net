@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -46,25 +47,36 @@ namespace Azure.ResourceManager.Quota.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubmittedResourceRequestStatusList"/>. </summary>
-        internal SubmittedResourceRequestStatusList()
+        /// <param name="value"> The SubmittedResourceRequestStatus items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SubmittedResourceRequestStatusList(IEnumerable<GroupQuotaRequestStatusData> value)
         {
-            Value = new ChangeTrackingList<GroupQuotaRequestStatusData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubmittedResourceRequestStatusList"/>. </summary>
-        /// <param name="value"> Subscription groupQuotaRequests list. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value"> The SubmittedResourceRequestStatus items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubmittedResourceRequestStatusList(IReadOnlyList<GroupQuotaRequestStatusData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubmittedResourceRequestStatusList(IReadOnlyList<GroupQuotaRequestStatusData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Subscription groupQuotaRequests list. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubmittedResourceRequestStatusList"/> for deserialization. </summary>
+        internal SubmittedResourceRequestStatusList()
+        {
+        }
+
+        /// <summary> The SubmittedResourceRequestStatus items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<GroupQuotaRequestStatusData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }
