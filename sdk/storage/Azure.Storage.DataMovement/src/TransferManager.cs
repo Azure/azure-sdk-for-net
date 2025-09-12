@@ -40,12 +40,6 @@ namespace Azure.Storage.DataMovement
 
         private readonly List<StorageResourceProvider> _resumeProviders;
 
-        /// <summary>
-        /// Cancels the channels operations when disposing.
-        /// </summary>
-        private readonly CancellationTokenSource _cancellationTokenSource = new();
-        private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
-
         private readonly Func<string> _generateTransferId;
 
         /// <summary>
@@ -106,15 +100,15 @@ namespace Azure.Storage.DataMovement
             _chunksProcessor.Process = Task.Run;
         }
 
-        private async Task ProcessJobAsync(TransferJobInternal job, CancellationToken cancellationToken = default)
+        private async Task ProcessJobAsync(TransferJobInternal job)
         {
             await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync().ConfigureAwait(false))
             {
                 await job.IncrementJobParts().ConfigureAwait(false);
-                await _partsProcessor.QueueAsync(partItem, cancellationToken).ConfigureAwait(false);
+                await _partsProcessor.QueueAsync(partItem).ConfigureAwait(false);
             }
         }
-        private async Task ProcessPartAsync(JobPartInternal part, CancellationToken cancellationToken = default)
+        private async Task ProcessPartAsync(JobPartInternal part)
         {
             part.SetQueueChunkDelegate(_chunksProcessor.QueueAsync);
             await part.ProcessPartToChunkAsync().ConfigureAwait(false);
@@ -135,13 +129,15 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         public virtual async Task PauseTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             if (!_transfers.TryGetValue(transferId, out TransferOperation transfer))
             {
                 throw Errors.InvalidTransferId(nameof(PauseTransferAsync), transferId);
             }
-            await transfer.PauseAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            else
+            {
+                await transfer.PauseAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -163,7 +159,6 @@ namespace Azure.Storage.DataMovement
             ICollection<TransferStatus> filterByStatus = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             await PopulateTransfersAsync(cancellationToken).ConfigureAwait(false);
             IEnumerable<TransferOperation> totalTransfers;
             if (filterByStatus == default || filterByStatus.Count == 0)
@@ -196,7 +191,6 @@ namespace Azure.Storage.DataMovement
         public virtual async IAsyncEnumerable<TransferProperties> GetResumableTransfersAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync(cancellationToken).ConfigureAwait(false);
             foreach (string transferId in storedTransfers)
             {
@@ -226,7 +220,6 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             if (_checkpointer is DisabledTransferCheckpointer)
             {
                 throw Errors.CheckpointerDisabled("ResumeAllTransfersAsync");
@@ -255,7 +248,6 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
             if (_checkpointer is DisabledTransferCheckpointer)
@@ -279,7 +271,6 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions,
             CancellationToken cancellationToken)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             bool TryGetStorageResourceProvider(TransferProperties properties, bool getSource, out StorageResourceProvider resourceProvider)
             {
                 foreach (StorageResourceProvider provider in _resumeProviders)
@@ -332,11 +323,10 @@ namespace Azure.Storage.DataMovement
         /// <exception cref="NotImplementedException"></exception>
         internal virtual async Task PauseAllRunningTransfersAsync(CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             await Task.WhenAll(_transfers.Values
-                .Where(transfer => transfer.CanPause())
-                .Select(transfer => transfer.PauseAsync(cancellationToken)))
-                .ConfigureAwait(false);
+            .Where(transfer => transfer.CanPause())
+            .Select(transfer => transfer.PauseAsync(cancellationToken)))
+            .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -345,9 +335,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal virtual Task<bool> TryRemoveTransferAsync(string id)
+        internal virtual bool TryRemoveTransfer(string id)
         {
-            throw new NotImplementedException();
+            return _transfers.TryRemove(id, out TransferOperation transfer);
         }
         #endregion Transfer Job Management
 
@@ -370,7 +360,6 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
@@ -424,7 +413,6 @@ namespace Azure.Storage.DataMovement
             bool resumeJob,
             CancellationToken cancellationToken)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             (TransferOperation transfer, TransferJobInternal transferJobInternal) = await _jobBuilder.BuildJobAsync(
                 sourceResource,
                 destinationResource,
@@ -432,16 +420,16 @@ namespace Azure.Storage.DataMovement
                 _checkpointer,
                 transferId,
                 resumeJob,
+                TryRemoveTransfer,
                 cancellationToken)
-                .ConfigureAwait(false);
+            .ConfigureAwait(false);
 
             transfer.TransferManager = this;
             if (!_transfers.TryAdd(transfer.Id, transfer))
             {
                 throw Errors.CollisionTransferId(transfer.Id);
             }
-            await _jobsProcessor.QueueAsync(transferJobInternal, cancellationToken).ConfigureAwait(false);
-
+            await _jobsProcessor.QueueAsync(transferJobInternal).ConfigureAwait(false);
             return transfer;
         }
         #endregion
@@ -457,41 +445,33 @@ namespace Azure.Storage.DataMovement
                 // If TryAdd fails here, we need to check if in other places where we are
                 // adding that every transferId is unique.
                 if (!_transfers.TryAdd(transferId, new TransferOperation(
+                    removeTransferDelegate: TryRemoveTransfer,
                     id: transferId,
-                    status: jobStatus)
-                {
-                    TransferManager = this,
-                }))
+                    status: jobStatus)))
                 {
                     throw Errors.CollisionTransferId(transferId);
                 }
             }
         }
 
-        private CancellationToken LinkCancellation(CancellationToken cancellationToken)
-            => CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken).Token;
-
         /// <summary>
-        /// Disposes.
+        /// Disposes TransferManager and all its resources.
         /// </summary>
         /// <returns>A <see cref="ValueTask"/> of disposing the <see cref="TransferManager"/>.</returns>
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            if (!_cancellationTokenSource.IsCancellationRequested)
-            {
-                _cancellationTokenSource.Cancel();
-            }
+            _transfers.Clear();
             if (_jobsProcessor != default)
             {
-                await _jobsProcessor.DisposeAsync().ConfigureAwait(false);
+                await _jobsProcessor.TryCompleteAsync().ConfigureAwait(false);
             }
             if (_partsProcessor != default)
             {
-                await _partsProcessor.DisposeAsync().ConfigureAwait(false);
+                await _partsProcessor.TryCompleteAsync().ConfigureAwait(false);
             }
             if (_chunksProcessor != default)
             {
-                await _chunksProcessor.DisposeAsync().ConfigureAwait(false);
+                await _chunksProcessor.TryCompleteAsync().ConfigureAwait(false);
             }
             GC.SuppressFinalize(this);
         }

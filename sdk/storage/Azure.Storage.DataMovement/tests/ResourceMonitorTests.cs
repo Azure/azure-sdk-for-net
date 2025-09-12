@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
-            var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
             // Act
@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
-            var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
             // Act
@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(100));
-            var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
             // Assert
@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
-            var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
             // Act
@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
-            var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
             // Act
@@ -139,7 +139,7 @@ namespace Azure.Storage.DataMovement.Tests
         //    // Act
         //    // The lower frequency check
         //    ResourceMonitor resourceMonitor = new(monitorInterval);
-        //    var cancellationTokenSource = new CancellationTokenSource();
+        //    using var cancellationTokenSource = new CancellationTokenSource();
         //    var cancellationToken = cancellationTokenSource.Token;
         //    watch.Start();
         //    resourceMonitor.StartMonitoring(cancellationToken);

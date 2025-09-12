@@ -5,8 +5,12 @@
 ### Features Added
 
 ### Breaking Changes
+- [BREAKING BEHAVIOR CHANGE] Transfers that are in a `Paused` or `Completed` state will now throw an `ArgumentException` when attempting to call `PauseAsync` on them. Before transfers in a `Paused` or `Completed` state would not throw an exception when calling `PauseAsync`.
 
 ### Bugs Fixed
+- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
+- Resolved memory leak issue with `CancellationTokenSource` usage not being properly disposed, namely in the following areas:
+    - `TransferOperation` when created upon starting a transfer.
 
 ### Other Changes
 

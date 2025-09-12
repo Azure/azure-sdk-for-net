@@ -410,13 +410,13 @@ namespace Azure.Storage.DataMovement.Tests
                 string.Join("/", prefix, "space folder", "space file"),
             ];
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
+            using CancellationTokenSource cancellationTokenSource = TestHelper.GetTimeoutTokenSource(30);
             await DownloadDirectoryAndVerifyAsync(
                 test.Container,
                 prefix,
                 itemNames.Select(name => (name, Constants.KB)).ToList(),
                 directoryName: directoryName,
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationTokenSource.Token);
         }
 
         [Test]
@@ -426,12 +426,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             string[] items = { "file1", "file2", "dir1/file1" };
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
+            using CancellationTokenSource cancellationTokenSource = TestHelper.GetTimeoutTokenSource(30);
             await DownloadDirectoryAndVerifyAsync(
                 test.Container,
                 string.Empty,
                 items.Select(name => (name, Constants.KB)).ToList(),
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationTokenSource.Token);
         }
         #endregion DirectoryDownloadTests
 

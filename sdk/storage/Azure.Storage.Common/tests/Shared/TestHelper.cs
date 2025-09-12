@@ -164,11 +164,11 @@ namespace Azure.Storage.Test
             }
         }
 
-        public static CancellationToken GetTimeoutToken(int seconds)
+        public static CancellationTokenSource GetTimeoutTokenSource(int seconds)
         {
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(seconds));
-            return cts.Token;
+            return cts;
         }
     }
 }

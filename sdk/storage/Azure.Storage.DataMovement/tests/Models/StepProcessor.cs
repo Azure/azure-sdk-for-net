@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement.Tests
         public ProcessAsync<T> Process { get; set; }
 
         /// <inheritdoc/>
-        public ValueTask QueueAsync(T item, CancellationToken cancellationToken = default)
+        public ValueTask QueueAsync(T item)
         {
             _queue.Enqueue(item);
             return new(Task.CompletedTask);
@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement.Tests
             if (_queue.Count > 0)
             {
                 _queue.TryDequeue(out T result);
-                await Process?.Invoke(result, cancellationToken);
+                await Process?.Invoke(result);
                 return true;
             }
             else
@@ -72,9 +72,9 @@ namespace Azure.Storage.DataMovement.Tests
             return steps;
         }
 
-        public ValueTask DisposeAsync()
+        public Task<bool> TryCompleteAsync()
         {
-            return new ValueTask();
+            return Task.FromResult(true);
         }
     }
 }

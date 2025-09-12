@@ -116,7 +116,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithOptions(directoryPath, containerClient, false, options, 1);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transferOperation,
                 testEventsRaised,
@@ -157,7 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithDirectoryPrefix(directoryPath, containerClient, blobDirectoryPrefix, 1);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transferOperation.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
@@ -197,7 +197,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithOptions(directoryPath, containerClient, true, options, 1);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transferOperation,
                 testEventsRaised,
@@ -231,7 +231,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithOptions(directoryPath, containerClient, true, options, 1);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transferOperation,
                 testEventsRaised,
@@ -349,7 +349,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithOptions(directoryPath, containerClient, options, 1);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transferOperation,
                 testEventsRaised,
@@ -389,7 +389,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithDirectoryPrefix(directoryPath, containerClient, prefixFilter, 1);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transferOperation.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
@@ -423,7 +423,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithOptions(directoryPath, containerClient, options, 1);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transferOperation,
                 testEventsRaised,
@@ -462,7 +462,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithOptions(directoryPath, containerClient, options, 1);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transferOperation,
                 testEventsRaised,

@@ -25,14 +25,16 @@ namespace Azure.Storage.DataMovement.Tests
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
         private const string DefaultSourcePermissionKey = "anlfdjsgkljWLJITflo'fu903w8ueng";
+        private TransferInternalState.RemoveTransferDelegate _removeTransferDelegate = (string transferId) => true;
+
         public ServiceToServiceJobPartTests() { }
 
         private Mock<JobPartInternal.QueueChunkDelegate> GetPartQueueChunkTask()
         {
             var mock = new Mock<JobPartInternal.QueueChunkDelegate>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsAny<Func<Task>>(), It.IsAny<CancellationToken>()))
-                .Callback<Func<Task>, CancellationToken>(
-                async(funcTask, _) =>
+            mock.Setup(del => del(It.IsAny<Func<Task>>()))
+                .Callback<Func<Task>>(
+                async(funcTask) =>
                 {
                     await funcTask().ConfigureAwait(false);
                 })
@@ -83,7 +85,7 @@ namespace Azure.Storage.DataMovement.Tests
             int numberOfInvocationCalls = 1,
             int maxWaitTimeInSec = 6)
         {
-            CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
             CancellationToken cancellationToken = cancellationSource.Token;
             bool verified = false;
 
@@ -154,7 +156,7 @@ namespace Azure.Storage.DataMovement.Tests
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
             TransferJobInternal job = new(
-                new TransferOperation(id: transferId),
+                new TransferOperation(removeTransferDelegate: _removeTransferDelegate,id: transferId),
                 source,
                 destination,
                 ServiceToServiceJobPart.CreateJobPartAsync,
@@ -231,7 +233,7 @@ namespace Azure.Storage.DataMovement.Tests
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
             TransferJobInternal job = new(
-                new TransferOperation(id: transferId),
+                new TransferOperation(removeTransferDelegate: _removeTransferDelegate, id: transferId),
                 source,
                 destination,
                 ServiceToServiceJobPart.CreateJobPartAsync,

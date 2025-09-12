@@ -49,15 +49,20 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructing a TransferOperation object.
         /// </summary>
+        /// <param name="removeTransferDelegate">Delegate to call to remove transfer from the respective TransferManager.</param>
         /// <param name="id">The transfer ID of the transfer object.</param>
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="TransferStatus"/>.</param>
         internal TransferOperation(
+            TransferInternalState.RemoveTransferDelegate removeTransferDelegate,
             string id,
             TransferStatus status = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             status ??= new TransferStatus();
-            _state = new TransferInternalState(id, status);
+            _state = new TransferInternalState(
+                removeTransferDelegate,
+                id,
+                status);
         }
 
         /// <summary>

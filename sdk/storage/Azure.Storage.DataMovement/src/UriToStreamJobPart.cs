@@ -11,7 +11,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class UriToStreamJobPart : JobPartInternal, IAsyncDisposable
+    internal class UriToStreamJobPart : JobPartInternal
     {
         public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
         public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
@@ -87,11 +87,6 @@ namespace Azure.Storage.DataMovement
                   jobPartStatus: jobPartStatus,
                   length: default)
         {
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            await DisposeHandlersAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -475,7 +470,7 @@ namespace Azure.Storage.DataMovement
         {
             if (_downloadChunkHandler != default)
             {
-                await _downloadChunkHandler.DisposeAsync().ConfigureAwait(false);
+                await _downloadChunkHandler.TryCompleteAsync().ConfigureAwait(false);
                 _downloadChunkHandler = null;
             }
         }

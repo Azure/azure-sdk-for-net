@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement
 {
     internal abstract class JobPartInternal
     {
-        public delegate ValueTask QueueChunkDelegate(Func<Task> item, CancellationToken cancellationToken);
+        public delegate ValueTask QueueChunkDelegate(Func<Task> item);
         public QueueChunkDelegate QueueChunk { get; internal set; }
 
         /// <summary>
@@ -225,8 +225,7 @@ namespace Azure.Storage.DataMovement
                     }
                     Interlocked.Increment(ref _completedChunkCount);
                     await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
-                },
-                default).ConfigureAwait(false);
+                }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,7 +235,7 @@ namespace Azure.Storage.DataMovement
         public abstract Task ProcessPartToChunkAsync();
 
         /// <summary>
-        /// Diposes of chunk handler.
+        /// Disposes of chunk handler.
         /// </summary>
         public abstract Task DisposeHandlersAsync();
 
