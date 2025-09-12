@@ -57,25 +57,59 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             // Get the PartitionRuntimeInformation for all partitions
             _logger.LogInformation($"Querying partition information for {partitions.Length} partitions.");
             var partitionPropertiesTasks = new Task<PartitionProperties>[partitions.Length];
-            var checkpointTasks = new Task<EventProcessorCheckpoint>[partitionPropertiesTasks.Length];
 
             for (int i = 0; i < partitions.Length; i++)
             {
                 partitionPropertiesTasks[i] = _client.GetPartitionPropertiesAsync(partitions[i]);
-
-                checkpointTasks[i] = _checkpointStore.GetCheckpointAsync(
-                        _client.FullyQualifiedNamespace,
-                        _client.EventHubName,
-                        _client.ConsumerGroup,
-                        partitions[i],
-                        CancellationToken.None);
             }
 
             await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
             EventProcessorCheckpoint[] checkpoints = null;
 
+            const int ConcurrencyLimit = 50;
+            const int WaitTimeoutMs = 5000;
+
             try
             {
+                using var semaphore = new SemaphoreSlim(ConcurrencyLimit, ConcurrencyLimit);
+                using var cts = new CancellationTokenSource();
+
+                var checkpointTasks = partitions.Select(async partition =>
+                {
+                    bool acquired = false;
+                    try
+                    {
+                        acquired = await semaphore.WaitAsync(WaitTimeoutMs, cts.Token).ConfigureAwait(false);
+                        if (!acquired)
+                        {
+                            throw new TimeoutException(
+                                $"Failed to acquire checkpoint concurrency slot within {WaitTimeoutMs}ms for Event Hub '{_client.EventHubName}', partition '{partition}'.");
+                        }
+
+                        return await _checkpointStore.GetCheckpointAsync(
+                            _client.FullyQualifiedNamespace,
+                            _client.EventHubName,
+                            _client.ConsumerGroup,
+                            partition,
+                            cts.Token).ConfigureAwait(false);
+                    }
+                    catch (Exception e)
+                    {
+                        if (!cts.Token.IsCancellationRequested)
+                        {
+                            _logger.LogDebug($"Requesting cancellation of other checkpoint tasks. Error while getting checkpoint for eventhub '{_client.EventHubName}', partition '{partition}': {e.Message}");
+                            cts.Cancel();
+                        }
+                        throw;
+                    }
+                    finally
+                    {
+                        if (acquired)
+                        {
+                            semaphore.Release();
+                        }
+                    }
+                });
                 checkpoints = await Task.WhenAll(checkpointTasks).ConfigureAwait(false);
             }
             catch (Exception e)
