@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/7f6e17564770ef938595a0c7c9929753fa51047d/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a0eb6371715693d3fa0349e3d80f07566766a4e8/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -407,13 +407,20 @@ directive:
   - from: ComputeRP.json
     where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
     transform: $["x-ms-client-name"] = "DataDiskList";
-  # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and UserInitiatedReboot
+  # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and AllInstancesDown
   - from: ComputeRP.json
     where: $.definitions.UserInitiatedRedeploy.properties
     transform: >
       $.dummyProperty = {
         "type": "string",
         "description": "This is a dummy property to prevent flattening."
+      };
+  - from: ComputeRP.json
+    where: $.definitions.AllInstancesDown.properties
+    transform: >
+      $.dummyPropertyTwo = {
+        "type": "string",
+        "description": "This is a dummy property two to prevent flattening."
       };
   # add additionalproperties to a few models to support private properties supported by the service
   - from: ComputeRP.json
