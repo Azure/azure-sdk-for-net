@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of <see cref="SearchEncryptionWithCmk"/>. </summary>
         /// <param name="enforcement"> Describes how a search service should enforce compliance if it finds objects that aren't encrypted with the customer-managed key. </param>
         /// <param name="encryptionComplianceStatus"> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </param>
+        /// <param name="serviceLevelEncryptionKey"> The encryption key used for service-level encryption. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement, SearchEncryptionComplianceStatus? encryptionComplianceStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement, SearchEncryptionComplianceStatus? encryptionComplianceStatus, SearchResourceEncryptionKey serviceLevelEncryptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enforcement = enforcement;
             EncryptionComplianceStatus = encryptionComplianceStatus;
+            ServiceLevelEncryptionKey = serviceLevelEncryptionKey;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,5 +69,8 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </summary>
         [WirePath("encryptionComplianceStatus")]
         public SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get; }
+        /// <summary> The encryption key used for service-level encryption. </summary>
+        [WirePath("serviceLevelEncryptionKey")]
+        public SearchResourceEncryptionKey ServiceLevelEncryptionKey { get; set; }
     }
 }
