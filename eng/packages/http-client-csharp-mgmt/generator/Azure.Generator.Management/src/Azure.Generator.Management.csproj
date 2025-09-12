@@ -9,7 +9,7 @@
 		<PackageReference Include="Azure.Core" />
 		<PackageReference Include="Azure.Generator" />
 		<PackageReference Include="Azure.ResourceManager" />
-		<PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+		<PackageReference Include="Humanizer.Core" />
 	</ItemGroup>
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
@@ -92,7 +92,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RequestHeaderExtensions.cs" LinkBase="Shared/Core">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-	<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\NoValueResponseOfT.cs" LinkBase="Shared/Core">
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\NoValueResponseOfT.cs" LinkBase="Shared/Core">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ForwardsClientCallsAttribute.cs" LinkBase="Shared/Core">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
 	</ItemGroup>

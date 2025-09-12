@@ -8,12 +8,11 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
 		<PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Remove="./**/*.*" />
   </ItemGroup>

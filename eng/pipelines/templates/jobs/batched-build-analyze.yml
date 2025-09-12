@@ -43,9 +43,6 @@ jobs:
       matrix: $[ ${{ parameters.Matrix }} ]
 
     variables:
-    - template: /eng/pipelines/templates/variables/codeql.yml
-    - name: Codeql.BuildIdentifier
-      value: ${{ parameters.ServiceDirectory }}
     - name: SDKType
       value: ${{ parameters.SDKType }}
 

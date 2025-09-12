@@ -6,8 +6,10 @@
 #nullable disable
 
 using Azure.Core.Pipeline;
+using Routes._QueryParameters.QueryContinuation.Explode;
+using Routes._QueryParameters.QueryContinuation.Standard;
 
-namespace Routes
+namespace Routes._QueryParameters.QueryContinuation
 {
     public partial class QueryParametersQueryContinuation
     {

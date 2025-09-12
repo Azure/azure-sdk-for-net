@@ -1,0 +1,3 @@
+options:
+  "@azure-typespec/http-client-csharp":
+    unreferenced-types-handling: keepAll

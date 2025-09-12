@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Payload.MediaType
+namespace Payload.MediaType._StringBody
 {
     public partial class StringBody
     {

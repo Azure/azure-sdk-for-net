@@ -1,0 +1,163 @@
+{
+  "name": "_Specs_.Azure.ClientGenerator.Core.ApiVersion.Header",
+  "apiVersions": [
+    "2025-01-01"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "ApiVersions",
+      "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.ApiVersions",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "v2025_01_01",
+          "value": "2025-01-01",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Api version 2025-01-01.",
+          "decorators": []
+        }
+      ],
+      "namespace": "Client.AlternateApiVersion.Service.Header",
+      "doc": "Supported api versions.",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": []
+    }
+  ],
+  "constants": [],
+  "models": [],
+  "clients": [
+    {
+      "$id": "4",
+      "kind": "client",
+      "name": "HeaderClient",
+      "namespace": "Client.AlternateApiVersion.Service.Header",
+      "methods": [
+        {
+          "$id": "5",
+          "kind": "basic",
+          "name": "headerApiVersion",
+          "accessibility": "public",
+          "apiVersions": [
+            "2025-01-01"
+          ],
+          "doc": "Header api version parameter.",
+          "operation": {
+            "$id": "6",
+            "name": "headerApiVersion",
+            "resourceName": "Header",
+            "doc": "Header api version parameter.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "7",
+                "kind": "header",
+                "name": "version",
+                "serializedName": "x-ms-version",
+                "type": {
+                  "$id": "8",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "defaultValue": {
+                  "type": {
+                    "$id": "9",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2025-01-01"
+                },
+                "optional": false,
+                "isContentType": false,
+                "scope": "Client",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.headerApiVersion.version"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/api-version/header",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.headerApiVersion",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.headerApiVersion"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "10",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "11",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "12",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header",
+      "apiVersions": [
+        "2025-01-01"
+      ]
+    }
+  ]
+}

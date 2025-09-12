@@ -8,10 +8,9 @@ import { CompilerOptions, EmitContext, Program } from "@typespec/compiler";
 import { createTestHost, TestHost } from "@typespec/compiler/testing";
 import {
   CSharpEmitterContext,
-  CSharpEmitterOptions,
   createCSharpEmitterContext,
   Logger,
-  LoggerLevel,
+  LoggerLevel
 } from "@typespec/http-client-csharp";
 import { HttpTestLibrary } from "@typespec/http/testing";
 import { RestTestLibrary } from "@typespec/rest/testing";
@@ -93,7 +92,7 @@ export async function typeSpecCompile(
 export function createEmitterContext(
   program: Program,
   options: AzureEmitterOptions = {}
-): EmitContext<CSharpEmitterOptions> {
+): EmitContext<AzureEmitterOptions> {
   return {
     program: program,
     emitterOutputDir: "./",
@@ -107,7 +106,7 @@ export function createEmitterContext(
       "generate-convenience-methods": true,
       "package-name": undefined
     }
-  } as EmitContext<CSharpEmitterOptions>;
+  } as EmitContext<AzureEmitterOptions>;
 }
 
 /* We always need to pass in the emitter name now that it is required so making a helper to do this. */
@@ -120,5 +119,8 @@ export async function createCSharpSdkContext(
     "@typespec/http-client-csharp",
     sdkContextOptions
   );
-  return createCSharpEmitterContext(context, new Logger(program.program, LoggerLevel.INFO));
+  return createCSharpEmitterContext(
+    context,
+    new Logger(program.program, LoggerLevel.INFO)
+  );
 }

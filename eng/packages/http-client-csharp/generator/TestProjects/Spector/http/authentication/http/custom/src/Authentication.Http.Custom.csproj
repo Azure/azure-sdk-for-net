@@ -8,17 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/TypeFormatters.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/ClientDiagnostics.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/NoValueResponseOfT.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <ItemGroup>

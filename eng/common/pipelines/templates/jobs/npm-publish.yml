@@ -1,0 +1,133 @@
+parameters:
+  Tag: 'auto'
+  ArtifactName: 'packages'
+  ArtifactSubPath: ''
+  DeploymentName: 'PublishPackage'
+  DependsOn: []
+  Environment: 'package-publish'
+  Registry: 'https://registry.npmjs.org/'
+  Pool: # hardcoding the pool and image name because deployment jobs do not support variable expansion in pool names
+    name: azsdk-pool
+    image: ubuntu-24.04
+    os: linux
+  CustomCondition: succeeded()
+  FailOnMissingPackages: true
+
+jobs:
+- deployment: ${{ parameters.DeploymentName }}
+  displayName: 'Publish ${{ parameters.ArtifactName }} to ${{ parameters.Registry }}' 
+  condition: ${{ parameters.CustomCondition }}
+  environment: ${{ parameters.Environment }}
+  dependsOn: ${{ parameters.DependsOn }}
+  variables:
+    - name: ArtifactPath
+      value: $(Pipeline.Workspace)/${{ parameters.ArtifactName }}/${{ parameters.ArtifactSubPath }}
+
+  templateContext:
+    type: releaseJob
+    isProduction: ${{ eq(parameters.Registry, 'https://registry.npmjs.org/') }}
+    inputs:
+    - input: pipelineArtifact
+      artifactName: ${{ parameters.ArtifactName }}
+      itemPattern: '**/*.tgz'
+      targetPath: $(Pipeline.Workspace)/${{ parameters.ArtifactName }}/
+
+  pool: ${{ parameters.Pool }}
+  
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - pwsh: |
+            $containsBeta = $false
+            $containsPackages = $false
+            foreach ($package in (dir $(ArtifactPath) *.tgz -Recurse)) {
+              if ($package.Name -match "[\d\.]+-[a-zA-Z]+") { $containsBeta = $true }
+              Write-Host "Publishing $package to ${{ parameters.Registry }}"
+              $containsPackages = $true
+            }
+            if (!$containsPackages) {
+              Write-Host "##vso[task.setvariable variable=SkipPublishing]true"
+              if ("${{ parameters.FailOnMissingPackages }}" -eq 'true') {
+                Write-Error "No packages found to publish, but FailOnMissingPackages is set to true. Failing the job."
+                exit 1
+              }
+              else {
+                Write-Host "No packages found to publish in $(ArtifactPath), so skipping publishing."
+                exit 0
+              }
+            }
+
+            $tag = '${{ parameters.Tag }}'
+            if ($tag -eq '' -or $tag -eq 'auto') {
+              $tag = 'latest'
+              # If the package is prerelease publish it under 'beta' tag
+              if ($containsBeta) { $tag = 'beta'}
+            }
+            Write-Host "##vso[task.setvariable variable=TagName]$tag"
+            Write-Host "Publishing packages with tag: $tag"
+          displayName: 'Packages to be published'
+
+        - ${{ if eq(parameters.Registry, 'https://registry.npmjs.org/') }}:
+          - task: EsrpRelease@9
+            displayName: 'Publish ${{ parameters.ArtifactName }} via ESRP'
+            condition: and(succeeded(), ne(variables['SkipPublishing'], 'true'))
+            inputs:
+              ConnectedServiceName: 'Azure SDK PME Managed Identity'
+              ClientId: '5f81938c-2544-4f1f-9251-dd9de5b8a81b'
+              DomainTenantId: '975f013f-7f24-47e8-a7d3-abc4752bf346'
+              Usemanagedidentity: true
+              KeyVaultName: 'kv-azuresdk-codesign'
+              SignCertName: 'azure-sdk-esrp-release-certificate'
+              Intent: 'PackageDistribution'
+              ContentType: 'npm'
+              FolderLocation: $(ArtifactPath)
+              Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+              Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+              ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
+              MainPublisher: 'ESRPRELPACMANTEST'
+              productstate: $(TagName)
+
+          - pwsh: |
+              foreach ($package in (dir $(ArtifactPath) *.tgz -Recurse)) {
+                $packageJson = tar -xOf $package "package/package.json" | ConvertFrom-Json
+                if (!$packageJson) {
+                  Write-Warning "Could not read package.json from $package"
+                  continue;
+                }
+                Write-Host "Verifying tag '$(TagName)' is set for '$($packageJson.name)' version '$($packageJson.version)'"
+                $packageTags = npm view $packageJson.name "dist-tags" -json -silent | ConvertFrom-Json
+                if ($LASTEXITCODE -ne 0 -or !$packageTags) {
+                  Write-Warning "Failed to retrieve dist-tags for $packageJson.name. It is possible the package hasn't been indexed yet so ignoring."
+                  $global:LASTEXITCODE = 0
+                  continue
+                }
+
+                if ($packageTags."$(TagName)" -ne $packageJson.version) {
+                  Write-Error "The dist-tag '$(TagName)' for package '$($packageJson.name)' is not correctly set something must have gone wrong during the ESRP release process."
+                  exit 1
+                }
+              }
+            displayName: 'Verify tag after ESRP release'
+            condition: and(succeeded(), ne(variables['SkipPublishing'], 'true'))
+
+        - ${{ else }}:
+          - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+            parameters:
+              npmrcPath: $(ArtifactPath)/.npmrc
+              registryUrl: ${{ parameters.Registry }}
+              CustomCondition: and(succeeded(), ne(variables['SkipPublishing'], 'true'))
+
+          - pwsh: |
+              foreach ($package in (dir $(ArtifactPath) *.tgz -Recurse)) {
+                Write-Host "npm publish $package --verbose --access public --tag $(TagName) --registry ${{ parameters.Registry }}"
+                npm publish $package --verbose --access public --tag $(TagName) --registry ${{ parameters.Registry }}
+                if ($LASTEXITCODE -ne 0) {
+                  Write-Error "Failed to publish $package to ${{ parameters.Registry }}"
+                  exit $LASTEXITCODE
+                }
+              }
+            displayName: 'Publish ${{ parameters.ArtifactName }}'
+            condition: and(succeeded(), ne(variables['SkipPublishing'], 'true'))
+            workingDirectory: $(ArtifactPath)
+            

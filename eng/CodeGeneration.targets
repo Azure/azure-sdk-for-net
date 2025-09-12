@@ -1,39 +1,25 @@
 <Project>
-
+  
   <PropertyGroup>
-    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6236/autorest-3.0.6236.tgz</_AutoRestVersion>
-    <_AutoRestCoreVersion>3.0.6306</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200811.1/autorest-csharp-v3-3.0.0-dev.20200811.1.tgz</_AutoRestCSharpVersion>
-    <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
-    <_DefaultInputName Condition="Exists('$(MSBuildProjectDirectory)/autorest.md')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
-    <AutoRestInput Condition="'$(AutoRestInput)' == ''">$(_DefaultInputName)</AutoRestInput>
-    <!--
-      Allows passing additional AutoRest command line arguments, for example to run in interactive mode
-      use the following command line (remove the space between minus minus): dotnet build /t:GenerateCode /p:AutoRestAdditionalParameters="- -interactive"
-    -->
-    <AutoRestAdditionalParameters></AutoRestAdditionalParameters>
-
-    <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutoRestInput)' != ''">true</_GenerateCode>
+    <TypeSpecInput Condition="Exists('$(MSBuildProjectDirectory)/../tsp-location.yaml') and $(MSBuildProjectDirectory.EndsWith('src'))">$(MSBuildProjectDirectory)/../tsp-location.yaml</TypeSpecInput>
+    <_TypeSpecProjectGenerateCommand>npx --no-install --package=@azure-tools/typespec-client-generator-cli --yes tsp-client generate --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectGenerateCommand>
+    <_TypeSpecProjectSyncAndGenerateCommand>npx --no-install --package=@azure-tools/typespec-client-generator-cli --yes tsp-client update --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectSyncAndGenerateCommand>
+    <_SaveInputs Condition="'$(SaveInputs)' == 'true'">--save-inputs</_SaveInputs>
+    <_Trace Condition="'$(Trace)' == 'true'">--trace @typespec/http-client-csharp @azure-typespec/http-client-csharp @azure-typespec/http-client-csharp-mgmt</_Trace>
+    <!-- Here we append the generate-test-project configuration to TypespecAdditionalOptions if it is specified -->
+    <TypespecAdditionalOptions Condition="'$(GenerateTestProject)' != '' AND '$(TypespecAdditionalOptions)' != ''">$(TypespecAdditionalOptions)%3Bgenerate-test-project=true</TypespecAdditionalOptions>
+    <TypespecAdditionalOptions Condition="'$(GenerateTestProject)' != '' AND '$(TypespecAdditionalOptions)' == ''">generate-test-project=true</TypespecAdditionalOptions>
+    <_TypespecAdditionalOptions Condition="'$(TypespecAdditionalOptions)' != ''">--emitter-options "$(TypespecAdditionalOptions)"</_TypespecAdditionalOptions>
+    <_LocalSpecRepo Condition="'$(LocalSpecRepo)' != ''">--local-spec-repo $(LocalSpecRepo)</_LocalSpecRepo>
   </PropertyGroup>
 
-  <PropertyGroup>
-  </PropertyGroup>
-
-  <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
-    <ReadLinesFromFile File="$(AutoRestInput)">
-       <Output TaskParameter="Lines" ItemName="AutoRestInputLines"/>
-    </ReadLinesFromFile>
-
-   <ItemGroup>
-      <GithubUrls Include="$([System.Text.RegularExpressions.Regex]::Match('%(AutoRestInputLines.Identity)', 'https?://(raw.)?github.+'))" />
-      <GithubUrlsWithoutIssues Include="%(GithubUrls.Identity)" Condition="! ($([System.Text.RegularExpressions.Regex]::IsMatch('%(GithubUrls.Identity)', '/issues/\d+')))" />
-      <GithubUrlsWithoutHash Include="%(GithubUrlsWithoutIssues.Identity)" Condition="! ($([System.Text.RegularExpressions.Regex]::IsMatch('%(GithubUrlsWithoutIssues.Identity)', '[\w\d]{40}')))" />
-    </ItemGroup>
-
-    <Error Text="Following GitHub URLs do not contain commit hash: @(GithubUrlsWithoutHash) please use permalinks for code generation inputs (see https://help.github.com/en/github/managing-files-in-a-repository/getting-permanent-links-to-files) " Condition="'@(GithubUrlsWithoutHash)' != ''" />
-
-    <RemoveDir Directories="$(MSBuildProjectDirectory)/Generated"/>
-    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutoRestInput) $(AutoRestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(AutoRestSharedCodeDirectory).." />
+   <!-- For projects using the new TypeSpec generator, we don't include the Autorest dependency which pulls in the GenerateCode target.
+   So we need to add it here. -->
+  <Target Name="GenerateCode" Condition="'$(TypeSpecInput)' != ''">
+    <Error Text="You used skipped sync but didn't have the TempTypeSpecFiles in your project directory.  Please run 'dotnet build /t:GenerateCode /p:SaveInputs=true' without SkipSync first at least once" Condition="'$(SkipSync)' == 'true' AND !Exists('$(MSBuildProjectDirectory)/../TempTypeSpecFiles')" />
+    <Exec Command="npm install --prefix $(MSBuildProjectDirectory)/../ @azure-tools/typespec-client-generator-cli --no-save" />
+    <Exec Condition="'$(SkipSync)' == 'true'" Command="$(_TypeSpecProjectGenerateCommand) $(_SaveInputs) $(_TypespecAdditionalOptions) $(_Trace)"/>
+    <Exec Condition="'$(SkipSync)' != 'true'" Command="$(_TypeSpecProjectSyncAndGenerateCommand) $(_SaveInputs) $(_LocalSpecRepo) $(_TypespecAdditionalOptions) $(_Trace)"/>
   </Target>
 
 </Project>

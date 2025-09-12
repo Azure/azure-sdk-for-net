@@ -7,7 +7,7 @@
       }
     },
     "TestTargetFramework": ["net462", "net8.0", "net9.0"]
-  }
+  },
   "include": [
     {
       "Agent": {

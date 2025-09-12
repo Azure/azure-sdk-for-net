@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Client.Structure.Service
+namespace Client.Structure.Service._Baz
 {
     public partial class Baz
     {

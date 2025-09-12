@@ -1,6 +1,5 @@
+emit:
+  - "@azure-typespec/http-client-csharp-mgmt"
 options:
-  "@azure-tools/typespec-csharp":
-    flavor: "azure"
+  "@azure-typespec/http-client-csharp-mgmt":
     namespace: "MgmtTypeSpec"
-    clear-output-folder: true
-    examples-dir: "{project-root}/examples"

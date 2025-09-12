@@ -1,0 +1,1859 @@
+{
+  "name": "Type.Union.Discriminated",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "getContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "putContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "5",
+      "kind": "constant",
+      "name": "putContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "7",
+      "kind": "constant",
+      "name": "getContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "9",
+      "kind": "constant",
+      "name": "putContentType2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "10",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "11",
+      "kind": "constant",
+      "name": "putContentType3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "13",
+      "kind": "constant",
+      "name": "getContentType2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "14",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "15",
+      "kind": "constant",
+      "name": "putContentType4",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "16",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "17",
+      "kind": "constant",
+      "name": "putContentType5",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "18",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "19",
+      "kind": "constant",
+      "name": "getContentType3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "20",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "21",
+      "kind": "constant",
+      "name": "putContentType6",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "22",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "23",
+      "kind": "constant",
+      "name": "putContentType7",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "24",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "25",
+      "kind": "model",
+      "name": "Cat",
+      "namespace": "Type.Union.Discriminated",
+      "crossLanguageDefinitionId": "Type.Union.Discriminated.Cat",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "26",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "27",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Union.Discriminated.Cat.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "28",
+          "kind": "property",
+          "name": "meow",
+          "serializedName": "meow",
+          "type": {
+            "$id": "29",
+            "kind": "boolean",
+            "name": "boolean",
+            "crossLanguageDefinitionId": "TypeSpec.boolean",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Union.Discriminated.Cat.meow",
+          "serializationOptions": {
+            "json": {
+              "name": "meow"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "30",
+      "kind": "model",
+      "name": "Dog",
+      "namespace": "Type.Union.Discriminated",
+      "crossLanguageDefinitionId": "Type.Union.Discriminated.Dog",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "31",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "32",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Union.Discriminated.Dog.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "33",
+          "kind": "property",
+          "name": "bark",
+          "serializedName": "bark",
+          "type": {
+            "$id": "34",
+            "kind": "boolean",
+            "name": "boolean",
+            "crossLanguageDefinitionId": "TypeSpec.boolean",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Union.Discriminated.Dog.bark",
+          "serializationOptions": {
+            "json": {
+              "name": "bark"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "35",
+      "kind": "client",
+      "name": "DiscriminatedClient",
+      "namespace": "Type.Union.Discriminated",
+      "doc": "Describe scenarios for discriminated unions.",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "36",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "37",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "38",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Type.Union.Discriminated",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "39",
+          "kind": "client",
+          "name": "Envelope",
+          "namespace": "Type.Union.Discriminated.Envelope",
+          "methods": [],
+          "parameters": [
+            {
+              "$id": "40",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "41",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "42",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+            }
+          ],
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "35"
+          },
+          "children": [
+            {
+              "$id": "43",
+              "kind": "client",
+              "name": "Object",
+              "namespace": "Type.Union.Discriminated.Envelope.Object",
+              "methods": [],
+              "parameters": [
+                {
+                  "$id": "44",
+                  "kind": "endpoint",
+                  "name": "endpoint",
+                  "serializedName": "endpoint",
+                  "doc": "Service host",
+                  "type": {
+                    "$id": "45",
+                    "kind": "url",
+                    "name": "endpoint",
+                    "crossLanguageDefinitionId": "TypeSpec.url"
+                  },
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Client",
+                  "isEndpoint": true,
+                  "defaultValue": {
+                    "type": {
+                      "$id": "46",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string"
+                    },
+                    "value": "http://localhost:3000"
+                  },
+                  "serverUrlTemplate": "{endpoint}",
+                  "skipUrlEncoding": false,
+                  "readOnly": false,
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                }
+              ],
+              "decorators": [],
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object",
+              "apiVersions": [],
+              "parent": {
+                "$ref": "39"
+              },
+              "children": [
+                {
+                  "$id": "47",
+                  "kind": "client",
+                  "name": "Default",
+                  "namespace": "Type.Union.Discriminated.Envelope.Object",
+                  "methods": [
+                    {
+                      "$id": "48",
+                      "kind": "basic",
+                      "name": "get",
+                      "accessibility": "public",
+                      "apiVersions": [],
+                      "operation": {
+                        "$id": "49",
+                        "name": "get",
+                        "resourceName": "Default",
+                        "accessibility": "public",
+                        "parameters": [
+                          {
+                            "$id": "50",
+                            "kind": "query",
+                            "name": "kind",
+                            "serializedName": "kind",
+                            "type": {
+                              "$id": "51",
+                              "kind": "string",
+                              "name": "string",
+                              "crossLanguageDefinitionId": "TypeSpec.string",
+                              "decorators": []
+                            },
+                            "isApiVersion": false,
+                            "explode": false,
+                            "optional": true,
+                            "scope": "Method",
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.kind",
+                            "readOnly": false
+                          },
+                          {
+                            "$id": "52",
+                            "kind": "header",
+                            "name": "accept",
+                            "serializedName": "Accept",
+                            "type": {
+                              "$ref": "1"
+                            },
+                            "isApiVersion": false,
+                            "optional": false,
+                            "isContentType": false,
+                            "scope": "Constant",
+                            "readOnly": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.accept"
+                          }
+                        ],
+                        "responses": [
+                          {
+                            "statusCodes": [
+                              200
+                            ],
+                            "bodyType": {
+                              "$id": "53",
+                              "kind": "union",
+                              "name": "PetWithEnvelope",
+                              "variantTypes": [
+                                {
+                                  "$ref": "25"
+                                },
+                                {
+                                  "$ref": "30"
+                                }
+                              ],
+                              "namespace": "Type.Union.Discriminated",
+                              "decorators": []
+                            },
+                            "headers": [],
+                            "isErrorResponse": false,
+                            "contentTypes": [
+                              "application/json"
+                            ]
+                          }
+                        ],
+                        "httpMethod": "GET",
+                        "uri": "{endpoint}",
+                        "path": "/type/union/discriminated/envelope/object/default",
+                        "bufferResponse": true,
+                        "generateProtocolMethod": true,
+                        "generateConvenienceMethod": true,
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get",
+                        "decorators": []
+                      },
+                      "parameters": [
+                        {
+                          "$id": "54",
+                          "kind": "method",
+                          "name": "kind",
+                          "serializedName": "kind",
+                          "type": {
+                            "$id": "55",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "location": "Query",
+                          "isApiVersion": false,
+                          "optional": true,
+                          "scope": "Method",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.kind",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        },
+                        {
+                          "$id": "56",
+                          "kind": "method",
+                          "name": "accept",
+                          "serializedName": "Accept",
+                          "type": {
+                            "$ref": "1"
+                          },
+                          "location": "Header",
+                          "isApiVersion": false,
+                          "optional": false,
+                          "scope": "Constant",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get.accept",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        }
+                      ],
+                      "response": {
+                        "type": {
+                          "$ref": "53"
+                        }
+                      },
+                      "isOverride": false,
+                      "generateConvenient": true,
+                      "generateProtocol": true,
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get"
+                    },
+                    {
+                      "$id": "57",
+                      "kind": "basic",
+                      "name": "put",
+                      "accessibility": "public",
+                      "apiVersions": [],
+                      "operation": {
+                        "$id": "58",
+                        "name": "put",
+                        "resourceName": "Default",
+                        "accessibility": "public",
+                        "parameters": [
+                          {
+                            "$id": "59",
+                            "kind": "header",
+                            "name": "contentType",
+                            "serializedName": "Content-Type",
+                            "doc": "Body parameter's content type. Known values are application/json",
+                            "type": {
+                              "$ref": "3"
+                            },
+                            "isApiVersion": false,
+                            "optional": false,
+                            "isContentType": true,
+                            "scope": "Constant",
+                            "readOnly": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.contentType"
+                          },
+                          {
+                            "$id": "60",
+                            "kind": "header",
+                            "name": "accept",
+                            "serializedName": "Accept",
+                            "type": {
+                              "$ref": "5"
+                            },
+                            "isApiVersion": false,
+                            "optional": false,
+                            "isContentType": false,
+                            "scope": "Constant",
+                            "readOnly": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.accept"
+                          },
+                          {
+                            "$id": "61",
+                            "kind": "body",
+                            "name": "input",
+                            "serializedName": "input",
+                            "type": {
+                              "$ref": "53"
+                            },
+                            "isApiVersion": false,
+                            "contentTypes": [
+                              "application/json"
+                            ],
+                            "defaultContentType": "application/json",
+                            "optional": false,
+                            "scope": "Method",
+                            "decorators": [],
+                            "readOnly": false,
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.input"
+                          }
+                        ],
+                        "responses": [
+                          {
+                            "statusCodes": [
+                              200
+                            ],
+                            "bodyType": {
+                              "$ref": "53"
+                            },
+                            "headers": [],
+                            "isErrorResponse": false,
+                            "contentTypes": [
+                              "application/json"
+                            ]
+                          }
+                        ],
+                        "httpMethod": "PUT",
+                        "uri": "{endpoint}",
+                        "path": "/type/union/discriminated/envelope/object/default",
+                        "requestMediaTypes": [
+                          "application/json"
+                        ],
+                        "bufferResponse": true,
+                        "generateProtocolMethod": true,
+                        "generateConvenienceMethod": true,
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put",
+                        "decorators": []
+                      },
+                      "parameters": [
+                        {
+                          "$id": "62",
+                          "kind": "method",
+                          "name": "input",
+                          "serializedName": "input",
+                          "type": {
+                            "$ref": "53"
+                          },
+                          "location": "Body",
+                          "isApiVersion": false,
+                          "optional": false,
+                          "scope": "Method",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.input",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        },
+                        {
+                          "$id": "63",
+                          "kind": "method",
+                          "name": "contentType",
+                          "serializedName": "Content-Type",
+                          "doc": "Body parameter's content type. Known values are application/json",
+                          "type": {
+                            "$ref": "3"
+                          },
+                          "location": "Header",
+                          "isApiVersion": false,
+                          "optional": false,
+                          "scope": "Constant",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.contentType",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        },
+                        {
+                          "$id": "64",
+                          "kind": "method",
+                          "name": "accept",
+                          "serializedName": "Accept",
+                          "type": {
+                            "$ref": "5"
+                          },
+                          "location": "Header",
+                          "isApiVersion": false,
+                          "optional": false,
+                          "scope": "Constant",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put.accept",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        }
+                      ],
+                      "response": {
+                        "type": {
+                          "$ref": "53"
+                        }
+                      },
+                      "isOverride": false,
+                      "generateConvenient": true,
+                      "generateProtocol": true,
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put"
+                    }
+                  ],
+                  "parameters": [
+                    {
+                      "$id": "65",
+                      "kind": "endpoint",
+                      "name": "endpoint",
+                      "serializedName": "endpoint",
+                      "doc": "Service host",
+                      "type": {
+                        "$id": "66",
+                        "kind": "url",
+                        "name": "endpoint",
+                        "crossLanguageDefinitionId": "TypeSpec.url"
+                      },
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Client",
+                      "isEndpoint": true,
+                      "defaultValue": {
+                        "type": {
+                          "$id": "67",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string"
+                        },
+                        "value": "http://localhost:3000"
+                      },
+                      "serverUrlTemplate": "{endpoint}",
+                      "skipUrlEncoding": false,
+                      "readOnly": false,
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                    }
+                  ],
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default",
+                  "apiVersions": [],
+                  "parent": {
+                    "$ref": "43"
+                  }
+                },
+                {
+                  "$id": "68",
+                  "kind": "client",
+                  "name": "CustomProperties",
+                  "namespace": "Type.Union.Discriminated.Envelope.Object",
+                  "methods": [
+                    {
+                      "$id": "69",
+                      "kind": "basic",
+                      "name": "get",
+                      "accessibility": "public",
+                      "apiVersions": [],
+                      "operation": {
+                        "$id": "70",
+                        "name": "get",
+                        "resourceName": "CustomProperties",
+                        "accessibility": "public",
+                        "parameters": [
+                          {
+                            "$id": "71",
+                            "kind": "query",
+                            "name": "petType",
+                            "serializedName": "petType",
+                            "type": {
+                              "$id": "72",
+                              "kind": "string",
+                              "name": "string",
+                              "crossLanguageDefinitionId": "TypeSpec.string",
+                              "decorators": []
+                            },
+                            "isApiVersion": false,
+                            "explode": false,
+                            "optional": true,
+                            "scope": "Method",
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.petType",
+                            "readOnly": false
+                          },
+                          {
+                            "$id": "73",
+                            "kind": "header",
+                            "name": "accept",
+                            "serializedName": "Accept",
+                            "type": {
+                              "$ref": "7"
+                            },
+                            "isApiVersion": false,
+                            "optional": false,
+                            "isContentType": false,
+                            "scope": "Constant",
+                            "readOnly": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.accept"
+                          }
+                        ],
+                        "responses": [
+                          {
+                            "statusCodes": [
+                              200
+                            ],
+                            "bodyType": {
+                              "$id": "74",
+                              "kind": "union",
+                              "name": "PetWithCustomNames",
+                              "variantTypes": [
+                                {
+                                  "$ref": "25"
+                                },
+                                {
+                                  "$ref": "30"
+                                }
+                              ],
+                              "namespace": "Type.Union.Discriminated",
+                              "decorators": []
+                            },
+                            "headers": [],
+                            "isErrorResponse": false,
+                            "contentTypes": [
+                              "application/json"
+                            ]
+                          }
+                        ],
+                        "httpMethod": "GET",
+                        "uri": "{endpoint}",
+                        "path": "/type/union/discriminated/envelope/object/custom-properties",
+                        "bufferResponse": true,
+                        "generateProtocolMethod": true,
+                        "generateConvenienceMethod": true,
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get",
+                        "decorators": []
+                      },
+                      "parameters": [
+                        {
+                          "$id": "75",
+                          "kind": "method",
+                          "name": "petType",
+                          "serializedName": "petType",
+                          "type": {
+                            "$id": "76",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "location": "Query",
+                          "isApiVersion": false,
+                          "optional": true,
+                          "scope": "Method",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.petType",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        },
+                        {
+                          "$id": "77",
+                          "kind": "method",
+                          "name": "accept",
+                          "serializedName": "Accept",
+                          "type": {
+                            "$ref": "7"
+                          },
+                          "location": "Header",
+                          "isApiVersion": false,
+                          "optional": false,
+                          "scope": "Constant",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get.accept",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        }
+                      ],
+                      "response": {
+                        "type": {
+                          "$ref": "74"
+                        }
+                      },
+                      "isOverride": false,
+                      "generateConvenient": true,
+                      "generateProtocol": true,
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get"
+                    },
+                    {
+                      "$id": "78",
+                      "kind": "basic",
+                      "name": "put",
+                      "accessibility": "public",
+                      "apiVersions": [],
+                      "operation": {
+                        "$id": "79",
+                        "name": "put",
+                        "resourceName": "CustomProperties",
+                        "accessibility": "public",
+                        "parameters": [
+                          {
+                            "$id": "80",
+                            "kind": "header",
+                            "name": "contentType",
+                            "serializedName": "Content-Type",
+                            "doc": "Body parameter's content type. Known values are application/json",
+                            "type": {
+                              "$ref": "9"
+                            },
+                            "isApiVersion": false,
+                            "optional": false,
+                            "isContentType": true,
+                            "scope": "Constant",
+                            "readOnly": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.contentType"
+                          },
+                          {
+                            "$id": "81",
+                            "kind": "header",
+                            "name": "accept",
+                            "serializedName": "Accept",
+                            "type": {
+                              "$ref": "11"
+                            },
+                            "isApiVersion": false,
+                            "optional": false,
+                            "isContentType": false,
+                            "scope": "Constant",
+                            "readOnly": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.accept"
+                          },
+                          {
+                            "$id": "82",
+                            "kind": "body",
+                            "name": "input",
+                            "serializedName": "input",
+                            "type": {
+                              "$ref": "74"
+                            },
+                            "isApiVersion": false,
+                            "contentTypes": [
+                              "application/json"
+                            ],
+                            "defaultContentType": "application/json",
+                            "optional": false,
+                            "scope": "Method",
+                            "decorators": [],
+                            "readOnly": false,
+                            "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.input"
+                          }
+                        ],
+                        "responses": [
+                          {
+                            "statusCodes": [
+                              200
+                            ],
+                            "bodyType": {
+                              "$ref": "74"
+                            },
+                            "headers": [],
+                            "isErrorResponse": false,
+                            "contentTypes": [
+                              "application/json"
+                            ]
+                          }
+                        ],
+                        "httpMethod": "PUT",
+                        "uri": "{endpoint}",
+                        "path": "/type/union/discriminated/envelope/object/custom-properties",
+                        "requestMediaTypes": [
+                          "application/json"
+                        ],
+                        "bufferResponse": true,
+                        "generateProtocolMethod": true,
+                        "generateConvenienceMethod": true,
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put",
+                        "decorators": []
+                      },
+                      "parameters": [
+                        {
+                          "$id": "83",
+                          "kind": "method",
+                          "name": "input",
+                          "serializedName": "input",
+                          "type": {
+                            "$ref": "74"
+                          },
+                          "location": "Body",
+                          "isApiVersion": false,
+                          "optional": false,
+                          "scope": "Method",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.input",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        },
+                        {
+                          "$id": "84",
+                          "kind": "method",
+                          "name": "contentType",
+                          "serializedName": "Content-Type",
+                          "doc": "Body parameter's content type. Known values are application/json",
+                          "type": {
+                            "$ref": "9"
+                          },
+                          "location": "Header",
+                          "isApiVersion": false,
+                          "optional": false,
+                          "scope": "Constant",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.contentType",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        },
+                        {
+                          "$id": "85",
+                          "kind": "method",
+                          "name": "accept",
+                          "serializedName": "Accept",
+                          "type": {
+                            "$ref": "11"
+                          },
+                          "location": "Header",
+                          "isApiVersion": false,
+                          "optional": false,
+                          "scope": "Constant",
+                          "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put.accept",
+                          "readOnly": false,
+                          "access": "public",
+                          "decorators": []
+                        }
+                      ],
+                      "response": {
+                        "type": {
+                          "$ref": "74"
+                        }
+                      },
+                      "isOverride": false,
+                      "generateConvenient": true,
+                      "generateProtocol": true,
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put"
+                    }
+                  ],
+                  "parameters": [
+                    {
+                      "$id": "86",
+                      "kind": "endpoint",
+                      "name": "endpoint",
+                      "serializedName": "endpoint",
+                      "doc": "Service host",
+                      "type": {
+                        "$id": "87",
+                        "kind": "url",
+                        "name": "endpoint",
+                        "crossLanguageDefinitionId": "TypeSpec.url"
+                      },
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Client",
+                      "isEndpoint": true,
+                      "defaultValue": {
+                        "type": {
+                          "$id": "88",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string"
+                        },
+                        "value": "http://localhost:3000"
+                      },
+                      "serverUrlTemplate": "{endpoint}",
+                      "skipUrlEncoding": false,
+                      "readOnly": false,
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                    }
+                  ],
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties",
+                  "apiVersions": [],
+                  "parent": {
+                    "$ref": "43"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$id": "89",
+          "kind": "client",
+          "name": "NoEnvelope",
+          "namespace": "Type.Union.Discriminated.NoEnvelope",
+          "methods": [],
+          "parameters": [
+            {
+              "$id": "90",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "91",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "92",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+            }
+          ],
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "35"
+          },
+          "children": [
+            {
+              "$id": "93",
+              "kind": "client",
+              "name": "Default",
+              "namespace": "Type.Union.Discriminated.NoEnvelope",
+              "methods": [
+                {
+                  "$id": "94",
+                  "kind": "basic",
+                  "name": "get",
+                  "accessibility": "public",
+                  "apiVersions": [],
+                  "operation": {
+                    "$id": "95",
+                    "name": "get",
+                    "resourceName": "Default",
+                    "accessibility": "public",
+                    "parameters": [
+                      {
+                        "$id": "96",
+                        "kind": "query",
+                        "name": "kind",
+                        "serializedName": "kind",
+                        "type": {
+                          "$id": "97",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "isApiVersion": false,
+                        "explode": false,
+                        "optional": true,
+                        "scope": "Method",
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.kind",
+                        "readOnly": false
+                      },
+                      {
+                        "$id": "98",
+                        "kind": "header",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "13"
+                        },
+                        "isApiVersion": false,
+                        "optional": false,
+                        "isContentType": false,
+                        "scope": "Constant",
+                        "readOnly": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.accept"
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "statusCodes": [
+                          200
+                        ],
+                        "bodyType": {
+                          "$id": "99",
+                          "kind": "union",
+                          "name": "PetInline",
+                          "variantTypes": [
+                            {
+                              "$ref": "25"
+                            },
+                            {
+                              "$ref": "30"
+                            }
+                          ],
+                          "namespace": "Type.Union.Discriminated",
+                          "decorators": []
+                        },
+                        "headers": [],
+                        "isErrorResponse": false,
+                        "contentTypes": [
+                          "application/json"
+                        ]
+                      }
+                    ],
+                    "httpMethod": "GET",
+                    "uri": "{endpoint}",
+                    "path": "/type/union/discriminated/no-envelope/default",
+                    "bufferResponse": true,
+                    "generateProtocolMethod": true,
+                    "generateConvenienceMethod": true,
+                    "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get",
+                    "decorators": []
+                  },
+                  "parameters": [
+                    {
+                      "$id": "100",
+                      "kind": "method",
+                      "name": "kind",
+                      "serializedName": "kind",
+                      "type": {
+                        "$id": "101",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "location": "Query",
+                      "isApiVersion": false,
+                      "optional": true,
+                      "scope": "Method",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.kind",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    },
+                    {
+                      "$id": "102",
+                      "kind": "method",
+                      "name": "accept",
+                      "serializedName": "Accept",
+                      "type": {
+                        "$ref": "13"
+                      },
+                      "location": "Header",
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Constant",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get.accept",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    }
+                  ],
+                  "response": {
+                    "type": {
+                      "$ref": "99"
+                    }
+                  },
+                  "isOverride": false,
+                  "generateConvenient": true,
+                  "generateProtocol": true,
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get"
+                },
+                {
+                  "$id": "103",
+                  "kind": "basic",
+                  "name": "put",
+                  "accessibility": "public",
+                  "apiVersions": [],
+                  "operation": {
+                    "$id": "104",
+                    "name": "put",
+                    "resourceName": "Default",
+                    "accessibility": "public",
+                    "parameters": [
+                      {
+                        "$id": "105",
+                        "kind": "header",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "15"
+                        },
+                        "isApiVersion": false,
+                        "optional": false,
+                        "isContentType": true,
+                        "scope": "Constant",
+                        "readOnly": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.contentType"
+                      },
+                      {
+                        "$id": "106",
+                        "kind": "header",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "17"
+                        },
+                        "isApiVersion": false,
+                        "optional": false,
+                        "isContentType": false,
+                        "scope": "Constant",
+                        "readOnly": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.accept"
+                      },
+                      {
+                        "$id": "107",
+                        "kind": "body",
+                        "name": "input",
+                        "serializedName": "input",
+                        "type": {
+                          "$ref": "99"
+                        },
+                        "isApiVersion": false,
+                        "contentTypes": [
+                          "application/json"
+                        ],
+                        "defaultContentType": "application/json",
+                        "optional": false,
+                        "scope": "Method",
+                        "decorators": [],
+                        "readOnly": false,
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.input"
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "statusCodes": [
+                          200
+                        ],
+                        "bodyType": {
+                          "$ref": "99"
+                        },
+                        "headers": [],
+                        "isErrorResponse": false,
+                        "contentTypes": [
+                          "application/json"
+                        ]
+                      }
+                    ],
+                    "httpMethod": "PUT",
+                    "uri": "{endpoint}",
+                    "path": "/type/union/discriminated/no-envelope/default",
+                    "requestMediaTypes": [
+                      "application/json"
+                    ],
+                    "bufferResponse": true,
+                    "generateProtocolMethod": true,
+                    "generateConvenienceMethod": true,
+                    "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put",
+                    "decorators": []
+                  },
+                  "parameters": [
+                    {
+                      "$id": "108",
+                      "kind": "method",
+                      "name": "input",
+                      "serializedName": "input",
+                      "type": {
+                        "$ref": "99"
+                      },
+                      "location": "Body",
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Method",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.input",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    },
+                    {
+                      "$id": "109",
+                      "kind": "method",
+                      "name": "contentType",
+                      "serializedName": "Content-Type",
+                      "doc": "Body parameter's content type. Known values are application/json",
+                      "type": {
+                        "$ref": "15"
+                      },
+                      "location": "Header",
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Constant",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.contentType",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    },
+                    {
+                      "$id": "110",
+                      "kind": "method",
+                      "name": "accept",
+                      "serializedName": "Accept",
+                      "type": {
+                        "$ref": "17"
+                      },
+                      "location": "Header",
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Constant",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put.accept",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    }
+                  ],
+                  "response": {
+                    "type": {
+                      "$ref": "99"
+                    }
+                  },
+                  "isOverride": false,
+                  "generateConvenient": true,
+                  "generateProtocol": true,
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put"
+                }
+              ],
+              "parameters": [
+                {
+                  "$id": "111",
+                  "kind": "endpoint",
+                  "name": "endpoint",
+                  "serializedName": "endpoint",
+                  "doc": "Service host",
+                  "type": {
+                    "$id": "112",
+                    "kind": "url",
+                    "name": "endpoint",
+                    "crossLanguageDefinitionId": "TypeSpec.url"
+                  },
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Client",
+                  "isEndpoint": true,
+                  "defaultValue": {
+                    "type": {
+                      "$id": "113",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string"
+                    },
+                    "value": "http://localhost:3000"
+                  },
+                  "serverUrlTemplate": "{endpoint}",
+                  "skipUrlEncoding": false,
+                  "readOnly": false,
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                }
+              ],
+              "decorators": [],
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default",
+              "apiVersions": [],
+              "parent": {
+                "$ref": "89"
+              }
+            },
+            {
+              "$id": "114",
+              "kind": "client",
+              "name": "CustomDiscriminator",
+              "namespace": "Type.Union.Discriminated.NoEnvelope",
+              "methods": [
+                {
+                  "$id": "115",
+                  "kind": "basic",
+                  "name": "get",
+                  "accessibility": "public",
+                  "apiVersions": [],
+                  "operation": {
+                    "$id": "116",
+                    "name": "get",
+                    "resourceName": "CustomDiscriminator",
+                    "accessibility": "public",
+                    "parameters": [
+                      {
+                        "$id": "117",
+                        "kind": "query",
+                        "name": "type",
+                        "serializedName": "type",
+                        "type": {
+                          "$id": "118",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "isApiVersion": false,
+                        "explode": false,
+                        "optional": true,
+                        "scope": "Method",
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.type",
+                        "readOnly": false
+                      },
+                      {
+                        "$id": "119",
+                        "kind": "header",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "19"
+                        },
+                        "isApiVersion": false,
+                        "optional": false,
+                        "isContentType": false,
+                        "scope": "Constant",
+                        "readOnly": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.accept"
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "statusCodes": [
+                          200
+                        ],
+                        "bodyType": {
+                          "$id": "120",
+                          "kind": "union",
+                          "name": "PetInlineWithCustomDiscriminator",
+                          "variantTypes": [
+                            {
+                              "$ref": "25"
+                            },
+                            {
+                              "$ref": "30"
+                            }
+                          ],
+                          "namespace": "Type.Union.Discriminated",
+                          "decorators": []
+                        },
+                        "headers": [],
+                        "isErrorResponse": false,
+                        "contentTypes": [
+                          "application/json"
+                        ]
+                      }
+                    ],
+                    "httpMethod": "GET",
+                    "uri": "{endpoint}",
+                    "path": "/type/union/discriminated/no-envelope/custom-discriminator",
+                    "bufferResponse": true,
+                    "generateProtocolMethod": true,
+                    "generateConvenienceMethod": true,
+                    "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get",
+                    "decorators": []
+                  },
+                  "parameters": [
+                    {
+                      "$id": "121",
+                      "kind": "method",
+                      "name": "type",
+                      "serializedName": "type",
+                      "type": {
+                        "$id": "122",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "location": "Query",
+                      "isApiVersion": false,
+                      "optional": true,
+                      "scope": "Method",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.type",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    },
+                    {
+                      "$id": "123",
+                      "kind": "method",
+                      "name": "accept",
+                      "serializedName": "Accept",
+                      "type": {
+                        "$ref": "19"
+                      },
+                      "location": "Header",
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Constant",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get.accept",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    }
+                  ],
+                  "response": {
+                    "type": {
+                      "$ref": "120"
+                    }
+                  },
+                  "isOverride": false,
+                  "generateConvenient": true,
+                  "generateProtocol": true,
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get"
+                },
+                {
+                  "$id": "124",
+                  "kind": "basic",
+                  "name": "put",
+                  "accessibility": "public",
+                  "apiVersions": [],
+                  "operation": {
+                    "$id": "125",
+                    "name": "put",
+                    "resourceName": "CustomDiscriminator",
+                    "accessibility": "public",
+                    "parameters": [
+                      {
+                        "$id": "126",
+                        "kind": "header",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "21"
+                        },
+                        "isApiVersion": false,
+                        "optional": false,
+                        "isContentType": true,
+                        "scope": "Constant",
+                        "readOnly": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.contentType"
+                      },
+                      {
+                        "$id": "127",
+                        "kind": "header",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "23"
+                        },
+                        "isApiVersion": false,
+                        "optional": false,
+                        "isContentType": false,
+                        "scope": "Constant",
+                        "readOnly": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.accept"
+                      },
+                      {
+                        "$id": "128",
+                        "kind": "body",
+                        "name": "input",
+                        "serializedName": "input",
+                        "type": {
+                          "$ref": "120"
+                        },
+                        "isApiVersion": false,
+                        "contentTypes": [
+                          "application/json"
+                        ],
+                        "defaultContentType": "application/json",
+                        "optional": false,
+                        "scope": "Method",
+                        "decorators": [],
+                        "readOnly": false,
+                        "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.input"
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "statusCodes": [
+                          200
+                        ],
+                        "bodyType": {
+                          "$ref": "120"
+                        },
+                        "headers": [],
+                        "isErrorResponse": false,
+                        "contentTypes": [
+                          "application/json"
+                        ]
+                      }
+                    ],
+                    "httpMethod": "PUT",
+                    "uri": "{endpoint}",
+                    "path": "/type/union/discriminated/no-envelope/custom-discriminator",
+                    "requestMediaTypes": [
+                      "application/json"
+                    ],
+                    "bufferResponse": true,
+                    "generateProtocolMethod": true,
+                    "generateConvenienceMethod": true,
+                    "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put",
+                    "decorators": []
+                  },
+                  "parameters": [
+                    {
+                      "$id": "129",
+                      "kind": "method",
+                      "name": "input",
+                      "serializedName": "input",
+                      "type": {
+                        "$ref": "120"
+                      },
+                      "location": "Body",
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Method",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.input",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    },
+                    {
+                      "$id": "130",
+                      "kind": "method",
+                      "name": "contentType",
+                      "serializedName": "Content-Type",
+                      "doc": "Body parameter's content type. Known values are application/json",
+                      "type": {
+                        "$ref": "21"
+                      },
+                      "location": "Header",
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Constant",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.contentType",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    },
+                    {
+                      "$id": "131",
+                      "kind": "method",
+                      "name": "accept",
+                      "serializedName": "Accept",
+                      "type": {
+                        "$ref": "23"
+                      },
+                      "location": "Header",
+                      "isApiVersion": false,
+                      "optional": false,
+                      "scope": "Constant",
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put.accept",
+                      "readOnly": false,
+                      "access": "public",
+                      "decorators": []
+                    }
+                  ],
+                  "response": {
+                    "type": {
+                      "$ref": "120"
+                    }
+                  },
+                  "isOverride": false,
+                  "generateConvenient": true,
+                  "generateProtocol": true,
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put"
+                }
+              ],
+              "parameters": [
+                {
+                  "$id": "132",
+                  "kind": "endpoint",
+                  "name": "endpoint",
+                  "serializedName": "endpoint",
+                  "doc": "Service host",
+                  "type": {
+                    "$id": "133",
+                    "kind": "url",
+                    "name": "endpoint",
+                    "crossLanguageDefinitionId": "TypeSpec.url"
+                  },
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Client",
+                  "isEndpoint": true,
+                  "defaultValue": {
+                    "type": {
+                      "$id": "134",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string"
+                    },
+                    "value": "http://localhost:3000"
+                  },
+                  "serverUrlTemplate": "{endpoint}",
+                  "skipUrlEncoding": false,
+                  "readOnly": false,
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                }
+              ],
+              "decorators": [],
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator",
+              "apiVersions": [],
+              "parent": {
+                "$ref": "89"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

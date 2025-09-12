@@ -1,0 +1,41 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - eng/packages/plugins/client/Client.Plugin
+pr:
+  branches:
+    include:
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
+  paths:
+    include:
+      - eng/packages/plugins/client/Client.Plugin
+
+variables:
+  - template: /eng/pipelines/templates/variables/image.yml
+  - template: /eng/pipelines/templates/variables/globals.yml
+
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    stages:
+    - stage: Build
+      displayName: 'Build'
+      pool:
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
+      jobs:
+      - job: Build
+        steps:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        - pwsh: |
+            dotnet build .
+          displayName: 'Build client plugin'
+          workingDirectory: eng/packages/plugins/client/Client.Plugin

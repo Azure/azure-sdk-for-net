@@ -7,6 +7,8 @@
 
 using System;
 using Azure.Core.Pipeline;
+using SpecialWords._ModelProperties;
+using SpecialWords._Models;
 
 namespace SpecialWords
 {

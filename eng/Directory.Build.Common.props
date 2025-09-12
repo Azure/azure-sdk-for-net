@@ -13,6 +13,7 @@
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
+    <IncludeAutorestDependency Condition="'$(IncludeAutorestDependency)' != 'false' and '$(IsClientLibrary)' == 'true'">true</IncludeAutorestDependency>
     <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
     <IsSourceGenerator Condition="'$(IsSourceGenerator)' == '' and $(MSBuildProjectName.EndsWith('.SourceGeneration'))">true</IsSourceGenerator>
 
@@ -30,6 +31,7 @@
 
   <!-- Setup default project properties -->
   <PropertyGroup>
+    <LtsTargetFramework>net8.0</LtsTargetFramework>
     <LangVersion>latest</LangVersion>
     <!--
       Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
@@ -107,7 +109,7 @@
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
     <DefineConstants Condition="'$(BuildSnippets)' == 'true'">$(DefineConstants);SNIPPET</DefineConstants>
-    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net8.0'">netstandard2.0</ApiCompatBaselineTargetFramework>
+    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == '$(LtsTargetFramework)'">netstandard2.0</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
@@ -122,6 +124,16 @@
       AZC0012; <!-- Single word class names -->
       AZC0008;
       SCM0005; <!-- Resources currently do not have a parameterless ctor so builders cannot be created for them -->
+
+      <!--
+        Temporarily disable warnings from new analyzers:
+          AZC0034: Typename is already used in another library.
+          AZC0035: Missing model factory method
+
+        Tracked by # 51312
+      -->
+      AZC0034;
+      AZC0035;
     </NoWarn>
   </PropertyGroup>
 
@@ -138,15 +150,15 @@
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == ''">false</SupportsNetStandard20>
 
     <RequiredTargetFrameworks>net452;net461;netstandard2.0</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true' and '$(IsSourceGenerator)' != 'true'">net8.0;netstandard2.0</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(IsGeneratorLibrary)' == 'true'">net8.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true' and '$(IsSourceGenerator)' != 'true'">$(LtsTargetFramework);netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(IsGeneratorLibrary)' == 'true'">$(LtsTargetFramework)</RequiredTargetFrameworks>
     <RequiredTargetFrameworks Condition="'$(IsSourceGenerator)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsGeneratorLibrary)' != 'true' and ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true')">
     <IsPackable>false</IsPackable>
     <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
-    <RequiredTargetFrameworks>net9.0;net8.0;</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
     <!-- Also test net462 on Windows. net461 is out of support as of 4/2022 and is not supported in version 4.4.x and beyond of NUnit3TestAdapter. -->
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net462</RequiredTargetFrameworks>
     <!-- But only build snippets for the latest. -->

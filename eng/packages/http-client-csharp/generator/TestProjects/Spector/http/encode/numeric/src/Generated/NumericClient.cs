@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Encode.Numeric._Property;
 
 namespace Encode.Numeric
 {

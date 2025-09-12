@@ -21,12 +21,12 @@ namespace Azure.SpecialHeaders.XmsClientRequestId
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Response Get(string clientRequestId, RequestContext context) => throw null;
+        public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(string clientRequestId, RequestContext context) => throw null;
+        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response Get(string clientRequestId = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetAsync(string clientRequestId = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> GetAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

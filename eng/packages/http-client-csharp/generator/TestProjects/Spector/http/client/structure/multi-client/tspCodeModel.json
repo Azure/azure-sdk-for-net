@@ -1,0 +1,421 @@
+{
+  "name": "Client.Structure.Service.Multi.Client",
+  "apiVersions": [],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "ClientType",
+      "crossLanguageDefinitionId": "Client.Structure.Service.ClientType",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "Default",
+          "value": "default",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "MultiClient",
+          "value": "multi-client",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "RenamedOperation",
+          "value": "renamed-operation",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "6",
+          "kind": "enumvalue",
+          "name": "TwoOperationGroup",
+          "value": "two-operation-group",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "7",
+          "kind": "enumvalue",
+          "name": "ClientOperationGroup",
+          "value": "client-operation-group",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        }
+      ],
+      "namespace": "Client.Structure.Service",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "Input",
+      "decorators": []
+    }
+  ],
+  "constants": [],
+  "models": [],
+  "clients": [
+    {
+      "$id": "8",
+      "kind": "client",
+      "name": "ClientAClient",
+      "namespace": "Client.Structure.MultiClient",
+      "methods": [
+        {
+          "$id": "9",
+          "kind": "basic",
+          "name": "renamedOne",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "10",
+            "name": "renamedOne",
+            "resourceName": "ClientA",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/client/structure/{client}",
+            "path": "/one",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedOne",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedOne"
+        },
+        {
+          "$id": "11",
+          "kind": "basic",
+          "name": "renamedThree",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "12",
+            "name": "renamedThree",
+            "resourceName": "ClientA",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/client/structure/{client}",
+            "path": "/three",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedThree",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedThree"
+        },
+        {
+          "$id": "13",
+          "kind": "basic",
+          "name": "renamedFive",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "14",
+            "name": "renamedFive",
+            "resourceName": "ClientA",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/client/structure/{client}",
+            "path": "/five",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedFive",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedFive"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "15",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Need to be set as 'http://localhost:3000' in client.",
+          "type": {
+            "$id": "16",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}/client/structure/{client}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+        },
+        {
+          "$id": "17",
+          "kind": "endpoint",
+          "name": "client",
+          "serializedName": "client",
+          "doc": "Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.",
+          "type": {
+            "$ref": "1"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": false,
+          "serverUrlTemplate": "{endpoint}/client/structure/{client}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Client.Structure.Service.client"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA",
+      "apiVersions": []
+    },
+    {
+      "$id": "18",
+      "kind": "client",
+      "name": "ClientBClient",
+      "namespace": "Client.Structure.MultiClient",
+      "methods": [
+        {
+          "$id": "19",
+          "kind": "basic",
+          "name": "renamedTwo",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "20",
+            "name": "renamedTwo",
+            "resourceName": "ClientB",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/client/structure/{client}",
+            "path": "/two",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedTwo",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedTwo"
+        },
+        {
+          "$id": "21",
+          "kind": "basic",
+          "name": "renamedFour",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "22",
+            "name": "renamedFour",
+            "resourceName": "ClientB",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/client/structure/{client}",
+            "path": "/four",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedFour",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedFour"
+        },
+        {
+          "$id": "23",
+          "kind": "basic",
+          "name": "renamedSix",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "24",
+            "name": "renamedSix",
+            "resourceName": "ClientB",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/client/structure/{client}",
+            "path": "/six",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedSix",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedSix"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "25",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Need to be set as 'http://localhost:3000' in client.",
+          "type": {
+            "$id": "26",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}/client/structure/{client}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+        },
+        {
+          "$id": "27",
+          "kind": "endpoint",
+          "name": "client",
+          "serializedName": "client",
+          "doc": "Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.",
+          "type": {
+            "$ref": "1"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": false,
+          "serverUrlTemplate": "{endpoint}/client/structure/{client}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Client.Structure.Service.client"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB",
+      "apiVersions": []
+    }
+  ]
+}

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Payload.ContentNegotiation
+namespace Payload.ContentNegotiation._SameBody
 {
     public partial class SameBody
     {

@@ -14,7 +14,7 @@ namespace Azure.Generator.Tests.Common
 #pragma warning disable SA1402
     public abstract class RoundTripStrategy<T>
     {
-        public abstract object Read(string payload, object model, ModelReaderWriterOptions options);
+        public abstract object? Read(string payload, object model, ModelReaderWriterOptions options);
         public abstract BinaryData Write(T model, ModelReaderWriterOptions options);
         public abstract bool IsExplicitJsonWrite { get; }
         public abstract bool IsExplicitJsonRead { get; }
@@ -77,7 +77,7 @@ namespace Azure.Generator.Tests.Common
             return model.Write(options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ((IPersistableModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
@@ -93,7 +93,7 @@ namespace Azure.Generator.Tests.Common
             return ((IPersistableModel<object>)model).Write(options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ((IPersistableModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
@@ -109,7 +109,7 @@ namespace Azure.Generator.Tests.Common
             return WriteWithJsonInterface(model, options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ((IJsonModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
@@ -125,7 +125,7 @@ namespace Azure.Generator.Tests.Common
             return WriteWithJsonInterface((IJsonModel<object>)model, options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ((IJsonModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
@@ -141,7 +141,7 @@ namespace Azure.Generator.Tests.Common
             return WriteWithJsonInterface(model, options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
             return ((IJsonModel<T>)model).Create(ref reader, options);
@@ -158,7 +158,7 @@ namespace Azure.Generator.Tests.Common
             return WriteWithJsonInterface((IJsonModel<object>)model, options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
             return ((IJsonModel<object>)model).Create(ref reader, options);

@@ -26,35 +26,37 @@
     <Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
 	</Target>
 
-	<!-- Include shared code from Azure.Core -->
+	<!-- Include shared code from Azure.Core. CopyToOutputDirectory is required to make roslyn reduce work -->
 	<ItemGroup>
-		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Compile>
-		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared/Core">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\TypeFormatters.cs" LinkBase="Shared/Core">
+    <Compile Include="
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AzureKeyCredentialPolicy.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\TypeFormatters.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RequestHeaderExtensions.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ClientDiagnostics.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScope.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\HttpMessageSanitizer.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ProtocolOperationHelpers.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\VoidValue.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\OperationFinalStateVia.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\HttpPipelineExtensions.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ProtocolOperation.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\OperationInternal.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\OperationInternalBase.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\OperationInternalOfT.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AsyncLockWithValue.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\NextLinkOperationImplementation.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\IOperationSource.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\TaskExtensions.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\OperationPoller.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\FixedDelayWithNoJitterStrategy.cs;">
+      <LinkBase>Shared/Core</LinkBase>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RequestHeaderExtensions.cs" LinkBase="Shared/Core">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared/Core">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Compile>
-		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ClientDiagnostics.cs" LinkBase="Shared/Core">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Compile>
-		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared/Core">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Compile>
-		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared/Core">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Compile>
-		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\HttpMessageSanitizer.cs" LinkBase="Shared/Core">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Compile>
-	</ItemGroup>
+  </ItemGroup>
+
+
 
 </Project>

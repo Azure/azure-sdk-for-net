@@ -14,6 +14,17 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
     name: "MIT License",
     company: "Microsoft Corporation"
   };
+  context.options["package-name"] ??= context.options["namespace"];
+
+  // Merge additional decorators
+  context.options["sdk-context-options"] ??= {};
+  const existingDecorators =
+    context.options["sdk-context-options"].additionalDecorators;
+  context.options["sdk-context-options"].additionalDecorators = [
+    ...(Array.isArray(existingDecorators) ? existingDecorators : []),
+    // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-client-generator-core/README.md#usesystemtextjsonconverter
+    "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"
+  ];
 
   // warn if use-model-namespaces is true, but namespace is not set
   if (context.options["model-namespace"] && !context.options["namespace"]) {

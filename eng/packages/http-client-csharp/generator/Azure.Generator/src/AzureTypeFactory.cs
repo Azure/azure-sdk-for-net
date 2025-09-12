@@ -16,7 +16,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.TypeSpec.Generator.Providers;
+using Azure.Core;
 
 namespace Azure.Generator
 {
@@ -73,8 +73,30 @@ namespace Azure.Generator
                     return knownType;
                 }
             }
+            else if (inputType is InputArrayType inputArrayType)
+            {
+                // Handle special collection types
+                if (KnownAzureTypes.TryGetKnownType(inputArrayType.CrossLanguageDefinitionId, out var knownType))
+                {
+                    var elementType = CreateCSharpType(inputArrayType.ValueType);
+                    return new CSharpType(knownType, elementType!);
+                }
+            }
 
             return base.CreateCSharpTypeCore(inputType);
+        }
+
+        /// <inheritdoc/>
+        protected override Type? CreateFrameworkType(string fullyQualifiedTypeName)
+        {
+            return fullyQualifiedTypeName switch
+            {
+                "Azure.Core.ResourceIdentifier" => typeof(ResourceIdentifier),
+                "Azure.Core.AzureLocation" => typeof(AzureLocation),
+                "Azure.ResponseError" => typeof(ResponseError),
+                "Azure.ETag" => typeof(ETag),
+                _ => base.CreateFrameworkType(fullyQualifiedTypeName)
+            };
         }
 
         private CSharpType? CreateKnownPrimitiveType(InputPrimitiveType inputType)
@@ -94,21 +116,24 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
-#pragma warning restore AZC0014 // Avoid using banned types in public API
+        public override ValueExpression DeserializeJsonValue(
+            Type valueType,
+            ScopedApi<JsonElement> element,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
+            SerializationFormat format)
         {
-            var expression = DeserializeJsonValueCore(valueType, element, format);
-            return expression ?? base.DeserializeJsonValue(valueType, element, format);
+            var expression = DeserializeJsonValueCore(valueType, element, mrwOptionsParameter, format);
+            return expression ?? base.DeserializeJsonValue(valueType, element, mrwOptionsParameter, format);
         }
 
         private ValueExpression? DeserializeJsonValueCore(
             Type valueType,
             ScopedApi<JsonElement> element,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
             SerializationFormat format)
         {
             return KnownAzureTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression) ?
-                deserializationExpression(new CSharpType(valueType), element, format) :
+                deserializationExpression(valueType, element, mrwOptionsParameter, format) :
                 null;
         }
 
@@ -119,7 +144,7 @@ namespace Azure.Generator
             return statement ?? base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
         }
 
-        private MethodBodyStatement? SerializeValueTypeCore(SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
+        private MethodBodyStatement? SerializeValueTypeCore(SerializationFormat serializationFormat, ValueExpression value, CSharpType valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
         {
             return KnownAzureTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression) ?
                 serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :

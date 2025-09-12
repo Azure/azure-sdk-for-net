@@ -10,11 +10,12 @@ pr:
       - eng/CredScanSuppression.json
 
 pool:
-  name: azsdk-pool-mms-win-2022-general
-  vmImage: windows-2022
+  name: $(WINDOWSPOOL)
+  demands: ImageOverride -equals $(WINDOWSVMIMAGE)
 
 variables:
   - template: templates/variables/globals.yml
+  - template: templates/variables/image.yml
 
 stages:
   - stage: AggregateReports
@@ -144,15 +145,12 @@ stages:
     jobs:
       - job: ComplianceTools
         timeoutInMinutes: 120
+
         steps:
           - template: /eng/common/pipelines/templates/steps/policheck.yml
             parameters:
               ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
               PublishAnalysisLogs: false
-
-          - template: /eng/common/pipelines/templates/steps/credscan.yml
-            parameters:
-              BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
 
       - job: APIScan
         timeoutInMinutes: 180

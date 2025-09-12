@@ -5,24 +5,24 @@
   },
   "matrix": {
     "Agent": {
-      "Ubuntu-20.04_NETCore3.1": {
-        "OSVmImage": "MMSUbuntu20.04",
-        "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+      "Ubuntu-24.04_NETCore3.1": {
+        "OSVmImage": "ubuntu-24.04",
+        "Pool": "azsdk-pool",
         "TestTargetFramework": "netcoreapp3.1"
       },
-      "Ubuntu-20.04_NET6.0": {
-        "OSVmImage": "MMSUbuntu20.04",
-        "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+      "Ubuntu-24.04_NET6.0": {
+        "OSVmImage": "ubuntu-24.04",
+        "Pool": "azsdk-pool",
         "TestTargetFramework": "net6.0"
       },
       "windows2022_NET6.0": {
         "OSVmImage": "windows-2022",
-        "Pool": "azsdk-pool-mms-win-2022-general",
+        "Pool": "azsdk-pool",
         "TestTargetFramework": "net6.0"
       },
       "windows2022_NET462": {
         "OSVmImage": "windows-2022",
-        "Pool": "azsdk-pool-mms-win-2022-general",
+        "Pool": "azsdk-pool",
         "TestTargetFramework": "net462"
       },
       "macos_NETCore3.1": {
@@ -76,7 +76,7 @@
       "Agent": {
         "windows2022": {
           "OSVmImage": "windows-2022",
-          "Pool": "azsdk-pool-mms-win-2022-general",
+          "Pool": "azsdk-pool",
           "TestTargetFramework": "netcoreapp3.1"
         }
       },

@@ -2,7 +2,7 @@
   "output-folder": "./outputFolder",
   "project-folder": "./projectFolder",
   "unknown-bool-property": false,
-  "package-name": "sample-library",
+  "package-name": "Samples",
   "unknown-string-property": "unknownPropertyValue",
   "license": {
     "name": "MIT License",

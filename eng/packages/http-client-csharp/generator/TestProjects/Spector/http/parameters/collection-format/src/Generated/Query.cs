@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Parameters.CollectionFormat
+namespace Parameters.CollectionFormat._Query
 {
     public partial class Query
     {

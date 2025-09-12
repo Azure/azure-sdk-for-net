@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Encode.Duration
+namespace Encode.Duration._Header
 {
     public partial class Header
     {

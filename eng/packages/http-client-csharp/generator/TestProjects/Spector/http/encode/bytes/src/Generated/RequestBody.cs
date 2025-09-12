@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Encode.Bytes
+namespace Encode.Bytes._RequestBody
 {
     public partial class RequestBody
     {

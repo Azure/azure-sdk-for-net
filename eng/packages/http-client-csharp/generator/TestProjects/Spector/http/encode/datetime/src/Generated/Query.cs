@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Encode.Datetime
+namespace Encode.Datetime._Query
 {
     public partial class Query
     {

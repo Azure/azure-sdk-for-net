@@ -89,7 +89,7 @@
 
   <!-- Add Client SDK Tools -->
   <ItemGroup>
-    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
+    <PackageReference Condition="'$(IncludeAutorestDependency)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
 
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
@@ -105,6 +105,7 @@
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Memory" />
     <PackageReference Remove="System.Net.Http" />
     <PackageReference Remove="System.Numerics.Vectors" />
     <PackageReference Remove="System.Text.Encodings.Web" />
@@ -172,7 +173,7 @@
 
   <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true'" />
 
-  <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
+  <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
 
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
 
@@ -328,17 +329,6 @@
     <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
   </Target>
 
-  <!-- Validates that all the mgmt libraries have a trigger path in the core resourcemanager pipeline -->
-  <Target Name="ValidateResourceManagerPipelineTriggers" AfterTargets="Build" Condition="'$(IsMgmtSubLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'" >
-    <PropertyGroup>
-      <_ResourceManagerCIFile>$(RepoRoot)/sdk/resourcemanager/ci.mgmt.yml</_ResourceManagerCIFile>
-      <_ResourceManagerCIFileContents>$([System.IO.File]::ReadAllText($(_ResourceManagerCIFile)))</_ResourceManagerCIFileContents>
-      <_ContainsTrigger>$([System.Text.RegularExpressions.Regex]::IsMatch($(_ResourceManagerCIFileContents), `- sdk/.*/$(MSBuildProjectName)\W+`))</_ContainsTrigger>
-    </PropertyGroup>
-
-    <Error Condition="'$(_ContainsTrigger)' != 'true'" Text="The core resourcemanager pipeline ['$(_ResourceManagerCIFile)'] does not contain a trigger path for your library please run 'eng/scripts/Update-Mgmt-CI.ps1' to add the correct trigger paths." />
-  </Target>
-
   <!-- InheritDoc-->
   <ItemGroup Condition="'$(InheritDocEnabled)' != 'false'">
     <PackageReference Include="SauceControl.InheritDoc" PrivateAssets="all" />
@@ -375,7 +365,7 @@
   <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
   </Target>
 
-  <Target Name="GetPackageInfo">
+  <Target Name="GetPackageInfo" Returns="@(PackageInfoLine)">
     <PropertyGroup>
       <PackageIsNewSdk>false</PackageIsNewSdk>
       <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true' or '$(IsFunctionsLibrary)' == 'true'">true</PackageIsNewSdk>
@@ -391,9 +381,14 @@
 
       <!-- Parse out the service directory based on the relative path to the sdk folder -->
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
+      
+      <!-- Format package info line for output -->
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'</PackageInfoText>
     </PropertyGroup>
 
-    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'" Importance="High" />
+    <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
+      <PackageInfoLine Include="$(PackageInfoText)" />
+    </ItemGroup>
   </Target>
 
   <Target Name="GetCodeGenProjects" Returns="@(ProjectsToInclude)">

@@ -12,7 +12,7 @@ import "@azure-tools/typespec-azure-core";
   "{basicTypeSpecUrl}",
   "Endpoint Service",
   {
-    basicTypeSpecUrl: string,
+    basicTypeSpecUrl: url,
   }
 )
 @useAuth(ApiKeyAuth<ApiKeyLocation.header, "my-api-key"> | AadToken)
@@ -40,7 +40,6 @@ enum Versions {
 }
 
 @doc("float fixed enum")
-@fixed
 enum FloatFixedEnumWithIntValue {
   One: 1.0,
   Two: 2.0,
@@ -48,7 +47,6 @@ enum FloatFixedEnumWithIntValue {
 }
 
 @doc("float fixed enum")
-@fixed
 enum FloatFixedEnum {
   OneDotOne: 1.1,
   TwoDotTwo: 2.2,
@@ -56,7 +54,6 @@ enum FloatFixedEnum {
 }
 
 @doc("int fixed enum")
-@fixed
 enum IntFixedEnum {
   One: 1,
   Two: 2,
@@ -64,7 +61,6 @@ enum IntFixedEnum {
 }
 
 @doc("Simple enum")
-@fixed
 enum StringFixedEnum {
   One: "1",
   Two: "2",
@@ -172,6 +168,7 @@ model ModelWithClientName {
 }
 
 @doc("this is a roundtrip model")
+@useSystemTextJsonConverter()
 model RoundTripModel {
   @doc("Required string, illustrating a reference type property.")
   requiredString: string;
@@ -377,3 +374,80 @@ op stillConvenient(): void;
 @head
 @convenientAPI(true)
 op headAsBoolean(@path id: string): void;
+
+@route("/link")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink next?: url;
+};
+
+@route("/linkString")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithStringNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink next?: string;
+};
+
+@route("/linkHeader")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithHeaderNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink @header next?: string;
+};
+
+@route("/continuation")
+@doc("List things with continuation token")
+@convenientAPI(true)
+@list
+op ListWithContinuationToken(@query @continuationToken token?: string): {
+  @pageItems
+  things: ThingModel[];
+
+  @continuationToken nextToken?: string;
+};
+
+@route("/continuation/header")
+@doc("List things with continuation token header response")
+@convenientAPI(true)
+@list
+op ListWithContinuationTokenHeaderResponse(@query @continuationToken token?: string): {
+  @pageItems
+  things: ThingModel[];
+
+  @header @continuationToken nextToken?: string;
+};
+
+model Page<T> {
+  @pageItems items: T[];
+}
+
+@route("list/paging")
+@doc("List things with paging")
+@convenientAPI(true)
+@list
+op ListWithPaging(): Page<ThingModel>;
+
+@route("conditionalrequest")
+@doc("A sample operation with conditional requests")
+@convenientAPI(true)
+@get
+op ConditionalRequest(@header("If-Match") ifMatch?: string, @header("If-None-Match") ifNoneMatch?: string): void;
+
+@route("conditionalrequest/date")
+@doc("A sample operation with conditional requests")
+@convenientAPI(true)
+@get
+op ConditionalRequestDate(@header("If-Match") ifMatch?: string, @header("If-None-Match") ifNoneMatch?: string, @header("If-Modified-Since") ifModifiedSince?: string): void;

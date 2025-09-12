@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Payload.MultiPart._FormData.HttpParts;
 
-namespace Payload.MultiPart
+namespace Payload.MultiPart._FormData
 {
     public partial class FormData
     {

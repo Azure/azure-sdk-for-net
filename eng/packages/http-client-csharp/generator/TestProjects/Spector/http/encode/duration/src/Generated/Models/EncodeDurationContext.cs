@@ -6,9 +6,16 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Encode.Duration._Property;
 
 namespace Encode.Duration
 {
+    [ModelReaderWriterBuildable(typeof(DefaultDurationProperty))]
+    [ModelReaderWriterBuildable(typeof(Float64SecondsDurationProperty))]
+    [ModelReaderWriterBuildable(typeof(FloatSecondsDurationArrayProperty))]
+    [ModelReaderWriterBuildable(typeof(FloatSecondsDurationProperty))]
+    [ModelReaderWriterBuildable(typeof(Int32SecondsDurationProperty))]
+    [ModelReaderWriterBuildable(typeof(ISO8601DurationProperty))]
     public partial class EncodeDurationContext : ModelReaderWriterContext
     {
     }

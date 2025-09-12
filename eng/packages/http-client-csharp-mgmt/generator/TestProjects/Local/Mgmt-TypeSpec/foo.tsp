@@ -9,36 +9,79 @@ namespace MgmtTypeSpec;
 
 @resource("foos")
 model Foo is TrackedResource<FooProperties> {
-    ...ResourceNameParameter<Foo, SegmentName = "foos">;
+  ...ResourceNameParameter<Foo, SegmentName = "foos">;
 
-    ...ExtendedLocationProperty;
+  ...ExtendedLocationProperty;
 }
 
 @useSystemTextJsonConverter("csharp")
 model FooProperties {
-    /** the service url */
-    serviceUrl?: url;
+  /** the service url */
+  serviceUrl?: url;
 
-    /** something */
-    something?: string;
+  /** something */
+  something?: string;
 
-    /** boolean value */
-    boolValue?: boolean;
+  /** boolean value */
+  boolValue?: boolean;
 
-    /** float value */
-    floatValue?: float32;
+  /** float value */
+  floatValue?: float32;
 
-    /** double value */
-    doubleValue?: float64;
+  /** double value */
+  doubleValue?: float64;
 }
 
 @armResourceOperations
 interface Foos {
-    createOrUpdate is ArmResourceCreateOrUpdateAsync<Foo>;
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<Foo>;
 
-    get is ArmResourceRead<Foo>;
+  get is ArmResourceRead<Foo>;
 
-    delete is ArmResourceDeleteWithoutOkAsync<Foo>;
+  delete is ArmResourceDeleteWithoutOkAsync<Foo>;
 
-    list is ArmResourceListByParent<Foo>;
+  update is ArmCustomPatchAsync<Foo, Foo>;
+
+  list is ArmResourceListByParent<Foo>;
+
+  listBySubscription is ArmListBySubscription<Foo>;
+}
+
+@singleton
+model FooSettings is ProxyResource<FooSettingsProperties> {
+  @doc("The default Foo settings.")
+  @segment("FooSettings")
+  @key
+  @visibility(Lifecycle.Read)
+  @path
+  @pattern("^[a-zA-Z0-9-]{3,24}$")
+  name: string;
+}
+
+@armResourceOperations
+interface FooSettingsOperations {
+  get is ArmResourceRead<FooSettings>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<FooSettings>;
+  update is ArmCustomPatchSync<
+    FooSettings,
+    Azure.ResourceManager.Foundations.ResourceUpdateModel<
+      FooSettings,
+      FooSettingsProperties
+    >
+  >;
+  delete is ArmResourceDeleteSync<FooSettings>;
+}
+
+model FooSettingsProperties {
+  accessControlEnabled?: boolean;
+
+  @visibility(Lifecycle.Read)
+  provisioningState?: ResourceProvisioningState;
+
+  @visibility(Lifecycle.Read)
+  metaData?: FooSettingsPropertiesMetaData;
+}
+
+model FooSettingsPropertiesMetaData {
+  metaDatas?: string[];
 }

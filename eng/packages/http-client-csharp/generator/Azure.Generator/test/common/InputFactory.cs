@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 
 namespace Azure.Generator.Tests.Common
 {
@@ -40,10 +39,11 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
+            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Int32(string name, int value)
+            public static InputEnumTypeValue Int32(string name, int value, InputEnumType enumType)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, "", $"{name} description", enumType);
             }
 
             /// <summary>
@@ -51,10 +51,11 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
+            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Float32(string name, float value)
+            public static InputEnumTypeValue Float32(string name, float value, InputEnumType enumType)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, "", $"{name} description", enumType);
             }
 
             /// <summary>
@@ -62,10 +63,11 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
+            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue String(string name, string value)
+            public static InputEnumTypeValue String(string name, string value, InputEnumType enumType)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, "", $"{name} description", enumType);
             }
         }
 
@@ -78,20 +80,24 @@ namespace Azure.Generator.Tests.Common
             /// Construct input literal type value for string
             /// </summary>
             /// <param name="value"></param>
+            /// <param name="name"></param>
+            /// <param name="namespace"></param>
             /// <returns></returns>
-            public static InputLiteralType String(string value)
+            public static InputLiteralType String(string value, string? name = null, string? @namespace = null)
             {
-                return new InputLiteralType(InputPrimitiveType.String, value);
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.String, value);
             }
 
             /// <summary>
             /// Construct input enum type value for any
             /// </summary>
             /// <param name="value"></param>
+            /// <param name="name"></param>
+            /// <param name="namespace"></param>
             /// <returns></returns>
-            public static InputLiteralType Any(object value)
+            public static InputLiteralType Int32(int value, string? name = null, string? @namespace = null)
             {
-                return new InputLiteralType(InputPrimitiveType.Any, value);
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.Int32, value);
             }
         }
 
@@ -126,59 +132,15 @@ namespace Azure.Generator.Tests.Common
         /// </summary>
         /// <param name="contentType"></param>
         /// <returns></returns>
-        public static InputParameter ContentTypeParameter(string contentType)
-            => Parameter(
+        public static InputHeaderParameter ContentTypeParameter(string contentType)
+            => HeaderParameter(
                 "contentType",
                 Literal.String(contentType),
-                location: InputRequestLocation.Header,
                 isRequired: true,
                 defaultValue: Constant.String(contentType),
-                nameInRequest: "Content-Type",
+                serializedName: "Content-Type",
                 isContentType: true,
-                kind: InputParameterKind.Constant);
-
-        /// <summary>
-        /// Construct input paraemter
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="type"></param>
-        /// <param name="nameInRequest"></param>
-        /// <param name="defaultValue"></param>
-        /// <param name="location"></param>
-        /// <param name="isRequired"></param>
-        /// <param name="kind"></param>
-        /// <param name="isEndpoint"></param>
-        /// <param name="isContentType"></param>
-        /// <returns></returns>
-        public static InputParameter Parameter(
-            string name,
-            InputType type,
-            string? nameInRequest = null,
-            InputConstant? defaultValue = null,
-            InputRequestLocation location = InputRequestLocation.Body,
-            bool isRequired = false,
-            InputParameterKind kind = InputParameterKind.Method,
-            bool isEndpoint = false,
-            bool isContentType = false)
-        {
-            return new InputParameter(
-                name,
-                nameInRequest ?? name,
-                null,
-                $"{name} description",
-                type,
-                location,
-                defaultValue,
-                kind,
-                isRequired,
-                false,
-                isContentType,
-                isEndpoint,
-                false,
-                false,
-                null,
-                null);
-        }
+                scope: InputParameterScope.Constant);
 
         /// <summary>
         /// Construct input model property
@@ -188,11 +150,13 @@ namespace Azure.Generator.Tests.Common
         /// <param name="isRequired"></param>
         /// <param name="isReadOnly"></param>
         /// <param name="isDiscriminator"></param>
+        /// <param name="isHttpMetadata"></param>
+        /// <param name="isApiVersion"></param>
+        /// <param name="defaultValue"></param>
         /// <param name="wireName"></param>
         /// <param name="summary"></param>
-        /// <param name="description"></param>
         /// <param name="serializedName"></param>
-        /// <param name="kind"></param>
+        /// <param name="doc"></param>
         /// <returns></returns>
         public static InputModelProperty Property(
             string name,
@@ -200,23 +164,215 @@ namespace Azure.Generator.Tests.Common
             bool isRequired = false,
             bool isReadOnly = false,
             bool isDiscriminator = false,
+            bool isHttpMetadata = false,
+            bool isApiVersion = false,
+            InputConstant? defaultValue = null,
             string? wireName = null,
             string? summary = null,
-            string? description = null,
             string? serializedName = null,
-            InputModelPropertyKind kind = InputModelPropertyKind.Property)
+            string? doc = null)
         {
             return new InputModelProperty(
-                name,
-                kind,
-                summary,
-                description ?? $"Description for {name}",
-                type,
-                isRequired,
-                isReadOnly,
-                isDiscriminator,
-                serializedName,
-                new(json: new(wireName ?? name)));
+                name: name,
+                summary: summary,
+                doc: doc ?? $"Description for {name}",
+                type: type,
+                isRequired: isRequired,
+                isReadOnly: isReadOnly,
+                isApiVersion: isApiVersion,
+                defaultValue: defaultValue,
+                isHttpMetadata: isHttpMetadata,
+                access: null,
+                isDiscriminator: isDiscriminator,
+                serializedName: serializedName ?? wireName ?? name.ToVariableName(),
+                serializationOptions: new(json: new(wireName ?? name.ToVariableName())));
+        }
+
+        public static InputHeaderParameter HeaderParameter(
+           string name,
+           InputType type,
+           bool isRequired = false,
+           bool isReadOnly = false,
+           bool isApiVersion = false,
+           bool isContentType = false,
+           string? summary = null,
+           string? doc = null,
+           string? collectionFormat = null,
+           string? serializedName = null,
+           InputConstant? defaultValue = null,
+           InputParameterScope scope = InputParameterScope.Method)
+        {
+            return new InputHeaderParameter(
+                name: name,
+                summary: summary,
+                doc: doc ?? $"{name} description",
+                type: type,
+                isRequired: isRequired,
+                isReadOnly: isReadOnly,
+                isApiVersion: isApiVersion,
+                isContentType: isContentType,
+                access: null,
+                defaultValue: defaultValue,
+                collectionFormat: collectionFormat,
+                scope: scope,
+                arraySerializationDelimiter: null,
+                serializedName: serializedName ?? name);
+        }
+
+        public static InputQueryParameter QueryParameter(
+            string name,
+            InputType type,
+            bool isRequired = false,
+            bool isReadOnly = false,
+            bool isApiVersion = false,
+            InputConstant? defaultValue = null,
+            string? summary = null,
+            string? doc = null,
+            string? collectionFormat = null,
+            string? serializedName = null,
+            bool explode = false,
+            InputParameterScope scope = InputParameterScope.Method,
+            string? delimiter = null)
+        {
+            return new InputQueryParameter(
+                name: name,
+                summary: summary,
+                doc: doc ?? $"{name} description",
+                type: type,
+                isRequired: isRequired,
+                isReadOnly: isReadOnly,
+                isApiVersion: isApiVersion,
+                defaultValue: defaultValue,
+                scope: scope,
+                arraySerializationDelimiter: delimiter,
+                access: null,
+                serializedName: serializedName ?? name,
+                collectionFormat: collectionFormat,
+                explode: explode);
+        }
+
+        public static InputPathParameter PathParameter(
+            string name,
+            InputType type,
+            bool isRequired = false,
+            bool isReadOnly = false,
+            bool isApiVersion = false,
+            InputConstant? defaultValue = null,
+            string? summary = null,
+            string? doc = null,
+            string? serializedName = null,
+            bool allowReserved = false,
+            bool explode = false,
+            bool skipUrlEncoding = false,
+            string? serverUrlTemplate = null,
+            InputParameterScope scope = InputParameterScope.Method)
+        {
+            return new InputPathParameter(
+                name: name,
+                summary: summary,
+                doc: doc ?? $"{name} description",
+                type: type,
+                isRequired: isRequired,
+                isReadOnly: isReadOnly,
+                isApiVersion: isApiVersion,
+                explode: explode,
+                defaultValue: defaultValue,
+                scope: scope,
+                skipUrlEncoding: skipUrlEncoding,
+                serverUrlTemplate: serverUrlTemplate,
+                access: null,
+                serializedName: serializedName ?? name,
+                allowReserved: allowReserved);
+        }
+
+        public static InputEndpointParameter EndpointParameter(
+            string name,
+            InputType type,
+            bool isRequired = false,
+            bool isReadOnly = false,
+            bool isApiVersion = false,
+            InputConstant? defaultValue = null,
+            string? summary = null,
+            string? doc = null,
+            string? serializedName = null,
+            bool skipUrlEncoding = false,
+            bool isEndpoint = true,
+            string? serverUrlTemplate = null,
+            InputParameterScope scope = InputParameterScope.Client)
+        {
+            return new InputEndpointParameter(
+                name: name,
+                summary: summary,
+                doc: doc ?? $"{name} description",
+                type: type,
+                isRequired: isRequired,
+                isReadOnly: isReadOnly,
+                isApiVersion: isApiVersion,
+                defaultValue: defaultValue,
+                scope: scope,
+                skipUrlEncoding: skipUrlEncoding,
+                serverUrlTemplate: serverUrlTemplate,
+                isEndpoint: isEndpoint,
+                access: null,
+                serializedName: serializedName ?? name);
+        }
+
+        public static InputBodyParameter BodyParameter(
+            string name,
+            InputType type,
+            bool isRequired = false,
+            bool isReadOnly = false,
+            bool isApiVersion = false,
+            InputConstant? defaultValue = null,
+            string? summary = null,
+            string? doc = null,
+            string? serializedName = null,
+            string[]? contentTypes = null,
+            string? defaultContentType = null,
+            InputParameterScope scope = InputParameterScope.Method)
+        {
+            return new InputBodyParameter(
+                name: name,
+                summary: summary,
+                doc: doc ?? $"{name} description",
+                type: type,
+                isRequired: isRequired,
+                isReadOnly: isReadOnly,
+                isApiVersion: isApiVersion,
+                defaultValue: defaultValue,
+                defaultContentType: defaultContentType ?? "application/json",
+                contentTypes: contentTypes ?? ["application/json"],
+                scope: scope,
+                access: null,
+                serializedName: serializedName ?? name);
+        }
+
+        public static InputMethodParameter MethodParameter(
+            string name,
+            InputType type,
+            bool isRequired = false,
+            bool isReadOnly = false,
+            bool isApiVersion = false,
+            InputConstant? defaultValue = null,
+            string? summary = null,
+            string? doc = null,
+            string? serializedName = null,
+            InputRequestLocation location = InputRequestLocation.Body,
+            InputParameterScope scope = InputParameterScope.Method)
+        {
+            return new InputMethodParameter(
+                name: name,
+                summary: summary,
+                doc: doc ?? $"{name} description",
+                type: type,
+                isRequired: isRequired,
+                isReadOnly: isReadOnly,
+                isApiVersion: isApiVersion,
+                defaultValue: defaultValue,
+                scope: scope,
+                access: null,
+                location: location,
+                serializedName: serializedName ?? name);
         }
 
         /// <summary>
@@ -286,14 +442,16 @@ namespace Azure.Generator.Tests.Common
         /// <param name="parameters"></param>
         /// <param name="response"></param>
         /// <param name="exception"></param>
+        /// <param name="crossLanguageDefinitionId"></param>
         /// <returns></returns>
         public static InputBasicServiceMethod BasicServiceMethod(
             string name,
             InputOperation operation,
             string access = "public",
-            IReadOnlyList<InputParameter>? parameters = null,
+            IReadOnlyList<InputMethodParameter>? parameters = null,
             InputServiceMethodResponse? response = null,
-            InputServiceMethodResponse? exception = null)
+            InputServiceMethodResponse? exception = null,
+            string? crossLanguageDefinitionId = null)
         {
             return new InputBasicServiceMethod(
                 name,
@@ -308,7 +466,7 @@ namespace Azure.Generator.Tests.Common
                 false,
                 true,
                 true,
-                string.Empty);
+                crossLanguageDefinitionId ?? string.Empty);
         }
 
         /// <summary>
@@ -337,7 +495,7 @@ namespace Azure.Generator.Tests.Common
            string name,
            InputOperation operation,
            string access = "public",
-           IReadOnlyList<InputParameter>? parameters = null,
+           IReadOnlyList<InputMethodParameter>? parameters = null,
            InputServiceMethodResponse? response = null,
            InputServiceMethodResponse? exception = null,
            InputPagingServiceMetadata? pagingMetadata = null)
@@ -369,6 +527,55 @@ namespace Azure.Generator.Tests.Common
         public static InputPagingServiceMetadata PagingMetadata(IReadOnlyList<string> itemPropertySegments, InputNextLink? nextLink, InputContinuationToken? continuationToken)
         {
             return new InputPagingServiceMetadata(itemPropertySegments, nextLink, continuationToken);
+        }
+
+        /// <summary>
+        /// Construct paging service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <param name="longRunningServiceMetadata"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMethod LongRunningServiceMethod(
+            string name,
+            InputOperation operation,
+            string access = "public",
+            IReadOnlyList<InputMethodParameter>? parameters = null,
+            InputServiceMethodResponse? response = null,
+            InputServiceMethodResponse? exception = null,
+            InputLongRunningServiceMetadata? longRunningServiceMetadata = null)
+        {
+            return new InputLongRunningServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty,
+                longRunningServiceMetadata ?? LongRunningServiceMetadata(1, OperationResponse(), null));
+        }
+
+        /// <summary>
+        /// Construct paging metadata
+        /// </summary>
+        /// <param name="finalState"></param>
+        /// <param name="finalResponse"></param>
+        /// <param name="resultPath"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMetadata LongRunningServiceMetadata(int finalState, InputOperationResponse finalResponse, string? resultPath)
+        {
+            return new InputLongRunningServiceMetadata(finalState, finalResponse, resultPath);
         }
 
         /// <summary>
@@ -460,7 +667,8 @@ namespace Azure.Generator.Tests.Common
                 methods is null ? [] : [.. methods],
                 parameters is null ? [] : [.. parameters],
                 parent,
-                clientChildren
+                clientChildren,
+                []
                 );
             _childClientsCache[client] = clientChildren;
             // when we have a parent, we need to find the children list of this parent client and update accordingly.
@@ -477,5 +685,73 @@ namespace Azure.Generator.Tests.Common
             }
             return client;
         }
+
+        public static InputPagingServiceMetadata ContinuationTokenPagingMetadata(InputParameter parameter, string itemPropertyName, string continuationTokenName, InputResponseLocation continuationTokenLocation)
+        {
+            return new InputPagingServiceMetadata(
+                [itemPropertyName],
+                null,
+                continuationToken: new InputContinuationToken(parameter, [continuationTokenName], continuationTokenLocation));
+        }
+
+        public static InputType Array(InputType elementType)
+        {
+            return new InputArrayType("list", "list", elementType);
+        }
+
+        public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation, IReadOnlyList<InputParameter>? reinjectedParameters = null)
+        {
+            return PagingMetadata(
+                [itemPropertyName],
+                new InputNextLink(null, [nextLinkName], nextLinkLocation, reinjectedParameters),
+                null);
+        }
+
+        public static InputEnumType StringEnum(
+            string name,
+            IEnumerable<(string Name, string Value)> values,
+            string access = "public",
+            InputModelTypeUsage usage = InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+            bool isExtensible = false,
+            string clientNamespace = "Sample.Models")
+        {
+            var enumValues = new List<InputEnumTypeValue>();
+            var enumType = Enum(
+                name,
+                InputPrimitiveType.String,
+                enumValues,
+                access: access,
+                usage: usage,
+                isExtensible: isExtensible,
+                clientNamespace: clientNamespace);
+
+            foreach (var (valueName, value) in values)
+            {
+                enumValues.Add(EnumMember.String(valueName, value, enumType));
+            }
+
+            return enumType;
+        }
+
+        private static InputEnumType Enum(
+            string name,
+            InputPrimitiveType underlyingType,
+            IReadOnlyList<InputEnumTypeValue> values,
+            string access = "public",
+            InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input,
+            bool isExtensible = false,
+            string clientNamespace = "Sample.Models")
+            => new InputEnumType(
+                name,
+                clientNamespace,
+                name,
+                access,
+                null,
+                "",
+                $"{name} description",
+                usage,
+                underlyingType,
+                values,
+                isExtensible);
     }
 }

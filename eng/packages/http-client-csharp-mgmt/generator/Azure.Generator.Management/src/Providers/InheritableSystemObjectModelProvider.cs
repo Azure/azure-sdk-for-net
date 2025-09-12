@@ -10,11 +10,13 @@ namespace Azure.Generator.Management.Providers
     internal class InheritableSystemObjectModelProvider : ModelProvider
     {
         internal readonly Type _type;
-
         public InheritableSystemObjectModelProvider(Type type, InputModelType inputModel) : base(inputModel)
         {
             _type = type;
+            CrossLanguageDefinitionId = inputModel.CrossLanguageDefinitionId;
         }
+
+        internal string CrossLanguageDefinitionId { get; }
 
         protected override string BuildName() => _type.Name;
 

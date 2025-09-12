@@ -55,6 +55,10 @@ jobs:
       parameters:
         GenerateJobName: generate_build_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/batched-build-analyze.yml
+        Pools: # eng/pipelines/templates/stages/build-matrix.json only contains windows OS currently so only pass the Windows pool to avoid the other OS's being marked skipped in DevOps
+          - name: Windows
+            filter: .*Windows.*Pool$
+            os: windows
         MatrixConfigs:
         - Name: NET_ci_build_base
           Path: eng/pipelines/templates/stages/build-matrix.json
@@ -90,11 +94,20 @@ jobs:
         os: windows
 
       variables:
-      - template: /eng/pipelines/templates/variables/codeql.yml
-      - name: Codeql.BuildIdentifier
-        value: ${{ parameters.ServiceDirectory }}
       - name: SDKType
         value: ${{ parameters.SDKType }}
+
+      # Only run CG and codeql on internal build job
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        templateContext:
+          sdl:
+            componentgovernance:
+              enabled: true
+            codeql:
+              # Need to specify the language because we clone after the codeql initialize step
+              language: csharp, javascript
+              compiled:
+                enabled: true
 
       steps:
         - template: /eng/pipelines/templates/steps/build.yml
@@ -160,11 +173,6 @@ jobs:
             SourceDirectory: $(Build.SourcesDirectory)
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
-
-        - template: /eng/common/pipelines/templates/steps/credscan.yml
-          parameters:
-            BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:

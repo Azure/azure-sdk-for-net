@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Serialization.EncodedName.Json._Property;
 
 namespace Serialization.EncodedName.Json
 {

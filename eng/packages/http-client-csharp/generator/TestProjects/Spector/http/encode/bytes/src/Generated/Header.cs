@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Encode.Bytes
+namespace Encode.Bytes._Header
 {
     public partial class Header
     {

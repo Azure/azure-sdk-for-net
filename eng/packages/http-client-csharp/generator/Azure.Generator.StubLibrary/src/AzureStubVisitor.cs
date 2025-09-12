@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Linq;
+using Azure.Core;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -80,7 +80,7 @@ namespace Azure.Generator.StubLibrary
         protected override FieldProvider? VisitField(FieldProvider field)
         {
             // For ClientOptions, keep the non-public field as this currently represents the latest service version for a client.
-            return (field.Modifiers.HasFlag(FieldModifiers.Public) || field.EnclosingType.Implements.Any(i => i.Equals(typeof(ClientPipelineOptions))))
+            return field.Modifiers.HasFlag(FieldModifiers.Public) || field.EnclosingType.Implements.Any(i => i.Equals(typeof(ClientOptions)))
                 ? field
                 : null;
         }

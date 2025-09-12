@@ -1,28 +1,29 @@
-#!/bin/env pwsh
+#!/usr/bin/env pwsh
+
+#Requires -Version 7.0
+#Requires -PSEdition Core
 
 param(
-    [string]$FileName = 'azsdk',
+    [string]$FileName = 'Azure.Sdk.Tools.Cli',
     [string]$Package = 'azsdk',
     [string]$Version, # Default to latest
-    [string]$InstallDirectory = (Join-Path $HOME ".azure-sdk-mcp" "azsdk"),
+    [string]$InstallDirectory = '',
     [string]$Repository = 'Azure/azure-sdk-tools',
+    [string]$RunDirectory = (Resolve-Path (Join-Path $PSScriptRoot .. .. ..)),
     [switch]$Run,
     [switch]$UpdateVsCodeConfig,
-    [switch]$Clean
+    [switch]$UpdatePathInProfile
 )
 
 $ErrorActionPreference = "Stop"
-
 . (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
 
-if ($Clean) {
-    Clear-Directory -Path $InstallDirectory
-}
+$toolInstallDirectory = $InstallDirectory ? $InstallDirectory : (Get-CommonInstallDirectory)
 
 if ($UpdateVsCodeConfig) {
-    $vscodeConfigPath = $PSScriptRoot + "../../../.vscode/mcp.json"
+    $vscodeConfigPath = Join-Path $PSScriptRoot ".." ".." ".." ".vscode" "mcp.json"
     if (Test-Path $vscodeConfigPath) {
-        $vscodeConfig = Get-Content -Raw $vscodeConfig | ConvertFrom-Json -AsHashtable
+        $vscodeConfig = Get-Content -Raw $vscodeConfigPath | ConvertFrom-Json -AsHashtable
     }
     else {
         $vscodeConfig = @{}
@@ -30,7 +31,7 @@ if ($UpdateVsCodeConfig) {
     $serverKey = "azure-sdk-mcp"
     $serverConfig = @{
         "type"    = "stdio"
-        "command" = "/home/ben/azs/azure-sdk-tools/eng/common/mcp/azure-sdk-mcp.ps1"
+        "command" = "$PSCommandPath"
     }
     $orderedServers = [ordered]@{
         $serverKey = $serverConfig
@@ -45,16 +46,36 @@ if ($UpdateVsCodeConfig) {
     }
     $vscodeConfig.servers = $orderedServers
     Write-Host "Updating vscode mcp config at $vscodeConfigPath"
-    $vscodeConfig | ConvertTo-Json -Depth 10 | Set-Content -Path $vscodeConfig -Force
+    $vscodeConfig | ConvertTo-Json -Depth 10 | Set-Content -Path $vscodeConfigPath -Force
 }
 
-$exe = Install-Standalone-Tool `
+# Install to a temp directory first so we don't dump out all the other
+# release zip contents to one of the users bin directories.
+$tmp = $env:TEMP ? $env:TEMP : [System.IO.Path]::GetTempPath()
+$guid = [System.Guid]::NewGuid()
+$tempInstallDirectory = Join-Path $tmp "azsdk-install-$($guid)"
+$tempExe = Install-Standalone-Tool `
     -Version $Version `
     -FileName $FileName `
     -Package $Package `
-    -Directory $InstallDirectory `
+    -Directory $tempInstallDirectory `
     -Repository $Repository
 
+if (-not (Test-Path $toolInstallDirectory)) {
+    New-Item -ItemType Directory -Path $toolInstallDirectory -Force | Out-Null
+}
+$exeName = Split-Path $tempExe -Leaf
+$exeDestination = Join-Path $toolInstallDirectory $exeName
+Copy-Item -Path $tempExe -Destination $exeDestination -Force
+
+Write-Host "Package $package is installed at $exeDestination"
+if (!$UpdatePathInProfile) {
+    Write-Warning "To add the tool to PATH for new shell sessions, re-run with -UpdatePathInProfile to modify the shell profile file."
+} else {
+    Add-InstallDirectoryToPathInProfile -InstallDirectory $toolInstallDirectory
+    Write-Warning "'$exeName' will be available in PATH for new shell sessions."
+}
+
 if ($Run) {
-    Start-Process -FilePath $exe -NoNewWindow -Wait
+    Start-Process -WorkingDirectory $RunDirectory -FilePath $exeDestination -ArgumentList 'start' -NoNewWindow -Wait
 }

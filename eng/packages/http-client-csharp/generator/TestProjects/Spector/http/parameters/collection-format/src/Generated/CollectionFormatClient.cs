@@ -7,6 +7,8 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Parameters.CollectionFormat._Header;
+using Parameters.CollectionFormat._Query;
 
 namespace Parameters.CollectionFormat
 {
