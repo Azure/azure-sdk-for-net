@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.BotService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BotResponseList"/>. </summary>
-        internal BotResponseList()
+        /// <param name="value"> The Bot items on this page. </param>
+        internal BotResponseList(IEnumerable<BotData> value)
         {
-            Value = new ChangeTrackingList<BotData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BotResponseList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of bot service resources. </param>
-        /// <param name="value"> Gets the list of bot service results and their properties. </param>
+        /// <param name="value"> The Bot items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotResponseList(string nextLink, IReadOnlyList<BotData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotResponseList(IReadOnlyList<BotData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of bot service resources. </summary>
-        public string NextLink { get; }
-        /// <summary> Gets the list of bot service results and their properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotResponseList"/> for deserialization. </summary>
+        internal BotResponseList()
+        {
+        }
+
+        /// <summary> The Bot items on this page. </summary>
         public IReadOnlyList<BotData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
