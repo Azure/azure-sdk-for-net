@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Communication.Sms.Models;
 using Azure.Core.TestFramework;
+using System.Threading;
 
 namespace Azure.Communication.Sms.Tests
 {
@@ -199,11 +200,13 @@ namespace Azure.Communication.Sms.Tests
         public async Task GetDeliveryReportAsync()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
+            int deliveryReportTimeoutInSeconds = 60;
 
             // First send a message with delivery report enabled to get a message ID
             SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
                 Tag = "delivery-report-test",
+                DeliveryReportTimeoutInSeconds = deliveryReportTimeoutInSeconds
             };
 
             Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
@@ -217,7 +220,7 @@ namespace Azure.Communication.Sms.Tests
             Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
 
             // Wait a bit for the delivery report to be available
-            await Task.Delay(TimeSpan.FromSeconds(5));
+            await Task.Delay(TimeSpan.FromSeconds(deliveryReportTimeoutInSeconds + 2));
 
             // Get the delivery report
             Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(sendResult.MessageId);
@@ -231,11 +234,13 @@ namespace Azure.Communication.Sms.Tests
         public async Task GetDeliveryReportAsync_UsingTokenCredential()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClientWithToken();
+            int deliveryReportTimeoutInSeconds = 60;
 
             // First send a message with delivery report enabled to get a message ID
             SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
                 Tag = "delivery-report-token-test",
+                DeliveryReportTimeoutInSeconds = deliveryReportTimeoutInSeconds
             };
 
             Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
@@ -249,7 +254,7 @@ namespace Azure.Communication.Sms.Tests
             Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
 
             // Wait a bit for the delivery report to be available
-            await Task.Delay(TimeSpan.FromSeconds(5));
+            await Task.Delay(TimeSpan.FromSeconds(deliveryReportTimeoutInSeconds + 2));
 
             // Get the delivery report
             Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(sendResult.MessageId);
@@ -264,11 +269,13 @@ namespace Azure.Communication.Sms.Tests
         public void GetDeliveryReport_Sync()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
+            int deliveryReportTimeoutInSeconds = 60;
 
             // First send a message with delivery report enabled to get a message ID
             SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
                 Tag = "delivery-report-sync-test",
+                DeliveryReportTimeoutInSeconds = deliveryReportTimeoutInSeconds
             };
 
             Response<SmsSendResult> sendResponse = client.Sms.Send(
@@ -282,7 +289,7 @@ namespace Azure.Communication.Sms.Tests
             Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
 
             // Wait a bit for the delivery report to be available
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            Thread.Sleep(TimeSpan.FromSeconds(deliveryReportTimeoutInSeconds + 2));
 
             // Get the delivery report
             Response<DeliveryReport> deliveryResponse = client.DeliveryReports.Get(sendResult.MessageId);
