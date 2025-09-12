@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.Advisor
         /// <summary> Initializes a new instance of ConfigurationsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public ConfigurationsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-01-01";
+            _apiVersion = apiVersion ?? "2025-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        internal RequestUriBuilder CreateGetAdvisorConfigurationsRequestUri(string subscriptionId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
+        internal HttpMessage CreateGetAdvisorConfigurationsRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationListResult>> GetAdvisorConfigurationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
+            using var message = CreateGetAdvisorConfigurationsRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ConfigurationListResult> GetAdvisorConfigurations(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
+            using var message = CreateGetAdvisorConfigurationsRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateCreateInSubscriptionRequestUri(string subscriptionId, ConfigurationName configurationName, ConfigData data)
+        internal RequestUriBuilder CreateCreateAdvisorConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateCreateInSubscriptionRequest(string subscriptionId, ConfigurationName configurationName, ConfigData data)
+        internal HttpMessage CreateCreateAdvisorConfigurationRequest(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -149,26 +149,26 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigData>> CreateInSubscriptionAsync(string subscriptionId, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorConfigData>> CreateAdvisorConfigurationAsync(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateInSubscriptionRequest(subscriptionId, configurationName, data);
+            using var message = CreateCreateAdvisorConfigurationRequest(subscriptionId, configurationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConfigData value = default;
+                        AdvisorConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConfigData.DeserializeConfigData(document.RootElement);
+                        value = AdvisorConfigData.DeserializeAdvisorConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,26 +177,26 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigData> CreateInSubscription(string subscriptionId, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public Response<AdvisorConfigData> CreateAdvisorConfiguration(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateInSubscriptionRequest(subscriptionId, configurationName, data);
+            using var message = CreateCreateAdvisorConfigurationRequest(subscriptionId, configurationName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConfigData value = default;
+                        AdvisorConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConfigData.DeserializeConfigData(document.RootElement);
+                        value = AdvisorConfigData.DeserializeAdvisorConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroup)
+        internal RequestUriBuilder CreateGetAdvisorConfigurationsRequestUri(string subscriptionId, string resourceGroup)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroup)
+        internal HttpMessage CreateGetAdvisorConfigurationsRequest(string subscriptionId, string resourceGroup)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -237,17 +237,17 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> Retrieve Azure Advisor configurations. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroup"> The name of the Azure resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationListResult>> GetAdvisorConfigurationsAsync(string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroup);
+            using var message = CreateGetAdvisorConfigurationsRequest(subscriptionId, resourceGroup);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -264,17 +264,17 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> Retrieve Azure Advisor configurations. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroup"> The name of the Azure resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationListResult> ListByResourceGroup(string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
+        public Response<ConfigurationListResult> GetAdvisorConfigurations(string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroup);
+            using var message = CreateGetAdvisorConfigurationsRequest(subscriptionId, resourceGroup);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateCreateInResourceGroupRequestUri(string subscriptionId, string resourceGroup, ConfigurationName configurationName, ConfigData data)
+        internal RequestUriBuilder CreateCreateAdvisorConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateCreateInResourceGroupRequest(string subscriptionId, string resourceGroup, ConfigurationName configurationName, ConfigData data)
+        internal HttpMessage CreateCreateAdvisorConfigurationRequest(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -329,28 +329,28 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> Create/Overwrite Azure Advisor configuration. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
+        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigData>> CreateInResourceGroupAsync(string subscriptionId, string resourceGroup, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorConfigData>> CreateAdvisorConfigurationAsync(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateInResourceGroupRequest(subscriptionId, resourceGroup, configurationName, data);
+            using var message = CreateCreateAdvisorConfigurationRequest(subscriptionId, configurationName, resourceGroup, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConfigData value = default;
+                        AdvisorConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConfigData.DeserializeConfigData(document.RootElement);
+                        value = AdvisorConfigData.DeserializeAdvisorConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -359,28 +359,28 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> Create/Overwrite Azure Advisor configuration. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
+        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigData> CreateInResourceGroup(string subscriptionId, string resourceGroup, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public Response<AdvisorConfigData> CreateAdvisorConfiguration(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateInResourceGroupRequest(subscriptionId, resourceGroup, configurationName, data);
+            using var message = CreateCreateAdvisorConfigurationRequest(subscriptionId, configurationName, resourceGroup, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConfigData value = default;
+                        AdvisorConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConfigData.DeserializeConfigData(document.RootElement);
+                        value = AdvisorConfigData.DeserializeAdvisorConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        internal RequestUriBuilder CreateGetAdvisorConfigurationsNextPageRequestUri(string nextLink, string subscriptionId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
+        internal HttpMessage CreateGetAdvisorConfigurationsNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -412,16 +412,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary> Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationListResult>> GetAdvisorConfigurationsNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
+            using var message = CreateGetAdvisorConfigurationsNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -439,16 +439,96 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary> Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ConfigurationListResult> GetAdvisorConfigurationsNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
+            using var message = CreateGetAdvisorConfigurationsNextPageRequest(nextLink, subscriptionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConfigurationListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ConfigurationListResult.DeserializeConfigurationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetAdvisorConfigurationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroup)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetAdvisorConfigurationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroup)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Retrieve Azure Advisor configurations. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ConfigurationListResult>> GetAdvisorConfigurationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+
+            using var message = CreateGetAdvisorConfigurationsNextPageRequest(nextLink, subscriptionId, resourceGroup);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConfigurationListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ConfigurationListResult.DeserializeConfigurationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Retrieve Azure Advisor configurations. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroup"> The name of the Azure resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ConfigurationListResult> GetAdvisorConfigurationsNextPage(string nextLink, string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+
+            using var message = CreateGetAdvisorConfigurationsNextPageRequest(nextLink, subscriptionId, resourceGroup);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

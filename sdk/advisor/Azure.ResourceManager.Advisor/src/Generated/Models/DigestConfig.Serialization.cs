@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Advisor.Models
             string name = default;
             string actionGroupResourceId = default;
             int? frequency = default;
-            IList<Category> categories = default;
+            IList<RecommendationCategory> categories = default;
             string language = default;
             DigestConfigState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Advisor.Models
                     {
                         continue;
                     }
-                    List<Category> array = new List<Category>();
+                    List<RecommendationCategory> array = new List<RecommendationCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Category(item.GetString()));
+                        array.Add(new RecommendationCategory(item.GetString()));
                     }
                     categories = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 actionGroupResourceId,
                 frequency,
-                categories ?? new ChangeTrackingList<Category>(),
+                categories ?? new ChangeTrackingList<RecommendationCategory>(),
                 language,
                 state,
                 serializedAdditionalRawData);
