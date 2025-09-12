@@ -396,7 +396,7 @@ namespace Azure.Generator.Management.Providers
         public bool TryGetPrivateFieldParameter(ParameterProvider parameter, out FieldProvider? matchingField)
         {
             matchingField = _pathParameterMap
-                .FirstOrDefault(kvp => kvp.Key.Name.Equals(parameter.WireInfo.SerializedName, StringComparison.OrdinalIgnoreCase))
+                .FirstOrDefault(kvp => kvp.Key.WireInfo.SerializedName.Equals(parameter.WireInfo.SerializedName, StringComparison.OrdinalIgnoreCase))
                 .Value;
             return matchingField != null;
         }
