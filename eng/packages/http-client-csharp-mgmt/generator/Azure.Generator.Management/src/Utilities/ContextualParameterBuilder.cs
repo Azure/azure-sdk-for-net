@@ -63,7 +63,7 @@ namespace Azure.Generator.Management.Utilities
             else if (current.Count == 1 && !current[0].IsConstant) // Extension resource case: single variable segment
             {
                 // Extension resource case: single variable segment
-                parameterStack.Push(new ContextualParameter(current[0].Value, current[0].VariableName, id => BuildParentInvocation(parentLayerCount, id)));
+                parameterStack.Push(new ContextualParameter(current[0].VariableName, current[0].VariableName, id => BuildParentInvocation(parentLayerCount, id)));
             }
             else
             {
