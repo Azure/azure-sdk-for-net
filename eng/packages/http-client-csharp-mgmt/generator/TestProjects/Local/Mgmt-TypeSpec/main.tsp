@@ -7,6 +7,7 @@ import "./baz.tsp";
 import "./zoo.tsp";
 import "./routes.tsp";
 import "./endpoint.tsp";
+import "./selfhelp.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
