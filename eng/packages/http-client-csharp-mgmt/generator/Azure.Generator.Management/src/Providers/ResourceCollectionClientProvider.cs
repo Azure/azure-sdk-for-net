@@ -71,6 +71,15 @@ namespace Azure.Generator.Management.Providers
                 return new RequestPathPattern(resourceMetadata.ParentResourceId);
             }
 
+            if (resourceMetadata.ResourceScope == ResourceScope.Extension)
+            {
+                if (string.IsNullOrEmpty(resourceMetadata.ResourceIdPattern))
+                {
+                    throw new ArgumentNullException(nameof(resourceMetadata.ResourceIdPattern), "Extension resource requires a resourceIdPattern.");
+                }
+                return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope, new RequestPathPattern(resourceMetadata.ResourceIdPattern));
+            }
+
             return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope);
         }
 
