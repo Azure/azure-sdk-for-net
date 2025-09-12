@@ -137,5 +137,14 @@ namespace MgmtTypeSpec.Mocking
 
             return await GetEndpointResources(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
+
+        /// <summary> Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PlaywrightQuotaResource"/> object. </returns>
+        public virtual PlaywrightQuotaResource GetPlaywrightQuotaResource(ResourceIdentifier id)
+        {
+            PlaywrightQuotaResource.ValidateResourceId(id);
+            return new PlaywrightQuotaResource(Client, id);
+        }
     }
 }
