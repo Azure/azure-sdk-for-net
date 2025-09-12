@@ -77,7 +77,7 @@ namespace MgmtTypeSpec.Models
         /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
         public static FooSettingsProperties FooSettingsProperties(bool? accessControlEnabled = default, ResourceProvisioningState? provisioningState = default, IList<string> metaDatas = default)
         {
-            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -131,10 +131,10 @@ namespace MgmtTypeSpec.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
+                isEnabled is null ? default : new BarSettingsProperties(isEnabled, null),
                 stringArray.ToList(),
-                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
-                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
+                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, null),
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, null),
                 innerProp1 is null || innerProp2 is null || middleProp1 is null || middleProp2 is null || prop1 is null || prop2 is null ? default : new BarNestedQuotaProperties(
                     innerProp1,
                     innerProp2,
@@ -143,7 +143,7 @@ namespace MgmtTypeSpec.Models
                     middleProp2,
                     prop1,
                     prop2.Value),
-                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, new Dictionary<string, BinaryData>()));
+                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -160,7 +160,7 @@ namespace MgmtTypeSpec.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, new Dictionary<string, BinaryData>()));
+                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, null));
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -208,7 +208,7 @@ namespace MgmtTypeSpec.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                zooSomething is null ? default : new ZooProperties(zooSomething, new Dictionary<string, BinaryData>()),
+                zooSomething is null ? default : new ZooProperties(zooSomething, null),
                 extendedLocation);
         }
 
@@ -219,7 +219,7 @@ namespace MgmtTypeSpec.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Paged collection of ZooAddress items. </summary>
@@ -247,7 +247,7 @@ namespace MgmtTypeSpec.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                endpointProp is null ? default : new EndpointProperties(endpointProp, new Dictionary<string, BinaryData>()));
+                endpointProp is null ? default : new EndpointProperties(endpointProp, null));
         }
 
         /// <summary> The ZooRecommendation. </summary>
