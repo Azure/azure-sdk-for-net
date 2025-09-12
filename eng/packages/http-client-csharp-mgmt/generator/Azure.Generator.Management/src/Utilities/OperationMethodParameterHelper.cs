@@ -39,30 +39,29 @@ namespace Azure.Generator.Management.Utilities
 
                 var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
 
-                // Check if parameter can be handled by contextual path or private field parameters
-                bool isHandledByContext = contextualPath.TryGetContextualParameter(outputParameter, out _);
-                bool isHandledByPrivateField = false;
-
-                if (!isHandledByContext && enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider)
+                if (contextualPath.TryGetContextualParameter(outputParameter, out _))
                 {
-                    isHandledByPrivateField = collectionProvider.TryGetPrivateFieldParameter(outputParameter, out _);
+                    continue;
                 }
 
-                if (!isHandledByContext && !isHandledByPrivateField)
+                if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
+                    collectionProvider.TryGetPrivateFieldParameter(outputParameter, out _))
                 {
-                    if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
-                    {
-                        outputParameter.Update(name: "data");
-                    }
+                    continue;
+                }
 
-                    if (parameter.IsRequired)
-                    {
-                        requiredParameters.Add(outputParameter);
-                    }
-                    else
-                    {
-                        optionalParameters.Add(outputParameter);
-                    }
+                if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                {
+                    outputParameter.Update(name: "data");
+                }
+
+                if (parameter.IsRequired)
+                {
+                    requiredParameters.Add(outputParameter);
+                }
+                else
+                {
+                    optionalParameters.Add(outputParameter);
                 }
             }
 
