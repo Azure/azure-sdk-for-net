@@ -1420,7 +1420,6 @@ namespace Azure.AI.VoiceLive
         public string ResponseId { get { throw null; } }
         protected override Azure.AI.VoiceLive.SessionUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDone (Azure.Response result) { throw null; }
         protected override Azure.AI.VoiceLive.SessionUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDone System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDone>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

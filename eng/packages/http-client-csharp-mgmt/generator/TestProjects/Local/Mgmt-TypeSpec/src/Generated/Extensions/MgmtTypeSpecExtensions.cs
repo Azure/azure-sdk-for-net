@@ -174,6 +174,58 @@ namespace MgmtTypeSpec
             return await GetMockableMgmtTypeSpecArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="SelfHelpResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SelfHelpResource"/> object. </returns>
+        public static SelfHelpResource GetSelfHelpResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetSelfHelpResource(id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SelfHelpResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="SelfHelpResource"/> objects. </returns>
+        public static SelfHelpResourceCollection GetSelfHelpResources(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetSelfHelpResources(scope);
+        }
+
+        /// <summary> Get a SelfHelpResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SelfHelpResource> GetSelfHelpResource(this ArmClient client, ResourceIdentifier scope, string selfHelpName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetSelfHelpResource(scope, selfHelpName, cancellationToken);
+        }
+
+        /// <summary> Get a SelfHelpResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SelfHelpResource>> GetSelfHelpResourceAsync(this ArmClient client, ResourceIdentifier scope, string selfHelpName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableMgmtTypeSpecArmClient(client).GetSelfHelpResourceAsync(scope, selfHelpName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
