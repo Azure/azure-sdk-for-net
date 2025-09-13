@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceResourceGroup"> Resource Group Name of the Datasource. </param>
         /// <param name="sourceSubscriptionId"> SubscriptionId corresponding to the DataSource. </param>
         /// <param name="startOn"> StartTime of the job(in UTC). </param>
-        /// <param name="status"> Status of the job like InProgress/Success/Failed/Cancelled/SuccessWithWarning. </param>
+        /// <param name="status"> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </param>
         /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
         /// <param name="supportedActions"> List of supported actions. </param>
         /// <param name="vaultName"> Name of the vault. </param>
@@ -867,12 +867,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
         /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
         /// <param name="subItemPathPrefix"> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </param>
+        /// <param name="renameTo"> Rename the item to be restored. Restore will rename the itemPath to this new name if the value is specified otherwise the itemPath will be restored as same name. </param>
         /// <returns> A new <see cref="Models.ItemPathBasedRestoreCriteria"/> instance for mocking. </returns>
-        public static ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath = null, bool isPathRelativeToBackupItem = default, IEnumerable<string> subItemPathPrefix = null)
+        public static ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath = null, bool isPathRelativeToBackupItem = default, IEnumerable<string> subItemPathPrefix = null, string renameTo = null)
         {
             subItemPathPrefix ??= new List<string>();
 
-            return new ItemPathBasedRestoreCriteria("ItemPathBasedRestoreCriteria", serializedAdditionalRawData: null, itemPath, isPathRelativeToBackupItem, subItemPathPrefix?.ToList());
+            return new ItemPathBasedRestoreCriteria(
+                "ItemPathBasedRestoreCriteria",
+                serializedAdditionalRawData: null,
+                itemPath,
+                isPathRelativeToBackupItem,
+                subItemPathPrefix?.ToList(),
+                renameTo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesClusterRestoreCriteria"/>. </summary>
@@ -1009,6 +1016,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceInfo,
                 dataSourceSetInfo,
                 dataSourceAuthCredentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.ItemPathBasedRestoreCriteria" />. </summary>
+        /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
+        /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
+        /// <param name="subItemPathPrefix"> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.ItemPathBasedRestoreCriteria" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem, IEnumerable<string> subItemPathPrefix)
+        {
+            return ItemPathBasedRestoreCriteria(itemPath: itemPath, isPathRelativeToBackupItem: isPathRelativeToBackupItem, subItemPathPrefix: subItemPathPrefix, renameTo: default);
         }
 
         /// <summary>
