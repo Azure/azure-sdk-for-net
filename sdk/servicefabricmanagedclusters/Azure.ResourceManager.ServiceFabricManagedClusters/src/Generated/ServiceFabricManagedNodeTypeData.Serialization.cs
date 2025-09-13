@@ -378,6 +378,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("zoneBalance"u8);
                 writer.WriteBooleanValue(IsZoneBalanceEnabled.Value);
             }
+            if (Optional.IsDefined(IsOutboundOnly))
+            {
+                writer.WritePropertyName("isOutboundOnly"u8);
+                writer.WriteBooleanValue(IsOutboundOnly.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -459,6 +464,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             string computerNamePrefix = default;
             IList<ServiceFabricManagedVmApplication> vmApplications = default;
             bool? zoneBalance = default;
+            bool? isOutboundOnly = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1011,6 +1017,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             zoneBalance = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("isOutboundOnly"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isOutboundOnly = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -1077,6 +1092,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 computerNamePrefix,
                 vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>(),
                 zoneBalance,
+                isOutboundOnly,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 sku,
                 serializedAdditionalRawData);
