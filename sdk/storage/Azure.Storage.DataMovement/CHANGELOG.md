@@ -8,9 +8,12 @@
 - [BREAKING BEHAVIOR CHANGE] Transfers that are in a `Paused` or `Completed` state will now throw an `ArgumentException` when attempting to call `PauseAsync` on them. Before transfers in a `Paused` or `Completed` state would not throw an exception when calling `PauseAsync`.
 
 ### Bugs Fixed
-- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
 - Resolved memory leak issue with `CancellationTokenSource` usage not being properly disposed, namely in the following areas:
-    - `TransferOperation` when created upon starting a transfer.
+    - `TransferOperation` disposes the `CancellationTokenSource` after transfer reaches a `Completed` or `Paused` state
+    - `TransferManager` uses a `CancellationTokenSource` also does not link the`CancellationToken` passed to it's methods
+    - Removed usage of `CancellationTokenSource` from handling the chunking of large transfers. This only affects transfers that cannot be completed in one request.
+- Fixed bug where cached referenced `TransferOperation`s from the `TransferManager` were not being cleared on dispose.
+- Fixed bug where referenced `TransferOperation` from the transfers stored in the `TransferManager` after they reach a `Completed` or `Paused` state where not being removed.
 
 ### Other Changes
 
