@@ -11,16 +11,16 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Configuration for avatar streaming and behavior during the session. </summary>
-    public partial class AvatarConfiguration
+    public partial class AvatarConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AvatarConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvatarConfig"/>. </summary>
         /// <param name="character"> The character name or ID used for the avatar. </param>
         /// <param name="customized"> Indicates whether the avatar is customized or not. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="character"/> is null. </exception>
-        public AvatarConfiguration(string character, bool customized)
+        public AvatarConfig(string character, bool customized)
         {
             Argument.AssertNotNull(character, nameof(character));
 
@@ -29,14 +29,14 @@ namespace Azure.AI.VoiceLive
             Customized = customized;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvatarConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvatarConfig"/>. </summary>
         /// <param name="iceServers"> Optional list of ICE servers to use for WebRTC connection establishment. </param>
         /// <param name="character"> The character name or ID used for the avatar. </param>
         /// <param name="style"> Optional avatar style, such as emotional tone or speaking style. </param>
         /// <param name="customized"> Indicates whether the avatar is customized or not. </param>
         /// <param name="video"> Optional video configuration including resolution, bitrate, and codec. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvatarConfiguration(IList<IceServer> iceServers, string character, string style, bool customized, VideoParams video, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvatarConfig(IList<IceServer> iceServers, string character, string style, bool customized, VideoParams video, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IceServers = iceServers;
             Character = character;

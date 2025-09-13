@@ -19,14 +19,14 @@ namespace Azure.AI.VoiceLive
 
         internal HttpMessage CreateForceModelsRequest(string accept, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/voice-agent/realtime", false);
             uri.AppendPath("/", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", accept);
             request.Content = content;

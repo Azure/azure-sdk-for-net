@@ -34,7 +34,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
             var session = TestSessionFactory.CreateSessionWithFakeSocket(out var fake);
 
-            var options = new SessionOptions
+            var options = new VoiceLiveSessionOptions
             {
                 Model = TestConstants.ModelName,
                 Voice = new AzureStandardVoice(TestConstants.VoiceName)

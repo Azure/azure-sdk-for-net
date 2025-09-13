@@ -324,13 +324,12 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task ConfigureSessionAsync(SessionOptions sessionOptions, CancellationToken cancellationToken = default)
+        public virtual async Task ConfigureSessionAsync(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sessionOptions, nameof(sessionOptions));
             ThrowIfDisposed();
 
-            RequestSession requestSession = sessionOptions.ToRequestSession();
-            ClientEventSessionUpdate updateCommand = new(requestSession);
+            ClientEventSessionUpdate updateCommand = new(sessionOptions);
             await SendCommandAsync(updateCommand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -340,7 +339,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="sessionOptions">The session configuration options.</param>
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
-        public virtual void ConfigureSession(SessionOptions sessionOptions, CancellationToken cancellationToken = default)
+        public virtual void ConfigureSession(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
         {
             ConfigureSessionAsync(sessionOptions, cancellationToken).EnsureCompleted();
         }
@@ -352,7 +351,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task ConfigureConversationSessionAsync(SessionOptions sessionOptions, CancellationToken cancellationToken = default)
+        public virtual async Task ConfigureConversationSessionAsync(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
         {
             await ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
         }
@@ -363,7 +362,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="sessionOptions">The session configuration options.</param>
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
-        public virtual void ConfigureConversationSession(SessionOptions sessionOptions, CancellationToken cancellationToken = default)
+        public virtual void ConfigureConversationSession(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
         {
             ConfigureConversationSessionAsync(sessionOptions, cancellationToken).EnsureCompleted();
         }
@@ -375,7 +374,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task ConfigureTranscriptionSessionAsync(SessionOptions sessionOptions, CancellationToken cancellationToken = default)
+        public virtual async Task ConfigureTranscriptionSessionAsync(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
         {
             await ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
         }
@@ -386,7 +385,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="sessionOptions">The session configuration options.</param>
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
-        public virtual void ConfigureTranscriptionSession(SessionOptions sessionOptions, CancellationToken cancellationToken = default)
+        public virtual void ConfigureTranscriptionSession(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
         {
             ConfigureTranscriptionSessionAsync(sessionOptions, cancellationToken).EnsureCompleted();
         }

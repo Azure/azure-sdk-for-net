@@ -12,17 +12,17 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Details of the error. </summary>
-    public partial class SessionUpdateErrorDetails : IJsonModel<SessionUpdateErrorDetails>
+    /// <summary> The ServerEventErrorError. </summary>
+    public partial class ServerEventErrorError : IJsonModel<ServerEventErrorError>
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateErrorDetails"/> for deserialization. </summary>
-        internal SessionUpdateErrorDetails()
+        /// <summary> Initializes a new instance of <see cref="ServerEventErrorError"/> for deserialization. </summary>
+        internal ServerEventErrorError()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionUpdateErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServerEventErrorError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventErrorError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionUpdateErrorDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventErrorError)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -76,24 +76,24 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateErrorDetails IJsonModel<SessionUpdateErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ServerEventErrorError IJsonModel<ServerEventErrorError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SessionUpdateErrorDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ServerEventErrorError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventErrorError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionUpdateErrorDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventErrorError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionUpdateErrorDetails(document.RootElement, options);
+            return DeserializeServerEventErrorError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SessionUpdateErrorDetails DeserializeSessionUpdateErrorDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServerEventErrorError DeserializeServerEventErrorError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SessionUpdateErrorDetails(
+            return new ServerEventErrorError(
                 @type,
                 code,
                 message,
@@ -162,43 +162,43 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateErrorDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServerEventErrorError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventErrorError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateErrorDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventErrorError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateErrorDetails IPersistableModel<SessionUpdateErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ServerEventErrorError IPersistableModel<ServerEventErrorError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SessionUpdateErrorDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ServerEventErrorError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventErrorError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeSessionUpdateErrorDetails(document.RootElement, options);
+                        return DeserializeServerEventErrorError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateErrorDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventErrorError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServerEventErrorError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

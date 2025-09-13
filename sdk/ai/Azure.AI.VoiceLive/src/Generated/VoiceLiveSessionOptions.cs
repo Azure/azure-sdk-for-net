@@ -7,27 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The RequestSession. </summary>
-    public partial class RequestSession
+    /// <summary> The VoiceLiveSessionOptions. </summary>
+    public partial class VoiceLiveSessionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RequestSession"/>. </summary>
-        public RequestSession()
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionOptions"/>. </summary>
+        public VoiceLiveSessionOptions()
         {
             Modalities = new ChangeTrackingList<InputModality>();
             OutputAudioTimestampTypes = new ChangeTrackingList<AudioTimestampType>();
             Tools = new ChangeTrackingList<VoiceLiveToolDefinition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestSession"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionOptions"/>. </summary>
         /// <param name="model"></param>
         /// <param name="modalities"></param>
         /// <param name="animation"></param>
+        /// <param name="voiceInternal"></param>
         /// <param name="instructions"></param>
         /// <param name="inputAudio"></param>
         /// <param name="inputAudioSamplingRate"></param>
@@ -41,15 +43,16 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputAudioTimestampTypes"></param>
         /// <param name="tools"></param>
         /// <param name="temperature"></param>
-        /// <param name="serviceVoice"></param>
+        /// <param name="agent"></param>
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="toolChoice"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequestSession(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData serviceVoice, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionOptions(string model, IList<InputModality> modalities, AnimationOptions animation, BinaryData voiceInternal, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, RespondingAgentConfig agent, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
             Animation = animation;
+            VoiceInternal = voiceInternal;
             Instructions = instructions;
             InputAudio = inputAudio;
             InputAudioSamplingRate = inputAudioSamplingRate;
@@ -63,7 +66,7 @@ namespace Azure.AI.VoiceLive
             OutputAudioTimestampTypes = outputAudioTimestampTypes;
             Tools = tools;
             Temperature = temperature;
-            _serviceVoice = serviceVoice;
+            Agent = agent;
             _maxResponseOutputTokens = maxResponseOutputTokens;
             _toolChoice = toolChoice;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -77,6 +80,56 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the Animation. </summary>
         public AnimationOptions Animation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the VoiceInternal.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="OAIVoice"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="OpenAIVoice"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="AzureVoice"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LlmVoiceName"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LlmVoice"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData VoiceInternal { get; set; }
 
         /// <summary> Gets or sets the Instructions. </summary>
         public string Instructions { get; set; }
@@ -103,7 +156,7 @@ namespace Azure.AI.VoiceLive
         public AudioEchoCancellation InputAudioEchoCancellation { get; set; }
 
         /// <summary> Gets or sets the Avatar. </summary>
-        public AvatarConfiguration Avatar { get; set; }
+        public AvatarConfig Avatar { get; set; }
 
         /// <summary> Gets or sets the InputAudioTranscription. </summary>
         public AudioInputTranscriptionSettings InputAudioTranscription { get; set; }
@@ -116,5 +169,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the Temperature. </summary>
         public float? Temperature { get; set; }
+
+        /// <summary> Gets or sets the Agent. </summary>
+        public RespondingAgentConfig Agent { get; set; }
     }
 }

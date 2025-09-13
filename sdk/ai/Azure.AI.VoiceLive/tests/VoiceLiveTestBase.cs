@@ -94,16 +94,16 @@ namespace Azure.AI.VoiceLive.Tests
         /// Creates a new Voice Live session with default or specified configuration.
         /// </summary>
         protected async Task<VoiceLiveSession> CreateSessionAsync(
-            SessionOptions options)
+            VoiceLiveSessionOptions options)
         {
             if (Client == null)
             {
                 throw new InvalidOperationException("Client not initialized. Ensure Setup() has been called.");
             }
 
-            options ??= new SessionOptions();
+            options ??= new VoiceLiveSessionOptions();
 
-            var session = await Client.StartSessionAsync(options.ToRequestSession()).ConfigureAwait(false);
+            var session = await Client.StartSessionAsync(options).ConfigureAwait(false);
             _sessions.Add(session); // Track for cleanup
 
             TestContext.WriteLine($"Session created");

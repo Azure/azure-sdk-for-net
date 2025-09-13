@@ -75,7 +75,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
             var session = CreateSessionWithFakeSocket(out var fake);
 
-            var options = new SessionOptions
+            var options = new VoiceLiveSessionOptions
             {
                 Voice = new AzureStandardVoice(TestConstants.VoiceName),
                 Model = TestConstants.ModelName,
@@ -119,7 +119,7 @@ namespace Azure.AI.VoiceLive.Tests
         public async Task ConfigureConversationSession_IncludesTools()
         {
             var session = CreateSessionWithFakeSocket(out var fake);
-            var options = new SessionOptions
+            var options = new VoiceLiveSessionOptions
             {
                 Model = TestConstants.ModelName,
                 Voice = new AzureStandardVoice(TestConstants.VoiceName)
@@ -153,11 +153,11 @@ namespace Azure.AI.VoiceLive.Tests
         {
             var session = CreateSessionWithFakeSocket(out var fake);
 
-            var options1 = new SessionOptions { Model = TestConstants.ModelName };
+            var options1 = new VoiceLiveSessionOptions { Model = TestConstants.ModelName };
             options1.Modalities.Clear();
             options1.Modalities.Add(InputModality.Text);
 
-            var options2 = new SessionOptions { Model = TestConstants.ModelName };
+            var options2 = new VoiceLiveSessionOptions { Model = TestConstants.ModelName };
             options2.Modalities.Clear();
             options2.Modalities.Add(InputModality.Audio);
 
