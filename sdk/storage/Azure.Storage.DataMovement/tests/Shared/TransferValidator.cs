@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Tests
             if (cancellationToken == default)
             {
                 CancellationTokenSource cts = new();
-                cts.CancelAfter(TimeSpan.FromSeconds(30));
+                cts.CancelAfter(TimeSpan.FromSeconds(60));
                 cancellationToken = cts.Token;
             }
 

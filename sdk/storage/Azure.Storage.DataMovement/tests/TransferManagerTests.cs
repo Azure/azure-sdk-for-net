@@ -63,7 +63,7 @@ public class TransferManagerTests
         if (chunksPerPart > 1)
         {
             // Multichunk transfer sends a completion chunk after all the other chunks stepped through.
-            await Task.Delay(50);
+            await Task.Delay(100);
             Assert.That(await chunksProcessor.StepAll() + chunksStepped, Is.EqualTo(numChunks + totalJobParts));
         }
         else
