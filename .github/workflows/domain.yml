@@ -1,0 +1,54 @@
+            - name: Azure Login
+  uses: Azure/login@v2.3.0
+  with:
+    # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+    creds: # optional
+    # ClientId of the Azure Service principal created.
+    client-id: # optional
+    # TenantId of the Azure Service principal created.
+    tenant-id: # optional
+    # Azure subscriptionId
+    subscription-id: # optional
+    # Set this value to true to enable Azure PowerShell Login in addition to Azure CLI login
+    enable-AzPSSession: # optional
+    # Name of the environment. Supported values are azurecloud, azurestack, azureusgovernment, azurechinacloud, azuregermancloud. Default being azurecloud
+    environment: # optional, default is azurecloud
+    # Set this value to true to enable support for accessing tenants without subscriptions
+    allow-no-subscriptions: # optional
+    # Provide audience field for access-token. Default value is api://AzureADTokenExchange
+    audience: # optional, default is api://AzureADTokenExchange
+    # The type of authentication. Supported values are SERVICE_PRINCIPAL, IDENTITY. Default value is SERVICE_PRINCIPAL
+    auth-type: # optional, default is SERVICE_PRINCIPAL
+
+               - name: Azure PowerShell Action
+  uses: Azure/powershell@v2
+  with:
+    # Specify the Az PowerShell script here.
+    inlineScript: 
+    # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
+    azPSVersion: 
+    # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
+    errorActionPreference: # optional, default is Stop
+    # If this is true, this task will fail if any errors are written to the error pipeline, or if any data is written to the Standard Error stream.
+    failOnStandardError: # optional, default is false
+    # Used to pull Az module from Azure/az-ps-module-versions.  Since there's a default, this is typically not supplied by the user.
+    githubToken: # optional, default is ${{ github.token }}
+
+                      - name: Enable Developer Command Prompt
+  # You may pin to the exact commit or the version.
+  # uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
+  uses: ilammy/msvc-dev-cmd@v1.13.0
+  with:
+    # Target architecture
+    arch: # optional, default is x64
+    # Windows SDK number to build for
+    sdk: # optional
+    # Enable Specre mitigations
+    spectre: # optional
+    # VC++ compiler toolset version
+    toolset: # optional
+    # Build for Universal Windows Platform
+    uwp: # optional
+    # The Visual Studio version to use. This can be the version number (e.g. 16.0 for 2019) or the year (e.g. "2019").
+    vsversion: # optional
+          
