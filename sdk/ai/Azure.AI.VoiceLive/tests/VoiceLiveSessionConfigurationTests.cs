@@ -49,7 +49,8 @@ namespace Azure.AI.VoiceLive.Tests
             var docs = new List<JsonDocument>();
             foreach (var msg in socket.GetSentTextMessages())
             {
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     var doc = JsonDocument.Parse(msg);
@@ -168,7 +169,26 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.That(updateMessages.Count, Is.GreaterThanOrEqualTo(2), "Expected two session.update messages after two configuration calls.");
 
             // Dispose docs not used further
-            foreach (var d in updateMessages) d.Dispose();
+            foreach (var d in updateMessages)
+                d.Dispose();
+        }
+
+        [Ignore("WIP")]
+        [Test]
+        public void VoiceSetGetTest()
+        {
+            var voice = new AzureStandardVoice("en-US-JennyNeural");
+
+            var sessionOpts = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                Voice = voice
+            };
+
+            Assert.That(sessionOpts.Voice, Is.Not.Null);
+            Assert.That(sessionOpts.Voice, Is.TypeOf<AzureStandardVoice>());
+            var retrievedVoice = (AzureStandardVoice)sessionOpts.Voice;
+            Assert.That(retrievedVoice.Name, Is.EqualTo("en-US-JennyNeural"));
         }
     }
 }

@@ -10,29 +10,29 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ServerEventErrorError. </summary>
-    public partial class ServerEventErrorError
+    /// <summary> Details of the error. </summary>
+    public partial class SessionUpdateErrorDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventErrorError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionUpdateErrorDetails"/>. </summary>
         /// <param name="type"> The type of error (e.g., "invalid_request_error", "server_error"). </param>
         /// <param name="message"> A human-readable error message. </param>
-        internal ServerEventErrorError(string @type, string message)
+        internal SessionUpdateErrorDetails(string @type, string message)
         {
             Type = @type;
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventErrorError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionUpdateErrorDetails"/>. </summary>
         /// <param name="type"> The type of error (e.g., "invalid_request_error", "server_error"). </param>
         /// <param name="code"> Error code, if any. </param>
         /// <param name="message"> A human-readable error message. </param>
         /// <param name="param"> Parameter related to the error, if any. </param>
         /// <param name="eventId"> The event_id of the client event that caused the error, if applicable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEventErrorError(string @type, string code, string message, string @param, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionUpdateErrorDetails(string @type, string code, string message, string @param, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Code = code;

@@ -60,7 +60,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
         /// <param name="maxOutputTokens"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveResponse(string id, string @object, VoiceLiveResponseStatus? status, ResponseStatusDetails statusDetails, IList<ResponseItem> output, ResponseTokenStatistics usage, string conversationId, BinaryData voiceInternal, IList<ResponseModality> modalitiesInternal, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveResponse(string id, string @object, VoiceLiveResponseStatus? status, ResponseStatusDetails statusDetails, IList<ResponseItem> output, ResponseTokenStatistics usage, string conversationId, BinaryData voiceInternal, IList<ResponseModality> modalitiesInternal, AudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -115,7 +115,7 @@ namespace Azure.AI.VoiceLive
         public string ConversationId { get; }
 
         /// <summary> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </summary>
-        public ResponseOutputAudioFormat? OutputAudioFormat { get; }
+        public AudioFormat? OutputAudioFormat { get; }
 
         /// <summary> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </summary>
         public float? Temperature { get; }

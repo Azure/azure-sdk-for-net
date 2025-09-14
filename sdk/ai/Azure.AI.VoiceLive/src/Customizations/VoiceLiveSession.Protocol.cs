@@ -55,13 +55,6 @@ namespace Azure.AI.VoiceLive
                     // On Net4.x you can't set the UserAgent for a websocket connection
                 }
 
-                var proxy = Environment.GetEnvironmentVariable("HTTPS_PROXY");
-
-                if (!string.IsNullOrEmpty(proxy))
-                {
-                    clientWebSocket.Options.Proxy = new WebProxy(proxy);
-                }
-
                 await clientWebSocket.ConnectAsync(_endpoint, cancellationToken).ConfigureAwait(false);
 
                 WebSocket = clientWebSocket;

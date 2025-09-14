@@ -16,8 +16,7 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         internal IDictionary<string, BinaryData> AdditionalProperties => this._additionalBinaryDataProperties;
 
-        [CodeGenMember("Voice")]
-        private BinaryData _serviceVoice;
+        private BinaryData VoiceInternal;
 
         /// <summary>
         /// Gets or sets the Voice.
@@ -26,21 +25,24 @@ namespace Azure.AI.VoiceLive
         {
             get
             {
-                if (_serviceVoice == null)
+                if (VoiceInternal == null)
                 {
                     return null;
                 }
-                return _serviceVoice.ToObjectFromJson<VoiceProvider>();
+
+                var s = VoiceInternal.ToString();
+
+                return null;
             }
             set
             {
                 if (value == null)
                 {
-                    _serviceVoice = null;
+                    VoiceInternal = null;
                 }
                 else
                 {
-                    _serviceVoice = value.ToBinaryData();
+                    VoiceInternal = value.ToBinaryData();
                 }
             }
         }

@@ -1,9 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using Azure.Identity;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +10,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
+using Azure.Core.TestFramework;
+using Azure.Identity;
+using Microsoft.Extensions.Logging;
+using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests
 {
@@ -25,7 +26,7 @@ namespace Azure.AI.VoiceLive.Tests
     public abstract class VoiceLiveTestBase : TimeOutTestBase<Infrastructure.VoiceLiveTestEnvironment>
     {
         private readonly List<VoiceLiveSession> _sessions = new List<VoiceLiveSession>();
-
+        private HashSet<string> _eventIDs = new HashSet<string>();
         protected VoiceLiveClient? Client { get; private set; }
         protected TimeSpan DefaultTimeout => TestEnvironment.DefaultTimeout;
 
@@ -315,6 +316,58 @@ namespace Azure.AI.VoiceLive.Tests
 
             TestContext.WriteLine($"Timeout waiting for message type: {messageType}");
             throw new TimeoutException($"Did not receive message of type {messageType} within {timeout.TotalSeconds} seconds.");
+        }
+
+        protected void EnsureEventIdsUnique(SessionUpdate sessionUpdate)
+        {
+            Assert.IsNotNull(sessionUpdate.EventId, $"Event ID was not specified on type {sessionUpdate.Type}");
+            Assert.IsFalse(_eventIDs.Contains(sessionUpdate.EventId), $"EventId {sessionUpdate.EventId} was reused");
+            _eventIDs.Add(sessionUpdate.EventId);
+        }
+
+        protected async Task<List<SessionUpdate>> CollectResponseUpdates(IAsyncEnumerator<SessionUpdate> updateEnumerator, CancellationToken cancellationToken)
+        {
+            List<SessionUpdate> responseUpdates = new List<SessionUpdate>();
+
+            SessionUpdate currentUpdate;
+
+            do
+            {
+                currentUpdate = await GetNextUpdate(updateEnumerator).ConfigureAwait(false);
+                responseUpdates.Add(currentUpdate);
+            } while (currentUpdate is not SessionUpdateResponseDone && !cancellationToken.IsCancellationRequested);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                throw new OperationCanceledException();
+            }
+
+            return responseUpdates;
+        }
+
+        protected async Task<T> GetNextUpdate<T>(IAsyncEnumerator<SessionUpdate> updateEnumerator) where T : SessionUpdate
+        {
+            var currentUpdate = await GetNextUpdate(updateEnumerator).ConfigureAwait(false);
+            return SafeCast<T>(currentUpdate);
+        }
+
+        protected T SafeCast<T>(object o) where T : class
+        {
+            Assert.IsTrue(o is T, $"Expected {typeof(T).Name} but got {o.GetType().Name}");
+#pragma warning disable CS8603 // Possible null reference return. Assert 2 lines above prevents.
+            return o as T;
+#pragma warning restore CS8603 // Possible null reference return.
+        }
+
+        protected async Task<SessionUpdate> GetNextUpdate(IAsyncEnumerator<SessionUpdate> updateEnumerator)
+        {
+            var moved = await updateEnumerator.MoveNextAsync().ConfigureAwait(false);
+            Assert.IsTrue(moved);
+            var currentUpdate = updateEnumerator.Current;
+            Assert.IsNotNull(currentUpdate);
+            EnsureEventIdsUnique(currentUpdate);
+
+            return currentUpdate;
         }
     }
 }

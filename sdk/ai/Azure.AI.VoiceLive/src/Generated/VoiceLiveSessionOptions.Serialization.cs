@@ -53,18 +53,6 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("animation"u8);
                 writer.WriteObjectValue(Animation, options);
             }
-            if (Optional.IsDefined(VoiceInternal))
-            {
-                writer.WritePropertyName("voice"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(VoiceInternal);
-#else
-                using (JsonDocument document = JsonDocument.Parse(VoiceInternal))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
             if (Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
@@ -145,6 +133,18 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("agent"u8);
                 writer.WriteObjectValue(Agent, options);
             }
+            if (Optional.IsDefined(VoiceInternal))
+            {
+                writer.WritePropertyName("voice"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(VoiceInternal);
+#else
+                using (JsonDocument document = JsonDocument.Parse(VoiceInternal))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(_maxResponseOutputTokens))
             {
                 writer.WritePropertyName("max_response_output_tokens"u8);
@@ -214,7 +214,6 @@ namespace Azure.AI.VoiceLive
             string model = default;
             IList<InputModality> modalities = default;
             AnimationOptions animation = default;
-            BinaryData voiceInternal = default;
             string instructions = default;
             InputAudio inputAudio = default;
             int? inputAudioSamplingRate = default;
@@ -223,12 +222,13 @@ namespace Azure.AI.VoiceLive
             TurnDetection turnDetection = default;
             AudioNoiseReduction inputAudioNoiseReduction = default;
             AudioEchoCancellation inputAudioEchoCancellation = default;
-            AvatarConfig avatar = default;
+            AvatarConfiguration avatar = default;
             AudioInputTranscriptionSettings inputAudioTranscription = default;
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
             float? temperature = default;
-            RespondingAgentConfig agent = default;
+            RespondingAgentOptions agent = default;
+            BinaryData voiceInternal = default;
             BinaryData maxResponseOutputTokens = default;
             BinaryData toolChoice = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -260,15 +260,6 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     animation = AnimationOptions.DeserializeAnimationOptions(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("voice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    voiceInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
@@ -346,7 +337,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    avatar = AvatarConfig.DeserializeAvatarConfig(prop.Value, options);
+                    avatar = AvatarConfiguration.DeserializeAvatarConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("input_audio_transcription"u8))
@@ -401,7 +392,16 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    agent = RespondingAgentConfig.DeserializeRespondingAgentConfig(prop.Value, options);
+                    agent = RespondingAgentOptions.DeserializeRespondingAgentOptions(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("voice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    voiceInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("max_response_output_tokens"u8))
@@ -431,7 +431,6 @@ namespace Azure.AI.VoiceLive
                 model,
                 modalities ?? new ChangeTrackingList<InputModality>(),
                 animation,
-                voiceInternal,
                 instructions,
                 inputAudio,
                 inputAudioSamplingRate,
@@ -446,6 +445,7 @@ namespace Azure.AI.VoiceLive
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 temperature,
                 agent,
+                voiceInternal,
                 maxResponseOutputTokens,
                 toolChoice,
                 additionalBinaryDataProperties);

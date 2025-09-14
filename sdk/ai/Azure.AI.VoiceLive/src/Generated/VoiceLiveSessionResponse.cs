@@ -22,7 +22,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="model"></param>
         /// <param name="modalities"></param>
         /// <param name="animation"></param>
-        /// <param name="voiceInternal"></param>
         /// <param name="instructions"></param>
         /// <param name="inputAudio"></param>
         /// <param name="inputAudioSamplingRate"></param>
@@ -37,11 +36,12 @@ namespace Azure.AI.VoiceLive
         /// <param name="tools"></param>
         /// <param name="temperature"></param>
         /// <param name="agent"></param>
+        /// <param name="voiceInternal"></param>
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="toolChoice"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"></param>
-        internal VoiceLiveSessionResponse(string model, IList<InputModality> modalities, AnimationOptions animation, BinaryData voiceInternal, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, RespondingAgentConfig agent, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(model, modalities, animation, voiceInternal, instructions, inputAudio, inputAudioSamplingRate, inputAudioFormat, outputAudioFormat, turnDetection, inputAudioNoiseReduction, inputAudioEchoCancellation, avatar, inputAudioTranscription, outputAudioTimestampTypes, tools, temperature, agent, maxResponseOutputTokens, toolChoice, additionalBinaryDataProperties)
+        internal VoiceLiveSessionResponse(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, RespondingAgentOptions agent, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(model, modalities, animation, instructions, inputAudio, inputAudioSamplingRate, inputAudioFormat, outputAudioFormat, turnDetection, inputAudioNoiseReduction, inputAudioEchoCancellation, avatar, inputAudioTranscription, outputAudioTimestampTypes, tools, temperature, agent, voiceInternal, maxResponseOutputTokens, toolChoice, additionalBinaryDataProperties)
         {
             Id = id;
         }

@@ -137,7 +137,7 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <summary>
         /// Path to test audio files.
         /// </summary>
-        public string TestAudioPath => GetOptionalVariable("VOICELIVE_TEST_AUDIO_PATH") ?? Path.Combine(@"d:\scratch", "Audio");
+        public string TestAudioPath => GetOptionalVariable("VOICELIVE_TEST_AUDIO_PATH") ?? Path.Combine(Directory.GetCurrentDirectory(), "Audio");
 
         /// <summary>
         /// Enable extended logging for debugging.
