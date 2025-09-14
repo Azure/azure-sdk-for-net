@@ -160,10 +160,48 @@ namespace Azure.Core.Pipeline
             }
 
 #if NETCOREAPP
-            return ApplyOptionsToHandler(new SocketsHttpHandler { AllowAutoRedirect = false, UseCookies = UseCookies() }, options);
+            return ApplyOptionsToHandler(CreateSocketsHttpHandler(), options);
 #else
-            return ApplyOptionsToHandler(new HttpClientHandler { AllowAutoRedirect = false, UseCookies = UseCookies() }, options);
+            return ApplyOptionsToHandler(CreateHttpClientHandler(), options);
 #endif
+        }
+
+#if NETCOREAPP
+        private static SocketsHttpHandler CreateSocketsHttpHandler()
+        {
+#pragma warning disable CA1416 // Validate platform compatibility - Browser platform check handled in CreateDefaultHandler
+            var handler = new SocketsHttpHandler { UseCookies = UseCookies() };
+            try
+            {
+                handler.AllowAutoRedirect = false;
+            }
+            catch (PlatformNotSupportedException)
+            {
+                // On some platforms (e.g., WebAssembly), setting AllowAutoRedirect is not supported
+                // In such cases, we continue without setting it, as the default behavior should be acceptable
+                // for most scenarios or will be handled by higher-level redirect policies
+            }
+#pragma warning restore CA1416 // Validate platform compatibility
+            return handler;
+        }
+#endif
+
+        private static HttpClientHandler CreateHttpClientHandler()
+        {
+#pragma warning disable CA1416 // Validate platform compatibility - Browser platform check handled in CreateDefaultHandler
+            var handler = new HttpClientHandler { UseCookies = UseCookies() };
+            try
+            {
+                handler.AllowAutoRedirect = false;
+            }
+            catch (PlatformNotSupportedException)
+            {
+                // On some platforms (e.g., WebAssembly), setting AllowAutoRedirect is not supported
+                // In such cases, we continue without setting it, as the default behavior should be acceptable
+                // for most scenarios or will be handled by higher-level redirect policies
+            }
+#pragma warning restore CA1416 // Validate platform compatibility
+            return handler;
         }
 
         private static void SetProxySettings(HttpMessageHandler messageHandler)
