@@ -3,14 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests
@@ -57,6 +52,43 @@ namespace Azure.AI.VoiceLive.Tests
 
             var standardVoice = SafeCast<AzureStandardVoice>(updatedVoice);
             Assert.AreEqual(voice.Name, standardVoice.Name);
+        }
+
+        //[Ignore("Service issues")]
+        [LiveOnly]
+        [TestCase]
+        public async Task DisableToolCalls()
+        {
+            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+
+            var options = new VoiceLiveSessionOptions()
+            {
+                Model = "gpt-4o",
+                Modalities = { InputModality.Text },
+                ToolChoice = ToolChoiceLiteral.None
+            };
+
+            options.Tools.Add(FunctionCalls.AdditionDefinition);
+
+            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+
+            // Should get two updates back.
+            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+
+            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+
+            var content = new InputTextContentPart("What is 13 plus 29?");
+
+            await session.AddItemAsync(new UserMessageItem(new[] { content }), null, TimeoutToken).ConfigureAwait(false);
+
+            var conversationItemCreated = await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+            await session.StartResponseAsync(TimeoutToken).ConfigureAwait(false);
+            var responseCreated = await GetNextUpdate<SessionUpdateResponseCreated>(updatesEnum).ConfigureAwait(false);
+            var responseItems = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
         }
     }
 }

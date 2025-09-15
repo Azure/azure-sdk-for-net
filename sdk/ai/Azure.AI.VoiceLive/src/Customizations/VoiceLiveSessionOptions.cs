@@ -5,6 +5,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -53,10 +55,14 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets or sets the maximum number of tokens to generate in the response.
         /// </summary>
-        public int? MaxResponseOutputTokens
+        public ResponseMaxOutputTokensOption MaxResponseOutputTokens
         {
-            get => _maxResponseOutputTokens.ToObjectFromJson<int?>();
-            set => _maxResponseOutputTokens = BinaryData.FromObjectAsJson(value);
+            get => ResponseMaxOutputTokensOption.FromBinaryData(_maxResponseOutputTokens);
+            set
+            {
+                var persistable = value as IPersistableModel<ResponseMaxOutputTokensOption>;
+                _maxResponseOutputTokens = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
+            }
         }
 
         [CodeGenMember("ToolChoice")]
@@ -65,10 +71,14 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets or sets the tool choice strategy for response generation.
         /// </summary>
-        public string ToolChoice
+        public ToolChoiceOption ToolChoice
         {
-            get => _toolChoice.ToObjectFromJson<string>();
-            set => _toolChoice = BinaryData.FromObjectAsJson(value);
+            get => ToolChoiceOption.FromBinaryData(_toolChoice);
+            set
+            {
+                var persistable = value as IPersistableModel<ToolChoiceOption>;
+                _toolChoice = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
+            }
         }
     }
 }

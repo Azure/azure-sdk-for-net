@@ -190,5 +190,45 @@ namespace Azure.AI.VoiceLive.Tests
             var retrievedVoice = (AzureStandardVoice)sessionOpts.Voice;
             Assert.That(retrievedVoice.Name, Is.EqualTo("en-US-JennyNeural"));
         }
+
+        [Test]
+        public void MaxTokensSetGetTest()
+        {
+            var sessionOpts = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                MaxResponseOutputTokens = 4
+            };
+
+            Assert.AreEqual(4, sessionOpts.MaxResponseOutputTokens.NumericValue);
+
+            var sessionOpts2 = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                MaxResponseOutputTokens = ResponseMaxOutputTokensOption.CreateInfiniteMaxTokensOption()
+            };
+
+            Assert.IsNull(sessionOpts2.MaxResponseOutputTokens.NumericValue);
+        }
+
+        [Test]
+        public void ToolChoiceSetGet()
+        {
+            var sessionOpts = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                ToolChoice = "my_tool"
+            };
+
+            Assert.AreEqual("my_tool", sessionOpts.ToolChoice.FunctionName);
+
+            var sessionOpts2 = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                ToolChoice = ToolChoiceLiteral.None
+            };
+
+            Assert.IsNull(sessionOpts2.ToolChoice.FunctionName);
+        }
     }
 }

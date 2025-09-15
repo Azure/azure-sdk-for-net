@@ -362,7 +362,7 @@ namespace Azure.AI.VoiceLive.Tests
         protected async Task<SessionUpdate> GetNextUpdate(IAsyncEnumerator<SessionUpdate> updateEnumerator)
         {
             var moved = await updateEnumerator.MoveNextAsync().ConfigureAwait(false);
-            Assert.IsTrue(moved);
+            Assert.IsTrue(moved, "Failed to move to the next update.");
             var currentUpdate = updateEnumerator.Current;
             Assert.IsNotNull(currentUpdate);
             EnsureEventIdsUnique(currentUpdate);

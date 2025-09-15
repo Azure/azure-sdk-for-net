@@ -598,33 +598,6 @@ namespace Azure.AI.VoiceLive
             return new VoiceLiveFunctionDefinition(ToolType.Function, additionalBinaryDataProperties: null, name, description, parameters);
         }
 
-        /// <summary>
-        /// A base representation for a voicelive tool_choice selecting a named tool.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolChoiceFunctionObject"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="VoiceLive.ToolChoiceObject"/> instance for mocking. </returns>
-        public static ToolChoiceObject ToolChoiceObject(string @type = default)
-        {
-            return new UnknownToolChoiceObject(new ToolType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The representation of a voicelive tool_choice selecting a named function tool. </summary>
-        /// <param name="function"></param>
-        /// <returns> A new <see cref="VoiceLive.ToolChoiceFunctionObject"/> instance for mocking. </returns>
-        public static ToolChoiceFunctionObject ToolChoiceFunctionObject(ToolChoiceFunctionObjectFunction function = default)
-        {
-            return new ToolChoiceFunctionObject(ToolType.Function, additionalBinaryDataProperties: null, function);
-        }
-
-        /// <summary> The ToolChoiceFunctionObjectFunction. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="VoiceLive.ToolChoiceFunctionObjectFunction"/> instance for mocking. </returns>
-        public static ToolChoiceFunctionObjectFunction ToolChoiceFunctionObjectFunction(string name = default)
-        {
-            return new ToolChoiceFunctionObjectFunction(name, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The RespondingAgentOptions. </summary>
         /// <param name="type"></param>
         /// <param name="name"></param>

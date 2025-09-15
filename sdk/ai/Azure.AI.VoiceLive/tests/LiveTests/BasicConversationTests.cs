@@ -121,7 +121,7 @@ namespace Azure.AI.VoiceLive.Tests
                 Modalities = { InputModality.Text }
             };
 
-            options.Tools.Add(_additionDefinition);
+            options.Tools.Add(FunctionCalls.AdditionDefinition);
 
             var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
@@ -175,7 +175,7 @@ namespace Azure.AI.VoiceLive.Tests
                 Modalities = { InputModality.Text }
             };
 
-            options.Tools.Add(_additionDefinition);
+            options.Tools.Add(FunctionCalls.AdditionDefinition);
 
             var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
@@ -218,28 +218,6 @@ namespace Azure.AI.VoiceLive.Tests
             responseItems.Insert(0, responseCreated);
             ValidateResponseUpdates(responseItems, string.Empty);
         }
-
-        private readonly VoiceLiveFunctionDefinition _additionDefinition = new VoiceLiveFunctionDefinition("add_numbers")
-        {
-            Description = "Add two numbers together",
-            Parameters = BinaryData.FromObjectAsJson(new
-            {
-                type = "object",
-                properties = new
-                {
-                    a = new
-                    {
-                        type = "number",
-                        description = "The first number to add"
-                    },
-                    b = new
-                    {
-                        type = "number",
-                        description = "The second number to add"
-                    }
-                }
-            })
-        };
 
         private void ValidateResponseUpdates(List<SessionUpdate> responseItems, string previousItemId)
         {

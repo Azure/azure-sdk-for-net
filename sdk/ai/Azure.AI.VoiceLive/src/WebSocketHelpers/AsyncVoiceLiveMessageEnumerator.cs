@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,6 +70,10 @@ namespace Azure.AI.VoiceLive
 
                     if (receiveResult.CloseStatus.HasValue)
                     {
+                        if (_webSocket.State == WebSocketState.CloseReceived)
+                        {
+                            await _webSocket.CloseOutputAsync(receiveResult.CloseStatus.Value, "Acknowledge Close frame", CancellationToken.None).ConfigureAwait(false);
+                        }
                         Current = null;
                         return false;
                     }
@@ -82,8 +87,9 @@ namespace Azure.AI.VoiceLive
                 Current = websocketPipelineResponse.GetContent();
                 return true;
             }
-            catch (WebSocketException)
+            catch (WebSocketException webEx)
             {
+                Debug.WriteLine(webEx.ToString());
                 Current = null;
                 return false;
             }
