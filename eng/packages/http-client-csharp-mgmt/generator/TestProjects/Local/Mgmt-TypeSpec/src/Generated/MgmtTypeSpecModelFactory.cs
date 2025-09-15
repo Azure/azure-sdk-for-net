@@ -267,6 +267,33 @@ namespace MgmtTypeSpec.Models
                 selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, new Dictionary<string, BinaryData>()));
         }
 
+        /// <summary> Subscription-level location-based Playwright quota resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.PlaywrightQuotaData"/> instance for mocking. </returns>
+        public static PlaywrightQuotaData PlaywrightQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightQuotaProperties properties = default)
+        {
+            return new PlaywrightQuotaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Subscription-level location-based Playwright quota resource properties. </summary>
+        /// <param name="freeTrial"> The subscription-level location-based Playwright quota resource free-trial properties. </param>
+        /// <param name="provisioningState"> The status of the last resource operation. </param>
+        /// <returns> A new <see cref="Models.PlaywrightQuotaProperties"/> instance for mocking. </returns>
+        public static PlaywrightQuotaProperties PlaywrightQuotaProperties(string freeTrial = default, string provisioningState = default)
+        {
+            return new PlaywrightQuotaProperties(freeTrial, provisioningState, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
