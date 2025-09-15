@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             bool snapshotVolumes = default;
-            IList<AKSVolumeType> includedVolumeTypes = default;
+            IList<BackupAksVolumeType> includedVolumeTypes = default;
             bool includeClusterScopeResources = default;
             IList<string> includedNamespaces = default;
             IList<string> excludedNamespaces = default;
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    List<AKSVolumeType> array = new List<AKSVolumeType>();
+                    List<BackupAksVolumeType> array = new List<BackupAksVolumeType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AKSVolumeType(item.GetString()));
+                        array.Add(new BackupAksVolumeType(item.GetString()));
                     }
                     includedVolumeTypes = array;
                     continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 objectType,
                 serializedAdditionalRawData,
                 snapshotVolumes,
-                includedVolumeTypes ?? new ChangeTrackingList<AKSVolumeType>(),
+                includedVolumeTypes ?? new ChangeTrackingList<BackupAksVolumeType>(),
                 includeClusterScopeResources,
                 includedNamespaces ?? new ChangeTrackingList<string>(),
                 excludedNamespaces ?? new ChangeTrackingList<string>(),

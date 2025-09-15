@@ -654,24 +654,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AKSVolumeType : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AKSVolumeType(string value) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType AzureDisk { get { throw null; } }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType AzureFileShareSMB { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType left, Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType left, Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class ArmDataProtectionBackupModelFactory
     {
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationResult BackupFeatureValidationResult(Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType? featureType = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeature> features = null) { throw null; }
@@ -787,6 +769,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker left, Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker left, Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupAksVolumeType : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupAksVolumeType(string value) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType AzureDisk { get { throw null; } }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType AzureFileShareSMB { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType left, Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType left, Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class BackupDataSourceSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings>
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public System.Collections.Generic.IList<string> ExcludedResourceTypes { get { throw null; } }
         public System.Collections.Generic.IList<string> IncludedNamespaces { get { throw null; } }
         public System.Collections.Generic.IList<string> IncludedResourceTypes { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.AKSVolumeType> IncludedVolumeTypes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.BackupAksVolumeType> IncludedVolumeTypes { get { throw null; } }
         public bool IsClusterScopeResourcesIncluded { get { throw null; } set { } }
         public bool IsSnapshotVolumesEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LabelSelectors { get { throw null; } }
