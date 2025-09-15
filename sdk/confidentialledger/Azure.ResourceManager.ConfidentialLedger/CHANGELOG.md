@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-preview-2024-09' to 'package-preview-2025-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/01fab3a22af7bc6f37b7b96156372d0217a31e6d/specification/confidentialledger/resource-manager/readme.md
+
 ### Breaking Changes
 
 ### Bugs Fixed
