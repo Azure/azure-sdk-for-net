@@ -9,7 +9,7 @@ csharp: true
 library-name: ConfidentialLedger
 namespace: Azure.ResourceManager.ConfidentialLedger
 require: https://github.com/Azure/azure-rest-api-specs/blob/01fab3a22af7bc6f37b7b96156372d0217a31e6d/specification/confidentialledger/resource-manager/readme.md
-#tag: package-preview-2024-09
+#tag: package-preview-2025-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
