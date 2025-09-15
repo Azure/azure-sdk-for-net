@@ -1689,34 +1689,6 @@ namespace Azure.AI.VoiceLive
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SystemMessageItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SystemMessageItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ToolChoiceFunctionObject : Azure.AI.VoiceLive.ToolChoiceObject, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceFunctionObject>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceFunctionObject>
-    {
-        public ToolChoiceFunctionObject(Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction function) { }
-        public Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction Function { get { throw null; } set { } }
-        protected override Azure.AI.VoiceLive.ToolChoiceObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.VoiceLive.ToolChoiceObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.VoiceLive.ToolChoiceFunctionObject System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceFunctionObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceFunctionObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.VoiceLive.ToolChoiceFunctionObject System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceFunctionObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceFunctionObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceFunctionObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ToolChoiceFunctionObjectFunction : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction>
-    {
-        public ToolChoiceFunctionObjectFunction(string name) { }
-        public string Name { get { throw null; } set { } }
-        protected virtual Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ToolChoiceLiteral : System.IEquatable<Azure.AI.VoiceLive.ToolChoiceLiteral>
     {
@@ -1737,18 +1709,19 @@ namespace Azure.AI.VoiceLive
         public static bool operator !=(Azure.AI.VoiceLive.ToolChoiceLiteral left, Azure.AI.VoiceLive.ToolChoiceLiteral right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class ToolChoiceObject : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceObject>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceObject>
+    public partial class ToolChoiceOption : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceOption>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceOption>
     {
-        internal ToolChoiceObject() { }
-        protected virtual Azure.AI.VoiceLive.ToolChoiceObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.VoiceLive.ToolChoiceObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.VoiceLive.ToolChoiceObject System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.VoiceLive.ToolChoiceObject System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public ToolChoiceOption(Azure.AI.VoiceLive.ToolChoiceLiteral toolChoiceLiteral) { }
+        public ToolChoiceOption(string stringValue) { }
+        public string FunctionName { get { throw null; } }
+        public Azure.AI.VoiceLive.ToolChoiceLiteral? ToolCallConstraint { get { throw null; } }
+        public static implicit operator Azure.AI.VoiceLive.ToolChoiceOption (Azure.AI.VoiceLive.ToolChoiceLiteral literal) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.ToolChoiceOption (string name) { throw null; }
+        Azure.AI.VoiceLive.ToolChoiceOption System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceOption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ToolChoiceOption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.ToolChoiceOption System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceOption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceOption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ToolChoiceOption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class TurnDetection : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.TurnDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.TurnDetection>
     {
@@ -1998,9 +1971,6 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.SessionUpdateSessionCreated SessionUpdateSessionCreated(string eventId = null, Azure.AI.VoiceLive.VoiceLiveSessionResponse session = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateSessionUpdated SessionUpdateSessionUpdated(string eventId = null, Azure.AI.VoiceLive.VoiceLiveSessionResponse session = null) { throw null; }
         public static Azure.AI.VoiceLive.SystemMessageItem SystemMessageItem(string id = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?), System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InputTextContentPart> content = null) { throw null; }
-        public static Azure.AI.VoiceLive.ToolChoiceFunctionObject ToolChoiceFunctionObject(Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction function = null) { throw null; }
-        public static Azure.AI.VoiceLive.ToolChoiceFunctionObjectFunction ToolChoiceFunctionObjectFunction(string name = null) { throw null; }
-        public static Azure.AI.VoiceLive.ToolChoiceObject ToolChoiceObject(string type = null) { throw null; }
         public static Azure.AI.VoiceLive.TurnDetection TurnDetection(string type = null) { throw null; }
         public static Azure.AI.VoiceLive.UserContentPart UserContentPart(string type = null) { throw null; }
         public static Azure.AI.VoiceLive.UserMessageItem UserMessageItem(string id = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?), System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.UserContentPart> content = null) { throw null; }
@@ -2153,13 +2123,13 @@ namespace Azure.AI.VoiceLive
         public int? InputAudioSamplingRate { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AudioInputTranscriptionSettings InputAudioTranscription { get { throw null; } set { } }
         public string Instructions { get { throw null; } set { } }
-        public int? MaxResponseOutputTokens { get { throw null; } set { } }
+        public Azure.AI.VoiceLive.ResponseMaxOutputTokensOption MaxResponseOutputTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.InputModality> Modalities { get { throw null; } }
         public string Model { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AudioFormat? OutputAudioFormat { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.AudioTimestampType> OutputAudioTimestampTypes { get { throw null; } }
         public float? Temperature { get { throw null; } set { } }
-        public string ToolChoice { get { throw null; } set { } }
+        public Azure.AI.VoiceLive.ToolChoiceOption ToolChoice { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.VoiceLiveToolDefinition> Tools { get { throw null; } }
         public Azure.AI.VoiceLive.TurnDetection TurnDetection { get { throw null; } set { } }
         public Azure.AI.VoiceLive.VoiceProvider Voice { get { throw null; } set { } }

@@ -92,8 +92,12 @@ namespace Azure.AI.VoiceLive
                 {
                     case "session.update":
                         return ClientEventSessionUpdate.DeserializeClientEventSessionUpdate(element, options);
-                    case "session.avatar.connect":
-                        return ClientEventSessionAvatarConnect.DeserializeClientEventSessionAvatarConnect(element, options);
+                    case "input_audio_buffer.append":
+                        return ClientEventInputAudioBufferAppend.DeserializeClientEventInputAudioBufferAppend(element, options);
+                    case "input_audio_buffer.commit":
+                        return ClientEventInputAudioBufferCommit.DeserializeClientEventInputAudioBufferCommit(element, options);
+                    case "input_audio_buffer.clear":
+                        return ClientEventInputAudioBufferClear.DeserializeClientEventInputAudioBufferClear(element, options);
                     case "input_audio.turn.start":
                         return ClientEventInputAudioTurnStart.DeserializeClientEventInputAudioTurnStart(element, options);
                     case "input_audio.turn.append":
@@ -104,14 +108,10 @@ namespace Azure.AI.VoiceLive
                         return ClientEventInputAudioTurnCancel.DeserializeClientEventInputAudioTurnCancel(element, options);
                     case "input_audio.clear":
                         return ClientEventInputAudioClear.DeserializeClientEventInputAudioClear(element, options);
-                    case "input_audio_buffer.append":
-                        return ClientEventInputAudioBufferAppend.DeserializeClientEventInputAudioBufferAppend(element, options);
-                    case "input_audio_buffer.commit":
-                        return ClientEventInputAudioBufferCommit.DeserializeClientEventInputAudioBufferCommit(element, options);
-                    case "input_audio_buffer.clear":
-                        return ClientEventInputAudioBufferClear.DeserializeClientEventInputAudioBufferClear(element, options);
                     case "conversation.item.create":
                         return ClientEventConversationItemCreate.DeserializeClientEventConversationItemCreate(element, options);
+                    case "conversation.item.retrieve":
+                        return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
                     case "conversation.item.truncate":
                         return ClientEventConversationItemTruncate.DeserializeClientEventConversationItemTruncate(element, options);
                     case "conversation.item.delete":
@@ -120,8 +120,8 @@ namespace Azure.AI.VoiceLive
                         return ClientEventResponseCreate.DeserializeClientEventResponseCreate(element, options);
                     case "response.cancel":
                         return ClientEventResponseCancel.DeserializeClientEventResponseCancel(element, options);
-                    case "conversation.item.retrieve":
-                        return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
+                    case "session.avatar.connect":
+                        return ClientEventSessionAvatarConnect.DeserializeClientEventSessionAvatarConnect(element, options);
                 }
             }
             return UnknownClientEvent.DeserializeUnknownClientEvent(element, options);
