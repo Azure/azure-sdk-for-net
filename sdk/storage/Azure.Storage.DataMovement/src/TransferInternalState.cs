@@ -110,6 +110,9 @@ namespace Azure.Storage.DataMovement
 
                     // Tell the transfer manager to clean up the completed/paused job.
                     _removeTransfer?.Invoke(_id);
+
+                    // Once we reach a Completed/Paused, Dispose the CancellationTokenSource to release resources (since it is no longer needed).
+                    CancellationTokenSource.Dispose();
                 }
                 return true;
             }
