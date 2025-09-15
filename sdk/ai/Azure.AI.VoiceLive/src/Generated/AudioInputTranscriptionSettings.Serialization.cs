@@ -45,10 +45,37 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
-            writer.WritePropertyName("custom_model"u8);
-            writer.WriteBooleanValue(CustomModel);
+            if (Optional.IsCollectionDefined(CustomSpeech))
+            {
+                writer.WritePropertyName("custom_speech"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomSpeech)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(PhraseList))
+            {
+                writer.WritePropertyName("phrase_list"u8);
+                writer.WriteStartArray();
+                foreach (string item in PhraseList)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -93,8 +120,8 @@ namespace Azure.AI.VoiceLive
             }
             AudioInputTranscriptionSettingsModel model = default;
             string language = default;
-            bool enabled = default;
-            bool customModel = default;
+            IDictionary<string, string> customSpeech = default;
+            IList<string> phraseList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -108,14 +135,46 @@ namespace Azure.AI.VoiceLive
                     language = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("enabled"u8))
+                if (prop.NameEquals("custom_speech"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    customSpeech = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("custom_model"u8))
+                if (prop.NameEquals("phrase_list"u8))
                 {
-                    customModel = prop.Value.GetBoolean();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    phraseList = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +182,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AudioInputTranscriptionSettings(model, language, enabled, customModel, additionalBinaryDataProperties);
+            return new AudioInputTranscriptionSettings(model, language, customSpeech ?? new ChangeTrackingDictionary<string, string>(), phraseList ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

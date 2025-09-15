@@ -10,21 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The RequestSession. </summary>
-    public partial class RequestSession
+    /// <summary> The VoiceLiveSessionOptions. </summary>
+    public partial class VoiceLiveSessionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RequestSession"/>. </summary>
-        public RequestSession()
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionOptions"/>. </summary>
+        public VoiceLiveSessionOptions()
         {
             Modalities = new ChangeTrackingList<InputModality>();
             OutputAudioTimestampTypes = new ChangeTrackingList<AudioTimestampType>();
             Tools = new ChangeTrackingList<VoiceLiveToolDefinition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestSession"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionOptions"/>. </summary>
         /// <param name="model"></param>
         /// <param name="modalities"></param>
         /// <param name="animation"></param>
@@ -41,11 +41,12 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputAudioTimestampTypes"></param>
         /// <param name="tools"></param>
         /// <param name="temperature"></param>
-        /// <param name="serviceVoice"></param>
+        /// <param name="agent"></param>
+        /// <param name="voiceInternal"></param>
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="toolChoice"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequestSession(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData serviceVoice, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionOptions(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, RespondingAgentOptions agent, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -63,7 +64,8 @@ namespace Azure.AI.VoiceLive
             OutputAudioTimestampTypes = outputAudioTimestampTypes;
             Tools = tools;
             Temperature = temperature;
-            _serviceVoice = serviceVoice;
+            Agent = agent;
+            VoiceInternal = voiceInternal;
             _maxResponseOutputTokens = maxResponseOutputTokens;
             _toolChoice = toolChoice;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -103,7 +105,7 @@ namespace Azure.AI.VoiceLive
         public AudioEchoCancellation InputAudioEchoCancellation { get; set; }
 
         /// <summary> Gets or sets the Avatar. </summary>
-        public AvatarConfig Avatar { get; set; }
+        public AvatarConfiguration Avatar { get; set; }
 
         /// <summary> Gets or sets the InputAudioTranscription. </summary>
         public AudioInputTranscriptionSettings InputAudioTranscription { get; set; }
@@ -116,5 +118,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the Temperature. </summary>
         public float? Temperature { get; set; }
+
+        /// <summary> Gets or sets the Agent. </summary>
+        public RespondingAgentOptions Agent { get; set; }
     }
 }

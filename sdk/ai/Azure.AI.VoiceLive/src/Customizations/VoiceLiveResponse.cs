@@ -90,5 +90,17 @@ namespace Azure.AI.VoiceLive
                 return modalities; ;
             }
         }
+
+        [CodeGenMember("MaxOutputTokens")]
+        private BinaryData _MaxOutputTokens { get; }
+
+        /// <summary>
+        /// Maximum number of output tokens for a single assistant response,
+        /// inclusive of tool calls, that was used in this response.
+        /// </summary>
+        public ResponseMaxOutputTokensOption MaxOutputTokens
+        {
+            get;
+        }
     }
 }

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Net;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,11 +43,17 @@ namespace Azure.AI.VoiceLive
                     var tokenOptions = new TokenRequestContext(new string[] { "https://cognitiveservices.azure.com/.default" });
 
                     var token = await _tokenCredential.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
-                    clientWebSocket.Options.SetRequestHeader("Authorization", $"Bearer {token.Token}");
+                    clientWebSocket.Options.SetRequestHeader("Authorization", $"{token.TokenType} {token.Token}");
                 }
 
-                // Add any additional headers required by the VoiceLive service
-                clientWebSocket.Options.SetRequestHeader("User-Agent", "Azure-VoiceLive-SDK/.NET");
+                try
+                {
+                    clientWebSocket.Options.SetRequestHeader("User-Agent", "Azure-VoiceLive-SDK/.NET");
+                }
+                catch (System.ArgumentException)
+                {
+                    // On Net4.x you can't set the UserAgent for a websocket connection
+                }
 
                 await clientWebSocket.ConnectAsync(_endpoint, cancellationToken).ConfigureAwait(false);
 

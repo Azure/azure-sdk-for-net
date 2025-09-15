@@ -4,20 +4,20 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The VoiceLiveRequestSession. </summary>
-    public partial class RequestSession
+    public partial class VoiceLiveSessionOptions
     {
         /// <summary>
         /// Serialized additional properties for the request session
         /// </summary>
         internal IDictionary<string, BinaryData> AdditionalProperties => this._additionalBinaryDataProperties;
 
-        [CodeGenMember("Voice")]
-        private BinaryData _serviceVoice;
+        private BinaryData VoiceInternal;
 
         /// <summary>
         /// Gets or sets the Voice.
@@ -26,21 +26,24 @@ namespace Azure.AI.VoiceLive
         {
             get
             {
-                if (_serviceVoice == null)
+                if (VoiceInternal == null)
                 {
                     return null;
                 }
-                return _serviceVoice.ToObjectFromJson<VoiceProvider>();
+
+                var s = VoiceInternal.ToString();
+
+                return null;
             }
             set
             {
                 if (value == null)
                 {
-                    _serviceVoice = null;
+                    VoiceInternal = null;
                 }
                 else
                 {
-                    _serviceVoice = value.ToBinaryData();
+                    VoiceInternal = value.ToBinaryData();
                 }
             }
         }
@@ -51,10 +54,14 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets or sets the maximum number of tokens to generate in the response.
         /// </summary>
-        public int? MaxResponseOutputTokens
+        public ResponseMaxOutputTokensOption MaxResponseOutputTokens
         {
-            get => _maxResponseOutputTokens.ToObjectFromJson<int?>();
-            set => _maxResponseOutputTokens = BinaryData.FromObjectAsJson(value);
+            get => ResponseMaxOutputTokensOption.FromBinaryData(_maxResponseOutputTokens);
+            set
+            {
+                var persistable = value as IPersistableModel<ResponseMaxOutputTokensOption>;
+                _maxResponseOutputTokens = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
+            }
         }
 
         [CodeGenMember("ToolChoice")]
@@ -63,10 +70,14 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets or sets the tool choice strategy for response generation.
         /// </summary>
-        public string ToolChoice
+        public ToolChoiceOption ToolChoice
         {
-            get => _toolChoice.ToObjectFromJson<string>();
-            set => _toolChoice = BinaryData.FromObjectAsJson(value);
+            get => ToolChoiceOption.FromBinaryData(_toolChoice);
+            set
+            {
+                var persistable = value as IPersistableModel<ToolChoiceOption>;
+                _toolChoice = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
+            }
         }
     }
 }
