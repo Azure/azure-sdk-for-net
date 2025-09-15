@@ -65,11 +65,18 @@ namespace Azure.AI.Translation.Text
         /// An array of translation results. The size of the array matches the number of target
         /// languages specified through the to query parameter.
         /// </param>
+        /// <param name="sourceText">
+        /// Input text in the default script of the source language. sourceText property is present only when
+        /// the input is expressed in a script that's not the usual script for the language. For example,
+        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
+        /// converted into Arab script.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslatedTextItem(DetectedLanguage detectedLanguage, IReadOnlyList<TranslationText> translations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslatedTextItem(DetectedLanguage detectedLanguage, IReadOnlyList<TranslationText> translations, SourceText sourceText, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DetectedLanguage = detectedLanguage;
             Translations = translations;
+            SourceText = sourceText;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,5 +92,12 @@ namespace Azure.AI.Translation.Text
         /// languages specified through the to query parameter.
         /// </summary>
         public IReadOnlyList<TranslationText> Translations { get; }
+        /// <summary>
+        /// Input text in the default script of the source language. sourceText property is present only when
+        /// the input is expressed in a script that's not the usual script for the language. For example,
+        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
+        /// converted into Arab script.
+        /// </summary>
+        public SourceText SourceText { get; }
     }
 }

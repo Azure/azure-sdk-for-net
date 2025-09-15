@@ -203,12 +203,18 @@ namespace Azure.AI.Translation.Text
         /// An array of translation results. The size of the array matches the number of target
         /// languages specified through the to query parameter.
         /// </param>
+        /// <param name="sourceText">
+        /// Input text in the default script of the source language. sourceText property is present only when
+        /// the input is expressed in a script that's not the usual script for the language. For example,
+        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
+        /// converted into Arab script.
+        /// </param>
         /// <returns> A new <see cref="Text.TranslatedTextItem"/> instance for mocking. </returns>
-        public static TranslatedTextItem TranslatedTextItem(DetectedLanguage detectedLanguage = null, IEnumerable<TranslationText> translations = null)
+        public static TranslatedTextItem TranslatedTextItem(DetectedLanguage detectedLanguage = null, IEnumerable<TranslationText> translations = null, SourceText sourceText = null)
         {
             translations ??= new List<TranslationText>();
 
-            return new TranslatedTextItem(detectedLanguage, translations?.ToList(), serializedAdditionalRawData: null);
+            return new TranslatedTextItem(detectedLanguage, translations?.ToList(), sourceText, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.DetectedLanguage"/>. </summary>
@@ -254,6 +260,14 @@ namespace Azure.AI.Translation.Text
         public static TransliteratedText TransliteratedText(string text = null, string script = null)
         {
             return new TransliteratedText(text, script, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Text.SourceText"/>. </summary>
+        /// <param name="text"> Input text in the default script of the source language. </param>
+        /// <returns> A new <see cref="Text.SourceText"/> instance for mocking. </returns>
+        public static SourceText SourceText(string text = null)
+        {
+            return new SourceText(text, serializedAdditionalRawData: null);
         }
     }
 }
