@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
                 properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.RunningState, properties.LedgerType,
                 properties.ProvisioningState, ConfidentialLedgerSku.Standard, securityPrincipals, properties.CertBasedSecurityPrincipals, properties.HostLevel,
                 properties.MaxBodySizeInMb, properties.SubjectName, properties.NodeCount, properties.WriteLBAddressPrefix,
-                properties.WorkerThreads, properties.EnclavePlatform, properties.ApplicationType, null);
+                properties.WorkerThreads, properties.EnclavePlatform, properties.ApplicationType, properties.ScittConfiguration, null);
         }
 
         /// <summary>

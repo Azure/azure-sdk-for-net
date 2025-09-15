@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckConfidentialLedgerNameAvailability_CheckNameAvailability()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/CheckNameAvailability.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2025-06-10-preview/examples/CheckNameAvailability.json
             // this example is just showing the usage of "CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetConfidentialLedgers_ConfidentialLedgerListBySub()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_ListBySub.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2025-06-10-preview/examples/ConfidentialLedger_ListBySub.json
             // this example is just showing the usage of "Ledger_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetManagedCcfs_ManagedCCFListBySub()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ManagedCCF_ListBySub.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2025-06-10-preview/examples/ManagedCCF_ListBySub.json
             // this example is just showing the usage of "ManagedCCF_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
