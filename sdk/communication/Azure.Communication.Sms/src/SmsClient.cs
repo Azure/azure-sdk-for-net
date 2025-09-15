@@ -7,11 +7,10 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
 using Azure.Communication.Sms.Models;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Sms
 {
@@ -29,7 +28,7 @@ namespace Azure.Communication.Sms
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         public SmsClient(string connectionString)
             : this(
-                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 new SmsClientOptions())
         { }
 
@@ -38,7 +37,7 @@ namespace Azure.Communication.Sms
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public SmsClient(string connectionString, SmsClientOptions options)
             : this(
-                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new SmsClientOptions())
         { }
 
@@ -48,8 +47,8 @@ namespace Azure.Communication.Sms
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public SmsClient(Uri endpoint, AzureKeyCredential keyCredential, SmsClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                AssertNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
                 options ?? new SmsClientOptions())
         { }
 
@@ -59,8 +58,8 @@ namespace Azure.Communication.Sms
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public SmsClient(Uri endpoint, TokenCredential tokenCredential, SmsClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                AssertNotNull(tokenCredential, nameof(tokenCredential)),
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
                 options ?? new SmsClientOptions())
         { }
 
@@ -83,7 +82,8 @@ namespace Azure.Communication.Sms
         private SmsClient(string endpoint, HttpPipeline httpPipeline, SmsClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new SmsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            RestClient = new SmsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            OptOuts = new OptOutsClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
         }
 
         #endregion
@@ -93,7 +93,13 @@ namespace Azure.Communication.Sms
         {
             _clientDiagnostics = null;
             RestClient = null;
+            OptOuts = null;
         }
+
+        /// <summary>
+        /// Opt Out management client.
+        /// </summary>
+        public virtual OptOutsClient OptOuts { get; private set; }
 
         /// <summary>
         /// Sends a SMS <paramref name="from"/> a phone number that is acquired by the authenticated account, <paramref name="to"/> another phone number.
@@ -154,7 +160,7 @@ namespace Azure.Communication.Sms
                 Argument.AssertNotNullOrEmpty(from, nameof(from));
                 Argument.AssertNotNullOrEmpty(to, nameof(to));
                 IEnumerable<SmsRecipient> recipients = to.Select(x =>
-                    new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
+                    new SmsRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to)))
                     {
                         RepeatabilityRequestId = Guid.NewGuid().ToString(),
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
@@ -190,7 +196,7 @@ namespace Azure.Communication.Sms
                 Argument.AssertNotNullOrEmpty(to, nameof(to));
 
                 IEnumerable<SmsRecipient> recipients = to.Select(x =>
-                    new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
+                    new SmsRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to)))
                     {
                         RepeatabilityRequestId = Guid.NewGuid().ToString(),
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
@@ -204,19 +210,6 @@ namespace Azure.Communication.Sms
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        private static T AssertNotNull<T>(T argument, string argumentName)
-            where T : class
-        {
-            Argument.AssertNotNull(argument, argumentName);
-            return argument;
-        }
-
-        private static string AssertNotNullOrEmpty(string argument, string argumentName)
-        {
-            Argument.AssertNotNullOrEmpty(argument, argumentName);
-            return argument;
         }
     }
 }
