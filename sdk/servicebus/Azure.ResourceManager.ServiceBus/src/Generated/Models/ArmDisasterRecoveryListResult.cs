@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The response of a ArmDisasterRecovery list operation. </summary>
+    /// <summary> The result of the List Alias(Disaster Recovery configuration) operation. </summary>
     internal partial class ArmDisasterRecoveryListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ArmDisasterRecoveryListResult"/>. </summary>
-        /// <param name="value"> The ArmDisasterRecovery items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ArmDisasterRecoveryListResult(IEnumerable<ServiceBusDisasterRecoveryData> value)
+        internal ArmDisasterRecoveryListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ServiceBusDisasterRecoveryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmDisasterRecoveryListResult"/>. </summary>
-        /// <param name="value"> The ArmDisasterRecovery items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> List of Alias(Disaster Recovery configurations). </param>
+        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Alias(Disaster Recovery configuration). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDisasterRecoveryListResult(IReadOnlyList<ServiceBusDisasterRecoveryData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDisasterRecoveryListResult(IReadOnlyList<ServiceBusDisasterRecoveryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmDisasterRecoveryListResult"/> for deserialization. </summary>
-        internal ArmDisasterRecoveryListResult()
-        {
-        }
-
-        /// <summary> The ArmDisasterRecovery items on this page. </summary>
+        /// <summary> List of Alias(Disaster Recovery configurations). </summary>
         public IReadOnlyList<ServiceBusDisasterRecoveryData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Alias(Disaster Recovery configuration). </summary>
+        public string NextLink { get; }
     }
 }

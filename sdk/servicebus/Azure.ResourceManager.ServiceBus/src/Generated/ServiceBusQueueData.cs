@@ -83,8 +83,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="enableExpress"> A value that indicates whether Express Entities are enabled. An express queue holds a message in memory temporarily before writing it to persistent storage. </param>
         /// <param name="forwardTo"> Queue/Topic name to forward the messages. </param>
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MessageCountDetails countDetails, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, long? sizeInBytes, long? messageCount, TimeSpan? lockDuration, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, ServiceBusMessagingEntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, string forwardTo, string forwardDeadLetteredMessagesTo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MessageCountDetails countDetails, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, long? sizeInBytes, long? messageCount, TimeSpan? lockDuration, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, ServiceBusMessagingEntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, string forwardTo, string forwardDeadLetteredMessagesTo, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CountDetails = countDetails;
             CreatedOn = createdOn;
@@ -108,6 +109,7 @@ namespace Azure.ResourceManager.ServiceBus
             EnableExpress = enableExpress;
             ForwardTo = forwardTo;
             ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
+            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -177,5 +179,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Queue/Topic name to forward the Dead Letter message. </summary>
         [WirePath("properties.forwardDeadLetteredMessagesTo")]
         public string ForwardDeadLetteredMessagesTo { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
     }
 }

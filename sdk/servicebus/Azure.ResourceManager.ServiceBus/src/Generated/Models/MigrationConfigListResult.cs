@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> MigrationConfig Resource Collection. </summary>
+    /// <summary> The result of the List migrationConfigurations operation. </summary>
     internal partial class MigrationConfigListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MigrationConfigListResult"/>. </summary>
-        /// <param name="value"> The MigrationConfigProperties items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MigrationConfigListResult(IEnumerable<MigrationConfigurationData> value)
+        internal MigrationConfigListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<MigrationConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationConfigListResult"/>. </summary>
-        /// <param name="value"> The MigrationConfigProperties items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> List of Migration Configs. </param>
+        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of migrationConfigurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationConfigListResult(IReadOnlyList<MigrationConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrationConfigListResult(IReadOnlyList<MigrationConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationConfigListResult"/> for deserialization. </summary>
-        internal MigrationConfigListResult()
-        {
-        }
-
-        /// <summary> The MigrationConfigProperties items on this page. </summary>
+        /// <summary> List of Migration Configs. </summary>
         public IReadOnlyList<MigrationConfigurationData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of migrationConfigurations. </summary>
+        public string NextLink { get; }
     }
 }

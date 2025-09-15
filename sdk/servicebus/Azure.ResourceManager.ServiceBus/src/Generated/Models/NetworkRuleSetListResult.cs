@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The response of a NetworkRuleSet list operation. </summary>
+    /// <summary> The response of the List NetworkRuleSet operation. </summary>
     internal partial class NetworkRuleSetListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkRuleSetListResult"/>. </summary>
-        /// <param name="value"> The NetworkRuleSet items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal NetworkRuleSetListResult(IEnumerable<ServiceBusNetworkRuleSetData> value)
+        internal NetworkRuleSetListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ServiceBusNetworkRuleSetData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkRuleSetListResult"/>. </summary>
-        /// <param name="value"> The NetworkRuleSet items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> Result of the List NetworkRuleSet operation. </param>
+        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of NetworkRuleSet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRuleSetListResult(IReadOnlyList<ServiceBusNetworkRuleSetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkRuleSetListResult(IReadOnlyList<ServiceBusNetworkRuleSetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetListResult"/> for deserialization. </summary>
-        internal NetworkRuleSetListResult()
-        {
-        }
-
-        /// <summary> The NetworkRuleSet items on this page. </summary>
+        /// <summary> Result of the List NetworkRuleSet operation. </summary>
         public IReadOnlyList<ServiceBusNetworkRuleSetData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of NetworkRuleSet. </summary>
+        public string NextLink { get; }
     }
 }

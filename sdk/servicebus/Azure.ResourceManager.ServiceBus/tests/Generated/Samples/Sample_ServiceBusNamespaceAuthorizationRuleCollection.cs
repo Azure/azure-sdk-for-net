@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         public async Task GetAll_NameSpaceAuthorizationRuleListAll()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/SBNameSpaceAuthorizationRuleListAll.json
-            // this example is just showing the usage of "Namespaces_ListAuthorizationRules" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NamespaceAuthorizationRules_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

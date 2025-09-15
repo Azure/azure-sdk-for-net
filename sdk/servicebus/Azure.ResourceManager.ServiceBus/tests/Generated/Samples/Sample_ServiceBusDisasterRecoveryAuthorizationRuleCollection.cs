@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusDisasterRecoveryResource created on azure
             // for more information of creating ServiceBusDisasterRecoveryResource, please refer to the document of ServiceBusDisasterRecoveryResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "exampleSubscriptionId";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
             string @alias = "sdk-DisasterRecovery-4879";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusDisasterRecoveryResource created on azure
             // for more information of creating ServiceBusDisasterRecoveryResource, please refer to the document of ServiceBusDisasterRecoveryResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "exampleSubscriptionId";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
             string @alias = "sdk-DisasterRecovery-4047";
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusDisasterRecoveryResource created on azure
             // for more information of creating ServiceBusDisasterRecoveryResource, please refer to the document of ServiceBusDisasterRecoveryResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "exampleSubscriptionId";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
             string @alias = "sdk-DisasterRecovery-4879";
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusDisasterRecoveryResource created on azure
             // for more information of creating ServiceBusDisasterRecoveryResource, please refer to the document of ServiceBusDisasterRecoveryResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "exampleSubscriptionId";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
             string @alias = "sdk-DisasterRecovery-4879";

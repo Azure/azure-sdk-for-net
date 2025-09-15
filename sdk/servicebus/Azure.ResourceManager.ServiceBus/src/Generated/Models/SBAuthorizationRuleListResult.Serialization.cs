@@ -36,17 +36,20 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 throw new FormatException($"The model {nameof(SBAuthorizationRuleListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("value"u8);
-            writer.WriteStartArray();
-            foreach (var item in Value)
+            if (Optional.IsCollectionDefined(Value))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,13 +89,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             IReadOnlyList<ServiceBusAuthorizationRuleData> value = default;
-            Uri nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<ServiceBusAuthorizationRuleData> array = new List<ServiceBusAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -103,11 +110,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = new Uri(property.Value.GetString());
+                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +119,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SBAuthorizationRuleListResult(value, nextLink, serializedAdditionalRawData);
+            return new SBAuthorizationRuleListResult(value ?? new ChangeTrackingList<ServiceBusAuthorizationRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -164,7 +167,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 if (Optional.IsDefined(NextLink))
                 {
                     builder.Append("  nextLink: ");
-                    builder.AppendLine($"'{NextLink.AbsoluteUri}'");
+                    if (NextLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NextLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NextLink}'");
+                    }
                 }
             }
 

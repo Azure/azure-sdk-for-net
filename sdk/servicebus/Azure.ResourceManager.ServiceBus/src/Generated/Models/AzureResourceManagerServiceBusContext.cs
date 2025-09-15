@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(MigrationConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(NetworkRuleSetListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuleListResult))]
     [ModelReaderWriterBuildable(typeof(SBAuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(SBNamespaceListResult))]

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusPrivateEndpointConnectionResource created on azure
             // for more information of creating ServiceBusPrivateEndpointConnectionResource, please refer to the document of ServiceBusPrivateEndpointConnectionResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "subID";
             string resourceGroupName = "SDK-ServiceBus-4794";
             string namespaceName = "sdk-Namespace-5828";
             string privateEndpointConnectionName = "privateEndpointConnectionName";
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusPrivateEndpointConnectionResource created on azure
             // for more information of creating ServiceBusPrivateEndpointConnectionResource, please refer to the document of ServiceBusPrivateEndpointConnectionResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "subID";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2924";
             string privateEndpointConnectionName = "privateEndpointConnectionName";

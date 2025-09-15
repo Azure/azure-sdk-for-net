@@ -16,16 +16,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmServiceBusModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNameAvailabilityResult"/>. </summary>
-        /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
-        /// <param name="isNameAvailable"> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </param>
-        /// <param name="reason"> The reason for unavailability of a namespace. </param>
-        /// <returns> A new <see cref="Models.ServiceBusNameAvailabilityResult"/> instance for mocking. </returns>
-        public static ServiceBusNameAvailabilityResult ServiceBusNameAvailabilityResult(string message = null, bool? isNameAvailable = null, ServiceBusNameUnavailableReason? reason = null)
-        {
-            return new ServiceBusNameAvailabilityResult(message, isNameAvailable, reason, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -89,8 +79,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="privateEndpointId"> The Private Endpoint resource for this Connection. </param>
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ServiceBusPrivateLinkServiceConnectionState connectionState = null, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ServiceBusPrivateLinkServiceConnectionState connectionState = null, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
             return new ServiceBusPrivateEndpointConnectionData(
                 id,
@@ -100,6 +91,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
                 connectionState,
                 provisioningState,
+                location,
                 serializedAdditionalRawData: null);
         }
 
@@ -150,14 +142,127 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusPrivateLinkResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupId"></param>
+        /// <param name="requiredMembers"> Required Members. </param>
+        /// <param name="requiredZoneNames"> Required Zone Names. </param>
+        /// <returns> A new <see cref="Models.ServiceBusPrivateLinkResource"/> instance for mocking. </returns>
+        public static ServiceBusPrivateLinkResource ServiceBusPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        {
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+
+            return new ServiceBusPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusDisasterRecoveryData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </param>
+        /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
+        /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
+        /// <param name="alternateName"> Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
+        /// <param name="role"> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="ServiceBus.ServiceBusDisasterRecoveryData"/> instance for mocking. </returns>
+        public static ServiceBusDisasterRecoveryData ServiceBusDisasterRecoveryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceBusDisasterRecoveryProvisioningState? provisioningState = null, long? pendingReplicationOperationsCount = null, string partnerNamespace = null, string alternateName = null, ServiceBusDisasterRecoveryRole? role = null, AzureLocation? location = null)
+        {
+            return new ServiceBusDisasterRecoveryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                pendingReplicationOperationsCount,
+                partnerNamespace,
+                alternateName,
+                role,
+                location,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBus.MigrationConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state of Migration Configuration. </param>
+        /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
+        /// <param name="targetServiceBusNamespace"> Existing premium Namespace ARM Id name which has no entities, will be used for migration. </param>
+        /// <param name="postMigrationName"> Name to access Standard Namespace after migration. </param>
+        /// <param name="migrationState"> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="ServiceBus.MigrationConfigurationData"/> instance for mocking. </returns>
+        public static MigrationConfigurationData MigrationConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, long? pendingReplicationOperationsCount = null, ResourceIdentifier targetServiceBusNamespace = null, string postMigrationName = null, string migrationState = null, AzureLocation? location = null)
+        {
+            return new MigrationConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                pendingReplicationOperationsCount,
+                targetServiceBusNamespace,
+                postMigrationName,
+                migrationState,
+                location,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusNetworkRuleSetData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isTrustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
+        /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
+        /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
+        /// <param name="ipRules"> List of IpRules. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="ServiceBus.ServiceBusNetworkRuleSetData"/> instance for mocking. </returns>
+        public static ServiceBusNetworkRuleSetData ServiceBusNetworkRuleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isTrustedServiceAccessEnabled = null, ServiceBusNetworkRuleSetDefaultAction? defaultAction = null, IEnumerable<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = null, IEnumerable<ServiceBusNetworkRuleSetIPRules> ipRules = null, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = null, AzureLocation? location = null)
+        {
+            virtualNetworkRules ??= new List<ServiceBusNetworkRuleSetVirtualNetworkRules>();
+            ipRules ??= new List<ServiceBusNetworkRuleSetIPRules>();
+
+            return new ServiceBusNetworkRuleSetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isTrustedServiceAccessEnabled,
+                defaultAction,
+                virtualNetworkRules?.ToList(),
+                ipRules?.ToList(),
+                publicNetworkAccess,
+                location,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusAuthorizationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusAuthorizationRuleData"/> instance for mocking. </returns>
-        public static ServiceBusAuthorizationRuleData ServiceBusAuthorizationRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ServiceBusAccessRight> rights = null)
+        public static ServiceBusAuthorizationRuleData ServiceBusAuthorizationRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ServiceBusAccessRight> rights = null, AzureLocation? location = null)
         {
             rights ??= new List<ServiceBusAccessRight>();
 
@@ -167,6 +272,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 resourceType,
                 systemData,
                 rights?.ToList(),
+                location,
                 serializedAdditionalRawData: null);
         }
 
@@ -201,112 +307,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusRegenerateAccessKeyContent(keyType, key, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusDisasterRecoveryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </param>
-        /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
-        /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
-        /// <param name="alternateName"> Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
-        /// <param name="role"> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </param>
-        /// <returns> A new <see cref="ServiceBus.ServiceBusDisasterRecoveryData"/> instance for mocking. </returns>
-        public static ServiceBusDisasterRecoveryData ServiceBusDisasterRecoveryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceBusDisasterRecoveryProvisioningState? provisioningState = null, long? pendingReplicationOperationsCount = null, string partnerNamespace = null, string alternateName = null, ServiceBusDisasterRecoveryRole? role = null)
-        {
-            return new ServiceBusDisasterRecoveryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                pendingReplicationOperationsCount,
-                partnerNamespace,
-                alternateName,
-                role,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceBus.MigrationConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of Migration Configuration. </param>
-        /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
-        /// <param name="targetServiceBusNamespace"> Existing premium Namespace ARM Id name which has no entities, will be used for migration. </param>
-        /// <param name="postMigrationName"> Name to access Standard Namespace after migration. </param>
-        /// <param name="migrationState"> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </param>
-        /// <returns> A new <see cref="ServiceBus.MigrationConfigurationData"/> instance for mocking. </returns>
-        public static MigrationConfigurationData MigrationConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, long? pendingReplicationOperationsCount = null, ResourceIdentifier targetServiceBusNamespace = null, string postMigrationName = null, string migrationState = null)
-        {
-            return new MigrationConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                pendingReplicationOperationsCount,
-                targetServiceBusNamespace,
-                postMigrationName,
-                migrationState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusNetworkRuleSetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isTrustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
-        /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
-        /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
-        /// <param name="ipRules"> List of IpRules. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <returns> A new <see cref="ServiceBus.ServiceBusNetworkRuleSetData"/> instance for mocking. </returns>
-        public static ServiceBusNetworkRuleSetData ServiceBusNetworkRuleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isTrustedServiceAccessEnabled = null, ServiceBusNetworkRuleSetDefaultAction? defaultAction = null, IEnumerable<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = null, IEnumerable<ServiceBusNetworkRuleSetIPRules> ipRules = null, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = null)
-        {
-            virtualNetworkRules ??= new List<ServiceBusNetworkRuleSetVirtualNetworkRules>();
-            ipRules ??= new List<ServiceBusNetworkRuleSetIPRules>();
-
-            return new ServiceBusNetworkRuleSetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isTrustedServiceAccessEnabled,
-                defaultAction,
-                virtualNetworkRules?.ToList(),
-                ipRules?.ToList(),
-                publicNetworkAccess,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusPrivateLinkResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"></param>
-        /// <param name="requiredMembers"> Required Members. </param>
-        /// <param name="requiredZoneNames"> Required Zone Names. </param>
-        /// <returns> A new <see cref="Models.ServiceBusPrivateLinkResource"/> instance for mocking. </returns>
-        public static ServiceBusPrivateLinkResource ServiceBusPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new ServiceBusPrivateLinkResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusQueueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -334,8 +334,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="enableExpress"> A value that indicates whether Express Entities are enabled. An express queue holds a message in memory temporarily before writing it to persistent storage. </param>
         /// <param name="forwardTo"> Queue/Topic name to forward the messages. </param>
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusQueueData"/> instance for mocking. </returns>
-        public static ServiceBusQueueData ServiceBusQueueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MessageCountDetails countDetails = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, DateTimeOffset? accessedOn = null, long? sizeInBytes = null, long? messageCount = null, TimeSpan? lockDuration = null, int? maxSizeInMegabytes = null, long? maxMessageSizeInKilobytes = null, bool? requiresDuplicateDetection = null, bool? requiresSession = null, TimeSpan? defaultMessageTimeToLive = null, bool? deadLetteringOnMessageExpiration = null, TimeSpan? duplicateDetectionHistoryTimeWindow = null, int? maxDeliveryCount = null, ServiceBusMessagingEntityStatus? status = null, bool? enableBatchedOperations = null, TimeSpan? autoDeleteOnIdle = null, bool? enablePartitioning = null, bool? enableExpress = null, string forwardTo = null, string forwardDeadLetteredMessagesTo = null)
+        public static ServiceBusQueueData ServiceBusQueueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MessageCountDetails countDetails = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, DateTimeOffset? accessedOn = null, long? sizeInBytes = null, long? messageCount = null, TimeSpan? lockDuration = null, int? maxSizeInMegabytes = null, long? maxMessageSizeInKilobytes = null, bool? requiresDuplicateDetection = null, bool? requiresSession = null, TimeSpan? defaultMessageTimeToLive = null, bool? deadLetteringOnMessageExpiration = null, TimeSpan? duplicateDetectionHistoryTimeWindow = null, int? maxDeliveryCount = null, ServiceBusMessagingEntityStatus? status = null, bool? enableBatchedOperations = null, TimeSpan? autoDeleteOnIdle = null, bool? enablePartitioning = null, bool? enableExpress = null, string forwardTo = null, string forwardDeadLetteredMessagesTo = null, AzureLocation? location = null)
         {
             return new ServiceBusQueueData(
                 id,
@@ -364,6 +365,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 enableExpress,
                 forwardTo,
                 forwardDeadLetteredMessagesTo,
+                location,
                 serializedAdditionalRawData: null);
         }
 
@@ -407,8 +409,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="autoDeleteOnIdle"> ISO 8601 timespan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </param>
         /// <param name="enablePartitioning"> Value that indicates whether the topic to be partitioned across multiple message brokers is enabled. </param>
         /// <param name="enableExpress"> Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusTopicData"/> instance for mocking. </returns>
-        public static ServiceBusTopicData ServiceBusTopicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? sizeInBytes = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, DateTimeOffset? accessedOn = null, int? subscriptionCount = null, MessageCountDetails countDetails = null, TimeSpan? defaultMessageTimeToLive = null, int? maxSizeInMegabytes = null, long? maxMessageSizeInKilobytes = null, bool? requiresDuplicateDetection = null, TimeSpan? duplicateDetectionHistoryTimeWindow = null, bool? enableBatchedOperations = null, ServiceBusMessagingEntityStatus? status = null, bool? supportOrdering = null, TimeSpan? autoDeleteOnIdle = null, bool? enablePartitioning = null, bool? enableExpress = null)
+        public static ServiceBusTopicData ServiceBusTopicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? sizeInBytes = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, DateTimeOffset? accessedOn = null, int? subscriptionCount = null, MessageCountDetails countDetails = null, TimeSpan? defaultMessageTimeToLive = null, int? maxSizeInMegabytes = null, long? maxMessageSizeInKilobytes = null, bool? requiresDuplicateDetection = null, TimeSpan? duplicateDetectionHistoryTimeWindow = null, bool? enableBatchedOperations = null, ServiceBusMessagingEntityStatus? status = null, bool? supportOrdering = null, TimeSpan? autoDeleteOnIdle = null, bool? enablePartitioning = null, bool? enableExpress = null, AzureLocation? location = null)
         {
             return new ServiceBusTopicData(
                 id,
@@ -432,6 +435,33 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 autoDeleteOnIdle,
                 enablePartitioning,
                 enableExpress,
+                location,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="action"> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </param>
+        /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
+        /// <param name="sqlFilter"> Properties of sqlFilter. </param>
+        /// <param name="correlationFilter"> Properties of correlationFilter. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="ServiceBus.ServiceBusRuleData"/> instance for mocking. </returns>
+        public static ServiceBusRuleData ServiceBusRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceBusFilterAction action = null, ServiceBusFilterType? filterType = null, ServiceBusSqlFilter sqlFilter = null, ServiceBusCorrelationFilter correlationFilter = null, AzureLocation? location = null)
+        {
+            return new ServiceBusRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                action,
+                filterType,
+                sqlFilter,
+                correlationFilter,
+                location,
                 serializedAdditionalRawData: null);
         }
 
@@ -459,8 +489,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
         /// <param name="isClientAffine"> Value that indicates whether the subscription has an affinity to the client id. </param>
         /// <param name="clientAffineProperties"> Properties specific to client affine subscriptions. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusSubscriptionData"/> instance for mocking. </returns>
-        public static ServiceBusSubscriptionData ServiceBusSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? messageCount = null, DateTimeOffset? createdOn = null, DateTimeOffset? accessedOn = null, DateTimeOffset? updatedOn = null, MessageCountDetails countDetails = null, TimeSpan? lockDuration = null, bool? requiresSession = null, TimeSpan? defaultMessageTimeToLive = null, bool? deadLetteringOnFilterEvaluationExceptions = null, bool? deadLetteringOnMessageExpiration = null, TimeSpan? duplicateDetectionHistoryTimeWindow = null, int? maxDeliveryCount = null, ServiceBusMessagingEntityStatus? status = null, bool? enableBatchedOperations = null, TimeSpan? autoDeleteOnIdle = null, string forwardTo = null, string forwardDeadLetteredMessagesTo = null, bool? isClientAffine = null, ServiceBusClientAffineProperties clientAffineProperties = null)
+        public static ServiceBusSubscriptionData ServiceBusSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? messageCount = null, DateTimeOffset? createdOn = null, DateTimeOffset? accessedOn = null, DateTimeOffset? updatedOn = null, MessageCountDetails countDetails = null, TimeSpan? lockDuration = null, bool? requiresSession = null, TimeSpan? defaultMessageTimeToLive = null, bool? deadLetteringOnFilterEvaluationExceptions = null, bool? deadLetteringOnMessageExpiration = null, TimeSpan? duplicateDetectionHistoryTimeWindow = null, int? maxDeliveryCount = null, ServiceBusMessagingEntityStatus? status = null, bool? enableBatchedOperations = null, TimeSpan? autoDeleteOnIdle = null, string forwardTo = null, string forwardDeadLetteredMessagesTo = null, bool? isClientAffine = null, ServiceBusClientAffineProperties clientAffineProperties = null, AzureLocation? location = null)
         {
             return new ServiceBusSubscriptionData(
                 id,
@@ -486,31 +517,18 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 forwardDeadLetteredMessagesTo,
                 isClientAffine,
                 clientAffineProperties,
+                location,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="action"> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </param>
-        /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
-        /// <param name="sqlFilter"> Properties of sqlFilter. </param>
-        /// <param name="correlationFilter"> Properties of correlationFilter. </param>
-        /// <returns> A new <see cref="ServiceBus.ServiceBusRuleData"/> instance for mocking. </returns>
-        public static ServiceBusRuleData ServiceBusRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceBusFilterAction action = null, ServiceBusFilterType? filterType = null, ServiceBusSqlFilter sqlFilter = null, ServiceBusCorrelationFilter correlationFilter = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNameAvailabilityResult"/>. </summary>
+        /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
+        /// <param name="isNameAvailable"> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </param>
+        /// <param name="reason"> The reason for unavailability of a namespace. </param>
+        /// <returns> A new <see cref="Models.ServiceBusNameAvailabilityResult"/> instance for mocking. </returns>
+        public static ServiceBusNameAvailabilityResult ServiceBusNameAvailabilityResult(string message = null, bool? isNameAvailable = null, ServiceBusNameUnavailableReason? reason = null)
         {
-            return new ServiceBusRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                action,
-                filterType,
-                sqlFilter,
-                correlationFilter,
-                serializedAdditionalRawData: null);
+            return new ServiceBusNameAvailabilityResult(message, isNameAvailable, reason, serializedAdditionalRawData: null);
         }
     }
 }

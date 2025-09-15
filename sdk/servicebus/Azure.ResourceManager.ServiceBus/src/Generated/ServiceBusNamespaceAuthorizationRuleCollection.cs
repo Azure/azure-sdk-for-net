@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.ServiceBus
     {
         private readonly ClientDiagnostics _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesClientDiagnostics;
         private readonly NamespaceAuthorizationRulesRestOperations _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient;
-        private readonly ClientDiagnostics _serviceBusNamespaceAuthorizationRuleNamespacesClientDiagnostics;
-        private readonly NamespacesRestOperations _serviceBusNamespaceAuthorizationRuleNamespacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespaceAuthorizationRuleCollection"/> class for mocking. </summary>
         protected ServiceBusNamespaceAuthorizationRuleCollection()
@@ -42,9 +40,6 @@ namespace Azure.ResourceManager.ServiceBus
             _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespaceAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServiceBusNamespaceAuthorizationRuleResource.ResourceType, out string serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesApiVersion);
             _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient = new NamespaceAuthorizationRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesApiVersion);
-            _serviceBusNamespaceAuthorizationRuleNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespaceAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceBusNamespaceAuthorizationRuleResource.ResourceType, out string serviceBusNamespaceAuthorizationRuleNamespacesApiVersion);
-            _serviceBusNamespaceAuthorizationRuleNamespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusNamespaceAuthorizationRuleNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -253,11 +248,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/authorizationRules</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_ListAuthorizationRules</description>
+        /// <description>NamespaceAuthorizationRules_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -273,9 +268,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An async collection of <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusNamespaceAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -283,11 +278,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/authorizationRules</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_ListAuthorizationRules</description>
+        /// <description>NamespaceAuthorizationRules_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -303,9 +298,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> A collection of <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusNamespaceAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

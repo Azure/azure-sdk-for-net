@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "SubscriptionId";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
             ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             MigrationConfigurationName configName = MigrationConfigurationName.Default;
             MigrationConfigurationData data = new MigrationConfigurationData
             {
-                TargetServiceBusNamespace = new ResourceIdentifier("/subscriptions/5f750a97-50d9-4e36-8081-c9ee4c0210d4/resourceGroups/ResourceGroup/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-4028"),
+                TargetServiceBusNamespace = new ResourceIdentifier("/subscriptions/SubscriptionId/resourceGroups/ResourceGroup/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-4028"),
                 PostMigrationName = "sdk-PostMigration-5919",
             };
             ArmOperation<MigrationConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configName, data);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "SubscriptionId";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
             ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "SubscriptionId";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-9259";
             ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "SubscriptionId";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
             ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "SubscriptionId";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
             ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);

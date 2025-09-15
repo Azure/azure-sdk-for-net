@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusNetworkRuleSetResource created on azure
             // for more information of creating ServiceBusNetworkRuleSetResource, please refer to the document of ServiceBusNetworkRuleSetResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "Subscription";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-6019";
             ResourceIdentifier serviceBusNetworkRuleSetResourceId = ServiceBusNetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusNetworkRuleSetResource created on azure
             // for more information of creating ServiceBusNetworkRuleSetResource, please refer to the document of ServiceBusNetworkRuleSetResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "Subscription";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-6019";
             ResourceIdentifier serviceBusNetworkRuleSetResourceId = ServiceBusNetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);

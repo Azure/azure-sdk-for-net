@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.ServiceBus
-require: https://github.com/Azure/azure-rest-api-specs/blob/10e545fdba1423254bcd2543d9bfbcc5011ed6fa/specification/servicebus/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/3d407849c33d6afc377279f34811a093305a4dc5/specification/servicebus/resource-manager/readme.md
 tag: package-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -31,6 +31,8 @@ request-path-to-resource-name:
 override-operation-name:
   Namespaces_CheckNameAvailability: CheckServiceBusNamespaceNameAvailability
   DisasterRecoveryConfigs_CheckNameAvailability: CheckServiceBusDisasterRecoveryNameAvailability
+  Topics_ListKeys: GetKeys
+  Queues_ListKeys: GetKeys
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -94,7 +96,7 @@ rename-mapping:
   SBNamespace: ServiceBusNamespace
   SBSku: ServiceBusSku
   SBNamespaceUpdateParameters: ServiceBusNamespaceUpdateParameters
-  EncryptionKeySource: ServiceBusEncryptionKeySource
+  KeySource: ServiceBusEncryptionKeySource
   Encryption: ServiceBusEncryption
   ConnectionState: ServiceBusPrivateLinkServiceConnectionState
   PrivateLinkConnectionStatus: ServiceBusPrivateLinkConnectionStatus
@@ -183,7 +185,7 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.responses.201
       transform: $['description'] = 'Request to update Status of PrivateEndpoint Connection accepted.'
-    - from: servicebus.json
+    - from: swagger-document
       where: $.definitions.CorrelationFilter
       transform: >
         $.properties.properties.additionalProperties['x-ms-format'] = 'object';

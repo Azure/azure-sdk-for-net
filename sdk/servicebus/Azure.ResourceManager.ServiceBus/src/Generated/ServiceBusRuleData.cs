@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
         /// <param name="sqlFilter"> Properties of sqlFilter. </param>
         /// <param name="correlationFilter"> Properties of correlationFilter. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceBusFilterAction action, ServiceBusFilterType? filterType, ServiceBusSqlFilter sqlFilter, ServiceBusCorrelationFilter correlationFilter, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceBusFilterAction action, ServiceBusFilterType? filterType, ServiceBusSqlFilter sqlFilter, ServiceBusCorrelationFilter correlationFilter, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Action = action;
             FilterType = filterType;
             SqlFilter = sqlFilter;
             CorrelationFilter = correlationFilter;
+            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,5 +89,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Properties of correlationFilter. </summary>
         [WirePath("properties.correlationFilter")]
         public ServiceBusCorrelationFilter CorrelationFilter { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
     }
 }
