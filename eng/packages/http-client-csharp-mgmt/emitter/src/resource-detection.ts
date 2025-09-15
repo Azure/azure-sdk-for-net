@@ -72,7 +72,7 @@ export async function updateClients(
         singletonResourceName: getSingletonResource(
           m.decorators?.find((d) => d.name == singleton)
         ),
-        resourceScope: ResourceScope.ResourceGroup, // temporary default to ResourceGroup, will be properly set later after methods are populated
+        resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
         methods: [],
         parentResourceId: undefined, // this will be populated later
         resourceName: m.name
