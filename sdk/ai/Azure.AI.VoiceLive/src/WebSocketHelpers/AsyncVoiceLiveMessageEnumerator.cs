@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.WebSockets;
@@ -59,9 +60,10 @@ namespace Azure.AI.VoiceLive
                 return false;
             }
 
+            WebSocketPipelineResponse websocketPipelineResponse = new();
+
             try
             {
-                WebSocketPipelineResponse websocketPipelineResponse = new();
                 for (int partialMessageCount = 1; !websocketPipelineResponse.IsComplete; partialMessageCount++)
                 {
                     WebSocketReceiveResult receiveResult = await _webSocket
@@ -89,9 +91,18 @@ namespace Azure.AI.VoiceLive
             }
             catch (WebSocketException webEx)
             {
-                Debug.WriteLine(webEx.ToString());
-                Current = null;
-                return false;
+                var errorDetails = new SessionUpdateErrorDetails(webEx.GetType().Name, webEx.Message);
+
+                var id = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                var errorUpdate = new SessionUpdateError(errorDetails);
+
+                var persistable = errorUpdate as IPersistableModel<SessionUpdateError>;
+                var errorAsData = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
+
+                websocketPipelineResponse.IngestReceivedResult(errorAsData);
+
+                Current = websocketPipelineResponse.GetContent();
+                return true;
             }
         }
     }

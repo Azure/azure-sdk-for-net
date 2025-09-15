@@ -52,7 +52,6 @@ namespace Azure.AI.VoiceLive.Tests
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
 
             var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
-
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
 
             Assert.AreEqual(sessionUpdated.Session.InputAudioFormat, AudioFormat.Pcm16);

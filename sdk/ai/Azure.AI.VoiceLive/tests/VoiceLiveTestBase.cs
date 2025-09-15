@@ -345,9 +345,9 @@ namespace Azure.AI.VoiceLive.Tests
             return responseUpdates;
         }
 
-        protected async Task<T> GetNextUpdate<T>(IAsyncEnumerator<SessionUpdate> updateEnumerator) where T : SessionUpdate
+        protected async Task<T> GetNextUpdate<T>(IAsyncEnumerator<SessionUpdate> updateEnumerator, bool checkEventId = true) where T : SessionUpdate
         {
-            var currentUpdate = await GetNextUpdate(updateEnumerator).ConfigureAwait(false);
+            var currentUpdate = await GetNextUpdate(updateEnumerator, checkEventId).ConfigureAwait(false);
             return SafeCast<T>(currentUpdate);
         }
 
@@ -359,14 +359,16 @@ namespace Azure.AI.VoiceLive.Tests
 #pragma warning restore CS8603 // Possible null reference return.
         }
 
-        protected async Task<SessionUpdate> GetNextUpdate(IAsyncEnumerator<SessionUpdate> updateEnumerator)
+        protected async Task<SessionUpdate> GetNextUpdate(IAsyncEnumerator<SessionUpdate> updateEnumerator, bool checkEventId = true)
         {
             var moved = await updateEnumerator.MoveNextAsync().ConfigureAwait(false);
             Assert.IsTrue(moved, "Failed to move to the next update.");
             var currentUpdate = updateEnumerator.Current;
             Assert.IsNotNull(currentUpdate);
-            EnsureEventIdsUnique(currentUpdate);
-
+            if (checkEventId)
+            {
+                EnsureEventIdsUnique(currentUpdate);
+            }
             return currentUpdate;
         }
     }
