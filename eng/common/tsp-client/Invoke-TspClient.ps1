@@ -75,7 +75,7 @@ $originalLocation = Get-Location
 try {
   Set-Location $PackageInstallCache
   Write-Host "Installing dependencies in $PackageInstallCache"
-  npm ci | Write-Host
+  npm i --ignore-scripts --no-audit | Write-Host
 
   # Use the tsp-client with the provided options
   $command = "npm exec --no -- tsp-client $TspClientOptions"
