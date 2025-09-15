@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.3 (Unreleased)
+## 1.3.3 (2025-09-15)
 
 ### Features Added
 - Upgraded API version to `2025-05-01`.
