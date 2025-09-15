@@ -135,11 +135,7 @@ namespace Azure.Generator.Management.Utilities
 
         public static MethodBodyStatement? BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
-            if (innerProperty.Type.IsCollection)
-            {
-                return null;
-            }
-
+            // To not introduce breaking change, for collection types, we keep the setter for collection-type properties during safe flatten.
             var isOverriddenValueType = IsOverriddenValueType(innerProperty);
             var setter = new List<MethodBodyStatement>();
             var internalPropertyExpression = This.Property(internalProperty.Name);

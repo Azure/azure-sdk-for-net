@@ -29,18 +29,19 @@ namespace Azure.Generator.Management.Models
         public static readonly RequestPathPattern ManagementGroup = new("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
         public static readonly RequestPathPattern ResourceGroup = new("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
         public static readonly RequestPathPattern Subscription = new("/subscriptions/{subscriptionId}");
-        public static readonly RequestPathPattern Extension = new("/{resourceUri}");
-
         public static readonly RequestPathPattern Tenant = new(string.Empty);
 
-        public static RequestPathPattern GetFromScope(ResourceScope scope)
+        public static RequestPathPattern GetFromScope(ResourceScope scope, RequestPathPattern? path = null)
         {
             return scope switch
             {
                 ResourceScope.ResourceGroup => ResourceGroup,
                 ResourceScope.Subscription => Subscription,
                 ResourceScope.ManagementGroup => ManagementGroup,
-                ResourceScope.Extension => Extension,
+                ResourceScope.Extension =>
+                    path is null
+                        ? throw new InvalidOperationException("Extension scope requires a path parameter.")
+                        : new RequestPathPattern(path._segments.Take(1)),
                 ResourceScope.Tenant => Tenant,
                 _ => throw new InvalidOperationException($"Unhandled scope {scope}"),
             };

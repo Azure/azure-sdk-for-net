@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 
 namespace Azure.AI.VoiceLive
 {
@@ -168,13 +167,5 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SessionUpdateResponseAnimationVisemeDone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SessionUpdateResponseAnimationVisemeDone"/> from. </param>
-        public static explicit operator SessionUpdateResponseAnimationVisemeDone(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeSessionUpdateResponseAnimationVisemeDone(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

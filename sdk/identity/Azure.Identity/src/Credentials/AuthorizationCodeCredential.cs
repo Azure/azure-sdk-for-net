@@ -36,7 +36,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
+        /// Creates an instance of the AuthorizationCodeCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -49,7 +49,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
+        /// Creates an instance of the AuthorizationCodeCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -66,7 +66,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
+        /// Creates an instance of the AuthorizationCodeCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>

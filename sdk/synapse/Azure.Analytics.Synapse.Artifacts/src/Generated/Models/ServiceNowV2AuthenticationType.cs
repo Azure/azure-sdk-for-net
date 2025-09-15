@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The authentication type to use. </summary>
-    internal readonly partial struct ServiceNowV2AuthenticationType : IEquatable<ServiceNowV2AuthenticationType>
+    public readonly partial struct ServiceNowV2AuthenticationType : IEquatable<ServiceNowV2AuthenticationType>
     {
         private readonly string _value;
 

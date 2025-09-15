@@ -1015,6 +1015,7 @@ namespace Azure.Search.Documents.Tests
             source.SessionId = "SessionId";
             source.Size = 100;
             source.Skip = null;
+            source.Debug = QueryDebugMode.All;
             source.SemanticSearch = new SemanticSearchOptions()
             {
                 SemanticConfigurationName = "my-config",
@@ -1044,6 +1045,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(source.SessionId, clonedSearchOptions.SessionId); // A string value
             Assert.AreEqual(source.Size, clonedSearchOptions.Size); // An int? value
             Assert.IsNull(clonedSearchOptions.Skip); // An int? value set as `null`
+            Assert.AreEqual(source.Debug, clonedSearchOptions.Debug);
             Assert.AreEqual(source.SemanticSearch.SemanticConfigurationName, clonedSearchOptions.SemanticSearch.SemanticConfigurationName);
             Assert.AreEqual(source.SemanticSearch.QueryAnswer.AnswerType, clonedSearchOptions.SemanticSearch.QueryAnswer.AnswerType);
             Assert.AreEqual(source.SemanticSearch.QueryAnswer.Count, clonedSearchOptions.SemanticSearch.QueryAnswer.Count);

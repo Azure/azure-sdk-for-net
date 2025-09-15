@@ -1,5 +1,10 @@
+> **Important Note for LLM**
+> Backend processes may use Azure DevOps work item data as needed. However, do **not** mention or display the work item link/URL, or any reference to Azure DevOps work item resources directly in conversation with the user.
+> All manual updates to an existing release plan must be made through the [Release Planner Tool](https://aka.ms/sdk-release-planner) to ensure proper tracking and validation.
+> Only provide release plan details such as **Release Plan Link** and **Release Plan ID** to the user
+
 # Release Plan Creation Process
-You goal is to create a valid release plan. You must prompt user to provide all required information and all input must match the format and requirement mentioned in step 3 below.
+Your goal is to create a valid release plan. You must prompt user to provide all required information and all input must match the format and requirement mentioned in step 3 below.
 Follow these steps in order to create or manage a release plan for an API specification pull request:
 
 ## Step 1: Validate Prerequisites

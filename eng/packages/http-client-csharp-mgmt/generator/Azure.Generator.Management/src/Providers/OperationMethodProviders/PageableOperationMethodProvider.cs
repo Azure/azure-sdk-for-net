@@ -94,7 +94,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath, _enclosingType),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -119,7 +119,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 _restClientInfo.RestClient,
             };
-            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+
+            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType));
 
             // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)

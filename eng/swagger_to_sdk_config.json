@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/documentation/sdkautomation/SwaggerToSdkConfigSchema.json",
+  "$schema": "https://raw.githubusercontent.com/Azure/azure-sdk-tools/main/tools/spec-gen-sdk/src/types/SwaggerToSdkConfigSchema.json",
   "generateOptions": {
     "generateScript": {
       "path": "pwsh ./eng/scripts/Invoke-GenerateAndBuildV2.ps1",
@@ -21,6 +21,9 @@
     }
   },
   "packageOptions": {
-    "packageFolderFromFileSearch": false
+    "packageFolderFromFileSearch": false,
+    "buildScript": {
+      "command": "dotnet build {packagePath}"
+    }
   }
 }

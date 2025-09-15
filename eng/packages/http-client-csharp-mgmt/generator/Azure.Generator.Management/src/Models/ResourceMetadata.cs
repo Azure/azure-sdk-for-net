@@ -52,7 +52,7 @@ namespace Azure.Generator.Management.Models
                 }
 
                 //TODO: handle Extension resource in emitter
-                if (resourceIdPattern is not null && resourceIdPattern.StartsWith("/{resourceUri}/"))
+                if (resourceIdPattern is not null && (resourceIdPattern.StartsWith("/{resourceUri}/") || resourceIdPattern.StartsWith("/{scope}/")))
                 {
                     resourceScope = ResourceScope.Extension;
                 }

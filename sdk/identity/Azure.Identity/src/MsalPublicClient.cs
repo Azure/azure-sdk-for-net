@@ -126,8 +126,7 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
 
             if (context.IsProofOfPossessionEnabled)
@@ -182,8 +181,7 @@ namespace Azure.Identity
 
             if (tenantId != null || record.TenantId != null)
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId ?? record.TenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId ?? record.TenantId);
             }
 
             if (!string.IsNullOrEmpty(claims))
@@ -284,8 +282,7 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (browserOptions != null)
             {
@@ -328,8 +325,7 @@ namespace Azure.Identity
             }
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -353,8 +349,7 @@ namespace Azure.Identity
             }
             if (!string.IsNullOrEmpty(TenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(TenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(TenantId);
             }
 
             return await builder.ExecuteAsync(async, cancellationToken)
@@ -380,8 +375,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(TenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(TenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(TenantId);
             }
 
             return await builder.ExecuteAsync(async, cancellationToken)

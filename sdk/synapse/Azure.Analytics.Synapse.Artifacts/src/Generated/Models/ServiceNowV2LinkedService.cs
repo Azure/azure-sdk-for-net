@@ -6,25 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> ServiceNowV2 server linked service properties. </summary>
-    internal partial class ServiceNowV2LinkedServiceTypeProperties
+    /// <summary> ServiceNowV2 server linked service. </summary>
+    public partial class ServiceNowV2LinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of <see cref="ServiceNowV2LinkedServiceTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNowV2LinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the ServiceNowV2 server. (i.e. &lt;instance&gt;.service-now.com). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        internal ServiceNowV2LinkedServiceTypeProperties(object endpoint, ServiceNowV2AuthenticationType authenticationType)
+        public ServiceNowV2LinkedService(object endpoint, ServiceNowV2AuthenticationType authenticationType)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
             AuthenticationType = authenticationType;
+            Type = "ServiceNowV2";
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceNowV2LinkedServiceTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNowV2LinkedService"/>. </summary>
+        /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="endpoint"> The endpoint of the ServiceNowV2 server. (i.e. &lt;instance&gt;.service-now.com). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="username"> The user name used to connect to the ServiceNowV2 server for Basic and OAuth2 authentication. </param>
@@ -41,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="grantType"> GrantType for OAuth2 authentication. Default value is password. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal ServiceNowV2LinkedServiceTypeProperties(object endpoint, ServiceNowV2AuthenticationType authenticationType, object username, SecretBase password, object clientId, SecretBase clientSecret, object grantType, string encryptedCredential)
+        internal ServiceNowV2LinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, ServiceNowV2AuthenticationType authenticationType, object username, SecretBase password, object clientId, SecretBase clientSecret, object grantType, string encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             AuthenticationType = authenticationType;
@@ -51,31 +60,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ClientSecret = clientSecret;
             GrantType = grantType;
             EncryptedCredential = encryptedCredential;
+            Type = type ?? "ServiceNowV2";
         }
 
         /// <summary> The endpoint of the ServiceNowV2 server. (i.e. &lt;instance&gt;.service-now.com). </summary>
-        public object Endpoint { get; }
+        public object Endpoint { get; set; }
         /// <summary> The authentication type to use. </summary>
-        public ServiceNowV2AuthenticationType AuthenticationType { get; }
+        public ServiceNowV2AuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used to connect to the ServiceNowV2 server for Basic and OAuth2 authentication. </summary>
-        public object Username { get; }
+        public object Username { get; set; }
         /// <summary>
         /// The password corresponding to the user name for Basic and OAuth2 authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
-        public SecretBase Password { get; }
+        public SecretBase Password { get; set; }
         /// <summary> The client id for OAuth2 authentication. </summary>
-        public object ClientId { get; }
+        public object ClientId { get; set; }
         /// <summary>
         /// The client secret for OAuth2 authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
-        public SecretBase ClientSecret { get; }
+        public SecretBase ClientSecret { get; set; }
         /// <summary> GrantType for OAuth2 authentication. Default value is password. </summary>
-        public object GrantType { get; }
+        public object GrantType { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; }
+        public string EncryptedCredential { get; set; }
     }
 }
