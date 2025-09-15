@@ -231,8 +231,9 @@ namespace Azure.AI.Translation.Text
         /// <param name="responseTokens"> An interger indicating the number of tokens used in the translation response. </param>
         /// <param name="targetTokens"> An interger indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
+        /// <param name="transliteration"> An object giving the translated text in the script specified by the target script parameter. </param>
         /// <returns> A new <see cref="Text.TranslationText"/> instance for mocking. </returns>
-        public static TranslationText TranslationText(string language = null, int? sourceCharacters = null, int? instructionTokens = null, int? sourceTokens = null, int? responseTokens = null, int? targetTokens = null, string text = null)
+        public static TranslationText TranslationText(string language = null, int? sourceCharacters = null, int? instructionTokens = null, int? sourceTokens = null, int? responseTokens = null, int? targetTokens = null, string text = null, TransliteratedText transliteration = null)
         {
             return new TranslationText(
                 language,
@@ -242,6 +243,7 @@ namespace Azure.AI.Translation.Text
                 responseTokens,
                 targetTokens,
                 text,
+                transliteration,
                 serializedAdditionalRawData: null);
         }
 

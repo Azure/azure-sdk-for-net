@@ -392,7 +392,6 @@ namespace Azure.AI.Translation.Text
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("preview-api", "true");
             request.Content = content;
             return message;
         }
