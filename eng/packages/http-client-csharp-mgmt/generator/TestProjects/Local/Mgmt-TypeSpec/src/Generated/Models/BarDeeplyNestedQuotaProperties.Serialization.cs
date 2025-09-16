@@ -14,7 +14,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarDeeplyNestedQuotaProperties. </summary>
-    public partial class BarDeeplyNestedQuotaProperties : IJsonModel<BarDeeplyNestedQuotaProperties>
+    internal partial class BarDeeplyNestedQuotaProperties : IJsonModel<BarDeeplyNestedQuotaProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BarDeeplyNestedQuotaProperties"/> for deserialization. </summary>
         internal BarDeeplyNestedQuotaProperties()

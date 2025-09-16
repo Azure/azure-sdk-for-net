@@ -33,3 +33,6 @@ enum Versions {
 
 @@clientLocation(Bars.get, "Bar");
 @@clientLocation(Bars.update, "Bar");
+
+#suppress "deprecated"
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
