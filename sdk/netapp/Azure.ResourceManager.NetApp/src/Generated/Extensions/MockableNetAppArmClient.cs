@@ -177,5 +177,17 @@ namespace Azure.ResourceManager.NetApp.Mocking
             NetAppBackupVaultResource.ValidateResourceId(id);
             return new NetAppBackupVaultResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BucketResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BucketResource.CreateResourceIdentifier" /> to create a <see cref="BucketResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BucketResource"/> object. </returns>
+        public virtual BucketResource GetBucketResource(ResourceIdentifier id)
+        {
+            BucketResource.ValidateResourceId(id);
+            return new BucketResource(Client, id);
+        }
     }
 }

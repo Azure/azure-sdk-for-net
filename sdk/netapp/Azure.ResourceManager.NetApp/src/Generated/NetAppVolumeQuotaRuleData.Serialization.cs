@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(QuotaSizeInKiBs))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToNetAppProvisioningState();
+                            provisioningState = new NetAppProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("quotaSizeInKiBs"u8))

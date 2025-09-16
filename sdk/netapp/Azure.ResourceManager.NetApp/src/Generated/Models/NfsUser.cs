@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Subscription Quota Items. </summary>
-    internal partial class SubscriptionQuotaItemList
+    /// <summary> The effective NFS User ID and Group ID when accessing the volume data. </summary>
+    public partial class NfsUser
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,25 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        internal SubscriptionQuotaItemList()
+        /// <summary> Initializes a new instance of <see cref="NfsUser"/>. </summary>
+        public NfsUser()
         {
-            Value = new ChangeTrackingList<NetAppSubscriptionQuotaItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        /// <param name="value"> A list of SubscriptionQuotaItems. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <summary> Initializes a new instance of <see cref="NfsUser"/>. </summary>
+        /// <param name="userId"> The NFS user's UID. </param>
+        /// <param name="groupId"> The NFS user's GID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NfsUser(long? userId, long? groupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            UserId = userId;
+            GroupId = groupId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of SubscriptionQuotaItems. </summary>
-        public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The NFS user's UID. </summary>
+        public long? UserId { get; set; }
+        /// <summary> The NFS user's GID. </summary>
+        public long? GroupId { get; set; }
     }
 }

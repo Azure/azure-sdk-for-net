@@ -192,5 +192,19 @@ namespace Azure.ResourceManager.NetApp.Models
                 status,
                 serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="current"> The current quota value. </param>
+        /// <param name="default"> The default quota value. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default)
+        {
+            return NetAppSubscriptionQuotaItem(id: id, name: name, resourceType: resourceType, systemData: systemData, current: current, @default: @default, usage: null);
+        }
     }
 }

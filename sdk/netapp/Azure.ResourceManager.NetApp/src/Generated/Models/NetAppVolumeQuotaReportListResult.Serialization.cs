@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    internal partial class SubscriptionQuotaItemList : IUtf8JsonSerializable, IJsonModel<SubscriptionQuotaItemList>
+    public partial class NetAppVolumeQuotaReportListResult : IUtf8JsonSerializable, IJsonModel<NetAppVolumeQuotaReportListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionQuotaItemList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeQuotaReportListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SubscriptionQuotaItemList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppVolumeQuotaReportListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaItemList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReportListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeQuotaReportListResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Value))
@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,19 +61,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        SubscriptionQuotaItemList IJsonModel<SubscriptionQuotaItemList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppVolumeQuotaReportListResult IJsonModel<NetAppVolumeQuotaReportListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaItemList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReportListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeQuotaReportListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionQuotaItemList(document.RootElement, options);
+            return DeserializeNetAppVolumeQuotaReportListResult(document.RootElement, options);
         }
 
-        internal static SubscriptionQuotaItemList DeserializeSubscriptionQuotaItemList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppVolumeQuotaReportListResult DeserializeNetAppVolumeQuotaReportListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -86,8 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<NetAppSubscriptionQuotaItem> value = default;
-            string nextLink = default;
+            IReadOnlyList<NetAppVolumeQuotaReport> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,17 +92,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<NetAppSubscriptionQuotaItem> array = new List<NetAppSubscriptionQuotaItem>();
+                    List<NetAppVolumeQuotaReport> array = new List<NetAppVolumeQuotaReport>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(item, options));
+                        array.Add(NetAppVolumeQuotaReport.DeserializeNetAppVolumeQuotaReport(item, options));
                     }
                     value = array;
-                    continue;
-                }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,38 +106,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubscriptionQuotaItemList(value ?? new ChangeTrackingList<NetAppSubscriptionQuotaItem>(), nextLink, serializedAdditionalRawData);
+            return new NetAppVolumeQuotaReportListResult(value ?? new ChangeTrackingList<NetAppVolumeQuotaReport>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SubscriptionQuotaItemList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppVolumeQuotaReportListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaItemList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReportListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaReportListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SubscriptionQuotaItemList IPersistableModel<SubscriptionQuotaItemList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppVolumeQuotaReportListResult IPersistableModel<NetAppVolumeQuotaReportListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaItemList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReportListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSubscriptionQuotaItemList(document.RootElement, options);
+                        return DeserializeNetAppVolumeQuotaReportListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaReportListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SubscriptionQuotaItemList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppVolumeQuotaReportListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
