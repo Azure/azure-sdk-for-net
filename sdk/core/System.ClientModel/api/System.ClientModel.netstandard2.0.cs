@@ -365,12 +365,11 @@ namespace System.ClientModel.Primitives
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> jsonPath) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-        public readonly partial struct EncodedValue
+        public partial struct EncodedValue
         {
-            private readonly object _dummy;
-            private readonly int _dummyPrimitive;
+            private object _dummy;
+            private int _dummyPrimitive;
         }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public delegate bool PropagatorGetter(System.ReadOnlySpan<byte> jsonPath, out System.ClientModel.Primitives.JsonPatch.EncodedValue value);
