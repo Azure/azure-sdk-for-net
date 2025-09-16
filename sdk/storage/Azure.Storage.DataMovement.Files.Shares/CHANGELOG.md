@@ -1,6 +1,6 @@
 # Release History
 
-## 12.3.0-beta.1 (Unreleased)
+## 12.3.0-beta.1 (2025-09-16)
 
 ### Features Added
 - Added support for NFS -> SMB and SMB -> NFS Share-to-Share copy transfers.
