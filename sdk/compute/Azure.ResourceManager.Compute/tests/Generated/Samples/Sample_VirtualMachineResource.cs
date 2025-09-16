@@ -653,6 +653,8 @@ DetachOption = DiskDetachOptionType.ForceDetach,
                 {
                     ClassificationsToInclude = { VmGuestPatchClassificationForWindows.Critical, VmGuestPatchClassificationForWindows.Security },
                     MaxPatchPublishOn = DateTimeOffset.Parse("2020-11-19T02:36:43.0539904+00:00"),
+                    PatchNameMasksToInclude = { "*SQL*" },
+                    PatchNameMasksToExclude = { "*Windows*" },
                 },
             };
             ArmOperation<VirtualMachineInstallPatchesResult> lro = await virtualMachine.InstallPatchesAsync(WaitUntil.Completed, content);

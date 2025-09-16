@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="serviceState"> The current state of the service. </param>
         /// <param name="latestOperationStatus"> The latest operation status of the service. Minimum API version for this property is 2025-04-01. </param>
-        /// <param name="lastStatusChangeOn"> The last time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
+        /// <param name="lastStatusChangeOn"> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OrchestrationServiceSummary(OrchestrationServiceName? serviceName, OrchestrationServiceState? serviceState, OrchestrationServiceOperationStatus? latestOperationStatus, DateTimeOffset? lastStatusChangeOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         public OrchestrationServiceState? ServiceState { get; }
         /// <summary> The latest operation status of the service. Minimum API version for this property is 2025-04-01. </summary>
         public OrchestrationServiceOperationStatus? LatestOperationStatus { get; }
-        /// <summary> The last time when the operation status changed. Minimum API version for this property is 2025-04-01. </summary>
+        /// <summary> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </summary>
         public DateTimeOffset? LastStatusChangeOn { get; }
     }
 }

@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="serviceState"> The current state of the service. </param>
         /// <param name="latestOperationStatus"> The latest operation status of the service. Minimum API version for this property is 2025-04-01. </param>
-        /// <param name="lastStatusChangeOn"> The last time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
+        /// <param name="lastStatusChangeOn"> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
         /// <returns> A new <see cref="Models.OrchestrationServiceSummary"/> instance for mocking. </returns>
         public static OrchestrationServiceSummary OrchestrationServiceSummary(OrchestrationServiceName? serviceName = null, OrchestrationServiceState? serviceState = null, OrchestrationServiceOperationStatus? latestOperationStatus = null, DateTimeOffset? lastStatusChangeOn = null)
         {
