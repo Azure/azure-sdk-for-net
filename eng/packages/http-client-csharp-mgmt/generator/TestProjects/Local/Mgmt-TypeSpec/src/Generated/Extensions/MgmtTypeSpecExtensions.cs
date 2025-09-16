@@ -226,6 +226,18 @@ namespace MgmtTypeSpec
             return await GetMockableMgmtTypeSpecArmClient(client).GetSelfHelpResourceAsync(scope, selfHelpName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PlaywrightQuotaResource"/> object. </returns>
+        public static PlaywrightQuotaResource GetPlaywrightQuotaResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetPlaywrightQuotaResource(id);
+        }
+
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
@@ -346,6 +358,46 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZoo(zooName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
+        public static PlaywrightQuotaCollection GetPlaywrightQuotas(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetPlaywrightQuotas(location);
+        }
+
+        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PlaywrightQuotaResource>> GetPlaywrightQuotaAsync(this SubscriptionResource subscriptionResource, AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetPlaywrightQuotaAsync(location, playwrightQuotaName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PlaywrightQuotaResource> GetPlaywrightQuota(this SubscriptionResource subscriptionResource, AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetPlaywrightQuota(location, playwrightQuotaName, cancellationToken);
         }
 
         /// <summary> List Foo resources by subscription ID. </summary>
