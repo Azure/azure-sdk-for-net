@@ -5,12 +5,6 @@
 ### Features Added
 - This release contains features and bug fixes to improve quality.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 12.2.2 (2025-09-10)
 
 ### Bugs Fixed
