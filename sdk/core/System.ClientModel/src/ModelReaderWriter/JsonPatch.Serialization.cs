@@ -34,7 +34,7 @@ public partial struct JsonPatch
 
             if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
             {
-                _properties.Set(jsonPath, new(encodedValue.Kind | ValueKind.ModelOwned, encodedValue.Value));
+                _properties.TryUpdateValueKind(jsonPath, encodedValue.Kind | ValueKind.ModelOwned);
                 writer.WriteRawValue(encodedValue.Value.Span.Slice(1, encodedValue.Value.Length - 2));
             }
         }
@@ -43,6 +43,9 @@ public partial struct JsonPatch
         JsonPathComparer.Default.Normalize(jsonPath, normalizedPrefix, out int bytesWritten);
         normalizedPrefix = normalizedPrefix.Slice(0, bytesWritten);
 
+#if !NET8_0_OR_GREATER
+        Dictionary<byte[], ValueKind> keysToUpdate = new();
+#endif
         foreach (var kvp in _properties)
         {
             if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
@@ -60,8 +63,19 @@ public partial struct JsonPatch
 
             WriteEncodedValueAsJson(writer, keySpan.GetPropertyNameFromSlice(), kvp.Value);
 
-            _properties.Set(kvp.Key, new(kvp.Value.Kind | ValueKind.ModelOwned, kvp.Value.Value));
+#if NET8_0_OR_GREATER
+            _properties.TryUpdateValueKind(kvp.Key, kvp.Value.Kind | ValueKind.ModelOwned);
+#else
+            keysToUpdate.Add(kvp.Key, kvp.Value.Kind);
+#endif
         }
+
+#if !NET8_0_OR_GREATER
+        foreach (var kvp in keysToUpdate)
+        {
+            _properties.TryUpdateValueKind(kvp.Key, kvp.Value | ValueKind.ModelOwned);
+        }
+#endif
     }
 
     /// <summary>

@@ -13,7 +13,7 @@ public partial struct JsonPatch
     /// <summary>
     /// A patch value that has been encoded in UTF-8 bytes along with its value kind.
     /// </summary>
-    public readonly struct EncodedValue
+    public struct EncodedValue
     {
         private const byte MaxInt32Utf8Bytes = 11;
         private const byte MaxInt64Utf8Bytes = 20;
@@ -308,7 +308,7 @@ public partial struct JsonPatch
             }
         }
 
-        internal ValueKind Kind { get; }
+        internal ValueKind Kind { get; set; }
 
         internal ReadOnlyMemory<byte> Value { get; }
 

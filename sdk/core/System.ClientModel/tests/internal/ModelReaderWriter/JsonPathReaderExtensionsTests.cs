@@ -322,7 +322,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void GetPropertyName_InvalidPath_Throws(string jsonPathStr)
         {
             var ex = Assert.Throws<ArgumentException>(() => Encoding.UTF8.GetBytes(jsonPathStr).GetPropertyName());
+#if NET8_0_OR_GREATER
             Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message.Split('\n')[0]);
+#else
+            Assert.AreEqual("JsonPath must start with '$'\r\nParameter name: jsonPath", ex!.Message);
+#endif
         }
 
         [TestCase("invalid")]
@@ -330,7 +334,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void GetParent_InvalidPath_Throws(string jsonPathStr)
         {
             var ex = Assert.Throws<ArgumentException>(() => Encoding.UTF8.GetBytes(jsonPathStr).GetParent());
+#if NET8_0_OR_GREATER
             Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message.Split('\n')[0]);
+#else
+            Assert.AreEqual("JsonPath must start with '$'\r\nParameter name: jsonPath", ex!.Message);
+#endif
         }
 
         [TestCase("invalid")]
@@ -338,7 +346,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void GetIndexSpan_InvalidPath_Throws(string jsonPathStr)
         {
             var ex = Assert.Throws<ArgumentException>(() => Encoding.UTF8.GetBytes(jsonPathStr).GetIndexSpan());
+#if NET8_0_OR_GREATER
             Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message.Split('\n')[0]);
+#else
+            Assert.AreEqual("JsonPath must start with '$'\r\nParameter name: jsonPath", ex!.Message);
+#endif
         }
 
         [TestCase("invalid")]
@@ -356,7 +368,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             }
             catch (ArgumentException ex)
             {
+#if NET8_0_OR_GREATER
                 Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message);
+#else
+                Assert.AreEqual("JsonPath must start with '$'\r\nParameter name: jsonPath", ex!.Message);
+#endif
                 exceptionThrown = true;
             }
             Assert.IsTrue(exceptionThrown);
