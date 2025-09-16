@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_JobRunsGet()
         {
-            // Generated from example definition: 2025-07-01/JobRuns_Get.json
+            // Generated from example definition: 2024-07-01/JobRuns_Get.json
             // this example is just showing the usage of "JobRun_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_JobRunsList()
         {
-            // Generated from example definition: 2025-07-01/JobRuns_List.json
+            // Generated from example definition: 2024-07-01/JobRuns_List.json
             // this example is just showing the usage of "JobRun_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_JobRunsGet()
         {
-            // Generated from example definition: 2025-07-01/JobRuns_Get.json
+            // Generated from example definition: 2024-07-01/JobRuns_Get.json
             // this example is just showing the usage of "JobRun_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_JobRunsGet()
         {
-            // Generated from example definition: 2025-07-01/JobRuns_Get.json
+            // Generated from example definition: 2024-07-01/JobRuns_Get.json
             // this example is just showing the usage of "JobRun_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

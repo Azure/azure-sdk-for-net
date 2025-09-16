@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary>
     /// The resource specific properties for the Storage Mover resource.
     /// Please note <see cref="EndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureMultiCloudConnectorEndpointProperties"/>, <see cref="AzureStorageBlobContainerEndpointProperties"/>, <see cref="AzureStorageNfsFileShareEndpointProperties"/>, <see cref="AzureStorageSmbFileShareEndpointProperties"/>, <see cref="NfsMountEndpointProperties"/> and <see cref="SmbMountEndpointProperties"/>.
+    /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointProperties"/>, <see cref="AzureStorageSmbFileShareEndpointProperties"/>, <see cref="NfsMountEndpointProperties"/> and <see cref="SmbMountEndpointProperties"/>.
     /// </summary>
     public abstract partial class EndpointBaseProperties
     {

@@ -87,9 +87,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureMultiCloudConnector": return AzureMultiCloudConnectorEndpointProperties.DeserializeAzureMultiCloudConnectorEndpointProperties(element, options);
                     case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element, options);
-                    case "AzureStorageNfsFileShare": return AzureStorageNfsFileShareEndpointProperties.DeserializeAzureStorageNfsFileShareEndpointProperties(element, options);
                     case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element, options);
                     case "NfsMount": return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element, options);
                     case "SmbMount": return SmbMountEndpointProperties.DeserializeSmbMountEndpointProperties(element, options);

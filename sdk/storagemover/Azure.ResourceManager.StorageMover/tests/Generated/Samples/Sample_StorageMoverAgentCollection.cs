@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AgentsCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_CreateOrUpdate_MaximumSet.json
+            // Generated from example definition: 2024-07-01/Agents_CreateOrUpdate_MaximumSet.json
             // this example is just showing the usage of "Agent_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AgentsCreateOrUpdateMinimumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_CreateOrUpdate_MinimumSet.json
+            // Generated from example definition: 2024-07-01/Agents_CreateOrUpdate_MinimumSet.json
             // this example is just showing the usage of "Agent_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AgentsCreateOrUpdateWithOvernightUploadLimitSchedule()
         {
-            // Generated from example definition: 2025-07-01/Agents_CreateOrUpdate_UploadLimitSchedule_Overnight.json
+            // Generated from example definition: 2024-07-01/Agents_CreateOrUpdate_UploadLimitSchedule_Overnight.json
             // this example is just showing the usage of "Agent_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AgentsGetMaximumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_Get_MaximumSet.json
+            // Generated from example definition: 2024-07-01/Agents_Get_MaximumSet.json
             // this example is just showing the usage of "Agent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AgentsGetMinimumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_Get_MinimumSet.json
+            // Generated from example definition: 2024-07-01/Agents_Get_MinimumSet.json
             // this example is just showing the usage of "Agent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AgentsListMaximumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_List_MaximumSet.json
+            // Generated from example definition: 2024-07-01/Agents_List_MaximumSet.json
             // this example is just showing the usage of "Agent_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AgentsListMinimumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_List_MinimumSet.json
+            // Generated from example definition: 2024-07-01/Agents_List_MinimumSet.json
             // this example is just showing the usage of "Agent_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AgentsGetMaximumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_Get_MaximumSet.json
+            // Generated from example definition: 2024-07-01/Agents_Get_MaximumSet.json
             // this example is just showing the usage of "Agent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AgentsGetMinimumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_Get_MinimumSet.json
+            // Generated from example definition: 2024-07-01/Agents_Get_MinimumSet.json
             // this example is just showing the usage of "Agent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AgentsGetMaximumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_Get_MaximumSet.json
+            // Generated from example definition: 2024-07-01/Agents_Get_MaximumSet.json
             // this example is just showing the usage of "Agent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AgentsGetMinimumSet()
         {
-            // Generated from example definition: 2025-07-01/Agents_Get_MinimumSet.json
+            // Generated from example definition: 2024-07-01/Agents_Get_MinimumSet.json
             // this example is just showing the usage of "Agent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

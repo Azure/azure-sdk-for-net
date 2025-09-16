@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetStorageMovers_StorageMoversList()
         {
-            // Generated from example definition: 2025-07-01/StorageMovers_ListBySubscription.json
+            // Generated from example definition: 2024-07-01/StorageMovers_ListBySubscription.json
             // this example is just showing the usage of "StorageMover_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

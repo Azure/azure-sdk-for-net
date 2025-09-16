@@ -45,11 +45,6 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(JobType))
-            {
-                writer.WritePropertyName("jobType"u8);
-                writer.WriteStringValue(JobType.Value.ToString());
-            }
             writer.WritePropertyName("copyMode"u8);
             writer.WriteStringValue(CopyMode.ToString());
             writer.WritePropertyName("sourceName"u8);
@@ -101,11 +96,6 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("agentResourceId"u8);
                 writer.WriteStringValue(AgentResourceId);
             }
-            if (Optional.IsDefined(SourceTargetMap))
-            {
-                writer.WritePropertyName("sourceTargetMap"u8);
-                writer.WriteObjectValue(SourceTargetMap, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -139,7 +129,6 @@ namespace Azure.ResourceManager.StorageMover
             ResourceType type = default;
             SystemData systemData = default;
             string description = default;
-            JobType? jobType = default;
             StorageMoverCopyMode copyMode = default;
             string sourceName = default;
             ResourceIdentifier sourceResourceId = default;
@@ -152,7 +141,6 @@ namespace Azure.ResourceManager.StorageMover
             JobRunStatus? latestJobRunStatus = default;
             string agentName = default;
             ResourceIdentifier agentResourceId = default;
-            JobDefinitionPropertiesSourceTargetMap sourceTargetMap = default;
             StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -194,15 +182,6 @@ namespace Azure.ResourceManager.StorageMover
                         if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("jobType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            jobType = new JobType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("copyMode"u8))
@@ -285,15 +264,6 @@ namespace Azure.ResourceManager.StorageMover
                             agentResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sourceTargetMap"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceTargetMap = JobDefinitionPropertiesSourceTargetMap.DeserializeJobDefinitionPropertiesSourceTargetMap(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -318,7 +288,6 @@ namespace Azure.ResourceManager.StorageMover
                 type,
                 systemData,
                 description,
-                jobType,
                 copyMode,
                 sourceName,
                 sourceResourceId,
@@ -331,7 +300,6 @@ namespace Azure.ResourceManager.StorageMover
                 latestJobRunStatus,
                 agentName,
                 agentResourceId,
-                sourceTargetMap,
                 provisioningState,
                 serializedAdditionalRawData);
         }
