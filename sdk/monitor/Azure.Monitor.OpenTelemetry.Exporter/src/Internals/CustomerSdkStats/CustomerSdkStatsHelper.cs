@@ -302,7 +302,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.CustomerSdkStatsTrackingFailed("dropped", ex);
+                AzureMonitorExporterEventSource.Log.CustomerSdkStatsTrackingFailed("retry", ex);
             }
         }
     }

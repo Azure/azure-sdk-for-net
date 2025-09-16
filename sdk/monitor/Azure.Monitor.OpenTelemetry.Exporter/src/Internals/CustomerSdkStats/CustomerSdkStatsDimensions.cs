@@ -69,7 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         {
             if (s_computeType == null)
             {
-                var platform = new DefaultPlatform();
+                var platform = DefaultPlatform.Instance;
                 s_computeType = ResourceProviderHelper.DetermineResourceProvider(platform);
             }
             return s_computeType;
