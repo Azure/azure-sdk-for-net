@@ -43,11 +43,6 @@ public partial struct JsonPatch
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     [DoesNotReturn]
-    private static EncodedValue ThrowEncodeFailedException<T>(T value)
-        => throw new InvalidOperationException($"Failed to encode value '{value}'.");
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    [DoesNotReturn]
     private static void ThrowIndexOutOfRangeException(ReadOnlySpan<byte> jsonPath)
         => throw new IndexOutOfRangeException($"Cannot remove non-existing array item at path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 

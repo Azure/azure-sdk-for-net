@@ -77,7 +77,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, bool value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, byte value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public partial struct JsonPatch
     /// <param name="format">The format to encode the value into.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, DateTime value, StandardFormat format = default)
     {
-        SetInternal(jsonPath, EncodeValue(value, format));
+        SetInternal(jsonPath, new(value, format));
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public partial struct JsonPatch
     /// <param name="format">The format to encode the value into.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, DateTimeOffset value, StandardFormat format = default)
     {
-        SetInternal(jsonPath, EncodeValue(value, format));
+        SetInternal(jsonPath, new(value, format));
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, decimal value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, double value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -139,7 +139,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, float value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -149,7 +149,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, Guid value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -159,7 +159,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, int value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, long value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -179,7 +179,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, sbyte value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -189,7 +189,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, short value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ public partial struct JsonPatch
     /// <param name="format">The format to encode the value into.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, TimeSpan value, StandardFormat format = default)
     {
-        SetInternal(jsonPath, EncodeValue(value, format));
+        SetInternal(jsonPath, new(value, format));
     }
 
     /// <summary>
@@ -210,7 +210,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, uint value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -220,7 +220,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, ulong value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -230,7 +230,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, ushort value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -240,7 +240,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, string value)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, new(value));
     }
 
     /// <summary>
@@ -250,7 +250,7 @@ public partial struct JsonPatch
     /// <param name="utf8Json">The utf8 json to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, byte[] utf8Json)
     {
-        SetInternal(jsonPath, EncodeValue(utf8Json));
+        SetInternal(jsonPath, new(utf8Json));
     }
 
     /// <summary>
@@ -260,7 +260,7 @@ public partial struct JsonPatch
     /// <param name="utf8Json">The utf8 json to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, BinaryData utf8Json)
     {
-        SetInternal(jsonPath, EncodeValue(utf8Json));
+        SetInternal(jsonPath, new(utf8Json));
     }
 
     /// <summary>
@@ -270,7 +270,7 @@ public partial struct JsonPatch
     /// <param name="utf8Json">The utf8 json to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> utf8Json)
     {
-        SetInternal(jsonPath, EncodeValue(utf8Json));
+        SetInternal(jsonPath, new(utf8Json));
     }
 
     /// <summary>
@@ -290,7 +290,7 @@ public partial struct JsonPatch
     /// <param name="jsonPath">The JSON path of the value to be set.</param>
     public void SetNull(ReadOnlySpan<byte> jsonPath)
     {
-        SetInternal(jsonPath, s_nullValueArray);
+        SetInternal(jsonPath, EncodedValue.Null);
     }
     #endregion
 
@@ -307,7 +307,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out bool boolValue))
+        if (encodedValue.TryDecodeValue(out bool boolValue))
         {
             return boolValue;
         }
@@ -327,7 +327,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out byte byteValue))
+        if (encodedValue.TryDecodeValue(out byte byteValue))
         {
             return byteValue;
         }
@@ -348,7 +348,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out DateTime dateTimeValue, format))
+        if (encodedValue.TryDecodeValue(out DateTime dateTimeValue, format))
         {
             return dateTimeValue;
         }
@@ -369,7 +369,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out DateTimeOffset dateTimeOffsetValue, format))
+        if (encodedValue.TryDecodeValue(out DateTimeOffset dateTimeOffsetValue, format))
         {
             return dateTimeOffsetValue;
         }
@@ -389,7 +389,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out decimal decimalValue))
+        if (encodedValue.TryDecodeValue(out decimal decimalValue))
         {
             return decimalValue;
         }
@@ -409,7 +409,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out double doubleValue))
+        if (encodedValue.TryDecodeValue(out double doubleValue))
         {
             return doubleValue;
         }
@@ -429,7 +429,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out float floatValue))
+        if (encodedValue.TryDecodeValue(out float floatValue))
         {
             return floatValue;
         }
@@ -449,7 +449,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out Guid guidValue))
+        if (encodedValue.TryDecodeValue(out Guid guidValue))
         {
             return guidValue;
         }
@@ -469,7 +469,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out int intValue))
+        if (encodedValue.TryDecodeValue(out int intValue))
         {
             return intValue;
         }
@@ -489,7 +489,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out long int64Value))
+        if (encodedValue.TryDecodeValue(out long int64Value))
         {
             return int64Value;
         }
@@ -509,7 +509,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out sbyte int8Value))
+        if (encodedValue.TryDecodeValue(out sbyte int8Value))
         {
             return int8Value;
         }
@@ -529,7 +529,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out short int16Value))
+        if (encodedValue.TryDecodeValue(out short int16Value))
         {
             return int16Value;
         }
@@ -550,7 +550,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out TimeSpan timeSpanValue, format))
+        if (encodedValue.TryDecodeValue(out TimeSpan timeSpanValue, format))
         {
             return timeSpanValue;
         }
@@ -570,7 +570,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out uint uintValue))
+        if (encodedValue.TryDecodeValue(out uint uintValue))
         {
             return uintValue;
         }
@@ -590,7 +590,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out ulong uint64Value))
+        if (encodedValue.TryDecodeValue(out ulong uint64Value))
         {
             return uint64Value;
         }
@@ -610,7 +610,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeValue(encodedValue, out ushort uint16Value))
+        if (encodedValue.TryDecodeValue(out ushort uint16Value))
         {
             return uint16Value;
         }
@@ -659,7 +659,7 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        if (TryDecodeNullableValue(encodedValue, out T? value, out bool supportedType))
+        if (encodedValue.TryDecodeNullableValue(out T? value, out bool supportedType))
         {
             return value;
         }
@@ -685,7 +685,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out bool value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out bool result))
+            && encodedValue.TryDecodeValue(out bool result))
         {
             value = result;
             return true;
@@ -704,7 +704,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out byte value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out byte result))
+            && encodedValue.TryDecodeValue(out byte result))
         {
             value = result;
             return true;
@@ -724,7 +724,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out DateTime value, StandardFormat format = default)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out DateTime result, format.Symbol))
+            && encodedValue.TryDecodeValue(out DateTime result, format.Symbol))
         {
             value = result;
             return true;
@@ -744,7 +744,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out DateTimeOffset value, StandardFormat format = default)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out DateTimeOffset result, format.Symbol))
+            && encodedValue.TryDecodeValue(out DateTimeOffset result, format.Symbol))
         {
             value = result;
             return true;
@@ -763,7 +763,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out decimal value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out decimal result))
+            && encodedValue.TryDecodeValue(out decimal result))
         {
             value = result;
             return true;
@@ -782,7 +782,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out double value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out double result))
+            && encodedValue.TryDecodeValue(out double result))
         {
             value = result;
             return true;
@@ -801,7 +801,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out float value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out float result))
+            && encodedValue.TryDecodeValue(out float result))
         {
             value = result;
             return true;
@@ -820,7 +820,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out Guid value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            &&TryDecodeValue(encodedValue, out Guid result))
+            && encodedValue.TryDecodeValue(out Guid result))
         {
             value = result;
             return true;
@@ -839,7 +839,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out int value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out int result))
+            && encodedValue.TryDecodeValue(out int result))
         {
             value = result;
             return true;
@@ -858,7 +858,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out long value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out long result))
+            && encodedValue.TryDecodeValue(out long result))
         {
             value = result;
             return true;
@@ -877,7 +877,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out sbyte value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out sbyte result))
+            && encodedValue.TryDecodeValue(out sbyte result))
         {
             value = result;
             return true;
@@ -896,7 +896,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out short value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out short result))
+            && encodedValue.TryDecodeValue(out short result))
         {
             value = result;
             return true;
@@ -916,7 +916,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out TimeSpan value, StandardFormat format = default)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out TimeSpan result, format.Symbol))
+            && encodedValue.TryDecodeValue(out TimeSpan result, format.Symbol))
         {
             value = result;
             return true;
@@ -935,7 +935,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out uint value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out uint result))
+            && encodedValue.TryDecodeValue(out uint result))
         {
             value = result;
             return true;
@@ -954,7 +954,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out ulong value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out ulong result))
+            && encodedValue.TryDecodeValue(out ulong result))
         {
             value = result;
             return true;
@@ -973,7 +973,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out ushort value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
-            && TryDecodeValue(encodedValue, out ushort result))
+            && encodedValue.TryDecodeValue(out ushort result))
         {
             value = result;
             return true;
@@ -993,7 +993,7 @@ public partial struct JsonPatch
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            if (s_nullValueArray.Value.Span.SequenceEqual(encodedValue.Value.Span))
+            if (EncodedValue.Null.Value.Span.SequenceEqual(encodedValue.Value.Span))
             {
                 value = null;
                 return true;
@@ -1039,7 +1039,7 @@ public partial struct JsonPatch
             return true;
         }
 
-        if (TryDecodeNullableValue(encodedValue, out T? result, out _))
+        if (encodedValue.TryDecodeNullableValue(out T? result, out _))
         {
             value = result;
             return true;
@@ -1082,7 +1082,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, bool value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1093,7 +1093,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, byte value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1105,7 +1105,7 @@ public partial struct JsonPatch
     /// <param name="format">The format to encode the value into.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, DateTime value, StandardFormat format = default)
     {
-        var encodedValue = EncodeValue(value, format);
+        EncodedValue encodedValue = new(value, format);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1117,7 +1117,7 @@ public partial struct JsonPatch
     /// <param name="format">The format to encode the value into.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, DateTimeOffset value, StandardFormat format = default)
     {
-        var encodedValue = EncodeValue(value, format);
+        EncodedValue encodedValue = new(value, format);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1128,7 +1128,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, decimal value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1139,7 +1139,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, double value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1150,7 +1150,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, float value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1161,7 +1161,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, Guid value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1172,7 +1172,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, int value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1183,7 +1183,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, long value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1194,7 +1194,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, sbyte value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1205,7 +1205,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, short value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1217,7 +1217,7 @@ public partial struct JsonPatch
     /// <param name="format">The format to encode the value into.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, TimeSpan value, StandardFormat format = default)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1228,7 +1228,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, uint value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1239,7 +1239,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, ulong value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1250,7 +1250,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, ushort value)
     {
-        var encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1261,7 +1261,7 @@ public partial struct JsonPatch
     /// <param name="value">The value to append.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, string value)
     {
-        EncodedValue encodedValue = EncodeValue(value);
+        EncodedValue encodedValue = new(value);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1272,7 +1272,7 @@ public partial struct JsonPatch
     /// <param name="utf8Json">The utf8 json to insert.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, byte[] utf8Json)
     {
-        var encodedValue = EncodeValue(utf8Json);
+        EncodedValue encodedValue = new(utf8Json);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1283,7 +1283,7 @@ public partial struct JsonPatch
     /// <param name="utf8Json">The utf8 json to insert.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, BinaryData utf8Json)
     {
-        var encodedValue = EncodeValue(utf8Json);
+        EncodedValue encodedValue = new(utf8Json);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1294,7 +1294,7 @@ public partial struct JsonPatch
     /// <param name="utf8Json">The utf8 json to insert.</param>
     public void Append(ReadOnlySpan<byte> arrayPath, ReadOnlySpan<byte> utf8Json)
     {
-        var encodedValue = EncodeValue(utf8Json);
+        EncodedValue encodedValue = new(utf8Json);
         SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
@@ -1304,7 +1304,7 @@ public partial struct JsonPatch
     /// <param name="arrayPath">The JSON path pointing at the array.</param>
     public void AppendNull(ReadOnlySpan<byte> arrayPath)
     {
-        SetInternal(arrayPath, new(ValueKind.Null | ValueKind.ArrayItemAppend, s_nullValueArray.Value));
+        SetInternal(arrayPath, new(ValueKind.Null | ValueKind.ArrayItemAppend, EncodedValue.Null.Value));
     }
     #endregion
 
@@ -1314,7 +1314,7 @@ public partial struct JsonPatch
     /// <param name="jsonPath">The JSON path of the value to remove.</param>
     public void Remove(ReadOnlySpan<byte> jsonPath)
     {
-        SetInternal(jsonPath, s_removedValueArray);
+        SetInternal(jsonPath, EncodedValue.Removed);
     }
 
     /// <summary>
