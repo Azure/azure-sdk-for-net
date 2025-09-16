@@ -186,26 +186,6 @@ internal class UseSyncMethodsInterceptor : IInterceptor
                 return;
             }
         }
-
-        // Handle non-generic AsyncCollectionResult case
-        if (methodReturnType == typeof(Task<AsyncCollectionResult>))
-        {
-            invocation.ReturnValue = _taskFromExceptionMethod.MakeGenericMethod(typeof(AsyncCollectionResult)).Invoke(null, new[] { result });
-            return;
-        }
-
-        if (methodReturnType == typeof(ValueTask<AsyncCollectionResult>))
-        {
-            var task = _taskFromExceptionMethod.MakeGenericMethod(typeof(AsyncCollectionResult)).Invoke(null, new[] { result });
-            var asyncCollectionResult = task as Task<AsyncCollectionResult>;
-            if (asyncCollectionResult == null)
-            {
-                throw new InvalidOperationException("Expected Task<AsyncCollectionResult> from exception task creation");
-            }
-            invocation.ReturnValue = new ValueTask<AsyncCollectionResult>(asyncCollectionResult);
-            return;
-        }
-
         throw new NotSupportedException();
     }
 
