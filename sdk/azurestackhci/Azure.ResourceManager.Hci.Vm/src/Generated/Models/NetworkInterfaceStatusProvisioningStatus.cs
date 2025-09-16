@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the network interface. </param>
         /// <param name="status"> The status of the operation performed on the network interface [Succeeded, Failed, InProgress]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterfaceStatusProvisioningStatus(string operationId, Status? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkInterfaceStatusProvisioningStatus(string operationId, AzureStackHciVmStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             Status = status;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> The ID of the operation performed on the network interface. </summary>
         public string OperationId { get; }
         /// <summary> The status of the operation performed on the network interface [Succeeded, Failed, InProgress]. </summary>
-        public Status? Status { get; }
+        public AzureStackHciVmStatus? Status { get; }
     }
 }

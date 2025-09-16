@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="agentVersion"> The hybrid machine agent full version. </param>
         /// <param name="errorDetails"> Details about the error state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestAgentInstallStatus(string vmUuid, StatusType? status, DateTimeOffset? lastStatusChange, string agentVersion, IReadOnlyList<ResponseError> errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GuestAgentInstallStatus(string vmUuid, AzureStackHciVmStatusType? status, DateTimeOffset? lastStatusChange, string agentVersion, IReadOnlyList<ResponseError> errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmUuid = vmUuid;
             Status = status;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Specifies the VM's unique SMBIOS ID. </summary>
         public string VmUuid { get; }
         /// <summary> The installation status of the hybrid machine agent installation. </summary>
-        public StatusType? Status { get; }
+        public AzureStackHciVmStatusType? Status { get; }
         /// <summary> The time of the last status change. </summary>
         public DateTimeOffset? LastStatusChange { get; }
         /// <summary> The hybrid machine agent full version. </summary>

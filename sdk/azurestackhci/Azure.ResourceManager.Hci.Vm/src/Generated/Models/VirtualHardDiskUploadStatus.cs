@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="errorCode"> VirtualHardDisk upload error code. </param>
         /// <param name="errorMessage"> Descriptive upload error message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHardDiskUploadStatus(long? uploadedSizeInMB, Status? status, long? progressPercentage, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualHardDiskUploadStatus(long? uploadedSizeInMB, AzureStackHciVmStatus? status, long? progressPercentage, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UploadedSizeInMB = uploadedSizeInMB;
             Status = status;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> The uploaded sized of the virtual hard disk in MB. </summary>
         public long? UploadedSizeInMB { get; }
         /// <summary> The status of Uploading virtual hard disk [Succeeded, Failed, InProgress]. </summary>
-        public Status? Status { get; }
+        public AzureStackHciVmStatus? Status { get; }
         /// <summary> The progress of the operation in percentage. </summary>
         public long? ProgressPercentage { get; }
         /// <summary> VirtualHardDisk upload error code. </summary>

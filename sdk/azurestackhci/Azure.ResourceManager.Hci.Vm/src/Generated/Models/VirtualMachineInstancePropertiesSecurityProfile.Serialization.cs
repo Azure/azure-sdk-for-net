@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             bool? enableTPM = default;
             VirtualMachineInstancePropertiesSecurityProfileUefiSettings uefiSettings = default;
-            SecurityType? securityType = default;
+            AzureStackHciVmSecurityType? securityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    securityType = new SecurityType(property.Value.GetString());
+                    securityType = new AzureStackHciVmSecurityType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

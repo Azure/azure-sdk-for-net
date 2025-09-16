@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             string etag = default;
             string name = default;
             string type = default;
-            IList<Route> routes = default;
+            IList<AzureStackHciVmNetworkingRoute> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                             {
                                 continue;
                             }
-                            List<Route> array = new List<Route>();
+                            List<AzureStackHciVmNetworkingRoute> array = new List<AzureStackHciVmNetworkingRoute>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Route.DeserializeRoute(item, options));
+                                array.Add(AzureStackHciVmNetworkingRoute.DeserializeAzureStackHciVmNetworkingRoute(item, options));
                             }
                             routes = array;
                             continue;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RouteTable(etag, name, type, routes ?? new ChangeTrackingList<Route>(), serializedAdditionalRawData);
+            return new RouteTable(etag, name, type, routes ?? new ChangeTrackingList<AzureStackHciVmNetworkingRoute>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteTable>.Write(ModelReaderWriterOptions options)

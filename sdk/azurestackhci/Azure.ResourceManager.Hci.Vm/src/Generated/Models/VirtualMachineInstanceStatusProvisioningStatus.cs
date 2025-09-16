@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the virtual machine instance. </param>
         /// <param name="status"> The status of the operation performed on the virtual machine instance [Succeeded, Failed, InProgress]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceStatusProvisioningStatus(string operationId, Status? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineInstanceStatusProvisioningStatus(string operationId, AzureStackHciVmStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             Status = status;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> The ID of the operation performed on the virtual machine instance. </summary>
         public string OperationId { get; }
         /// <summary> The status of the operation performed on the virtual machine instance [Succeeded, Failed, InProgress]. </summary>
-        public Status? Status { get; }
+        public AzureStackHciVmStatus? Status { get; }
     }
 }

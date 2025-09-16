@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of gallery images. </param>
         /// <param name="sourceVirtualMachineId"> Resource ID of the source virtual machine from whose OS disk the gallery image is created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageProperties(ResourceIdentifier containerId, string imagePath, OperatingSystemType osType, CloudInitDataSource? cloudInitDataSource, HyperVGeneration? hyperVGeneration, VmImageRepositoryCredentials vmImageRepositoryCredentials, GalleryImageIdentifier identifier, GalleryImageVersion version, ProvisioningStateEnum? provisioningState, GalleryImageStatus status, ResourceIdentifier sourceVirtualMachineId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryImageProperties(ResourceIdentifier containerId, string imagePath, OperatingSystemType osType, CloudInitDataSource? cloudInitDataSource, HyperVGeneration? hyperVGeneration, VmImageRepositoryCredentials vmImageRepositoryCredentials, GalleryImageIdentifier identifier, GalleryImageVersion version, AzureStackHciVmProvisioningStateEnum? provisioningState, GalleryImageStatus status, ResourceIdentifier sourceVirtualMachineId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerId = containerId;
             ImagePath = imagePath;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
         public GalleryImageVersion Version { get; set; }
         /// <summary> Provisioning state of the gallery image. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
         /// <summary> The observed state of gallery images. </summary>
         public GalleryImageStatus Status { get; }
         /// <summary> Resource ID of the source virtual machine from whose OS disk the gallery image is created. </summary>

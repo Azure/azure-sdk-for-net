@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             VmImageRepositoryCredentials vmImageRepositoryCredentials = default;
             GalleryImageIdentifier identifier = default;
             GalleryImageVersion version = default;
-            ProvisioningStateEnum? provisioningState = default;
+            AzureStackHciVmProvisioningStateEnum? provisioningState = default;
             GalleryImageStatus status = default;
             ResourceIdentifier sourceVirtualMachineId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningStateEnum(property.Value.GetString());
+                    provisioningState = new AzureStackHciVmProvisioningStateEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             AttestHealthStatusEnum? healthStatus = default;
             string timestamp = default;
             string errorMessage = default;
-            ProvisioningStateEnum? provisioningState = default;
+            AzureStackHciVmProvisioningStateEnum? provisioningState = default;
             AttestHWPlatformEnum? attestHardwarePlatform = default;
             AttestDiskSecurityEncryptionTypeEnum? attestDiskSecurityEncryptionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningStateEnum(property.Value.GetString());
+                    provisioningState = new AzureStackHciVmProvisioningStateEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("attestHardwarePlatform"u8))

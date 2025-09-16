@@ -15,11 +15,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    public partial class Subnet : IUtf8JsonSerializable, IJsonModel<Subnet>
+    public partial class AzureStackHciVmNetworkingSubnet : IUtf8JsonSerializable, IJsonModel<AzureStackHciVmNetworkingSubnet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Subnet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStackHciVmNetworkingSubnet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Subnet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureStackHciVmNetworkingSubnet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Subnet)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingSubnet)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -116,19 +116,19 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        Subnet IJsonModel<Subnet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureStackHciVmNetworkingSubnet IJsonModel<AzureStackHciVmNetworkingSubnet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Subnet)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingSubnet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubnet(document.RootElement, options);
+            return DeserializeAzureStackHciVmNetworkingSubnet(document.RootElement, options);
         }
 
-        internal static Subnet DeserializeSubnet(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AzureStackHciVmNetworkingSubnet DeserializeAzureStackHciVmNetworkingSubnet(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             IList<WritableSubResource> ipConfigurationReferences = default;
             WritableSubResource networkSecurityGroup = default;
             RouteTable routeTable = default;
-            IList<IPPool> ipPools = default;
+            IList<AzureStackHciVmNetworkingIPPool> ipPools = default;
             int? vlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                             {
                                 continue;
                             }
-                            List<IPPool> array = new List<IPPool>();
+                            List<AzureStackHciVmNetworkingIPPool> array = new List<AzureStackHciVmNetworkingIPPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPPool.DeserializeIPPool(item, options));
+                                array.Add(AzureStackHciVmNetworkingIPPool.DeserializeAzureStackHciVmNetworkingIPPool(item, options));
                             }
                             ipPools = array;
                             continue;
@@ -255,48 +255,48 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Subnet(
+            return new AzureStackHciVmNetworkingSubnet(
                 addressPrefix,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 ipAllocationMethod,
                 ipConfigurationReferences ?? new ChangeTrackingList<WritableSubResource>(),
                 networkSecurityGroup,
                 routeTable,
-                ipPools ?? new ChangeTrackingList<IPPool>(),
+                ipPools ?? new ChangeTrackingList<AzureStackHciVmNetworkingIPPool>(),
                 vlan,
                 name,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Subnet>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AzureStackHciVmNetworkingSubnet>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Subnet)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingSubnet)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Subnet IPersistableModel<Subnet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AzureStackHciVmNetworkingSubnet IPersistableModel<AzureStackHciVmNetworkingSubnet>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSubnet(document.RootElement, options);
+                        return DeserializeAzureStackHciVmNetworkingSubnet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Subnet)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingSubnet)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Subnet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureStackHciVmNetworkingSubnet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

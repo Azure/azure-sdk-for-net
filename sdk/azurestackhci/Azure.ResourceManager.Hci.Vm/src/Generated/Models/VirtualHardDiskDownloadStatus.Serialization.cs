@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             long? downloadedSizeInMB = default;
-            Status? status = default;
+            AzureStackHciVmStatus? status = default;
             long? progressPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new AzureStackHciVmStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("progressPercentage"u8))

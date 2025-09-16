@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             LogicalNetworkPropertiesDhcpOptions dhcpOptions = default;
-            IList<Subnet> subnets = default;
-            ProvisioningStateEnum? provisioningState = default;
+            IList<AzureStackHciVmNetworkingSubnet> subnets = default;
+            AzureStackHciVmProvisioningStateEnum? provisioningState = default;
             string vmSwitchName = default;
             LogicalNetworkStatus status = default;
             LogicalNetworkTypeEnum? networkType = default;
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    List<Subnet> array = new List<Subnet>();
+                    List<AzureStackHciVmNetworkingSubnet> array = new List<AzureStackHciVmNetworkingSubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Subnet.DeserializeSubnet(item, options));
+                        array.Add(AzureStackHciVmNetworkingSubnet.DeserializeAzureStackHciVmNetworkingSubnet(item, options));
                     }
                     subnets = array;
                     continue;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningStateEnum(property.Value.GetString());
+                    provisioningState = new AzureStackHciVmProvisioningStateEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vmSwitchName"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new LogicalNetworkProperties(
                 dhcpOptions,
-                subnets ?? new ChangeTrackingList<Subnet>(),
+                subnets ?? new ChangeTrackingList<AzureStackHciVmNetworkingSubnet>(),
                 provisioningState,
                 vmSwitchName,
                 status,

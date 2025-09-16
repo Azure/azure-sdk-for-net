@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
                         Username = "tempuser",
                         Password = "<password>",
                     },
-                    ProvisioningAction = ProvisioningAction.Install,
+                    ProvisioningAction = AzureStackHciVmProvisioningAction.Install,
                 },
             };
             ArmOperation<GuestAgentResource> lro = await guestAgent.CreateOrUpdateAsync(WaitUntil.Completed, data);

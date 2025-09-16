@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The status of Uploading virtual hard disk [Succeeded, Failed, InProgress]. </param>
         /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHardDiskDownloadStatus(long? downloadedSizeInMB, Status? status, long? progressPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualHardDiskDownloadStatus(long? downloadedSizeInMB, AzureStackHciVmStatus? status, long? progressPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DownloadedSizeInMB = downloadedSizeInMB;
             Status = status;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> The downloaded sized of the virtual hard disk in MB. </summary>
         public long? DownloadedSizeInMB { get; }
         /// <summary> The status of Uploading virtual hard disk [Succeeded, Failed, InProgress]. </summary>
-        public Status? Status { get; }
+        public AzureStackHciVmStatus? Status { get; }
         /// <summary> The progress of the operation in percentage. </summary>
         public long? ProgressPercentage { get; }
     }

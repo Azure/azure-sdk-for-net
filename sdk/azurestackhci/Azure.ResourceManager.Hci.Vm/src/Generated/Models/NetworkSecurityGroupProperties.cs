@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
         /// <param name="status"> The observed state of Network Security Group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityGroupProperties(IReadOnlyList<WritableSubResource> networkInterfaces, IReadOnlyList<WritableSubResource> subnets, ProvisioningStateEnum? provisioningState, NetworkSecurityGroupStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityGroupProperties(IReadOnlyList<WritableSubResource> networkInterfaces, IReadOnlyList<WritableSubResource> subnets, AzureStackHciVmProvisioningStateEnum? provisioningState, NetworkSecurityGroupStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkInterfaces = networkInterfaces;
             Subnets = subnets;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> A collection of references to logical networks that are currently using this NSG. </summary>
         public IReadOnlyList<WritableSubResource> Subnets { get; }
         /// <summary> The provisioning state of the network security group resource. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
         /// <summary> The observed state of Network Security Group. </summary>
         public NetworkSecurityGroupStatus Status { get; }
     }

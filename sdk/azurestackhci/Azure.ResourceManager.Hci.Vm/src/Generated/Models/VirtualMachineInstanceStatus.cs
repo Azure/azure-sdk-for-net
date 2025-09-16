@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="powerState"> The power state of the virtual machine instance. </param>
         /// <param name="provisioningStatus"> Provisioning status of the virtual machine instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceStatus(string errorCode, string errorMessage, PowerStateEnum? powerState, VirtualMachineInstanceStatusProvisioningStatus provisioningStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineInstanceStatus(string errorCode, string errorMessage, AzureStackHciVmPowerStateEnum? powerState, VirtualMachineInstanceStatusProvisioningStatus provisioningStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Descriptive error message. </summary>
         public string ErrorMessage { get; }
         /// <summary> The power state of the virtual machine instance. </summary>
-        public PowerStateEnum? PowerState { get; }
+        public AzureStackHciVmPowerStateEnum? PowerState { get; }
         /// <summary> Provisioning status of the virtual machine instance. </summary>
         public VirtualMachineInstanceStatusProvisioningStatus ProvisioningStatus { get; }
     }

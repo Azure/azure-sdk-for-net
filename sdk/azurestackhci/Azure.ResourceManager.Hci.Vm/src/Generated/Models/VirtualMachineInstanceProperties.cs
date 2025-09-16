@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="hostNodeName"> Name of the host node that the VM is on. </param>
         /// <param name="hostNodeIPAddress"> Name of the host node that the VM is on. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceProperties(VirtualMachineInstancePropertiesHardwareProfile hardwareProfile, VirtualMachineInstancePropertiesPlacementProfile placementProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, VirtualMachineInstancePropertiesOSProfile osProfile, VirtualMachineInstancePropertiesSecurityProfile securityProfile, VirtualMachineInstancePropertiesStorageProfile storageProfile, HttpProxyConfiguration httpProxyConfig, bool? createFromLocal, ProvisioningStateEnum? provisioningState, VirtualMachineInstanceView instanceView, VirtualMachineInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid, string hyperVVmId, string hostNodeName, string hostNodeIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineInstanceProperties(VirtualMachineInstancePropertiesHardwareProfile hardwareProfile, VirtualMachineInstancePropertiesPlacementProfile placementProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, VirtualMachineInstancePropertiesOSProfile osProfile, VirtualMachineInstancePropertiesSecurityProfile securityProfile, VirtualMachineInstancePropertiesStorageProfile storageProfile, HttpProxyConfiguration httpProxyConfig, bool? createFromLocal, AzureStackHciVmProvisioningStateEnum? provisioningState, VirtualMachineInstanceView instanceView, VirtualMachineInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid, string hyperVVmId, string hostNodeName, string hostNodeIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HardwareProfile = hardwareProfile;
             PlacementProfile = placementProfile;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Boolean indicating whether this is an existing local virtual machine or if one should be created. </summary>
         public bool? CreateFromLocal { get; set; }
         /// <summary> Provisioning state of the virtual machine instance. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
         /// <summary> The virtual machine instance view. </summary>
         internal VirtualMachineInstanceView InstanceView { get; }
         /// <summary> The VM Config Agent running on the virtual machine. </summary>

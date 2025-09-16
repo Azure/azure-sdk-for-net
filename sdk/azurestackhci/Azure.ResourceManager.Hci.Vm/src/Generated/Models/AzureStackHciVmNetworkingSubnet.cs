@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Properties of the subnet. </summary>
-    public partial class Subnet
+    public partial class AzureStackHciVmNetworkingSubnet
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Subnet"/>. </summary>
-        public Subnet()
+        /// <summary> Initializes a new instance of <see cref="AzureStackHciVmNetworkingSubnet"/>. </summary>
+        public AzureStackHciVmNetworkingSubnet()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             IPConfigurationReferences = new ChangeTrackingList<WritableSubResource>();
-            IPPools = new ChangeTrackingList<IPPool>();
+            IPPools = new ChangeTrackingList<AzureStackHciVmNetworkingIPPool>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Subnet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStackHciVmNetworkingSubnet"/>. </summary>
         /// <param name="addressPrefix"> The address prefix for the subnet: Cidr for this subnet - IPv4, IPv6. </param>
         /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>
         /// <param name="ipAllocationMethod"> IPAllocationMethod - The IP address allocation method. Possible values include: 'Static', 'Dynamic'. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="vlan"> Vlan to use for the subnet. </param>
         /// <param name="name"> Name - The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Subnet(string addressPrefix, IList<string> addressPrefixes, IPAllocationMethodEnum? ipAllocationMethod, IList<WritableSubResource> ipConfigurationReferences, WritableSubResource networkSecurityGroup, RouteTable routeTable, IList<IPPool> ipPools, int? vlan, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureStackHciVmNetworkingSubnet(string addressPrefix, IList<string> addressPrefixes, IPAllocationMethodEnum? ipAllocationMethod, IList<WritableSubResource> ipConfigurationReferences, WritableSubResource networkSecurityGroup, RouteTable routeTable, IList<AzureStackHciVmNetworkingIPPool> ipPools, int? vlan, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressPrefix = addressPrefix;
             AddressPrefixes = addressPrefixes;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Route table resource. </summary>
         public RouteTable RouteTable { get; set; }
         /// <summary> network associated pool of IP Addresses. </summary>
-        public IList<IPPool> IPPools { get; }
+        public IList<AzureStackHciVmNetworkingIPPool> IPPools { get; }
         /// <summary> Vlan to use for the subnet. </summary>
         public int? Vlan { get; set; }
         /// <summary> Name - The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>

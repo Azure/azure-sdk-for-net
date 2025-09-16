@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    /// <summary> Route - Route resource. </summary>
-    public partial class Route
+    /// <summary> SSH configuration for Linux based VMs running on Azure. </summary>
+    internal partial class AzureStackHciVmOSProfileSshConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,22 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Route"/>. </summary>
-        public Route()
+        /// <summary> Initializes a new instance of <see cref="AzureStackHciVmOSProfileSshConfiguration"/>. </summary>
+        public AzureStackHciVmOSProfileSshConfiguration()
         {
+            PublicKeys = new ChangeTrackingList<AzureStackHciVmOSProfileSshPublicKey>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Route"/>. </summary>
-        /// <param name="addressPrefix"> The destination CIDR to which the route applies. </param>
-        /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
-        /// <param name="name"> Name - name of the subnet. </param>
+        /// <summary> Initializes a new instance of <see cref="AzureStackHciVmOSProfileSshConfiguration"/>. </summary>
+        /// <param name="publicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Route(string addressPrefix, string nextHopIPAddress, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureStackHciVmOSProfileSshConfiguration(IList<AzureStackHciVmOSProfileSshPublicKey> publicKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AddressPrefix = addressPrefix;
-            NextHopIPAddress = nextHopIPAddress;
-            Name = name;
+            PublicKeys = publicKeys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The destination CIDR to which the route applies. </summary>
-        public string AddressPrefix { get; set; }
-        /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
-        public string NextHopIPAddress { get; set; }
-        /// <summary> Name - name of the subnet. </summary>
-        public string Name { get; set; }
+        /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
+        public IList<AzureStackHciVmOSProfileSshPublicKey> PublicKeys { get; }
     }
 }

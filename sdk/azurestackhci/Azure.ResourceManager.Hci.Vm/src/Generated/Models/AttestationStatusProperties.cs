@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="attestHardwarePlatform"> The hardware platform information from attestation token. This only applies to Confidential VM. </param>
         /// <param name="attestDiskSecurityEncryptionType"> The managed disk security encryption type from attestation token. This only applies to Confidential VM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationStatusProperties(AttestSecureBootPropertyEnum? attestSecureBootEnabled, AttestCertPropertyEnum? attestationCertValidated, AttestBootIntegrityPropertyEnum? bootIntegrityValidated, string linuxKernelVersion, AttestHealthStatusEnum? healthStatus, string timestamp, string errorMessage, ProvisioningStateEnum? provisioningState, AttestHWPlatformEnum? attestHardwarePlatform, AttestDiskSecurityEncryptionTypeEnum? attestDiskSecurityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AttestationStatusProperties(AttestSecureBootPropertyEnum? attestSecureBootEnabled, AttestCertPropertyEnum? attestationCertValidated, AttestBootIntegrityPropertyEnum? bootIntegrityValidated, string linuxKernelVersion, AttestHealthStatusEnum? healthStatus, string timestamp, string errorMessage, AzureStackHciVmProvisioningStateEnum? provisioningState, AttestHWPlatformEnum? attestHardwarePlatform, AttestDiskSecurityEncryptionTypeEnum? attestDiskSecurityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AttestSecureBootEnabled = attestSecureBootEnabled;
             AttestationCertValidated = attestationCertValidated;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> The error message of attestation validation and parsing. </summary>
         public string ErrorMessage { get; }
         /// <summary> Provisioning state of the virtual machine instance. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
         /// <summary> The hardware platform information from attestation token. This only applies to Confidential VM. </summary>
         public AttestHWPlatformEnum? AttestHardwarePlatform { get; }
         /// <summary> The managed disk security encryption type from attestation token. This only applies to Confidential VM. </summary>

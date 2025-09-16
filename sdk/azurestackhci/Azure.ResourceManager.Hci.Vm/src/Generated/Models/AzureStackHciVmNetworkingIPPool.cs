@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Describes IPPool. </summary>
-    public partial class IPPool
+    public partial class AzureStackHciVmNetworkingIPPool
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPPool"/>. </summary>
-        public IPPool()
+        /// <summary> Initializes a new instance of <see cref="AzureStackHciVmNetworkingIPPool"/>. </summary>
+        public AzureStackHciVmNetworkingIPPool()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStackHciVmNetworkingIPPool"/>. </summary>
         /// <param name="name"> Name of the IP-Pool. </param>
         /// <param name="ipPoolType"> Type of the IP Pool [vm, vippool]. </param>
         /// <param name="start"> Start of the IP address pool. </param>
         /// <param name="end"> End of the IP address pool. </param>
         /// <param name="info"> IPPool info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPPool(string name, IPPoolTypeEnum? ipPoolType, string start, string end, IPPoolInfo info, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureStackHciVmNetworkingIPPool(string name, IPPoolTypeEnum? ipPoolType, string start, string end, IPPoolInfo info, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IPPoolType = ipPoolType;

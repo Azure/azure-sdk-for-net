@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of network interfaces. </param>
         /// <param name="networkSecurityGroup"> NetworkSecurityGroup - Network Security Group attached to the network interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterfaceProperties(IList<IPConfiguration> ipConfigurations, string macAddress, InterfaceDnsSettings dnsSettings, bool? createFromLocal, ProvisioningStateEnum? provisioningState, NetworkInterfaceStatus status, WritableSubResource networkSecurityGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkInterfaceProperties(IList<IPConfiguration> ipConfigurations, string macAddress, InterfaceDnsSettings dnsSettings, bool? createFromLocal, AzureStackHciVmProvisioningStateEnum? provisioningState, NetworkInterfaceStatus status, WritableSubResource networkSecurityGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPConfigurations = ipConfigurations;
             MacAddress = macAddress;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Boolean indicating whether this is a existing local network interface or if one should be created. </summary>
         public bool? CreateFromLocal { get; set; }
         /// <summary> Provisioning state of the network interface. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
         /// <summary> The observed state of network interfaces. </summary>
         public NetworkInterfaceStatus Status { get; }
         /// <summary> NetworkSecurityGroup - Network Security Group attached to the network interface. </summary>

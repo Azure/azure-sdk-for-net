@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHardDiskProperties(int? blockSizeBytes, long? diskSizeGB, bool? @dynamic, int? logicalSectorBytes, int? physicalSectorBytes, string downloadUri, HyperVGeneration? hyperVGeneration, DiskFileFormat? diskFileFormat, bool? createFromLocal, ProvisioningStateEnum? provisioningState, ResourceIdentifier containerId, VirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualHardDiskProperties(int? blockSizeBytes, long? diskSizeGB, bool? @dynamic, int? logicalSectorBytes, int? physicalSectorBytes, string downloadUri, HyperVGeneration? hyperVGeneration, DiskFileFormat? diskFileFormat, bool? createFromLocal, AzureStackHciVmProvisioningStateEnum? provisioningState, ResourceIdentifier containerId, VirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlockSizeBytes = blockSizeBytes;
             DiskSizeGB = diskSizeGB;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Boolean indicating whether it is an existing local hard disk or if one should be created. </summary>
         public bool? CreateFromLocal { get; set; }
         /// <summary> Provisioning state of the virtual hard disk. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
         /// <summary> Storage ContainerID of the storage container to be used for VHD. </summary>
         public ResourceIdentifier ContainerId { get; set; }
         /// <summary> The observed state of virtual hard disks. </summary>

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    public partial class Route : IUtf8JsonSerializable, IJsonModel<Route>
+    public partial class AzureStackHciVmNetworkingRoute : IUtf8JsonSerializable, IJsonModel<AzureStackHciVmNetworkingRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Route>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStackHciVmNetworkingRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Route>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureStackHciVmNetworkingRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Route>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Route)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingRoute)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        Route IJsonModel<Route>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureStackHciVmNetworkingRoute IJsonModel<AzureStackHciVmNetworkingRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Route>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Route)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoute(document.RootElement, options);
+            return DeserializeAzureStackHciVmNetworkingRoute(document.RootElement, options);
         }
 
-        internal static Route DeserializeRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AzureStackHciVmNetworkingRoute DeserializeAzureStackHciVmNetworkingRoute(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -129,38 +129,38 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Route(addressPrefix, nextHopIPAddress, name, serializedAdditionalRawData);
+            return new AzureStackHciVmNetworkingRoute(addressPrefix, nextHopIPAddress, name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Route>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AzureStackHciVmNetworkingRoute>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Route>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Route)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Route IPersistableModel<Route>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AzureStackHciVmNetworkingRoute IPersistableModel<AzureStackHciVmNetworkingRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Route>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRoute(document.RootElement, options);
+                        return DeserializeAzureStackHciVmNetworkingRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Route)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingRoute)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Route>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureStackHciVmNetworkingRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

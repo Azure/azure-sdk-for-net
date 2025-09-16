@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             long? uploadedSizeInMB = default;
-            Status? status = default;
+            AzureStackHciVmStatus? status = default;
             long? progressPercentage = default;
             string errorCode = default;
             string errorMessage = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new AzureStackHciVmStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("progressPercentage"u8))

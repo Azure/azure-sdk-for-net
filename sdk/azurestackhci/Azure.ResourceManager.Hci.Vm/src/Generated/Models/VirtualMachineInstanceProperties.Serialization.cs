@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             VirtualMachineInstancePropertiesStorageProfile storageProfile = default;
             HttpProxyConfiguration httpProxyConfig = default;
             bool? createFromLocal = default;
-            ProvisioningStateEnum? provisioningState = default;
+            AzureStackHciVmProvisioningStateEnum? provisioningState = default;
             VirtualMachineInstanceView instanceView = default;
             VirtualMachineInstanceStatus status = default;
             GuestAgentInstallStatus guestAgentInstallStatus = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningStateEnum(property.Value.GetString());
+                    provisioningState = new AzureStackHciVmProvisioningStateEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceView"u8))

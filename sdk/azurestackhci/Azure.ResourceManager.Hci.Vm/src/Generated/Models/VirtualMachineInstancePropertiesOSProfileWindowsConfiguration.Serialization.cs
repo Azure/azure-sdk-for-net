@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             bool? enableAutomaticUpdates = default;
-            SshConfiguration ssh = default;
+            AzureStackHciVmOSProfileSshConfiguration ssh = default;
             string timeZone = default;
             bool? provisionVmAgent = default;
             bool? provisionVmConfigAgent = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value, options);
+                    ssh = AzureStackHciVmOSProfileSshConfiguration.DeserializeAzureStackHciVmOSProfileSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))

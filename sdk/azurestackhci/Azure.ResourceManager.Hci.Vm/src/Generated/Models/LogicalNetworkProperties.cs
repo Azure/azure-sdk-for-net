@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="LogicalNetworkProperties"/>. </summary>
         public LogicalNetworkProperties()
         {
-            Subnets = new ChangeTrackingList<Subnet>();
+            Subnets = new ChangeTrackingList<AzureStackHciVmNetworkingSubnet>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LogicalNetworkProperties"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of logical networks. </param>
         /// <param name="networkType"> Type of the Logical Network. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogicalNetworkProperties(LogicalNetworkPropertiesDhcpOptions dhcpOptions, IList<Subnet> subnets, ProvisioningStateEnum? provisioningState, string vmSwitchName, LogicalNetworkStatus status, LogicalNetworkTypeEnum? networkType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LogicalNetworkProperties(LogicalNetworkPropertiesDhcpOptions dhcpOptions, IList<AzureStackHciVmNetworkingSubnet> subnets, AzureStackHciVmProvisioningStateEnum? provisioningState, string vmSwitchName, LogicalNetworkStatus status, LogicalNetworkTypeEnum? networkType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DhcpOptions = dhcpOptions;
             Subnets = subnets;
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> Subnet - list of subnets under the logical network. </summary>
-        public IList<Subnet> Subnets { get; }
+        public IList<AzureStackHciVmNetworkingSubnet> Subnets { get; }
         /// <summary> Provisioning state of the logical network. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
         /// <summary> name of the network switch to be used for VMs. </summary>
         public string VmSwitchName { get; set; }
         /// <summary> The observed state of logical networks. </summary>

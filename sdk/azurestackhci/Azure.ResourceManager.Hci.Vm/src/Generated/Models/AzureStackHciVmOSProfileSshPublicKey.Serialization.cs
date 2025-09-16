@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    public partial class SshPublicKey : IUtf8JsonSerializable, IJsonModel<SshPublicKey>
+    public partial class AzureStackHciVmOSProfileSshPublicKey : IUtf8JsonSerializable, IJsonModel<AzureStackHciVmOSProfileSshPublicKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SshPublicKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStackHciVmOSProfileSshPublicKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SshPublicKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureStackHciVmOSProfileSshPublicKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmOSProfileSshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKey)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmOSProfileSshPublicKey)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Path))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        SshPublicKey IJsonModel<SshPublicKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureStackHciVmOSProfileSshPublicKey IJsonModel<AzureStackHciVmOSProfileSshPublicKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmOSProfileSshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKey)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmOSProfileSshPublicKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSshPublicKey(document.RootElement, options);
+            return DeserializeAzureStackHciVmOSProfileSshPublicKey(document.RootElement, options);
         }
 
-        internal static SshPublicKey DeserializeSshPublicKey(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AzureStackHciVmOSProfileSshPublicKey DeserializeAzureStackHciVmOSProfileSshPublicKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SshPublicKey(path, keyData, serializedAdditionalRawData);
+            return new AzureStackHciVmOSProfileSshPublicKey(path, keyData, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SshPublicKey>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AzureStackHciVmOSProfileSshPublicKey>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmOSProfileSshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKey)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmOSProfileSshPublicKey)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SshPublicKey IPersistableModel<SshPublicKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AzureStackHciVmOSProfileSshPublicKey IPersistableModel<AzureStackHciVmOSProfileSshPublicKey>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmOSProfileSshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSshPublicKey(document.RootElement, options);
+                        return DeserializeAzureStackHciVmOSProfileSshPublicKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKey)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmOSProfileSshPublicKey)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SshPublicKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureStackHciVmOSProfileSshPublicKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             string code = default;
-            StatusLevelType? level = default;
+            AzureStackHciVmStatusLevelType? level = default;
             string displayStatus = default;
             string message = default;
             DateTimeOffset? time = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    level = new StatusLevelType(property.Value.GetString());
+                    level = new AzureStackHciVmStatusLevelType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayStatus"u8))

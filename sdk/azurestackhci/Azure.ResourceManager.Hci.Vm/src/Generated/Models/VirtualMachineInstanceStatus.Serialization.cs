@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             string errorCode = default;
             string errorMessage = default;
-            PowerStateEnum? powerState = default;
+            AzureStackHciVmPowerStateEnum? powerState = default;
             VirtualMachineInstanceStatusProvisioningStatus provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    powerState = new PowerStateEnum(property.Value.GetString());
+                    powerState = new AzureStackHciVmPowerStateEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningStatus"u8))

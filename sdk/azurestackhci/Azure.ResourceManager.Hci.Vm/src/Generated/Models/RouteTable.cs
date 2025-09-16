@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="RouteTable"/>. </summary>
         public RouteTable()
         {
-            Routes = new ChangeTrackingList<Route>();
+            Routes = new ChangeTrackingList<AzureStackHciVmNetworkingRoute>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteTable"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="routes"> Collection of routes contained within a route table. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouteTable(string etag, string name, string type, IList<Route> routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RouteTable(string etag, string name, string type, IList<AzureStackHciVmNetworkingRoute> routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ETag = etag;
             Name = name;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Resource type. </summary>
         public string Type { get; }
         /// <summary> Collection of routes contained within a route table. </summary>
-        public IList<Route> Routes { get; }
+        public IList<AzureStackHciVmNetworkingRoute> Routes { get; }
     }
 }

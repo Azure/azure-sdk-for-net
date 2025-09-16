@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    public partial class IPPool : IUtf8JsonSerializable, IJsonModel<IPPool>
+    public partial class AzureStackHciVmNetworkingIPPool : IUtf8JsonSerializable, IJsonModel<AzureStackHciVmNetworkingIPPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPPool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStackHciVmNetworkingIPPool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IPPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureStackHciVmNetworkingIPPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingIPPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPPool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingIPPool)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        IPPool IJsonModel<IPPool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureStackHciVmNetworkingIPPool IJsonModel<AzureStackHciVmNetworkingIPPool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingIPPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPPool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingIPPool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPPool(document.RootElement, options);
+            return DeserializeAzureStackHciVmNetworkingIPPool(document.RootElement, options);
         }
 
-        internal static IPPool DeserializeIPPool(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AzureStackHciVmNetworkingIPPool DeserializeAzureStackHciVmNetworkingIPPool(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IPPool(
+            return new AzureStackHciVmNetworkingIPPool(
                 name,
                 ipPoolType,
                 start,
@@ -153,35 +153,35 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IPPool>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AzureStackHciVmNetworkingIPPool>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingIPPool>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IPPool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingIPPool)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IPPool IPersistableModel<IPPool>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AzureStackHciVmNetworkingIPPool IPersistableModel<AzureStackHciVmNetworkingIPPool>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmNetworkingIPPool>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIPPool(document.RootElement, options);
+                        return DeserializeAzureStackHciVmNetworkingIPPool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPPool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmNetworkingIPPool)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureStackHciVmNetworkingIPPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

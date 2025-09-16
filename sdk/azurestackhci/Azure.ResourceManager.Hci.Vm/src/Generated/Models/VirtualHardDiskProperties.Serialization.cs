@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HyperVGeneration? hyperVGeneration = default;
             DiskFileFormat? diskFileFormat = default;
             bool? createFromLocal = default;
-            ProvisioningStateEnum? provisioningState = default;
+            AzureStackHciVmProvisioningStateEnum? provisioningState = default;
             ResourceIdentifier containerId = default;
             VirtualHardDiskStatus status = default;
             long? maxShares = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningStateEnum(property.Value.GetString());
+                    provisioningState = new AzureStackHciVmProvisioningStateEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("containerId"u8))

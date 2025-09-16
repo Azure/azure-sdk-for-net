@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             GuestCredential credentials = default;
-            ProvisioningAction? provisioningAction = default;
+            AzureStackHciVmProvisioningAction? provisioningAction = default;
             string status = default;
-            ProvisioningStateEnum? provisioningState = default;
+            AzureStackHciVmProvisioningStateEnum? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisioningAction = new ProvisioningAction(property.Value.GetString());
+                    provisioningAction = new AzureStackHciVmProvisioningAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningStateEnum(property.Value.GetString());
+                    provisioningState = new AzureStackHciVmProvisioningStateEnum(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             string vmUuid = default;
-            StatusType? status = default;
+            AzureStackHciVmStatusType? status = default;
             DateTimeOffset? lastStatusChange = default;
             string agentVersion = default;
             IReadOnlyList<ResponseError> errorDetails = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    status = new StatusType(property.Value.GetString());
+                    status = new AzureStackHciVmStatusType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastStatusChange"u8))

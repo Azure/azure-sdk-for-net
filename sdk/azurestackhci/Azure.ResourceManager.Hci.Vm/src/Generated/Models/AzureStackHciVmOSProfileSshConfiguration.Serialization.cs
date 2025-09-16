@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    internal partial class SshConfiguration : IUtf8JsonSerializable, IJsonModel<SshConfiguration>
+    internal partial class AzureStackHciVmOSProfileSshConfiguration : IUtf8JsonSerializable, IJsonModel<AzureStackHciVmOSProfileSshConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SshConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStackHciVmOSProfileSshConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SshConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureStackHciVmOSProfileSshConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmOSProfileSshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmOSProfileSshConfiguration)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(PublicKeys))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        SshConfiguration IJsonModel<SshConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureStackHciVmOSProfileSshConfiguration IJsonModel<AzureStackHciVmOSProfileSshConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmOSProfileSshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStackHciVmOSProfileSshConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSshConfiguration(document.RootElement, options);
+            return DeserializeAzureStackHciVmOSProfileSshConfiguration(document.RootElement, options);
         }
 
-        internal static SshConfiguration DeserializeSshConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AzureStackHciVmOSProfileSshConfiguration DeserializeAzureStackHciVmOSProfileSshConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            IList<SshPublicKey> publicKeys = default;
+            IList<AzureStackHciVmOSProfileSshPublicKey> publicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    List<SshPublicKey> array = new List<SshPublicKey>();
+                    List<AzureStackHciVmOSProfileSshPublicKey> array = new List<AzureStackHciVmOSProfileSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKey.DeserializeSshPublicKey(item, options));
+                        array.Add(AzureStackHciVmOSProfileSshPublicKey.DeserializeAzureStackHciVmOSProfileSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;
@@ -106,38 +106,38 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<SshPublicKey>(), serializedAdditionalRawData);
+            return new AzureStackHciVmOSProfileSshConfiguration(publicKeys ?? new ChangeTrackingList<AzureStackHciVmOSProfileSshPublicKey>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SshConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AzureStackHciVmOSProfileSshConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmOSProfileSshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SshConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmOSProfileSshConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SshConfiguration IPersistableModel<SshConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AzureStackHciVmOSProfileSshConfiguration IPersistableModel<AzureStackHciVmOSProfileSshConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStackHciVmOSProfileSshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSshConfiguration(document.RootElement, options);
+                        return DeserializeAzureStackHciVmOSProfileSshConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SshConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStackHciVmOSProfileSshConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SshConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureStackHciVmOSProfileSshConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

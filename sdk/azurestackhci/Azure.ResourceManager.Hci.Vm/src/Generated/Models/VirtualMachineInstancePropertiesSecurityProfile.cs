@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="uefiSettings"> Uefi settings of the virtual machine instance. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. EnableTPM and SecureBootEnabled must be set to true for SecurityType to function. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstancePropertiesSecurityProfile(bool? enableTPM, VirtualMachineInstancePropertiesSecurityProfileUefiSettings uefiSettings, SecurityType? securityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineInstancePropertiesSecurityProfile(bool? enableTPM, VirtualMachineInstancePropertiesSecurityProfileUefiSettings uefiSettings, AzureStackHciVmSecurityType? securityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableTPM = enableTPM;
             UefiSettings = uefiSettings;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> Specifies the SecurityType of the virtual machine. EnableTPM and SecureBootEnabled must be set to true for SecurityType to function. </summary>
-        public SecurityType? SecurityType { get; set; }
+        public AzureStackHciVmSecurityType? SecurityType { get; set; }
     }
 }

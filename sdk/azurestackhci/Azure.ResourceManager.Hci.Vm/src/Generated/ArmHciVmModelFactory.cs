@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of gallery images. </param>
         /// <param name="sourceVirtualMachineId"> Resource ID of the source virtual machine from whose OS disk the gallery image is created. </param>
         /// <returns> A new <see cref="Models.GalleryImageProperties"/> instance for mocking. </returns>
-        public static GalleryImageProperties GalleryImageProperties(ResourceIdentifier containerId = null, string imagePath = null, OperatingSystemType osType = default, CloudInitDataSource? cloudInitDataSource = null, HyperVGeneration? hyperVGeneration = null, VmImageRepositoryCredentials vmImageRepositoryCredentials = null, GalleryImageIdentifier identifier = null, GalleryImageVersion version = null, ProvisioningStateEnum? provisioningState = null, GalleryImageStatus status = null, ResourceIdentifier sourceVirtualMachineId = null)
+        public static GalleryImageProperties GalleryImageProperties(ResourceIdentifier containerId = null, string imagePath = null, OperatingSystemType osType = default, CloudInitDataSource? cloudInitDataSource = null, HyperVGeneration? hyperVGeneration = null, VmImageRepositoryCredentials vmImageRepositoryCredentials = null, GalleryImageIdentifier identifier = null, GalleryImageVersion version = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null, GalleryImageStatus status = null, ResourceIdentifier sourceVirtualMachineId = null)
         {
             return new GalleryImageProperties(
                 containerId,
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the gallery image. </param>
         /// <param name="status"> The status of the operation performed on the gallery image [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.GalleryImageStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static GalleryImageStatusProvisioningStatus GalleryImageStatusProvisioningStatus(string operationId = null, Status? status = null)
+        public static GalleryImageStatusProvisioningStatus GalleryImageStatusProvisioningStatus(string operationId = null, AzureStackHciVmStatus? status = null)
         {
             return new GalleryImageStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of logical networks. </param>
         /// <param name="networkType"> Type of the Logical Network. </param>
         /// <returns> A new <see cref="Models.LogicalNetworkProperties"/> instance for mocking. </returns>
-        public static LogicalNetworkProperties LogicalNetworkProperties(IEnumerable<string> dhcpOptionsDnsServers = null, IEnumerable<Subnet> subnets = null, ProvisioningStateEnum? provisioningState = null, string vmSwitchName = null, LogicalNetworkStatus status = null, LogicalNetworkTypeEnum? networkType = null)
+        public static LogicalNetworkProperties LogicalNetworkProperties(IEnumerable<string> dhcpOptionsDnsServers = null, IEnumerable<AzureStackHciVmNetworkingSubnet> subnets = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null, string vmSwitchName = null, LogicalNetworkStatus status = null, LogicalNetworkTypeEnum? networkType = null)
         {
             dhcpOptionsDnsServers ??= new List<string>();
-            subnets ??= new List<Subnet>();
+            subnets ??= new List<AzureStackHciVmNetworkingSubnet>();
 
             return new LogicalNetworkProperties(
                 dhcpOptionsDnsServers != null ? new LogicalNetworkPropertiesDhcpOptions(dhcpOptionsDnsServers?.ToList(), serializedAdditionalRawData: null) : null,
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="routes"> Collection of routes contained within a route table. </param>
         /// <returns> A new <see cref="Models.RouteTable"/> instance for mocking. </returns>
-        public static RouteTable RouteTable(string etag = null, string name = null, string type = null, IEnumerable<Route> routes = null)
+        public static RouteTable RouteTable(string etag = null, string name = null, string type = null, IEnumerable<AzureStackHciVmNetworkingRoute> routes = null)
         {
-            routes ??= new List<Route>();
+            routes ??= new List<AzureStackHciVmNetworkingRoute>();
 
             return new RouteTable(etag, name, type, routes?.ToList(), serializedAdditionalRawData: null);
         }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the logical network. </param>
         /// <param name="status"> The status of the operation performed on the logical network [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.LogicalNetworkStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static LogicalNetworkStatusProvisioningStatus LogicalNetworkStatusProvisioningStatus(string operationId = null, Status? status = null)
+        public static LogicalNetworkStatusProvisioningStatus LogicalNetworkStatusProvisioningStatus(string operationId = null, AzureStackHciVmStatus? status = null)
         {
             return new LogicalNetworkStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the marketplace gallery image. </param>
         /// <param name="status"> The observed state of marketplace gallery images. </param>
         /// <returns> A new <see cref="Models.MarketplaceGalleryImageProperties"/> instance for mocking. </returns>
-        public static MarketplaceGalleryImageProperties MarketplaceGalleryImageProperties(ResourceIdentifier containerId = null, OperatingSystemType osType = default, CloudInitDataSource? cloudInitDataSource = null, HyperVGeneration? hyperVGeneration = null, GalleryImageIdentifier identifier = null, GalleryImageVersion version = null, ProvisioningStateEnum? provisioningState = null, MarketplaceGalleryImageStatus status = null)
+        public static MarketplaceGalleryImageProperties MarketplaceGalleryImageProperties(ResourceIdentifier containerId = null, OperatingSystemType osType = default, CloudInitDataSource? cloudInitDataSource = null, HyperVGeneration? hyperVGeneration = null, GalleryImageIdentifier identifier = null, GalleryImageVersion version = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null, MarketplaceGalleryImageStatus status = null)
         {
             return new MarketplaceGalleryImageProperties(
                 containerId,
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the gallery image. </param>
         /// <param name="status"> The status of the operation performed on the gallery image [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.MarketplaceGalleryImageStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static MarketplaceGalleryImageStatusProvisioningStatus MarketplaceGalleryImageStatusProvisioningStatus(string operationId = null, Status? status = null)
+        public static MarketplaceGalleryImageStatusProvisioningStatus MarketplaceGalleryImageStatusProvisioningStatus(string operationId = null, AzureStackHciVmStatus? status = null)
         {
             return new MarketplaceGalleryImageStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of network interfaces. </param>
         /// <param name="networkSecurityGroupId"> NetworkSecurityGroup - Network Security Group attached to the network interface. </param>
         /// <returns> A new <see cref="Models.NetworkInterfaceProperties"/> instance for mocking. </returns>
-        public static NetworkInterfaceProperties NetworkInterfaceProperties(IEnumerable<IPConfiguration> ipConfigurations = null, string macAddress = null, IEnumerable<string> dnsServers = null, bool? createFromLocal = null, ProvisioningStateEnum? provisioningState = null, NetworkInterfaceStatus status = null, ResourceIdentifier networkSecurityGroupId = null)
+        public static NetworkInterfaceProperties NetworkInterfaceProperties(IEnumerable<IPConfiguration> ipConfigurations = null, string macAddress = null, IEnumerable<string> dnsServers = null, bool? createFromLocal = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null, NetworkInterfaceStatus status = null, ResourceIdentifier networkSecurityGroupId = null)
         {
             ipConfigurations ??= new List<IPConfiguration>();
             dnsServers ??= new List<string>();
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the network interface. </param>
         /// <param name="status"> The status of the operation performed on the network interface [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.NetworkInterfaceStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static NetworkInterfaceStatusProvisioningStatus NetworkInterfaceStatusProvisioningStatus(string operationId = null, Status? status = null)
+        public static NetworkInterfaceStatusProvisioningStatus NetworkInterfaceStatusProvisioningStatus(string operationId = null, AzureStackHciVmStatus? status = null)
         {
             return new NetworkInterfaceStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
         /// <param name="status"> The observed state of Network Security Group. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityGroupProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityGroupProperties NetworkSecurityGroupProperties(IEnumerable<WritableSubResource> networkInterfaces = null, IEnumerable<WritableSubResource> subnets = null, ProvisioningStateEnum? provisioningState = null, NetworkSecurityGroupStatus status = null)
+        public static NetworkSecurityGroupProperties NetworkSecurityGroupProperties(IEnumerable<WritableSubResource> networkInterfaces = null, IEnumerable<WritableSubResource> subnets = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null, NetworkSecurityGroupStatus status = null)
         {
             networkInterfaces ??= new List<WritableSubResource>();
             subnets ??= new List<WritableSubResource>();
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the network security group. </param>
         /// <param name="status"> The status of the operation performed on the network security group [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityGroupStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static NetworkSecurityGroupStatusProvisioningStatus NetworkSecurityGroupStatusProvisioningStatus(string operationId = null, Status? status = null)
+        public static NetworkSecurityGroupStatusProvisioningStatus NetworkSecurityGroupStatusProvisioningStatus(string operationId = null, AzureStackHciVmStatus? status = null)
         {
             return new NetworkSecurityGroupStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="direction"> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </param>
         /// <param name="provisioningState"> Provisioning state of the SR. </param>
         /// <returns> A new <see cref="Models.SecurityRuleProperties"/> instance for mocking. </returns>
-        public static SecurityRuleProperties SecurityRuleProperties(string description = null, SecurityRuleProtocol protocol = default, IEnumerable<string> sourceAddressPrefixes = null, IEnumerable<string> destinationAddressPrefixes = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityRuleAccess access = default, int priority = default, SecurityRuleDirection direction = default, ProvisioningStateEnum? provisioningState = null)
+        public static SecurityRuleProperties SecurityRuleProperties(string description = null, SecurityRuleProtocol protocol = default, IEnumerable<string> sourceAddressPrefixes = null, IEnumerable<string> destinationAddressPrefixes = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityRuleAccess access = default, int priority = default, SecurityRuleDirection direction = default, AzureStackHciVmProvisioningStateEnum? provisioningState = null)
         {
             sourceAddressPrefixes ??= new List<string>();
             destinationAddressPrefixes ??= new List<string>();
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the storage container. </param>
         /// <param name="status"> The observed state of storage containers. </param>
         /// <returns> A new <see cref="Models.StorageContainerProperties"/> instance for mocking. </returns>
-        public static StorageContainerProperties StorageContainerProperties(string path = null, ProvisioningStateEnum? provisioningState = null, StorageContainerStatus status = null)
+        public static StorageContainerProperties StorageContainerProperties(string path = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null, StorageContainerStatus status = null)
         {
             return new StorageContainerProperties(path, provisioningState, status, serializedAdditionalRawData: null);
         }
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the storage container. </param>
         /// <param name="status"> The status of the operation performed on the storage container [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.StorageContainerStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static StorageContainerStatusProvisioningStatus StorageContainerStatusProvisioningStatus(string operationId = null, Status? status = null)
+        public static StorageContainerStatusProvisioningStatus StorageContainerStatusProvisioningStatus(string operationId = null, AzureStackHciVmStatus? status = null)
         {
             return new StorageContainerStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <returns> A new <see cref="Models.VirtualHardDiskProperties"/> instance for mocking. </returns>
-        public static VirtualHardDiskProperties VirtualHardDiskProperties(int? blockSizeBytes = null, long? diskSizeGB = null, bool? @dynamic = null, int? logicalSectorBytes = null, int? physicalSectorBytes = null, string downloadUri = null, HyperVGeneration? hyperVGeneration = null, DiskFileFormat? diskFileFormat = null, bool? createFromLocal = null, ProvisioningStateEnum? provisioningState = null, ResourceIdentifier containerId = null, VirtualHardDiskStatus status = null, long? maxShares = null)
+        public static VirtualHardDiskProperties VirtualHardDiskProperties(int? blockSizeBytes = null, long? diskSizeGB = null, bool? @dynamic = null, int? logicalSectorBytes = null, int? physicalSectorBytes = null, string downloadUri = null, HyperVGeneration? hyperVGeneration = null, DiskFileFormat? diskFileFormat = null, bool? createFromLocal = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null, ResourceIdentifier containerId = null, VirtualHardDiskStatus status = null, long? maxShares = null)
         {
             return new VirtualHardDiskProperties(
                 blockSizeBytes,
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the virtual hard disk. </param>
         /// <param name="status"> The status of the operation performed on the virtual hard disk [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.VirtualHardDiskStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static VirtualHardDiskStatusProvisioningStatus VirtualHardDiskStatusProvisioningStatus(string operationId = null, Status? status = null)
+        public static VirtualHardDiskStatusProvisioningStatus VirtualHardDiskStatusProvisioningStatus(string operationId = null, AzureStackHciVmStatus? status = null)
         {
             return new VirtualHardDiskStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The status of Uploading virtual hard disk [Succeeded, Failed, InProgress]. </param>
         /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
         /// <returns> A new <see cref="Models.VirtualHardDiskDownloadStatus"/> instance for mocking. </returns>
-        public static VirtualHardDiskDownloadStatus VirtualHardDiskDownloadStatus(long? downloadedSizeInMB = null, Status? status = null, long? progressPercentage = null)
+        public static VirtualHardDiskDownloadStatus VirtualHardDiskDownloadStatus(long? downloadedSizeInMB = null, AzureStackHciVmStatus? status = null, long? progressPercentage = null)
         {
             return new VirtualHardDiskDownloadStatus(downloadedSizeInMB, status, progressPercentage, serializedAdditionalRawData: null);
         }
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="errorCode"> VirtualHardDisk upload error code. </param>
         /// <param name="errorMessage"> Descriptive upload error message. </param>
         /// <returns> A new <see cref="Models.VirtualHardDiskUploadStatus"/> instance for mocking. </returns>
-        public static VirtualHardDiskUploadStatus VirtualHardDiskUploadStatus(long? uploadedSizeInMB = null, Status? status = null, long? progressPercentage = null, string errorCode = null, string errorMessage = null)
+        public static VirtualHardDiskUploadStatus VirtualHardDiskUploadStatus(long? uploadedSizeInMB = null, AzureStackHciVmStatus? status = null, long? progressPercentage = null, string errorCode = null, string errorMessage = null)
         {
             return new VirtualHardDiskUploadStatus(
                 uploadedSizeInMB,
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="hostNodeName"> Name of the host node that the VM is on. </param>
         /// <param name="hostNodeIPAddress"> Name of the host node that the VM is on. </param>
         /// <returns> A new <see cref="Models.VirtualMachineInstanceProperties"/> instance for mocking. </returns>
-        public static VirtualMachineInstanceProperties VirtualMachineInstanceProperties(VirtualMachineInstancePropertiesHardwareProfile hardwareProfile = null, VirtualMachineInstancePropertiesPlacementProfile placementProfile = null, IEnumerable<WritableSubResource> networkInterfaces = null, VirtualMachineInstancePropertiesOSProfile osProfile = null, VirtualMachineInstancePropertiesSecurityProfile securityProfile = null, VirtualMachineInstancePropertiesStorageProfile storageProfile = null, HttpProxyConfiguration httpProxyConfig = null, bool? createFromLocal = null, ProvisioningStateEnum? provisioningState = null, VirtualMachineConfigAgentInstanceView instanceViewVmAgent = null, VirtualMachineInstanceStatus status = null, GuestAgentInstallStatus guestAgentInstallStatus = null, string vmId = null, string resourceUid = null, string hyperVVmId = null, string hostNodeName = null, string hostNodeIPAddress = null)
+        public static VirtualMachineInstanceProperties VirtualMachineInstanceProperties(VirtualMachineInstancePropertiesHardwareProfile hardwareProfile = null, VirtualMachineInstancePropertiesPlacementProfile placementProfile = null, IEnumerable<WritableSubResource> networkInterfaces = null, VirtualMachineInstancePropertiesOSProfile osProfile = null, VirtualMachineInstancePropertiesSecurityProfile securityProfile = null, VirtualMachineInstancePropertiesStorageProfile storageProfile = null, HttpProxyConfiguration httpProxyConfig = null, bool? createFromLocal = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null, VirtualMachineConfigAgentInstanceView instanceViewVmAgent = null, VirtualMachineInstanceStatus status = null, GuestAgentInstallStatus guestAgentInstallStatus = null, string vmId = null, string resourceUid = null, string hyperVVmId = null, string hostNodeName = null, string hostNodeIPAddress = null)
         {
             networkInterfaces ??= new List<WritableSubResource>();
 
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
         /// <returns> A new <see cref="Models.InstanceViewStatus"/> instance for mocking. </returns>
-        public static InstanceViewStatus InstanceViewStatus(string code = null, StatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
+        public static InstanceViewStatus InstanceViewStatus(string code = null, AzureStackHciVmStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
         {
             return new InstanceViewStatus(
                 code,
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="powerState"> The power state of the virtual machine instance. </param>
         /// <param name="provisioningStatus"> Provisioning status of the virtual machine instance. </param>
         /// <returns> A new <see cref="Models.VirtualMachineInstanceStatus"/> instance for mocking. </returns>
-        public static VirtualMachineInstanceStatus VirtualMachineInstanceStatus(string errorCode = null, string errorMessage = null, PowerStateEnum? powerState = null, VirtualMachineInstanceStatusProvisioningStatus provisioningStatus = null)
+        public static VirtualMachineInstanceStatus VirtualMachineInstanceStatus(string errorCode = null, string errorMessage = null, AzureStackHciVmPowerStateEnum? powerState = null, VirtualMachineInstanceStatusProvisioningStatus provisioningStatus = null)
         {
             return new VirtualMachineInstanceStatus(errorCode, errorMessage, powerState, provisioningStatus, serializedAdditionalRawData: null);
         }
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="operationId"> The ID of the operation performed on the virtual machine instance. </param>
         /// <param name="status"> The status of the operation performed on the virtual machine instance [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.VirtualMachineInstanceStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static VirtualMachineInstanceStatusProvisioningStatus VirtualMachineInstanceStatusProvisioningStatus(string operationId = null, Status? status = null)
+        public static VirtualMachineInstanceStatusProvisioningStatus VirtualMachineInstanceStatusProvisioningStatus(string operationId = null, AzureStackHciVmStatus? status = null)
         {
             return new VirtualMachineInstanceStatusProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
         }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="agentVersion"> The hybrid machine agent full version. </param>
         /// <param name="errorDetails"> Details about the error state. </param>
         /// <returns> A new <see cref="Models.GuestAgentInstallStatus"/> instance for mocking. </returns>
-        public static GuestAgentInstallStatus GuestAgentInstallStatus(string vmUuid = null, StatusType? status = null, DateTimeOffset? lastStatusChange = null, string agentVersion = null, IEnumerable<ResponseError> errorDetails = null)
+        public static GuestAgentInstallStatus GuestAgentInstallStatus(string vmUuid = null, AzureStackHciVmStatusType? status = null, DateTimeOffset? lastStatusChange = null, string agentVersion = null, IEnumerable<ResponseError> errorDetails = null)
         {
             errorDetails ??= new List<ResponseError>();
 
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
         /// <returns> A new <see cref="Models.HybridIdentityMetadataProperties"/> instance for mocking. </returns>
-        public static HybridIdentityMetadataProperties HybridIdentityMetadataProperties(string resourceUid = null, string publicKey = null, ManagedServiceIdentity identity = null, ProvisioningStateEnum? provisioningState = null)
+        public static HybridIdentityMetadataProperties HybridIdentityMetadataProperties(string resourceUid = null, string publicKey = null, ManagedServiceIdentity identity = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null)
         {
             return new HybridIdentityMetadataProperties(resourceUid, publicKey, identity, provisioningState, serializedAdditionalRawData: null);
         }
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="attestHardwarePlatform"> The hardware platform information from attestation token. This only applies to Confidential VM. </param>
         /// <param name="attestDiskSecurityEncryptionType"> The managed disk security encryption type from attestation token. This only applies to Confidential VM. </param>
         /// <returns> A new <see cref="Models.AttestationStatusProperties"/> instance for mocking. </returns>
-        public static AttestationStatusProperties AttestationStatusProperties(AttestSecureBootPropertyEnum? attestSecureBootEnabled = null, AttestCertPropertyEnum? attestationCertValidated = null, AttestBootIntegrityPropertyEnum? bootIntegrityValidated = null, string linuxKernelVersion = null, AttestHealthStatusEnum? healthStatus = null, string timestamp = null, string errorMessage = null, ProvisioningStateEnum? provisioningState = null, AttestHWPlatformEnum? attestHardwarePlatform = null, AttestDiskSecurityEncryptionTypeEnum? attestDiskSecurityEncryptionType = null)
+        public static AttestationStatusProperties AttestationStatusProperties(AttestSecureBootPropertyEnum? attestSecureBootEnabled = null, AttestCertPropertyEnum? attestationCertValidated = null, AttestBootIntegrityPropertyEnum? bootIntegrityValidated = null, string linuxKernelVersion = null, AttestHealthStatusEnum? healthStatus = null, string timestamp = null, string errorMessage = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null, AttestHWPlatformEnum? attestHardwarePlatform = null, AttestDiskSecurityEncryptionTypeEnum? attestDiskSecurityEncryptionType = null)
         {
             return new AttestationStatusProperties(
                 attestSecureBootEnabled,
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The guest agent status. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
         /// <returns> A new <see cref="Models.GuestAgentProperties"/> instance for mocking. </returns>
-        public static GuestAgentProperties GuestAgentProperties(GuestCredential credentials = null, ProvisioningAction? provisioningAction = null, string status = null, ProvisioningStateEnum? provisioningState = null)
+        public static GuestAgentProperties GuestAgentProperties(GuestCredential credentials = null, AzureStackHciVmProvisioningAction? provisioningAction = null, string status = null, AzureStackHciVmProvisioningStateEnum? provisioningState = null)
         {
             return new GuestAgentProperties(credentials, provisioningAction, status, provisioningState, serializedAdditionalRawData: null);
         }

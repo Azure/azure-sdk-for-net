@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridIdentityMetadataProperties(string resourceUid, string publicKey, ManagedServiceIdentity identity, ProvisioningStateEnum? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridIdentityMetadataProperties(string resourceUid, string publicKey, ManagedServiceIdentity identity, AzureStackHciVmProvisioningStateEnum? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceUid = resourceUid;
             PublicKey = publicKey;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; }
         /// <summary> Provisioning state of the virtual machine instance. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
     }
 }

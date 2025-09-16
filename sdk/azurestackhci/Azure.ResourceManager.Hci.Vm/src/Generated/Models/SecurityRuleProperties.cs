@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="direction"> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </param>
         /// <param name="provisioningState"> Provisioning state of the SR. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityRuleProperties(string description, SecurityRuleProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityRuleAccess access, int priority, SecurityRuleDirection direction, ProvisioningStateEnum? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityRuleProperties(string description, SecurityRuleProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityRuleAccess access, int priority, SecurityRuleDirection direction, AzureStackHciVmProvisioningStateEnum? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Protocol = protocol;
@@ -113,6 +113,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </summary>
         public SecurityRuleDirection Direction { get; set; }
         /// <summary> Provisioning state of the SR. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
     }
 }

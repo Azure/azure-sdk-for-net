@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the storage container. </param>
         /// <param name="status"> The observed state of storage containers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageContainerProperties(string path, ProvisioningStateEnum? provisioningState, StorageContainerStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageContainerProperties(string path, AzureStackHciVmProvisioningStateEnum? provisioningState, StorageContainerStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             ProvisioningState = provisioningState;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Path of the storage container on the disk. </summary>
         public string Path { get; set; }
         /// <summary> Provisioning state of the storage container. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
         /// <summary> The observed state of storage containers. </summary>
         public StorageContainerStatus Status { get; }
     }

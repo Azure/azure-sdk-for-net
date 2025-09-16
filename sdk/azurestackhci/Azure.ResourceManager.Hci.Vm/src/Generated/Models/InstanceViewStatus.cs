@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstanceViewStatus(string code, StatusLevelType? level, string displayStatus, string message, DateTimeOffset? time, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InstanceViewStatus(string code, AzureStackHciVmStatusLevelType? level, string displayStatus, string message, DateTimeOffset? time, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Level = level;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> The status code. </summary>
         public string Code { get; }
         /// <summary> The level code. </summary>
-        public StatusLevelType? Level { get; }
+        public AzureStackHciVmStatusLevelType? Level { get; }
         /// <summary> The short localizable label for the status. </summary>
         public string DisplayStatus { get; }
         /// <summary> The detailed status message, including for alerts and error messages. </summary>

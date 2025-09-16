@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The guest agent status. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestAgentProperties(GuestCredential credentials, ProvisioningAction? provisioningAction, string status, ProvisioningStateEnum? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GuestAgentProperties(GuestCredential credentials, AzureStackHciVmProvisioningAction? provisioningAction, string status, AzureStackHciVmProvisioningStateEnum? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Credentials = credentials;
             ProvisioningAction = provisioningAction;
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Username / Password Credentials to provision guest agent. </summary>
         public GuestCredential Credentials { get; set; }
         /// <summary> The guest agent provisioning action. </summary>
-        public ProvisioningAction? ProvisioningAction { get; set; }
+        public AzureStackHciVmProvisioningAction? ProvisioningAction { get; set; }
         /// <summary> The guest agent status. </summary>
         public string Status { get; }
         /// <summary> Provisioning state of the virtual machine instance. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
     }
 }

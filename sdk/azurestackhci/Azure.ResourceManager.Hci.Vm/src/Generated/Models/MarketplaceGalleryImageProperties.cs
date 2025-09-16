@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the marketplace gallery image. </param>
         /// <param name="status"> The observed state of marketplace gallery images. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceGalleryImageProperties(ResourceIdentifier containerId, OperatingSystemType osType, CloudInitDataSource? cloudInitDataSource, HyperVGeneration? hyperVGeneration, GalleryImageIdentifier identifier, GalleryImageVersion version, ProvisioningStateEnum? provisioningState, MarketplaceGalleryImageStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceGalleryImageProperties(ResourceIdentifier containerId, OperatingSystemType osType, CloudInitDataSource? cloudInitDataSource, HyperVGeneration? hyperVGeneration, GalleryImageIdentifier identifier, GalleryImageVersion version, AzureStackHciVmProvisioningStateEnum? provisioningState, MarketplaceGalleryImageStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerId = containerId;
             OSType = osType;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
         public GalleryImageVersion Version { get; set; }
         /// <summary> Provisioning state of the marketplace gallery image. </summary>
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public AzureStackHciVmProvisioningStateEnum? ProvisioningState { get; }
         /// <summary> The observed state of marketplace gallery images. </summary>
         public MarketplaceGalleryImageStatus Status { get; }
     }

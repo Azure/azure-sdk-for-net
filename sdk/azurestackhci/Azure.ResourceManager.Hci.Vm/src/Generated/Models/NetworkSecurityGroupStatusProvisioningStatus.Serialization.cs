@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             string operationId = default;
-            Status? status = default;
+            AzureStackHciVmStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new AzureStackHciVmStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

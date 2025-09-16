@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
         /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstancePropertiesOSProfileWindowsConfiguration(bool? enableAutomaticUpdates, SshConfiguration ssh, string timeZone, bool? provisionVmAgent, bool? provisionVmConfigAgent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineInstancePropertiesOSProfileWindowsConfiguration(bool? enableAutomaticUpdates, AzureStackHciVmOSProfileSshConfiguration ssh, string timeZone, bool? provisionVmAgent, bool? provisionVmConfigAgent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableAutomaticUpdates = enableAutomaticUpdates;
             Ssh = ssh;
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Whether to EnableAutomaticUpdates on the machine. </summary>
         public bool? EnableAutomaticUpdates { get; set; }
         /// <summary> Specifies the ssh key configuration for Windows OS. </summary>
-        internal SshConfiguration Ssh { get; set; }
+        internal AzureStackHciVmOSProfileSshConfiguration Ssh { get; set; }
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SshPublicKey> SshPublicKeys
+        public IList<AzureStackHciVmOSProfileSshPublicKey> SshPublicKeys
         {
             get
             {
                 if (Ssh is null)
-                    Ssh = new SshConfiguration();
+                    Ssh = new AzureStackHciVmOSProfileSshConfiguration();
                 return Ssh.PublicKeys;
             }
         }
