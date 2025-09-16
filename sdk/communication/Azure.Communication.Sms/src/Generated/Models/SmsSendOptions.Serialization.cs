@@ -15,32 +15,14 @@ namespace Azure.Communication.Sms
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enableDeliveryReport"u8);
+            writer.WritePropertyName("enableDeliveryReport");
             writer.WriteBooleanValue(EnableDeliveryReport);
             if (Optional.IsDefined(Tag))
             {
-                writer.WritePropertyName("tag"u8);
+                writer.WritePropertyName("tag");
                 writer.WriteStringValue(Tag);
             }
-            if (Optional.IsDefined(DeliveryReportTimeoutInSeconds))
-            {
-                writer.WritePropertyName("deliveryReportTimeoutInSeconds"u8);
-                writer.WriteNumberValue(DeliveryReportTimeoutInSeconds.Value);
-            }
-            if (Optional.IsDefined(MessagingConnect))
-            {
-                writer.WritePropertyName("messagingConnect"u8);
-                writer.WriteObjectValue(MessagingConnect);
-            }
             writer.WriteEndObject();
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }
