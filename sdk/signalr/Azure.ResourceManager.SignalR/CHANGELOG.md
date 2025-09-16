@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Make `Azure.ResourceManager.Authorization` AOT-compatible.
+- Make `Azure.ResourceManager.SignalR` AOT-compatible.
 
 ## 1.1.3 (2024-10-23)
 
