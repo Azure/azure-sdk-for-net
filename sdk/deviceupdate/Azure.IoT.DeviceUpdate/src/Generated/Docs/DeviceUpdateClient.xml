@@ -199,15 +199,15 @@ Console.WriteLine(result.GetProperty("scanDetails").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
-    <member name="GetOperationStatusAsync(string,ETag?,RequestContext)">
+    <member name="GetOperationAsync(string,ETag?,RequestContext)">
       <example>
-This sample shows how to call GetOperationStatusAsync and parse the result.
+This sample shows how to call GetOperationAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-Response response = await client.GetOperationStatusAsync("<operationId>");
+Response response = await client.GetOperationAsync("<operationId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -215,13 +215,13 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
-This sample shows how to call GetOperationStatusAsync with all parameters and parse the result.
+This sample shows how to call GetOperationAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-Response response = await client.GetOperationStatusAsync("<operationId>", ifNoneMatch: new ETag("<ifNoneMatch>"));
+Response response = await client.GetOperationAsync("<operationId>", ifNoneMatch: new ETag("<ifNoneMatch>"));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -245,15 +245,15 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("etag").ToString());
 ]]></code></example>
     </member>
-    <member name="GetOperationStatus(string,ETag?,RequestContext)">
+    <member name="GetOperation(string,ETag?,RequestContext)">
       <example>
-This sample shows how to call GetOperationStatus and parse the result.
+This sample shows how to call GetOperation and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-Response response = client.GetOperationStatus("<operationId>");
+Response response = client.GetOperation("<operationId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -261,13 +261,13 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
-This sample shows how to call GetOperationStatus with all parameters and parse the result.
+This sample shows how to call GetOperation with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-Response response = client.GetOperationStatus("<operationId>", ifNoneMatch: new ETag("<ifNoneMatch>"));
+Response response = client.GetOperation("<operationId>", ifNoneMatch: new ETag("<ifNoneMatch>"));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -621,15 +621,15 @@ foreach (BinaryData item in client.GetFiles("<provider>", "<name>", "<version>")
 }
 ]]></code></example>
     </member>
-    <member name="GetOperationStatusesAsync(string,int?,RequestContext)">
+    <member name="GetOperationsAsync(string,int?,RequestContext)">
       <example>
-This sample shows how to call GetOperationStatusesAsync and parse the result.
+This sample shows how to call GetOperationsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-await foreach (BinaryData item in client.GetOperationStatusesAsync())
+await foreach (BinaryData item in client.GetOperationsAsync())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -638,13 +638,13 @@ await foreach (BinaryData item in client.GetOperationStatusesAsync())
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 }
 ]]></code>
-This sample shows how to call GetOperationStatusesAsync with all parameters and parse the result.
+This sample shows how to call GetOperationsAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-await foreach (BinaryData item in client.GetOperationStatusesAsync(filter: "<filter>", top: 1234))
+await foreach (BinaryData item in client.GetOperationsAsync(filter: "<filter>", top: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -669,15 +669,15 @@ await foreach (BinaryData item in client.GetOperationStatusesAsync(filter: "<fil
 }
 ]]></code></example>
     </member>
-    <member name="GetOperationStatuses(string,int?,RequestContext)">
+    <member name="GetOperations(string,int?,RequestContext)">
       <example>
-This sample shows how to call GetOperationStatuses and parse the result.
+This sample shows how to call GetOperations and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-foreach (BinaryData item in client.GetOperationStatuses())
+foreach (BinaryData item in client.GetOperations())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -686,13 +686,13 @@ foreach (BinaryData item in client.GetOperationStatuses())
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 }
 ]]></code>
-This sample shows how to call GetOperationStatuses with all parameters and parse the result.
+This sample shows how to call GetOperations with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-foreach (BinaryData item in client.GetOperationStatuses(filter: "<filter>", top: 1234))
+foreach (BinaryData item in client.GetOperations(filter: "<filter>", top: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
