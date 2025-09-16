@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, AzureLocation location, GroupQuotasEnforcementStatusData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotasEnforcementStatusResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AzureLocation location, GroupQuotasEnforcementStatusData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.Quota
             try
             {
                 var response = await _groupQuotasEnforcementStatusRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, _resourceProviderName, location, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation(_groupQuotasEnforcementStatusClientDiagnostics, Pipeline, _groupQuotasEnforcementStatusRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, _resourceProviderName, location, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(new GroupQuotasEnforcementStatusOperationSource(Client), _groupQuotasEnforcementStatusClientDiagnostics, Pipeline, _groupQuotasEnforcementStatusRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, _resourceProviderName, location, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, AzureLocation location, GroupQuotasEnforcementStatusData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotasEnforcementStatusResource> CreateOrUpdate(WaitUntil waitUntil, AzureLocation location, GroupQuotasEnforcementStatusData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Quota
             try
             {
                 var response = _groupQuotasEnforcementStatusRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, _resourceProviderName, location, data, cancellationToken);
-                var operation = new QuotaArmOperation(_groupQuotasEnforcementStatusClientDiagnostics, Pipeline, _groupQuotasEnforcementStatusRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, _resourceProviderName, location, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(new GroupQuotasEnforcementStatusOperationSource(Client), _groupQuotasEnforcementStatusClientDiagnostics, Pipeline, _groupQuotasEnforcementStatusRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, _resourceProviderName, location, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

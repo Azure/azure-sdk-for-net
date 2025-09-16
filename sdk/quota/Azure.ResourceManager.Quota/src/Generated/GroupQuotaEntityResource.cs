@@ -732,7 +732,8 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateGetGroupQuotaLimitsRequestsRequest(Id.Parent.Name, Id.Name, resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GroupQuotaRequestStatusResource(Client, GroupQuotaRequestStatusData.DeserializeGroupQuotaRequestStatusData(e)), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateGetGroupQuotaLimitsRequestsNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaRequestStatusResource(Client, GroupQuotaRequestStatusData.DeserializeGroupQuotaRequestStatusData(e)), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -768,7 +769,8 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateGetGroupQuotaLimitsRequestsRequest(Id.Parent.Name, Id.Name, resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new GroupQuotaRequestStatusResource(Client, GroupQuotaRequestStatusData.DeserializeGroupQuotaRequestStatusData(e)), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateGetGroupQuotaLimitsRequestsNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaRequestStatusResource(Client, GroupQuotaRequestStatusData.DeserializeGroupQuotaRequestStatusData(e)), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -803,7 +805,8 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.List", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -838,7 +841,8 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.List", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.List", "value", "nextLink", cancellationToken);
         }
     }
 }
