@@ -12,7 +12,13 @@ namespace Azure.Communication.Sms.Tests
     public class SmsClientLiveTestBase : RecordedTestBase<SmsClientTestEnvironment>
     {
         public SmsClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new SmsClientRecordedTestSanitizer();
+        {
+            JsonPathSanitizers.Add("$..from");
+            JsonPathSanitizers.Add("$..to");
+            JsonPathSanitizers.Add("$..repeatabilityRequestId");
+            JsonPathSanitizers.Add("$..repeatabilityFirstSent");
+            SanitizedHeaders.Add("x-ms-content-sha256");
+        }
 
         [OneTimeSetUp]
         public void Setup()
@@ -36,6 +42,22 @@ namespace Azure.Communication.Sms.Tests
             return InstrumentClient(client);
         }
 
+        public SmsClient CreateSmsClientWithNullOptions()
+        {
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
+            SmsClient client = new SmsClient(connectionString, null);
+
+            return InstrumentClient(client);
+        }
+
+        public SmsClient CreateSmsClientWithoutOptions()
+        {
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
+            SmsClient client = new SmsClient(connectionString);
+
+            return InstrumentClient(client);
+        }
+
         public SmsClient CreateSmsClientWithToken()
         {
             Uri endpoint = TestEnvironment.LiveTestStaticEndpoint;
@@ -49,7 +71,8 @@ namespace Azure.Communication.Sms.Tests
                 #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
                 //@@ string endpoint = "<endpoint_url>";
                 //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
-                /*@@*/tokenCredential = new DefaultAzureCredential();
+                /*@@*/
+                tokenCredential = new DefaultAzureCredential();
                 //@@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
                 #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
             }

@@ -3,9 +3,12 @@
 
 #region Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
-/*@@*/ using System.IO;
+/*@@*/
+using System.IO;
 //@@ using Azure.Communication.Sms;
 #endregion Snippet:Azure_Communication_Sms_Tests_UsingStatements
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -30,8 +33,8 @@ namespace Azure.Communication.Sms.Tests
                    message: "Hi");
                 SmsSendResult result = response.Value;
                 Console.WriteLine($"Sms id: {result.MessageId}");
-                assertHappyPath(result);
-                assertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertHappyPath(result);
+                AssertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
             }
             catch (RequestFailedException ex)
             {
@@ -56,8 +59,8 @@ namespace Azure.Communication.Sms.Tests
                    message: "Hi");
                 SmsSendResult result = response.Value;
                 Console.WriteLine($"Sms id: {result.MessageId}");
-                assertHappyPath(result);
-                assertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertHappyPath(result);
+                AssertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
             }
             catch (RequestFailedException ex)
             {
@@ -70,68 +73,22 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
-        public async Task SendingSmsMessageFromFakeNumber()
+        [TestCase("+18007342577", Description = "Unauthorized number")]
+        [TestCase("+15550000000", Description = "Fake number")]
+        public async Task SendingSmsMessageFromUnauthorizedNumber(string from)
         {
-            SmsClient client = CreateSmsClient();
+            SmsClient client = CreateSmsClientWithNullOptions();
             try
             {
                 SmsSendResult result = await client.SendAsync(
-                   from: "+15550000000",
+                   from: from,
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
             }
             catch (RequestFailedException ex)
             {
                 Assert.IsNotEmpty(ex.Message);
-                Assert.True(ex.Message.Contains("400"));
-                Console.WriteLine(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-        }
-
-        [Test]
-        public async Task SendingSmsMessageToFakeNumber()
-        {
-            SmsClient client = CreateSmsClient();
-            try
-            {
-                SmsSendResult result = await client.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: "+15550000000",
-                   message: "Hi");
-                Assert.AreEqual(400, result.HttpStatusCode);
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-        }
-
-        [Test]
-        public async Task SendingSmsMessageFromUnauthorizedNumber()
-        {
-            SmsClient client = CreateSmsClient();
-            try
-            {
-                SmsSendResult result = await client.SendAsync(
-                   from: "+18007342577",
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: "Hi");
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.IsNotEmpty(ex.Message);
-                Assert.True(ex.Message.Contains("401"));
+                Assert.True(ex.Message.Contains("401")); // Unauthorized
                 Console.WriteLine(ex.Message);
             }
             catch (Exception ex)
@@ -154,11 +111,11 @@ namespace Azure.Communication.Sms.Tests
                    {
                        Tag = "marketing", // custom tags
                    });
-                assertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
                 foreach (SmsSendResult result in response.Value)
                 {
                     Console.WriteLine($"Sms id: {result.MessageId}");
-                    assertHappyPath(result);
+                    AssertHappyPath(result);
                 }
             }
             catch (RequestFailedException ex)
@@ -187,15 +144,15 @@ namespace Azure.Communication.Sms.Tests
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
 
-                assertRawResponseHappyPath(firstMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
-                assertRawResponseHappyPath(secondMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertRawResponseHappyPath(firstMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertRawResponseHappyPath(secondMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
 
                 SmsSendResult firstMessageResult = firstMessageResponse.Value;
                 SmsSendResult secondMessageResult = secondMessageResponse.Value;
 
                 Assert.AreNotEqual(firstMessageResult.MessageId, secondMessageResult.MessageId);
-                assertHappyPath(firstMessageResult);
-                assertHappyPath(secondMessageResult);
+                AssertHappyPath(firstMessageResult);
+                AssertHappyPath(secondMessageResult);
             }
             catch (RequestFailedException ex)
             {
@@ -211,7 +168,7 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public async Task SendingSmsFromNullNumberShouldThrow()
         {
-            SmsClient client = CreateSmsClient();
+            SmsClient client = CreateSmsClientWithoutOptions();
             try
             {
                 SmsSendResult result = await client.SendAsync(
@@ -227,14 +184,34 @@ namespace Azure.Communication.Sms.Tests
             Assert.Fail("SendAsync should have thrown an exception.");
         }
 
-        public void assertHappyPath(SmsSendResult sendResult)
+        [Test]
+        public async Task SendingSmsToNullNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = null;
+                Response<IReadOnlyList<SmsSendResult>> result = await client.SendAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to,
+                    message: "Hi");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("to", ex.ParamName);
+                return;
+            }
+            Assert.Fail("SendAsync should have thrown an exception.");
+        }
+
+        private void AssertHappyPath(SmsSendResult sendResult)
         {
             Assert.True(sendResult.Successful);
             Assert.AreEqual(202, sendResult.HttpStatusCode);
             Assert.IsFalse(string.IsNullOrWhiteSpace(sendResult.MessageId));
         }
 
-        public void assertRawResponseHappyPath(Stream contentStream)
+        private void AssertRawResponseHappyPath(Stream contentStream)
         {
             if (contentStream.Length > 0)
             {

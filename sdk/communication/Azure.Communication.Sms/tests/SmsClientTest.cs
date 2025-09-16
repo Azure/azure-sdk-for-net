@@ -7,7 +7,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Sms.Models;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
 
@@ -15,6 +16,56 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientTest
     {
+        [Test]
+        public void SmsClient_ThrowsWithNullKeyCredential()
+        {
+            AzureKeyCredential? nullCredential = null;
+            Uri uri = new Uri("http://localhost");
+
+            Assert.Throws<ArgumentNullException>(() => new SmsClient(uri, nullCredential));
+        }
+
+        [Test]
+        public void SmsClient_ThrowsWithNullUri()
+        {
+            AzureKeyCredential mockCredential = new AzureKeyCredential("mockKey");
+
+            Assert.Throws<ArgumentNullException>(() => new SmsClient(null, mockCredential));
+        }
+
+        [Test]
+        public void SmsClient_KeyCredential_ValidParameters()
+        {
+            AzureKeyCredential mockCredential = new AzureKeyCredential("mockKey");
+            Uri uri = new Uri("http://localhost");
+
+            Assert.DoesNotThrow(() => new SmsClient(uri, mockCredential));
+        }
+
+        [Test]
+        public void SmsClient_TokenCredential_NullOptions()
+        {
+            TokenCredential mockCredential = new MockCredential();
+            Uri endpoint = new Uri("http://localhost");
+
+            Assert.DoesNotThrow(() => new SmsClient(endpoint, mockCredential, null));
+        }
+
+        [Test]
+        public void SmsClient_ThrowsWithNullOrEmptyConnectionString()
+        {
+            Assert.Throws<ArgumentException>(() => new SmsClient(string.Empty));
+            Assert.Throws<ArgumentNullException>(() => new SmsClient(null));
+        }
+
+        [Test]
+        public void SmsClientOptions_ThrowsWithInvalidVersion()
+        {
+            var invalidServiceVersion = (SmsClientOptions.ServiceVersion)2;
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SmsClientOptions(invalidServiceVersion));
+        }
+
         [TestCaseSource(nameof(TestDataForSingleSms))]
         public async Task SendSmsAsyncOverload_PassesToGeneratedOne(string expectedFrom, string expectedTo, string expectedMessage, SmsSendOptions expectedOptions)
         {
