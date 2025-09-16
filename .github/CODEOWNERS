@@ -763,7 +763,7 @@
 # ServiceOwners:                                                   @Sharmistha-Rai
 
 # ServiceLabel: %Redis Cache
-# ServiceOwners:                                                   @yegu-ms
+# ServiceOwners:                                                   @yegu-ms @ArthurMa1978 @m-nash
 
 # PRLabel: %Remote Rendering
 /sdk/remoterendering/                                              @FlorianBorn71 @MichaelZp0 @ChristopherManthei
