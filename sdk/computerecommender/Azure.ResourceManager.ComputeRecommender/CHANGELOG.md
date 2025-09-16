@@ -5,9 +5,3 @@
 ### Features Added
 
 - Release `Spot Placement Score` version `2025-06-05`
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
