@@ -1,6 +1,6 @@
 # TypeSpec Client Generator CLI
 
-This directory contains npm package definitions for `@azure-tools/typespec-client-generator-cli` (tsp-client) with pinned versions to ensure reproducible builds across environments and enhance security by preventing supply chain attacks.
+This directory contains npm package definitions for `@azure-tools/typespec-client-generator-cli` (tsp-client) with pinned versions to ensure reproducible builds across environments.
 
 ## Files
 
