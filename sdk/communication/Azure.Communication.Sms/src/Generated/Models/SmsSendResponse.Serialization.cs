@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication.Sms;
-using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
@@ -16,10 +14,14 @@ namespace Azure.Communication.Sms.Models
     {
         internal static SmsSendResponse DeserializeSmsSendResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SmsSendResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SmsSendResult> array = new List<SmsSendResult>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -31,6 +33,14 @@ namespace Azure.Communication.Sms.Models
                 }
             }
             return new SmsSendResponse(value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SmsSendResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSmsSendResponse(document.RootElement);
         }
     }
 }

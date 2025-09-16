@@ -1,33 +1,34 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Description>
-      This client library enables working with the Microsoft Azure Communication Sms service.
-      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Sms/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Sms/CHANGELOG.md.
-      Microsoft Azure Communication Sms quickstart - https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp
-    </Description>
-    <AssemblyTitle>Azure Communication Sms Service</AssemblyTitle>
-    <Version>1.1.0-beta.4</Version>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.1</ApiCompatVersion>
-    <PackageTags>Microsoft Azure Communication Sms Service;Microsoft;Azure;Azure Communication Service;Azure Communication Sms Service;Sms;Communication;$(PackageCommonTags)</PackageTags>
-    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-  </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Description>
+			This client library enables working with the Microsoft Azure Communication Sms service.
+			For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Sms/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Sms/CHANGELOG.md.
+			Microsoft Azure Communication Sms quickstart - https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp
+		</Description>
+		<AssemblyTitle>Azure Communication Sms Service</AssemblyTitle>
+		<Version>1.0.2</Version>
+		<!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+		<ApiCompatVersion>1.0.1</ApiCompatVersion>
+		<PackageTags>Microsoft Azure Communication Sms Service;Microsoft;Azure;Azure Communication Service;Azure Communication Sms Service;Sms;Communication;$(PackageCommonTags)</PackageTags>
+		<DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+		<IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\README.md" Link="README.md" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\README.md" Link="README.md" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
-    <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Azure.Core" />
+		<PackageReference Include="System.Text.Json" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
+		<Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
+		<Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+		<Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+		<Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+	</ItemGroup>
 
 </Project>

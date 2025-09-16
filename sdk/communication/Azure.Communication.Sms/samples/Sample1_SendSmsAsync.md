@@ -38,7 +38,6 @@ var response = await smsClient.SendAsync(
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
         Tag = "marketing", // custom tags
-        DeliveryReportTimeoutInSeconds = 90
     });
 foreach (SmsSendResult result in response.Value)
 {
@@ -47,4 +46,9 @@ foreach (SmsSendResult result in response.Value)
 }
 ```
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Sms/README.md#getting-started
+To see the full example source files, see:
+
+* [Send SMS to single recipient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/tests/samples/Sample1_SmsClient.cs)
+* [Send SMS to multiple recipients with options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/tests/samples/Sample1_SmsClient.cs)
+
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/README.md#getting-started
