@@ -204,7 +204,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void AiLocationIpIsSetAsHttpClientIpForHttpServerSpans()
+        public void AiLocationIpIsSetAsClientAddressForHttpServerSpansIfNoOverridePresent()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -222,6 +222,67 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItem = telemetryItems.FirstOrDefault();
 
             Assert.Equal("127.0.0.1", telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+
+            // Verify that client.address is not in custom properties (it's mapped to ai.location.ip instead)
+            var requestData = telemetryItem?.Data?.BaseData as RequestData;
+            Assert.NotNull(requestData);
+            Assert.False(requestData.Properties.ContainsKey("client.address"));
+        }
+
+        [Fact]
+        public void AiLocationIpIsSetAsMicrosoftClientIPWhenPresentOnServerSpan()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.SetTag("microsoft.client.ip", "1.2.3.4");
+            activity.SetTag(SemanticConventions.AttributeClientAddress, "127.0.0.1");
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
+            var telemetryItem = telemetryItems.FirstOrDefault();
+
+            Assert.Equal("1.2.3.4", telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+
+            // Verify that client.address is not in custom properties (it's mapped to ai.location.ip instead)
+            var requestData = telemetryItem?.Data?.BaseData as RequestData;
+            Assert.NotNull(requestData);
+            Assert.False(requestData.Properties.ContainsKey("microsoft.client.ip"));
+            Assert.False(requestData.Properties.ContainsKey("client.address"));
+        }
+
+        [Fact]
+        public void AiLocationIpIsSetAsMicrosoftClientIPWhenPresentOnClientSpan()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.SetTag("microsoft.client.ip", "1.2.3.4");
+            activity.SetTag(SemanticConventions.AttributeClientAddress, "127.0.0.1");
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
+            var telemetryItem = telemetryItems.FirstOrDefault();
+
+            Assert.Equal("1.2.3.4", telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+
+            // Verify that client.address is not in custom properties (it's mapped to ai.location.ip instead)
+            var dependencyData = telemetryItem?.Data?.BaseData as RemoteDependencyData;
+            Assert.NotNull(dependencyData);
+            Assert.False(dependencyData.Properties.ContainsKey("microsoft.client.ip"));
+            Assert.False(dependencyData.Properties.ContainsKey("client.address"));
         }
 
         [Fact]

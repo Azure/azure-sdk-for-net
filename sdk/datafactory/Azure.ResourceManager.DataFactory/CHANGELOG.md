@@ -1,14 +1,10 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.10.0 (2025-09-03)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added Managed Identity (MI) authentication support for Lakehouse, Warehouse, and HDInsight linked services.
+- Added support for custom number precision and scale in Oracle V2.
 
 ## 1.9.0 (2025-06-13)
 

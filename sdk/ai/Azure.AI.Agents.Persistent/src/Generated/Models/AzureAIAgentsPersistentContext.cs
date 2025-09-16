@@ -176,6 +176,7 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(RunStepDeltaMicrosoftFabricToolCall))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaOpenAPIObject))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaOpenAPIToolCall))]
+    [ModelReaderWriterBuildable(typeof(RunStepDeltaSharepointToolCall))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaToolCall))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaToolCallObject))]
     [ModelReaderWriterBuildable(typeof(RunStepDetails))]

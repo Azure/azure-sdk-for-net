@@ -6,6 +6,7 @@ using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -51,6 +52,13 @@ namespace Azure.Generator.Management
 
         // our initialization process should guarantee that here we never get a KeyNotFoundException
         internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourcesByScopeDict)[scope];
+
+        private IReadOnlyDictionary<ModelProvider, IEnumerable<PropertyProvider>>? _outputFlattenPropertyMap;
+        internal IReadOnlyDictionary<ModelProvider, IEnumerable<PropertyProvider>> OutputFlattenPropertyMap => _outputFlattenPropertyMap ??= BuildOutputFlattenPropertyMap();
+        private IReadOnlyDictionary<ModelProvider, IEnumerable<PropertyProvider>> BuildOutputFlattenPropertyMap()
+            => ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap.ToDictionary(
+                kv => ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!,
+                kv => kv.Value.Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!)!));
 
         private T GetValue<T>(ref T? field) where T : class
         {
@@ -127,7 +135,8 @@ namespace Azure.Generator.Management
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
-                if (resourcesInScope.Count > 0 || nonResourceMethods.Count > 0)
+                if (scope != ResourceScope.Extension &&
+                    (resourcesInScope.Count > 0 || resourceMethods.Count > 0 || nonResourceMethods.Count > 0))
                 {
                     var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, resourceMethods, nonResourceMethods);
                     mockableResources.Add(scope, mockableExtension);
@@ -150,6 +159,7 @@ namespace Azure.Generator.Management
                     [ResourceScope.Subscription] = new([], [], []),
                     [ResourceScope.Tenant] = new([], [], []),
                     [ResourceScope.ManagementGroup] = new([], [], []),
+                    [ResourceScope.Extension] = new([], [], [])
                 };
                 foreach (var (metadata, resourceClient) in resourceDict)
                 {
@@ -253,7 +263,7 @@ namespace Azure.Generator.Management
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
+                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
                 ArmOperation,
                 ArmOperationOfT,
                 ProviderConstants,

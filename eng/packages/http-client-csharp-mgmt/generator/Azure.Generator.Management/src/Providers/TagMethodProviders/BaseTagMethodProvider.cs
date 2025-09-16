@@ -27,33 +27,43 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly TypeProvider _enclosingType;
         protected readonly ResourceClientProvider _resource;
         protected readonly MethodProvider _updateMethodProvider;
-        protected readonly ClientProvider _restClient;
+        protected readonly InputServiceMethod _getMethodProvider;
+        protected readonly ClientProvider _updateRestClient;
+        protected readonly ClientProvider _getRestClient;
         protected readonly RequestPathPattern _contextualPath;
-        protected readonly FieldProvider _clientDiagnosticsField;
-        protected readonly FieldProvider _restClientField;
+        protected readonly FieldProvider _updateClientDiagnosticsField;
+        protected readonly FieldProvider _getRestClientField;
+        protected readonly bool _isPatch;
         protected readonly bool _isAsync;
         protected readonly bool _isLongRunningUpdateOperation;
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
+        // TODO: make a struct to group the input parameters
         protected BaseTagMethodProvider(
             ResourceClientProvider resource,
             RequestPathPattern contextualPath,
             ResourceOperationMethodProvider updateMethodProvider,
-            RestClientInfo restClientInfo,
+            InputServiceMethod getMethod,
+            RestClientInfo updateRestClientInfo,
+            RestClientInfo getRestClientInfo,
+            bool isPatch,
             bool isAsync,
             string methodName,
             string methodDescription)
         {
             _resource = resource;
             _updateMethodProvider = updateMethodProvider;
+            _getMethodProvider = getMethod;
             _contextualPath = contextualPath;
             _enclosingType = resource;
-            _restClient = restClientInfo.RestClientProvider;
+            _updateRestClient = updateRestClientInfo.RestClientProvider;
+            _getRestClient = getRestClientInfo.RestClientProvider;
+            _isPatch = isPatch;
             _isAsync = isAsync;
             _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation;
-            _clientDiagnosticsField = restClientInfo.DiagnosticsField;
-            _restClientField = restClientInfo.RestClientField;
+            _updateClientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
+            _getRestClientField = getRestClientInfo.RestClientField;
 
             _signature = CreateMethodSignature(methodName, methodDescription);
             _bodyStatements = BuildBodyStatements();
@@ -105,21 +115,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParam, out var contextVariable)
             };
 
-            InputServiceMethod? getServiceMethod = null;
+            var requestMethod = _getRestClient.GetRequestMethodByOperation(_getMethodProvider.Operation);
 
-            foreach (var resourceMethod in resourceClientProvider.ResourceServiceMethods)
-            {
-                if (resourceMethod.Kind == ResourceOperationKind.Get)
-                {
-                    getServiceMethod = resourceMethod.InputMethod;
-                    break;
-                }
-            }
+            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
 
-            var requestMethod = _restClient.GetRequestMethodByOperation(getServiceMethod!.Operation);
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
-
-            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, "CreateGetRequest", arguments, out var messageVariable));
+            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_getRestClientField, "CreateGetRequest", arguments, out var messageVariable));
 
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
@@ -225,7 +225,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var updateParam = _updateMethodProvider.Signature.Parameters.Where(p => !p.Type.Equals(typeof(WaitUntil))).First();
 
             VariableExpression resultVar;
-            if (!updateParam.Type.Equals(_resource.ResourceData.Type)) // patch case
+            if (_isPatch) // patch case
             {
                 // Create a new instance of the update patch type
                 statements.Add(Declare(
