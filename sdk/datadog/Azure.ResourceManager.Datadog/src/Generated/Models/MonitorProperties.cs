@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="provisioningState"></param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="marketplaceSubscriptionStatus"> Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state. </param>
-        /// <param name="datadogOrganizationProperties"> Datadog organization properties. </param>
-        /// <param name="userInfo"> User info. </param>
+        /// <param name="datadogOrganizationProperties"> Specify the Datadog organization name. In the case of linking to existing organizations, Id, ApiKey, and Applicationkey is required as well. </param>
+        /// <param name="userInfo"> Includes name, email and optionally, phone number. User Information can't be null. </param>
         /// <param name="liftrResourceCategory"></param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Datadog.Models
         public MonitoringStatus? MonitoringStatus { get; set; }
         /// <summary> Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state. </summary>
         public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
-        /// <summary> Datadog organization properties. </summary>
+        /// <summary> Specify the Datadog organization name. In the case of linking to existing organizations, Id, ApiKey, and Applicationkey is required as well. </summary>
         public DatadogOrganizationProperties DatadogOrganizationProperties { get; set; }
-        /// <summary> User info. </summary>
+        /// <summary> Includes name, email and optionally, phone number. User Information can't be null. </summary>
         public UserInfo UserInfo { get; set; }
         /// <summary> Gets the liftr resource category. </summary>
         public LiftrResourceCategory? LiftrResourceCategory { get; }

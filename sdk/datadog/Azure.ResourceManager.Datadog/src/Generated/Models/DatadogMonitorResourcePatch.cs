@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of <see cref="DatadogMonitorResourcePatch"/>. </summary>
         /// <param name="properties"> The set of properties that can be update in a PATCH request to a monitor resource. </param>
         /// <param name="tags"> The new tags of the monitor resource. </param>
-        /// <param name="sku"></param>
+        /// <param name="sku"> Represents the SKU of a resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DatadogMonitorResourcePatch(MonitorUpdateProperties properties, IDictionary<string, string> tags, ResourceSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,24 +65,12 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> The set of properties that can be update in a PATCH request to a monitor resource. </summary>
-        internal MonitorUpdateProperties Properties { get; set; }
-        /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
-        public MonitoringStatus? MonitorUpdateMonitoringStatus
-        {
-            get => Properties is null ? default : Properties.MonitoringStatus;
-            set
-            {
-                if (Properties is null)
-                    Properties = new MonitorUpdateProperties();
-                Properties.MonitoringStatus = value;
-            }
-        }
-
+        public MonitorUpdateProperties Properties { get; set; }
         /// <summary> The new tags of the monitor resource. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets the sku. </summary>
+        /// <summary> Represents the SKU of a resource. </summary>
         internal ResourceSku Sku { get; set; }
-        /// <summary> Name of the SKU. </summary>
+        /// <summary> The name of the SKU. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
-    /// <summary> A class representing the DatadogSingleSignOnResource data model. </summary>
+    /// <summary>
+    /// A class representing the DatadogSingleSignOnResource data model.
+    /// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
     public partial class DatadogSingleSignOnResourceData : ResourceData
     {
         /// <summary>

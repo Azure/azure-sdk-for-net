@@ -49,6 +49,16 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules, options);
             }
+            if (Optional.IsDefined(Automuting))
+            {
+                writer.WritePropertyName("automuting"u8);
+                writer.WriteBooleanValue(Automuting.Value);
+            }
+            if (Optional.IsDefined(CustomMetrics))
+            {
+                writer.WritePropertyName("customMetrics"u8);
+                writer.WriteBooleanValue(CustomMetrics.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +99,8 @@ namespace Azure.ResourceManager.Datadog.Models
             ProvisioningState? provisioningState = default;
             LogRules logRules = default;
             MetricRules metricRules = default;
+            bool? automuting = default;
+            bool? customMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,13 +132,37 @@ namespace Azure.ResourceManager.Datadog.Models
                     metricRules = MetricRules.DeserializeMetricRules(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("automuting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    automuting = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("customMetrics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customMetrics = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MonitoringTagRulesProperties(provisioningState, logRules, metricRules, serializedAdditionalRawData);
+            return new MonitoringTagRulesProperties(
+                provisioningState,
+                logRules,
+                metricRules,
+                automuting,
+                customMetrics,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringTagRulesProperties>.Write(ModelReaderWriterOptions options)

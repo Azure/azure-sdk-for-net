@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> Datadog organization properties. </summary>
+    /// <summary> Specify the Datadog organization name. In the case of linking to existing organizations, Id, ApiKey, and Applicationkey is required as well. </summary>
     public partial class DatadogOrganizationProperties
     {
         /// <summary>
@@ -53,14 +53,15 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of <see cref="DatadogOrganizationProperties"/>. </summary>
         /// <param name="name"> Name of the Datadog organization. </param>
         /// <param name="id"> Id of the Datadog organization. </param>
-        /// <param name="linkingAuthCode"> The auth code used to linking to an existing datadog organization. </param>
+        /// <param name="linkingAuthCode"> The auth code used to linking to an existing Datadog organization. </param>
         /// <param name="linkingClientId"> The client_id from an existing in exchange for an auth token to link organization. </param>
-        /// <param name="redirectUri"> The redirect uri for linking. </param>
+        /// <param name="redirectUri"> The redirect URI for linking. </param>
         /// <param name="apiKey"> Api key associated to the Datadog organization. </param>
         /// <param name="applicationKey"> Application key associated to the Datadog organization. </param>
         /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign on. </param>
+        /// <param name="cspm"> The configuration which describes the state of cloud security posture management. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogOrganizationProperties(string name, string id, string linkingAuthCode, string linkingClientId, Uri redirectUri, string apiKey, string applicationKey, string enterpriseAppId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatadogOrganizationProperties(string name, string id, string linkingAuthCode, string linkingClientId, Uri redirectUri, string apiKey, string applicationKey, string enterpriseAppId, bool? cspm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
@@ -70,18 +71,19 @@ namespace Azure.ResourceManager.Datadog.Models
             ApiKey = apiKey;
             ApplicationKey = applicationKey;
             EnterpriseAppId = enterpriseAppId;
+            Cspm = cspm;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Datadog organization. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Id of the Datadog organization. </summary>
-        public string Id { get; }
-        /// <summary> The auth code used to linking to an existing datadog organization. </summary>
+        public string Id { get; set; }
+        /// <summary> The auth code used to linking to an existing Datadog organization. </summary>
         public string LinkingAuthCode { get; set; }
         /// <summary> The client_id from an existing in exchange for an auth token to link organization. </summary>
         public string LinkingClientId { get; set; }
-        /// <summary> The redirect uri for linking. </summary>
+        /// <summary> The redirect URI for linking. </summary>
         public Uri RedirectUri { get; set; }
         /// <summary> Api key associated to the Datadog organization. </summary>
         public string ApiKey { get; set; }
@@ -89,5 +91,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public string ApplicationKey { get; set; }
         /// <summary> The Id of the Enterprise App used for Single sign on. </summary>
         public string EnterpriseAppId { get; set; }
+        /// <summary> The configuration which describes the state of cloud security posture management. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </summary>
+        public bool? Cspm { get; set; }
     }
 }

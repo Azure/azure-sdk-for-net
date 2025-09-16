@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
@@ -16,11 +15,15 @@ namespace Azure.ResourceManager.Datadog
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CreateResourceSupportedProperties))]
+    [ModelReaderWriterBuildable(typeof(CreateResourceSupportedResponseList))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreementProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreementResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreementResourceProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogApiKey))]
     [ModelReaderWriterBuildable(typeof(DatadogApiKeyListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogBillingInfoResponseResult))]
+    [ModelReaderWriterBuildable(typeof(DatadogCreateResourceSupportedResponseResult))]
     [ModelReaderWriterBuildable(typeof(DatadogHost))]
     [ModelReaderWriterBuildable(typeof(DatadogHostListResponse))]
     [ModelReaderWriterBuildable(typeof(DatadogHostMetadata))]
@@ -37,21 +40,28 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResourceData))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(FilteringTag))]
+    [ModelReaderWriterBuildable(typeof(LinkedInfo))]
     [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(LogRules))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
     [ModelReaderWriterBuildable(typeof(MetricRules))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceContent))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscription))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertiesList))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertyData))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertyResource))]
     [ModelReaderWriterBuildable(typeof(MonitoringTagRuleData))]
     [ModelReaderWriterBuildable(typeof(MonitoringTagRuleResource))]
     [ModelReaderWriterBuildable(typeof(MonitoringTagRulesListResponse))]
     [ModelReaderWriterBuildable(typeof(MonitoringTagRulesProperties))]
     [ModelReaderWriterBuildable(typeof(MonitorProperties))]
     [ModelReaderWriterBuildable(typeof(MonitorUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
     [ModelReaderWriterBuildable(typeof(ResourceSku))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionList))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserInfo))]
     public partial class AzureResourceManagerDatadogContext : ModelReaderWriterContext

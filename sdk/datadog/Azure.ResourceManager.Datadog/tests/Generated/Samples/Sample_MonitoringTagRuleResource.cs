@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Datadog.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Datadog.Samples
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TagRulesGet()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/TagRules_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/TagRules_Get.json
             // this example is just showing the usage of "TagRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TagRulesCreateOrUpdate()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/TagRules_CreateOrUpdate.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/TagRules_CreateOrUpdate.json
             // this example is just showing the usage of "TagRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +69,31 @@ namespace Azure.ResourceManager.Datadog.Samples
             MonitoringTagRuleResource monitoringTagRule = client.GetMonitoringTagRuleResource(monitoringTagRuleResourceId);
 
             // invoke the operation
-            MonitoringTagRuleData data = new MonitoringTagRuleData();
+            MonitoringTagRuleData data = new MonitoringTagRuleData
+            {
+                Properties = new MonitoringTagRulesProperties
+                {
+                    LogRules = new LogRules
+                    {
+                        SendAadLogs = false,
+                        SendSubscriptionLogs = true,
+                        SendResourceLogs = true,
+                        FilteringTags = {new FilteringTag
+{
+Name = "Environment",
+Value = "Prod",
+Action = TagAction.Include,
+}, new FilteringTag
+{
+Name = "Environment",
+Value = "Dev",
+Action = TagAction.Exclude,
+}},
+                    },
+                    MetricRulesFilteringTags = { },
+                    Automuting = true,
+                },
+            };
             ArmOperation<MonitoringTagRuleResource> lro = await monitoringTagRule.UpdateAsync(WaitUntil.Completed, data);
             MonitoringTagRuleResource result = lro.Value;
 
