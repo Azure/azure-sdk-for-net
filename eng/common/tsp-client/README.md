@@ -66,8 +66,8 @@ npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client init -
 
 ```bash
 cd eng/common/tsp-client
-npm i --ignore-scripts --no-audit
-npm exec --no -- tsp-client generate --output-dir ./output
+npm ci
+npm exec --no -- tsp-client init --update-if-exists --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/dee71463cbde1d416c47cf544e34f7966a94ddcb/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml
 ```
 
 ## Package Management
