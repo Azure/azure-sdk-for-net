@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
             string subscriptionId = "301DCB09-82EC-4777-A56C-6FFF26BCC814";
             string resourceGroupName = "rgdisconnectedoperations";
             string name = "J_3-_S--_-UM_-_7w11";
-            string imageName = "default";
+            string imageName = "PMY-";
             ResourceIdentifier disconnectedOperationsImageResourceId = DisconnectedOperationsImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, imageName);
             DisconnectedOperationsImageResource disconnectedOperationsImage = client.GetDisconnectedOperationsImageResource(disconnectedOperationsImageResourceId);
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
             string subscriptionId = "301DCB09-82EC-4777-A56C-6FFF26BCC814";
             string resourceGroupName = "rgdisconnectedoperations";
             string name = "XOn_Y-7_M-46E-Y";
-            string imageName = "default";
+            string imageName = "2v5Q3mNihPV88C882LnbQO8";
             ResourceIdentifier disconnectedOperationsImageResourceId = DisconnectedOperationsImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, imageName);
             DisconnectedOperationsImageResource disconnectedOperationsImage = client.GetDisconnectedOperationsImageResource(disconnectedOperationsImageResourceId);
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
             string subscriptionId = "301DCB09-82EC-4777-A56C-6FFF26BCC814";
             string resourceGroupName = "rgdisconnectedoperations";
             string name = "J_3-_S--_-UM_-_7w11";
-            string imageName = "default";
+            string imageName = "PMY-";
             ResourceIdentifier disconnectedOperationsImageResourceId = DisconnectedOperationsImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, imageName);
             DisconnectedOperationsImageResource disconnectedOperationsImage = client.GetDisconnectedOperationsImageResource(disconnectedOperationsImageResourceId);
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
             string subscriptionId = "301DCB09-82EC-4777-A56C-6FFF26BCC814";
             string resourceGroupName = "rgdisconnectedoperations";
             string name = "J_3-_S--_-UM_-_7w11";
-            string imageName = "default";
+            string imageName = "PMY-";
             ResourceIdentifier disconnectedOperationsImageResourceId = DisconnectedOperationsImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, imageName);
             DisconnectedOperationsImageResource disconnectedOperationsImage = client.GetDisconnectedOperationsImageResource(disconnectedOperationsImageResourceId);
 

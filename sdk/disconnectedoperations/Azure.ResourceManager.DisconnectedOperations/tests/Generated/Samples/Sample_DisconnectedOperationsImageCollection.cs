@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
             DisconnectedOperationsImageCollection collection = disconnectedOperation.GetDisconnectedOperationsImages();
 
             // invoke the operation
-            string imageName = "default";
+            string imageName = "2P6";
             DisconnectedOperationsImageResource result = await collection.GetAsync(imageName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
             DisconnectedOperationsImageCollection collection = disconnectedOperation.GetDisconnectedOperationsImages();
 
             // invoke the operation
-            string imageName = "default";
+            string imageName = "2P6";
             bool result = await collection.ExistsAsync(imageName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
             DisconnectedOperationsImageCollection collection = disconnectedOperation.GetDisconnectedOperationsImages();
 
             // invoke the operation
-            string imageName = "default";
+            string imageName = "2P6";
             NullableResponse<DisconnectedOperationsImageResource> response = await collection.GetIfExistsAsync(imageName);
             DisconnectedOperationsImageResource result = response.HasValue ? response.Value : null;
 
