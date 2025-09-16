@@ -20,15 +20,7 @@ This directory contains npm package definitions for `@azure-tools/typespec-clien
 cd eng/common/tsp-client
 
 # Install dependencies (recommended for CI/security)
-npm i --ignore-scripts --no-audit
-```
-
-The `--ignore-scripts --no-audit` flags provide:
-
-- **Security**: Prevents potentially malicious install scripts from running
-- **Performance**: Skips vulnerability audit for faster installs
-- **Reliability**: Reduces potential points of failure during installation
-
+npm ci
 ## Usage
 
 After installation, you can run tsp-client using one of these approaches:
