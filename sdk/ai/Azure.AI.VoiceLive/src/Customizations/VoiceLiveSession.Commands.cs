@@ -472,15 +472,16 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId">The ID of the item up to which to truncate the conversation.</param>
         /// <param name="contentIndex">The content index within the item to truncate to.</param>
         /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <param name="audioEnd">Inclusive duration up to which audio is truncated</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="itemId"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task TruncateConversationAsync(string itemId, int contentIndex, CancellationToken cancellationToken = default)
+        public virtual async Task TruncateConversationAsync(string itemId, int contentIndex, TimeSpan audioEnd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             ThrowIfDisposed();
 
-            var truncateEvent = new ClientEventConversationItemTruncate(itemId, contentIndex, 0);
+            var truncateEvent = new ClientEventConversationItemTruncate(itemId, contentIndex, Convert.ToInt32(audioEnd.TotalMilliseconds));
 
             await SendCommandAsync(truncateEvent, cancellationToken).ConfigureAwait(false);
         }
@@ -491,11 +492,12 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId">The ID of the item up to which to truncate the conversation.</param>
         /// <param name="contentIndex">The content index within the item to truncate to.</param>
         /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <param name="audioEnd">Inclusive duration up to which audio is truncated</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="itemId"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
-        public virtual void TruncateConversation(string itemId, int contentIndex, CancellationToken cancellationToken = default)
+        public virtual void TruncateConversation(string itemId, int contentIndex, TimeSpan audioEnd, CancellationToken cancellationToken = default)
         {
-            TruncateConversationAsync(itemId, contentIndex, cancellationToken).EnsureCompleted();
+            TruncateConversationAsync(itemId, contentIndex, audioEnd, cancellationToken).EnsureCompleted();
         }
         #endregion
 

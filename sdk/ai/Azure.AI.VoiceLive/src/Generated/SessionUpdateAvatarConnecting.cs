@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Sent when the server is in the process of establishing an avatar media connection and provides its SDP answer. </summary>
-    public partial class SessionUpdateSessionAvatarConnecting : SessionUpdate
+    public partial class SessionUpdateAvatarConnecting : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionAvatarConnecting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionUpdateAvatarConnecting"/>. </summary>
         /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
-        internal SessionUpdateSessionAvatarConnecting(string serverSdp) : base(ServerEventType.SessionAvatarConnecting)
+        internal SessionUpdateAvatarConnecting(string serverSdp) : base(ServerEventType.SessionAvatarConnecting)
         {
             ServerSdp = serverSdp;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionAvatarConnecting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionUpdateAvatarConnecting"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
-        internal SessionUpdateSessionAvatarConnecting(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverSdp) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateAvatarConnecting(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverSdp) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ServerSdp = serverSdp;
         }

@@ -13,16 +13,16 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Sent when the server is in the process of establishing an avatar media connection and provides its SDP answer. </summary>
-    public partial class SessionUpdateSessionAvatarConnecting : IJsonModel<SessionUpdateSessionAvatarConnecting>
+    public partial class SessionUpdateAvatarConnecting : IJsonModel<SessionUpdateAvatarConnecting>
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionAvatarConnecting"/> for deserialization. </summary>
-        internal SessionUpdateSessionAvatarConnecting()
+        /// <summary> Initializes a new instance of <see cref="SessionUpdateAvatarConnecting"/> for deserialization. </summary>
+        internal SessionUpdateAvatarConnecting()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionUpdateSessionAvatarConnecting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SessionUpdateAvatarConnecting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateSessionAvatarConnecting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateAvatarConnecting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionUpdateSessionAvatarConnecting)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionUpdateAvatarConnecting)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_sdp"u8);
@@ -45,24 +45,24 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateSessionAvatarConnecting IJsonModel<SessionUpdateSessionAvatarConnecting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionUpdateSessionAvatarConnecting)JsonModelCreateCore(ref reader, options);
+        SessionUpdateAvatarConnecting IJsonModel<SessionUpdateAvatarConnecting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionUpdateAvatarConnecting)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateSessionAvatarConnecting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateAvatarConnecting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionUpdateSessionAvatarConnecting)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionUpdateAvatarConnecting)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionUpdateSessionAvatarConnecting(document.RootElement, options);
+            return DeserializeSessionUpdateAvatarConnecting(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SessionUpdateSessionAvatarConnecting DeserializeSessionUpdateSessionAvatarConnecting(JsonElement element, ModelReaderWriterOptions options)
+        internal static SessionUpdateAvatarConnecting DeserializeSessionUpdateAvatarConnecting(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,47 +94,47 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SessionUpdateSessionAvatarConnecting(@type, eventId, additionalBinaryDataProperties, serverSdp);
+            return new SessionUpdateAvatarConnecting(@type, eventId, additionalBinaryDataProperties, serverSdp);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateSessionAvatarConnecting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SessionUpdateAvatarConnecting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateSessionAvatarConnecting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateAvatarConnecting>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateSessionAvatarConnecting)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionUpdateAvatarConnecting)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateSessionAvatarConnecting IPersistableModel<SessionUpdateSessionAvatarConnecting>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateSessionAvatarConnecting)PersistableModelCreateCore(data, options);
+        SessionUpdateAvatarConnecting IPersistableModel<SessionUpdateAvatarConnecting>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateAvatarConnecting)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateSessionAvatarConnecting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateAvatarConnecting>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeSessionUpdateSessionAvatarConnecting(document.RootElement, options);
+                        return DeserializeSessionUpdateAvatarConnecting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateSessionAvatarConnecting)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionUpdateAvatarConnecting)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateSessionAvatarConnecting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SessionUpdateAvatarConnecting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
