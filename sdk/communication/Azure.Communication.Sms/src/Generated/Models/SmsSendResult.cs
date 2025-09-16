@@ -12,25 +12,22 @@ namespace Azure.Communication.Sms
     /// <summary> Response for a single recipient. </summary>
     public partial class SmsSendResult
     {
-        /// <summary> Initializes a new instance of SmsSendResult. </summary>
-        /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
+        /// <summary> Initializes a new instance of <see cref="SmsSendResult"/>. </summary>
+        /// <param name="to"> The recipient's phone number in E.164 format. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
         /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         internal SmsSendResult(string to, int httpStatusCode, bool successful)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
+            Argument.AssertNotNull(to, nameof(to));
 
             To = to;
             HttpStatusCode = httpStatusCode;
             Successful = successful;
         }
 
-        /// <summary> Initializes a new instance of SmsSendResult. </summary>
-        /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
+        /// <summary> Initializes a new instance of <see cref="SmsSendResult"/>. </summary>
+        /// <param name="to"> The recipient's phone number in E.164 format. </param>
         /// <param name="messageId"> The identifier of the outgoing Sms message. Only present if message processed. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
         /// <param name="repeatabilityResult"> The result of a repeatable request with one of the case-insensitive values accepted or rejected. </param>
@@ -46,7 +43,7 @@ namespace Azure.Communication.Sms
             ErrorMessage = errorMessage;
         }
 
-        /// <summary> The recipient&apos;s phone number in E.164 format. </summary>
+        /// <summary> The recipient's phone number in E.164 format. </summary>
         public string To { get; }
         /// <summary> The identifier of the outgoing Sms message. Only present if message processed. </summary>
         public string MessageId { get; }
