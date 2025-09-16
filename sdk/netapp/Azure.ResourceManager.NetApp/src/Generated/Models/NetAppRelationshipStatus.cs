@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Status of the mirror relationship. </summary>
+    /// <summary> The status of the Volume Replication. </summary>
     public readonly partial struct NetAppRelationshipStatus : IEquatable<NetAppRelationshipStatus>
     {
         private readonly string _value;
@@ -24,17 +24,11 @@ namespace Azure.ResourceManager.NetApp.Models
 
         private const string IdleValue = "Idle";
         private const string TransferringValue = "Transferring";
-        private const string FailedValue = "Failed";
-        private const string UnknownValue = "Unknown";
 
-        /// <summary> Idle. </summary>
+        /// <summary> No data is currently being transferred between volumes. </summary>
         public static NetAppRelationshipStatus Idle { get; } = new NetAppRelationshipStatus(IdleValue);
-        /// <summary> Transferring. </summary>
+        /// <summary> Data is being transferred between volumes. </summary>
         public static NetAppRelationshipStatus Transferring { get; } = new NetAppRelationshipStatus(TransferringValue);
-        /// <summary> Failed. </summary>
-        public static NetAppRelationshipStatus Failed { get; } = new NetAppRelationshipStatus(FailedValue);
-        /// <summary> Unknown. </summary>
-        public static NetAppRelationshipStatus Unknown { get; } = new NetAppRelationshipStatus(UnknownValue);
         /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are the same. </summary>
         public static bool operator ==(NetAppRelationshipStatus left, NetAppRelationshipStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are not the same. </summary>

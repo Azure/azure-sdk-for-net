@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/4d3d0a372b8680b55640240fa14690f360f4e954/specification/netapp/resource-manager/readme.md
-tag: package-2025-06-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/c2c7ee70dea80830fe9ea94aed2cec6182c4e9e6/specification/netapp/resource-manager/readme.md
+tag: package-preview-2025-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -76,6 +76,7 @@ override-operation-name:
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/quotaLimits/{quotaLimitName}
 
 prepend-rp-prefix:
   - Backup
@@ -258,7 +259,7 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
-
+  QuotaItem: NetAppSubscriptionQuotaItem
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
 
