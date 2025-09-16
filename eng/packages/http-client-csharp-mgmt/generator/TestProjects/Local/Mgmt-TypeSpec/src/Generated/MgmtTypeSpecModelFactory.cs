@@ -37,7 +37,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -89,7 +89,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.BarData"/> instance for mocking. </returns>
-        public static BarData BarData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, BarProperties properties = default)
+        public static BarData BarData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BarProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -112,16 +112,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="stringArray"></param>
         /// <param name="propertyLeft"> enabled. </param>
         /// <param name="anotherPropertyLeft"> enabled. </param>
-        /// <param name="innerProp1"> Gets or sets the InnerProp1. </param>
-        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
-        /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
-        /// <param name="middleProp2"> Gets the MiddleProp2. </param>
-        /// <param name="prop1"> Gets the Prop1. </param>
-        /// <param name="prop2"> Gets or sets the Prop2. </param>
+        /// <param name="flattenedNestedProperty"></param>
         /// <param name="optionalFlattenPropertyRandomCollectionProp"> Gets the RandomCollectionProp. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/> or <paramref name="prop1"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IList<string> prop1 = default, int? prop2 = default, IList<string> optionalFlattenPropertyRandomCollectionProp = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, BarNestedQuotaProperties flattenedNestedProperty = default, IList<string> optionalFlattenPropertyRandomCollectionProp = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -135,15 +129,44 @@ namespace MgmtTypeSpec.Models
                 stringArray.ToList(),
                 propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
                 anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
-                innerProp1 is null || innerProp2 is null || middleProp1 is null || middleProp2 is null || prop1 is null || prop2 is null ? default : new BarNestedQuotaProperties(
-                    innerProp1,
-                    innerProp2,
-                    null,
-                    middleProp1.Value,
-                    middleProp2,
-                    prop1,
-                    prop2.Value),
+                flattenedNestedProperty,
                 optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, new Dictionary<string, BinaryData>()));
+        }
+
+        /// <summary> The BarNestedQuotaProperties. </summary>
+        /// <param name="innerProp1"></param>
+        /// <param name="innerProp2"></param>
+        /// <param name="middleProp1"></param>
+        /// <param name="middleProp2"></param>
+        /// <param name="prop1"></param>
+        /// <param name="prop2"></param>
+        /// <returns> A new <see cref="Models.BarNestedQuotaProperties"/> instance for mocking. </returns>
+        public static BarNestedQuotaProperties BarNestedQuotaProperties(int? innerProp1 = default, string innerProp2 = default, int middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int prop2 = default)
+        {
+            middleProp2 ??= new ChangeTrackingDictionary<string, string>();
+            prop1 ??= new ChangeTrackingList<string>();
+
+            return new BarNestedQuotaProperties(
+                innerProp1,
+                innerProp2,
+                additionalBinaryDataProperties: null,
+                middleProp1,
+                middleProp2,
+                prop1.ToList(),
+                prop2);
+        }
+
+        /// <summary> The BarMiddleNestedQuotaProperties. </summary>
+        /// <param name="innerProp1"></param>
+        /// <param name="innerProp2"></param>
+        /// <param name="middleProp1"></param>
+        /// <param name="middleProp2"></param>
+        /// <returns> A new <see cref="Models.BarMiddleNestedQuotaProperties"/> instance for mocking. </returns>
+        public static BarMiddleNestedQuotaProperties BarMiddleNestedQuotaProperties(int? innerProp1 = default, string innerProp2 = default, int middleProp1 = default, IDictionary<string, string> middleProp2 = default)
+        {
+            middleProp2 ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BarMiddleNestedQuotaProperties(innerProp1, innerProp2, additionalBinaryDataProperties: null, middleProp1, middleProp2);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -172,7 +195,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.BazData"/> instance for mocking. </returns>
-        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, BazProperties properties = default)
+        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BazProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -196,7 +219,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="zooSomething"> something. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.ZooData"/> instance for mocking. </returns>
-        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, string zooSomething = default, ExtendedLocation extendedLocation = default)
+        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string zooSomething = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
