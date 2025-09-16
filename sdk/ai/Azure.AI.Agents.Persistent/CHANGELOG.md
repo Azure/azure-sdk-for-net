@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix issue with image block serialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/52571)
 
 ### Other Changes
 
