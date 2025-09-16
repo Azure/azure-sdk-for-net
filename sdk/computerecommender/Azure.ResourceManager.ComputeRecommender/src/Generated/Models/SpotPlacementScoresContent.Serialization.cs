@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
             {
                 return null;
             }
-            IList<string> desiredLocations = default;
-            IList<ResourceSize> desiredSizes = default;
+            IList<AzureLocation> desiredLocations = default;
+            IList<ComputeRecommenderResourceSize> desiredSizes = default;
             int? desiredCount = default;
             bool? availabilityZones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     desiredLocations = array;
                     continue;
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
                     {
                         continue;
                     }
-                    List<ResourceSize> array = new List<ResourceSize>();
+                    List<ComputeRecommenderResourceSize> array = new List<ComputeRecommenderResourceSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSize.DeserializeResourceSize(item, options));
+                        array.Add(ComputeRecommenderResourceSize.DeserializeComputeRecommenderResourceSize(item, options));
                     }
                     desiredSizes = array;
                     continue;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SpotPlacementScoresContent(desiredLocations ?? new ChangeTrackingList<string>(), desiredSizes ?? new ChangeTrackingList<ResourceSize>(), desiredCount, availabilityZones, serializedAdditionalRawData);
+            return new SpotPlacementScoresContent(desiredLocations ?? new ChangeTrackingList<AzureLocation>(), desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>(), desiredCount, availabilityZones, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpotPlacementScoresContent>.Write(ModelReaderWriterOptions options)

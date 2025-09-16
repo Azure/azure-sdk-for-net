@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeRecommender.Models
 {
@@ -48,9 +49,9 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// <summary> Initializes a new instance of <see cref="SpotPlacementScoresResult"/>. </summary>
         internal SpotPlacementScoresResult()
         {
-            DesiredLocations = new ChangeTrackingList<string>();
-            DesiredSizes = new ChangeTrackingList<ResourceSize>();
-            PlacementScores = new ChangeTrackingList<PlacementScore>();
+            DesiredLocations = new ChangeTrackingList<AzureLocation>();
+            DesiredSizes = new ChangeTrackingList<ComputeRecommenderResourceSize>();
+            PlacementScores = new ChangeTrackingList<ComputeRecommenderPlacementScore>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SpotPlacementScoresResult"/>. </summary>
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
         /// <param name="placementScores"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SpotPlacementScoresResult(IReadOnlyList<string> desiredLocations, IReadOnlyList<ResourceSize> desiredSizes, int? desiredCount, bool? availabilityZones, IReadOnlyList<PlacementScore> placementScores, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SpotPlacementScoresResult(IReadOnlyList<AzureLocation> desiredLocations, IReadOnlyList<ComputeRecommenderResourceSize> desiredSizes, int? desiredCount, bool? availabilityZones, IReadOnlyList<ComputeRecommenderPlacementScore> placementScores, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DesiredLocations = desiredLocations;
             DesiredSizes = desiredSizes;
@@ -71,14 +72,14 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         }
 
         /// <summary> The desired regions. </summary>
-        public IReadOnlyList<string> DesiredLocations { get; }
+        public IReadOnlyList<AzureLocation> DesiredLocations { get; }
         /// <summary> The desired virtual machine SKU sizes. </summary>
-        public IReadOnlyList<ResourceSize> DesiredSizes { get; }
+        public IReadOnlyList<ComputeRecommenderResourceSize> DesiredSizes { get; }
         /// <summary> Desired instance count per region/zone based on the scope. </summary>
         public int? DesiredCount { get; }
         /// <summary> Defines if the scope is zonal or regional. </summary>
         public bool? AvailabilityZones { get; }
         /// <summary> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </summary>
-        public IReadOnlyList<PlacementScore> PlacementScores { get; }
+        public IReadOnlyList<ComputeRecommenderPlacementScore> PlacementScores { get; }
     }
 }

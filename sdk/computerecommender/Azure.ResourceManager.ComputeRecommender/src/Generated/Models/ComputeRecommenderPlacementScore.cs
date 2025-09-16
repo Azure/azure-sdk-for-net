@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeRecommender.Models
 {
     /// <summary> The spot placement score for sku/region/zone combination. </summary>
-    public partial class PlacementScore
+    public partial class ComputeRecommenderPlacementScore
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +46,19 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlacementScore"/>. </summary>
-        internal PlacementScore()
+        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderPlacementScore"/>. </summary>
+        internal ComputeRecommenderPlacementScore()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlacementScore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderPlacementScore"/>. </summary>
         /// <param name="sku"> The resource's CRP virtual machine SKU size. </param>
         /// <param name="region"> The region. </param>
         /// <param name="availabilityZone"> The availability zone. </param>
         /// <param name="score"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <param name="isQuotaAvailable"> Whether the desired quota is available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlacementScore(string sku, string region, string availabilityZone, string score, bool? isQuotaAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeRecommenderPlacementScore(string sku, AzureLocation? region, string availabilityZone, string score, bool? isQuotaAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Region = region;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// <summary> The resource's CRP virtual machine SKU size. </summary>
         public string Sku { get; }
         /// <summary> The region. </summary>
-        public string Region { get; }
+        public AzureLocation? Region { get; }
         /// <summary> The availability zone. </summary>
         public string AvailabilityZone { get; }
         /// <summary> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </summary>

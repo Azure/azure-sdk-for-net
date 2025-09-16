@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
     public static partial class ArmComputeRecommenderModelFactory
     {
         public static Azure.ResourceManager.ComputeRecommender.Models.ComputeDiagnosticBase ComputeDiagnosticBase(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> diagnosticSupportedResourceTypes = null) { throw null; }
-        public static Azure.ResourceManager.ComputeRecommender.Models.PlacementScore PlacementScore(string sku = null, string region = null, string availabilityZone = null, string score = null, bool? isQuotaAvailable = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresResult SpotPlacementScoresResult(System.Collections.Generic.IEnumerable<string> desiredLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize> desiredSizes = null, int? desiredCount = default(int?), bool? availabilityZones = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeRecommender.Models.PlacementScore> placementScores = null) { throw null; }
+        public static Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore ComputeRecommenderPlacementScore(string sku = null, Azure.Core.AzureLocation? region = default(Azure.Core.AzureLocation?), string availabilityZone = null, string score = null, bool? isQuotaAvailable = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresResult SpotPlacementScoresResult(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> desiredLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize> desiredSizes = null, int? desiredCount = default(int?), bool? availabilityZones = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore> placementScores = null) { throw null; }
     }
     public partial class ComputeDiagnosticBase : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeDiagnosticBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeDiagnosticBase>
     {
@@ -44,39 +44,39 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeDiagnosticBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeDiagnosticBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PlacementScore : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.PlacementScore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.PlacementScore>
+    public partial class ComputeRecommenderPlacementScore : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore>
     {
-        internal PlacementScore() { }
+        internal ComputeRecommenderPlacementScore() { }
         public string AvailabilityZone { get { throw null; } }
         public bool? IsQuotaAvailable { get { throw null; } }
-        public string Region { get { throw null; } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } }
         public string Score { get { throw null; } }
         public string Sku { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeRecommender.Models.PlacementScore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.PlacementScore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.PlacementScore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeRecommender.Models.PlacementScore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.PlacementScore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.PlacementScore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.PlacementScore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceSize : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize>
+    public partial class ComputeRecommenderResourceSize : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize>
     {
-        public ResourceSize() { }
+        public ComputeRecommenderResourceSize() { }
         public string Sku { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeRecommender.Models.ResourceSize System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeRecommender.Models.ResourceSize System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SpotPlacementScoresContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresContent>
     {
         public SpotPlacementScoresContent() { }
         public bool? AvailabilityZones { get { throw null; } set { } }
         public int? DesiredCount { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> DesiredLocations { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize> DesiredSizes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> DesiredLocations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize> DesiredSizes { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         internal SpotPlacementScoresResult() { }
         public bool? AvailabilityZones { get { throw null; } }
         public int? DesiredCount { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> DesiredLocations { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeRecommender.Models.ResourceSize> DesiredSizes { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeRecommender.Models.PlacementScore> PlacementScores { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> DesiredLocations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderResourceSize> DesiredSizes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeRecommender.Models.ComputeRecommenderPlacementScore> PlacementScores { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeRecommender.Models.SpotPlacementScoresResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

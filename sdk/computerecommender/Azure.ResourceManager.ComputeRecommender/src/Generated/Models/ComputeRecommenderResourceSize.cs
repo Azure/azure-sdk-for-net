@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeRecommender.Models
 {
     /// <summary> SpotPlacementRecommender API response. </summary>
-    public partial class ResourceSize
+    public partial class ComputeRecommenderResourceSize
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSize"/>. </summary>
-        public ResourceSize()
+        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderResourceSize"/>. </summary>
+        public ComputeRecommenderResourceSize()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderResourceSize"/>. </summary>
         /// <param name="sku"> The resource's CRP virtual machine SKU size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSize(string sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeRecommenderResourceSize(string sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;

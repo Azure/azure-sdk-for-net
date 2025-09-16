@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ComputeRecommender
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ComputeDiagnosticBase))]
+    [ModelReaderWriterBuildable(typeof(ComputeRecommenderPlacementScore))]
+    [ModelReaderWriterBuildable(typeof(ComputeRecommenderResourceSize))]
     [ModelReaderWriterBuildable(typeof(DiagnosticProperties))]
-    [ModelReaderWriterBuildable(typeof(PlacementScore))]
-    [ModelReaderWriterBuildable(typeof(ResourceSize))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SpotPlacementScoresContent))]
     [ModelReaderWriterBuildable(typeof(SpotPlacementScoresResult))]

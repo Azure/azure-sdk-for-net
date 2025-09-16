@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
         /// <param name="placementScores"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <returns> A new <see cref="Models.SpotPlacementScoresResult"/> instance for mocking. </returns>
-        public static SpotPlacementScoresResult SpotPlacementScoresResult(IEnumerable<string> desiredLocations = null, IEnumerable<ResourceSize> desiredSizes = null, int? desiredCount = null, bool? availabilityZones = null, IEnumerable<PlacementScore> placementScores = null)
+        public static SpotPlacementScoresResult SpotPlacementScoresResult(IEnumerable<AzureLocation> desiredLocations = null, IEnumerable<ComputeRecommenderResourceSize> desiredSizes = null, int? desiredCount = null, bool? availabilityZones = null, IEnumerable<ComputeRecommenderPlacementScore> placementScores = null)
         {
-            desiredLocations ??= new List<string>();
-            desiredSizes ??= new List<ResourceSize>();
-            placementScores ??= new List<PlacementScore>();
+            desiredLocations ??= new List<AzureLocation>();
+            desiredSizes ??= new List<ComputeRecommenderResourceSize>();
+            placementScores ??= new List<ComputeRecommenderPlacementScore>();
 
             return new SpotPlacementScoresResult(
                 desiredLocations?.ToList(),
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PlacementScore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeRecommenderPlacementScore"/>. </summary>
         /// <param name="sku"> The resource's CRP virtual machine SKU size. </param>
         /// <param name="region"> The region. </param>
         /// <param name="availabilityZone"> The availability zone. </param>
         /// <param name="score"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <param name="isQuotaAvailable"> Whether the desired quota is available. </param>
-        /// <returns> A new <see cref="Models.PlacementScore"/> instance for mocking. </returns>
-        public static PlacementScore PlacementScore(string sku = null, string region = null, string availabilityZone = null, string score = null, bool? isQuotaAvailable = null)
+        /// <returns> A new <see cref="Models.ComputeRecommenderPlacementScore"/> instance for mocking. </returns>
+        public static ComputeRecommenderPlacementScore ComputeRecommenderPlacementScore(string sku = null, AzureLocation? region = null, string availabilityZone = null, string score = null, bool? isQuotaAvailable = null)
         {
-            return new PlacementScore(
+            return new ComputeRecommenderPlacementScore(
                 sku,
                 region,
                 availabilityZone,

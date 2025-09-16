@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.ComputeRecommender.Samples
             AzureLocation location = new AzureLocation("eastus");
             SpotPlacementScoresContent content = new SpotPlacementScoresContent
             {
-                DesiredLocations = { "eastus", "eastus2" },
-                DesiredSizes = {new ResourceSize
+                DesiredLocations = { new AzureLocation("eastus"), new AzureLocation("eastus2") },
+                DesiredSizes = {new ComputeRecommenderResourceSize
 {
 Sku = "Standard_D2_v2",
 }},

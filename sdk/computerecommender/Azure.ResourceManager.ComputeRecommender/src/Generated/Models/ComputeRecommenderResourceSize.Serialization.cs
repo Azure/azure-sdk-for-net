@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeRecommender.Models
 {
-    public partial class ResourceSize : IUtf8JsonSerializable, IJsonModel<ResourceSize>
+    public partial class ComputeRecommenderResourceSize : IUtf8JsonSerializable, IJsonModel<ComputeRecommenderResourceSize>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeRecommenderResourceSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourceSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeRecommenderResourceSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderResourceSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSize)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderResourceSize)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Sku))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
             }
         }
 
-        ResourceSize IJsonModel<ResourceSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeRecommenderResourceSize IJsonModel<ComputeRecommenderResourceSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderResourceSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSize)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderResourceSize)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceSize(document.RootElement, options);
+            return DeserializeComputeRecommenderResourceSize(document.RootElement, options);
         }
 
-        internal static ResourceSize DeserializeResourceSize(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeRecommenderResourceSize DeserializeComputeRecommenderResourceSize(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceSize(sku, serializedAdditionalRawData);
+            return new ComputeRecommenderResourceSize(sku, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResourceSize>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeRecommenderResourceSize>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderResourceSize>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSize)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderResourceSize)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourceSize IPersistableModel<ResourceSize>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeRecommenderResourceSize IPersistableModel<ComputeRecommenderResourceSize>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderResourceSize>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourceSize(document.RootElement, options);
+                        return DeserializeComputeRecommenderResourceSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSize)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderResourceSize)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourceSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeRecommenderResourceSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

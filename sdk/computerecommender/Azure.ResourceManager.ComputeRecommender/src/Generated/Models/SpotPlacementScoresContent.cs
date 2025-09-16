@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeRecommender.Models
 {
@@ -48,8 +49,8 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// <summary> Initializes a new instance of <see cref="SpotPlacementScoresContent"/>. </summary>
         public SpotPlacementScoresContent()
         {
-            DesiredLocations = new ChangeTrackingList<string>();
-            DesiredSizes = new ChangeTrackingList<ResourceSize>();
+            DesiredLocations = new ChangeTrackingList<AzureLocation>();
+            DesiredSizes = new ChangeTrackingList<ComputeRecommenderResourceSize>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SpotPlacementScoresContent"/>. </summary>
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
         /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SpotPlacementScoresContent(IList<string> desiredLocations, IList<ResourceSize> desiredSizes, int? desiredCount, bool? availabilityZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SpotPlacementScoresContent(IList<AzureLocation> desiredLocations, IList<ComputeRecommenderResourceSize> desiredSizes, int? desiredCount, bool? availabilityZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DesiredLocations = desiredLocations;
             DesiredSizes = desiredSizes;
@@ -68,9 +69,9 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         }
 
         /// <summary> The desired regions. </summary>
-        public IList<string> DesiredLocations { get; }
+        public IList<AzureLocation> DesiredLocations { get; }
         /// <summary> The desired virtual machine SKU sizes. </summary>
-        public IList<ResourceSize> DesiredSizes { get; }
+        public IList<ComputeRecommenderResourceSize> DesiredSizes { get; }
         /// <summary> Desired instance count per region/zone based on the scope. </summary>
         public int? DesiredCount { get; set; }
         /// <summary> Defines if the scope is zonal or regional. </summary>
