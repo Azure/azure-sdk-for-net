@@ -1,6 +1,8 @@
 # Release History
 
 ## 1.0.2 (2025-09-19)
+
+### Other Changes
 - Dependency versions updated.
 
 ## 1.0.1 (2021-05-25)
