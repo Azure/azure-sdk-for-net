@@ -1,6 +1,6 @@
 # Microsoft Azure DisconnectedOperations management client library for .NET
 
-**[Describe the service briefly first.]**
+**Azure Stack's local disconnected operation, also referred to as Winfield, provides Azure control plane capabilities in environments with limited or no internet and cloud access, primarily through virtual machines hosted on HCI clusters. The Disconnected Operations Services represent the set of Azure cloud services and infrastructure deployed for managing the lifecycle of these devices. This includes the Disconnected Operations Resource Provider (RP), an RPaaS user RP, which offers control plan API for management via ARM.**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -22,7 +22,7 @@ dotnet add package Azure.ResourceManager.DisconnectedOperations --prerelease
 
 ### Prerequisites
 
-* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
