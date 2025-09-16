@@ -22,18 +22,18 @@ namespace Azure.AI.VoiceLive
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
-        /// <param name="timeout"></param>
+        /// <param name="timeoutMs"> Gets or sets the Timeout. </param>
         /// <param name="secondaryThreshold"></param>
-        /// <param name="secondaryTimeout"></param>
+        /// <param name="secondaryTimeoutMs"> Gets or sets the SecondaryTimeout. </param>
         /// <param name="disableRules"></param>
         /// <param name="srBoost"></param>
         /// <param name="extraImendCheck"></param>
-        internal AzureSemanticDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, float? timeout, float? secondaryThreshold, float? secondaryTimeout, bool? disableRules, float? srBoost, bool? extraImendCheck) : base(model, additionalBinaryDataProperties)
+        internal AzureSemanticDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, float? timeoutMs, float? secondaryThreshold, float? secondaryTimeoutMs, bool? disableRules, float? srBoost, bool? extraImendCheck) : base(model, additionalBinaryDataProperties)
         {
             Threshold = threshold;
-            Timeout = timeout;
+            TimeoutMs = timeoutMs;
             SecondaryThreshold = secondaryThreshold;
-            SecondaryTimeout = secondaryTimeout;
+            SecondaryTimeoutMs = secondaryTimeoutMs;
             DisableRules = disableRules;
             SrBoost = srBoost;
             ExtraImendCheck = extraImendCheck;
@@ -42,14 +42,8 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets or sets the Threshold. </summary>
         public float? Threshold { get; set; }
 
-        /// <summary> Gets or sets the Timeout. </summary>
-        public float? Timeout { get; set; }
-
         /// <summary> Gets or sets the SecondaryThreshold. </summary>
         public float? SecondaryThreshold { get; set; }
-
-        /// <summary> Gets or sets the SecondaryTimeout. </summary>
-        public float? SecondaryTimeout { get; set; }
 
         /// <summary> Gets or sets the DisableRules. </summary>
         public bool? DisableRules { get; set; }

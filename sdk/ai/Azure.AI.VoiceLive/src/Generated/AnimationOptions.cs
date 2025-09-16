@@ -40,8 +40,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Set of output data types requested from the animation system. </summary>
         public IList<AnimationOutputType> Outputs { get; }
-
-        /// <summary> Interval for emotion detection in milliseconds. If not set, emotion detection is disabled. </summary>
-        public int? EmotionDetectionIntervalMs { get; set; }
     }
 }

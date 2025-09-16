@@ -166,7 +166,7 @@ sessionOptions.Modalities.Clear();
 sessionOptions.Modalities.Add(InputModality.Text);
 sessionOptions.Modalities.Add(InputModality.Audio);
 
-await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
+await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 
 // Process events from the session
 await foreach (SessionUpdate serverEvent in session.GetUpdatesAsync().ConfigureAwait(false))
@@ -211,7 +211,7 @@ sessionOptions.Modalities.Clear();
 sessionOptions.Modalities.Add(InputModality.Text);
 sessionOptions.Modalities.Add(InputModality.Audio);
 
-await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
+await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 ```
 
 ### Function calling example
@@ -252,7 +252,7 @@ sessionOptions.Modalities.Clear();
 sessionOptions.Modalities.Add(InputModality.Text);
 sessionOptions.Modalities.Add(InputModality.Audio);
 
-await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
+await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 ```
 
 ## Troubleshooting

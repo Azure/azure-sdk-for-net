@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive.Samples;
 /// This sample now demonstrates some of the new convenience methods added to the VoiceLive SDK:
 /// - ClearStreamingAudioAsync() - Clears all input audio currently being streamed
 /// - CancelResponseAsync() - Cancels the current response generation (existing method)
-/// - ConfigureConversationSessionAsync() - Configures session options (existing method)
+/// - ConfigureSessionAsync() - Configures session options (existing method)
 ///
 /// Additional convenience methods available but not shown in this sample:
 /// - StartAudioTurnAsync() / EndAudioTurnAsync() / CancelAudioTurnAsync() - Audio turn management
@@ -126,8 +126,8 @@ public class BasicVoiceAssistant : IDisposable
         var turnDetectionConfig = new ServerVad
         {
             Threshold = 0.5f,
-            PrefixPaddingMs = 300,
-            SilenceDurationMs = 500
+            PrefixPadding = TimeSpan.FromMilliseconds(300),
+            SilenceDuration = TimeSpan.FromMilliseconds(500)
         };
 
         // Create conversation session options
@@ -147,7 +147,7 @@ public class BasicVoiceAssistant : IDisposable
         sessionOptions.Modalities.Add(InputModality.Text);
         sessionOptions.Modalities.Add(InputModality.Audio);
 
-        await _session!.ConfigureConversationSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
+        await _session!.ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
 
         _logger.LogInformation("Session configuration sent");
     }

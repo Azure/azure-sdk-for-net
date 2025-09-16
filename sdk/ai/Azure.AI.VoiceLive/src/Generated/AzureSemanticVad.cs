@@ -23,11 +23,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"></param>
-        /// <param name="silenceDurationMs"></param>
+        /// <param name="prefixPaddingMs"> Gets or sets the PrefixPaddingMs. </param>
+        /// <param name="silenceDurationMs"> Gets or sets the SilenceDurationMs. </param>
         /// <param name="endOfUtteranceDetection"></param>
         /// <param name="negThreshold"></param>
-        /// <param name="speechDurationMs"></param>
+        /// <param name="speechDurationMs"> Gets or sets the SpeechDurationMs. </param>
         /// <param name="windowSize"></param>
         /// <param name="distinctCiPhones"></param>
         /// <param name="requireVowel"></param>
@@ -53,20 +53,11 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets or sets the Threshold. </summary>
         public float? Threshold { get; set; }
 
-        /// <summary> Gets or sets the PrefixPaddingMs. </summary>
-        public int? PrefixPaddingMs { get; set; }
-
-        /// <summary> Gets or sets the SilenceDurationMs. </summary>
-        public int? SilenceDurationMs { get; set; }
-
         /// <summary> Gets or sets the EndOfUtteranceDetection. </summary>
         public EouDetection EndOfUtteranceDetection { get; set; }
 
         /// <summary> Gets or sets the NegThreshold. </summary>
         public float? NegThreshold { get; set; }
-
-        /// <summary> Gets or sets the SpeechDurationMs. </summary>
-        public int? SpeechDurationMs { get; set; }
 
         /// <summary> Gets or sets the WindowSize. </summary>
         public int? WindowSize { get; set; }

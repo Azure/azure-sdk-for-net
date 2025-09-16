@@ -199,7 +199,7 @@ namespace Azure.AI.VoiceLive.Tests
                         "Personal voice not configured");
                     return new AzurePersonalVoice(
                         TestEnvironment.PersonalVoiceName,
-                        (AzurePersonalVoiceModel)Enum.Parse(typeof(AzurePersonalVoiceModel), TestEnvironment.PersonalVoiceModel));
+                        new PersonalVoiceModels(TestEnvironment.PersonalVoiceModel));
 
                 case "openai":
                     return new OpenAIVoice(OAIVoice.Alloy);

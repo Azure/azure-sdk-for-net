@@ -39,20 +39,20 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(TimeoutMs))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteNumberValue(Timeout.Value);
+                writer.WriteNumberValue(TimeoutMs.Value);
             }
             if (Optional.IsDefined(SecondaryThreshold))
             {
                 writer.WritePropertyName("secondary_threshold"u8);
                 writer.WriteNumberValue(SecondaryThreshold.Value);
             }
-            if (Optional.IsDefined(SecondaryTimeout))
+            if (Optional.IsDefined(SecondaryTimeoutMs))
             {
                 writer.WritePropertyName("secondary_timeout"u8);
-                writer.WriteNumberValue(SecondaryTimeout.Value);
+                writer.WriteNumberValue(SecondaryTimeoutMs.Value);
             }
             if (Optional.IsDefined(DisableRules))
             {
@@ -99,9 +99,9 @@ namespace Azure.AI.VoiceLive
             EOUDetectionModel model = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             float? threshold = default;
-            float? timeout = default;
+            float? timeoutMs = default;
             float? secondaryThreshold = default;
-            float? secondaryTimeout = default;
+            float? secondaryTimeoutMs = default;
             bool? disableRules = default;
             float? srBoost = default;
             bool? extraImendCheck = default;
@@ -127,7 +127,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    timeout = prop.Value.GetSingle();
+                    timeoutMs = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("secondary_threshold"u8))
@@ -145,7 +145,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    secondaryTimeout = prop.Value.GetSingle();
+                    secondaryTimeoutMs = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("disable_rules"u8))
@@ -184,9 +184,9 @@ namespace Azure.AI.VoiceLive
                 model,
                 additionalBinaryDataProperties,
                 threshold,
-                timeout,
+                timeoutMs,
                 secondaryThreshold,
-                secondaryTimeout,
+                secondaryTimeoutMs,
                 disableRules,
                 srBoost,
                 extraImendCheck);

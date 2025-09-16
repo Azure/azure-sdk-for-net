@@ -38,8 +38,8 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                 TurnDetection = new ServerVad()
                 {
                     Threshold = 0.5f,
-                    PrefixPaddingMs = 300,
-                    SilenceDurationMs = 500
+                    PrefixPadding = TimeSpan.FromMilliseconds(300),
+                    SilenceDuration = TimeSpan.FromMilliseconds(500)
                 },
                 InputAudioFormat = AudioFormat.Pcm16,
                 OutputAudioFormat = AudioFormat.Pcm16
@@ -50,7 +50,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             sessionOptions.Modalities.Add(InputModality.Text);
             sessionOptions.Modalities.Add(InputModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
+            await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 
             // Process events from the session
             await foreach (SessionUpdate serverEvent in session.GetUpdatesAsync().ConfigureAwait(false))
@@ -107,7 +107,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             sessionOptions.Modalities.Add(InputModality.Text);
             sessionOptions.Modalities.Add(InputModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
+            await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
             #endregion
         }
 
@@ -160,7 +160,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             sessionOptions.Modalities.Add(InputModality.Text);
             sessionOptions.Modalities.Add(InputModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
+            await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
             #endregion
         }
     }

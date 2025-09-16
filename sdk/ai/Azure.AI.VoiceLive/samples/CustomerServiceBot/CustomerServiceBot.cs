@@ -129,8 +129,8 @@ public class CustomerServiceBot : IDisposable
         var turnDetectionConfig = new ServerVad
         {
             Threshold = 0.5f,
-            PrefixPaddingMs = 300,
-            SilenceDurationMs = 500
+            PrefixPadding = TimeSpan.FromMilliseconds(300),
+            SilenceDuration = TimeSpan.FromMilliseconds(500)
         };
 
         // Create conversation session options with function tools
@@ -157,7 +157,7 @@ public class CustomerServiceBot : IDisposable
         sessionOptions.Tools.Add(CreateUpdateShippingAddressTool());
 
 
-        await _session!.ConfigureConversationSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
+        await _session!.ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
 
         _logger.LogInformation("Session configuration sent with {ToolCount} customer service tools", sessionOptions.Tools.Count);
     }
