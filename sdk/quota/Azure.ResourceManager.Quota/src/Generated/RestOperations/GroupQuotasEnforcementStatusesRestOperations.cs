@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Quota
         /// The subscriptions share the GroupQuotaLimits assigned to the GroupQuota. If the GroupQuotaLimits is used, then submit a groupQuotaLimit request for the specific resource - provider/location/resource.
         /// Once the GroupQuota Enforcement is enabled then, it cannot be deleted or reverted back. To disable GroupQuota Enforcement -
         /// 1. Remove all the subscriptions from the groupQuota using the delete API for Subscriptions (Check the example - GroupQuotaSubscriptions_Delete).
-        /// 2. Then delete the GroupQuota (Check the example - GroupQuotas_Delete).
+        /// 2. Ten delete the GroupQuota (Check the example - GroupQuotas_Delete).
         /// </summary>
         /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Quota
         /// The subscriptions share the GroupQuotaLimits assigned to the GroupQuota. If the GroupQuotaLimits is used, then submit a groupQuotaLimit request for the specific resource - provider/location/resource.
         /// Once the GroupQuota Enforcement is enabled then, it cannot be deleted or reverted back. To disable GroupQuota Enforcement -
         /// 1. Remove all the subscriptions from the groupQuota using the delete API for Subscriptions (Check the example - GroupQuotaSubscriptions_Delete).
-        /// 2. Then delete the GroupQuota (Check the example - GroupQuotas_Delete).
+        /// 2. Ten delete the GroupQuota (Check the example - GroupQuotas_Delete).
         /// </summary>
         /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
