@@ -355,6 +355,10 @@ internal static class JsonPathExtensions
     public static bool IsRoot(this byte[] jsonPath)
         => IsRoot(jsonPath.AsSpan());
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsRoot(this Span<byte> jsonPath)
+        => IsRoot((ReadOnlySpan<byte>)jsonPath);
+
     /// <summary>
     /// Gets whether or not the specified JSON path represents the root of the JSON document.
     /// </summary>

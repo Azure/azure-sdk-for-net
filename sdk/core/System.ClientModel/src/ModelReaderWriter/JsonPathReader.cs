@@ -51,7 +51,6 @@ internal ref struct JsonPathReader
     private const byte DoubleQuote = 34;  // '"'
     private const byte Zero = 48;         // '0'
     private const byte Nine = 57;         // '9'
-    private const byte Dash = 45;         // '-'
 
     private readonly ReadOnlySpan<byte> _jsonPath;
     private int _consumed;
@@ -115,14 +114,6 @@ internal ref struct JsonPathReader
                 if (next == SingleQuote || next == DoubleQuote)
                 {
                     Current = new JsonPathToken(JsonPathTokenType.PropertySeparator, _consumed++);
-                    return true;
-                }
-
-                // special handling of jsonPath insert [-] it must end with this
-                if (next == Dash && _consumed + 3 == _length && _jsonPath[_consumed + 2] == CloseBracket)
-                {
-                    Current = new JsonPathToken(JsonPathTokenType.ArrayIndex, _consumed, _jsonPath.Slice(_consumed + 1, 1));
-                    _consumed += 3; // Skip '[-]'
                     return true;
                 }
 
