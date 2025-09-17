@@ -19,7 +19,6 @@ namespace Azure.AI.Translation.Text
     [ModelReaderWriterBuildable(typeof(LanguageScript))]
     [ModelReaderWriterBuildable(typeof(ReferenceSentencePair))]
     [ModelReaderWriterBuildable(typeof(SourceDictionaryLanguage))]
-    [ModelReaderWriterBuildable(typeof(SourceText))]
     [ModelReaderWriterBuildable(typeof(TargetDictionaryLanguage))]
     [ModelReaderWriterBuildable(typeof(TranslateBody))]
     [ModelReaderWriterBuildable(typeof(TranslatedTextItem))]
