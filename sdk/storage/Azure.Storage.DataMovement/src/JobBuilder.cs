@@ -49,12 +49,11 @@ internal class JobBuilder
         ITransferCheckpointer checkpointer,
         string transferId,
         bool resumeJob,
-        RemoveTransferDelegate removeTransferDelegate,
         CancellationToken cancellationToken)
     {
         ValidateTransferOptions(transferOptions);
 
-        TransferOperation transferOperation = new(removeTransferDelegate: removeTransferDelegate, id: transferId);
+        TransferOperation transferOperation = new(id: transferId);
         TransferJobInternal transferJobInternal;
 
         // For single item transfers, wrap in single item container

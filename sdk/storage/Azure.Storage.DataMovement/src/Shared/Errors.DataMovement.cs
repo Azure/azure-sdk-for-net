@@ -17,7 +17,7 @@ namespace Azure.Storage
                 $"Either the source or destination resource, or both resources needs to be a web resource.");
 
         public static ArgumentException InvalidTransferId(string command, string transferId)
-            => new ArgumentException($"Cannot process { command } for transfer id: \"{transferId}\". " +
+            => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". " +
         $"The respective transfer does not exist, is no longer stored in the transfer manager. " +
         $"The respective transfer may already be in a paused or completed state.");
 

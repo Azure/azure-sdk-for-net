@@ -420,7 +420,6 @@ namespace Azure.Storage.DataMovement
                 _checkpointer,
                 transferId,
                 resumeJob,
-                TryRemoveTransfer,
                 cancellationToken)
             .ConfigureAwait(false);
 
@@ -445,9 +444,11 @@ namespace Azure.Storage.DataMovement
                 // If TryAdd fails here, we need to check if in other places where we are
                 // adding that every transferId is unique.
                 if (!_transfers.TryAdd(transferId, new TransferOperation(
-                    removeTransferDelegate: TryRemoveTransfer,
                     id: transferId,
-                    status: jobStatus)))
+                    status: jobStatus)
+                {
+                    TransferManager = this,
+                }))
                 {
                     throw Errors.CollisionTransferId(transferId);
                 }
@@ -460,7 +461,6 @@ namespace Azure.Storage.DataMovement
         /// <returns>A <see cref="ValueTask"/> of disposing the <see cref="TransferManager"/>.</returns>
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            _transfers.Clear();
             if (_jobsProcessor != default)
             {
                 await _jobsProcessor.TryCompleteAsync().ConfigureAwait(false);
@@ -473,6 +473,7 @@ namespace Azure.Storage.DataMovement
             {
                 await _chunksProcessor.TryCompleteAsync().ConfigureAwait(false);
             }
+            _transfers.Clear();
             GC.SuppressFinalize(this);
         }
     }

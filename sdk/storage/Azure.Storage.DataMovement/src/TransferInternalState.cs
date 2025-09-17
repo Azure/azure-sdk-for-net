@@ -17,9 +17,7 @@ namespace Azure.Storage.DataMovement
     {
         private string _id;
         private TransferStatus _status;
-
-        public delegate bool RemoveTransferDelegate(string transferId);
-        private readonly RemoveTransferDelegate _removeTransfer;
+        public TransferManager TransferManager;
 
         public TaskCompletionSource<TransferStatus> CompletionSource;
 
@@ -30,15 +28,13 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructor to resume current jobs
         /// </summary>
-        /// <param name="removeTransferDelegate">Delegate to call to remove transfer from the respective TransferManager.</param>
         /// <param name="id">The transfer ID of the transfer object.</param>
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="TransferStatus"/>.</param>
         public TransferInternalState(
-            RemoveTransferDelegate removeTransferDelegate,
             string id = default,
             TransferStatus status = default)
         {
-            _removeTransfer = removeTransferDelegate ?? throw new ArgumentNullException(nameof(removeTransferDelegate));
+            Argument.AssertNotNull(TransferManager, nameof(TransferManager));
             _id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
             _status = status;
             CompletionSource = new TaskCompletionSource<TransferStatus>(
@@ -96,6 +92,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>Returns whether or not the status has been changed from its original state.</returns>
         public bool SetTransferState(TransferState state)
         {
+            Argument.AssertNotNull(TransferManager, nameof(TransferManager));
             if (_status.SetTransferStateChange(state))
             {
                 if (TransferState.Completed == _status.State ||
@@ -109,10 +106,10 @@ namespace Azure.Storage.DataMovement
                     CompletionSource.TrySetResult(_status);
 
                     // Tell the transfer manager to clean up the completed/paused job.
-                    _removeTransfer?.Invoke(_id);
+                    TransferManager.TryRemoveTransfer(_id);
 
                     // Once we reach a Completed/Paused, Dispose the CancellationTokenSource to release resources (since it is no longer needed).
-                    CancellationTokenSource.Dispose();
+                    DisposeCancellationTokenSource();
                 }
                 return true;
             }
@@ -149,10 +146,19 @@ namespace Azure.Storage.DataMovement
                 CancellationTokenSource.Cancel();
                 // Dispose the CancellationTokenSource after cancellation to release resources.
                 // CancellationTokens created from this CancellationTokenSource are still valid.
-                CancellationTokenSource.Dispose();
+                DisposeCancellationTokenSource();
                 return true;
             }
             return false;
+        }
+
+        private void DisposeCancellationTokenSource()
+        {
+            if (CancellationTokenSource != null)
+            {
+                CancellationTokenSource.Dispose();
+                CancellationTokenSource = null;
+            }
         }
     }
 }

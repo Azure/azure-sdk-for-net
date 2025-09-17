@@ -25,8 +25,6 @@ namespace Azure.Storage.DataMovement.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
-        private TransferInternalState.RemoveTransferDelegate _removeTransferDelegate = (string transferId) => true;
-
         public StreamToUriJobPartTests() { }
 
         private static byte[] GetRandomBuffer(long size, Random random = null)
@@ -167,7 +165,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destination: mockDestination.Object);
 
             TransferJobInternal job = new(
-                new TransferOperation(removeTransferDelegate: _removeTransferDelegate,id: transferId),
+                new TransferOperation(id: transferId),
                 source,
                 destination,
                 StreamToUriJobPart.CreateJobPartAsync,
@@ -279,7 +277,7 @@ namespace Azure.Storage.DataMovement.Tests
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = MockQueueInternalTasks.GetPartQueueChunkTask();
 
             TransferJobInternal job = new(
-                new TransferOperation(removeTransferDelegate: _removeTransferDelegate,id: transferId),
+                new TransferOperation(id: transferId),
                 source,
                 destination,
                 StreamToUriJobPart.CreateJobPartAsync,

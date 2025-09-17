@@ -49,7 +49,6 @@ namespace Azure.Storage.DataMovement.Tests
             TransferStatus status = default)
         {
             return new TransferOperation(
-                removeTransferDelegate: (string transferId) => true,
                 id: Guid.NewGuid().ToString(),
                 status: status);
         }

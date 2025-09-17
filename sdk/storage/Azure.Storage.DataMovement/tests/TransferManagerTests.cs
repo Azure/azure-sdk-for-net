@@ -376,7 +376,7 @@ public class TransferManagerTests
             case 0:
                 jobBuilder.Setup(b => b.BuildJobAsync(It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
                     It.IsAny<TransferOptions>(), It.IsAny<ITransferCheckpointer>(), It.IsAny<string>(),
-                    It.IsAny<bool>(), It.IsAny<TransferInternalState.RemoveTransferDelegate>(),It.IsAny<CancellationToken>())
+                    It.IsAny<bool>(), It.IsAny<CancellationToken>())
                 ).Throws(expectedException);
                 break;
             case 1:

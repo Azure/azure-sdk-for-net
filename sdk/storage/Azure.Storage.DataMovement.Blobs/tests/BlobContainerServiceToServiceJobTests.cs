@@ -23,7 +23,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
     [TestFixture]
     public class BlobContainerServiceToServiceJobTests
     {
-        private TransferInternalState.RemoveTransferDelegate _removeTransferDelegate = (string transferId) => true;
         private Mock<BlobStorageResourceContainer> GetMockBlobContainerResource()
         {
             Mock <BlobStorageResourceContainer> mock = new Mock<BlobStorageResourceContainer>();
@@ -112,7 +111,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
             TransferJobInternal transferJob = new(
-                new TransferOperation(removeTransferDelegate: _removeTransferDelegate, id: transferId),
+                new TransferOperation(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
                 ServiceToServiceJobPart.CreateJobPartAsync,
@@ -167,7 +166,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
             TransferJobInternal transferJob = new(
-                new TransferOperation(removeTransferDelegate: _removeTransferDelegate, id: transferId),
+                new TransferOperation(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
                 ServiceToServiceJobPart.CreateJobPartAsync,

@@ -14,6 +14,7 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class TransferOperation
     {
+        private TransferManager _transferManager;
         /// <summary>
         /// Defines whether the transfer has completed.
         /// </summary>
@@ -32,7 +33,15 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The <see cref="TransferManager"/> responsible for this transfer.
         /// </summary>
-        public TransferManager TransferManager { get; internal set; }
+        public TransferManager TransferManager
+        {
+            get => _transferManager;
+            internal set
+            {
+                _transferManager = value;
+                _state.TransferManager = value;
+            }
+        }
 
         /// <summary>
         /// Defines the current state of the transfer.
@@ -49,18 +58,15 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructing a TransferOperation object.
         /// </summary>
-        /// <param name="removeTransferDelegate">Delegate to call to remove transfer from the respective TransferManager.</param>
         /// <param name="id">The transfer ID of the transfer object.</param>
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="TransferStatus"/>.</param>
         internal TransferOperation(
-            TransferInternalState.RemoveTransferDelegate removeTransferDelegate,
             string id,
             TransferStatus status = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             status ??= new TransferStatus();
             _state = new TransferInternalState(
-                removeTransferDelegate,
                 id,
                 status);
         }
