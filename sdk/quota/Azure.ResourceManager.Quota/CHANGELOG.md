@@ -1,8 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2025-09-17)
 
 ### Features Added
+
+- Upgraded api-version tag from 'package-2025-03-01' to 'package-2025-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/520e1f6bc250b4ce51a22eaa7583cc0b24564b71/specification/quota/resource-manager/readme.md.
 
 ### Breaking Changes
 
