@@ -19,7 +19,7 @@ This directory contains npm package definitions for `@azure-tools/typespec-clien
 # Navigate to this directory
 cd eng/common/tsp-client
 
-# Install dependencies (recommended for CI/security)
+# Install dependencies (for development/manual use)
 npm ci
 ## Usage
 
@@ -66,13 +66,19 @@ npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client init -
 
 ```bash
 cd eng/common/tsp-client
-npm ci
+npm i --ignore-scripts --no-audit
 npm exec --no -- tsp-client init --update-if-exists --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/dee71463cbde1d416c47cf544e34f7966a94ddcb/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml
 ```
 
 ## Package Management
 
-### Updating tsp-client Version
+### Automatic Updates via Dependabot
+
+Dependabot is configured to automatically check for updates to `@azure-tools/typespec-client-generator-cli` daily and create pull requests with updated `package.json` and `package-lock.json` files. This ensures the package stays current with the latest versions while maintaining security through the PR review process.
+
+### Manual Version Updates
+
+If you need to manually update the tsp-client version:
 
 1. Edit `package.json` to update the version:
 
