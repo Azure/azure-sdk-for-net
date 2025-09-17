@@ -367,5 +367,57 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
             Assert.IsFalse(reader.Read(), "Should not be able to read past End token");
         }
+
+        [Test]
+        public void Peek_DoesNotAdvance()
+        {
+            var reader = new JsonPathReader("$.x.y"u8);
+
+            // First token
+            Assert.IsTrue(reader.Read());
+            Assert.AreEqual(JsonPathTokenType.Root, reader.Current.TokenType);
+
+            // Peek property separator
+            var peek1 = reader.Peek();
+            Assert.AreEqual(JsonPathTokenType.PropertySeparator, peek1.TokenType);
+            // After peek, current still root
+            Assert.AreEqual(JsonPathTokenType.Root, reader.Current.TokenType);
+
+            // Read now moves to separator
+            Assert.IsTrue(reader.Read());
+            Assert.AreEqual(JsonPathTokenType.PropertySeparator, reader.Current.TokenType);
+
+            // Peek property 'x'
+            var peek2 = reader.Peek();
+            Assert.AreEqual(JsonPathTokenType.Property, peek2.TokenType);
+            Assert.AreEqual("x", Encoding.UTF8.GetString(peek2.ValueSpan.ToArray()));
+
+            // Read property 'x'
+            Assert.IsTrue(reader.Read());
+            Assert.AreEqual(JsonPathTokenType.Property, reader.Current.TokenType);
+            Assert.AreEqual("x", Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()));
+        }
+
+        [Test]
+        public void Advance_ByPrefix()
+        {
+            var full = new JsonPathReader("$.a.b.c"u8);
+            var prefixReader = new JsonPathReader("$.a.b"u8);
+
+            // Consume prefix in prefixReader fully (simulate external usage)
+            while (prefixReader.Read() && prefixReader.Current.TokenType != JsonPathTokenType.End)
+            { }
+
+            // Now advance 'full' reader using parsed prefix slice
+            var slice = Encoding.UTF8.GetBytes("$.a.b");
+            Assert.IsTrue(full.Advance(slice));
+
+            // After advance, next token should continue at '.c'
+            Assert.IsTrue(full.Read()); // Expect PropertySeparator
+            Assert.AreEqual(JsonPathTokenType.PropertySeparator, full.Current.TokenType);
+            Assert.IsTrue(full.Read()); // Property c
+            Assert.AreEqual(JsonPathTokenType.Property, full.Current.TokenType);
+            Assert.AreEqual("c", Encoding.UTF8.GetString(full.Current.ValueSpan.ToArray()));
+        }
     }
 }

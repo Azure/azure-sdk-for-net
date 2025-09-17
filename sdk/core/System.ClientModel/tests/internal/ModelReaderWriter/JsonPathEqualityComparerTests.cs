@@ -91,5 +91,20 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             JsonPathComparer.Default.Normalize(a.AsSpan(), buffer, out int bytesWritten);
             Assert.AreEqual(expected, Encoding.UTF8.GetString(buffer.Slice(0, bytesWritten).ToArray()));
         }
+
+        [TestCase("$.x.y", "$['x'].y")]
+        [TestCase("$.x.y", "$[\"x\"].y")]
+        [TestCase("$.x.y", "$['x']['y']")]
+        [TestCase("$.foo.bar", "$['foo']['bar']")]
+        [TestCase("$.foo.bar", "$[\"foo\"].bar")]
+        [TestCase("$.a.b[0].c", "$['a'].b[0]['c']")]
+        [TestCase("$.foo.bar[2].baz", "$['foo']['bar'][2]['baz']")]
+        [TestCase("$.a.b[0].c.d[1]['e'].f", "$['a'].b[0]['c'].d[1][\"e\"].f")]
+        public void NormalizedHashCode(string left, string right)
+        {
+            var a = Encoding.UTF8.GetBytes(left);
+            var b = Encoding.UTF8.GetBytes(right);
+            Assert.AreEqual(JsonPathComparer.Default.GetNormalizedHashCode(a), JsonPathComparer.Default.GetNormalizedHashCode(b));
+        }
     }
 }
