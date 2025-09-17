@@ -9,7 +9,8 @@ generate-model-factory: true
 csharp: true
 library-name: DevCenter
 namespace: Azure.ResourceManager.DevCenter
-require: https://github.com/Azure/azure-rest-api-specs/blob/07c55de803057861912799405580ea9d022853fc/specification/devcenter/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c0ba17235b00917bf1b734b7b537bf532fe7fce0/specification/devcenter/resource-manager/readme.md
+# tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -123,6 +124,8 @@ rename-mapping:
   ProjectEnvironmentType: DevCenterProjectEnvironment
   ImageVersion.properties.osDiskImageSizeInGb:  OsDiskImageSizeInGB
   ImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+  ScheduleUpdateProperties.properties.type: ScheduledType
+  OperationStatusResult.properties.id: -|arm-id
 
 override-operation-name:
   OperationStatuses_Get: GetDevCenterOperationStatus
@@ -143,12 +146,12 @@ request-path-to-resource-name:
 
 ### Directive renaming "type" property of ScheduleUpdateProperties to "ScheduledType" (to avoid it being generated as TypePropertiesType)
 directive:
-    - from: swagger-document
-      where: "$.definitions.ScheduleUpdateProperties.properties.type"
-      transform: >
-        $["x-ms-client-name"] = "ScheduledType";
-    - from: types.json
-      where: $.definitions.OperationStatusResult
-      transform: >
-        $.properties.id['x-ms-format'] = 'arm-id';
+    #- from: swagger-document
+    #  where: "$.definitions.ScheduleUpdateProperties.properties.type"
+    #  transform: >
+    #    $["x-ms-client-name"] = "ScheduledType";
+    #- from: types.json
+    #  where: $.definitions.OperationStatusResult
+    #  transform: >
+    #    $.properties.id['x-ms-format'] = 'arm-id';
 ```
