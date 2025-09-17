@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
@@ -170,7 +171,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             return Declare(
                 variableName,
                 resourceClientProvider.ResourceData.Type,
-                new TupleExpression(This.Invoke(getMethod, [cancellationTokenParam], null, isAsync))
+                new TupleExpression(This.Invoke(getMethod, [KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam)], null, isAsync))
                     .Property("Value").Property("Data"),
                 out currentVar);
         }
