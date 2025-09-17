@@ -46,11 +46,6 @@ namespace Azure.AI.Translation.Text
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(SourceText))
-            {
-                writer.WritePropertyName("sourceText"u8);
-                writer.WriteObjectValue(SourceText, options);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,7 +85,6 @@ namespace Azure.AI.Translation.Text
             }
             DetectedLanguage detectedLanguage = default;
             IReadOnlyList<TranslationText> translations = default;
-            SourceText sourceText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,22 +108,13 @@ namespace Azure.AI.Translation.Text
                     translations = array;
                     continue;
                 }
-                if (property.NameEquals("sourceText"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceText = SourceText.DeserializeSourceText(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TranslatedTextItem(detectedLanguage, translations, sourceText, serializedAdditionalRawData);
+            return new TranslatedTextItem(detectedLanguage, translations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TranslatedTextItem>.Write(ModelReaderWriterOptions options)

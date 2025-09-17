@@ -66,7 +66,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="responseTokens"> An interger indicating the number of tokens used in the translation response. </param>
         /// <param name="targetTokens"> An interger indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
-        /// <param name="transliteration"> An object giving the translated text in the script specified by the target script parameter. </param>
+        /// <param name="transliteration"> An object giving the translated text in the script specified by the target's script parameter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TranslationText(string language, int? sourceCharacters, int? instructionTokens, int? sourceTokens, int? responseTokens, int? targetTokens, string text, TransliteratedText transliteration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -100,7 +100,7 @@ namespace Azure.AI.Translation.Text
         public int? TargetTokens { get; }
         /// <summary> A string giving the translated text. </summary>
         public string Text { get; }
-        /// <summary> An object giving the translated text in the script specified by the target script parameter. </summary>
+        /// <summary> An object giving the translated text in the script specified by the target's script parameter. </summary>
         public TransliteratedText Transliteration { get; }
     }
 }
