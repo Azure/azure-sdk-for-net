@@ -40,8 +40,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultData"/> instance for mocking. </returns>
         public static RecoveryServicesVaultData RecoveryServicesVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity = null, RecoveryServicesVaultProperties properties = null, RecoveryServicesSku sku = null, ETag? etag = null)
         {
-            tags ??= new Dictionary<string, string>();
-
             return ArmRecoveryServicesModelFactory.RecoveryServicesVaultData(
                 id,
                 name,
