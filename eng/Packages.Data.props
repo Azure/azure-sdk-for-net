@@ -205,7 +205,7 @@
     <PackageReference Update="OpenAI" Version="2.3.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.MicrosoftPlaywrightTesting')) or $(MSBuildProjectName.StartsWith('Azure.Developer.Playwright'))">
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.Playwright'))">
     <PackageReference Update="Microsoft.TestPlatform.ObjectModel" Version="17.10.0" />
     <PackageReference Update="MSTest.TestFramework" Version="1.3.2" />
     <PackageReference Update="NUnit" Version="3.13.2" />
@@ -297,7 +297,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-alpha.20250914.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250916.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20250715.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <!-- Note: Upgrading the .NET SDK version needs to be synchronized with the autorest.csharp repository -->
