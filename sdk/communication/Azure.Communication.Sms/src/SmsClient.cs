@@ -7,10 +7,10 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Pipeline;
-using Azure.Communication.Sms.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Communication.Pipeline;
+using Azure.Communication.Sms.Models;
 
 namespace Azure.Communication.Sms
 {
@@ -82,8 +82,7 @@ namespace Azure.Communication.Sms
         private SmsClient(string endpoint, HttpPipeline httpPipeline, SmsClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new SmsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
-            OptOuts = new OptOutsClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            RestClient = new SmsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         #endregion
@@ -93,13 +92,7 @@ namespace Azure.Communication.Sms
         {
             _clientDiagnostics = null;
             RestClient = null;
-            OptOuts = null;
         }
-
-        /// <summary>
-        /// Opt Out management client.
-        /// </summary>
-        public virtual OptOutsClient OptOuts { get; private set; }
 
         /// <summary>
         /// Sends a SMS <paramref name="from"/> a phone number that is acquired by the authenticated account, <paramref name="to"/> another phone number.

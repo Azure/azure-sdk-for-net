@@ -1,26 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Moq" />
-    <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Communication.Sms.csproj" />
-    <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
-    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\samples\Sample2_OptOutsApi.md" Link="samples\Sample2_OptOutsApi.md" />
-    <None Include="..\samples\Sample2_OptOutsApiAsync.md" Link="samples\Sample2_OptOutsApiAsync.md" />
-    <None Include="..\tests.yml" Link="\tests.yml" />
-    <None Include="..\samples\README.md" Link="samples\README.md" />
-    <None Include="..\samples\Sample1_SendSms.md" Link="samples\Sample1_SendSms.md" />
-    <None Include="..\samples\Sample1_SendSmsAsync.md" Link="samples\Sample1_SendSmsAsync.md" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Moq" />
+		<PackageReference Include="NUnit" />
+		<PackageReference Include="NUnit3TestAdapter" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="$(AzureCoreTestFramework)" />
+		<ProjectReference Include="..\src\Azure.Communication.Sms.csproj" />
+		<Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
+		<Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\tests.yml" Link="\tests.yml" />
+		<None Include="..\samples\README.md" Link="samples\README.md" />
+		<None Include="..\samples\Sample1_SendSms.md" Link="samples\Sample1_SendSms.md" />
+		<None Include="..\samples\Sample1_SendSmsAsync.md" Link="samples\Sample1_SendSmsAsync.md" />
+	</ItemGroup>
 </Project>

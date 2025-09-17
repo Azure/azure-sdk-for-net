@@ -17,14 +17,10 @@ To get started you will need to have an Azure Subscription. Once you have this y
 This client library allows to do following operations:
  - Send SMS to one or more recipients
  - Specify optional paramters while sending SMS
- - Manage the Opt Out list
 
  #### You can find samples for each of these functions below.
  - Send SMS Messages [synchronously][sample_sms] or [asynchronously][sample_sms_async]
- - Manage Opt Out list [synchronously][sample_optouts] or [asynchronously][sample_optouts_async]
  
 <!-- LINKS -->
 [sample_sms]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSms.md
 [sample_sms_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSmsAsync.md
-[sample_optouts]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample2_OptOutsApi.md
-[sample_optouts_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample2_OptOutsApiAsync.md 

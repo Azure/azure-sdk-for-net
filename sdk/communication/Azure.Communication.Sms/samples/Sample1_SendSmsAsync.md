@@ -38,7 +38,6 @@ var response = await smsClient.SendAsync(
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
         Tag = "marketing", // custom tags
-        DeliveryReportTimeoutInSeconds = 90
     });
 foreach (SmsSendResult result in response.Value)
 {

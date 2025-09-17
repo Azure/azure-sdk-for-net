@@ -4,14 +4,13 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientLiveTestBase : RecordedTestBase<SmsClientTestEnvironment>
     {
-        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         public SmsClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$..from");
@@ -19,7 +18,6 @@ namespace Azure.Communication.Sms.Tests
             JsonPathSanitizers.Add("$..repeatabilityRequestId");
             JsonPathSanitizers.Add("$..repeatabilityFirstSent");
             SanitizedHeaders.Add("x-ms-content-sha256");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
         }
 
         [OneTimeSetUp]
