@@ -378,12 +378,6 @@ namespace System.ClientModel.Primitives
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public delegate bool PropagatorSetter(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.JsonPatch.EncodedValue value);
     }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0001")]
-    public static partial class JsonPatchExtensions
-    {
-        public static void Append<T>(this ref System.ClientModel.Primitives.JsonPatch jsonPatch, System.ReadOnlySpan<byte> jsonPath, T value) where T : System.ClientModel.Primitives.IJsonModel<T> { }
-        public static void Set<T>(this ref System.ClientModel.Primitives.JsonPatch jsonPatch, System.ReadOnlySpan<byte> jsonPath, T value) where T : System.ClientModel.Primitives.IJsonModel<T> { }
-    }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public MessageLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions? options = null) { }
