@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.Health.Deidentification
+namespace Azure.Monitor.Ingestion
 {
     internal partial class ErrorResult<T> : Response<T>
     {

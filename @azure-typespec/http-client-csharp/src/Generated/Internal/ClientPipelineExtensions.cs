@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Health.Deidentification
+namespace Azure.Monitor.Ingestion
 {
     internal static partial class ClientPipelineExtensions
     {

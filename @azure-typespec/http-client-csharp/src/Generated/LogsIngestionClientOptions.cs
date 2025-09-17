@@ -8,20 +8,20 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Health.Deidentification
+namespace Azure.Monitor.Ingestion
 {
-    /// <summary> Client options for <see cref="DeidentificationClient"/>. </summary>
-    public partial class DeidentificationClientOptions : ClientOptions
+    /// <summary> Client options for <see cref="LogsIngestionClient"/>. </summary>
+    public partial class LogsIngestionClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_15;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2023_01_01;
 
-        /// <summary> Initializes a new instance of DeidentificationClientOptions. </summary>
+        /// <summary> Initializes a new instance of LogsIngestionClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public DeidentificationClientOptions(ServiceVersion version = LatestVersion)
+        public LogsIngestionClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2024_11_15 => "2024-11-15",
+                ServiceVersion.V2023_01_01 => "2023-01-01",
                 _ => throw new NotSupportedException()
             };
         }
@@ -32,8 +32,8 @@ namespace Azure.Health.Deidentification
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> V2024_11_15. </summary>
-            V2024_11_15 = 1
+            /// <summary> The 2023-01-01 API version. </summary>
+            V2023_01_01 = 1
         }
     }
 }

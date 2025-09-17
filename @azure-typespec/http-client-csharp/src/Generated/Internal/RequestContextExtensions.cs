@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using Azure;
 
-namespace Azure.Health.Deidentification
+namespace Azure.Monitor.Ingestion
 {
     internal static partial class RequestContextExtensions
     {

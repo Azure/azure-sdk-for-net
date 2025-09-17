@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.Health.Deidentification
+namespace Azure.Monitor.Ingestion
 {
     internal static partial class Argument
     {

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Health.Deidentification
+namespace Azure.Monitor.Ingestion
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute
