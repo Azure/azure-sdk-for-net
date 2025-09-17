@@ -1083,7 +1083,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, bool value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1094,7 +1095,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, byte value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1106,7 +1108,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, DateTime value, StandardFormat format = default)
     {
         EncodedValue encodedValue = new(value, format);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1118,7 +1121,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, DateTimeOffset value, StandardFormat format = default)
     {
         EncodedValue encodedValue = new(value, format);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1129,7 +1133,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, decimal value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1140,7 +1145,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, double value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1151,7 +1157,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, float value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1162,7 +1169,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, Guid value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1173,7 +1181,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, int value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1184,7 +1193,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, long value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1195,7 +1205,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, sbyte value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1206,7 +1217,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, short value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1218,7 +1230,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, TimeSpan value, StandardFormat format = default)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1229,7 +1242,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, uint value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1240,7 +1254,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, ulong value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1251,7 +1266,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, ushort value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1262,7 +1278,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, string value)
     {
         EncodedValue encodedValue = new(value);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1273,7 +1290,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, byte[] utf8Json)
     {
         EncodedValue encodedValue = new(utf8Json);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1284,7 +1302,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, BinaryData utf8Json)
     {
         EncodedValue encodedValue = new(utf8Json);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
@@ -1295,7 +1314,8 @@ public partial struct JsonPatch
     public void Append(ReadOnlySpan<byte> arrayPath, ReadOnlySpan<byte> utf8Json)
     {
         EncodedValue encodedValue = new(utf8Json);
-        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        encodedValue.Kind |= ValueKind.ArrayItemAppend;
+        SetInternal(arrayPath, encodedValue);
     }
 
     /// <summary>
