@@ -125,6 +125,7 @@ namespace System.ClientModel.Primitives
         private readonly int _dummyPrimitive;
         public ClientConnection(string id, string locator) { throw null; }
         public ClientConnection(string id, string locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
+        public ClientConnection(string id, string locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata) { throw null; }
         public object? Credential { get { throw null; } }
         public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }

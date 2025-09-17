@@ -186,7 +186,6 @@ The `ManagedIdentityCredential` is designed to work on various Azure hosts that 
 |---|---|---|
 |Azure App Service and Azure Functions|[Configuration](https://learn.microsoft.com/azure/app-service/overview-managed-identity)|[Troubleshooting](#azure-app-service-and-azure-functions-managed-identity)|
 |Azure Arc|[Configuration](https://learn.microsoft.com/azure/azure-arc/servers/managed-identity-authentication)||
-|Azure Kubernetes Service|[Configuration](https://azure.github.io/aad-pod-identity/docs/)|[Troubleshooting](#azure-kubernetes-service-managed-identity)|
 |Azure Service Fabric|[Configuration](https://learn.microsoft.com/azure/service-fabric/concepts-managed-identity)||
 |Azure Virtual Machines and Scale Sets|[Configuration](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/qs-configure-portal-windows-vm)|[Troubleshooting](#azure-virtual-machine-managed-identity)|
 
@@ -228,16 +227,6 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 ```
 
 > Note that the output of this command will contain a valid access token, and SHOULD NOT BE SHARED to avoid compromising account security.
-
-### Azure Kubernetes Service managed identity
-
-#### Pod identity for Kubernetes
-
-`CredentialUnavailableException`
-
-| Error Message |Description| Mitigation |
-|---|---|---|
-|No Managed Identity endpoint found|The application attempted to authenticate before an identity was assigned to its pod|Verify the pod is labeled correctly. This error also occurs when a correctly labeled pod authenticates before the identity is ready. To prevent initialization races, configure NMI to set the `Retry-After` header in its responses (see [Pod Identity documentation](https://azure.github.io/aad-pod-identity/docs/configure/feature_flags/#set-retry-after-header-in-nmi-response)).
 
 ## Troubleshoot `VisualStudioCredential` authentication issues
 

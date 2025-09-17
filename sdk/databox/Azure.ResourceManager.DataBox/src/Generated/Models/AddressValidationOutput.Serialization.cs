@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -35,34 +34,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ValidationType))
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("validationType"u8);
-                writer.WriteStringValue(ValidationType.Value.ToSerialString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
-            {
-                writer.WritePropertyName("validationStatus"u8);
-                writer.WriteStringValue(ValidationStatus.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AlternateAddresses))
-            {
-                writer.WritePropertyName("alternateAddresses"u8);
-                writer.WriteStartArray();
-                foreach (var item in AlternateAddresses)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,10 +76,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            DataBoxValidationInputDiscriminator? validationType = default;
-            ResponseError error = default;
-            AddressValidationStatus? validationStatus = default;
-            IReadOnlyList<DataBoxShippingAddress> alternateAddresses = default;
+            AddressValidationResult properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,53 +85,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("validationType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            validationType = property0.Value.GetString().ToDataBoxValidationInputDiscriminator();
-                            continue;
-                        }
-                        if (property0.NameEquals("error"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataBoxContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("validationStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            validationStatus = property0.Value.GetString().ToAddressValidationStatus();
-                            continue;
-                        }
-                        if (property0.NameEquals("alternateAddresses"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item, options));
-                            }
-                            alternateAddresses = array;
-                            continue;
-                        }
-                    }
+                    properties = AddressValidationResult.DeserializeAddressValidationResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AddressValidationOutput(validationType, error, validationStatus, alternateAddresses ?? new ChangeTrackingList<DataBoxShippingAddress>(), serializedAdditionalRawData);
+            return new AddressValidationOutput(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressValidationOutput>.Write(ModelReaderWriterOptions options)

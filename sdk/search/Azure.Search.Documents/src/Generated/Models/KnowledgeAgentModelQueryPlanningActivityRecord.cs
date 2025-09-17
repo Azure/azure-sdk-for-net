@@ -17,22 +17,21 @@ namespace Azure.Search.Documents.Agents.Models
         /// <param name="id"> The ID of the activity record. </param>
         internal KnowledgeAgentModelQueryPlanningActivityRecord(int id) : base(id)
         {
-            Type = "ModelQueryPlanning";
+            Type = "modelQueryPlanning";
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentModelQueryPlanningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM query planning activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM query planning activity. </param>
-        /// <param name="elapsedMs"> The elapsed time in milliseconds for the model activity. </param>
-        internal KnowledgeAgentModelQueryPlanningActivityRecord(int id, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, int? inputTokens, int? outputTokens, int? elapsedMs) : base(id, type, serializedAdditionalRawData)
+        internal KnowledgeAgentModelQueryPlanningActivityRecord(int id, string type, int? elapsedMs, IDictionary<string, BinaryData> serializedAdditionalRawData, int? inputTokens, int? outputTokens) : base(id, type, elapsedMs, serializedAdditionalRawData)
         {
             InputTokens = inputTokens;
             OutputTokens = outputTokens;
-            ElapsedMs = elapsedMs;
-            Type = type ?? "ModelQueryPlanning";
+            Type = type ?? "modelQueryPlanning";
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentModelQueryPlanningActivityRecord"/> for deserialization. </summary>
@@ -44,7 +43,5 @@ namespace Azure.Search.Documents.Agents.Models
         public int? InputTokens { get; }
         /// <summary> The number of output tokens for the LLM query planning activity. </summary>
         public int? OutputTokens { get; }
-        /// <summary> The elapsed time in milliseconds for the model activity. </summary>
-        public int? ElapsedMs { get; }
     }
 }

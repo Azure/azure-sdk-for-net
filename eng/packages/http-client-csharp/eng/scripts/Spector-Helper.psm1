@@ -5,16 +5,15 @@ $failingSpecs = @(
     Join-Path 'http' 'payload' 'xml'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
 # Azure scenarios not yet buildable
-    Join-Path 'http' 'client' 'namespace'
     Join-Path 'http' 'azure' 'client-generator-core' 'client-initialization'
     Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
-    Join-Path 'http' 'azure' 'payload' 'pageable'
 # These scenarios will be covered in Azure.Generator.Management
     Join-Path 'http' 'azure' 'resource-manager' 'common-properties'
     Join-Path 'http' 'azure' 'resource-manager' 'non-resource'
     Join-Path 'http' 'azure' 'resource-manager' 'operation-templates'
     Join-Path 'http' 'azure' 'resource-manager' 'resources'
     Join-Path 'http' 'azure' 'resource-manager' 'large-header'
+    Join-Path 'http' 'azure' 'resource-manager' 'method-subscription-id'
 )
 
 function Capitalize-FirstLetter {
