@@ -145,7 +145,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}: ProjectDevBoxDefinition
 
 ### Directive renaming "type" property of ScheduleUpdateProperties to "ScheduledType" (to avoid it being generated as TypePropertiesType)
-directive:
+#directive:
     #- from: swagger-document
     #  where: "$.definitions.ScheduleUpdateProperties.properties.type"
     #  transform: >
