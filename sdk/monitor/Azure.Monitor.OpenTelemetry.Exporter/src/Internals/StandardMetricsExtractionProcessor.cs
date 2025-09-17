@@ -26,6 +26,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             [StandardMetricConstants.RequestDurationInstrumentName] = StandardMetricConstants.RequestDurationMetricIdValue,
             [StandardMetricConstants.DependencyDurationInstrumentName] = StandardMetricConstants.DependencyDurationMetricIdValue,
+            [PerfCounterConstants.ExceptionRateInstrumentName] = PerfCounterConstants.ExceptionRateMetricIdValue,
+            [PerfCounterConstants.RequestRateInstrumentName] = PerfCounterConstants.RequestRateMetricIdValue,
+            [PerfCounterConstants.ProcessCpuInstrumentName] = PerfCounterConstants.ProcessCpuMetricIdValue,
+            [PerfCounterConstants.ProcessCpuNormalizedInstrumentName] = PerfCounterConstants.ProcessCpuNormalizedMetricIdValue,
+            [PerfCounterConstants.ProcessPrivateBytesInstrumentName] = PerfCounterConstants.ProcessPrivateBytesMetricIdValue,
         };
 
         internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();

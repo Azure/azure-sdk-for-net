@@ -39,27 +39,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Create observable gauges for perf counter
             _exceptionRateGauge = _perfCounterMeter.CreateObservableGauge(
-                PerfCounterConstants.ExceptionRateGauge,
+                PerfCounterConstants.ExceptionRateInstrumentName,
                 () => GetExceptionRate(),
                 description: "Exception rate gauge (ex/sec)");
 
             _requestRateGauge = _perfCounterMeter.CreateObservableGauge(
-                PerfCounterConstants.RequestRateGauge,
+                PerfCounterConstants.RequestRateInstrumentName,
                 () => GetRequestRate(),
                 description: "Request rate gauge (req/sec)");
 
             _processCpuGauge = _perfCounterMeter.CreateObservableGauge(
-                PerfCounterConstants.ProcessCpuGauge,
+                PerfCounterConstants.ProcessCpuInstrumentName,
                 () => GetProcessCpu(),
                 description: "Process CPU gauge (percent)");
 
             _processCpuNormalizedGauge = _perfCounterMeter.CreateObservableGauge(
-                PerfCounterConstants.ProcessCpuNormalizedGauge,
+                PerfCounterConstants.ProcessCpuNormalizedInstrumentName,
                 () => GetProcessCpuNormalized(),
                 description: "Process CPU normalized gauge (percent)");
 
             _processPrivateBytesGauge = _perfCounterMeter.CreateObservableGauge(
-                PerfCounterConstants.ProcessPrivateBytesGauge,
+                PerfCounterConstants.ProcessPrivateBytesInstrumentName,
                 () => GetProcessPrivateBytes(),
                 description: "Process private bytes gauge");
         }
