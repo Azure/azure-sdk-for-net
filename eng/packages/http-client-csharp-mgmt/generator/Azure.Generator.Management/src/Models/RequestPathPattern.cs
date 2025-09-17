@@ -82,6 +82,7 @@ namespace Azure.Generator.Management.Models
         public bool IsAncestorOf(RequestPathPattern other)
         {
             // Ancestor detection: compare only constant segments, skip variable segments.
+            // To be the parent of other, you must at least be shorter than other.
             if (other.Count <= Count)
                 return false;
             for (int i = 0; i < Count; i++)
