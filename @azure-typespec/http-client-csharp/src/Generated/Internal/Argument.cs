@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.Monitor.Ingestion
+namespace Azure.AI.VoiceLive
 {
     internal static partial class Argument
     {

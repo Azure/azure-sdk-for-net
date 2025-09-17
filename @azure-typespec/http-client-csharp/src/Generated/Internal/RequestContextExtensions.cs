@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using Azure;
 
-namespace Azure.Monitor.Ingestion
+namespace Azure.AI.VoiceLive
 {
     internal static partial class RequestContextExtensions
     {

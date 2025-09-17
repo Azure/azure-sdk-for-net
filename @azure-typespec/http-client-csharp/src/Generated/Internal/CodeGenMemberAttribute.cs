@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Monitor.Ingestion
+namespace Azure.AI.VoiceLive
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute

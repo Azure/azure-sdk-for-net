@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.Monitor.Ingestion
+namespace Azure.AI.VoiceLive
 {
     internal partial class ErrorResult<T> : Response<T>
     {
