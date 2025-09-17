@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(EventGridAndResourceGraph)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Enable))
+            if (Optional.IsDefined(IsEventGridAndResourceGraphEnabled))
             {
                 writer.WritePropertyName("enable"u8);
-                writer.WriteBooleanValue(Enable.Value);
+                writer.WriteBooleanValue(IsEventGridAndResourceGraphEnabled.Value);
             }
             if (Optional.IsDefined(ScheduledEventsApiVersion))
             {

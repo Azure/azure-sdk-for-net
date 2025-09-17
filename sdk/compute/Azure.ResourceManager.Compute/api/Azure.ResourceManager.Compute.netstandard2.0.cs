@@ -5629,7 +5629,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class EventGridAndResourceGraph : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>
     {
         public EventGridAndResourceGraph() { }
-        public bool? Enable { get { throw null; } set { } }
+        public bool? IsEventGridAndResourceGraphEnabled { get { throw null; } set { } }
         public string ScheduledEventsApiVersion { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

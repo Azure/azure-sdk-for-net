@@ -51,18 +51,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGridAndResourceGraph"/>. </summary>
-        /// <param name="enable"> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </param>
+        /// <param name="isEventGridAndResourceGraphEnabled"> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </param>
         /// <param name="scheduledEventsApiVersion"> Specifies the api-version to determine which Scheduled Events configuration schema version will be delivered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridAndResourceGraph(bool? enable, string scheduledEventsApiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventGridAndResourceGraph(bool? isEventGridAndResourceGraphEnabled, string scheduledEventsApiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enable = enable;
+            IsEventGridAndResourceGraphEnabled = isEventGridAndResourceGraphEnabled;
             ScheduledEventsApiVersion = scheduledEventsApiVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </summary>
-        public bool? Enable { get; set; }
+        public bool? IsEventGridAndResourceGraphEnabled { get; set; }
         /// <summary> Specifies the api-version to determine which Scheduled Events configuration schema version will be delivered. </summary>
         public string ScheduledEventsApiVersion { get; set; }
     }

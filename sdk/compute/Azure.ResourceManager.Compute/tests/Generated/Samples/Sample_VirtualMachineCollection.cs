@@ -534,7 +534,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     AutomaticallyApprove = true,
                     ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = new EventGridAndResourceGraph
                     {
-                        Enable = true,
+                        IsEventGridAndResourceGraphEnabled = true,
                         ScheduledEventsApiVersion = "2020-07-01",
                     },
                     AllInstancesDown = new AllInstancesDown
@@ -2942,7 +2942,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     AutomaticallyApprove = true,
                     ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = new EventGridAndResourceGraph
                     {
-                        Enable = true,
+                        IsEventGridAndResourceGraphEnabled = true,
                         ScheduledEventsApiVersion = "2020-07-01",
                     },
                     AllInstancesDown = new AllInstancesDown
