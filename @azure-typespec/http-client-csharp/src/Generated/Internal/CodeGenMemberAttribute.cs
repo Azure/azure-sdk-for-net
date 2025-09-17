@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Health.Deidentification
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute

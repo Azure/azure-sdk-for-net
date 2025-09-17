@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Health.Deidentification
 {
     internal static partial class TypeFormatters
     {

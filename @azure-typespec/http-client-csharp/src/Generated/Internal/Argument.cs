@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Health.Deidentification
 {
     internal static partial class Argument
     {

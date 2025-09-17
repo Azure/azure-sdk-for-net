@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Health.Deidentification
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Struct), AllowMultiple = true, Inherited = true)]
     internal partial class CodeGenSerializationAttribute : Attribute

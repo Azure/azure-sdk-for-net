@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Health.Deidentification
 {
     internal static partial class ClientPipelineExtensions
     {

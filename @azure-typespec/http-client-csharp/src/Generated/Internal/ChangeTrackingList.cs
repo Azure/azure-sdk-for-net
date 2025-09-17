@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Health.Deidentification
 {
     internal partial class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

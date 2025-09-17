@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Health.Deidentification
 {
     internal static partial class Optional
     {

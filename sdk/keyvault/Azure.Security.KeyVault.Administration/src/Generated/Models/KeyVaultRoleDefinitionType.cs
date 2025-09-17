@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The role definition type. </summary>
-    public readonly partial struct KeyVaultRoleDefinitionType : IEquatable<KeyVaultRoleDefinitionType>
+    public readonly partial struct KeyVaultRoleDefinitionType : ValueType, IEquatable<KeyVaultRoleDefinitionType>
     {
         private readonly string _value;
         /// <summary> Microsoft-defined role definitions. </summary>

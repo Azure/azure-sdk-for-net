@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Health.Deidentification
 {
     internal partial class ErrorResult<T> : Response<T>
     {

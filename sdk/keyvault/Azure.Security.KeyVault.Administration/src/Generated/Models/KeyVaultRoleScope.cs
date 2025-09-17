@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The role scope. </summary>
-    public readonly partial struct KeyVaultRoleScope : IEquatable<KeyVaultRoleScope>
+    public readonly partial struct KeyVaultRoleScope : ValueType, IEquatable<KeyVaultRoleScope>
     {
         /// <summary> Global scope. </summary>
         private const string GlobalValue = "/";
