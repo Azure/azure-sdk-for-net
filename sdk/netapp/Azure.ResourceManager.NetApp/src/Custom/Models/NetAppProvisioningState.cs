@@ -8,5 +8,6 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Provisioning state of the resource. </summary>
     public partial struct NetAppProvisioningState
     {
+        // This partial struct is intended to be extended by generated code.
     }
 }
