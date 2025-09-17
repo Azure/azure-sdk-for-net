@@ -31,7 +31,7 @@
     "lint:fix": "eslint . --fix",
     "prettier:fix": "prettier --write --config .prettierrc.json ./**/*.ts package.json",
     "prettier": "prettier --check --config .prettierrc.json ./**/*.ts package.json",
-    "regen-docs": "npm run build:emitter && tspd doc . --enable-experimental --skip-js"
+    "regen-docs": "npm run build:emitter && tspd doc . --output-dir .tspd/docs --enable-experimental --skip-js"
   },
   "files": [
     "dist/emitter/src/**",
