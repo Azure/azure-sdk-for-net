@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WritePropertyName("enforcementEnabled"u8);
                 writer.WriteStringValue(EnforcementEnabled.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(EnforcedGroupName))
+            {
+                writer.WritePropertyName("enforcedGroupName"u8);
+                writer.WriteStringValue(EnforcedGroupName);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             EnforcementState? enforcementEnabled = default;
+            string enforcedGroupName = default;
             QuotaRequestStatus? provisioningState = default;
             string faultCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,6 +107,11 @@ namespace Azure.ResourceManager.Quota.Models
                         continue;
                     }
                     enforcementEnabled = new EnforcementState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("enforcedGroupName"u8))
+                {
+                    enforcedGroupName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -123,7 +134,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GroupQuotasEnforcementStatusProperties(enforcementEnabled, provisioningState, faultCode, serializedAdditionalRawData);
+            return new GroupQuotasEnforcementStatusProperties(enforcementEnabled, enforcedGroupName, provisioningState, faultCode, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -149,6 +160,29 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     builder.Append("  enforcementEnabled: ");
                     builder.AppendLine($"'{EnforcementEnabled.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnforcedGroupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enforcedGroupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnforcedGroupName))
+                {
+                    builder.Append("  enforcedGroupName: ");
+                    if (EnforcedGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EnforcedGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EnforcedGroupName}'");
+                    }
                 }
             }
 

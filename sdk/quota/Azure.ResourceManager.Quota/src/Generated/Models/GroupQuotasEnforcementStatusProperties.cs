@@ -52,12 +52,14 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotasEnforcementStatusProperties"/>. </summary>
         /// <param name="enforcementEnabled"> Is the GroupQuota Enforcement enabled for the Azure region. </param>
+        /// <param name="enforcedGroupName"> The name of the group that is enforced. </param>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="faultCode"> Details of the failure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotasEnforcementStatusProperties(EnforcementState? enforcementEnabled, QuotaRequestStatus? provisioningState, string faultCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupQuotasEnforcementStatusProperties(EnforcementState? enforcementEnabled, string enforcedGroupName, QuotaRequestStatus? provisioningState, string faultCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnforcementEnabled = enforcementEnabled;
+            EnforcedGroupName = enforcedGroupName;
             ProvisioningState = provisioningState;
             FaultCode = faultCode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -66,6 +68,9 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Is the GroupQuota Enforcement enabled for the Azure region. </summary>
         [WirePath("enforcementEnabled")]
         public EnforcementState? EnforcementEnabled { get; set; }
+        /// <summary> The name of the group that is enforced. </summary>
+        [WirePath("enforcedGroupName")]
+        public string EnforcedGroupName { get; }
         /// <summary> Request status. </summary>
         [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }

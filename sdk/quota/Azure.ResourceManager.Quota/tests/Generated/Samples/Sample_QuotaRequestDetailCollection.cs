@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotaRequestStatus()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestStatusById.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestStatusById.json
             // this example is just showing the usage of "QuotaRequestDetails_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotaRequestFailed()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestStatusFailed.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestStatusFailed.json
             // this example is just showing the usage of "QuotaRequestDetails_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotaRequestInProgress()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestStatusInProgress.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestStatusInProgress.json
             // this example is just showing the usage of "QuotaRequestDetails_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_QuotaRequestHistory()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestsHistory.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestsHistory.json
             // this example is just showing the usage of "QuotaRequestDetails_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuotaRequestStatus()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestStatusById.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestStatusById.json
             // this example is just showing the usage of "QuotaRequestDetails_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuotaRequestFailed()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestStatusFailed.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestStatusFailed.json
             // this example is just showing the usage of "QuotaRequestDetails_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuotaRequestInProgress()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestStatusInProgress.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestStatusInProgress.json
             // this example is just showing the usage of "QuotaRequestDetails_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuotaRequestStatus()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestStatusById.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestStatusById.json
             // this example is just showing the usage of "QuotaRequestDetails_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuotaRequestFailed()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestStatusFailed.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestStatusFailed.json
             // this example is just showing the usage of "QuotaRequestDetails_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuotaRequestInProgress()
         {
-            // Generated from example definition: 2025-07-15/getQuotaRequestStatusInProgress.json
+            // Generated from example definition: 2025-09-01/getQuotaRequestStatusInProgress.json
             // this example is just showing the usage of "QuotaRequestDetails_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

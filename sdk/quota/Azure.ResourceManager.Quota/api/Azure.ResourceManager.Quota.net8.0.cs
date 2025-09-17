@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Quota
         public virtual Azure.ResourceManager.Quota.GroupQuotaRequestStatusCollection GetGroupQuotaRequestStatuses() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> GetGroupQuotasEnforcementStatus(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>> GetGroupQuotasEnforcementStatusAsync(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusCollection GetGroupQuotasEnforcementStatuses(string resourceProviderName) { throw null; }
+        public virtual Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusCollection GetGroupQuotasEnforcementStatuses() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource> GetGroupQuotaSubscription(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource>> GetGroupQuotaSubscriptionAsync(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusResource> GetGroupQuotaSubscriptionRequestStatus(string requestId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -232,22 +232,17 @@ namespace Azure.ResourceManager.Quota
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotaRequestStatusData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotaRequestStatusData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GroupQuotasEnforcementStatusCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>, System.Collections.IEnumerable
+    public partial class GroupQuotasEnforcementStatusCollection : Azure.ResourceManager.ArmCollection
     {
         protected GroupQuotasEnforcementStatusCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> Get(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>> GetAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> GetIfExists(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>> GetIfExistsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string resourceProviderName, Azure.Core.AzureLocation location, Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string resourceProviderName, Azure.Core.AzureLocation location, Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> Get(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>> GetAsync(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource> GetIfExists(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource>> GetIfExistsAsync(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GroupQuotasEnforcementStatusData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData>
     {
@@ -578,7 +573,9 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.CurrentUsagesBaseData CurrentUsagesBaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaUsagesProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaDetails GroupQuotaDetails(string resourceName, long? limit, string comment, string unit, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaDetails GroupQuotaDetails(string resourceName = null, long? limit = default(long?), string comment = null, string unit = null, string value = null, string localizedValue = null, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null) { throw null; }
-        public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase GroupQuotaEntityBase(string displayName = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase GroupQuotaEntityBase(string displayName = null, Azure.ResourceManager.Quota.Models.GroupType? groupType = default(Azure.ResourceManager.Quota.Models.GroupType?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase GroupQuotaEntityBase(string displayName, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaEntityData GroupQuotaEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch GroupQuotaEntityPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaLimitListData GroupQuotaLimitListData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties properties = null) { throw null; }
@@ -590,10 +587,12 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties GroupQuotaRequestStatusProperties(Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase requestedResource = null, System.DateTimeOffset? requestSubmittedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), string faultCode = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages GroupQuotaResourceUsages(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData GroupQuotasEnforcementStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties GroupQuotasEnforcementStatusProperties(Azure.ResourceManager.Quota.Models.EnforcementState? enforcementEnabled = default(Azure.ResourceManager.Quota.Models.EnforcementState?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), string faultCode = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties GroupQuotasEnforcementStatusProperties(Azure.ResourceManager.Quota.Models.EnforcementState? enforcementEnabled = default(Azure.ResourceManager.Quota.Models.EnforcementState?), string enforcedGroupName = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), string faultCode = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch GroupQuotasEntityBasePatch(string displayName = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties GroupQuotasEntityPatchProperties(string displayName = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
-        public static Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties GroupQuotasEntityProperties(string displayName = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties GroupQuotasEntityProperties(string displayName = null, Azure.ResourceManager.Quota.Models.GroupType? groupType = default(Azure.ResourceManager.Quota.Models.GroupType?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties GroupQuotasEntityProperties(string displayName, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaSubscriptionData GroupQuotaSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties GroupQuotaSubscriptionProperties(string subscriptionId = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusData GroupQuotaSubscriptionRequestStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties properties = null) { throw null; }
@@ -657,6 +656,7 @@ namespace Azure.ResourceManager.Quota.Models
     {
         public GroupQuotaEntityBase() { }
         public string DisplayName { get { throw null; } set { } }
+        public Azure.ResourceManager.Quota.Models.GroupType? GroupType { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -753,6 +753,7 @@ namespace Azure.ResourceManager.Quota.Models
     public partial class GroupQuotasEnforcementStatusProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties>
     {
         public GroupQuotasEnforcementStatusProperties() { }
+        public string EnforcedGroupName { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.EnforcementState? EnforcementEnabled { get { throw null; } set { } }
         public string FaultCode { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
@@ -834,6 +835,24 @@ namespace Azure.ResourceManager.Quota.Models
         Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GroupType : System.IEquatable<Azure.ResourceManager.Quota.Models.GroupType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GroupType(string value) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.GroupType AllocationGroup { get { throw null; } }
+        public static Azure.ResourceManager.Quota.Models.GroupType EnforcedGroup { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Quota.Models.GroupType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Quota.Models.GroupType left, Azure.ResourceManager.Quota.Models.GroupType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quota.Models.GroupType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Quota.Models.GroupType left, Azure.ResourceManager.Quota.Models.GroupType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class QuotaAllocationRequestBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase>
     {
@@ -975,6 +994,7 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.QuotaRequestStatus Accepted { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.QuotaRequestStatus Canceled { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.QuotaRequestStatus Created { get { throw null; } }
+        public static Azure.ResourceManager.Quota.Models.QuotaRequestStatus Escalated { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.QuotaRequestStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.QuotaRequestStatus InProgress { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.QuotaRequestStatus Invalid { get { throw null; } }

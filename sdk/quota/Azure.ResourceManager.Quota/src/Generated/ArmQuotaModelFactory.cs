@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -66,20 +67,22 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotasEntityProperties"/>. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
+        /// <param name="groupType"> Type of the group. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
         /// <returns> A new <see cref="Models.GroupQuotasEntityProperties"/> instance for mocking. </returns>
-        public static GroupQuotasEntityProperties GroupQuotasEntityProperties(string displayName = null, QuotaRequestStatus? provisioningState = null)
+        public static GroupQuotasEntityProperties GroupQuotasEntityProperties(string displayName = null, GroupType? groupType = null, QuotaRequestStatus? provisioningState = null)
         {
-            return new GroupQuotasEntityProperties(displayName, provisioningState, serializedAdditionalRawData: null);
+            return new GroupQuotasEntityProperties(displayName, groupType, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaEntityBase"/>. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
+        /// <param name="groupType"> Type of the group. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
         /// <returns> A new <see cref="Models.GroupQuotaEntityBase"/> instance for mocking. </returns>
-        public static GroupQuotaEntityBase GroupQuotaEntityBase(string displayName = null, QuotaRequestStatus? provisioningState = null)
+        public static GroupQuotaEntityBase GroupQuotaEntityBase(string displayName = null, GroupType? groupType = null, QuotaRequestStatus? provisioningState = null)
         {
-            return new GroupQuotaEntityBase(displayName, provisioningState, serializedAdditionalRawData: null);
+            return new GroupQuotaEntityBase(displayName, groupType, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaEntityPatch"/>. </summary>
@@ -450,12 +453,13 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotasEnforcementStatusProperties"/>. </summary>
         /// <param name="enforcementEnabled"> Is the GroupQuota Enforcement enabled for the Azure region. </param>
+        /// <param name="enforcedGroupName"> The name of the group that is enforced. </param>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="faultCode"> Details of the failure. </param>
         /// <returns> A new <see cref="Models.GroupQuotasEnforcementStatusProperties"/> instance for mocking. </returns>
-        public static GroupQuotasEnforcementStatusProperties GroupQuotasEnforcementStatusProperties(EnforcementState? enforcementEnabled = null, QuotaRequestStatus? provisioningState = null, string faultCode = null)
+        public static GroupQuotasEnforcementStatusProperties GroupQuotasEnforcementStatusProperties(EnforcementState? enforcementEnabled = null, string enforcedGroupName = null, QuotaRequestStatus? provisioningState = null, string faultCode = null)
         {
-            return new GroupQuotasEnforcementStatusProperties(enforcementEnabled, provisioningState, faultCode, serializedAdditionalRawData: null);
+            return new GroupQuotasEnforcementStatusProperties(enforcementEnabled, enforcedGroupName, provisioningState, faultCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Quota.CurrentUsagesBaseData"/>. </summary>
@@ -624,6 +628,26 @@ namespace Azure.ResourceManager.Quota.Models
                 subRequestId,
                 limit,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties" />. </summary>
+        /// <param name="displayName"> Display name of the GroupQuota entity. </param>
+        /// <param name="provisioningState"> Provisioning state of the operation. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GroupQuotasEntityProperties GroupQuotasEntityProperties(string displayName, QuotaRequestStatus? provisioningState)
+        {
+            return GroupQuotasEntityProperties(displayName: displayName, groupType: default, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase" />. </summary>
+        /// <param name="displayName"> Display name of the GroupQuota entity. </param>
+        /// <param name="provisioningState"> Provisioning state of the operation. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GroupQuotaEntityBase GroupQuotaEntityBase(string displayName, QuotaRequestStatus? provisioningState)
+        {
+            return GroupQuotaEntityBase(displayName: displayName, groupType: default, provisioningState: provisioningState);
         }
     }
 }

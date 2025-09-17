@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(GroupQuotaRequestStatusProperties))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaRequestStatusResource))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaResourceUsages))]
-    [ModelReaderWriterBuildable(typeof(GroupQuotasEnforcementListResponse))]
     [ModelReaderWriterBuildable(typeof(GroupQuotasEnforcementStatusData))]
     [ModelReaderWriterBuildable(typeof(GroupQuotasEnforcementStatusProperties))]
     [ModelReaderWriterBuildable(typeof(GroupQuotasEnforcementStatusResource))]
