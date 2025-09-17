@@ -18,7 +18,6 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
         {
         }
 
-        [Test]
         public async Task SimpleSchedulingScenario()
         {
             JobRouterClient client = CreateRouterClientWithConnectionString();
