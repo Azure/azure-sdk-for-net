@@ -10,9 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Client.ClientNamespace.Second.Model;
 
-namespace ClientNameSpaceClient._ClientNamespaceSecondClient
+namespace client.clientnamespace.second
 {
     public partial class ClientNamespaceSecondClient
     {
