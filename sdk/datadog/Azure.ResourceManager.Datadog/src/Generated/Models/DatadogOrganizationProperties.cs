@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="apiKey"> Api key associated to the Datadog organization. </param>
         /// <param name="applicationKey"> Application key associated to the Datadog organization. </param>
         /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign on. </param>
-        /// <param name="cspm"> The configuration which describes the state of cloud security posture management. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </param>
+        /// <param name="isCspm"> The configuration which describes the state of cloud security posture management. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogOrganizationProperties(string name, string id, string linkingAuthCode, string linkingClientId, Uri redirectUri, string apiKey, string applicationKey, string enterpriseAppId, bool? cspm, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatadogOrganizationProperties(string name, string id, string linkingAuthCode, string linkingClientId, Uri redirectUri, string apiKey, string applicationKey, string enterpriseAppId, bool? isCspm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Datadog.Models
             ApiKey = apiKey;
             ApplicationKey = applicationKey;
             EnterpriseAppId = enterpriseAppId;
-            Cspm = cspm;
+            IsCspm = isCspm;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -92,6 +92,6 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> The Id of the Enterprise App used for Single sign on. </summary>
         public string EnterpriseAppId { get; set; }
         /// <summary> The configuration which describes the state of cloud security posture management. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </summary>
-        public bool? Cspm { get; set; }
+        public bool? IsCspm { get; set; }
     }
 }

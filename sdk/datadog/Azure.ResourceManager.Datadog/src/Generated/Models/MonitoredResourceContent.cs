@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitoredResourceContent"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
-        /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to Datadog. </param>
+        /// <param name="isSendingMetrics"> Flag indicating if resource is sending metrics to Datadog. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
-        /// <param name="sendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
+        /// <param name="isSendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredResourceContent(string id, bool? sendingMetrics, string reasonForMetricsStatus, bool? sendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredResourceContent(string id, bool? isSendingMetrics, string reasonForMetricsStatus, bool? isSendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
-            SendingMetrics = sendingMetrics;
+            IsSendingMetrics = isSendingMetrics;
             ReasonForMetricsStatus = reasonForMetricsStatus;
-            SendingLogs = sendingLogs;
+            IsSendingLogs = isSendingLogs;
             ReasonForLogsStatus = reasonForLogsStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> The ARM id of the resource. </summary>
         public string Id { get; }
         /// <summary> Flag indicating if resource is sending metrics to Datadog. </summary>
-        public bool? SendingMetrics { get; }
+        public bool? IsSendingMetrics { get; }
         /// <summary> Reason for why the resource is sending metrics (or why it is not sending). </summary>
         public string ReasonForMetricsStatus { get; }
         /// <summary> Flag indicating if resource is sending logs to Datadog. </summary>
-        public bool? SendingLogs { get; }
+        public bool? IsSendingLogs { get; }
         /// <summary> Reason for why the resource is sending logs (or why it is not sending). </summary>
         public string ReasonForLogsStatus { get; }
     }

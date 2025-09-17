@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogAgreementResourceProperties : IUtf8JsonSerializable, IJsonModel<DatadogAgreementResourceProperties>
+    public partial class DatadogAgreementResourceContent : IUtf8JsonSerializable, IJsonModel<DatadogAgreementResourceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogAgreementResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogAgreementResourceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DatadogAgreementResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatadogAgreementResourceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogAgreementResourceContent)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        DatadogAgreementResourceProperties IJsonModel<DatadogAgreementResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatadogAgreementResourceContent IJsonModel<DatadogAgreementResourceContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogAgreementResourceContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatadogAgreementResourceProperties(document.RootElement, options);
+            return DeserializeDatadogAgreementResourceContent(document.RootElement, options);
         }
 
-        internal static DatadogAgreementResourceProperties DeserializeDatadogAgreementResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DatadogAgreementResourceContent DeserializeDatadogAgreementResourceContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DatadogAgreementResourceProperties(
+            return new DatadogAgreementResourceContent(
                 id,
                 name,
                 type,
@@ -121,35 +121,35 @@ namespace Azure.ResourceManager.Datadog.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DatadogAgreementResourceProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DatadogAgreementResourceContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogAgreementResourceContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DatadogAgreementResourceProperties IPersistableModel<DatadogAgreementResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DatadogAgreementResourceContent IPersistableModel<DatadogAgreementResourceContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementResourceContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDatadogAgreementResourceProperties(document.RootElement, options);
+                        return DeserializeDatadogAgreementResourceContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogAgreementResourceContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DatadogAgreementResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatadogAgreementResourceContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

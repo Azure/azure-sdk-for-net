@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules, options);
             }
-            if (Optional.IsDefined(Automuting))
+            if (Optional.IsDefined(IsAutomuting))
             {
                 writer.WritePropertyName("automuting"u8);
-                writer.WriteBooleanValue(Automuting.Value);
+                writer.WriteBooleanValue(IsAutomuting.Value);
             }
-            if (Optional.IsDefined(CustomMetrics))
+            if (Optional.IsDefined(IsCustomMetrics))
             {
                 writer.WritePropertyName("customMetrics"u8);
-                writer.WriteBooleanValue(CustomMetrics.Value);
+                writer.WriteBooleanValue(IsCustomMetrics.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

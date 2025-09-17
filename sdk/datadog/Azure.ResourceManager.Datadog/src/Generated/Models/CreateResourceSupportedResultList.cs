@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Paged collection of CreateResourceSupportedResponse items. </summary>
-    internal partial class CreateResourceSupportedResponseList
+    internal partial class CreateResourceSupportedResultList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CreateResourceSupportedResponseList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateResourceSupportedResultList"/>. </summary>
         /// <param name="value"> The CreateResourceSupportedResponse items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CreateResourceSupportedResponseList(IEnumerable<DatadogCreateResourceSupportedResponseResult> value)
+        internal CreateResourceSupportedResultList(IEnumerable<DatadogCreateResourceSupportedResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateResourceSupportedResponseList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateResourceSupportedResultList"/>. </summary>
         /// <param name="value"> The CreateResourceSupportedResponse items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateResourceSupportedResponseList(IReadOnlyList<DatadogCreateResourceSupportedResponseResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateResourceSupportedResultList(IReadOnlyList<DatadogCreateResourceSupportedResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateResourceSupportedResponseList"/> for deserialization. </summary>
-        internal CreateResourceSupportedResponseList()
+        /// <summary> Initializes a new instance of <see cref="CreateResourceSupportedResultList"/> for deserialization. </summary>
+        internal CreateResourceSupportedResultList()
         {
         }
 
         /// <summary> The CreateResourceSupportedResponse items on this page. </summary>
-        public IReadOnlyList<DatadogCreateResourceSupportedResponseResult> Value { get; }
+        public IReadOnlyList<DatadogCreateResourceSupportedResult> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

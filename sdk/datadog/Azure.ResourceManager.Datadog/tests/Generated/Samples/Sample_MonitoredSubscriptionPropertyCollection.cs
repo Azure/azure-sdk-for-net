@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.Datadog.Samples
             {
                 Properties = new SubscriptionList
                 {
-                    Operation = Models.Operation.AddBegin,
+                    Operation = OperationData.AddBegin,
                     MonitoredSubscriptionList = {new MonitoredSubscription
 {
 SubscriptionId = "/subscriptions/00000000-0000-0000-0000-000000000000",
-Status = Status.Active,
+Status = MonitoredStatus.Active,
 TagRules = new MonitoringTagRulesProperties
 {
 LogRules = new LogRules
 {
-SendAadLogs = false,
-SendSubscriptionLogs = true,
-SendResourceLogs = true,
+IsSendAadLogs = false,
+IsSendSubscriptionLogs = true,
+IsSendResourceLogs = true,
 FilteringTags = {new FilteringTag
 {
 Name = "Environment",
@@ -70,19 +70,19 @@ Action = TagAction.Exclude,
 }},
 },
 MetricRulesFilteringTags = {},
-Automuting = true,
+IsAutomuting = true,
 },
 }, new MonitoredSubscription
 {
 SubscriptionId = "/subscriptions/00000000-0000-0000-0000-000000000001",
-Status = Status.Failed,
+Status = MonitoredStatus.Failed,
 TagRules = new MonitoringTagRulesProperties
 {
 LogRules = new LogRules
 {
-SendAadLogs = false,
-SendSubscriptionLogs = true,
-SendResourceLogs = true,
+IsSendAadLogs = false,
+IsSendSubscriptionLogs = true,
+IsSendResourceLogs = true,
 FilteringTags = {new FilteringTag
 {
 Name = "Environment",
@@ -96,7 +96,7 @@ Action = TagAction.Exclude,
 }},
 },
 MetricRulesFilteringTags = {},
-Automuting = true,
+IsAutomuting = true,
 },
 }},
                 },

@@ -34,20 +34,20 @@ namespace Azure.ResourceManager.Datadog.Models
                 throw new FormatException($"The model {nameof(LogRules)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(SendAadLogs))
+            if (Optional.IsDefined(IsSendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
-                writer.WriteBooleanValue(SendAadLogs.Value);
+                writer.WriteBooleanValue(IsSendAadLogs.Value);
             }
-            if (Optional.IsDefined(SendSubscriptionLogs))
+            if (Optional.IsDefined(IsSendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
-                writer.WriteBooleanValue(SendSubscriptionLogs.Value);
+                writer.WriteBooleanValue(IsSendSubscriptionLogs.Value);
             }
-            if (Optional.IsDefined(SendResourceLogs))
+            if (Optional.IsDefined(IsSendResourceLogs))
             {
                 writer.WritePropertyName("sendResourceLogs"u8);
-                writer.WriteBooleanValue(SendResourceLogs.Value);
+                writer.WriteBooleanValue(IsSendResourceLogs.Value);
             }
             if (Optional.IsCollectionDefined(FilteringTags))
             {

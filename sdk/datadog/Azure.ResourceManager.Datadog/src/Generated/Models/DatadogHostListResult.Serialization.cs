@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    internal partial class MonitoringTagRulesListResponse : IUtf8JsonSerializable, IJsonModel<MonitoringTagRulesListResponse>
+    internal partial class DatadogHostListResult : IUtf8JsonSerializable, IJsonModel<DatadogHostListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTagRulesListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogHostListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MonitoringTagRulesListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatadogHostListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringTagRulesListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHostListResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        MonitoringTagRulesListResponse IJsonModel<MonitoringTagRulesListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatadogHostListResult IJsonModel<DatadogHostListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringTagRulesListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHostListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitoringTagRulesListResponse(document.RootElement, options);
+            return DeserializeDatadogHostListResult(document.RootElement, options);
         }
 
-        internal static MonitoringTagRulesListResponse DeserializeMonitoringTagRulesListResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DatadogHostListResult DeserializeDatadogHostListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            IReadOnlyList<MonitoringTagRuleData> value = default;
+            IReadOnlyList<DatadogHost> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MonitoringTagRuleData> array = new List<MonitoringTagRuleData>();
+                    List<DatadogHost> array = new List<DatadogHost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringTagRuleData.DeserializeMonitoringTagRuleData(item, options));
+                        array.Add(DatadogHost.DeserializeDatadogHost(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MonitoringTagRulesListResponse(value, nextLink, serializedAdditionalRawData);
+            return new DatadogHostListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MonitoringTagRulesListResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DatadogHostListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringTagRulesListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHostListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MonitoringTagRulesListResponse IPersistableModel<MonitoringTagRulesListResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DatadogHostListResult IPersistableModel<DatadogHostListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMonitoringTagRulesListResponse(document.RootElement, options);
+                        return DeserializeDatadogHostListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringTagRulesListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHostListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MonitoringTagRulesListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatadogHostListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

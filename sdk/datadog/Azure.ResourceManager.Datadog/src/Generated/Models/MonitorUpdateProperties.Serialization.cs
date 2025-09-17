@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (Optional.IsDefined(Cspm))
+            if (Optional.IsDefined(IsCspm))
             {
                 writer.WritePropertyName("cspm"u8);
-                writer.WriteBooleanValue(Cspm.Value);
+                writer.WriteBooleanValue(IsCspm.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

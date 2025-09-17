@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatadogApiKey>> GetDefaultKeyAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatadogApiKeyContent>> GetDefaultKeyAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _datadogMonitorResourceMonitorsClientDiagnostics.CreateScope("DatadogMonitorResource.GetDefaultKey");
             scope.Start();
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatadogApiKey> GetDefaultKey(CancellationToken cancellationToken = default)
+        public virtual Response<DatadogApiKeyContent> GetDefaultKey(CancellationToken cancellationToken = default)
         {
             using var scope = _datadogMonitorResourceMonitorsClientDiagnostics.CreateScope("DatadogMonitorResource.GetDefaultKey");
             scope.Start();
@@ -656,12 +656,12 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogApiKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatadogApiKey> GetApiKeysAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatadogApiKeyContent"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatadogApiKeyContent> GetApiKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListApiKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListApiKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatadogApiKey.DeserializeDatadogApiKey(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetApiKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatadogApiKeyContent.DeserializeDatadogApiKeyContent(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetApiKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -686,12 +686,12 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogApiKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatadogApiKey> GetApiKeys(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatadogApiKeyContent"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatadogApiKeyContent> GetApiKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListApiKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListApiKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatadogApiKey.DeserializeDatadogApiKey(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetApiKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatadogApiKeyContent.DeserializeDatadogApiKeyContent(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetApiKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -971,15 +971,15 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The <see cref="DatadogApiKey"/> to use. </param>
+        /// <param name="content"> The <see cref="DatadogApiKeyContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetDefaultKeyAsync(DatadogApiKey body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetDefaultKeyAsync(DatadogApiKeyContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _datadogMonitorResourceMonitorsClientDiagnostics.CreateScope("DatadogMonitorResource.SetDefaultKey");
             scope.Start();
             try
             {
-                var response = await _datadogMonitorResourceMonitorsRestClient.SetDefaultKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _datadogMonitorResourceMonitorsRestClient.SetDefaultKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1010,15 +1010,15 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The <see cref="DatadogApiKey"/> to use. </param>
+        /// <param name="content"> The <see cref="DatadogApiKeyContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetDefaultKey(DatadogApiKey body = null, CancellationToken cancellationToken = default)
+        public virtual Response SetDefaultKey(DatadogApiKeyContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _datadogMonitorResourceMonitorsClientDiagnostics.CreateScope("DatadogMonitorResource.SetDefaultKey");
             scope.Start();
             try
             {
-                var response = _datadogMonitorResourceMonitorsRestClient.SetDefaultKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _datadogMonitorResourceMonitorsRestClient.SetDefaultKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatadogBillingInfoResponseResult>> GetBillingInfoAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatadogBillingInfoResult>> GetBillingInfoAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _billingInfoClientDiagnostics.CreateScope("DatadogMonitorResource.GetBillingInfo");
             scope.Start();
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatadogBillingInfoResponseResult> GetBillingInfo(CancellationToken cancellationToken = default)
+        public virtual Response<DatadogBillingInfoResult> GetBillingInfo(CancellationToken cancellationToken = default)
         {
             using var scope = _billingInfoClientDiagnostics.CreateScope("DatadogMonitorResource.GetBillingInfo");
             scope.Start();

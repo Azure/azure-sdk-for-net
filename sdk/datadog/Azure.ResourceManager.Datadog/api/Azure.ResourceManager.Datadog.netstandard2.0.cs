@@ -8,12 +8,12 @@ namespace Azure.ResourceManager.Datadog
     }
     public static partial class DatadogExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties> CreateOrUpdateMarketplaceAgreement(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>> CreateOrUpdateMarketplaceAgreementAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult> GetCreationSupported(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult>> GetCreationSupportedAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult> GetCreationSupporteds(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult> GetCreationSupportedsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent> CreateOrUpdateMarketplaceAgreement(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent>> CreateOrUpdateMarketplaceAgreementAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult> GetCreationSupported(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult>> GetCreationSupportedAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult> GetCreationSupporteds(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult> GetCreationSupportedsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Datadog.DatadogMonitorResource GetDatadogMonitorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource> GetDatadogMonitorResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource>> GetDatadogMonitorResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Datadog
         public static Azure.Pageable<Azure.ResourceManager.Datadog.DatadogMonitorResource> GetDatadogMonitorResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Datadog.DatadogMonitorResource> GetDatadogMonitorResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Datadog.DatadogSingleSignOnResource GetDatadogSingleSignOnResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties> GetMarketplaceAgreements(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties> GetMarketplaceAgreementsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent> GetMarketplaceAgreements(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent> GetMarketplaceAgreementsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Datadog.MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionPropertyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Datadog.MonitoringTagRuleResource GetMonitoringTagRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.Datadog
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogApiKey> GetApiKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogApiKey> GetApiKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent> GetApiKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent> GetApiKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult> GetBillingInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult>> GetBillingInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult> GetBillingInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>> GetBillingInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Datadog.DatadogSingleSignOnResource> GetDatadogSingleSignOnResource(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.DatadogSingleSignOnResource>> GetDatadogSingleSignOnResourceAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Datadog.DatadogSingleSignOnResourceCollection GetDatadogSingleSignOnResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogApiKey> GetDefaultKey(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogApiKey>> GetDefaultKeyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent> GetDefaultKey(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent>> GetDefaultKeyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogHost> GetHosts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogHost> GetHostsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Datadog.Models.LinkedInfo> GetLinkedResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Datadog
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogSetPasswordLink>> RefreshSetPasswordLinkAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SetDefaultKey(Azure.ResourceManager.Datadog.Models.DatadogApiKey body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SetDefaultKeyAsync(Azure.ResourceManager.Datadog.Models.DatadogApiKey body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetDefaultKey(Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetDefaultKeyAsync(Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Datadog.DatadogMonitorResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.DatadogMonitorResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -264,26 +264,26 @@ namespace Azure.ResourceManager.Datadog.Mocking
     public partial class MockableDatadogSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableDatadogSubscriptionResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties> CreateOrUpdateMarketplaceAgreement(Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>> CreateOrUpdateMarketplaceAgreementAsync(Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult> GetCreationSupported(string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult>> GetCreationSupportedAsync(string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult> GetCreationSupporteds(string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult> GetCreationSupportedsAsync(string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent> CreateOrUpdateMarketplaceAgreement(Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent>> CreateOrUpdateMarketplaceAgreementAsync(Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult> GetCreationSupported(string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult>> GetCreationSupportedAsync(string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult> GetCreationSupporteds(string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult> GetCreationSupportedsAsync(string datadogOrganizationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Datadog.DatadogMonitorResource> GetDatadogMonitorResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Datadog.DatadogMonitorResource> GetDatadogMonitorResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties> GetMarketplaceAgreements(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties> GetMarketplaceAgreementsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent> GetMarketplaceAgreements(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent> GetMarketplaceAgreementsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Datadog.Models
 {
     public static partial class ArmDatadogModelFactory
     {
-        public static Azure.ResourceManager.Datadog.Models.CreateResourceSupportedProperties CreateResourceSupportedProperties(string name = null, bool? creationSupported = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties DatadogAgreementResourceProperties(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult DatadogBillingInfoResponseResult(Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo marketplaceSaasInfo = null, Azure.ResourceManager.Datadog.Models.PartnerBillingEntity partnerBillingEntity = null) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult DatadogCreateResourceSupportedResponseResult(Azure.ResourceManager.Datadog.Models.CreateResourceSupportedProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.CreateResourceSupportedProperties CreateResourceSupportedProperties(string name = null, bool? isCreationSupported = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent DatadogAgreementResourceContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult DatadogBillingInfoResult(Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo marketplaceSaasInfo = null, Azure.ResourceManager.Datadog.Models.PartnerBillingEntity partnerBillingEntity = null) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult DatadogCreateResourceSupportedResult(Azure.ResourceManager.Datadog.Models.CreateResourceSupportedProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogHost DatadogHost(string name = null, System.Collections.Generic.IEnumerable<string> aliases = null, System.Collections.Generic.IEnumerable<string> apps = null, Azure.ResourceManager.Datadog.Models.DatadogHostMetadata meta = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogHostMetadata DatadogHostMetadata(string agentVersion = null, Azure.ResourceManager.Datadog.Models.DatadogInstallMethod installMethod = null, string logsAgentTransport = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogInstallMethod DatadogInstallMethod(string tool = null, string toolVersion = null, string installerVersion = null) { throw null; }
@@ -292,18 +292,18 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnProperties DatadogSingleSignOnProperties(Azure.ResourceManager.Datadog.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Datadog.Models.ProvisioningState?), Azure.ResourceManager.Datadog.Models.SingleSignOnState? singleSignOnState = default(Azure.ResourceManager.Datadog.Models.SingleSignOnState?), string enterpriseAppId = null, System.Uri singleSignOnUri = null) { throw null; }
         public static Azure.ResourceManager.Datadog.DatadogSingleSignOnResourceData DatadogSingleSignOnResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.LinkedInfo LinkedInfo(string id = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = null, string marketplaceName = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? subscribed = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.MonitoredResourceContent MonitoredResourceContent(string id = null, bool? sendingMetrics = default(bool?), string reasonForMetricsStatus = null, bool? sendingLogs = default(bool?), string reasonForLogsStatus = null) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = null, string marketplaceName = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? isSubscribed = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.MonitoredResourceContent MonitoredResourceContent(string id = null, bool? isSendingMetrics = default(bool?), string reasonForMetricsStatus = null, bool? isSendingLogs = default(bool?), string reasonForLogsStatus = null) { throw null; }
         public static Azure.ResourceManager.Datadog.MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Datadog.Models.SubscriptionList properties = null) { throw null; }
         public static Azure.ResourceManager.Datadog.MonitoringTagRuleData MonitoringTagRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Datadog.Models.MonitoringTagRulesProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.MonitoringTagRulesProperties MonitoringTagRulesProperties(Azure.ResourceManager.Datadog.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Datadog.Models.ProvisioningState?), Azure.ResourceManager.Datadog.Models.LogRules logRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.FilteringTag> metricRulesFilteringTags = null, bool? automuting = default(bool?), bool? customMetrics = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.MonitoringTagRulesProperties MonitoringTagRulesProperties(Azure.ResourceManager.Datadog.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Datadog.Models.ProvisioningState?), Azure.ResourceManager.Datadog.Models.LogRules logRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.FilteringTag> metricRulesFilteringTags = null, bool? isAutomuting = default(bool?), bool? isCustomMetrics = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.MonitorProperties MonitorProperties(Azure.ResourceManager.Datadog.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Datadog.Models.ProvisioningState?), Azure.ResourceManager.Datadog.Models.MonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Datadog.Models.MonitoringStatus?), Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus?), Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties datadogOrganizationProperties = null, Azure.ResourceManager.Datadog.Models.UserInfo userInfo = null, Azure.ResourceManager.Datadog.Models.LiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Datadog.Models.LiftrResourceCategory?), int? liftrResourcePreference = default(int?)) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.PartnerBillingEntity PartnerBillingEntity(string id = null, string name = null, System.Uri partnerEntityUri = null) { throw null; }
     }
     public partial class CreateResourceSupportedProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.CreateResourceSupportedProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.CreateResourceSupportedProperties>
     {
         internal CreateResourceSupportedProperties() { }
-        public bool? CreationSupported { get { throw null; } }
+        public bool? IsCreationSupported { get { throw null; } }
         public string Name { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Datadog.Models.CreateResourceSupportedProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.CreateResourceSupportedProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Datadog.Models
     public partial class DatadogAgreementProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties>
     {
         public DatadogAgreementProperties() { }
-        public bool? Accepted { get { throw null; } set { } }
+        public bool? IsAccepted { get { throw null; } set { } }
         public string LicenseTextLink { get { throw null; } set { } }
         public string Plan { get { throw null; } set { } }
         public string PrivacyPolicyLink { get { throw null; } set { } }
@@ -330,53 +330,53 @@ namespace Azure.ResourceManager.Datadog.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DatadogAgreementResourceProperties : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>
+    public partial class DatadogAgreementResourceContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent>
     {
-        public DatadogAgreementResourceProperties() { }
+        public DatadogAgreementResourceContent() { }
         public Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DatadogApiKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogApiKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogApiKey>
+    public partial class DatadogApiKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent>
     {
-        public DatadogApiKey(string key) { }
+        public DatadogApiKeyContent(string key) { }
         public string Created { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public string Key { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.DatadogApiKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogApiKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogApiKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.DatadogApiKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogApiKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogApiKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogApiKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogApiKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DatadogBillingInfoResponseResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult>
+    public partial class DatadogBillingInfoResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>
     {
-        internal DatadogBillingInfoResponseResult() { }
+        internal DatadogBillingInfoResult() { }
         public Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo MarketplaceSaasInfo { get { throw null; } }
         public Azure.ResourceManager.Datadog.Models.PartnerBillingEntity PartnerBillingEntity { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResponseResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DatadogCreateResourceSupportedResponseResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult>
+    public partial class DatadogCreateResourceSupportedResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult>
     {
-        internal DatadogCreateResourceSupportedResponseResult() { }
+        internal DatadogCreateResourceSupportedResult() { }
         public Azure.ResourceManager.Datadog.Models.CreateResourceSupportedProperties Properties { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResponseResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogCreateResourceSupportedResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DatadogHost : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogHost>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogHost>
     {
@@ -436,9 +436,9 @@ namespace Azure.ResourceManager.Datadog.Models
         public DatadogOrganizationProperties() { }
         public string ApiKey { get { throw null; } set { } }
         public string ApplicationKey { get { throw null; } set { } }
-        public bool? Cspm { get { throw null; } set { } }
         public string EnterpriseAppId { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        public bool? IsCspm { get { throw null; } set { } }
         public string LinkingAuthCode { get { throw null; } set { } }
         public string LinkingClientId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -522,9 +522,9 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         public LogRules() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Datadog.Models.FilteringTag> FilteringTags { get { throw null; } }
-        public bool? SendAadLogs { get { throw null; } set { } }
-        public bool? SendResourceLogs { get { throw null; } set { } }
-        public bool? SendSubscriptionLogs { get { throw null; } set { } }
+        public bool? IsSendAadLogs { get { throw null; } set { } }
+        public bool? IsSendResourceLogs { get { throw null; } set { } }
+        public bool? IsSendSubscriptionLogs { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Datadog.Models.LogRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.LogRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.LogRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -536,10 +536,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal MarketplaceSaaSInfo() { }
         public string BilledAzureSubscriptionId { get { throw null; } }
+        public bool? IsSubscribed { get { throw null; } }
         public string MarketplaceName { get { throw null; } }
         public string MarketplaceStatus { get { throw null; } }
         public string MarketplaceSubscriptionId { get { throw null; } }
-        public bool? Subscribed { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -571,10 +571,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal MonitoredResourceContent() { }
         public string Id { get { throw null; } }
+        public bool? IsSendingLogs { get { throw null; } }
+        public bool? IsSendingMetrics { get { throw null; } }
         public string ReasonForLogsStatus { get { throw null; } }
         public string ReasonForMetricsStatus { get { throw null; } }
-        public bool? SendingLogs { get { throw null; } }
-        public bool? SendingMetrics { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Datadog.Models.MonitoredResourceContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MonitoredResourceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MonitoredResourceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -582,11 +582,31 @@ namespace Azure.ResourceManager.Datadog.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MonitoredResourceContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MonitoredResourceContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitoredStatus : System.IEquatable<Azure.ResourceManager.Datadog.Models.MonitoredStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitoredStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.MonitoredStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.Datadog.Models.MonitoredStatus Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Datadog.Models.MonitoredStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Datadog.Models.MonitoredStatus InProgress { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Datadog.Models.MonitoredStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Datadog.Models.MonitoredStatus left, Azure.ResourceManager.Datadog.Models.MonitoredStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Datadog.Models.MonitoredStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Datadog.Models.MonitoredStatus left, Azure.ResourceManager.Datadog.Models.MonitoredStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MonitoredSubscription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MonitoredSubscription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MonitoredSubscription>
     {
         public MonitoredSubscription() { }
         public string Error { get { throw null; } set { } }
-        public Azure.ResourceManager.Datadog.Models.Status? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.Datadog.Models.MonitoredStatus? Status { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.Datadog.Models.MonitoringTagRulesProperties TagRules { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -617,8 +637,8 @@ namespace Azure.ResourceManager.Datadog.Models
     public partial class MonitoringTagRulesProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MonitoringTagRulesProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MonitoringTagRulesProperties>
     {
         public MonitoringTagRulesProperties() { }
-        public bool? Automuting { get { throw null; } set { } }
-        public bool? CustomMetrics { get { throw null; } set { } }
+        public bool? IsAutomuting { get { throw null; } set { } }
+        public bool? IsCustomMetrics { get { throw null; } set { } }
         public Azure.ResourceManager.Datadog.Models.LogRules LogRules { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Datadog.Models.FilteringTag> MetricRulesFilteringTags { get { throw null; } }
         public Azure.ResourceManager.Datadog.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -649,7 +669,7 @@ namespace Azure.ResourceManager.Datadog.Models
     public partial class MonitorUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MonitorUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MonitorUpdateProperties>
     {
         public MonitorUpdateProperties() { }
-        public bool? Cspm { get { throw null; } set { } }
+        public bool? IsCspm { get { throw null; } set { } }
         public Azure.ResourceManager.Datadog.Models.MonitoringStatus? MonitoringStatus { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Datadog.Models.MonitorUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MonitorUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -659,24 +679,24 @@ namespace Azure.ResourceManager.Datadog.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MonitorUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Operation : System.IEquatable<Azure.ResourceManager.Datadog.Models.Operation>
+    public readonly partial struct OperationData : System.IEquatable<Azure.ResourceManager.Datadog.Models.OperationData>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Operation(string value) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.Operation Active { get { throw null; } }
-        public static Azure.ResourceManager.Datadog.Models.Operation AddBegin { get { throw null; } }
-        public static Azure.ResourceManager.Datadog.Models.Operation AddComplete { get { throw null; } }
-        public static Azure.ResourceManager.Datadog.Models.Operation DeleteBegin { get { throw null; } }
-        public static Azure.ResourceManager.Datadog.Models.Operation DeleteComplete { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Datadog.Models.Operation other) { throw null; }
+        public OperationData(string value) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.OperationData Active { get { throw null; } }
+        public static Azure.ResourceManager.Datadog.Models.OperationData AddBegin { get { throw null; } }
+        public static Azure.ResourceManager.Datadog.Models.OperationData AddComplete { get { throw null; } }
+        public static Azure.ResourceManager.Datadog.Models.OperationData DeleteBegin { get { throw null; } }
+        public static Azure.ResourceManager.Datadog.Models.OperationData DeleteComplete { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Datadog.Models.OperationData other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Datadog.Models.Operation left, Azure.ResourceManager.Datadog.Models.Operation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Datadog.Models.Operation (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Datadog.Models.Operation left, Azure.ResourceManager.Datadog.Models.Operation right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Datadog.Models.OperationData left, Azure.ResourceManager.Datadog.Models.OperationData right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Datadog.Models.OperationData (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Datadog.Models.OperationData left, Azure.ResourceManager.Datadog.Models.OperationData right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PartnerBillingEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.PartnerBillingEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.PartnerBillingEntity>
@@ -737,31 +757,11 @@ namespace Azure.ResourceManager.Datadog.Models
         public static bool operator !=(Azure.ResourceManager.Datadog.Models.SingleSignOnState left, Azure.ResourceManager.Datadog.Models.SingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.Datadog.Models.Status>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Status(string value) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.Status Active { get { throw null; } }
-        public static Azure.ResourceManager.Datadog.Models.Status Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Datadog.Models.Status Failed { get { throw null; } }
-        public static Azure.ResourceManager.Datadog.Models.Status InProgress { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Datadog.Models.Status other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Datadog.Models.Status left, Azure.ResourceManager.Datadog.Models.Status right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Datadog.Models.Status (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Datadog.Models.Status left, Azure.ResourceManager.Datadog.Models.Status right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class SubscriptionList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.SubscriptionList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.SubscriptionList>
     {
         public SubscriptionList() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Datadog.Models.MonitoredSubscription> MonitoredSubscriptionList { get { throw null; } }
-        public Azure.ResourceManager.Datadog.Models.Operation? Operation { get { throw null; } set { } }
+        public Azure.ResourceManager.Datadog.Models.OperationData? Operation { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Datadog.Models.SubscriptionList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.SubscriptionList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.SubscriptionList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

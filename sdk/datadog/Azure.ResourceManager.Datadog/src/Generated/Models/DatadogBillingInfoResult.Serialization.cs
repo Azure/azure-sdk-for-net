@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogBillingInfoResponseResult : IUtf8JsonSerializable, IJsonModel<DatadogBillingInfoResponseResult>
+    public partial class DatadogBillingInfoResult : IUtf8JsonSerializable, IJsonModel<DatadogBillingInfoResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogBillingInfoResponseResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogBillingInfoResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DatadogBillingInfoResponseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatadogBillingInfoResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogBillingInfoResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogBillingInfoResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogBillingInfoResponseResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogBillingInfoResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(MarketplaceSaasInfo))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        DatadogBillingInfoResponseResult IJsonModel<DatadogBillingInfoResponseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatadogBillingInfoResult IJsonModel<DatadogBillingInfoResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogBillingInfoResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogBillingInfoResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogBillingInfoResponseResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogBillingInfoResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatadogBillingInfoResponseResult(document.RootElement, options);
+            return DeserializeDatadogBillingInfoResult(document.RootElement, options);
         }
 
-        internal static DatadogBillingInfoResponseResult DeserializeDatadogBillingInfoResponseResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DatadogBillingInfoResult DeserializeDatadogBillingInfoResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DatadogBillingInfoResponseResult(marketplaceSaasInfo, partnerBillingEntity, serializedAdditionalRawData);
+            return new DatadogBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DatadogBillingInfoResponseResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DatadogBillingInfoResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogBillingInfoResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogBillingInfoResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogBillingInfoResponseResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogBillingInfoResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DatadogBillingInfoResponseResult IPersistableModel<DatadogBillingInfoResponseResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DatadogBillingInfoResult IPersistableModel<DatadogBillingInfoResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogBillingInfoResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogBillingInfoResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDatadogBillingInfoResponseResult(document.RootElement, options);
+                        return DeserializeDatadogBillingInfoResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogBillingInfoResponseResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogBillingInfoResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DatadogBillingInfoResponseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatadogBillingInfoResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

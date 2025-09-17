@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Datadog.Samples
                         LinkingAuthCode = "someAuthCode",
                         LinkingClientId = "00000000-0000-0000-0000-000000000000",
                         EnterpriseAppId = "00000000-0000-0000-0000-000000000000",
-                        Cspm = false,
+                        IsCspm = false,
                     },
                     UserInfo = new UserInfo
                     {

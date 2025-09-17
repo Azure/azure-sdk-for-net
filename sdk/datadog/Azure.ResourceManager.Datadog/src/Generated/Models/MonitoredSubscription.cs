@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="error"> The reason of not monitoring the subscription. </param>
         /// <param name="tagRules"> Definition of the properties for a TagRules resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscription(string subscriptionId, Status? status, string error, MonitoringTagRulesProperties tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredSubscription(string subscriptionId, MonitoredStatus? status, string error, MonitoringTagRulesProperties tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             Status = status;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> The subscriptionId to be monitored. </summary>
         public string SubscriptionId { get; set; }
         /// <summary> The state of monitoring. </summary>
-        public Status? Status { get; set; }
+        public MonitoredStatus? Status { get; set; }
         /// <summary> The reason of not monitoring the subscription. </summary>
         public string Error { get; set; }
         /// <summary> Definition of the properties for a TagRules resource. </summary>

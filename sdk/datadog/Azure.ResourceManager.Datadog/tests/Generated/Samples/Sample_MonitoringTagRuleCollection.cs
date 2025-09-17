@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Datadog.Samples
                 {
                     LogRules = new LogRules
                     {
-                        SendAadLogs = false,
-                        SendSubscriptionLogs = true,
-                        SendResourceLogs = true,
+                        IsSendAadLogs = false,
+                        IsSendSubscriptionLogs = true,
+                        IsSendResourceLogs = true,
                         FilteringTags = {new FilteringTag
 {
 Name = "Environment",
@@ -63,7 +63,7 @@ Action = TagAction.Exclude,
 }},
                     },
                     MetricRulesFilteringTags = { },
-                    Automuting = true,
+                    IsAutomuting = true,
                 },
             };
             ArmOperation<MonitoringTagRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName, data);

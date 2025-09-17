@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> Response of a list operation. </summary>
-    internal partial class LinkedResourceListResponse
+    /// <summary> The DatadogAgreementResourceContent. </summary>
+    public partial class DatadogAgreementResourceContent : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +47,25 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/>. </summary>
-        /// <param name="value"> The LinkedResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LinkedResourceListResponse(IEnumerable<LinkedInfo> value)
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceContent"/>. </summary>
+        public DatadogAgreementResourceContent()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/>. </summary>
-        /// <param name="value"> The LinkedResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Represents the properties of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkedResourceListResponse(IReadOnlyList<LinkedInfo> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatadogAgreementResourceContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatadogAgreementProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/> for deserialization. </summary>
-        internal LinkedResourceListResponse()
-        {
-        }
-
-        /// <summary> The LinkedResource items on this page. </summary>
-        public IReadOnlyList<LinkedInfo> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Represents the properties of the resource. </summary>
+        public DatadogAgreementProperties Properties { get; set; }
     }
 }

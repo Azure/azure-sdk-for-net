@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Operation? operation = default;
+            OperationData? operation = default;
             IList<MonitoredSubscription> monitoredSubscriptionList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    operation = new Operation(property.Value.GetString());
+                    operation = new OperationData(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("monitoredSubscriptionList"u8))

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DatadogAgreementResourceProperties item in subscriptionResource.GetMarketplaceAgreementsAsync())
+            await foreach (DatadogAgreementResourceContent item in subscriptionResource.GetMarketplaceAgreementsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Datadog.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            DatadogAgreementResourceProperties body = new DatadogAgreementResourceProperties
+            DatadogAgreementResourceContent content = new DatadogAgreementResourceContent
             {
                 Properties = new DatadogAgreementProperties
                 {
-                    Accepted = true,
+                    IsAccepted = true,
                 },
             };
-            DatadogAgreementResourceProperties result = await subscriptionResource.CreateOrUpdateMarketplaceAgreementAsync(body: body);
+            DatadogAgreementResourceContent result = await subscriptionResource.CreateOrUpdateMarketplaceAgreementAsync(content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Datadog.Samples
 
             // invoke the operation and iterate over the result
             string datadogOrganizationId = "00000000-0000-0000-0000";
-            await foreach (DatadogCreateResourceSupportedResponseResult item in subscriptionResource.GetCreationSupportedsAsync(datadogOrganizationId))
+            await foreach (DatadogCreateResourceSupportedResult item in subscriptionResource.GetCreationSupportedsAsync(datadogOrganizationId))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Datadog.Samples
 
             // invoke the operation
             string datadogOrganizationId = "00000000-0000-0000-0000";
-            DatadogCreateResourceSupportedResponseResult result = await subscriptionResource.GetCreationSupportedAsync(datadogOrganizationId);
+            DatadogCreateResourceSupportedResult result = await subscriptionResource.GetCreationSupportedAsync(datadogOrganizationId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

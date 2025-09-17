@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
         /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
         /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
-        /// <param name="subscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
+        /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, string billedAzureSubscriptionId, bool? subscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             MarketplaceName = marketplaceName;
             MarketplaceStatus = marketplaceStatus;
             BilledAzureSubscriptionId = billedAzureSubscriptionId;
-            Subscribed = subscribed;
+            IsSubscribed = isSubscribed;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </summary>
         public string BilledAzureSubscriptionId { get; }
         /// <summary> Flag specifying if the Marketplace status is subscribed or not. </summary>
-        public bool? Subscribed { get; }
+        public bool? IsSubscribed { get; }
     }
 }

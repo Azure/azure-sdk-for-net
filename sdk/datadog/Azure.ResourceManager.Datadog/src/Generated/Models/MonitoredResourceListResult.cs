@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Response of a list operation. </summary>
-    internal partial class MonitoringTagRulesListResponse
+    internal partial class MonitoredResourceListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResponse"/>. </summary>
-        /// <param name="value"> The MonitoringTagRules items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResult"/>. </summary>
+        /// <param name="value"> The MonitoredResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MonitoringTagRulesListResponse(IEnumerable<MonitoringTagRuleData> value)
+        internal MonitoredResourceListResult(IEnumerable<MonitoredResourceContent> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResponse"/>. </summary>
-        /// <param name="value"> The MonitoringTagRules items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResult"/>. </summary>
+        /// <param name="value"> The MonitoredResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringTagRulesListResponse(IReadOnlyList<MonitoringTagRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredResourceListResult(IReadOnlyList<MonitoredResourceContent> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResponse"/> for deserialization. </summary>
-        internal MonitoringTagRulesListResponse()
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResult"/> for deserialization. </summary>
+        internal MonitoredResourceListResult()
         {
         }
 
-        /// <summary> The MonitoringTagRules items on this page. </summary>
-        public IReadOnlyList<MonitoringTagRuleData> Value { get; }
+        /// <summary> The MonitoredResource items on this page. </summary>
+        public IReadOnlyList<MonitoredResourceContent> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

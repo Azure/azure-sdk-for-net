@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> Response of a list operation. </summary>
-    internal partial class DatadogSingleSignOnResourceListResponse
+    /// <summary> Marketplace Subscription and Organization details to which resource gets billed into. </summary>
+    public partial class DatadogBillingInfoResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,25 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceListResponse"/>. </summary>
-        /// <param name="value"> The DatadogSingleSignOnResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DatadogSingleSignOnResourceListResponse(IEnumerable<DatadogSingleSignOnResourceData> value)
+        /// <summary> Initializes a new instance of <see cref="DatadogBillingInfoResult"/>. </summary>
+        internal DatadogBillingInfoResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceListResponse"/>. </summary>
-        /// <param name="value"> The DatadogSingleSignOnResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="DatadogBillingInfoResult"/>. </summary>
+        /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
+        /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogSingleSignOnResourceListResponse(IReadOnlyList<DatadogSingleSignOnResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatadogBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo, PartnerBillingEntity partnerBillingEntity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            MarketplaceSaasInfo = marketplaceSaasInfo;
+            PartnerBillingEntity = partnerBillingEntity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceListResponse"/> for deserialization. </summary>
-        internal DatadogSingleSignOnResourceListResponse()
-        {
-        }
-
-        /// <summary> The DatadogSingleSignOnResource items on this page. </summary>
-        public IReadOnlyList<DatadogSingleSignOnResourceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Marketplace Subscription details. </summary>
+        public MarketplaceSaaSInfo MarketplaceSaasInfo { get; }
+        /// <summary> Partner Billing Entity details: Organization Info. </summary>
+        public PartnerBillingEntity PartnerBillingEntity { get; }
     }
 }

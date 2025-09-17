@@ -51,10 +51,35 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  DatadogAgreementResource: DatadogAgreementResourceProperties
+  DatadogAgreementResource: DatadogAgreementResourceContent
   MonitoredResource: MonitoredResourceContent
-  BillingInfoResponse: DatadogBillingInfoResponseResult
-  CreateResourceSupportedResponse: DatadogCreateResourceSupportedResponseResult
+  BillingInfoResponse: DatadogBillingInfoResult
+  CreateResourceSupportedResponse: DatadogCreateResourceSupportedResult
+  DatadogMonitorResourceUpdateParameters: DatadogMonitorResourceUpdateContent
+  DatadogApiKey: DatadogApiKeyContent
   LinkedResource: LinkedInfo
+  Status: MonitoredStatus
+  DatadogAgreementResourceListResponse: DatadogAgreementResourceListResult
+  DatadogApiKeyListResponse: DatadogApiKeyListResult
+  DatadogHostListResponse: DatadogHostListResult
+  DatadogMonitorResourceListResponse: DatadogMonitorResourceListResult
+  DatadogSingleSignOnResourceListResponse: DatadogSingleSignOnResourceListResult
+  LinkedResourceListResponse: LinkedResourceListResult
+  MonitoredResourceListResponse: MonitoredResourceListResult
+  MonitoringTagRulesListResponse: MonitoringTagRulesListResult
+  CreateResourceSupportedResponseList: CreateResourceSupportedResultList
+  Operation: OperationData
+  CreateResourceSupportedProperties.creationSupported: IsCreationSupported
+  MarketplaceSaaSInfo.subscribed: IsSubscribed
+  DatadogAgreementProperties.accepted: IsAccepted
+  DatadogOrganizationProperties.cspm: IsCspm
+  LogRules.sendAadLogs: IsSendAadLogs
+  LogRules.sendSubscriptionLogs: IsSendSubscriptionLogs
+  LogRules.sendResourceLogs: IsSendResourceLogs
+  MonitorUpdateProperties.cspm: IsCspm
+  MonitoredResource.sendingMetrics: IsSendingMetrics
+  MonitoredResource.sendingLogs: IsSendingLogs
+  MonitoringTagRulesProperties.automuting: IsAutomuting
+  MonitoringTagRulesProperties.customMetrics: IsCustomMetrics
 
 ```

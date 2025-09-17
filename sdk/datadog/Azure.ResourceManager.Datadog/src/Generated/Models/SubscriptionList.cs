@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="operation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionList(Operation? operation, IList<MonitoredSubscription> monitoredSubscriptionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubscriptionList(OperationData? operation, IList<MonitoredSubscription> monitoredSubscriptionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Operation = operation;
             MonitoredSubscriptionList = monitoredSubscriptionList;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> The operation for the patch on the resource. </summary>
-        public Operation? Operation { get; set; }
+        public OperationData? Operation { get; set; }
         /// <summary> List of subscriptions and the state of the monitoring. </summary>
         public IList<MonitoredSubscription> MonitoredSubscriptionList { get; }
     }

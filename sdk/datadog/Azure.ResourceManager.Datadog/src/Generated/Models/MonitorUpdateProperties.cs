@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitorUpdateProperties"/>. </summary>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
-        /// <param name="cspm"> The new cloud security posture management value of the monitor resource. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </param>
+        /// <param name="isCspm"> The new cloud security posture management value of the monitor resource. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorUpdateProperties(MonitoringStatus? monitoringStatus, bool? cspm, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorUpdateProperties(MonitoringStatus? monitoringStatus, bool? isCspm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MonitoringStatus = monitoringStatus;
-            Cspm = cspm;
+            IsCspm = isCspm;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
         public MonitoringStatus? MonitoringStatus { get; set; }
         /// <summary> The new cloud security posture management value of the monitor resource. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </summary>
-        public bool? Cspm { get; set; }
+        public bool? IsCspm { get; set; }
     }
 }

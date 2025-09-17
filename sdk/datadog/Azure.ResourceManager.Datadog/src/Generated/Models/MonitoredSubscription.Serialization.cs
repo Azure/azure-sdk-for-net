@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 return null;
             }
             string subscriptionId = default;
-            Status? status = default;
+            MonitoredStatus? status = default;
             string error = default;
             MonitoringTagRulesProperties tagRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new MonitoredStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))

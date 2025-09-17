@@ -39,20 +39,20 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(SendingMetrics))
+            if (Optional.IsDefined(IsSendingMetrics))
             {
                 writer.WritePropertyName("sendingMetrics"u8);
-                writer.WriteBooleanValue(SendingMetrics.Value);
+                writer.WriteBooleanValue(IsSendingMetrics.Value);
             }
             if (Optional.IsDefined(ReasonForMetricsStatus))
             {
                 writer.WritePropertyName("reasonForMetricsStatus"u8);
                 writer.WriteStringValue(ReasonForMetricsStatus);
             }
-            if (Optional.IsDefined(SendingLogs))
+            if (Optional.IsDefined(IsSendingLogs))
             {
                 writer.WritePropertyName("sendingLogs"u8);
-                writer.WriteBooleanValue(SendingLogs.Value);
+                writer.WriteBooleanValue(IsSendingLogs.Value);
             }
             if (Optional.IsDefined(ReasonForLogsStatus))
             {

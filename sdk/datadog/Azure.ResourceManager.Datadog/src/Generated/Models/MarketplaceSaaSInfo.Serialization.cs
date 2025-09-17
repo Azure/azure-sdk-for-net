@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("billedAzureSubscriptionId"u8);
                 writer.WriteStringValue(BilledAzureSubscriptionId);
             }
-            if (Optional.IsDefined(Subscribed))
+            if (Optional.IsDefined(IsSubscribed))
             {
                 writer.WritePropertyName("subscribed"u8);
-                writer.WriteBooleanValue(Subscribed.Value);
+                writer.WriteBooleanValue(IsSubscribed.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

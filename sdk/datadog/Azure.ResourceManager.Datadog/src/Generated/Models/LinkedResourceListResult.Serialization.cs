@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    internal partial class LinkedResourceListResponse : IUtf8JsonSerializable, IJsonModel<LinkedResourceListResponse>
+    internal partial class LinkedResourceListResult : IUtf8JsonSerializable, IJsonModel<LinkedResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedResourceListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LinkedResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkedResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        LinkedResourceListResponse IJsonModel<LinkedResourceListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LinkedResourceListResult IJsonModel<LinkedResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLinkedResourceListResponse(document.RootElement, options);
+            return DeserializeLinkedResourceListResult(document.RootElement, options);
         }
 
-        internal static LinkedResourceListResponse DeserializeLinkedResourceListResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LinkedResourceListResult DeserializeLinkedResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LinkedResourceListResponse(value, nextLink, serializedAdditionalRawData);
+            return new LinkedResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LinkedResourceListResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LinkedResourceListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LinkedResourceListResponse IPersistableModel<LinkedResourceListResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LinkedResourceListResult IPersistableModel<LinkedResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLinkedResourceListResponse(document.RootElement, options);
+                        return DeserializeLinkedResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LinkedResourceListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkedResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

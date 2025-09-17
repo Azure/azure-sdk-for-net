@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    internal partial class DatadogHostListResponse : IUtf8JsonSerializable, IJsonModel<DatadogHostListResponse>
+    internal partial class DatadogSingleSignOnResourceListResult : IUtf8JsonSerializable, IJsonModel<DatadogSingleSignOnResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogHostListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogSingleSignOnResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DatadogHostListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatadogSingleSignOnResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHostListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        DatadogHostListResponse IJsonModel<DatadogHostListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatadogSingleSignOnResourceListResult IJsonModel<DatadogSingleSignOnResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHostListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatadogHostListResponse(document.RootElement, options);
+            return DeserializeDatadogSingleSignOnResourceListResult(document.RootElement, options);
         }
 
-        internal static DatadogHostListResponse DeserializeDatadogHostListResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DatadogSingleSignOnResourceListResult DeserializeDatadogSingleSignOnResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            IReadOnlyList<DatadogHost> value = default;
+            IReadOnlyList<DatadogSingleSignOnResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DatadogHost> array = new List<DatadogHost>();
+                    List<DatadogSingleSignOnResourceData> array = new List<DatadogSingleSignOnResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogHost.DeserializeDatadogHost(item, options));
+                        array.Add(DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DatadogHostListResponse(value, nextLink, serializedAdditionalRawData);
+            return new DatadogSingleSignOnResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DatadogHostListResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DatadogSingleSignOnResourceListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHostListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DatadogHostListResponse IPersistableModel<DatadogHostListResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DatadogSingleSignOnResourceListResult IPersistableModel<DatadogSingleSignOnResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDatadogHostListResponse(document.RootElement, options);
+                        return DeserializeDatadogSingleSignOnResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHostListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DatadogHostListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatadogSingleSignOnResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

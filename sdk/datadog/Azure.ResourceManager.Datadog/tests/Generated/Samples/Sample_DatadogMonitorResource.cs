@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogApiKey result = await datadogMonitorResource.GetDefaultKeyAsync();
+            DatadogApiKeyContent result = await datadogMonitorResource.GetDefaultKeyAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DatadogApiKey item in datadogMonitorResource.GetApiKeysAsync())
+            await foreach (DatadogApiKeyContent item in datadogMonitorResource.GetApiKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -303,8 +303,8 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogApiKey body = new DatadogApiKey("1111111111111111aaaaaaaaaaaaaaaa");
-            await datadogMonitorResource.SetDefaultKeyAsync(body: body);
+            DatadogApiKeyContent content = new DatadogApiKeyContent("1111111111111111aaaaaaaaaaaaaaaa");
+            await datadogMonitorResource.SetDefaultKeyAsync(content: content);
 
             Console.WriteLine("Succeeded");
         }
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogBillingInfoResponseResult result = await datadogMonitorResource.GetBillingInfoAsync();
+            DatadogBillingInfoResult result = await datadogMonitorResource.GetBillingInfoAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
