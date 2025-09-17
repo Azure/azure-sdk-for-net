@@ -22,12 +22,6 @@
 - Added `patchNameMasksToInclude` and `patchNameMasksToExclude` properties to `WindowsParameters` class.
 
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.11.0 (2025-08-12)
 
 ### Features Added
