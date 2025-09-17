@@ -22,9 +22,5 @@ public partial struct JsonPatch
         DateTime = 1 << 9,
         Guid = 1 << 10,
         TimeSpan = 1 << 11,
-        Boolean = BooleanTrue | BooleanFalse,
-        NullableNumber = Number | Null,
-        NullableBoolean = Boolean | Null,
-        NullableUtf8String = Utf8String | Null,
     }
 }
