@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
-internal static class JsonPathReaderExtensions
+internal static class JsonPathExtensions
 {
     /// <summary>
     /// Converts JSON path RFC 9535 to JSON Pointer RFC 6901 format.
@@ -19,7 +19,6 @@ internal static class JsonPathReaderExtensions
     /// <param name="isArrayAppend">True if the jsonPath represents an array append operation.</param>
     public static int ConvertToJsonPointer(this byte[] jsonPath, Span<byte> buffer, bool isArrayAppend = false)
     {
-        //TODO: escape ~ to ~0 and / to ~1 in property names
         ReadOnlySpan<byte> jsonPathSpan = jsonPath.AsSpan();
         if (jsonPathSpan.SequenceEqual("$"u8))
         {
@@ -51,11 +50,10 @@ internal static class JsonPathReaderExtensions
                     break;
                 case JsonPathTokenType.Property:
                     buffer[bytesWritten++] = (byte)'/';
-                    int propertyLength = reader.Current.ValueSpan.Length;
-                    if (propertyLength > 0)
+                    if (reader.Current.ValueSpan.Length > 0)
                     {
-                        reader.Current.ValueSpan.CopyTo(buffer.Slice(bytesWritten));
-                        bytesWritten += propertyLength;
+                        EscapePropertyName(reader.Current.ValueSpan, buffer.Slice(bytesWritten), out int escapedLength);
+                        bytesWritten += escapedLength;
                     }
                     break;
                 case JsonPathTokenType.ArrayIndex:
@@ -79,6 +77,41 @@ internal static class JsonPathReaderExtensions
         }
 
         return bytesWritten;
+    }
+
+    private static void EscapePropertyName(ReadOnlySpan<byte> propertyName, Span<byte> buffer, out int bytesWritten)
+    {
+        ReadOnlySpan<byte> local = propertyName;
+        int count = 0;
+        bytesWritten = 0;
+        for (int i = 0; i < propertyName.Length; i++)
+        {
+            byte c = propertyName[i];
+            if (c == (byte)'~')
+            {
+                local.Slice(0, count).CopyTo(buffer.Slice(bytesWritten));
+                local = local.Slice(count + 1);
+                bytesWritten += count;
+                count = 0;
+                "~0"u8.CopyTo(buffer.Slice(bytesWritten));
+                bytesWritten += 2;
+            }
+            else if (c == (byte)'/')
+            {
+                local.Slice(0, count).CopyTo(buffer.Slice(bytesWritten));
+                local = local.Slice(count + 1);
+                bytesWritten += count;
+                count = 0;
+                "~1"u8.CopyTo(buffer.Slice(bytesWritten));
+                bytesWritten += 2;
+            }
+            else
+            {
+                count++;
+            }
+        }
+        local.Slice(0, count).CopyTo(buffer.Slice(bytesWritten));
+        bytesWritten += count;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
-    public class JsonPathReaderExtensionsTests
+    public class JsonPathExtensionsTests
     {
         [TestCase("{\"obj\":{\"a\":1}}", "$.obj", "{\"a\":1}")]
         [TestCase("{\"ob.j\":{\"a\":1}}", "$['ob.j']", "{\"a\":1}")]
@@ -404,7 +404,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$.x", "/x")]
         [TestCase("$['x']", "/x")]
         [TestCase("$[\"x\"]", "/x")]
-        [TestCase("$x.['y'][4].[\"z\"][12].a", "/x/y/4/z/12/a")]
+        [TestCase("$.x.['y'][4].[\"z\"][12].a", "/x/y/4/z/12/a")]
+        [TestCase("$.x.['y'][4].[\"z~z/\"][12].a", "/x/y/4/z~0z~1/12/a")]
+        [TestCase("$.~", "/~0")]
+        [TestCase("$.~x", "/~0x")]
+        [TestCase("$.x~", "/x~0")]
         public void ConvertToJsonPointer(string jsonPathStr, string expectedJsonPointer)
         {
             byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
@@ -418,7 +422,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$.x", "/x/-")]
         [TestCase("$['x']", "/x/-")]
         [TestCase("$[\"x\"]", "/x/-")]
-        [TestCase("$x.['y'][4].[\"z\"][12].a", "/x/y/4/z/12/a/-")]
+        [TestCase("$.x.['y'][4].[\"z\"][12].a", "/x/y/4/z/12/a/-")]
+        [TestCase("$.x.['y'][4].[\"z~z/\"][12].a", "/x/y/4/z~0z~1/12/a/-")]
+        [TestCase("$.~", "/~0/-")]
+        [TestCase("$.~x", "/~0x/-")]
+        [TestCase("$.x~", "/x~0/-")]
         public void ConvertToJsonPointerAppend(string jsonPathStr, string expectedJsonPointer)
         {
             byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
