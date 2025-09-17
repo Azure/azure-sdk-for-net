@@ -9,6 +9,7 @@ import "./routes.tsp";
 import "./endpoint.tsp";
 import "./selfhelp.tsp";
 import "./playwright.tsp";
+import "./databox.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;

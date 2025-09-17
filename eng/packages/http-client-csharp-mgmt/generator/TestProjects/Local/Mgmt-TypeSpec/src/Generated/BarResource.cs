@@ -305,7 +305,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BarData patch = new BarData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -353,7 +353,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = Get(cancellationToken).Value.Data;
+                    BarData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BarData patch = new BarData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -400,7 +400,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BarData patch = new BarData();
                     patch.Tags.ReplaceWith(tags);
                     Response<BarResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
@@ -443,7 +443,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = Get(cancellationToken).Value.Data;
+                    BarData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BarData patch = new BarData();
                     patch.Tags.ReplaceWith(tags);
                     Response<BarResource> result = Update(patch, cancellationToken);
@@ -485,7 +485,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BarData patch = new BarData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -531,7 +531,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = Get(cancellationToken).Value.Data;
+                    BarData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BarData patch = new BarData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
