@@ -34,7 +34,6 @@ namespace Azure.Storage.DataMovement
             string id = default,
             TransferStatus status = default)
         {
-            Argument.AssertNotNull(TransferManager, nameof(TransferManager));
             _id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
             _status = status;
             CompletionSource = new TaskCompletionSource<TransferStatus>(

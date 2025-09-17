@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement.Tests
         public ProcessAsync<T> Process { get; set; }
 
         /// <inheritdoc/>
-        public ValueTask QueueAsync(T item)
+        public ValueTask QueueAsync(T item, CancellationToken cancellationToken = default)
         {
             _queue.Enqueue(item);
             return new(Task.CompletedTask);

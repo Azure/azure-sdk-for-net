@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                await _progressProcessor.QueueAsync(args).ConfigureAwait(false);
+                await _progressProcessor.QueueAsync(args, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex) when (ex is ChannelClosedException || ex is OperationCanceledException)
             {

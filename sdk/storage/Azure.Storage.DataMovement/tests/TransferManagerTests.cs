@@ -616,7 +616,7 @@ internal static partial class MockExtensions
 {
     public static void SetupQueueAsync<T>(this Mock<IProcessor<T>> processor, Action<T, CancellationToken> onQueue = default)
     {
-        var setup = processor.Setup(p => p.QueueAsync(It.IsNotNull<T>()))
+        var setup = processor.Setup(p => p.QueueAsync(It.IsNotNull<T>(), It.IsAny<CancellationToken>()))
             .Returns(new ValueTask(Task.CompletedTask));
         if (onQueue != default)
         {

@@ -100,9 +100,9 @@ namespace Azure.Storage.DataMovement
             await _downloadRangeProcessor.TryCompleteAsync().ConfigureAwait(false);
         }
 
-        public async ValueTask QueueChunkAsync(QueueDownloadChunkArgs args)
+        public async ValueTask QueueChunkAsync(QueueDownloadChunkArgs args, CancellationToken cancellationToken = default)
         {
-            await _downloadRangeProcessor.QueueAsync(args).ConfigureAwait(false);
+            await _downloadRangeProcessor.QueueAsync(args, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task ProcessDownloadRange(QueueDownloadChunkArgs args)

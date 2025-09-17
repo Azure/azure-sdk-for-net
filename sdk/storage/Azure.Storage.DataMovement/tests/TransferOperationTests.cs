@@ -117,9 +117,13 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
 
+            await using TransferManager transferManager = new TransferManager();
             TransferOperation transfer = new TransferOperation(
                 id: transferId,
-                status: InProgressStatus);
+                status: InProgressStatus)
+            {
+                TransferManager = transferManager
+            };
 
             // Act
             Task pauseTask = transfer.PauseAsync();

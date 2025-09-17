@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement
             await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync().ConfigureAwait(false))
             {
                 await job.IncrementJobParts().ConfigureAwait(false);
-                await _partsProcessor.QueueAsync(partItem).ConfigureAwait(false);
+                await _partsProcessor.QueueAsync(partItem, default).ConfigureAwait(false);
             }
         }
         private async Task ProcessPartAsync(JobPartInternal part)
@@ -428,7 +428,7 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.CollisionTransferId(transfer.Id);
             }
-            await _jobsProcessor.QueueAsync(transferJobInternal).ConfigureAwait(false);
+            await _jobsProcessor.QueueAsync(transferJobInternal, cancellationToken).ConfigureAwait(false);
             return transfer;
         }
         #endregion

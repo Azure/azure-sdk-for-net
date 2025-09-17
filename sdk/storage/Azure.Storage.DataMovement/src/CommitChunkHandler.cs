@@ -89,9 +89,9 @@ namespace Azure.Storage.DataMovement
             return _stageChunkProcessor.TryCompleteAsync();
         }
 
-        public async ValueTask QueueChunkAsync(QueueStageChunkArgs args)
+        public async ValueTask QueueChunkAsync(QueueStageChunkArgs args, CancellationToken cancellationToken = default)
         {
-            await _stageChunkProcessor.QueueAsync(args).ConfigureAwait(false);
+            await _stageChunkProcessor.QueueAsync(args, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task ProcessCommitRange(QueueStageChunkArgs args)
