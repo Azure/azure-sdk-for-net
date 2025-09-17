@@ -432,7 +432,8 @@ public partial struct JsonPatch
                 if (_properties.TryGetValue(parentPath, out currentValue))
                 {
                     GetSubPath(parentPath, localPath, ref childPath);
-                    _properties.Set(parentPath, new(currentValue.Kind, ModifyJson(currentValue, childPath, encodedValue)));
+                    ValueKind newKind = encodedValue.Kind == ValueKind.Removed && childPath.IsRoot() ? encodedValue.Kind : currentValue.Kind;
+                    _properties.Set(parentPath, new(newKind, ModifyJson(currentValue, childPath, encodedValue)));
                     return;
                 }
 

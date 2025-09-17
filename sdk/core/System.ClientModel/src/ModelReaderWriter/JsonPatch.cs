@@ -302,7 +302,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public bool GetBoolean(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -322,7 +322,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public byte GetByte(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -343,7 +343,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public DateTime GetDateTime(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -364,7 +364,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public DateTimeOffset GetDateTimeOffset(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -384,7 +384,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public decimal GetDecimal(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -404,7 +404,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public double GetDouble(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -424,7 +424,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public float GetFloat(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -444,7 +444,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public Guid GetGuid(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -464,7 +464,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public int GetInt32(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -484,7 +484,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public long GetInt64(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -504,7 +504,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public sbyte GetInt8(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -524,7 +524,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public short GetInt16(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -545,7 +545,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public TimeSpan GetTimeSpan(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -565,7 +565,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public uint GetUInt32(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -585,7 +585,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public ulong GetUInt64(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -605,7 +605,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public ushort GetUInt16(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -625,7 +625,9 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public string? GetString(ReadOnlySpan<byte> jsonPath)
     {
-        if (TryGetValue(jsonPath, out string? stringValue))
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue) &&
+            encodedValue.Kind != ValueKind.Removed &&
+            encodedValue.TryDecodeValue(out string? stringValue))
         {
             return stringValue;
         }
@@ -641,7 +643,11 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public BinaryData GetJson(ReadOnlySpan<byte> jsonPath)
     {
-        return new(GetEncodedValue(jsonPath));
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
+        {
+            ThrowKeyNotFoundException(jsonPath);
+        }
+        return new(encodedValue.Value);
     }
 
     /// <summary>
@@ -654,7 +660,7 @@ public partial struct JsonPatch
     public T? GetNullableValue<T>(ReadOnlySpan<byte> jsonPath)
         where T : struct
     {
-        if (!TryGetEncodedValueInternal(jsonPath, out EncodedValue encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out EncodedValue encodedValue) || encodedValue.Kind == ValueKind.Removed)
         {
             ThrowKeyNotFoundException(jsonPath);
         }
@@ -993,24 +999,8 @@ public partial struct JsonPatch
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            if (EncodedValue.Null.Value.Span.SequenceEqual(encodedValue.Value.Span))
-            {
-                value = null;
-                return true;
-            }
-
-            var span = encodedValue.Value.Span;
-            if (span.Length >= 2 && span[0] == (byte)'"' && span[span.Length - 1] == (byte)'"')
-            {
-                // Trim the quotes
-                span = span.Slice(1, span.Length - 2);
-            }
-
-#if NET6_0_OR_GREATER
-            value = Encoding.UTF8.GetString(span);
-#else
-            value = Encoding.UTF8.GetString(span.ToArray());
-#endif
+            encodedValue.TryDecodeValue(out string? result);
+            value = result;
             return true;
         }
 

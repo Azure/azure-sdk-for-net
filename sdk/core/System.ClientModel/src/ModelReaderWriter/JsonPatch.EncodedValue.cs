@@ -504,6 +504,30 @@ public partial struct JsonPatch
             return false;
         }
 
+        internal bool TryDecodeValue(out string? value)
+        {
+            var span = Value.Span;
+
+            if (s_null.Span.SequenceEqual(span))
+            {
+                value = null;
+                return true;
+            }
+
+            if (span.Length >= 2 && span[0] == (byte)'"' && span[span.Length - 1] == (byte)'"')
+            {
+                // Trim the quotes
+                span = span.Slice(1, span.Length - 2);
+            }
+
+#if NET6_0_OR_GREATER
+            value = Encoding.UTF8.GetString(span);
+#else
+            value = Encoding.UTF8.GetString(span.ToArray());
+#endif
+            return true;
+        }
+
         internal bool TryDecodeNullableValue<T>(out T? value, out bool supportedType)
             where T : struct
         {

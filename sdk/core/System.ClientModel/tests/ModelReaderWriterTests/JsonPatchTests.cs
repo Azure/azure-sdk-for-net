@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.IO;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
@@ -138,6 +135,59 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("value", jp.GetString("$['pro.perty']"u8));
 
             Assert.AreEqual("{\"pro.perty\":\"value\"}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void Contains_ArrayAppend_DoesNotReportArrayPath()
+        {
+            JsonPatch jp = new();
+            jp.Append("$.items"u8, "value1");
+            Assert.IsFalse(jp.Contains("$.items"u8), "Append should not cause Contains(path) to report true for the array container path.");
+
+            Assert.AreEqual("value1", jp.GetString("$.items[0]"u8));
+        }
+
+        [Test]
+        public void Contains_PrefixProperty_ReportsProperty()
+        {
+            JsonPatch jp = new("{\"parent\":{\"child\":1}}"u8.ToArray());
+            jp.Set("$.parent.child"u8, 10);
+
+            Assert.IsTrue(jp.Contains("$.parent.child"u8));
+            Assert.IsTrue(jp.Contains("$.parent"u8, "child"u8));
+
+            Assert.IsFalse(jp.Contains("$.parent"u8, "missing"u8));
+            Assert.IsFalse(jp.Contains("$.parent.child"u8, "grand"u8));
+        }
+
+        [Test]
+        public void Contains_PrefixProperty_ArrayAppendPotentialInconsistency()
+        {
+            JsonPatch jp = new();
+            jp.Append("$.arr"u8, 5);
+
+            Assert.IsFalse(jp.Contains("$.arr"u8), "Array container path should not be considered 'contained' after only an append.");
+
+            Assert.IsTrue(jp.Contains("$"u8, "arr"u8), "Prefix/property Contains currently ignores ArrayItemAppend and reports true.");
+        }
+
+        [Test]
+        public void IsRemoved_Behavior()
+        {
+            JsonPatch jp = new("{\"obj\":{\"a\":0,\"b\":1}}"u8.ToArray());
+            jp.Set("$.obj.a"u8, 1);
+            jp.Set("$.obj.b"u8, 2);
+
+            Assert.IsFalse(jp.IsRemoved("$.obj.a"u8));
+            Assert.IsFalse(jp.IsRemoved("$.obj.b"u8));
+
+            jp.Remove("$.obj.a"u8);
+
+            Assert.IsTrue(jp.IsRemoved("$.obj.a"u8));
+            Assert.IsFalse(jp.IsRemoved("$.obj.b"u8));
+
+            var ex = Assert.Throws<KeyNotFoundException>(() => jp.GetInt32("$.obj.a"u8));
+            Assert.AreEqual("No value found at JSON path '$.obj.a'.", ex!.Message);
         }
     }
 }

@@ -372,6 +372,11 @@ internal static class JsonPathExtensions
     /// <returns>The modified JSON excluding the value found at <paramref name="jsonPath"/>.</returns>
     public static byte[] Remove(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath)
     {
+        if (jsonPath.IsRoot())
+        {
+            return Array.Empty<byte>();
+        }
+
         Find(json.Span, jsonPath, out Utf8JsonReader jsonReader);
 
         long endLeft = jsonReader.TokenStartIndex;
