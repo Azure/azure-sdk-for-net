@@ -95,7 +95,6 @@ namespace Azure.Generator.Management.Models
                 {
                     if (!other[i].IsConstant)
                         continue;
-                    // If this[i] is variable, other[i] must also be variable
                     return false;
                 }
             }
