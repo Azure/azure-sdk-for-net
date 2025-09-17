@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
         /// <param name="sharingProfile"> Specifies the settings to enable sharing across subscriptions for the capacity reservation group resource. The capacity reservation group resource can generally be shared across subscriptions belonging to a single Azure AAD tenant or across AAD tenants if there is a trust relationship established between the tenants.  Block capacity reservation does not support sharing across subscriptions. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </param>
-        internal CapacityReservationGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<SubResource> capacityReservations, IReadOnlyList<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView, ResourceSharingProfile sharingProfile, ReservationType? reservationType) : base(tags, serializedAdditionalRawData)
+        internal CapacityReservationGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<SubResource> capacityReservations, IReadOnlyList<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView, ResourceSharingProfile sharingProfile, CapacityReservationType? reservationType) : base(tags, serializedAdditionalRawData)
         {
             CapacityReservations = capacityReservations;
             VirtualMachinesAssociated = virtualMachinesAssociated;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </summary>
-        public ReservationType? ReservationType { get; set; }
+        public CapacityReservationType? ReservationType { get; set; }
     }
 }

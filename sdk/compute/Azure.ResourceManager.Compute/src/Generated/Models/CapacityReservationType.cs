@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </summary>
-    public readonly partial struct ReservationType : IEquatable<ReservationType>
+    public readonly partial struct CapacityReservationType : IEquatable<CapacityReservationType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ReservationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReservationType(string value)
+        public CapacityReservationType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.Compute.Models
         private const string BlockValue = "Block";
 
         /// <summary> To consume on demand allocated capacity reservation when a capacity reservation group is provided. </summary>
-        public static ReservationType Targeted { get; } = new ReservationType(TargetedValue);
+        public static CapacityReservationType Targeted { get; } = new CapacityReservationType(TargetedValue);
         /// <summary> To consume scheduled allocated block capacity reservation when a capacity reservation group is provided. </summary>
-        public static ReservationType Block { get; } = new ReservationType(BlockValue);
-        /// <summary> Determines if two <see cref="ReservationType"/> values are the same. </summary>
-        public static bool operator ==(ReservationType left, ReservationType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ReservationType"/> values are not the same. </summary>
-        public static bool operator !=(ReservationType left, ReservationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationType"/>. </summary>
-        public static implicit operator ReservationType(string value) => new ReservationType(value);
+        public static CapacityReservationType Block { get; } = new CapacityReservationType(BlockValue);
+        /// <summary> Determines if two <see cref="CapacityReservationType"/> values are the same. </summary>
+        public static bool operator ==(CapacityReservationType left, CapacityReservationType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="CapacityReservationType"/> values are not the same. </summary>
+        public static bool operator !=(CapacityReservationType left, CapacityReservationType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityReservationType"/>. </summary>
+        public static implicit operator CapacityReservationType(string value) => new CapacityReservationType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ReservationType other && Equals(other);
+        public override bool Equals(object obj) => obj is CapacityReservationType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ReservationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CapacityReservationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

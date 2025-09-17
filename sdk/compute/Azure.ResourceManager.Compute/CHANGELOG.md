@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0 (2025-04-01)
+## 1.12.0 (2025-09-22)
 
 ### Features Added
 

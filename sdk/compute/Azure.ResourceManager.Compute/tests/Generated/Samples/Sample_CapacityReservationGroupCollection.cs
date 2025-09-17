@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Samples
             CapacityReservationGroupData data = new CapacityReservationGroupData(new AzureLocation("westus"))
             {
                 Zones = { "1", "2" },
-                ReservationType = ReservationType.Block,
+                ReservationType = CapacityReservationType.Block,
                 Tags =
 {
 ["department"] = "finance"
@@ -144,7 +144,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id1}"),
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
 }},
-                ReservationType = ReservationType.Targeted,
+                ReservationType = CapacityReservationType.Targeted,
                 Tags =
 {
 ["department"] = "finance"

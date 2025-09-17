@@ -306,6 +306,8 @@ rename-mapping:
   Expand: GetVirtualMachineImagesWithPropertiesExpand
   RebalanceBehavior: VmssRebalanceBehavior
   RebalanceStrategy: VmssRebalanceStrategy
+  EventGridAndResourceGraph.Enable: IsEventGridAndResourceGraphEnabled
+  ReservationType : CapacityReservationType
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
