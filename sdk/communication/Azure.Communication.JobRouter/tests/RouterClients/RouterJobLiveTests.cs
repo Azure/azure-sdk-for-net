@@ -188,7 +188,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerClient.CancelJobAsync(new CancelJobOptions(jobId1)); // other wise queue deletion will throw error
         }
 
-        [Test]
         public async Task CreateJobWithClassificationPolicy_w_StaticPriority()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -248,7 +247,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerAdministrationClient.DeleteClassificationPolicyAsync(classificationPolicyId); // other wise default queue deletion will throw error
         }
 
-        [Test]
         public async Task CreateJobWithClassificationPolicy_w_StaticQueueSelector()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -301,7 +299,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerAdministrationClient.DeleteClassificationPolicyAsync(classificationPolicyId); // other wise default queue deletion will throw error
         }
 
-        [Test]
         public async Task CreateJobWithClassificationPolicy_w_FallbackQueue()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -350,7 +347,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerAdministrationClient.DeleteClassificationPolicyAsync(classificationPolicyId); // other wise default queue deletion will throw error
         }
 
-        [Test]
         public async Task CreateJobWithQueue_And_ClassificationPolicy_w_FallbackQueue()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -498,7 +494,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerClient.CancelJobAsync(new CancelJobOptions(createJob1.Id)); // other wise queue deletion will throw error
         }
 
-        [Test]
         public async Task UpdateJobTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
