@@ -38,6 +38,91 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Describes the connected cluster resource properties that can be updated during PATCH operation. </summary>
-        public ConnectedClusterPatchProperties Properties { get; set; }
+        internal ConnectedClusterPatchProperties Properties { get; set; }
+
+        /// <summary> Represents the distribution of the connected cluster. </summary>
+        public string Distribution
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Distribution;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterPatchProperties();
+                }
+                Properties.Distribution = value;
+            }
+        }
+
+        /// <summary> Represents the Kubernetes distribution version on this connected cluster. </summary>
+        public string DistributionVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DistributionVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterPatchProperties();
+                }
+                Properties.DistributionVersion = value;
+            }
+        }
+
+        /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
+        public AzureHybridBenefit? AzureHybridBenefit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureHybridBenefit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterPatchProperties();
+                }
+                Properties.AzureHybridBenefit = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether Gateway is enabled for the connected cluster resource. </summary>
+        internal Gateway Gateway
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Gateway;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterPatchProperties();
+                }
+                Properties.Gateway = value;
+            }
+        }
+
+        /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
+        public bool? GatewayEnabled
+        {
+            get
+            {
+                return Gateway is null ? default : Gateway.Enabled;
+            }
+            set
+            {
+                if (Gateway is null)
+                {
+                    Gateway = new Gateway();
+                }
+                Gateway.Enabled = value;
+            }
+        }
     }
 }

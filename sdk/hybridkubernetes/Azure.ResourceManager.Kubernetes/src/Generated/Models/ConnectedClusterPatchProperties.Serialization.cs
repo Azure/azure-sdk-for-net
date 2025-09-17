@@ -14,7 +14,7 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Properties which can be patched on the connected cluster resource. </summary>
-    public partial class ConnectedClusterPatchProperties : IJsonModel<ConnectedClusterPatchProperties>
+    internal partial class ConnectedClusterPatchProperties : IJsonModel<ConnectedClusterPatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 writer.WritePropertyName("azureHybridBenefit"u8);
                 writer.WriteStringValue(AzureHybridBenefit.Value.ToString());
+            }
+            if (Optional.IsDefined(Gateway))
+            {
+                writer.WritePropertyName("gateway"u8);
+                writer.WriteObjectValue(Gateway, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -94,6 +99,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             string distribution = default;
             string distributionVersion = default;
             AzureHybridBenefit? azureHybridBenefit = default;
+            Gateway gateway = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,12 +122,21 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     azureHybridBenefit = new AzureHybridBenefit(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("gateway"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gateway = Gateway.DeserializeGateway(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, additionalBinaryDataProperties);
+            return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, gateway, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

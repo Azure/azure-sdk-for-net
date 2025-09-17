@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             TryGetApiVersion(ResourceType, out string connectedClusterApiVersion);
             _connectedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kubernetes", ResourceType.Namespace, Diagnostics);
-            _connectedClustersRestClient = new ConnectedClusters(_connectedClustersClientDiagnostics, Pipeline, Endpoint, connectedClusterApiVersion ?? "2025-08-01-preview");
+            _connectedClustersRestClient = new ConnectedClusters(_connectedClustersClientDiagnostics, Pipeline, Endpoint, connectedClusterApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

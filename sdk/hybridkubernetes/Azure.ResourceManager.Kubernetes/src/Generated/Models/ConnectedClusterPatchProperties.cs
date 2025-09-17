@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Properties which can be patched on the connected cluster resource. </summary>
-    public partial class ConnectedClusterPatchProperties
+    internal partial class ConnectedClusterPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="distribution"> Represents the distribution of the connected cluster. </param>
         /// <param name="distributionVersion"> Represents the Kubernetes distribution version on this connected cluster. </param>
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
+        /// <param name="gateway"> Indicates whether Gateway is enabled for the connected cluster resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterPatchProperties(string distribution, string distributionVersion, AzureHybridBenefit? azureHybridBenefit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterPatchProperties(string distribution, string distributionVersion, AzureHybridBenefit? azureHybridBenefit, Gateway gateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Distribution = distribution;
             DistributionVersion = distributionVersion;
             AzureHybridBenefit = azureHybridBenefit;
+            Gateway = gateway;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,25 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
         public AzureHybridBenefit? AzureHybridBenefit { get; set; }
+
+        /// <summary> Indicates whether Gateway is enabled for the connected cluster resource. </summary>
+        internal Gateway Gateway { get; set; }
+
+        /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
+        public bool? GatewayEnabled
+        {
+            get
+            {
+                return Gateway is null ? default : Gateway.Enabled;
+            }
+            set
+            {
+                if (Gateway is null)
+                {
+                    Gateway = new Gateway();
+                }
+                Gateway.Enabled = value;
+            }
+        }
     }
 }

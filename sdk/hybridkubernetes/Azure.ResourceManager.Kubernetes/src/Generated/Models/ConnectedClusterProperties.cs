@@ -12,7 +12,7 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Properties of the connected cluster. </summary>
-    public partial class ConnectedClusterProperties
+    internal partial class ConnectedClusterProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
 
         private ClientDiagnostics ConnectedClustersClientDiagnostics => _connectedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kubernetes.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConnectedClusters ConnectedClustersRestClient => _connectedClustersRestClient ??= new ConnectedClusters(ConnectedClustersClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private ConnectedClusters ConnectedClustersRestClient => _connectedClustersRestClient ??= new ConnectedClusters(ConnectedClustersClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
         /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

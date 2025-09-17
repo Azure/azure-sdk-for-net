@@ -14,7 +14,7 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Properties of the connected cluster. </summary>
-    public partial class ConnectedClusterProperties : IJsonModel<ConnectedClusterProperties>
+    internal partial class ConnectedClusterProperties : IJsonModel<ConnectedClusterProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterProperties"/> for deserialization. </summary>
         internal ConnectedClusterProperties()
