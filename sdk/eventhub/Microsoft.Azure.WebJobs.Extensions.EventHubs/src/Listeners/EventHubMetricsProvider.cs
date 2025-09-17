@@ -56,24 +56,58 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
 
             // Get the PartitionRuntimeInformation for all partitions
             _logger.LogInformation($"Querying partition information for {partitions.Length} partitions.");
-            var partitionPropertiesTasks = new Task<PartitionProperties>[partitions.Length];
 
-            for (int i = 0; i < partitions.Length; i++)
-            {
-                partitionPropertiesTasks[i] = _client.GetPartitionPropertiesAsync(partitions[i]);
-            }
-
-            await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
-            EventProcessorCheckpoint[] checkpoints = null;
-
+            // Limit number of concurrent requests to eventhub client
             const int ConcurrencyLimit = 50;
             const int WaitTimeoutMs = 5000;
+            using var semaphore = new SemaphoreSlim(ConcurrencyLimit, ConcurrencyLimit);
+            using var cts = new CancellationTokenSource();
 
+            // Get partition properties
+            var partitionPropertiesTasks = new Task<PartitionProperties>[partitions.Length];
             try
             {
-                using var semaphore = new SemaphoreSlim(ConcurrencyLimit, ConcurrencyLimit);
-                using var cts = new CancellationTokenSource();
+                partitionPropertiesTasks = partitions.Select(async partition =>
+                {
+                    bool acquired = false;
+                    try
+                    {
+                        acquired = await semaphore.WaitAsync(WaitTimeoutMs, cts.Token).ConfigureAwait(false);
+                        if (!acquired)
+                        {
+                            throw new TimeoutException(
+                                $"Failed to acquire EH client concurrency slot within {WaitTimeoutMs}ms for Event Hub '{_client.EventHubName}', partition '{partition}'.");
+                        }
+                        return await _client.GetPartitionPropertiesAsync(partition).ConfigureAwait(false);
+                    }
+                    catch (Exception e)
+                    {
+                        if (!cts.Token.IsCancellationRequested)
+                        {
+                            _logger.LogDebug($"Requesting cancellation of other partition info tasks. Error while getting partition info for eventhub '{_client.EventHubName}', partition '{partition}': {e.Message}");
+                            cts.Cancel();
+                        }
+                        throw;
+                    }
+                    finally
+                    {
+                        if (acquired)
+                        {
+                            semaphore.Release();
+                        }
+                    }
+                }).ToArray();
+                await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"Encountered an exception while getting partition information for Event Hub '{_client.EventHubName}' used for scaling. Error: {e.Message}");
+            }
 
+            // Get checkpoints
+            EventProcessorCheckpoint[] checkpoints = null;
+            try
+            {
                 var checkpointTasks = partitions.Select(async partition =>
                 {
                     bool acquired = false;
