@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.4 (2025-09-17)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.SignalR` AOT-compatible.
 
 ## 1.1.3 (2024-10-23)
 
