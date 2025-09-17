@@ -23,6 +23,7 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 ### Using statements
 ```C# Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
+using System.IO;
 using Azure.Communication.Sms;
 ```
 
@@ -40,6 +41,7 @@ Alternatively, SMS clients can also be authenticated using a valid token credent
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
 string endpoint = "<endpoint_url>";
 TokenCredential tokenCredential = new DefaultAzureCredential();
+tokenCredential = new DefaultAzureCredential();
 SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
