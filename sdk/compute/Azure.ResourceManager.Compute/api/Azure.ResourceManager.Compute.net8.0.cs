@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView InstanceView { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ReservationType? ReservationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.CapacityReservationType? ReservationType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
@@ -3474,13 +3474,13 @@ namespace Azure.ResourceManager.Compute.Models
         public static Azure.ResourceManager.Compute.CapacityReservationData CapacityReservationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.Models.ComputeSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, string reservationId = null, int? platformFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, System.DateTimeOffset? provisioningOn = default(System.DateTimeOffset?), string provisioningState = null, Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView instanceView = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.ScheduleProfile scheduleProfile = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.CapacityReservationGroupData CapacityReservationGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<string> zones, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds) { throw null; }
-        public static Azure.ResourceManager.Compute.CapacityReservationGroupData CapacityReservationGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds = null, Azure.ResourceManager.Compute.Models.ReservationType? reservationType = default(Azure.ResourceManager.Compute.Models.ReservationType?)) { throw null; }
+        public static Azure.ResourceManager.Compute.CapacityReservationGroupData CapacityReservationGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds = null, Azure.ResourceManager.Compute.Models.CapacityReservationType? reservationType = default(Azure.ResourceManager.Compute.Models.CapacityReservationType?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.CapacityReservationGroupData CapacityReservationGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<string> zones, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> instanceViewCapacityReservations) { throw null; }
         public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView CapacityReservationGroupInstanceView(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> sharedSubscriptionIds = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupPatch CapacityReservationGroupPatch(System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupPatch CapacityReservationGroupPatch(System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds = null, Azure.ResourceManager.Compute.Models.ReservationType? reservationType = default(Azure.ResourceManager.Compute.Models.ReservationType?)) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupPatch CapacityReservationGroupPatch(System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds = null, Azure.ResourceManager.Compute.Models.CapacityReservationType? reservationType = default(Azure.ResourceManager.Compute.Models.CapacityReservationType?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView CapacityReservationInstanceView(Azure.ResourceManager.Compute.Models.CapacityReservationUtilization utilizationInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName CapacityReservationInstanceViewWithName(Azure.ResourceManager.Compute.Models.CapacityReservationUtilization utilizationInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null, string name = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -3935,7 +3935,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView InstanceView { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ReservationType? ReservationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.CapacityReservationType? ReservationType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4005,6 +4005,24 @@ namespace Azure.ResourceManager.Compute.Models
         Azure.ResourceManager.Compute.Models.CapacityReservationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CapacityReservationType : System.IEquatable<Azure.ResourceManager.Compute.Models.CapacityReservationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CapacityReservationType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationType Block { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationType Targeted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.CapacityReservationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.CapacityReservationType left, Azure.ResourceManager.Compute.Models.CapacityReservationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.CapacityReservationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.CapacityReservationType left, Azure.ResourceManager.Compute.Models.CapacityReservationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CapacityReservationUtilization : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CapacityReservationUtilization>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationUtilization>
     {
@@ -7693,24 +7711,6 @@ namespace Azure.ResourceManager.Compute.Models
         Azure.ResourceManager.Compute.Models.RequestRateByIntervalContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RequestRateByIntervalContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RequestRateByIntervalContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RequestRateByIntervalContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReservationType : System.IEquatable<Azure.ResourceManager.Compute.Models.ReservationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ReservationType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ReservationType Block { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ReservationType Targeted { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ReservationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ReservationType left, Azure.ResourceManager.Compute.Models.ReservationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ReservationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ReservationType left, Azure.ResourceManager.Compute.Models.ReservationType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ResiliencyPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ResiliencyPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResiliencyPolicy>
     {
