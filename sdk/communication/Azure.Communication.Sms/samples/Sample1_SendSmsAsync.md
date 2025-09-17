@@ -11,7 +11,6 @@ SMS clients can be authenticated using the connection string acquired from an Az
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
 string endpoint = "<endpoint_url>";
 TokenCredential tokenCredential = new DefaultAzureCredential();
-tokenCredential = new DefaultAzureCredential();
 SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
@@ -47,9 +46,4 @@ foreach (SmsSendResult result in response.Value)
 }
 ```
 
-To see the full example source files, see:
-
-* [Send SMS to single recipient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/tests/samples/Sample1_SmsClient.cs)
-* [Send SMS to multiple recipients with options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/tests/samples/Sample1_SmsClient.cs)
-
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/README.md#getting-started
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Sms/README.md#getting-started

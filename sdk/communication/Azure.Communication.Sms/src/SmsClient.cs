@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
