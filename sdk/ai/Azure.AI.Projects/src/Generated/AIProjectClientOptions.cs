@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
     /// <summary> Client options for <see cref="AIProjectClient"/>. </summary>
     public partial class AIProjectClientOptions : ClientPipelineOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
         /// <summary> Initializes a new instance of AIProjectClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects
             Version = version switch
             {
                 ServiceVersion.V2025_05_01 => "2025-05-01",
-                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
+                ServiceVersion.V1 => "v1",
                 _ => throw new NotSupportedException()
             };
         }
@@ -32,8 +32,8 @@ namespace Azure.AI.Projects
         {
             /// <summary> Azure AI API version 2025-05-01. </summary>
             V2025_05_01 = 1,
-            /// <summary> Azure AI API version 2025-05-15-preview. </summary>
-            V2025_05_15_Preview = 2
+            /// <summary> Azure AI API version v1. </summary>
+            V1 = 2
         }
     }
 }
