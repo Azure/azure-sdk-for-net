@@ -276,6 +276,7 @@ rename-mapping:
   EncryptionState: BackupVaultEncryptionState
   IdentityType: BackupVaultCmkKekIdentityType
   InfrastructureEncryptionState: BackupVaultInfrastructureEncryptionState
+  AKSVolumeTypes: BackupAksVolumeType
 
 directive:
 # Correct the type of properties

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public KubernetesClusterBackupDataSourceSettings(bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded)
         {
             IsSnapshotVolumesEnabled = isSnapshotVolumesEnabled;
-            IncludedVolumeTypes = new ChangeTrackingList<AKSVolumeType>();
+            IncludedVolumeTypes = new ChangeTrackingList<BackupAksVolumeType>();
             IsClusterScopeResourcesIncluded = isClusterScopeResourcesIncluded;
             IncludedNamespaces = new ChangeTrackingList<string>();
             ExcludedNamespaces = new ChangeTrackingList<string>();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="excludedResourceTypes"> Gets or sets the exclude resource types property. This property sets the resource types to be excluded during backup. </param>
         /// <param name="labelSelectors"> Gets or sets the LabelSelectors property. This property sets the resource with such label selectors to be included during backup. </param>
         /// <param name="backupHookReferences"> Gets or sets the backup hook references. This property sets the hook reference to be executed during backup. </param>
-        internal KubernetesClusterBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool isSnapshotVolumesEnabled, IList<AKSVolumeType> includedVolumeTypes, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, IList<NamespacedName> backupHookReferences) : base(objectType, serializedAdditionalRawData)
+        internal KubernetesClusterBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool isSnapshotVolumesEnabled, IList<BackupAksVolumeType> includedVolumeTypes, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, IList<NamespacedName> backupHookReferences) : base(objectType, serializedAdditionalRawData)
         {
             IsSnapshotVolumesEnabled = isSnapshotVolumesEnabled;
             IncludedVolumeTypes = includedVolumeTypes;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during backup. </summary>
         public bool IsSnapshotVolumesEnabled { get; set; }
         /// <summary> Gets or sets the include volume types property. This property sets the volume types to be included during backup. </summary>
-        public IList<AKSVolumeType> IncludedVolumeTypes { get; }
+        public IList<BackupAksVolumeType> IncludedVolumeTypes { get; }
         /// <summary> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during backup. </summary>
         public bool IsClusterScopeResourcesIncluded { get; set; }
         /// <summary> Gets or sets the include namespaces property. This property sets the namespaces to be included during backup. </summary>
