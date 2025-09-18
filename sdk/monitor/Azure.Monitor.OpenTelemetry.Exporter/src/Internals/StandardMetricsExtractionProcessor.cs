@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _perfCounterMeter = new Meter(PerfCounterConstants.PerfCounterMeterName);
             _requestRate = _perfCounterMeter.CreateCounter<long>(PerfCounterConstants.RequestRateInstrumentationName);
-            _processPrivateBytesGauge = _standardMetricMeter.CreateObservableGauge<long>(PerfCounterConstants.ProcessPrivateBytesInstrumentationName, () => GetProcessPrivateBytes());
+            _processPrivateBytesGauge = _perfCounterMeter.CreateObservableGauge<long>(PerfCounterConstants.ProcessPrivateBytesInstrumentationName, () => GetProcessPrivateBytes());
             _processCpuGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ProcessCpuInstrumentationName, () => GetProcessCPU());
             _processCpuNormalizedGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ProcessCpuNormalizedInstrumentationName, () => GetProcessCPUNormalized());
             InitializeCpuBaseline();
@@ -247,7 +247,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (previousCollectedTime == DateTimeOffset.MinValue)
             {
-                Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} DateTimeOffset.MinValue");
                 rawValue = default;
                 normalizedValue = default;
                 return false;
@@ -260,7 +259,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     previousCollectedTime: previousCollectedTime.Ticks,
                     recentCollectedTime: recentCollectedTime.Ticks);
 
-                Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} period less than or equal to zero");
                 rawValue = default;
                 normalizedValue = default;
                 return false;
@@ -273,7 +271,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     previousCollectedValue: previousCollectedValue,
                     recentCollectedValue: recentCollectedValue);
 
-                Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} diff less than zero");
                 rawValue = default;
                 normalizedValue = default;
                 return false;

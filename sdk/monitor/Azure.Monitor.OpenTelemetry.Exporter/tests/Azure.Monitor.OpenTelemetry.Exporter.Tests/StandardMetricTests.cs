@@ -515,7 +515,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Helper local function to find metric by mapped name.
             MetricsData? FindMetric(string expectedName) => metricTelemetryItems
                 .Select(ti => (MetricsData)ti.Data.BaseData)
-                .FirstOrDefault(md => md.Metrics[0].Name == expectedName);
+                .FirstOrDefault(md => md.Metrics.Count > 0 && md.Metrics[0].Name == expectedName);
 
             var requestRate = FindMetric(PerfCounterConstants.RequestRateMetricIdValue);
             Assert.NotNull(requestRate);
