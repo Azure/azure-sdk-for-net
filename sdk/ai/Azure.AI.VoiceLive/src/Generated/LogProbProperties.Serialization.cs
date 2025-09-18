@@ -43,12 +43,14 @@ namespace Azure.AI.VoiceLive
             writer.WritePropertyName("logprob"u8);
             writer.WriteNumberValue(Logprob);
             writer.WritePropertyName("bytes"u8);
-            writer.WriteStartArray();
-            foreach (int item in Bytes)
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(Bytes);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Bytes))
             {
-                writer.WriteNumberValue(item);
+                JsonSerializer.Serialize(writer, document.RootElement);
             }
-            writer.WriteEndArray();
+#endif
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -93,7 +95,7 @@ namespace Azure.AI.VoiceLive
             }
             string token = default;
             float logprob = default;
-            IList<int> bytes = default;
+            BinaryData bytes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -109,12 +111,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("bytes"u8))
                 {
-                    List<int> array = new List<int>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetInt32());
-                    }
-                    bytes = array;
+                    bytes = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

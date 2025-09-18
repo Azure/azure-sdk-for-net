@@ -25,5 +25,32 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
             return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore, serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
+        /// <param name="etag"> etag for the resource. </param>
+        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultData"/> instance for mocking. </returns>
+        public static RecoveryServicesVaultData RecoveryServicesVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity = null, RecoveryServicesVaultProperties properties = null, RecoveryServicesSku sku = null, ETag? etag = null)
+        {
+            return ArmRecoveryServicesModelFactory.RecoveryServicesVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                sku,
+                etag);
+        }
     }
 }

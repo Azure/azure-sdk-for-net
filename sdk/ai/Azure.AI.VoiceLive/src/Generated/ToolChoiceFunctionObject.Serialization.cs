@@ -12,8 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The representation of a voicelive tool_choice selecting a named function tool. </summary>
-    public partial class ToolChoiceFunctionObject : IJsonModel<ToolChoiceFunctionObject>
+    internal partial class ToolChoiceFunctionObject : IJsonModel<ToolChoiceFunctionObject>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/> for deserialization. </summary>
         internal ToolChoiceFunctionObject()

@@ -3,7 +3,9 @@
 
 using System;
 using System.Buffers;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,9 +60,10 @@ namespace Azure.AI.VoiceLive
                 return false;
             }
 
+            WebSocketPipelineResponse websocketPipelineResponse = new();
+
             try
             {
-                WebSocketPipelineResponse websocketPipelineResponse = new();
                 for (int partialMessageCount = 1; !websocketPipelineResponse.IsComplete; partialMessageCount++)
                 {
                     WebSocketReceiveResult receiveResult = await _webSocket
@@ -69,6 +72,10 @@ namespace Azure.AI.VoiceLive
 
                     if (receiveResult.CloseStatus.HasValue)
                     {
+                        if (_webSocket.State == WebSocketState.CloseReceived)
+                        {
+                            await _webSocket.CloseOutputAsync(receiveResult.CloseStatus.Value, "Acknowledge Close frame", CancellationToken.None).ConfigureAwait(false);
+                        }
                         Current = null;
                         return false;
                     }
@@ -82,10 +89,20 @@ namespace Azure.AI.VoiceLive
                 Current = websocketPipelineResponse.GetContent();
                 return true;
             }
-            catch (WebSocketException)
+            catch (WebSocketException webEx)
             {
-                Current = null;
-                return false;
+                var errorDetails = new SessionUpdateErrorDetails(webEx.GetType().Name, webEx.Message);
+
+                var id = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                var errorUpdate = new SessionUpdateError(errorDetails);
+
+                var persistable = errorUpdate as IPersistableModel<SessionUpdateError>;
+                var errorAsData = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
+
+                websocketPipelineResponse.IngestReceivedResult(errorAsData);
+
+                Current = websocketPipelineResponse.GetContent();
+                return true;
             }
         }
     }

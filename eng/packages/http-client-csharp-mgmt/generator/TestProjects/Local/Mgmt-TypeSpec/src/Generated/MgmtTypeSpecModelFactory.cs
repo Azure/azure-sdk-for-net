@@ -37,7 +37,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -89,7 +89,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.BarData"/> instance for mocking. </returns>
-        public static BarData BarData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, BarProperties properties = default)
+        public static BarData BarData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BarProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -172,7 +172,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.BazData"/> instance for mocking. </returns>
-        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, BazProperties properties = default)
+        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BazProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -196,7 +196,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="zooSomething"> something. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.ZooData"/> instance for mocking. </returns>
-        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, string zooSomething = default, ExtendedLocation extendedLocation = default)
+        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string zooSomething = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -265,6 +265,66 @@ namespace MgmtTypeSpec.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, new Dictionary<string, BinaryData>()));
+        }
+
+        /// <summary> Subscription-level location-based Playwright quota resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.PlaywrightQuotaData"/> instance for mocking. </returns>
+        public static PlaywrightQuotaData PlaywrightQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightQuotaProperties properties = default)
+        {
+            return new PlaywrightQuotaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Subscription-level location-based Playwright quota resource properties. </summary>
+        /// <param name="freeTrial"> The subscription-level location-based Playwright quota resource free-trial properties. </param>
+        /// <param name="provisioningState"> The status of the last resource operation. </param>
+        /// <returns> A new <see cref="Models.PlaywrightQuotaProperties"/> instance for mocking. </returns>
+        public static PlaywrightQuotaProperties PlaywrightQuotaProperties(string freeTrial = default, string provisioningState = default)
+        {
+            return new PlaywrightQuotaProperties(freeTrial, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="jobName"> Gets or sets the JobName. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.JobResourceData"/> instance for mocking. </returns>
+        public static JobResourceData JobResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string jobName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new JobResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                jobName is null ? default : new JobProperties(jobName, new Dictionary<string, BinaryData>()));
+        }
+
+        /// <param name="jobName"> Gets or sets the JobName. </param>
+        /// <param name="tags"></param>
+        /// <returns> A new <see cref="Models.JobResourcePatch"/> instance for mocking. </returns>
+        public static JobResourcePatch JobResourcePatch(string jobName, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new JobResourcePatch(jobName is null ? default : new JobProperties(jobName, new Dictionary<string, BinaryData>()), tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>

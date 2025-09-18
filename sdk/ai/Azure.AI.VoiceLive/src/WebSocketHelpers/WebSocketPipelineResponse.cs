@@ -46,6 +46,23 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
+        /// Ingests a received WebSocket result and associated data.
+        /// </summary>
+        /// <remarks>
+        /// This overload is intended to be used to insert and error message into the stream
+        /// when a websocket error occurs.
+        /// </remarks>
+        /// <param name="receivedBytes">The received data.</param>
+        public void IngestReceivedResult(BinaryData receivedBytes)
+        {
+            byte[] rawReceivedBytes = receivedBytes.ToArray();
+            _contentStream.Position = _contentStream.Length;
+            _contentStream.Write(rawReceivedBytes, 0, rawReceivedBytes.Length);
+            _contentStream.Position = 0;
+            IsComplete = true;
+        }
+
+        /// <summary>
         /// Gets the accumulated message content as BinaryData.
         /// </summary>
         /// <returns>The complete message content.</returns>

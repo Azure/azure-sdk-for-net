@@ -35,6 +35,42 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ChaosCapabilityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosCapabilityResource.CreateResourceIdentifier" /> to create a <see cref="ChaosCapabilityResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosCapabilityResource"/> object. </returns>
+        public virtual ChaosCapabilityResource GetChaosCapabilityResource(ResourceIdentifier id)
+        {
+            ChaosCapabilityResource.ValidateResourceId(id);
+            return new ChaosCapabilityResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosTargetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosTargetResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosTargetResource"/> object. </returns>
+        public virtual ChaosTargetResource GetChaosTargetResource(ResourceIdentifier id)
+        {
+            ChaosTargetResource.ValidateResourceId(id);
+            return new ChaosTargetResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosCapabilityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosCapabilityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ChaosCapabilityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosCapabilityMetadataResource"/> object. </returns>
+        public virtual ChaosCapabilityMetadataResource GetChaosCapabilityMetadataResource(ResourceIdentifier id)
+        {
+            ChaosCapabilityMetadataResource.ValidateResourceId(id);
+            return new ChaosCapabilityMetadataResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ChaosExperimentResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ChaosExperimentResource.CreateResourceIdentifier" /> to create a <see cref="ChaosExperimentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -56,42 +92,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosExperimentExecutionResource.ValidateResourceId(id);
             return new ChaosExperimentExecutionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ChaosCapabilityResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosCapabilityResource.CreateResourceIdentifier" /> to create a <see cref="ChaosCapabilityResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosCapabilityResource"/> object. </returns>
-        public virtual ChaosCapabilityResource GetChaosCapabilityResource(ResourceIdentifier id)
-        {
-            ChaosCapabilityResource.ValidateResourceId(id);
-            return new ChaosCapabilityResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ChaosCapabilityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosCapabilityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ChaosCapabilityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosCapabilityMetadataResource"/> object. </returns>
-        public virtual ChaosCapabilityMetadataResource GetChaosCapabilityMetadataResource(ResourceIdentifier id)
-        {
-            ChaosCapabilityMetadataResource.ValidateResourceId(id);
-            return new ChaosCapabilityMetadataResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ChaosTargetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosTargetResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosTargetResource"/> object. </returns>
-        public virtual ChaosTargetResource GetChaosTargetResource(ResourceIdentifier id)
-        {
-            ChaosTargetResource.ValidateResourceId(id);
-            return new ChaosTargetResource(Client, id);
         }
 
         /// <summary>
