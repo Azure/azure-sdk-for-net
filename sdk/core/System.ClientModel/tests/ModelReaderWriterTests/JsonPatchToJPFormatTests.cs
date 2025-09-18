@@ -107,5 +107,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.AreEqual("[]", jp.ToString());
         }
+
+        [Test]
+        public void JsonPatch_ToString_JP_PathEscaping()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$['a~b/c']"u8, "v");
+
+            Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/a~0b~1c\",\"value\":\"v\"}]", jp.ToString());
+        }
+
+        [Test]
+        public void JsonPatch_ToString_JP_ArrayAppendRoot()
+        {
+            JsonPatch jp = new();
+
+            jp.Append("$"u8, 5);
+
+            Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/-\",\"value\":5}]", jp.ToString());
+        }
     }
 }

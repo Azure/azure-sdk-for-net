@@ -220,7 +220,7 @@ internal static class JsonPathExtensions
         for (int i = start; i < slice.Length; i++)
         {
             byte c = slice[i];
-            if (c == (byte)'.')
+            if (c == (byte)'.' && !indexSyntax)
             {
                 return slice.Slice(start, i - start);
             }
@@ -552,7 +552,7 @@ internal static class JsonPathExtensions
         }
         else
         {
-            result = jsonReaderCopy.Insert(json, ReadOnlySpan<byte>.Empty, new(rented, 0, length), index > 0);
+            result = jsonReaderCopy.Insert(json, ReadOnlySpan<byte>.Empty, new(rented, 0, length), nextIndex > 0);
         }
 
         ArrayPool<byte>.Shared.Return(rented);
@@ -1033,10 +1033,10 @@ internal static class JsonPathExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static bool SkipToIndex(ref this Utf8JsonReader jsonReader, int indexToFind, out int maxIndex)
+    internal static bool SkipToIndex(ref this Utf8JsonReader jsonReader, int indexToFind, out int nextIndex)
     {
         Utf8JsonReader last = default;
-        return jsonReader.SkipToIndex(indexToFind, out maxIndex, ref last);
+        return jsonReader.SkipToIndex(indexToFind, out nextIndex, ref last);
     }
 
     /// <summary>
@@ -1044,12 +1044,12 @@ internal static class JsonPathExtensions
     /// </summary>
     /// <param name="jsonReader">The <see cref="Utf8JsonReader"/> pointed at an array.</param>
     /// <param name="indexToFind">The index to skip to.</param>
-    /// <param name="maxIndex">The max index found.</param>
+    /// <param name="nextIndex">The next index an item will be added to.</param>
     /// <param name="last">The last state of <paramref name="jsonReader"/>.</param>
     /// <returns>Try if the index was found otherwise false.</returns>
-    internal static bool SkipToIndex(ref this Utf8JsonReader jsonReader, int indexToFind, out int maxIndex, ref Utf8JsonReader last)
+    internal static bool SkipToIndex(ref this Utf8JsonReader jsonReader, int indexToFind, out int nextIndex, ref Utf8JsonReader last)
     {
-        maxIndex = 0;
+        nextIndex = 0;
 
         while (jsonReader.Read(ref last))
         {
@@ -1058,7 +1058,7 @@ internal static class JsonPathExtensions
                 return false;
             }
 
-            if (maxIndex == indexToFind)
+            if (nextIndex == indexToFind)
             {
                 break;
             }
@@ -1067,7 +1067,7 @@ internal static class JsonPathExtensions
                 // Skip the value
                 jsonReader.Skip(ref last);
             }
-            maxIndex++;
+            nextIndex++;
         }
 
         return true;

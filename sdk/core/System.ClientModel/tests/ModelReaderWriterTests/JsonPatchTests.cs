@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
@@ -218,6 +219,57 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.x"u8, 1);
             var ex = Assert.Throws<NotSupportedException>(() => jp.ToString("INVALID"));
             Assert.AreEqual("The format 'INVALID' is not supported.", ex!.Message);
+        }
+
+        [Test]
+        public void Overwrite_Property_WithDifferentTypes()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.v"u8, 10);
+            Assert.AreEqual(10, jp.GetInt32("$.v"u8));
+            jp.Set("$.v"u8, "str");
+            Assert.AreEqual("str", jp.GetString("$.v"u8));
+        }
+
+        [Test]
+        public void TryGetValue_Removed_ReturnsFalse()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.x"u8, 5);
+            Assert.IsTrue(jp.TryGetValue("$.x"u8, out int v) && v == 5);
+            jp.Remove("$.x"u8);
+            Assert.IsFalse(jp.TryGetValue("$.x"u8, out int _));
+        }
+
+        [Test]
+        public void TryGetNullableValue_UnsupportedType_ReturnsFalse()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.a"u8, 1);
+            bool found = jp.TryGetNullableValue("$.a"u8, out char? c);
+            Assert.IsFalse(found);
+            Assert.False(c.HasValue);
+        }
+
+        [Test]
+        public void Append_ToExistingArrayThenSetConcreteIndex()
+        {
+            JsonPatch jp = new();
+            jp.Append("$.arr"u8, 1);
+            jp.Append("$.arr"u8, 2);
+            Assert.IsFalse(jp.Contains("$.arr"u8));
+            jp.Set("$.arr[0]"u8, 10);
+            Assert.AreEqual(10, jp.GetInt32("$.arr[0]"u8));
+            Assert.AreEqual(2, jp.GetInt32("$.arr[1]"u8));
+        }
+
+        [Test]
+        public void TryGetJson_OnNullValue()
+        {
+            JsonPatch jp = new();
+            jp.SetNull("$.n"u8);
+            Assert.IsTrue(jp.TryGetJson("$.n"u8, out var mem));
+            Assert.AreEqual("null", Encoding.UTF8.GetString(mem.Span.ToArray()));
         }
     }
 }

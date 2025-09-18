@@ -8,6 +8,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
     public class JsonPathEqualityComparerTests
     {
+        [TestCase("$['foo']", "$[\"foo\"]", true)]
+        [TestCase("$.a['b.c']", "$.a.b.c", false)]
         [TestCase("$.x.y", "$['x'].y", true)]
         [TestCase("$.x.y", "$[\"x\"].y", true)]
         [TestCase("$.x.y", "$['x']['y']", true)]
@@ -88,6 +90,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$['a'].b[0][\"c\"].d[1].e.f", "$.a.b[0].c.d[1].e.f")]
         [TestCase("$['f.oo']['bar']", "$['f.oo'].bar")]
         [TestCase("$[\"f.oo\"]['bar']", "$['f.oo'].bar")]
+        [TestCase("$['a'][\"b.c\"]['d']", "$.a['b.c'].d")]
         public void Normalize(string input, string expected)
         {
             var a = Encoding.UTF8.GetBytes(input);
