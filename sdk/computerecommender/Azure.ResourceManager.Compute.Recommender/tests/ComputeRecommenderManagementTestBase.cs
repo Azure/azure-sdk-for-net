@@ -10,7 +10,7 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace Azure.ResourceManager.ComputeRecommender.Tests
+namespace Azure.ResourceManager.Compute.Recommender.Tests
 {
     public class ComputeRecommenderManagementTestBase : ManagementRecordedTestBase<ComputeRecommenderManagementTestEnvironment>
     {

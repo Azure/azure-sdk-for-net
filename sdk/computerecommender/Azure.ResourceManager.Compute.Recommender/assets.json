@@ -2,6 +2,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/computerecommender/Azure.ResourceManager.ComputeRecommender",
+  "TagPrefix": "net/computerecommender/Azure.ResourceManager.Compute.Recommender",
   "Tag": ""
 }

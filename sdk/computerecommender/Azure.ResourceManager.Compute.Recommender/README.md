@@ -1,4 +1,4 @@
-# Microsoft Azure ComputeRecommender management client library for .NET
+# Microsoft Azure Compute Recommender management client library for .NET
 
 The Microsoft Azure Compute Recommender provides recommendations to help you make informed decisions about deployment of your virtual machines.
 
@@ -10,14 +10,14 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
-Install the Microsoft Azure ComputeRecommender management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Compute Recommender management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.ComputeRecommender --prerelease
+dotnet add package Azure.ResourceManager.Compute.Recommender --prerelease
 ```
 
 ### Prerequisites

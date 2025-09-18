@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.ComputeRecommender.Tests
+namespace Azure.ResourceManager.Compute.Recommender.Tests
 {
     public class ComputeRecommenderManagementTestEnvironment : TestEnvironment
     {
