@@ -20,9 +20,9 @@ Help the user generate and build SDKs locally from TypeSpec API specifications u
   2. Verify SDK repository
   3. Validate repository path
   4. Identify path to configuration file
-  5. Generate SDK using `azure-sdk-mcp`
+  5. Generate SDK using `azsdk_package_generate_code` MCP tool
   6. Identify SDK project path
-  7. Build/Compile SDK using `azure-sdk-mcp`
+  7. Build/Compile SDK using `azsdk_package_build_code` MCP tool
 - Ask the user to confirm readiness to proceed.
 
 ---
