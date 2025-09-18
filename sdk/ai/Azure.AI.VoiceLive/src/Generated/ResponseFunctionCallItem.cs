@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        internal ResponseFunctionCallItem(string name, string callId, string arguments, ResponseItemStatus status) : base(ItemType.FunctionCall)
+        internal ResponseFunctionCallItem(string name, string callId, string arguments, VoiceLiveResponseItemStatus status) : base(ItemType.FunctionCall)
         {
             Name = name;
             CallId = callId;
@@ -35,7 +35,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        internal ResponseFunctionCallItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string callId, string arguments, ResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal ResponseFunctionCallItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string callId, string arguments, VoiceLiveResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Name = name;
             CallId = callId;
@@ -53,6 +53,6 @@ namespace Azure.AI.VoiceLive
         public string Arguments { get; }
 
         /// <summary> Gets the Status. </summary>
-        public ResponseItemStatus Status { get; }
+        public VoiceLiveResponseItemStatus Status { get; }
     }
 }

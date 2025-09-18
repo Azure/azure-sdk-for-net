@@ -134,7 +134,7 @@ public class CustomerServiceBot : IDisposable
         };
 
         // Create conversation session options with function tools
-        var sessionOptions = new SessionOptions
+        var sessionOptions = new VoiceLiveSessionOptions
         {
             Model = _model,
             Instructions = _instructions,

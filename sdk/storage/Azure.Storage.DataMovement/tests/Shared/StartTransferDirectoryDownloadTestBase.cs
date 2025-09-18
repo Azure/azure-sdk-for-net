@@ -476,6 +476,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 MaximumConcurrency = concurrency,
+                ErrorMode = TransferErrorMode.StopOnAnyFailure
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 

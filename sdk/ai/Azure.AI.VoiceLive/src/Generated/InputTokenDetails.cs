@@ -20,23 +20,27 @@ namespace Azure.AI.VoiceLive
         /// <param name="cachedTokens"> Number of cached tokens used in the input. </param>
         /// <param name="textTokens"> Number of text tokens used in the input. </param>
         /// <param name="audioTokens"> Number of audio tokens used in the input. </param>
-        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens)
+        /// <param name="cachedTokensDetails"> Details of cached token usage. </param>
+        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, CachedTokenDetails cachedTokensDetails)
         {
             CachedTokens = cachedTokens;
             TextTokens = textTokens;
             AudioTokens = audioTokens;
+            CachedTokensDetails = cachedTokensDetails;
         }
 
         /// <summary> Initializes a new instance of <see cref="InputTokenDetails"/>. </summary>
         /// <param name="cachedTokens"> Number of cached tokens used in the input. </param>
         /// <param name="textTokens"> Number of text tokens used in the input. </param>
         /// <param name="audioTokens"> Number of audio tokens used in the input. </param>
+        /// <param name="cachedTokensDetails"> Details of cached token usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, CachedTokenDetails cachedTokensDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CachedTokens = cachedTokens;
             TextTokens = textTokens;
             AudioTokens = audioTokens;
+            CachedTokensDetails = cachedTokensDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,5 +52,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Number of audio tokens used in the input. </summary>
         public int AudioTokens { get; }
+
+        /// <summary> Details of cached token usage. </summary>
+        public CachedTokenDetails CachedTokensDetails { get; }
     }
 }

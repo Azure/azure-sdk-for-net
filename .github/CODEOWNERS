@@ -603,9 +603,6 @@
 # ServiceLabel: %Media Services
 # ServiceOwners:                                                   @naiteeks @bennage @giakas
 
-# PRLabel: %Microsoft Playwright Testing
-/sdk/playwrighttesting/                                            @puagarwa @ShreyaAnand
-
 # ServiceLabel: %Microsoft Playwright Testing
 # ServiceOwners:                                                   @puagarwa @ShreyaAnand
 
@@ -1167,6 +1164,14 @@
 
 # ServiceLabel: %Weights & Biases %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
+
+
+# PRLabel: %Workload Orchestration
+/sdk/workloadorchestration/Azure.ResourceManager.*/                @atharvau
+
+# ServiceLabel: %Workload Orchestration %Mgmt
+# ServiceOwners:                                                   @atharvau
+
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

@@ -131,9 +131,9 @@ public class BasicVoiceAssistant : IDisposable
         };
 
         // Create conversation session options
-        var sessionOptions = new SessionOptions
+        var sessionOptions = new VoiceLiveSessionOptions
         {
-            EchoCancellation = new AudioEchoCancellation(),
+            InputAudioEchoCancellation = new AudioEchoCancellation(),
             Model = _model,
             Instructions = _instructions,
             Voice = azureVoice,
