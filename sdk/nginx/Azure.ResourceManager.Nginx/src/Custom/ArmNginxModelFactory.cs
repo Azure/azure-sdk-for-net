@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="properties"></param>
         /// <param name="skuName"></param>
         /// <returns> A new <see cref="Nginx.NginxDeploymentData"/> instance for mocking. </returns>
-        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags , AzureLocation location , ManagedServiceIdentity identity= null, NginxDeploymentProperties properties = null, string skuName = null)
+        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags , AzureLocation location , ManagedServiceIdentity identity, NginxDeploymentProperties properties = null, string skuName = null)
         {
             tags ??= new Dictionary<string, string>();
 
