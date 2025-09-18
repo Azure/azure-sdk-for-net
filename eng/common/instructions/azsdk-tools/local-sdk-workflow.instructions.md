@@ -1,5 +1,5 @@
 ---
-description: "Guide the user to generate and build SDKs locally for TypeSpec changes"
+description: "Guide the user to generate and build SDKs locally for a TypeSpec based API spec"
 ---
 
 # Goal
