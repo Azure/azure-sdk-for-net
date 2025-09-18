@@ -46,7 +46,7 @@ namespace Azure.Health.Deidentification.Tests
             DeidentificationClient client = GetDeidClient();
 
             string input = "Hello, my name is John Smith.";
-            DeidentificationContent content = new(input, DeidentificationOperationType.Tag, null, null);
+            DeidentificationContent content = new(input, DeidentificationOperationType.Tag, null, null, null);
 
             DeidentificationResult result = await client.DeidentifyTextAsync(content);
 
