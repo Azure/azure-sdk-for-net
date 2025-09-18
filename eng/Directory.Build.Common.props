@@ -27,7 +27,6 @@
     <TestFrameworkSupportFiles>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Shared/*.cs</TestFrameworkSupportFiles>
 
     <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
-    
   </PropertyGroup>
 
   <!-- Setup default project properties -->
@@ -95,8 +94,6 @@
     <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
     <!-- Avoid implicitly added preview feeds -->
     <AddDotnetfeedProjectSource>false</AddDotnetfeedProjectSource>
-    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
-    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
   <PropertyGroup>
