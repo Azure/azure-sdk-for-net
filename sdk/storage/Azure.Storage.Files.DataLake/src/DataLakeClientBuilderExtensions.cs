@@ -59,15 +59,6 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        /// Registers a <see cref="DataLakeServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
-        /// </summary>
-        public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddDataLakeServiceClientWithTokenCredential<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<DataLakeServiceClient, DataLakeClientOptions>(options => new DataLakeServiceClient(serviceUri, tokenCredential, options));
-        }
-
-        /// <summary>
         /// Registers a <see cref="DataLakeServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="sasCredential"/>
         /// </summary>
         public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddDataLakeServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, AzureSasCredential sasCredential)

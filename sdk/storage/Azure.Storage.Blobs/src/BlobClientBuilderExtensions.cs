@@ -57,15 +57,6 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        /// Registers a <see cref="BlobServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
-        /// </summary>
-        public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClientWithTokenCredential<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<BlobServiceClient, BlobClientOptions>(options => new BlobServiceClient(serviceUri, tokenCredential, options));
-        }
-
-        /// <summary>
         /// Registers a <see cref="BlobServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="sasCredential"/>
         /// </summary>
         public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, AzureSasCredential sasCredential)

@@ -498,7 +498,6 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class QueueClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClientWithTokenCredential<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Core.TokenCredential tokenCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.AzureSasCredential sasCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }

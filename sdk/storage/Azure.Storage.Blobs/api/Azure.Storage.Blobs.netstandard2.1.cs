@@ -2048,7 +2048,6 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class BlobClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClientWithTokenCredential<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Core.TokenCredential tokenCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.AzureSasCredential sasCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }

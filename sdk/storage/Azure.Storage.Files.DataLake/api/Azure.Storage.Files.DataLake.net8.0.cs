@@ -1386,7 +1386,6 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class DataLakeClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.DataLake.DataLakeServiceClient, Azure.Storage.Files.DataLake.DataLakeClientOptions> AddDataLakeServiceClientWithTokenCredential<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Core.TokenCredential tokenCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.DataLake.DataLakeServiceClient, Azure.Storage.Files.DataLake.DataLakeClientOptions> AddDataLakeServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.DataLake.DataLakeServiceClient, Azure.Storage.Files.DataLake.DataLakeClientOptions> AddDataLakeServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.AzureSasCredential sasCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
