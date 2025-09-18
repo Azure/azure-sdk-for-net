@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Recommender;
 
-namespace Azure.ResourceManager.ComputeRecommender.Models
+namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    public partial class ComputeRecommenderPlacementScore : IUtf8JsonSerializable, IJsonModel<ComputeRecommenderPlacementScore>
+    /// <summary> The spot placement score for sku/region/zone combination. </summary>
+    public partial class ComputeRecommenderPlacementScore : IJsonModel<ComputeRecommenderPlacementScore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeRecommenderPlacementScore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeRecommenderPlacementScore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScore)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -59,15 +60,15 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
                 writer.WritePropertyName("isQuotaAvailable"u8);
                 writer.WriteBooleanValue(IsQuotaAvailable.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +77,27 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
             }
         }
 
-        ComputeRecommenderPlacementScore IJsonModel<ComputeRecommenderPlacementScore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeRecommenderPlacementScore IJsonModel<ComputeRecommenderPlacementScore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeRecommenderPlacementScore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScore)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeRecommenderPlacementScore(document.RootElement, options);
         }
 
-        internal static ComputeRecommenderPlacementScore DeserializeComputeRecommenderPlacementScore(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ComputeRecommenderPlacementScore DeserializeComputeRecommenderPlacementScore(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,62 +107,63 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
             string availabilityZone = default;
             string score = default;
             bool? isQuotaAvailable = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("sku"u8))
                 {
-                    sku = property.Value.GetString();
+                    sku = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"u8))
+                if (prop.NameEquals("region"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    region = new AzureLocation(property.Value.GetString());
+                    region = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("availabilityZone"u8))
+                if (prop.NameEquals("availabilityZone"u8))
                 {
-                    availabilityZone = property.Value.GetString();
+                    availabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("score"u8))
+                if (prop.NameEquals("score"u8))
                 {
-                    score = property.Value.GetString();
+                    score = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isQuotaAvailable"u8))
+                if (prop.NameEquals("isQuotaAvailable"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isQuotaAvailable = property.Value.GetBoolean();
+                    isQuotaAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeRecommenderPlacementScore(
                 sku,
                 region,
                 availabilityZone,
                 score,
                 isQuotaAvailable,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ComputeRecommenderPlacementScore>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScore>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeRecommenderPlacementScore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -166,15 +173,20 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
             }
         }
 
-        ComputeRecommenderPlacementScore IPersistableModel<ComputeRecommenderPlacementScore>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScore>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeRecommenderPlacementScore IPersistableModel<ComputeRecommenderPlacementScore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeRecommenderPlacementScore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeRecommenderPlacementScore(document.RootElement, options);
                     }
                 default:
@@ -182,6 +194,7 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeRecommenderPlacementScore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

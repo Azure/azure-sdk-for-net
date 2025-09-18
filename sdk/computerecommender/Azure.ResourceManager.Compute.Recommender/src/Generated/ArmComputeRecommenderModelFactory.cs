@@ -9,63 +9,76 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Recommender;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ComputeRecommender.Models
+namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmComputeRecommenderModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeDiagnosticBase"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="diagnosticSupportedResourceTypes"> Contains additional properties of a diagnostic. </param>
-        /// <returns> A new <see cref="Models.ComputeDiagnosticBase"/> instance for mocking. </returns>
-        public static ComputeDiagnosticBase ComputeDiagnosticBase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> diagnosticSupportedResourceTypes = null)
-        {
-            diagnosticSupportedResourceTypes ??= new List<string>();
 
-            return new ComputeDiagnosticBase(
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="diagnosticSupportedResourceTypes"> Describes what are the supported resource types for a diagnostic. </param>
+        /// <returns> A new <see cref="Recommender.ComputeDiagnosticBaseData"/> instance for mocking. </returns>
+        public static ComputeDiagnosticBaseData ComputeDiagnosticBaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IList<string> diagnosticSupportedResourceTypes = default)
+        {
+            return new ComputeDiagnosticBaseData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                diagnosticSupportedResourceTypes != null ? new DiagnosticProperties(diagnosticSupportedResourceTypes?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                diagnosticSupportedResourceTypes is null ? default : new DiagnosticProperties(diagnosticSupportedResourceTypes, new Dictionary<string, BinaryData>()));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SpotPlacementScoresResult"/>. </summary>
+        /// <summary> SpotPlacementScores API Input. </summary>
+        /// <param name="desiredLocations"> The desired regions. </param>
+        /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
+        /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
+        /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
+        /// <returns> A new <see cref="Models.SpotPlacementScoresInput"/> instance for mocking. </returns>
+        public static SpotPlacementScoresInput SpotPlacementScoresInput(IEnumerable<AzureLocation> desiredLocations = default, IEnumerable<ComputeRecommenderResourceSize> desiredSizes = default, int? desiredCount = default, bool? availabilityZones = default)
+        {
+            desiredLocations ??= new ChangeTrackingList<AzureLocation>();
+            desiredSizes ??= new ChangeTrackingList<ComputeRecommenderResourceSize>();
+
+            return new SpotPlacementScoresInput(desiredLocations.ToList(), desiredSizes.ToList(), desiredCount, availabilityZones, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> SpotPlacementScores API response. </summary>
         /// <param name="desiredLocations"> The desired regions. </param>
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
         /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
         /// <param name="placementScores"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <returns> A new <see cref="Models.SpotPlacementScoresResult"/> instance for mocking. </returns>
-        public static SpotPlacementScoresResult SpotPlacementScoresResult(IEnumerable<AzureLocation> desiredLocations = null, IEnumerable<ComputeRecommenderResourceSize> desiredSizes = null, int? desiredCount = null, bool? availabilityZones = null, IEnumerable<ComputeRecommenderPlacementScore> placementScores = null)
+        public static SpotPlacementScoresResult SpotPlacementScoresResult(IEnumerable<AzureLocation> desiredLocations = default, IEnumerable<ComputeRecommenderResourceSize> desiredSizes = default, int? desiredCount = default, bool? availabilityZones = default, IEnumerable<ComputeRecommenderPlacementScore> placementScores = default)
         {
-            desiredLocations ??= new List<AzureLocation>();
-            desiredSizes ??= new List<ComputeRecommenderResourceSize>();
-            placementScores ??= new List<ComputeRecommenderPlacementScore>();
+            desiredLocations ??= new ChangeTrackingList<AzureLocation>();
+            desiredSizes ??= new ChangeTrackingList<ComputeRecommenderResourceSize>();
+            placementScores ??= new ChangeTrackingList<ComputeRecommenderPlacementScore>();
 
             return new SpotPlacementScoresResult(
-                desiredLocations?.ToList(),
-                desiredSizes?.ToList(),
+                desiredLocations.ToList(),
+                desiredSizes.ToList(),
                 desiredCount,
                 availabilityZones,
-                placementScores?.ToList(),
-                serializedAdditionalRawData: null);
+                placementScores.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeRecommenderPlacementScore"/>. </summary>
+        /// <summary> The spot placement score for sku/region/zone combination. </summary>
         /// <param name="sku"> The resource's CRP virtual machine SKU size. </param>
         /// <param name="region"> The region. </param>
         /// <param name="availabilityZone"> The availability zone. </param>
         /// <param name="score"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <param name="isQuotaAvailable"> Whether the desired quota is available. </param>
         /// <returns> A new <see cref="Models.ComputeRecommenderPlacementScore"/> instance for mocking. </returns>
-        public static ComputeRecommenderPlacementScore ComputeRecommenderPlacementScore(string sku = null, AzureLocation? region = null, string availabilityZone = null, string score = null, bool? isQuotaAvailable = null)
+        public static ComputeRecommenderPlacementScore ComputeRecommenderPlacementScore(string sku = default, AzureLocation? region = default, string availabilityZone = default, string score = default, bool? isQuotaAvailable = default)
         {
             return new ComputeRecommenderPlacementScore(
                 sku,
@@ -73,7 +86,7 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
                 availabilityZone,
                 score,
                 isQuotaAvailable,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
     }
 }

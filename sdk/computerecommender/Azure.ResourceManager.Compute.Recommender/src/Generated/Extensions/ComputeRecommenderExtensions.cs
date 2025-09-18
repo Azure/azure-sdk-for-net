@@ -6,151 +6,49 @@
 #nullable disable
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.ComputeRecommender.Mocking;
-using Azure.ResourceManager.ComputeRecommender.Models;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Recommender.Mocking;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ComputeRecommender
+namespace Azure.ResourceManager.Compute.Recommender
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.ComputeRecommender. </summary>
+    /// <summary> A class to add extension methods to Azure.ResourceManager.Compute.Recommender. </summary>
     public static partial class ComputeRecommenderExtensions
     {
-        private static MockableComputeRecommenderSubscriptionResource GetMockableComputeRecommenderSubscriptionResource(ArmResource resource)
+        /// <param name="client"></param>
+        private static MockableComputeRecommenderArmClient GetMockableComputeRecommenderArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client => new MockableComputeRecommenderSubscriptionResource(client, resource.Id));
+            return client.GetCachedClient(client0 => new MockableComputeRecommenderArmClient(client0, ResourceIdentifier.Root));
         }
 
-        /// <summary>
-        /// Gets Spot Placement Scores metadata.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComputeDiagnosticBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-05</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetSpotPlacementScore(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="subscriptionResource"></param>
+        private static MockableComputeRecommenderSubscriptionResource GetMockableComputeRecommenderSubscriptionResource(SubscriptionResource subscriptionResource)
+        {
+            return subscriptionResource.GetCachedClient(client => new MockableComputeRecommenderSubscriptionResource(client, subscriptionResource.Id));
+        }
+
+        /// <summary> Gets an object representing a <see cref="ComputeDiagnosticBaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ComputeDiagnosticBaseResource"/> object. </returns>
+        public static ComputeDiagnosticBaseResource GetComputeDiagnosticBaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeRecommenderArmClient(client).GetComputeDiagnosticBaseResource(id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ComputeDiagnosticBaseResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ComputeDiagnosticBase>> GetSpotPlacementScoreAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="ComputeDiagnosticBaseResource"/> object. </returns>
+        public static ComputeDiagnosticBaseResource GetComputeDiagnosticBase(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetSpotPlacementScoreAsync(location, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets Spot Placement Scores metadata.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComputeDiagnosticBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-05</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetSpotPlacementScore(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ComputeDiagnosticBase> GetSpotPlacementScore(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetSpotPlacementScore(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Generates placement scores for Spot VM skus.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComputeDiagnosticBases_Post</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-05</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.PostSpotPlacementScore(AzureLocation,SpotPlacementScoresContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<SpotPlacementScoresResult>> PostSpotPlacementScoreAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SpotPlacementScoresContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).PostSpotPlacementScoreAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Generates placement scores for Spot VM skus.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComputeDiagnosticBases_Post</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-05</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.PostSpotPlacementScore(AzureLocation,SpotPlacementScoresContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<SpotPlacementScoresResult> PostSpotPlacementScore(this SubscriptionResource subscriptionResource, AzureLocation location, SpotPlacementScoresContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).PostSpotPlacementScore(location, content, cancellationToken);
+            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeDiagnosticBase();
         }
     }
 }

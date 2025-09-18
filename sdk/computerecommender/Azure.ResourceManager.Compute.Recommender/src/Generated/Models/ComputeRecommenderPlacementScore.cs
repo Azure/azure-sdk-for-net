@@ -9,42 +9,13 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.ComputeRecommender.Models
+namespace Azure.ResourceManager.Compute.Recommender.Models
 {
     /// <summary> The spot placement score for sku/region/zone combination. </summary>
     public partial class ComputeRecommenderPlacementScore
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeRecommenderPlacementScore"/>. </summary>
         internal ComputeRecommenderPlacementScore()
@@ -57,25 +28,29 @@ namespace Azure.ResourceManager.ComputeRecommender.Models
         /// <param name="availabilityZone"> The availability zone. </param>
         /// <param name="score"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <param name="isQuotaAvailable"> Whether the desired quota is available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeRecommenderPlacementScore(string sku, AzureLocation? region, string availabilityZone, string score, bool? isQuotaAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeRecommenderPlacementScore(string sku, AzureLocation? region, string availabilityZone, string score, bool? isQuotaAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Region = region;
             AvailabilityZone = availabilityZone;
             Score = score;
             IsQuotaAvailable = isQuotaAvailable;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource's CRP virtual machine SKU size. </summary>
         public string Sku { get; }
+
         /// <summary> The region. </summary>
         public AzureLocation? Region { get; }
+
         /// <summary> The availability zone. </summary>
         public string AvailabilityZone { get; }
+
         /// <summary> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </summary>
         public string Score { get; }
+
         /// <summary> Whether the desired quota is available. </summary>
         public bool? IsQuotaAvailable { get; }
     }

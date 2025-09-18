@@ -6,21 +6,21 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.ResourceManager.ComputeRecommender.Models;
+using Azure.ResourceManager.Compute.Recommender.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ComputeRecommender
+namespace Azure.ResourceManager.Compute.Recommender
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ComputeDiagnosticBase))]
+    [ModelReaderWriterBuildable(typeof(ComputeDiagnosticBaseData))]
+    [ModelReaderWriterBuildable(typeof(ComputeDiagnosticBaseResource))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderPlacementScore))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderResourceSize))]
     [ModelReaderWriterBuildable(typeof(DiagnosticProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SpotPlacementScoresContent))]
+    [ModelReaderWriterBuildable(typeof(SpotPlacementScoresInput))]
     [ModelReaderWriterBuildable(typeof(SpotPlacementScoresResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerComputeRecommenderContext : ModelReaderWriterContext

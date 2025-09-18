@@ -9,11 +9,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ComputeRecommender.Models;
+using Azure.ResourceManager.Compute.Recommender.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ComputeRecommender.Samples
+namespace Azure.ResourceManager.Compute.Recommender.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
