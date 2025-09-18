@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure.Provisioning.Expressions;
 using NUnit.Framework;
@@ -80,5 +81,58 @@ public class ProvisioningOutputTests
 
             output result object = tags
             """);
+    }
+
+    [Test]
+    public async Task EnumOutput()
+    {
+        await using Trycep trycep = new();
+        trycep.Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                ProvisioningParameter standard = new(nameof(standard), typeof(TestSku))
+                {
+                    Value = TestSku.Standard,
+                };
+                infra.Add(standard);
+                ProvisioningParameter premium = new(nameof(premium), typeof(TestSku))
+                {
+                    Value = TestSku.Premium,
+                };
+                infra.Add(premium);
+                ProvisioningOutput standardResult = new(nameof(standardResult), typeof(TestSku))
+                {
+                    Value = new IdentifierExpression(standard.BicepIdentifier)
+                };
+                infra.Add(standardResult);
+                ProvisioningOutput premiumResult = new(nameof(premiumResult), typeof(TestSku))
+                {
+                    Value = new IdentifierExpression(premium.BicepIdentifier)
+                };
+                infra.Add(premiumResult);
+                return infra;
+            })
+        .Compare(
+            """
+            param standard string = 'Standard'
+
+            param premium string = 'premium'
+
+            output standardResult string = standard
+
+            output premiumResult string = premium
+            """);
+    }
+
+    /// <summary>
+    /// This is an enum type mimicking one that we would see in the real provisioning library.
+    /// </summary>
+    private enum TestSku
+    {
+        Free,
+        Standard,
+        [DataMember(Name = "premium")]
+        Premium
     }
 }

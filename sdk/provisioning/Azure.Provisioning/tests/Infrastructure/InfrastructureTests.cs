@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Storage;
 using NUnit.Framework;
 
