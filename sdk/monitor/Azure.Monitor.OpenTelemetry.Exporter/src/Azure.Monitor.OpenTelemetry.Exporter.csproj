@@ -9,9 +9,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <DefineConstants>$(DefineConstants);AZURE_MONITOR_EXPORTER;</DefineConstants>
-    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
-    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
+
   <ItemGroup>
     <!-- Versions are defined in eng/Packages.Data.props -->
     <!-- Whenever updating OpenTelemetry dependencies, confirm that Test dependencies are also updated. -->
@@ -20,15 +19,18 @@
     <PackageReference Include="OpenTelemetry.PersistentStorage.FileSystem" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
   </ItemGroup>
+
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
   </ItemGroup>
+
   <!-- Shared sources from Azure.Monitor.OpenTelemetry.LiveMetrics -->
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\**\*.cs" Exclude="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Generated\Models\AzureMonitorOpenTelemetryLiveMetricsContext.cs" LinkBase="Shared\LiveMetrics" />
     <Compile Remove="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Properties\AssemblyInfo.cs" />
   </ItemGroup>
+
 </Project>
