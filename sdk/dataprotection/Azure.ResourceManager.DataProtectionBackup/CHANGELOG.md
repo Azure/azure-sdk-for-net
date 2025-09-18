@@ -1,8 +1,12 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0 (2025-09-25)
 
 ### Features Added
+
+- Stable version release for API version 2025-07-01.
+- Added property `RenameTo` in the model `ItemPathBasedRestoreCriteria` to support rename during restore.
+- Added model `AdlsBlobBackupDatasourceParameters` to support ADLS Gen2 backup datasource.
 
 ### Breaking Changes
 
