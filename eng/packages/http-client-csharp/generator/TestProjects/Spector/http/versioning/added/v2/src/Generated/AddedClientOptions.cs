@@ -11,6 +11,8 @@ namespace Versioning.Added
 {
     public partial class AddedClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2;
+
         public AddedClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

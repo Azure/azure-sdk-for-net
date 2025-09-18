@@ -11,6 +11,8 @@ namespace Resiliency.ServiceDriven
 {
     public partial class ResiliencyServiceDrivenClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+
         public ResiliencyServiceDrivenClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

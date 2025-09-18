@@ -11,6 +11,8 @@ namespace Client.AlternateApiVersion.Service.Path
 {
     public partial class PathClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_01;
+
         public PathClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

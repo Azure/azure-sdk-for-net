@@ -11,6 +11,8 @@ namespace _Specs_.Azure.Core.Lro.Rpc
 {
     public partial class RpcClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+
         public RpcClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

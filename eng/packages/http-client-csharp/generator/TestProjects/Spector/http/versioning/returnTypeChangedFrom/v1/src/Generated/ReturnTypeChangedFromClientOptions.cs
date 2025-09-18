@@ -11,6 +11,8 @@ namespace Versioning.ReturnTypeChangedFrom
 {
     public partial class ReturnTypeChangedFromClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+
         public ReturnTypeChangedFromClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

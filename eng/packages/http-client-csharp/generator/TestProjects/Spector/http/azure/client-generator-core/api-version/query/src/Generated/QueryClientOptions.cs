@@ -11,6 +11,8 @@ namespace Client.AlternateApiVersion.Service.Query
 {
     public partial class QueryClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_01;
+
         public QueryClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

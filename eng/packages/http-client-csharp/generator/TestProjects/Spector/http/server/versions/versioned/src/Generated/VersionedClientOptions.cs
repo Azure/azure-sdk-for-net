@@ -11,6 +11,8 @@ namespace Server.Versions.Versioned
 {
     public partial class VersionedClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+
         public VersionedClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

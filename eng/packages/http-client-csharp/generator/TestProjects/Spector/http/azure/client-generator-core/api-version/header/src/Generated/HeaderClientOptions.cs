@@ -11,6 +11,8 @@ namespace Client.AlternateApiVersion.Service.Header
 {
     public partial class HeaderClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_01;
+
         public HeaderClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion
