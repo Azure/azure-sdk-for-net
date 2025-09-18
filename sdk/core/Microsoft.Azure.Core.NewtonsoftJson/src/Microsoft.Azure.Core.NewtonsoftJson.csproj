@@ -10,16 +10,17 @@
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
-    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
+
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
+
 </Project>

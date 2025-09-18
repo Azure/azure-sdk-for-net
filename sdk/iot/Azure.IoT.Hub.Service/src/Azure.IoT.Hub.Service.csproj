@@ -5,8 +5,9 @@
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <!-- Nuget properties -->
   <PropertyGroup>
     <PackageTags>IoT;PnP;$(PackageCommonTags)</PackageTags>
@@ -14,11 +15,9 @@
     <Description>SDK for the Azure IoT Hub service</Description>
     <Version>1.0.0-preview.1</Version>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <!-- Common source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
@@ -28,5 +27,4 @@
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
   </ItemGroup>
-
 </Project>

@@ -8,22 +8,20 @@
     <NoWarn>$(NoWarn);AZC0012;AZC0035</NoWarn>
     <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
-
   <!-- Shared source from Azure.Maps -->
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\MapsSasCredentialPolicy.cs" LinkBase="Shared" />
   </ItemGroup>
-
 </Project>

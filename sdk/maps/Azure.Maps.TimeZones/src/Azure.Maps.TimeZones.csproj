@@ -10,20 +10,18 @@
     <NoWarn>
       $(NoWarn);
       AZC0012;
-      AZC0035; <!-- Missing model factory methods.  #51229-->
-    </NoWarn>
+      AZC0035; <!-- Missing model factory methods.  #51229--></NoWarn>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
-
   <!-- Shared source from Azure.Maps -->
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
@@ -32,5 +30,4 @@
   <ItemGroup>
     <None Remove="C:\azure-sdk-for-net\eng/images/azureicon.png" />
   </ItemGroup>
-
 </Project>

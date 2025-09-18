@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <Description>Contains the core functionality for defining Azure infrastructure with dotnet code.</Description>
     <Version>1.4.0-beta.2</Version>
@@ -8,10 +7,11 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
-
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <!-- Disable warning AZC0012: Single word class names -->
     <!-- Disable warning IDE0130: Namespace does not match folder structure-->
     <NoWarn>CS1591;AZC0012;IDE0130;$(NoWarn)</NoWarn>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 </Project>

@@ -7,11 +7,13 @@
     <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <PackageTags>Azure Monitor Ingestion</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks);net462</TargetFrameworks>
-    <NoWarn>$(NoWarn);CA1835</NoWarn> <!--TODO: Suppressing warning in shared source-->
+    <NoWarn>$(NoWarn);CA1835</NoWarn>
+    <!--TODO: Suppressing warning in shared source-->
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
@@ -21,5 +23,4 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
 </Project>
