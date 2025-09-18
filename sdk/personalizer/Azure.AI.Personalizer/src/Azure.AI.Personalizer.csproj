@@ -11,8 +11,8 @@
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
@@ -20,10 +20,8 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="RL.Net" VersionOverride="0.2.0" />
   </ItemGroup>
-
 </Project>

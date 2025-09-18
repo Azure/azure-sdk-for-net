@@ -10,20 +10,16 @@
     <!-- AZC0012 - Single word class names are too generic for Entity.cs class  -->
     <NoWarn>$(NoWarn);3021;AZC0012;AZC0034</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <!-- Import the Text Analytics legacy generated source -->
   <ItemGroup>
-    <Compile
-      Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/**/*"
-      Exclude="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/Models/AzureAITextAnalyticsLegacyContext.cs"
-      LinkBase="Shared/Legacy/Generated" />
+    <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/**/*" Exclude="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/Models/AzureAITextAnalyticsLegacyContext.cs" LinkBase="Shared/Legacy/Generated" />
     <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Custom/**/*" LinkBase="Shared/Legacy/Custom" />
   </ItemGroup>
-
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />

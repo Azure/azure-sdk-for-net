@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
@@ -9,8 +8,8 @@
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);CS1591;AZC0107;</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="MessagePack" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
@@ -21,7 +20,6 @@
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <!--Microsoft.Azure.SignalR.Management is not compatible with central version 1.2.0 yet.
     Tracked by issue https://github.com/Azure/azure-sdk-for-net/issues/51460 -->
