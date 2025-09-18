@@ -1072,6 +1072,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("true", property);
             var ex = Assert.Throws<KeyNotFoundException>(() => jp.GetString("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", ex!.Message);
+            Assert.IsFalse(jp.TryGetValue("$.notPresent"u8, out property));
         }
     }
 }

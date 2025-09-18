@@ -135,22 +135,10 @@ public partial struct JsonPatch
                         writer.WritePropertyName(kvp.Key.GetPropertyName());
                     }
                     _properties.TryGetValue(firstNonArray, out var existingArrayValue);
-                    var rawArray = GetCombinedArray(firstNonArray, existingArrayValue, true);
+                    var rawArray = GetCombinedArray(firstNonArray, existingArrayValue);
                     writer.WriteRawValue(rawArray.Span);
                     arrays ??= new();
                     arrays.Add(firstNonArray);
-                    continue;
-                }
-
-                if (!kvp.Key.GetParent().IsRoot())
-                {
-                    JsonPathReader pathReader = new(kvp.Key);
-                    ReadOnlySpan<byte> firstProperty = pathReader.GetFirstProperty();
-
-                    writer.WritePropertyName(firstProperty.GetPropertyName());
-                    writer.WriteStartObject();
-                    WriteTo(writer, firstProperty);
-                    writer.WriteEndObject();
                     continue;
                 }
 

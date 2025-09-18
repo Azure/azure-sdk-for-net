@@ -231,6 +231,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"array\":[123.5,67890.5,null]}", jp.ToString("J"));
         }
 
+        [Test]
         public void Append_Guid()
         {
             JsonPatch jp = new();
@@ -264,6 +265,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual($"{{\"array\":[\"{guid1}\",\"{guid2}\",null]}}", jp.ToString("J"));
         }
 
+        [Test]
         public void Append_Int32()
         {
             JsonPatch jp = new();

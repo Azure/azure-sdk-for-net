@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
@@ -270,6 +272,190 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.SetNull("$.n"u8);
             Assert.IsTrue(jp.TryGetJson("$.n"u8, out var mem));
             Assert.AreEqual("null", Encoding.UTF8.GetString(mem.Span.ToArray()));
+        }
+
+        [Test]
+        public void Set_DeepNestedArrayAndProperties()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$.a.b[3].c.d[2].e"u8, 1);
+
+            Assert.AreEqual("{\"b\":[null,null,null,{\"c\":{\"d\":[null,null,{\"e\":1}]}}]}", jp.GetJson("$.a"u8).ToString());
+            Assert.AreEqual("[null,null,null,{\"c\":{\"d\":[null,null,{\"e\":1}]}}]", jp.GetJson("$.a.b"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.a.b[0]"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.a.b[1]"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.a.b[2]"u8).ToString());
+            Assert.AreEqual("{\"c\":{\"d\":[null,null,{\"e\":1}]}}", jp.GetJson("$.a.b[3]"u8).ToString());
+            Assert.AreEqual("{\"d\":[null,null,{\"e\":1}]}", jp.GetJson("$.a.b[3].c"u8).ToString());
+            Assert.AreEqual("[null,null,{\"e\":1}]", jp.GetJson("$.a.b[3].c.d"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.a.b[3].c.d[0]"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.a.b[3].c.d[1]"u8).ToString());
+            Assert.AreEqual("{\"e\":1}", jp.GetJson("$.a.b[3].c.d[2]"u8).ToString());
+            Assert.AreEqual(1, jp.GetInt32("$.a.b[3].c.d[2].e"u8));
+
+            Assert.AreEqual("{\"a\":{\"b\":[null,null,null,{\"c\":{\"d\":[null,null,{\"e\":1}]}}]}}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void Append_ArrayItemPath_AppendsArrayInsideArrayIndex()
+        {
+            JsonPatch jp = new();
+
+            jp.Append("$.a[3]"u8, 5);
+
+            Assert.AreEqual("[null,null,null,[5]]", jp.GetJson("$.a"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.a[0]"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.a[1]"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.a[2]"u8).ToString());
+            Assert.AreEqual("[5]", jp.GetJson("$.a[3]"u8).ToString());
+            Assert.AreEqual(5, jp.GetInt32("$.a[3][0]"u8));
+
+            Assert.AreEqual("{\"a\":[null,null,null,[5]]}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void Append_PropertyLeaf_AppendsArrayAtProperty()
+        {
+            JsonPatch jp = new();
+
+            jp.Append("$.a"u8, 5);
+
+            Assert.AreEqual("[5]", jp.GetJson("$.a"u8).ToString());
+            Assert.AreEqual(5, jp.GetInt32("$.a[0]"u8));
+
+            Assert.AreEqual("{\"a\":[5]}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void Append_PropertyLeaf_NestedAfterArrayIndex()
+        {
+            JsonPatch jp = new();
+
+            jp.Append("$.arr[2].items"u8, "x");
+
+            Assert.AreEqual("[null,null,{\"items\":[\"x\"]}]", jp.GetJson("$.arr"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.arr[0]"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.arr[1]"u8).ToString());
+            Assert.AreEqual("{\"items\":[\"x\"]}", jp.GetJson("$.arr[2]"u8).ToString());
+            Assert.AreEqual("[\"x\"]", jp.GetJson("$.arr[2].items"u8).ToString());
+            Assert.AreEqual("x", jp.GetString("$.arr[2].items[0]"u8));
+
+            Assert.AreEqual("{\"arr\":[null,null,{\"items\":[\"x\"]}]}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void Branch_ArrayIndex_Final_Append()
+        {
+            JsonPatch jp = new();
+
+            jp.Append("$.arr[2]"u8, 10);
+
+            Assert.AreEqual("[null,null,[10]]", jp.GetJson("$.arr"u8).ToString());
+
+            Assert.AreEqual("{\"arr\":[null,null,[10]]}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void Branch_ArrayIndex_Final_Set()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$.arr[3]"u8, 11);
+
+            Assert.AreEqual("[null,null,null,11]", jp.GetJson("$.arr"u8).ToString());
+
+            Assert.AreEqual("{\"arr\":[null,null,null,11]}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void Branch_PropertySeparator_Final()
+        {
+            JsonPatch jp = new();
+            var ex = Assert.Throws<InvalidOperationException>(() => jp.Set("$.trailing."u8, 5));
+            StringAssert.Contains("property", ex!.Message.ToLowerInvariant());
+        }
+
+        [Test]
+        public void Branch_DirectRoot_Final()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$"u8, "{\"x\":1}"u8);
+
+            Assert.AreEqual("{\"x\":1}", jp.GetJson("$"u8).ToString());
+
+            Assert.AreEqual("{\"x\":1}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void WriteTo_SubPath_Removed()
+        {
+            JsonPatch jp = new("{\"a\":{\"b\":{\"x\":1,\"y\":2,\"z\":3}}}"u8.ToArray());
+
+            jp.Remove("$.a.b"u8);
+
+            using var buffer = new UnsafeBufferSequence();
+            using var writer = new Utf8JsonWriter(buffer);
+            writer.WriteStartObject();
+            writer.WritePropertyName("a");
+            writer.WriteStartObject();
+            jp.WriteTo(writer, "$.a.b"u8);
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+            writer.Flush();
+
+            using var reader = buffer.ExtractReader();
+            Assert.AreEqual("{\"a\":{}}", reader.ToBinaryData().ToString());
+        }
+
+        [Test]
+        public void SerializeEmptyPatch()
+        {
+            JsonPatch jp = new();
+
+            Assert.AreEqual("[]", jp.ToString());
+            Assert.AreEqual("{}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void SetEmptyJson()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$.a"u8, ""u8);
+
+            var ex = Assert.Throws<ArgumentException>(() => jp.ToString("J"));
+            Assert.AreEqual("Empty encoded value", ex!.Message);
+        }
+
+        [Test]
+        public void SerializeSeededEmptyPatch()
+        {
+            JsonPatch jp = new("{\"x\":1}"u8.ToArray());
+
+            Assert.AreEqual("[]", jp.ToString());
+            Assert.AreEqual("{\"x\":1}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void AddMultiplePropertiesToRoot()
+        {
+            JsonPatch jp = new("{\"z\":100}"u8.ToArray());
+
+            jp.Set("$.a"u8, 1);
+            jp.Set("$.b"u8, 2);
+            jp.Set("$.c"u8, 3);
+
+            Assert.AreEqual("{\"z\":100,\"a\":1,\"b\":2,\"c\":3}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void NullException_Format()
+        {
+            JsonPatch jp = new();
+            var ex = Assert.Throws<ArgumentNullException>(() => jp.ToString(null!));
+            Assert.AreEqual("Value cannot be null. (Parameter 'format')", ex!.Message);
         }
     }
 }

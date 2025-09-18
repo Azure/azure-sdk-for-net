@@ -127,5 +127,35 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/-\",\"value\":5}]", jp.ToString());
         }
+
+        [Test]
+        public void Remove_Primitive()
+        {
+            JsonPatch jp = new("{\"property\":\"value\"}"u8.ToArray());
+
+            jp.Remove("$.property"u8);
+
+            Assert.AreEqual("[{\"op\":\"remove\",\"path\":\"/property\"}]", jp.ToString());
+        }
+
+        [Test]
+        public void Remove_IndexedArrayItem()
+        {
+            JsonPatch jp = new("{\"x\":[{\"y\":\"value\"}]}"u8.ToArray());
+
+            jp.Remove("$.x[0]"u8);
+
+            Assert.AreEqual("[{\"op\":\"remove\",\"path\":\"/x/0\"}]", jp.ToString());
+        }
+
+        [Test]
+        public void Remove_IndexedArrayItem_Property()
+        {
+            JsonPatch jp = new("{\"x\":[{\"y\":\"value\"}]}"u8.ToArray());
+
+            jp.Remove("$.x[0].y"u8);
+
+            Assert.AreEqual("[{\"op\":\"remove\",\"path\":\"/x/0/y\"}]", jp.ToString());
+        }
     }
 }

@@ -19,16 +19,6 @@ public partial struct JsonPatch
     private PropagatorSetter? _propagatorSetter;
     private PropagatorGetter? _propagatorGetter;
 
-    private ReadOnlyMemory<byte> GetEncodedValue(ReadOnlySpan<byte> jsonPath)
-    {
-        if (TryGetEncodedValueInternal(jsonPath, out var value))
-        {
-            return value.Value;
-        }
-
-        return ThrowKeyNotFoundException(jsonPath);
-    }
-
     private bool TryGetEncodedValueInternal(ReadOnlySpan<byte> jsonPath, out EncodedValue value)
     {
         value = EncodedValue.Empty;
@@ -110,7 +100,8 @@ public partial struct JsonPatch
                 AdjustJsonPath(
                     indexRequested - Math.Max(length, GetMaxSibling(normalizedArrayPath) + 1),
                     reader.Current.ValueSpan.Length,
-                    adjustedJsonPath.Slice(reader.Current.TokenStartIndex, reader.Current.ValueSpan.Length),
+                    reader.Current.TokenStartIndex,
+                    adjustedJsonPath,
                     ref adjustedLength);
 
                 normalizedArrayPath = reader.GetNextArray();
@@ -180,14 +171,13 @@ public partial struct JsonPatch
         return false;
     }
 
-    private static void AdjustJsonPath(int newIndex, int indexLength, Span<byte> buffer, ref int length)
+    private static void AdjustJsonPath(int newIndex, int indexLength, int indexStart, Span<byte> buffer, ref int length)
     {
-        Utf8Formatter.TryFormat(newIndex, buffer, out var bytesWritten);
+        Utf8Formatter.TryFormat(newIndex, buffer.Slice(indexStart), out var bytesWritten);
         int shift = indexLength - bytesWritten;
         if (shift > 0)
         {
-            indexLength = bytesWritten;
-            buffer.Slice(indexLength + 1).CopyTo(buffer.Slice(bytesWritten + 1));
+            buffer.Slice(indexStart + indexLength).CopyTo(buffer.Slice(indexStart + bytesWritten));
             length -= shift;
         }
     }
@@ -203,7 +193,7 @@ public partial struct JsonPatch
             return false;
         }
 
-        if (!TryGetRootJson(out var rootJson, true))
+        if (!TryGetRootJson(out var rootJson))
         {
             return false;
         }
@@ -236,9 +226,9 @@ public partial struct JsonPatch
         return true;
     }
 
-    private ReadOnlyMemory<byte> GetCombinedArray(ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue, bool onlyRaw = true)
+    private ReadOnlyMemory<byte> GetCombinedArray(ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
     {
-        TryGetRootJson(out var rootJson, onlyRaw);
+        TryGetRootJson(out var rootJson);
 
         rootJson.TryGetJson(jsonPath, out var existingArray);
 
@@ -247,77 +237,62 @@ public partial struct JsonPatch
 
     private ReadOnlyMemory<byte> GetCombinedArray(ReadOnlySpan<byte> jsonPath, ReadOnlyMemory<byte> existingArray, EncodedValue encodedValue)
     {
-        if (_properties is not null)
+        Debug.Assert(_properties is not null, "GetCombinedArray should only be called when _properties is not null.");
+
+        Span<byte> normalizedPrefix = stackalloc byte[jsonPath.Length];
+        byte[] childPath = new byte[_properties!.MaxKeyLength];
+        JsonPathComparer.Default.Normalize(jsonPath, normalizedPrefix, out int bytesWritten);
+        normalizedPrefix = normalizedPrefix.Slice(0, bytesWritten);
+
+        // find all items in _properties that start with normalizedPrefix and combine them into a single array
+        foreach (var kvp in _properties)
         {
-            Span<byte> normalizedPrefix = stackalloc byte[jsonPath.Length];
-            byte[] childPath = new byte[_properties.MaxKeyLength];
-            JsonPathComparer.Default.Normalize(jsonPath, normalizedPrefix, out int bytesWritten);
-            normalizedPrefix = normalizedPrefix.Slice(0, bytesWritten);
-
-            // find all items in _properties that start with normalizedPrefix and combine them into a single array
-            foreach (var kvp in _properties)
+            if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
             {
-                if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                ReadOnlySpan<byte> keySpan = kvp.Key;
+            ReadOnlySpan<byte> keySpan = kvp.Key;
 
-                if (!keySpan.StartsWith(normalizedPrefix))
-                {
-                    continue;
-                }
+            if (!keySpan.StartsWith(normalizedPrefix))
+            {
+                continue;
+            }
 
-                if (existingArray.IsEmpty)
+            if (existingArray.IsEmpty)
+            {
+                // if the existing array is empty, then we can just use the encoded value directly if it matches the prefix, otherwise we need to wrap it in an array
+                existingArray = keySpan.SequenceEqual(normalizedPrefix) ? encodedValue.Value : new([(byte)'[', .. kvp.Value.Value.Span, (byte)']']);
+            }
+            else
+            {
+                GetSubPath(normalizedPrefix, kvp.Key, childPath, out int childPathLength);
+                ReadOnlySpan<byte> childJsonPath = childPath.AsSpan(0, childPathLength);
+                if (childJsonPath.IsArrayIndex())
                 {
-                    // if the existing array is empty, then we can just use the encoded value directly if it matches the prefix, otherwise we need to wrap it in an array
-                    existingArray = keySpan.SequenceEqual(normalizedPrefix) ? encodedValue.Value : new([(byte)'[', .. kvp.Value.Value.Span, (byte)']']);
+                    // if the childJsonPath is an array index, we need to insert the value at that index in the existing array
+                    existingArray = existingArray.InsertAt(childJsonPath, kvp.Value.Value);
                 }
                 else
                 {
-                    GetSubPath(normalizedPrefix, kvp.Key, childPath, out int childPathLength);
-                    ReadOnlySpan<byte> childJsonPath = childPath.AsSpan(0, childPathLength);
-                    if (childJsonPath.IsArrayIndex())
-                    {
-                        // if the childJsonPath is an array index, we need to insert the value at that index in the existing array
-                        existingArray = existingArray.InsertAt(childJsonPath, kvp.Value.Value);
-                    }
-                    else
-                    {
-                        // otherwise we can just append the value to the existing array
-                        existingArray = existingArray.Append(childJsonPath, kvp.Value.Value.Slice(1, kvp.Value.Value.Length - 2));
-                    }
+                    // otherwise we can just append the value to the existing array
+                    existingArray = existingArray.Append(childJsonPath, kvp.Value.Value.Slice(1, kvp.Value.Value.Length - 2));
                 }
             }
-            // if existing array is still empty return the original encoded value, otherwise return the combined array
-            return existingArray.IsEmpty ? encodedValue.Value : existingArray;
         }
-        else
-        {
-            if (existingArray.IsEmpty)
-            {
-                // if existing array is empty return the origin encoded value
-                return encodedValue.Value;
-            }
-            // append the new encoded value to the existing array and return the combined array
-            return new([.. existingArray.Span.Slice(0, existingArray.Length - 1), (byte)',', .. encodedValue.Value.Span.Slice(1)]);
-        }
+        // if existing array is still empty return the original encoded value, otherwise return the combined array
+        return existingArray.IsEmpty ? encodedValue.Value : existingArray;
     }
 
-    private bool TryGetRootJson(out ReadOnlyMemory<byte> value, bool onlyRaw = false)
+    private bool TryGetRootJson(out ReadOnlyMemory<byte> value)
     {
         value = ReadOnlyMemory<byte>.Empty;
 
-        if (_properties is null && _rawJson.Value.IsEmpty)
+        Debug.Assert(_properties is not null, "TryGetRootJson should only be called when _properties is not null.");
+
+        if (_rawJson.Value.IsEmpty)
         {
             return false;
-        }
-
-        if (!onlyRaw && _properties?.TryGetValue("$"u8, out var encodedRoot) == true && (encodedRoot.Kind.HasFlag(ValueKind.ArrayItemAppend) ? _rawJson.Value.IsEmpty : true))
-        {
-            value = encodedRoot.Value;
-            return true;
         }
 
         value = _rawJson.Value;
@@ -412,7 +387,7 @@ public partial struct JsonPatch
                     Utf8Parser.TryParse(pathReader.Current.ValueSpan, out int index, out _);
                     int newLength = parsedPath.Length;
                     parsedPath.CopyTo(adjustedPath);
-                    AdjustJsonPath(index - length, pathReader.Current.ValueSpan.Length, adjustedPath.AsSpan(pathReader.Current.TokenStartIndex), ref newLength);
+                    AdjustJsonPath(index - length, pathReader.Current.ValueSpan.Length, pathReader.Current.TokenStartIndex, adjustedPath, ref newLength);
                     var remainingPath = jsonPath.Slice(pathReader.Current.TokenStartIndex + 2);
                     remainingPath.CopyTo(adjustedPath.AsSpan(newLength));
                     localPath = adjustedPath.AsSpan(0, newLength + remainingPath.Length);
@@ -713,12 +688,9 @@ public partial struct JsonPatch
                     writer.WriteEndObject();
                     break;
                 case JsonPathTokenType.End:
-                    if (writer.BytesPending == 0 && writer.BytesCommitted == 0)
-                    {
-                        WriteEncodedValueAsJson(writer, ReadOnlySpan<byte>.Empty, encodedValue);
-                    }
                     break;
                 default:
+                    // we will never reach this since all token types are handled above
                     ThrowInvalidToken(pathReader.Current.TokenType);
                     break;
             }

@@ -9,6 +9,59 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     public class JsonPatchAppendTests
     {
         [Test]
+        public void AppendWithMoreThanTenAndARemove()
+        {
+            JsonPatch jp = new("{\"arr\":[1,2,3,4,5,6,7,8,9,10,11],\"x\":1}"u8.ToArray());
+
+            jp.Remove("$.x"u8);
+            jp.Append("$.arr"u8, 12);
+            jp.Append("$.arr"u8, 13);
+
+            Assert.AreEqual("[1,2,3,4,5,6,7,8,9,10,11,12,13]", jp.GetJson("$.arr"u8).ToString());
+            Assert.AreEqual(1, jp.GetInt32("$.arr[0]"u8));
+            Assert.AreEqual(2, jp.GetInt32("$.arr[1]"u8));
+            Assert.AreEqual(3, jp.GetInt32("$.arr[2]"u8));
+            Assert.AreEqual(4, jp.GetInt32("$.arr[3]"u8));
+            Assert.AreEqual(5, jp.GetInt32("$.arr[4]"u8));
+            Assert.AreEqual(6, jp.GetInt32("$.arr[5]"u8));
+            Assert.AreEqual(7, jp.GetInt32("$.arr[6]"u8));
+            Assert.AreEqual(8, jp.GetInt32("$.arr[7]"u8));
+            Assert.AreEqual(9, jp.GetInt32("$.arr[8]"u8));
+            Assert.AreEqual(10, jp.GetInt32("$.arr[9]"u8));
+            Assert.AreEqual(11, jp.GetInt32("$.arr[10]"u8));
+            Assert.AreEqual(12, jp.GetInt32("$.arr[11]"u8));
+            Assert.AreEqual(13, jp.GetInt32("$.arr[12]"u8));
+
+            Assert.AreEqual("{\"arr\":[1,2,3,4,5,6,7,8,9,10,11,12,13]}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void AppendWithMoreThanTen()
+        {
+            JsonPatch jp = new("{\"arr\":[1,2,3,4,5,6,7,8,9,10,11]}"u8.ToArray());
+
+            jp.Append("$.arr"u8, 12);
+            jp.Append("$.arr"u8, 13);
+
+            Assert.AreEqual("[1,2,3,4,5,6,7,8,9,10,11,12,13]", jp.GetJson("$.arr"u8).ToString());
+            Assert.AreEqual(1, jp.GetInt32("$.arr[0]"u8));
+            Assert.AreEqual(2, jp.GetInt32("$.arr[1]"u8));
+            Assert.AreEqual(3, jp.GetInt32("$.arr[2]"u8));
+            Assert.AreEqual(4, jp.GetInt32("$.arr[3]"u8));
+            Assert.AreEqual(5, jp.GetInt32("$.arr[4]"u8));
+            Assert.AreEqual(6, jp.GetInt32("$.arr[5]"u8));
+            Assert.AreEqual(7, jp.GetInt32("$.arr[6]"u8));
+            Assert.AreEqual(8, jp.GetInt32("$.arr[7]"u8));
+            Assert.AreEqual(9, jp.GetInt32("$.arr[8]"u8));
+            Assert.AreEqual(10, jp.GetInt32("$.arr[9]"u8));
+            Assert.AreEqual(11, jp.GetInt32("$.arr[10]"u8));
+            Assert.AreEqual(12, jp.GetInt32("$.arr[11]"u8));
+            Assert.AreEqual(13, jp.GetInt32("$.arr[12]"u8));
+
+            Assert.AreEqual("{\"arr\":[1,2,3,4,5,6,7,8,9,10,11,12,13]}", jp.ToString("J"));
+        }
+
+        [Test]
         public void RootAndInsert_ParentBeforeOutOfOrder()
         {
             JsonPatch jp = new("{\"a\":{\"b\":[[\"value1\",\"value3\"],[\"value2\"]]}}"u8.ToArray());

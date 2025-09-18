@@ -23,8 +23,6 @@ public partial struct JsonPatch
             _inner = new(JsonPathComparer.Default);
         }
 
-        public int Count => _inner.Count;
-
         public int MaxKeyLength { get; private set; }
 
         public bool TryGetValue(ReadOnlySpan<byte> key, out EncodedValue value)
@@ -35,17 +33,6 @@ public partial struct JsonPatch
             return _inner.GetAlternateLookup<ReadOnlySpan<byte>>().TryGetValue(normalizedKey, out value);
 #else
             return _inner.TryGetValue(normalizedKey.ToArray(), out value);
-#endif
-        }
-
-        public bool ContainsKey(ReadOnlySpan<byte> key)
-        {
-            Span<byte> buffer = stackalloc byte[key.Length];
-            ReadOnlySpan<byte> normalizedKey = GetNormalizedKey(key, buffer);
-#if NET9_0_OR_GREATER
-            return _inner.GetAlternateLookup<ReadOnlySpan<byte>>().ContainsKey(normalizedKey);
-#else
-            return _inner.ContainsKey(normalizedKey.ToArray());
 #endif
         }
 

@@ -11,6 +11,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
     internal partial class AvailabilitySetDataTests
     {
         [Test]
+        public void NoSeedAndNoPatches()
+        {
+            AvailabilitySetData model = new("eastus");
+
+            Assert.IsFalse(model.Patch.TryGetJson("$.extraSku"u8, out _));
+        }
+
+        [Test]
         public void AddInt32Property()
         {
             var model = GetInitialModel();
