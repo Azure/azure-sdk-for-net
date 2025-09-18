@@ -113,6 +113,4 @@ public class BicepValue<T> : BicepValue
             BicepValueKind.Literal => new(value._self, BicepTypeMapping.ToLiteralString(value.Value!, value.Format)),
             _ => throw new InvalidOperationException($"Unknown {nameof(BicepValueKind)}!")
         };
-
-    private protected override BicepExpression CompileCore() => BicepTypeMapping.ToBicep(this, Format);
 }

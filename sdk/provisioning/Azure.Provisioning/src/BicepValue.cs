@@ -90,9 +90,7 @@ public abstract class BicepValue : IBicepValue
     public override string ToString() => Compile().ToString();
 
     /// <inheritdoc />
-    public BicepExpression Compile() => CompileCore(); //=> BicepTypeMapping.ToBicep(this, Format);
-
-    private protected abstract BicepExpression CompileCore();
+    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this, Format);
 
     /// <inheritdoc />
     void IBicepValue.Assign(IBicepValue source) => Assign(source);

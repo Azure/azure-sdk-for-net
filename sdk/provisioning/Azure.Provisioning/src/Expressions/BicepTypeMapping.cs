@@ -74,7 +74,7 @@ internal static class BicepTypeMapping
             AzureLocation azureLocation => azureLocation.ToString(),
             ResourceType rt => rt.ToString(),
             Enum e => GetEnumValue(e),
-            // Extensible enums like AzureLocation
+            // Other extensible enums like AzureLocation (AzureLocation has been handled above)
             // TODO: Can we either tag or special case all that we care about because ValueType is too broad
             ValueType ee => ee.ToString()!,
             _ => throw new InvalidOperationException($"Cannot convert {value} to a literal Bicep string.")
@@ -110,13 +110,16 @@ internal static class BicepTypeMapping
             IPAddress a => BicepSyntax.Value(ToLiteralString(a, format)),
             ETag e => BicepSyntax.Value(ToLiteralString(e, format)),
             ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i, format)),
+            AzureLocation azureLocation => BicepSyntax.Value(ToLiteralString(azureLocation, format)),
+            ResourceType rt => BicepSyntax.Value(ToLiteralString(rt, format)),
             Enum e => BicepSyntax.Value(ToLiteralString(e, format)),
+            // we call this method on IBicepValue to convert this into an expression instead of statements
             ProvisionableConstruct c => ((IBicepValue)c).Compile(),
             IDictionary<string, IBicepValue> d =>
                 d is IBicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToObject(d),
             IEnumerable seq =>
                 seq is IBicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToArray(seq.OfType<object>()),
-            // Extensible enums like AzureLocation
+            // Other extensible enums like AzureLocation (AzureLocation has been handled above)
             ValueType ee => BicepSyntax.Value(ToLiteralString(ee, format)),
             // Unwrap BicepValue after collections so it doesn't loop forever
             IBicepValue v when (v.Kind == BicepValueKind.Expression) => v.Expression!,
