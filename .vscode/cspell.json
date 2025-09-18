@@ -1825,6 +1825,12 @@
       ]
     },
     {
+      "filename": "/sdk/virtualenclaves/**/*.cs",
+      "words": [
+        "mobo"
+      ]
+    },
+    {
       "filename": "**/sdk/workloadorchestration/**/*.cs",
       "words": [
         "Inprogress",
