@@ -10,16 +10,15 @@
     <DefineConstants>$(DefineConstants)</DefineConstants>
     <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <PropertyGroup>
     <RestoreSources>$(RestoreSources)</RestoreSources>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
@@ -28,5 +27,4 @@
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
   </ItemGroup>
-
 </Project>

@@ -1,11 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Local Search Client Library</AssemblyTitle>
     <Description>Provides ability to search for businesses</Description>
     <Version>1.0.0-preview.1</Version>
     <PackageTags>CognitiveServices;Bing;BingLocalSearch;LocalSearch;Local Search</PackageTags>
-    <PackageReleaseNotes>
-	    <![CDATA[
+    <PackageReleaseNotes><![CDATA[
 
     This version is based on the v1.0 Bing Local Search API specification.
 
@@ -14,14 +13,13 @@
     2. Search for businesses near named geographic places ("restaurants in seattle")
     3. Search near specific geographic coordinates using the localCircularView and/or localMapView parameters
     4. Search by category id using the localCategories parameter.
-    ]]>
-    </PackageReleaseNotes>
+    ]]></PackageReleaseNotes>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>

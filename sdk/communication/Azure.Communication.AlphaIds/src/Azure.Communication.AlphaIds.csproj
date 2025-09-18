@@ -6,8 +6,9 @@
     <PackageTags>Microsoft Azure Communication Alpha ID Service;Microsoft;Azure;Azure Communication Service;Azure Communication Alpha ID Service;Alpha ID;Alpha Ids;Communication</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
@@ -18,5 +19,4 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
 </Project>

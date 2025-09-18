@@ -1,21 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Visual Search Client Library</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services Image Visual Search API.</Description>
     <Version>2.1.0-preview.1</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;VisualSearch API;BingVisualSearch API;REST HTTPclient;VisualSearchSDK;BingVisualSearchSDK;netcore451511</PackageTags>
-    <PackageReleaseNotes>
-    <![CDATA[
+    <PackageReleaseNotes><![CDATA[
     Changes in this release:
     1. Support overriding the default endpoint.
     2. Change client class name to `VisualSearchClient`.
-    ]]>
-	</PackageReleaseNotes>
+    ]]></PackageReleaseNotes>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>

@@ -1,5 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageIcon>Icon.png</PackageIcon>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -8,21 +7,20 @@
     <RootNamespace />
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Version>1.0.0-beta.1</Version>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="System.ServiceModel.Primitives" GeneratePathProperty="true">
       <IncludeAssets>none</IncludeAssets>
       <ExcludeAssets>all</ExcludeAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Remove="Microsoft\CoreWCF\Configuration\**" />
     <EmbeddedResource Remove="Microsoft\CoreWCF\Configuration\**" />
     <None Remove="Microsoft\CoreWCF\Configuration\**" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Storage.Queues" />
@@ -30,7 +28,6 @@
     <PackageReference Include="System.Formats.Asn1" />
     <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Resources\SR.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -38,7 +35,6 @@
       <DependentUpon>SR.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Resources\SR.resx">
       <Generator>ResXFileCodeGenerator</Generator>

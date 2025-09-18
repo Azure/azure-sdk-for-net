@@ -1,23 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk"> 
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services Content Moderator SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services Content Moderator APIs.</Description>
     <Version>2.1.0-preview.1</Version>
     <PackageTags>ContentModerator;Content Moderator;</PackageTags>
-    <PackageReleaseNotes>
-<![CDATA[
+    <PackageReleaseNotes><![CDATA[
 This is a public release of the Cognitive Services Content Moderator SDK.
 
 Changes in this release:
 1) Change the namespace from `Microsoft.CognitiveServices.ContentModerator` to `Microsoft.Azure.CognitiveServices.ContentModerator`.
-]]>
-	</PackageReleaseNotes>
+]]></PackageReleaseNotes>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-  
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>

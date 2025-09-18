@@ -4,5 +4,7 @@
     <Version>1.0.0-beta.1</Version>
     <PackageTags>azure;management;arm;resource manager;disconnectedoperations</PackageTags>
     <PackageId>Azure.ResourceManager.DisconnectedOperations</PackageId>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 </Project>

@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <Description>Azure.Projects.Web is an ASP.NET Core extensions for Azure.Projects</Description>
     <Version>1.0.0-beta.2</Version>
@@ -7,19 +6,18 @@
     <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Properties\**" />
     <EmbeddedResource Remove="Properties\**" />
     <None Remove="Properties\**" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Projects\src\Azure.Projects.csproj" />
   </ItemGroup>

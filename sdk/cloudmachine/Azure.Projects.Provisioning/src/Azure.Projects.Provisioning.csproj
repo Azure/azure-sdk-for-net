@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <Description>Azure.Projects.Provisioning simplifies declarative resource provisioning in .NET.</Description>
     <Version>1.0.0-beta.2</Version>
@@ -8,8 +7,9 @@
     <Nullable>enable</Nullable>
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <NoWarn>CS1591;AZC0007</NoWarn>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Provisioning" />
@@ -21,9 +21,7 @@
     <PackageReference Include="Azure.Provisioning.AppService" />
     <PackageReference Include="Azure.Provisioning.AppConfiguration" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Projects\src\Azure.Projects.csproj" />
   </ItemGroup>
-
 </Project>

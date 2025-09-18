@@ -57,8 +57,9 @@ foreach ($serviceDir in $serviceDirs) {
     $currentDir++
     Write-Progress -Activity "Scanning sdk directories" -Status "Checking $($serviceDir.Name)" -PercentComplete (($currentDir / $totalDirs) * 100)
     
-    # Look for ci.yml files in this service directory
-    $ciYmlFiles = Get-ChildItem -Path $serviceDir.FullName -Filter "ci.yml" -Recurse -ErrorAction SilentlyContinue
+    # Look for ci.yml and ci.{something}.yml files in this service directory, excluding mgmt variants
+    $ciYmlFiles = Get-ChildItem -Path $serviceDir.FullName -Filter "ci*.yml" -Recurse -ErrorAction SilentlyContinue | 
+        Where-Object { $_.Name -eq "ci.yml" -or ($_.Name -match "^ci\..*\.yml$" -and $_.Name -notlike "*mgmt*") }
     
     foreach ($ciYmlFile in $ciYmlFiles) {
         # Read the ci.yml file to extract artifact name
@@ -75,15 +76,33 @@ foreach ($serviceDir in $serviceDirs) {
                 
                 foreach ($nameMatch in $nameMatches) {
                     $packageName = $nameMatch.Groups[1].Value.Trim()
-                      # Add to our collection
+                    
+                    # Look for directoryName in the same artifact entry
+                    $directoryName = $null
+                    $nameEndIndex = $nameMatch.Index + $nameMatch.Length
+                    
+                    # Find the next artifact entry or end of artifacts section to define the scope
+                    $nextNameMatch = $nameMatches | Where-Object { $_.Index -gt $nameMatch.Index } | Sort-Object Index | Select-Object -First 1
+                    $searchEndIndex = if ($nextNameMatch) { $nextNameMatch.Index } else { $sectionContent.Length }
+                    
+                    # Extract the text between this name entry and the next (or end of section)
+                    $artifactEntryContent = $sectionContent.Substring($nameEndIndex, $searchEndIndex - $nameEndIndex)
+                    
+                    # Look for directoryName within this artifact entry
+                    $directoryNameMatch = [regex]::Match($artifactEntryContent, 'directoryName:\s*["'']?(.*?)["'']?\s*(?:\r?\n|$)')
+                    if ($directoryNameMatch.Success) {
+                        $directoryName = $directoryNameMatch.Groups[1].Value.Trim()
+                    }
+                    
+                    # Add to our collection
                     $foundPackages += [PSCustomObject]@{
                         PackageName = $packageName
                         ServiceDirectory = $serviceDir.Name
+                        DirectoryName = $directoryName
                     }
                     
-                    Write-Host "  Found Artifacts.name: $packageName in $($serviceDir.Name)" -ForegroundColor Green
-                    
-                    Write-Host "  Found Artifacts.name: $packageName in $($serviceDir.Name)" -ForegroundColor Green
+                    $displayName = if ($directoryName) { "$packageName (dir: $directoryName)" } else { $packageName }
+                    Write-Host "  Found Artifacts.name: $displayName in $($serviceDir.Name)" -ForegroundColor Green
                 }
             }
         } catch {
@@ -99,7 +118,7 @@ Write-Host "`nScanned $($serviceDirs.Count) service directories" -ForegroundColo
 Write-Host "Found $($foundPackages.Count) artifacts in ci.yml files:" -ForegroundColor Green
 
 if ($foundPackages.Count -gt 0) {
-    $foundPackages | Format-Table -Property PackageName, ServiceDirectory
+    $foundPackages | Format-Table -Property PackageName, ServiceDirectory, DirectoryName
 } else {
     Write-Host "No artifacts found in ci.yml files." -ForegroundColor Red
     exit 1
@@ -141,7 +160,9 @@ foreach ($package in $foundPackages) {
     $checkAotScriptPath = Join-Path -Path $PSScriptRoot -ChildPath "Check-AOT-Compatibility.ps1"
     
     # Construct the path to the package directory following the structure: repoRoot/sdk/serviceDirectory/packageName
-    $packageDir = Join-Path -Path (Join-Path -Path $sdkDir -ChildPath $package.ServiceDirectory) -ChildPath $package.PackageName
+    # Use DirectoryName if available, otherwise fall back to PackageName
+    $packageFolderName = if ($package.DirectoryName) { $package.DirectoryName } else { $package.PackageName }
+    $packageDir = Join-Path -Path (Join-Path -Path $sdkDir -ChildPath $package.ServiceDirectory) -ChildPath $packageFolderName
     
     # Check if the package directory exists
     if (!(Test-Path $packageDir)) {
@@ -150,26 +171,14 @@ foreach ($package in $foundPackages) {
         continue
     }
     
-    # # Create the compatibility directory for the output
-    # $testsDir = Join-Path -Path $packageDir -ChildPath "tests"
-    # $compatibilityDir = Join-Path -Path $testsDir -ChildPath "compatibility"
-    
-    # # Create directory if it doesn't exist
-    # if (!(Test-Path $testsDir)) {
-    #     New-Item -ItemType Directory -Path $testsDir -Force | Out-Null
-    #     Write-Host "  Created directory: $testsDir" -ForegroundColor Gray
-    # }
-    
-    # if (!(Test-Path $compatibilityDir)) {
-    #     New-Item -ItemType Directory -Path $compatibilityDir -Force | Out-Null
-    #     Write-Host "  Created directory: $compatibilityDir" -ForegroundColor Gray
-    # }
-      # Determine the output file path
-    # $outputFilePath = Join-Path -Path $compatibilityDir -ChildPath "ExpectedWarnings.txt"
-      # Run the AOT compatibility check and extract warnings
     Write-Host "  Running Check-AOT-Compatibility.ps1 for $($package.PackageName)..." -ForegroundColor Gray
     try {        # Run the compatibility check with "None" to force it to report all warnings and capture all output
-        $output = & $checkAotScriptPath -ServiceDirectory $package.ServiceDirectory -PackageName $package.PackageName -ExpectedWarningsFilePath "None" *>&1
+        # Pass DirectoryName parameter if available
+        if ($package.DirectoryName) {
+            $output = & $checkAotScriptPath -ServiceDirectory $package.ServiceDirectory -PackageName $package.PackageName -ExpectedWarningsFilePath "None" -DirectoryName $package.DirectoryName *>&1
+        } else {
+            $output = & $checkAotScriptPath -ServiceDirectory $package.ServiceDirectory -PackageName $package.PackageName -ExpectedWarningsFilePath "None" *>&1
+        }
         
         # Split the output into lines and find warnings
         $outputLines = $output -split "`r`n"
@@ -179,39 +188,64 @@ foreach ($package in $foundPackages) {
             $warningLines = $outputLines | Where-Object { $_ -match "IL\d+:" }
         }
         
-        # Process each warning line
-        # $warningPatterns = @()
-        # foreach ($line in $warningLines) {
-        #     # Clean up the line - remove color codes and normalize whitespace
-        #     $cleanLine = $line -replace '\e\[\d+(;\d+)*m', '' -replace '\s+', ' ' -replace '^\s+|\s+$', ''
-            
-        #     # Remove filepath in brackets at the end if it exists
-        #     $cleanLine = $cleanLine -replace '\s+\[.+?\]$', ''
-        #       # Handle filepath at the beginning (replace with .* up to package name)
-        #     if ($cleanLine -match "\\sdk\\.*?\\($($package.PackageName))\\") {
-        #         $cleanLine = $cleanLine -replace "^.*\\sdk\\.*?\\($($package.PackageName))", ".*$($package.PackageName)"
-        #     }
-            
-        #     # Replace line numbers with \d*
-        #     $cleanLine = $cleanLine -replace '\(\d+\)', '(\d*)'
-            
-        #     # Escape special regex characters (except those we want to keep as wildcards)
-        #     $escapedLine = [regex]::Escape($cleanLine)
-
-        #     $escapedLine = $escapedLine -replace '\\\\d\\\*', '\d*'  # Keep \d* wildcards
-        #     $escapedLine = $escapedLine -replace '\\.\\\*', '.*'  # Keep .* wildcards
-
-            
-        #     $warningPatterns += $escapedLine
-        # }
-        
-        # Save the warning patterns to the file
         if ($warningLines.Count -gt 0) {
             # $warningPatterns | Out-File -FilePath $outputFilePath -Force
             Write-Host "  Counted $($warningLines.Count) warnings" -ForegroundColor Yellow
         } else {
             # Create an empty file if no warnings found
             Write-Host "  No warnings found." -ForegroundColor Green
+            
+            # Try to find and update the csproj file to add AOT compatibility properties
+            $csprojPath = Join-Path -Path $packageDir -ChildPath "src\$($package.PackageName).csproj"
+            if (Test-Path $csprojPath) {
+                Write-Host "  Found csproj file: $csprojPath" -ForegroundColor Gray
+                try {
+                    # Read the csproj file
+                    [xml]$csprojXml = Get-Content -Path $csprojPath
+                    
+                    # Check if AOT properties already exist
+                    $hasIsTrimmable = $csprojXml.SelectNodes("//IsTrimmable") | Where-Object { $_ -ne $null }
+                    $hasIsAotCompatible = $csprojXml.SelectNodes("//IsAotCompatible") | Where-Object { $_ -ne $null }
+                    
+                    if ($hasIsTrimmable.Count -eq 0 -or $hasIsAotCompatible.Count -eq 0) {
+                        # Find or create a PropertyGroup to add the properties to
+                        $propertyGroup = $csprojXml.Project.PropertyGroup | Select-Object -First 1
+                        if (-not $propertyGroup) {
+                            # Create a new PropertyGroup if none exists
+                            $propertyGroup = $csprojXml.CreateElement("PropertyGroup")
+                            $csprojXml.Project.AppendChild($propertyGroup) | Out-Null
+                        }
+                        
+                        # Add IsTrimmable if it doesn't exist
+                        if ($hasIsTrimmable.Count -eq 0) {
+                            $isTrimmableElement = $csprojXml.CreateElement("IsTrimmable")
+                            $isTrimmableElement.SetAttribute("Condition", "`$([MSBuild]::IsTargetFrameworkCompatible('`$(TargetFramework)', 'net6.0'))")
+                            $isTrimmableElement.InnerText = "true"
+                            $propertyGroup.AppendChild($isTrimmableElement) | Out-Null
+                            Write-Host "  Added IsTrimmable property" -ForegroundColor Green
+                        }
+                        
+                        # Add IsAotCompatible if it doesn't exist
+                        if ($hasIsAotCompatible.Count -eq 0) {
+                            $isAotCompatibleElement = $csprojXml.CreateElement("IsAotCompatible")
+                            $isAotCompatibleElement.SetAttribute("Condition", "`$([MSBuild]::IsTargetFrameworkCompatible('`$(TargetFramework)', 'net7.0'))")
+                            $isAotCompatibleElement.InnerText = "true"
+                            $propertyGroup.AppendChild($isAotCompatibleElement) | Out-Null
+                            Write-Host "  Added IsAotCompatible property" -ForegroundColor Green
+                        }
+                        
+                        # Save the updated csproj file
+                        $csprojXml.Save($csprojPath)
+                        Write-Host "  Updated csproj file with AOT compatibility properties" -ForegroundColor Green
+                    } else {
+                        Write-Host "  AOT compatibility properties already exist in csproj file" -ForegroundColor Yellow
+                    }
+                } catch {
+                    Write-Warning "  Error updating csproj file: $_"
+                }
+            } else {
+                Write-Warning "  Could not find csproj file at expected location: $csprojPath"
+            }
         }
         
         $successfulPackages++
