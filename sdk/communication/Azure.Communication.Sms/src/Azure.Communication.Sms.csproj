@@ -6,9 +6,9 @@
 			Microsoft Azure Communication Sms quickstart - https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp
 		</Description>
 		<AssemblyTitle>Azure Communication Sms Service</AssemblyTitle>
-		<Version>1.0.2</Version>
+		<Version>1.1.0-beta.1</Version>
 		<!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-		<ApiCompatVersion>1.0.1</ApiCompatVersion>
+		<ApiCompatVersion>1.0.2</ApiCompatVersion>
 		<PackageTags>Microsoft Azure Communication Sms Service;Microsoft;Azure;Azure Communication Service;Azure Communication Sms Service;Sms;Communication;$(PackageCommonTags)</PackageTags>
 		<DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
