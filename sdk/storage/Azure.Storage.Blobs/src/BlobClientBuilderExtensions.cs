@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Core;
@@ -48,7 +49,17 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="BlobServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<BlobServiceClient, BlobClientOptions>((options, token) => new BlobServiceClient(serviceUri, token, options));
+        }
+
+        /// <summary>
+        /// Registers a <see cref="BlobServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
+        /// </summary>
+        public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClientWithTokenCredential<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<BlobServiceClient, BlobClientOptions>(options => new BlobServiceClient(serviceUri, tokenCredential, options));

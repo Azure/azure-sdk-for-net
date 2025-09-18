@@ -67,7 +67,17 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<ShareServiceClient, ShareClientOptions> AddShareServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>((options, token) => new ShareServiceClient(serviceUri, token, options));
+        }
+
+        /// <summary>
+        /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
+        /// </summary>
+        public static IAzureClientBuilder<ShareServiceClient, ShareClientOptions> AddShareServiceClientWithTokenCredential<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>(options => new ShareServiceClient(serviceUri, tokenCredential, options));
