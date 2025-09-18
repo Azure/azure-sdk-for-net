@@ -2582,7 +2582,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        public async Task StorageAccountCreateSetGetZonePlacementPolicy()
+        public async Task StorageAccountCreateGetSetZonePlacementPolicy()
         {
             //create storage account
             _resourceGroup = await CreateResourceGroupAsync();
