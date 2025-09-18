@@ -1,6 +1,17 @@
 # Release History
-
 ## 1.7.0 (2025-09-25)
+
+### Features Added
+
+- Stable version release of 1.7.0-beta.1.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.7.0-beta.1 (2025-08-08)
 
 ### Features Added
 
