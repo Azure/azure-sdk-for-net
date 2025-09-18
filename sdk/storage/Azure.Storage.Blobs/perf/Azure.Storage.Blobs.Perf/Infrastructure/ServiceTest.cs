@@ -18,12 +18,12 @@ namespace Azure.Storage.Blobs.Perf
                 ? clientOptionsOptions.ClientOptions
                 : new BlobClientOptions();
             // The default credential does not support managed identity
-            TokenCredential crednetial = PerfTestEnvironment.Instance.StorageUseManagedIdentity ?
+            TokenCredential credential = PerfTestEnvironment.Instance.StorageUseManagedIdentity ?
                 new ManagedIdentityCredential(new ManagedIdentityCredentialOptions(ManagedIdentityId.SystemAssigned)) :
                 PerfTestEnvironment.Instance.Credential;
             BlobServiceClient = new BlobServiceClient(
                 PerfTestEnvironment.Instance.StorageEndpoint,
-                crednetial,
+                credential,
                 ConfigureClientOptions(clientOptions));
 
             // Can't do shared key tests if shared key wasn't provided
