@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CommunityResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string communityName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualEnclaveCommunityData>> GetAsync(string subscriptionId, string resourceGroupName, string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 case 200:
                     {
-                        CommunityResourceData value = default;
+                        VirtualEnclaveCommunityData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CommunityResourceData.DeserializeCommunityResourceData(document.RootElement);
+                        value = VirtualEnclaveCommunityData.DeserializeVirtualEnclaveCommunityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CommunityResourceData)null, message.Response);
+                    return Response.FromValue((VirtualEnclaveCommunityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CommunityResourceData> Get(string subscriptionId, string resourceGroupName, string communityName, CancellationToken cancellationToken = default)
+        public Response<VirtualEnclaveCommunityData> Get(string subscriptionId, string resourceGroupName, string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,19 +120,19 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 case 200:
                     {
-                        CommunityResourceData value = default;
+                        VirtualEnclaveCommunityData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CommunityResourceData.DeserializeCommunityResourceData(document.RootElement);
+                        value = VirtualEnclaveCommunityData.DeserializeVirtualEnclaveCommunityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CommunityResourceData)null, message.Response);
+                    return Response.FromValue((VirtualEnclaveCommunityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string communityName, CommunityResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string communityName, VirtualEnclaveCommunityData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string communityName, CommunityResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string communityName, VirtualEnclaveCommunityData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string communityName, CommunityResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string communityName, VirtualEnclaveCommunityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string communityName, CommunityResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string communityName, VirtualEnclaveCommunityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string communityName, CommunityResourcePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string communityName, VirtualEnclaveCommunityPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string communityName, CommunityResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string communityName, VirtualEnclaveCommunityPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communityName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string communityName, CommunityResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string communityName, VirtualEnclaveCommunityPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communityName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string communityName, CommunityResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string communityName, VirtualEnclaveCommunityPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -345,7 +345,6 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath(communityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -612,7 +611,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communityName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckAddressSpaceAvailabilityResponse>> CheckAddressSpaceAvailabilityAsync(string subscriptionId, string resourceGroupName, string communityName, CheckAddressSpaceAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckAddressSpaceAvailabilityResult>> CheckAddressSpaceAvailabilityAsync(string subscriptionId, string resourceGroupName, string communityName, CheckAddressSpaceAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -625,9 +624,9 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 case 200:
                     {
-                        CheckAddressSpaceAvailabilityResponse value = default;
+                        CheckAddressSpaceAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CheckAddressSpaceAvailabilityResponse.DeserializeCheckAddressSpaceAvailabilityResponse(document.RootElement);
+                        value = CheckAddressSpaceAvailabilityResult.DeserializeCheckAddressSpaceAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -643,7 +642,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communityName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckAddressSpaceAvailabilityResponse> CheckAddressSpaceAvailability(string subscriptionId, string resourceGroupName, string communityName, CheckAddressSpaceAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<CheckAddressSpaceAvailabilityResult> CheckAddressSpaceAvailability(string subscriptionId, string resourceGroupName, string communityName, CheckAddressSpaceAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -656,9 +655,9 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 case 200:
                     {
-                        CheckAddressSpaceAvailabilityResponse value = default;
+                        CheckAddressSpaceAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CheckAddressSpaceAvailabilityResponse.DeserializeCheckAddressSpaceAvailabilityResponse(document.RootElement);
+                        value = CheckAddressSpaceAvailabilityResult.DeserializeCheckAddressSpaceAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Initializes a new instance of <see cref="ApprovalSettingsPatchProperties"/>. </summary>
         public ApprovalSettingsPatchProperties()
         {
-            MandatoryApprovers = new ChangeTrackingList<MandatoryApprover>();
+            MandatoryApprovers = new ChangeTrackingList<VirtualEnclaveMandatoryApprover>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApprovalSettingsPatchProperties"/>. </summary>
         /// <param name="mandatoryApprovers"> List of mandatory approvers for the approval request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalSettingsPatchProperties(IList<MandatoryApprover> mandatoryApprovers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApprovalSettingsPatchProperties(IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MandatoryApprovers = mandatoryApprovers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of mandatory approvers for the approval request. </summary>
-        public IList<MandatoryApprover> MandatoryApprovers { get; }
+        public IList<VirtualEnclaveMandatoryApprover> MandatoryApprovers { get; }
     }
 }

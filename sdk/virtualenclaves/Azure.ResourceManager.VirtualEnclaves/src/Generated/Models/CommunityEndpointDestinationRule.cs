@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="destination"> Destination address. Can include multiple CIDR/IP Addresses or fqdn tags or fqdns (for community endpoint) separated by commas. </param>
         /// <param name="ports"> Port. Can include multiple ports separated by commas or a range indicated by a hyphen. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityEndpointDestinationRule(DestinationType? destinationType, IList<CommunityEndpointProtocol> protocols, ResourceIdentifier transitHubResourceId, string endpointRuleName, string destination, string ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommunityEndpointDestinationRule(CommunityEndpointDestinationType? destinationType, IList<CommunityEndpointProtocol> protocols, ResourceIdentifier transitHubResourceId, string endpointRuleName, string destination, string ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DestinationType = destinationType;
             Protocols = protocols;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> Destination Type. </summary>
-        public DestinationType? DestinationType { get; set; }
+        public CommunityEndpointDestinationType? DestinationType { get; set; }
         /// <summary> Protocols. Options specified by Endpoint Protocol Enum. </summary>
         public IList<CommunityEndpointProtocol> Protocols { get; }
         /// <summary> Transit Hub Resource Id. </summary>

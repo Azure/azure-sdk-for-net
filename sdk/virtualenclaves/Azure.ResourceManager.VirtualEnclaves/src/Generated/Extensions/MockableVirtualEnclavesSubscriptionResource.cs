@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableVirtualEnclavesSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _workloadResourceWorkloadClientDiagnostics;
-        private WorkloadRestOperations _workloadResourceWorkloadRestClient;
-        private ClientDiagnostics _enclaveResourceVirtualEnclaveClientDiagnostics;
-        private VirtualEnclaveRestOperations _enclaveResourceVirtualEnclaveRestClient;
-        private ClientDiagnostics _communityResourceCommunityClientDiagnostics;
-        private CommunityRestOperations _communityResourceCommunityRestClient;
-        private ClientDiagnostics _transitHubResourceTransitHubClientDiagnostics;
-        private TransitHubRestOperations _transitHubResourceTransitHubRestClient;
-        private ClientDiagnostics _enclaveConnectionResourceEnclaveConnectionClientDiagnostics;
-        private EnclaveConnectionRestOperations _enclaveConnectionResourceEnclaveConnectionRestClient;
-        private ClientDiagnostics _enclaveEndpointResourceEnclaveEndpointsClientDiagnostics;
-        private EnclaveEndpointsRestOperations _enclaveEndpointResourceEnclaveEndpointsRestClient;
-        private ClientDiagnostics _communityEndpointResourceCommunityEndpointsClientDiagnostics;
-        private CommunityEndpointsRestOperations _communityEndpointResourceCommunityEndpointsRestClient;
+        private ClientDiagnostics _virtualEnclaveWorkloadWorkloadClientDiagnostics;
+        private WorkloadRestOperations _virtualEnclaveWorkloadWorkloadRestClient;
+        private ClientDiagnostics _virtualEnclaveClientDiagnostics;
+        private VirtualEnclaveRestOperations _virtualEnclaveRestClient;
+        private ClientDiagnostics _virtualEnclaveCommunityCommunityClientDiagnostics;
+        private CommunityRestOperations _virtualEnclaveCommunityCommunityRestClient;
+        private ClientDiagnostics _virtualEnclaveTransitHubTransitHubClientDiagnostics;
+        private TransitHubRestOperations _virtualEnclaveTransitHubTransitHubRestClient;
+        private ClientDiagnostics _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics;
+        private EnclaveConnectionRestOperations _virtualEnclaveConnectionEnclaveConnectionRestClient;
+        private ClientDiagnostics _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics;
+        private EnclaveEndpointsRestOperations _virtualEnclaveEndpointEnclaveEndpointsRestClient;
+        private ClientDiagnostics _virtualEnclaveCommunityEndpointCommunityEndpointsClientDiagnostics;
+        private CommunityEndpointsRestOperations _virtualEnclaveCommunityEndpointCommunityEndpointsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableVirtualEnclavesSubscriptionResource"/> class for mocking. </summary>
         protected MockableVirtualEnclavesSubscriptionResource()
@@ -43,20 +43,20 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         {
         }
 
-        private ClientDiagnostics WorkloadResourceWorkloadClientDiagnostics => _workloadResourceWorkloadClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", WorkloadResource.ResourceType.Namespace, Diagnostics);
-        private WorkloadRestOperations WorkloadResourceWorkloadRestClient => _workloadResourceWorkloadRestClient ??= new WorkloadRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkloadResource.ResourceType));
-        private ClientDiagnostics EnclaveResourceVirtualEnclaveClientDiagnostics => _enclaveResourceVirtualEnclaveClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", EnclaveResource.ResourceType.Namespace, Diagnostics);
-        private VirtualEnclaveRestOperations EnclaveResourceVirtualEnclaveRestClient => _enclaveResourceVirtualEnclaveRestClient ??= new VirtualEnclaveRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EnclaveResource.ResourceType));
-        private ClientDiagnostics CommunityResourceCommunityClientDiagnostics => _communityResourceCommunityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", CommunityResource.ResourceType.Namespace, Diagnostics);
-        private CommunityRestOperations CommunityResourceCommunityRestClient => _communityResourceCommunityRestClient ??= new CommunityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CommunityResource.ResourceType));
-        private ClientDiagnostics TransitHubResourceTransitHubClientDiagnostics => _transitHubResourceTransitHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", TransitHubResource.ResourceType.Namespace, Diagnostics);
-        private TransitHubRestOperations TransitHubResourceTransitHubRestClient => _transitHubResourceTransitHubRestClient ??= new TransitHubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TransitHubResource.ResourceType));
-        private ClientDiagnostics EnclaveConnectionResourceEnclaveConnectionClientDiagnostics => _enclaveConnectionResourceEnclaveConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", EnclaveConnectionResource.ResourceType.Namespace, Diagnostics);
-        private EnclaveConnectionRestOperations EnclaveConnectionResourceEnclaveConnectionRestClient => _enclaveConnectionResourceEnclaveConnectionRestClient ??= new EnclaveConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EnclaveConnectionResource.ResourceType));
-        private ClientDiagnostics EnclaveEndpointResourceEnclaveEndpointsClientDiagnostics => _enclaveEndpointResourceEnclaveEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", EnclaveEndpointResource.ResourceType.Namespace, Diagnostics);
-        private EnclaveEndpointsRestOperations EnclaveEndpointResourceEnclaveEndpointsRestClient => _enclaveEndpointResourceEnclaveEndpointsRestClient ??= new EnclaveEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EnclaveEndpointResource.ResourceType));
-        private ClientDiagnostics CommunityEndpointResourceCommunityEndpointsClientDiagnostics => _communityEndpointResourceCommunityEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", CommunityEndpointResource.ResourceType.Namespace, Diagnostics);
-        private CommunityEndpointsRestOperations CommunityEndpointResourceCommunityEndpointsRestClient => _communityEndpointResourceCommunityEndpointsRestClient ??= new CommunityEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CommunityEndpointResource.ResourceType));
+        private ClientDiagnostics VirtualEnclaveWorkloadWorkloadClientDiagnostics => _virtualEnclaveWorkloadWorkloadClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveWorkloadResource.ResourceType.Namespace, Diagnostics);
+        private WorkloadRestOperations VirtualEnclaveWorkloadWorkloadRestClient => _virtualEnclaveWorkloadWorkloadRestClient ??= new WorkloadRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualEnclaveWorkloadResource.ResourceType));
+        private ClientDiagnostics VirtualEnclaveClientDiagnostics => _virtualEnclaveClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveResource.ResourceType.Namespace, Diagnostics);
+        private VirtualEnclaveRestOperations VirtualEnclaveRestClient => _virtualEnclaveRestClient ??= new VirtualEnclaveRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualEnclaveResource.ResourceType));
+        private ClientDiagnostics VirtualEnclaveCommunityCommunityClientDiagnostics => _virtualEnclaveCommunityCommunityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveCommunityResource.ResourceType.Namespace, Diagnostics);
+        private CommunityRestOperations VirtualEnclaveCommunityCommunityRestClient => _virtualEnclaveCommunityCommunityRestClient ??= new CommunityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualEnclaveCommunityResource.ResourceType));
+        private ClientDiagnostics VirtualEnclaveTransitHubTransitHubClientDiagnostics => _virtualEnclaveTransitHubTransitHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveTransitHubResource.ResourceType.Namespace, Diagnostics);
+        private TransitHubRestOperations VirtualEnclaveTransitHubTransitHubRestClient => _virtualEnclaveTransitHubTransitHubRestClient ??= new TransitHubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualEnclaveTransitHubResource.ResourceType));
+        private ClientDiagnostics VirtualEnclaveConnectionEnclaveConnectionClientDiagnostics => _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveConnectionResource.ResourceType.Namespace, Diagnostics);
+        private EnclaveConnectionRestOperations VirtualEnclaveConnectionEnclaveConnectionRestClient => _virtualEnclaveConnectionEnclaveConnectionRestClient ??= new EnclaveConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualEnclaveConnectionResource.ResourceType));
+        private ClientDiagnostics VirtualEnclaveEndpointEnclaveEndpointsClientDiagnostics => _virtualEnclaveEndpointEnclaveEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveEndpointResource.ResourceType.Namespace, Diagnostics);
+        private EnclaveEndpointsRestOperations VirtualEnclaveEndpointEnclaveEndpointsRestClient => _virtualEnclaveEndpointEnclaveEndpointsRestClient ??= new EnclaveEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualEnclaveEndpointResource.ResourceType));
+        private ClientDiagnostics VirtualEnclaveCommunityEndpointCommunityEndpointsClientDiagnostics => _virtualEnclaveCommunityEndpointCommunityEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveCommunityEndpointResource.ResourceType.Namespace, Diagnostics);
+        private CommunityEndpointsRestOperations VirtualEnclaveCommunityEndpointCommunityEndpointsRestClient => _virtualEnclaveCommunityEndpointCommunityEndpointsRestClient ??= new CommunityEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualEnclaveCommunityEndpointResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WorkloadResource"/></description>
+        /// <description><see cref="VirtualEnclaveWorkloadResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WorkloadResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkloadResource> GetWorkloadResourcesAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualEnclaveWorkloadResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveWorkloadResource> GetVirtualEnclaveWorkloadsAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkloadResourceWorkloadRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, virtualEnclaveName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkloadResourceWorkloadRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, virtualEnclaveName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadResource(Client, WorkloadResourceData.DeserializeWorkloadResourceData(e)), WorkloadResourceWorkloadClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetWorkloadResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveWorkloadWorkloadRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, virtualEnclaveName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveWorkloadWorkloadRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, virtualEnclaveName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveWorkloadResource(Client, VirtualEnclaveWorkloadData.DeserializeVirtualEnclaveWorkloadData(e)), VirtualEnclaveWorkloadWorkloadClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveWorkloads", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WorkloadResource"/></description>
+        /// <description><see cref="VirtualEnclaveWorkloadResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
-        /// <returns> A collection of <see cref="WorkloadResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkloadResource> GetWorkloadResources(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveWorkloadResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveWorkloadResource> GetVirtualEnclaveWorkloads(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkloadResourceWorkloadRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, virtualEnclaveName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkloadResourceWorkloadRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, virtualEnclaveName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadResource(Client, WorkloadResourceData.DeserializeWorkloadResourceData(e)), WorkloadResourceWorkloadClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetWorkloadResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveWorkloadWorkloadRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, virtualEnclaveName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveWorkloadWorkloadRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, virtualEnclaveName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveWorkloadResource(Client, VirtualEnclaveWorkloadData.DeserializeVirtualEnclaveWorkloadData(e)), VirtualEnclaveWorkloadWorkloadClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveWorkloads", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -151,17 +151,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EnclaveResource"/></description>
+        /// <description><see cref="VirtualEnclaveResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EnclaveResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveResource> GetEnclaveResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualEnclaveResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveResource> GetVirtualEnclavesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnclaveResourceVirtualEnclaveRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnclaveResourceVirtualEnclaveRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnclaveResource(Client, EnclaveResourceData.DeserializeEnclaveResourceData(e)), EnclaveResourceVirtualEnclaveClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetEnclaveResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveResource(Client, VirtualEnclaveData.DeserializeVirtualEnclaveData(e)), VirtualEnclaveClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EnclaveResource"/></description>
+        /// <description><see cref="VirtualEnclaveResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnclaveResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveResource> GetEnclaveResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveResource> GetVirtualEnclaves(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnclaveResourceVirtualEnclaveRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnclaveResourceVirtualEnclaveRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnclaveResource(Client, EnclaveResourceData.DeserializeEnclaveResourceData(e)), EnclaveResourceVirtualEnclaveClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetEnclaveResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveResource(Client, VirtualEnclaveData.DeserializeVirtualEnclaveData(e)), VirtualEnclaveClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -211,17 +211,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CommunityResource"/></description>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommunityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CommunityResource> GetCommunityResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveCommunityResource> GetVirtualEnclaveCommunitiesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunityResourceCommunityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunityResourceCommunityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunityResource(Client, CommunityResourceData.DeserializeCommunityResourceData(e)), CommunityResourceCommunityClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetCommunityResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveCommunityCommunityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveCommunityCommunityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveCommunityResource(Client, VirtualEnclaveCommunityData.DeserializeVirtualEnclaveCommunityData(e)), VirtualEnclaveCommunityCommunityClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,17 +241,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CommunityResource"/></description>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommunityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CommunityResource> GetCommunityResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveCommunityResource> GetVirtualEnclaveCommunities(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunityResourceCommunityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunityResourceCommunityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunityResource(Client, CommunityResourceData.DeserializeCommunityResourceData(e)), CommunityResourceCommunityClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetCommunityResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveCommunityCommunityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveCommunityCommunityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveCommunityResource(Client, VirtualEnclaveCommunityData.DeserializeVirtualEnclaveCommunityData(e)), VirtualEnclaveCommunityCommunityClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TransitHubResource"/></description>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,14 +279,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TransitHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TransitHubResource> GetTransitHubResourcesAsync(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveTransitHubResource> GetVirtualEnclaveTransitHubsAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TransitHubResourceTransitHubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, communityName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TransitHubResourceTransitHubRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, communityName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TransitHubResource(Client, TransitHubResourceData.DeserializeTransitHubResourceData(e)), TransitHubResourceTransitHubClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetTransitHubResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveTransitHubTransitHubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, communityName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveTransitHubTransitHubRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, communityName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveTransitHubResource(Client, VirtualEnclaveTransitHubData.DeserializeVirtualEnclaveTransitHubData(e)), VirtualEnclaveTransitHubTransitHubClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveTransitHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TransitHubResource"/></description>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,14 +314,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
-        /// <returns> A collection of <see cref="TransitHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TransitHubResource> GetTransitHubResources(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveTransitHubResource> GetVirtualEnclaveTransitHubs(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TransitHubResourceTransitHubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, communityName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TransitHubResourceTransitHubRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, communityName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TransitHubResource(Client, TransitHubResourceData.DeserializeTransitHubResourceData(e)), TransitHubResourceTransitHubClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetTransitHubResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveTransitHubTransitHubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, communityName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveTransitHubTransitHubRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, communityName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveTransitHubResource(Client, VirtualEnclaveTransitHubData.DeserializeVirtualEnclaveTransitHubData(e)), VirtualEnclaveTransitHubTransitHubClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveTransitHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -341,17 +341,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EnclaveConnectionResource"/></description>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveConnectionResource> GetEnclaveConnectionResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveConnectionResource> GetVirtualEnclaveConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnclaveConnectionResourceEnclaveConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnclaveConnectionResourceEnclaveConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnclaveConnectionResource(Client, EnclaveConnectionResourceData.DeserializeEnclaveConnectionResourceData(e)), EnclaveConnectionResourceEnclaveConnectionClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetEnclaveConnectionResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveConnectionEnclaveConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveConnectionEnclaveConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveConnectionResource(Client, VirtualEnclaveConnectionData.DeserializeVirtualEnclaveConnectionData(e)), VirtualEnclaveConnectionEnclaveConnectionClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveConnections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -371,17 +371,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EnclaveConnectionResource"/></description>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveConnectionResource> GetEnclaveConnectionResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveConnectionResource> GetVirtualEnclaveConnections(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnclaveConnectionResourceEnclaveConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnclaveConnectionResourceEnclaveConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnclaveConnectionResource(Client, EnclaveConnectionResourceData.DeserializeEnclaveConnectionResourceData(e)), EnclaveConnectionResourceEnclaveConnectionClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetEnclaveConnectionResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveConnectionEnclaveConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveConnectionEnclaveConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveConnectionResource(Client, VirtualEnclaveConnectionData.DeserializeVirtualEnclaveConnectionData(e)), VirtualEnclaveConnectionEnclaveConnectionClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveConnections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EnclaveEndpointResource"/></description>
+        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,14 +409,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveEndpointResource> GetEnclaveEndpointResourcesAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveEndpointResource> GetVirtualEnclaveEndpointsAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnclaveEndpointResourceEnclaveEndpointsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, virtualEnclaveName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnclaveEndpointResourceEnclaveEndpointsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, virtualEnclaveName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnclaveEndpointResource(Client, EnclaveEndpointResourceData.DeserializeEnclaveEndpointResourceData(e)), EnclaveEndpointResourceEnclaveEndpointsClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetEnclaveEndpointResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveEndpointEnclaveEndpointsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, virtualEnclaveName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveEndpointEnclaveEndpointsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, virtualEnclaveName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveEndpointResource(Client, VirtualEnclaveEndpointData.DeserializeVirtualEnclaveEndpointData(e)), VirtualEnclaveEndpointEnclaveEndpointsClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EnclaveEndpointResource"/></description>
+        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,14 +444,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
-        /// <returns> A collection of <see cref="EnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveEndpointResource> GetEnclaveEndpointResources(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveEndpointResource> GetVirtualEnclaveEndpoints(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnclaveEndpointResourceEnclaveEndpointsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, virtualEnclaveName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnclaveEndpointResourceEnclaveEndpointsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, virtualEnclaveName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnclaveEndpointResource(Client, EnclaveEndpointResourceData.DeserializeEnclaveEndpointResourceData(e)), EnclaveEndpointResourceEnclaveEndpointsClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetEnclaveEndpointResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveEndpointEnclaveEndpointsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, virtualEnclaveName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveEndpointEnclaveEndpointsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, virtualEnclaveName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveEndpointResource(Client, VirtualEnclaveEndpointData.DeserializeVirtualEnclaveEndpointData(e)), VirtualEnclaveEndpointEnclaveEndpointsClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CommunityEndpointResource"/></description>
+        /// <description><see cref="VirtualEnclaveCommunityEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -479,14 +479,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CommunityEndpointResource> GetCommunityEndpointResourcesAsync(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualEnclaveCommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveCommunityEndpointResource> GetVirtualEnclaveCommunityEndpointsAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunityEndpointResourceCommunityEndpointsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, communityName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunityEndpointResourceCommunityEndpointsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, communityName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunityEndpointResource(Client, CommunityEndpointResourceData.DeserializeCommunityEndpointResourceData(e)), CommunityEndpointResourceCommunityEndpointsClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetCommunityEndpointResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveCommunityEndpointCommunityEndpointsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, communityName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveCommunityEndpointCommunityEndpointsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, communityName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveCommunityEndpointResource(Client, VirtualEnclaveCommunityEndpointData.DeserializeVirtualEnclaveCommunityEndpointData(e)), VirtualEnclaveCommunityEndpointCommunityEndpointsClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunityEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CommunityEndpointResource"/></description>
+        /// <description><see cref="VirtualEnclaveCommunityEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -514,14 +514,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
-        /// <returns> A collection of <see cref="CommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CommunityEndpointResource> GetCommunityEndpointResources(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveCommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveCommunityEndpointResource> GetVirtualEnclaveCommunityEndpoints(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunityEndpointResourceCommunityEndpointsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, communityName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunityEndpointResourceCommunityEndpointsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, communityName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunityEndpointResource(Client, CommunityEndpointResourceData.DeserializeCommunityEndpointResourceData(e)), CommunityEndpointResourceCommunityEndpointsClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetCommunityEndpointResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualEnclaveCommunityEndpointCommunityEndpointsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, communityName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualEnclaveCommunityEndpointCommunityEndpointsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, communityName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveCommunityEndpointResource(Client, VirtualEnclaveCommunityEndpointData.DeserializeVirtualEnclaveCommunityEndpointData(e)), VirtualEnclaveCommunityEndpointCommunityEndpointsClientDiagnostics, Pipeline, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunityEndpoints", "value", "nextLink", cancellationToken);
         }
     }
 }

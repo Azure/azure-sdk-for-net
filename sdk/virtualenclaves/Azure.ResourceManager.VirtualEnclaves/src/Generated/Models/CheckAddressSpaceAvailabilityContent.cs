@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="communityResourceId"> Resource Id of the Community. </param>
         /// <param name="enclaveVirtualNetwork"> Information about the enclave virtual network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communityResourceId"/> or <paramref name="enclaveVirtualNetwork"/> is null. </exception>
-        public CheckAddressSpaceAvailabilityContent(ResourceIdentifier communityResourceId, EnclaveVirtualNetworkModel enclaveVirtualNetwork)
+        public CheckAddressSpaceAvailabilityContent(ResourceIdentifier communityResourceId, EnclaveVirtualNetwork enclaveVirtualNetwork)
         {
             Argument.AssertNotNull(communityResourceId, nameof(communityResourceId));
             Argument.AssertNotNull(enclaveVirtualNetwork, nameof(enclaveVirtualNetwork));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="communityResourceId"> Resource Id of the Community. </param>
         /// <param name="enclaveVirtualNetwork"> Information about the enclave virtual network. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckAddressSpaceAvailabilityContent(ResourceIdentifier communityResourceId, EnclaveVirtualNetworkModel enclaveVirtualNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CheckAddressSpaceAvailabilityContent(ResourceIdentifier communityResourceId, EnclaveVirtualNetwork enclaveVirtualNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommunityResourceId = communityResourceId;
             EnclaveVirtualNetwork = enclaveVirtualNetwork;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Resource Id of the Community. </summary>
         public ResourceIdentifier CommunityResourceId { get; }
         /// <summary> Information about the enclave virtual network. </summary>
-        public EnclaveVirtualNetworkModel EnclaveVirtualNetwork { get; }
+        public EnclaveVirtualNetwork EnclaveVirtualNetwork { get; }
     }
 }

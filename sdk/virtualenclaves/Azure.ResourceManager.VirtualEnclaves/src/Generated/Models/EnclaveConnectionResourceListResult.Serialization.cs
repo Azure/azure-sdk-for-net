@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 return null;
             }
-            IReadOnlyList<EnclaveConnectionResourceData> value = default;
+            IReadOnlyList<VirtualEnclaveConnectionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<EnclaveConnectionResourceData> array = new List<EnclaveConnectionResourceData>();
+                    List<VirtualEnclaveConnectionData> array = new List<VirtualEnclaveConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnclaveConnectionResourceData.DeserializeEnclaveConnectionResourceData(item, options));
+                        array.Add(VirtualEnclaveConnectionData.DeserializeVirtualEnclaveConnectionData(item, options));
                     }
                     value = array;
                     continue;

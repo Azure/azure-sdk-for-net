@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="approvalName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApprovalResourceData>> GetAsync(string resourceUri, string approvalName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualEnclaveApprovalData>> GetAsync(string resourceUri, string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 case 200:
                     {
-                        ApprovalResourceData value = default;
+                        VirtualEnclaveApprovalData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApprovalResourceData.DeserializeApprovalResourceData(document.RootElement);
+                        value = VirtualEnclaveApprovalData.DeserializeVirtualEnclaveApprovalData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApprovalResourceData)null, message.Response);
+                    return Response.FromValue((VirtualEnclaveApprovalData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="approvalName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApprovalResourceData> Get(string resourceUri, string approvalName, CancellationToken cancellationToken = default)
+        public Response<VirtualEnclaveApprovalData> Get(string resourceUri, string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
@@ -112,19 +112,19 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 case 200:
                     {
-                        ApprovalResourceData value = default;
+                        VirtualEnclaveApprovalData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApprovalResourceData.DeserializeApprovalResourceData(document.RootElement);
+                        value = VirtualEnclaveApprovalData.DeserializeVirtualEnclaveApprovalData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApprovalResourceData)null, message.Response);
+                    return Response.FromValue((VirtualEnclaveApprovalData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string approvalName, ApprovalResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string approvalName, VirtualEnclaveApprovalData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string approvalName, ApprovalResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string approvalName, VirtualEnclaveApprovalData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="approvalName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string approvalName, ApprovalResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string approvalName, VirtualEnclaveApprovalData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="approvalName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string resourceUri, string approvalName, ApprovalResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceUri, string approvalName, VirtualEnclaveApprovalData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, string approvalName, ApprovalResourcePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, string approvalName, VirtualEnclaveApprovalPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceUri, string approvalName, ApprovalResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string resourceUri, string approvalName, VirtualEnclaveApprovalPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="approvalName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string resourceUri, string approvalName, ApprovalResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceUri, string approvalName, VirtualEnclaveApprovalPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="approvalName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string resourceUri, string approvalName, ApprovalResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string resourceUri, string approvalName, VirtualEnclaveApprovalPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
@@ -393,7 +393,6 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath(approvalName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

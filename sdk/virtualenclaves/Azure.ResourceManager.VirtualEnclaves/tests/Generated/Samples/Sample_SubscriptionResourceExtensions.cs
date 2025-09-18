@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetWorkloadResources_WorkloadListBySubscription()
+        public async Task GetVirtualEnclaveWorkloads_WorkloadListBySubscription()
         {
             // Generated from example definition: 2025-05-01-preview/Workload_ListBySubscription.json
             // this example is just showing the usage of "WorkloadResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
             // invoke the operation and iterate over the result
             string virtualEnclaveName = "TestMyEnclave";
-            await foreach (WorkloadResource item in subscriptionResource.GetWorkloadResourcesAsync(virtualEnclaveName))
+            await foreach (VirtualEnclaveWorkloadResource item in subscriptionResource.GetVirtualEnclaveWorkloadsAsync(virtualEnclaveName))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                WorkloadResourceData resourceData = item.Data;
+                VirtualEnclaveWorkloadData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEnclaveResources_VirtualEnclaveListBySubscription()
+        public async Task GetVirtualEnclaves_VirtualEnclaveListBySubscription()
         {
             // Generated from example definition: 2025-05-01-preview/VirtualEnclave_ListBySubscription.json
             // this example is just showing the usage of "EnclaveResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (EnclaveResource item in subscriptionResource.GetEnclaveResourcesAsync())
+            await foreach (VirtualEnclaveResource item in subscriptionResource.GetVirtualEnclavesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                EnclaveResourceData resourceData = item.Data;
+                VirtualEnclaveData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetCommunityResources_CommunityListBySubscription()
+        public async Task GetVirtualEnclaveCommunities_CommunityListBySubscription()
         {
             // Generated from example definition: 2025-05-01-preview/Community_ListBySubscription.json
             // this example is just showing the usage of "CommunityResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CommunityResource item in subscriptionResource.GetCommunityResourcesAsync())
+            await foreach (VirtualEnclaveCommunityResource item in subscriptionResource.GetVirtualEnclaveCommunitiesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CommunityResourceData resourceData = item.Data;
+                VirtualEnclaveCommunityData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetTransitHubResources_TransitHubListBySubscription()
+        public async Task GetVirtualEnclaveTransitHubs_TransitHubListBySubscription()
         {
             // Generated from example definition: 2025-05-01-preview/TransitHub_ListBySubscription.json
             // this example is just showing the usage of "TransitHubResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
             // invoke the operation and iterate over the result
             string communityName = "TestMyCommunity";
-            await foreach (TransitHubResource item in subscriptionResource.GetTransitHubResourcesAsync(communityName))
+            await foreach (VirtualEnclaveTransitHubResource item in subscriptionResource.GetVirtualEnclaveTransitHubsAsync(communityName))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                TransitHubResourceData resourceData = item.Data;
+                VirtualEnclaveTransitHubData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEnclaveConnectionResources_EnclaveConnectionListBySubscription()
+        public async Task GetVirtualEnclaveConnections_EnclaveConnectionListBySubscription()
         {
             // Generated from example definition: 2025-05-01-preview/EnclaveConnection_ListBySubscription.json
             // this example is just showing the usage of "EnclaveConnectionResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (EnclaveConnectionResource item in subscriptionResource.GetEnclaveConnectionResourcesAsync())
+            await foreach (VirtualEnclaveConnectionResource item in subscriptionResource.GetVirtualEnclaveConnectionsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                EnclaveConnectionResourceData resourceData = item.Data;
+                VirtualEnclaveConnectionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEnclaveEndpointResources_EnclaveEndpointsListBySubscription()
+        public async Task GetVirtualEnclaveEndpoints_EnclaveEndpointsListBySubscription()
         {
             // Generated from example definition: 2025-05-01-preview/EnclaveEndpoints_ListBySubscription.json
             // this example is just showing the usage of "EnclaveEndpointResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
             // invoke the operation and iterate over the result
             string virtualEnclaveName = "TestMyEnclave";
-            await foreach (EnclaveEndpointResource item in subscriptionResource.GetEnclaveEndpointResourcesAsync(virtualEnclaveName))
+            await foreach (VirtualEnclaveEndpointResource item in subscriptionResource.GetVirtualEnclaveEndpointsAsync(virtualEnclaveName))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                EnclaveEndpointResourceData resourceData = item.Data;
+                VirtualEnclaveEndpointData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetCommunityEndpointResources_CommunityEndpointsListBySubscription()
+        public async Task GetVirtualEnclaveCommunityEndpoints_CommunityEndpointsListBySubscription()
         {
             // Generated from example definition: 2025-05-01-preview/CommunityEndpoints_ListBySubscription.json
             // this example is just showing the usage of "CommunityEndpointResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -225,11 +225,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
 
             // invoke the operation and iterate over the result
             string communityName = "TestMyCommunity";
-            await foreach (CommunityEndpointResource item in subscriptionResource.GetCommunityEndpointResourcesAsync(communityName))
+            await foreach (VirtualEnclaveCommunityEndpointResource item in subscriptionResource.GetVirtualEnclaveCommunityEndpointsAsync(communityName))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CommunityEndpointResourceData resourceData = item.Data;
+                VirtualEnclaveCommunityEndpointData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

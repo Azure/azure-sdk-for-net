@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 return null;
             }
-            ApprovalActionRequestApprovalStatus approvalStatus = default;
+            PostActionApprovalStatus approvalStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("approvalStatus"u8))
                 {
-                    approvalStatus = new ApprovalActionRequestApprovalStatus(property.Value.GetString());
+                    approvalStatus = new PostActionApprovalStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

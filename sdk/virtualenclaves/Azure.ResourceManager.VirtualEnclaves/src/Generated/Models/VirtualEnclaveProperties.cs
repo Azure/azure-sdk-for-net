@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
         /// <param name="communityResourceId"> Community Resource Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveVirtualNetwork"/> or <paramref name="communityResourceId"/> is null. </exception>
-        public VirtualEnclaveProperties(EnclaveVirtualNetworkModel enclaveVirtualNetwork, ResourceIdentifier communityResourceId)
+        public VirtualEnclaveProperties(EnclaveVirtualNetwork enclaveVirtualNetwork, ResourceIdentifier communityResourceId)
         {
             Argument.AssertNotNull(enclaveVirtualNetwork, nameof(enclaveVirtualNetwork));
             Argument.AssertNotNull(communityResourceId, nameof(communityResourceId));
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             EnclaveVirtualNetwork = enclaveVirtualNetwork;
             CommunityResourceId = communityResourceId;
             ResourceCollection = new ChangeTrackingList<ResourceIdentifier>();
-            EnclaveRoleAssignments = new ChangeTrackingList<RoleAssignmentItem>();
-            WorkloadRoleAssignments = new ChangeTrackingList<RoleAssignmentItem>();
-            GovernedServiceList = new ChangeTrackingList<GovernedServiceItem>();
+            EnclaveRoleAssignments = new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
+            WorkloadRoleAssignments = new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
+            GovernedServiceList = new ChangeTrackingList<VirtualEnclaveGovernedService>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveProperties"/>. </summary>
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="resourceCollection"> List of resource ids created by Virtual Enclave. </param>
         /// <param name="managedResourceGroupName"> Managed resource group name. </param>
         /// <param name="managedOnBehalfOfConfiguration"> Managed On Behalf Of Configuration. </param>
-        /// <param name="bastionEnabled"> Deploy Bastion service (True or False). </param>
+        /// <param name="isBastionEnabled"> Deploy Bastion service (True or False). </param>
         /// <param name="enclaveRoleAssignments"> Enclave role assignments. </param>
         /// <param name="workloadRoleAssignments"> Workload role assignments. </param>
         /// <param name="governedServiceList"> Enclave specific policies. </param>
         /// <param name="enclaveDefaultSettings"> Enclave default settings. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveProperties(ProvisioningState? provisioningState, EnclaveVirtualNetworkModel enclaveVirtualNetwork, EnclaveAddressSpacesModel enclaveAddressSpaces, ResourceIdentifier communityResourceId, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, bool? bastionEnabled, IList<RoleAssignmentItem> enclaveRoleAssignments, IList<RoleAssignmentItem> workloadRoleAssignments, IList<GovernedServiceItem> governedServiceList, EnclaveDefaultSettingsModel enclaveDefaultSettings, MaintenanceModeConfigurationModel maintenanceModeConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState, EnclaveVirtualNetwork enclaveVirtualNetwork, EnclaveAddressSpaces enclaveAddressSpaces, ResourceIdentifier communityResourceId, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, bool? isBastionEnabled, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettings enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             EnclaveVirtualNetwork = enclaveVirtualNetwork;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             ResourceCollection = resourceCollection;
             ManagedResourceGroupName = managedResourceGroupName;
             ManagedOnBehalfOfConfiguration = managedOnBehalfOfConfiguration;
-            BastionEnabled = bastionEnabled;
+            IsBastionEnabled = isBastionEnabled;
             EnclaveRoleAssignments = enclaveRoleAssignments;
             WorkloadRoleAssignments = workloadRoleAssignments;
             GovernedServiceList = governedServiceList;
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> Provisioning State. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public VirtualEnclaveProvisioningState? ProvisioningState { get; }
         /// <summary> Virtual Network. </summary>
-        public EnclaveVirtualNetworkModel EnclaveVirtualNetwork { get; set; }
+        public EnclaveVirtualNetwork EnclaveVirtualNetwork { get; set; }
         /// <summary> Enclave Address Spaces. </summary>
-        public EnclaveAddressSpacesModel EnclaveAddressSpaces { get; }
+        public EnclaveAddressSpaces EnclaveAddressSpaces { get; }
         /// <summary> Community Resource Id. </summary>
         public ResourceIdentifier CommunityResourceId { get; set; }
         /// <summary> List of resource ids created by Virtual Enclave. </summary>
@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> Deploy Bastion service (True or False). </summary>
-        public bool? BastionEnabled { get; set; }
+        public bool? IsBastionEnabled { get; set; }
         /// <summary> Enclave role assignments. </summary>
-        public IList<RoleAssignmentItem> EnclaveRoleAssignments { get; }
+        public IList<VirtualEnclaveRoleAssignmentItem> EnclaveRoleAssignments { get; }
         /// <summary> Workload role assignments. </summary>
-        public IList<RoleAssignmentItem> WorkloadRoleAssignments { get; }
+        public IList<VirtualEnclaveRoleAssignmentItem> WorkloadRoleAssignments { get; }
         /// <summary> Enclave specific policies. </summary>
-        public IList<GovernedServiceItem> GovernedServiceList { get; }
+        public IList<VirtualEnclaveGovernedService> GovernedServiceList { get; }
         /// <summary> Enclave default settings. </summary>
-        public EnclaveDefaultSettingsModel EnclaveDefaultSettings { get; set; }
+        public EnclaveDefaultSettings EnclaveDefaultSettings { get; set; }
         /// <summary> Maintenance Mode configuration. </summary>
-        public MaintenanceModeConfigurationModel MaintenanceModeConfiguration { get; set; }
+        public VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration { get; set; }
     }
 }

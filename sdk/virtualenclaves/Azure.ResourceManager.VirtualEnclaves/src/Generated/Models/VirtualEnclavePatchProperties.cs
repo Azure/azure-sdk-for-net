@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Initializes a new instance of <see cref="VirtualEnclavePatchProperties"/>. </summary>
         /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveVirtualNetwork"/> is null. </exception>
-        public VirtualEnclavePatchProperties(EnclaveVirtualNetworkModel enclaveVirtualNetwork)
+        public VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork)
         {
             Argument.AssertNotNull(enclaveVirtualNetwork, nameof(enclaveVirtualNetwork));
 
             EnclaveVirtualNetwork = enclaveVirtualNetwork;
-            EnclaveRoleAssignments = new ChangeTrackingList<RoleAssignmentItem>();
-            WorkloadRoleAssignments = new ChangeTrackingList<RoleAssignmentItem>();
-            GovernedServiceList = new ChangeTrackingList<GovernedServiceItem>();
+            EnclaveRoleAssignments = new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
+            WorkloadRoleAssignments = new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
+            GovernedServiceList = new ChangeTrackingList<VirtualEnclaveGovernedService>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclavePatchProperties"/>. </summary>
         /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
-        /// <param name="bastionEnabled"> Deploy Bastion service (True or False). </param>
+        /// <param name="isBastionEnabled"> Deploy Bastion service (True or False). </param>
         /// <param name="enclaveRoleAssignments"> Enclave role assignments. </param>
         /// <param name="workloadRoleAssignments"> Workload role assignments. </param>
         /// <param name="governedServiceList"> Enclave specific policies. </param>
         /// <param name="enclaveDefaultSettings"> Enclave default settings. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclavePatchProperties(EnclaveVirtualNetworkModel enclaveVirtualNetwork, bool? bastionEnabled, IList<RoleAssignmentItem> enclaveRoleAssignments, IList<RoleAssignmentItem> workloadRoleAssignments, IList<GovernedServiceItem> governedServiceList, EnclaveDefaultSettingsPatchModel enclaveDefaultSettings, MaintenanceModeConfigurationPatchModel maintenanceModeConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork, bool? isBastionEnabled, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettingsPatch enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnclaveVirtualNetwork = enclaveVirtualNetwork;
-            BastionEnabled = bastionEnabled;
+            IsBastionEnabled = isBastionEnabled;
             EnclaveRoleAssignments = enclaveRoleAssignments;
             WorkloadRoleAssignments = workloadRoleAssignments;
             GovernedServiceList = governedServiceList;
@@ -85,30 +85,30 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> Virtual Network. </summary>
-        public EnclaveVirtualNetworkModel EnclaveVirtualNetwork { get; }
+        public EnclaveVirtualNetwork EnclaveVirtualNetwork { get; }
         /// <summary> Deploy Bastion service (True or False). </summary>
-        public bool? BastionEnabled { get; set; }
+        public bool? IsBastionEnabled { get; set; }
         /// <summary> Enclave role assignments. </summary>
-        public IList<RoleAssignmentItem> EnclaveRoleAssignments { get; }
+        public IList<VirtualEnclaveRoleAssignmentItem> EnclaveRoleAssignments { get; }
         /// <summary> Workload role assignments. </summary>
-        public IList<RoleAssignmentItem> WorkloadRoleAssignments { get; }
+        public IList<VirtualEnclaveRoleAssignmentItem> WorkloadRoleAssignments { get; }
         /// <summary> Enclave specific policies. </summary>
-        public IList<GovernedServiceItem> GovernedServiceList { get; }
+        public IList<VirtualEnclaveGovernedService> GovernedServiceList { get; }
         /// <summary> Enclave default settings. </summary>
-        internal EnclaveDefaultSettingsPatchModel EnclaveDefaultSettings { get; set; }
+        internal EnclaveDefaultSettingsPatch EnclaveDefaultSettings { get; set; }
         /// <summary> Diagnostic Destination. </summary>
-        public DiagnosticDestination? EnclaveDefaultDiagnosticDestination
+        public VirtualEnclaveDiagnosticDestination? EnclaveDefaultDiagnosticDestination
         {
             get => EnclaveDefaultSettings is null ? default : EnclaveDefaultSettings.DiagnosticDestination;
             set
             {
                 if (EnclaveDefaultSettings is null)
-                    EnclaveDefaultSettings = new EnclaveDefaultSettingsPatchModel();
+                    EnclaveDefaultSettings = new EnclaveDefaultSettingsPatch();
                 EnclaveDefaultSettings.DiagnosticDestination = value;
             }
         }
 
         /// <summary> Maintenance Mode configuration. </summary>
-        public MaintenanceModeConfigurationPatchModel MaintenanceModeConfiguration { get; set; }
+        public VirtualEnclaveMaintenanceModeConfigurationPatch MaintenanceModeConfiguration { get; set; }
     }
 }

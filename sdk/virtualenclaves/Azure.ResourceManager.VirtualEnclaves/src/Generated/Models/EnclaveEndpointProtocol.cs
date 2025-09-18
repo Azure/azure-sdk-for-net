@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ANYValue = "ANY";
-        private const string TCPValue = "TCP";
-        private const string UDPValue = "UDP";
-        private const string ICMPValue = "ICMP";
-        private const string ESPValue = "ESP";
+        private const string AnyValue = "ANY";
+        private const string TcpValue = "TCP";
+        private const string UdpValue = "UDP";
+        private const string IcmpValue = "ICMP";
+        private const string EspValue = "ESP";
         private const string AHValue = "AH";
 
         /// <summary> EndpointProtocol Type ANY. </summary>
-        public static EnclaveEndpointProtocol ANY { get; } = new EnclaveEndpointProtocol(ANYValue);
+        public static EnclaveEndpointProtocol Any { get; } = new EnclaveEndpointProtocol(AnyValue);
         /// <summary> EndpointProtocol Type TCP. </summary>
-        public static EnclaveEndpointProtocol TCP { get; } = new EnclaveEndpointProtocol(TCPValue);
+        public static EnclaveEndpointProtocol Tcp { get; } = new EnclaveEndpointProtocol(TcpValue);
         /// <summary> EndpointProtocol Type UDP. </summary>
-        public static EnclaveEndpointProtocol UDP { get; } = new EnclaveEndpointProtocol(UDPValue);
+        public static EnclaveEndpointProtocol Udp { get; } = new EnclaveEndpointProtocol(UdpValue);
         /// <summary> EndpointProtocol Type ICMP. </summary>
-        public static EnclaveEndpointProtocol ICMP { get; } = new EnclaveEndpointProtocol(ICMPValue);
+        public static EnclaveEndpointProtocol Icmp { get; } = new EnclaveEndpointProtocol(IcmpValue);
         /// <summary> EndpointProtocol Type ESP. </summary>
-        public static EnclaveEndpointProtocol ESP { get; } = new EnclaveEndpointProtocol(ESPValue);
+        public static EnclaveEndpointProtocol Esp { get; } = new EnclaveEndpointProtocol(EspValue);
         /// <summary> EndpointProtocol Type AH. </summary>
         public static EnclaveEndpointProtocol AH { get; } = new EnclaveEndpointProtocol(AHValue);
         /// <summary> Determines if two <see cref="EnclaveEndpointProtocol"/> values are the same. </summary>

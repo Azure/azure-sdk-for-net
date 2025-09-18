@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 return null;
             }
-            DestinationType? destinationType = default;
+            CommunityEndpointDestinationType? destinationType = default;
             IList<CommunityEndpointProtocol> protocols = default;
             ResourceIdentifier transitHubResourceId = default;
             string endpointRuleName = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    destinationType = new DestinationType(property.Value.GetString());
+                    destinationType = new CommunityEndpointDestinationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protocols"u8))

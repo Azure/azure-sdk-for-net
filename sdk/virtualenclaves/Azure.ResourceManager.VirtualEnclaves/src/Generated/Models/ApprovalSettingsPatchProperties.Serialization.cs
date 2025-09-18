@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 return null;
             }
-            IList<MandatoryApprover> mandatoryApprovers = default;
+            IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    List<MandatoryApprover> array = new List<MandatoryApprover>();
+                    List<VirtualEnclaveMandatoryApprover> array = new List<VirtualEnclaveMandatoryApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MandatoryApprover.DeserializeMandatoryApprover(item, options));
+                        array.Add(VirtualEnclaveMandatoryApprover.DeserializeVirtualEnclaveMandatoryApprover(item, options));
                     }
                     mandatoryApprovers = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApprovalSettingsPatchProperties(mandatoryApprovers ?? new ChangeTrackingList<MandatoryApprover>(), serializedAdditionalRawData);
+            return new ApprovalSettingsPatchProperties(mandatoryApprovers ?? new ChangeTrackingList<VirtualEnclaveMandatoryApprover>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApprovalSettingsPatchProperties>.Write(ModelReaderWriterOptions options)

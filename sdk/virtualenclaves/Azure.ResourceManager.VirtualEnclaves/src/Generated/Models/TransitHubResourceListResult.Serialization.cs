@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 return null;
             }
-            IReadOnlyList<TransitHubResourceData> value = default;
+            IReadOnlyList<VirtualEnclaveTransitHubData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<TransitHubResourceData> array = new List<TransitHubResourceData>();
+                    List<VirtualEnclaveTransitHubData> array = new List<VirtualEnclaveTransitHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TransitHubResourceData.DeserializeTransitHubResourceData(item, options));
+                        array.Add(VirtualEnclaveTransitHubData.DeserializeVirtualEnclaveTransitHubData(item, options));
                     }
                     value = array;
                     continue;

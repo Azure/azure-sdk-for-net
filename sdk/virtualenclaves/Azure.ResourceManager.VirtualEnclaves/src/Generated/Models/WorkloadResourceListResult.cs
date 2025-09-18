@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Initializes a new instance of <see cref="WorkloadResourceListResult"/>. </summary>
         /// <param name="value"> The WorkloadResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkloadResourceListResult(IEnumerable<WorkloadResourceData> value)
+        internal WorkloadResourceListResult(IEnumerable<VirtualEnclaveWorkloadData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="value"> The WorkloadResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadResourceListResult(IReadOnlyList<WorkloadResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadResourceListResult(IReadOnlyList<VirtualEnclaveWorkloadData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> The WorkloadResource items on this page. </summary>
-        public IReadOnlyList<WorkloadResourceData> Value { get; }
+        public IReadOnlyList<VirtualEnclaveWorkloadData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("managedOnBehalfOfConfiguration"u8);
                 writer.WriteObjectValue(ManagedOnBehalfOfConfiguration, options);
             }
-            if (Optional.IsDefined(BastionEnabled))
+            if (Optional.IsDefined(IsBastionEnabled))
             {
                 writer.WritePropertyName("bastionEnabled"u8);
-                writer.WriteBooleanValue(BastionEnabled.Value);
+                writer.WriteBooleanValue(IsBastionEnabled.Value);
             }
             if (Optional.IsCollectionDefined(EnclaveRoleAssignments))
             {
@@ -155,19 +155,19 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
-            EnclaveVirtualNetworkModel enclaveVirtualNetwork = default;
-            EnclaveAddressSpacesModel enclaveAddressSpaces = default;
+            VirtualEnclaveProvisioningState? provisioningState = default;
+            EnclaveVirtualNetwork enclaveVirtualNetwork = default;
+            EnclaveAddressSpaces enclaveAddressSpaces = default;
             ResourceIdentifier communityResourceId = default;
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
             string managedResourceGroupName = default;
             ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration = default;
             bool? bastionEnabled = default;
-            IList<RoleAssignmentItem> enclaveRoleAssignments = default;
-            IList<RoleAssignmentItem> workloadRoleAssignments = default;
-            IList<GovernedServiceItem> governedServiceList = default;
-            EnclaveDefaultSettingsModel enclaveDefaultSettings = default;
-            MaintenanceModeConfigurationModel maintenanceModeConfiguration = default;
+            IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default;
+            IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default;
+            IList<VirtualEnclaveGovernedService> governedServiceList = default;
+            EnclaveDefaultSettings enclaveDefaultSettings = default;
+            VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new VirtualEnclaveProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enclaveVirtualNetwork"u8))
                 {
-                    enclaveVirtualNetwork = EnclaveVirtualNetworkModel.DeserializeEnclaveVirtualNetworkModel(property.Value, options);
+                    enclaveVirtualNetwork = EnclaveVirtualNetwork.DeserializeEnclaveVirtualNetwork(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enclaveAddressSpaces"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    enclaveAddressSpaces = EnclaveAddressSpacesModel.DeserializeEnclaveAddressSpacesModel(property.Value, options);
+                    enclaveAddressSpaces = EnclaveAddressSpaces.DeserializeEnclaveAddressSpaces(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("communityResourceId"u8))
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    List<RoleAssignmentItem> array = new List<RoleAssignmentItem>();
+                    List<VirtualEnclaveRoleAssignmentItem> array = new List<VirtualEnclaveRoleAssignmentItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignmentItem.DeserializeRoleAssignmentItem(item, options));
+                        array.Add(VirtualEnclaveRoleAssignmentItem.DeserializeVirtualEnclaveRoleAssignmentItem(item, options));
                     }
                     enclaveRoleAssignments = array;
                     continue;
@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    List<RoleAssignmentItem> array = new List<RoleAssignmentItem>();
+                    List<VirtualEnclaveRoleAssignmentItem> array = new List<VirtualEnclaveRoleAssignmentItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignmentItem.DeserializeRoleAssignmentItem(item, options));
+                        array.Add(VirtualEnclaveRoleAssignmentItem.DeserializeVirtualEnclaveRoleAssignmentItem(item, options));
                     }
                     workloadRoleAssignments = array;
                     continue;
@@ -278,10 +278,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    List<GovernedServiceItem> array = new List<GovernedServiceItem>();
+                    List<VirtualEnclaveGovernedService> array = new List<VirtualEnclaveGovernedService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GovernedServiceItem.DeserializeGovernedServiceItem(item, options));
+                        array.Add(VirtualEnclaveGovernedService.DeserializeVirtualEnclaveGovernedService(item, options));
                     }
                     governedServiceList = array;
                     continue;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    enclaveDefaultSettings = EnclaveDefaultSettingsModel.DeserializeEnclaveDefaultSettingsModel(property.Value, options);
+                    enclaveDefaultSettings = EnclaveDefaultSettings.DeserializeEnclaveDefaultSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maintenanceModeConfiguration"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    maintenanceModeConfiguration = MaintenanceModeConfigurationModel.DeserializeMaintenanceModeConfigurationModel(property.Value, options);
+                    maintenanceModeConfiguration = VirtualEnclaveMaintenanceModeConfiguration.DeserializeVirtualEnclaveMaintenanceModeConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 managedResourceGroupName,
                 managedOnBehalfOfConfiguration,
                 bastionEnabled,
-                enclaveRoleAssignments ?? new ChangeTrackingList<RoleAssignmentItem>(),
-                workloadRoleAssignments ?? new ChangeTrackingList<RoleAssignmentItem>(),
-                governedServiceList ?? new ChangeTrackingList<GovernedServiceItem>(),
+                enclaveRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
+                workloadRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
+                governedServiceList ?? new ChangeTrackingList<VirtualEnclaveGovernedService>(),
                 enclaveDefaultSettings,
                 maintenanceModeConfiguration,
                 serializedAdditionalRawData);

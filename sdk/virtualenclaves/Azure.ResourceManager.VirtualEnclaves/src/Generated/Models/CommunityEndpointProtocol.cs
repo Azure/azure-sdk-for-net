@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ANYValue = "ANY";
-        private const string TCPValue = "TCP";
-        private const string UDPValue = "UDP";
-        private const string ICMPValue = "ICMP";
-        private const string ESPValue = "ESP";
+        private const string AnyValue = "ANY";
+        private const string TcpValue = "TCP";
+        private const string UdpValue = "UDP";
+        private const string IcmpValue = "ICMP";
+        private const string EspValue = "ESP";
         private const string AHValue = "AH";
-        private const string HTTPSValue = "HTTPS";
-        private const string HTTPValue = "HTTP";
+        private const string HttpsValue = "HTTPS";
+        private const string HttpValue = "HTTP";
 
         /// <summary> CommunityEndpointProtocol Type ANY. </summary>
-        public static CommunityEndpointProtocol ANY { get; } = new CommunityEndpointProtocol(ANYValue);
+        public static CommunityEndpointProtocol Any { get; } = new CommunityEndpointProtocol(AnyValue);
         /// <summary> CommunityEndpointProtocol Type TCP. </summary>
-        public static CommunityEndpointProtocol TCP { get; } = new CommunityEndpointProtocol(TCPValue);
+        public static CommunityEndpointProtocol Tcp { get; } = new CommunityEndpointProtocol(TcpValue);
         /// <summary> CommunityEndpointProtocol Type UDP. </summary>
-        public static CommunityEndpointProtocol UDP { get; } = new CommunityEndpointProtocol(UDPValue);
+        public static CommunityEndpointProtocol Udp { get; } = new CommunityEndpointProtocol(UdpValue);
         /// <summary> CommunityEndpointProtocol Type ICMP. </summary>
-        public static CommunityEndpointProtocol ICMP { get; } = new CommunityEndpointProtocol(ICMPValue);
+        public static CommunityEndpointProtocol Icmp { get; } = new CommunityEndpointProtocol(IcmpValue);
         /// <summary> CommunityEndpointProtocol Type ESP. </summary>
-        public static CommunityEndpointProtocol ESP { get; } = new CommunityEndpointProtocol(ESPValue);
+        public static CommunityEndpointProtocol Esp { get; } = new CommunityEndpointProtocol(EspValue);
         /// <summary> CommunityEndpointProtocol Type AH. </summary>
         public static CommunityEndpointProtocol AH { get; } = new CommunityEndpointProtocol(AHValue);
         /// <summary> CommunityEndpointProtocol Type HTTPS. </summary>
-        public static CommunityEndpointProtocol HTTPS { get; } = new CommunityEndpointProtocol(HTTPSValue);
+        public static CommunityEndpointProtocol Https { get; } = new CommunityEndpointProtocol(HttpsValue);
         /// <summary> CommunityEndpointProtocol Type HTTP. </summary>
-        public static CommunityEndpointProtocol HTTP { get; } = new CommunityEndpointProtocol(HTTPValue);
+        public static CommunityEndpointProtocol Http { get; } = new CommunityEndpointProtocol(HttpValue);
         /// <summary> Determines if two <see cref="CommunityEndpointProtocol"/> values are the same. </summary>
         public static bool operator ==(CommunityEndpointProtocol left, CommunityEndpointProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunityEndpointProtocol"/> values are not the same. </summary>

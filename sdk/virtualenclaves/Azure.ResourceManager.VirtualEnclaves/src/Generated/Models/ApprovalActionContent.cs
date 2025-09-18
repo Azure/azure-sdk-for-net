@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> Initializes a new instance of <see cref="ApprovalActionContent"/>. </summary>
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
-        public ApprovalActionContent(ApprovalActionRequestApprovalStatus approvalStatus)
+        public ApprovalActionContent(PostActionApprovalStatus approvalStatus)
         {
             ApprovalStatus = approvalStatus;
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Initializes a new instance of <see cref="ApprovalActionContent"/>. </summary>
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalActionContent(ApprovalActionRequestApprovalStatus approvalStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApprovalActionContent(PostActionApprovalStatus approvalStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApprovalStatus = approvalStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> Approval status indicating 'Approved' or 'Rejected'. </summary>
-        public ApprovalActionRequestApprovalStatus ApprovalStatus { get; }
+        public PostActionApprovalStatus ApprovalStatus { get; }
     }
 }

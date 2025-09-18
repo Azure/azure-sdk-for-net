@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Initializes a new instance of <see cref="EnclaveResourceListResult"/>. </summary>
         /// <param name="value"> The EnclaveResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EnclaveResourceListResult(IEnumerable<EnclaveResourceData> value)
+        internal EnclaveResourceListResult(IEnumerable<VirtualEnclaveData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="value"> The EnclaveResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnclaveResourceListResult(IReadOnlyList<EnclaveResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnclaveResourceListResult(IReadOnlyList<VirtualEnclaveData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> The EnclaveResource items on this page. </summary>
-        public IReadOnlyList<EnclaveResourceData> Value { get; }
+        public IReadOnlyList<VirtualEnclaveData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

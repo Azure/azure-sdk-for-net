@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmVirtualEnclavesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.WorkloadResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.VirtualEnclaveWorkloadData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="VirtualEnclaves.WorkloadResourceData"/> instance for mocking. </returns>
-        public static WorkloadResourceData WorkloadResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkloadProperties properties = null)
+        /// <returns> A new <see cref="VirtualEnclaves.VirtualEnclaveWorkloadData"/> instance for mocking. </returns>
+        public static VirtualEnclaveWorkloadData VirtualEnclaveWorkloadData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VirtualEnclaveWorkloadProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new WorkloadResourceData(
+            return new VirtualEnclaveWorkloadData(
                 id,
                 name,
                 resourceType,
@@ -41,20 +41,20 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveWorkloadProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="resourceGroupCollection"> List of resource group ids. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed On Behalf Of Configuration. </param>
-        /// <returns> A new <see cref="Models.WorkloadProperties"/> instance for mocking. </returns>
-        public static WorkloadProperties WorkloadProperties(ProvisioningState? provisioningState = null, IEnumerable<string> resourceGroupCollection = null, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveWorkloadProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveWorkloadProperties VirtualEnclaveWorkloadProperties(VirtualEnclaveProvisioningState? provisioningState = null, IEnumerable<string> resourceGroupCollection = null, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = null)
         {
             resourceGroupCollection ??= new List<string>();
             managedOnBehalfOfMoboBrokerResources ??= new List<SubResource>();
 
-            return new WorkloadProperties(provisioningState, resourceGroupCollection?.ToList(), managedOnBehalfOfMoboBrokerResources != null ? new ManagedOnBehalfOfConfiguration(managedOnBehalfOfMoboBrokerResources?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new VirtualEnclaveWorkloadProperties(provisioningState, resourceGroupCollection?.ToList(), managedOnBehalfOfMoboBrokerResources != null ? new ManagedOnBehalfOfConfiguration(managedOnBehalfOfMoboBrokerResources?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.EnclaveResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.VirtualEnclaveData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="VirtualEnclaves.EnclaveResourceData"/> instance for mocking. </returns>
-        public static EnclaveResourceData EnclaveResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VirtualEnclaveProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="VirtualEnclaves.VirtualEnclaveData"/> instance for mocking. </returns>
+        public static VirtualEnclaveData VirtualEnclaveData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VirtualEnclaveProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EnclaveResourceData(
+            return new VirtualEnclaveData(
                 id,
                 name,
                 resourceType,
@@ -88,20 +88,20 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="resourceCollection"> List of resource ids created by Virtual Enclave. </param>
         /// <param name="managedResourceGroupName"> Managed resource group name. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed On Behalf Of Configuration. </param>
-        /// <param name="bastionEnabled"> Deploy Bastion service (True or False). </param>
+        /// <param name="isBastionEnabled"> Deploy Bastion service (True or False). </param>
         /// <param name="enclaveRoleAssignments"> Enclave role assignments. </param>
         /// <param name="workloadRoleAssignments"> Workload role assignments. </param>
         /// <param name="governedServiceList"> Enclave specific policies. </param>
         /// <param name="enclaveDefaultSettings"> Enclave default settings. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveProperties"/> instance for mocking. </returns>
-        public static VirtualEnclaveProperties VirtualEnclaveProperties(ProvisioningState? provisioningState = null, EnclaveVirtualNetworkModel enclaveVirtualNetwork = null, EnclaveAddressSpacesModel enclaveAddressSpaces = null, ResourceIdentifier communityResourceId = null, IEnumerable<ResourceIdentifier> resourceCollection = null, string managedResourceGroupName = null, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = null, bool? bastionEnabled = null, IEnumerable<RoleAssignmentItem> enclaveRoleAssignments = null, IEnumerable<RoleAssignmentItem> workloadRoleAssignments = null, IEnumerable<GovernedServiceItem> governedServiceList = null, EnclaveDefaultSettingsModel enclaveDefaultSettings = null, MaintenanceModeConfigurationModel maintenanceModeConfiguration = null)
+        public static VirtualEnclaveProperties VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState = null, EnclaveVirtualNetwork enclaveVirtualNetwork = null, EnclaveAddressSpaces enclaveAddressSpaces = null, ResourceIdentifier communityResourceId = null, IEnumerable<ResourceIdentifier> resourceCollection = null, string managedResourceGroupName = null, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = null, bool? isBastionEnabled = null, IEnumerable<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = null, IEnumerable<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = null, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = null, EnclaveDefaultSettings enclaveDefaultSettings = null, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = null)
         {
             resourceCollection ??= new List<ResourceIdentifier>();
             managedOnBehalfOfMoboBrokerResources ??= new List<SubResource>();
-            enclaveRoleAssignments ??= new List<RoleAssignmentItem>();
-            workloadRoleAssignments ??= new List<RoleAssignmentItem>();
-            governedServiceList ??= new List<GovernedServiceItem>();
+            enclaveRoleAssignments ??= new List<VirtualEnclaveRoleAssignmentItem>();
+            workloadRoleAssignments ??= new List<VirtualEnclaveRoleAssignmentItem>();
+            governedServiceList ??= new List<VirtualEnclaveGovernedService>();
 
             return new VirtualEnclaveProperties(
                 provisioningState,
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 resourceCollection?.ToList(),
                 managedResourceGroupName,
                 managedOnBehalfOfMoboBrokerResources != null ? new ManagedOnBehalfOfConfiguration(managedOnBehalfOfMoboBrokerResources?.ToList(), serializedAdditionalRawData: null) : null,
-                bastionEnabled,
+                isBastionEnabled,
                 enclaveRoleAssignments?.ToList(),
                 workloadRoleAssignments?.ToList(),
                 governedServiceList?.ToList(),
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubnetConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveSubnetConfiguration"/>. </summary>
         /// <param name="subnetName"> Subnet name. </param>
         /// <param name="subnetResourceId"> Subnet Resource ID. </param>
         /// <param name="networkPrefixSize"> Network prefix size. </param>
         /// <param name="subnetDelegation"> Subnet delegation. </param>
         /// <param name="addressPrefix"> Address prefix. </param>
         /// <param name="networkSecurityGroupResourceId"> Network security group ID. </param>
-        /// <returns> A new <see cref="Models.SubnetConfiguration"/> instance for mocking. </returns>
-        public static SubnetConfiguration SubnetConfiguration(string subnetName = null, ResourceIdentifier subnetResourceId = null, int networkPrefixSize = default, string subnetDelegation = null, string addressPrefix = null, ResourceIdentifier networkSecurityGroupResourceId = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveSubnetConfiguration"/> instance for mocking. </returns>
+        public static VirtualEnclaveSubnetConfiguration VirtualEnclaveSubnetConfiguration(string subnetName = null, ResourceIdentifier subnetResourceId = null, int networkPrefixSize = default, string subnetDelegation = null, string addressPrefix = null, ResourceIdentifier networkSecurityGroupResourceId = null)
         {
-            return new SubnetConfiguration(
+            return new VirtualEnclaveSubnetConfiguration(
                 subnetName,
                 subnetResourceId,
                 networkPrefixSize,
@@ -140,28 +140,28 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EnclaveAddressSpacesModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EnclaveAddressSpaces"/>. </summary>
         /// <param name="enclaveAddressSpace"> Enclave Address Space. </param>
         /// <param name="managedAddressSpace"> Managed Address Space. </param>
-        /// <returns> A new <see cref="Models.EnclaveAddressSpacesModel"/> instance for mocking. </returns>
-        public static EnclaveAddressSpacesModel EnclaveAddressSpacesModel(string enclaveAddressSpace = null, string managedAddressSpace = null)
+        /// <returns> A new <see cref="Models.EnclaveAddressSpaces"/> instance for mocking. </returns>
+        public static EnclaveAddressSpaces EnclaveAddressSpaces(string enclaveAddressSpace = null, string managedAddressSpace = null)
         {
-            return new EnclaveAddressSpacesModel(enclaveAddressSpace, managedAddressSpace, serializedAdditionalRawData: null);
+            return new EnclaveAddressSpaces(enclaveAddressSpace, managedAddressSpace, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GovernedServiceItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveGovernedService"/>. </summary>
         /// <param name="serviceId"> Service ID. </param>
         /// <param name="serviceName"> Service name. </param>
         /// <param name="option"> Governance option for this service (Allow, Deny, ExceptionOnly, or NotApplicable). </param>
         /// <param name="enforcement"> Initiative enforcement (Enabled or Disabled). </param>
         /// <param name="policyAction"> Enforcement mode for policy. AuditOnly, Enforce, or None. </param>
         /// <param name="initiatives"> Initiatives associated with this service. </param>
-        /// <returns> A new <see cref="Models.GovernedServiceItem"/> instance for mocking. </returns>
-        public static GovernedServiceItem GovernedServiceItem(ServiceIdentifier serviceId = default, string serviceName = null, GovernedServiceItemOption? option = null, GovernedServiceItemEnforcement? enforcement = null, GovernedServiceItemPolicyAction? policyAction = null, IEnumerable<string> initiatives = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveGovernedService"/> instance for mocking. </returns>
+        public static VirtualEnclaveGovernedService VirtualEnclaveGovernedService(VirtualEnclaveGovernedServiceIdentifier serviceId = default, string serviceName = null, ServiceGovernanceOptionType? option = null, ServiceInitiativeEnforcement? enforcement = null, ServiceEnforcementPolicyAction? policyAction = null, IEnumerable<string> initiatives = null)
         {
             initiatives ??= new List<string>();
 
-            return new GovernedServiceItem(
+            return new VirtualEnclaveGovernedService(
                 serviceId,
                 serviceName,
                 option,
@@ -171,76 +171,76 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EnclaveDefaultSettingsModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EnclaveDefaultSettings"/>. </summary>
         /// <param name="keyVaultResourceId"> Key Vault Resource Id. </param>
         /// <param name="storageAccountResourceId"> Storage Account Resource Id. </param>
         /// <param name="logAnalyticsResourceIdCollection"> Log Analytics Resource Ids. </param>
         /// <param name="diagnosticDestination"> Diagnostic Destination. </param>
-        /// <returns> A new <see cref="Models.EnclaveDefaultSettingsModel"/> instance for mocking. </returns>
-        public static EnclaveDefaultSettingsModel EnclaveDefaultSettingsModel(ResourceIdentifier keyVaultResourceId = null, ResourceIdentifier storageAccountResourceId = null, IEnumerable<ResourceIdentifier> logAnalyticsResourceIdCollection = null, DiagnosticDestination? diagnosticDestination = null)
+        /// <returns> A new <see cref="Models.EnclaveDefaultSettings"/> instance for mocking. </returns>
+        public static EnclaveDefaultSettings EnclaveDefaultSettings(ResourceIdentifier keyVaultResourceId = null, ResourceIdentifier storageAccountResourceId = null, IEnumerable<ResourceIdentifier> logAnalyticsResourceIdCollection = null, VirtualEnclaveDiagnosticDestination? diagnosticDestination = null)
         {
             logAnalyticsResourceIdCollection ??= new List<ResourceIdentifier>();
 
-            return new EnclaveDefaultSettingsModel(keyVaultResourceId, storageAccountResourceId, logAnalyticsResourceIdCollection?.ToList(), diagnosticDestination, serializedAdditionalRawData: null);
+            return new EnclaveDefaultSettings(keyVaultResourceId, storageAccountResourceId, logAnalyticsResourceIdCollection?.ToList(), diagnosticDestination, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclavePatchProperties"/>. </summary>
         /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
-        /// <param name="bastionEnabled"> Deploy Bastion service (True or False). </param>
+        /// <param name="isBastionEnabled"> Deploy Bastion service (True or False). </param>
         /// <param name="enclaveRoleAssignments"> Enclave role assignments. </param>
         /// <param name="workloadRoleAssignments"> Workload role assignments. </param>
         /// <param name="governedServiceList"> Enclave specific policies. </param>
         /// <param name="enclaveDefaultDiagnosticDestination"> Enclave default settings. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
         /// <returns> A new <see cref="Models.VirtualEnclavePatchProperties"/> instance for mocking. </returns>
-        public static VirtualEnclavePatchProperties VirtualEnclavePatchProperties(EnclaveVirtualNetworkModel enclaveVirtualNetwork = null, bool? bastionEnabled = null, IEnumerable<RoleAssignmentItem> enclaveRoleAssignments = null, IEnumerable<RoleAssignmentItem> workloadRoleAssignments = null, IEnumerable<GovernedServiceItem> governedServiceList = null, DiagnosticDestination? enclaveDefaultDiagnosticDestination = null, MaintenanceModeConfigurationPatchModel maintenanceModeConfiguration = null)
+        public static VirtualEnclavePatchProperties VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork = null, bool? isBastionEnabled = null, IEnumerable<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = null, IEnumerable<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = null, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = null, VirtualEnclaveDiagnosticDestination? enclaveDefaultDiagnosticDestination = null, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = null)
         {
-            enclaveRoleAssignments ??= new List<RoleAssignmentItem>();
-            workloadRoleAssignments ??= new List<RoleAssignmentItem>();
-            governedServiceList ??= new List<GovernedServiceItem>();
+            enclaveRoleAssignments ??= new List<VirtualEnclaveRoleAssignmentItem>();
+            workloadRoleAssignments ??= new List<VirtualEnclaveRoleAssignmentItem>();
+            governedServiceList ??= new List<VirtualEnclaveGovernedService>();
 
             return new VirtualEnclavePatchProperties(
                 enclaveVirtualNetwork,
-                bastionEnabled,
+                isBastionEnabled,
                 enclaveRoleAssignments?.ToList(),
                 workloadRoleAssignments?.ToList(),
                 governedServiceList?.ToList(),
-                enclaveDefaultDiagnosticDestination != null ? new EnclaveDefaultSettingsPatchModel(enclaveDefaultDiagnosticDestination, serializedAdditionalRawData: null) : null,
+                enclaveDefaultDiagnosticDestination != null ? new EnclaveDefaultSettingsPatch(enclaveDefaultDiagnosticDestination, serializedAdditionalRawData: null) : null,
                 maintenanceModeConfiguration,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceModeConfigurationPatchModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveMaintenanceModeConfigurationPatch"/>. </summary>
         /// <param name="mode"> Current mode of Maintenance Mode Configuration. </param>
         /// <param name="principals"> The user, group or service principal object affected by Maintenance Mode. </param>
         /// <param name="justification"> Justification for entering or exiting Maintenance Mode. </param>
-        /// <returns> A new <see cref="Models.MaintenanceModeConfigurationPatchModel"/> instance for mocking. </returns>
-        public static MaintenanceModeConfigurationPatchModel MaintenanceModeConfigurationPatchModel(MaintenanceModeConfigurationModelMode mode = default, IEnumerable<Principal> principals = null, MaintenanceModeConfigurationModelJustification? justification = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveMaintenanceModeConfigurationPatch"/> instance for mocking. </returns>
+        public static VirtualEnclaveMaintenanceModeConfigurationPatch VirtualEnclaveMaintenanceModeConfigurationPatch(VirtualEnclaveMaintenanceMode mode = default, IEnumerable<VirtualEnclavePrincipal> principals = null, VirtualEnclaveMaintenanceJustification? justification = null)
         {
-            principals ??= new List<Principal>();
+            principals ??= new List<VirtualEnclavePrincipal>();
 
-            return new MaintenanceModeConfigurationPatchModel(mode, principals?.ToList(), justification, serializedAdditionalRawData: null);
+            return new VirtualEnclaveMaintenanceModeConfigurationPatch(mode, principals?.ToList(), justification, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ApprovalCallbackRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApprovalCallbackContent"/>. </summary>
         /// <param name="resourceRequestAction"> Resource request action indicating action which needed to be performed upon calling approval-callback post action. </param>
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
         /// <param name="approvalCallbackPayload"> Payload requested by client upon approval action. </param>
-        /// <returns> A new <see cref="Models.ApprovalCallbackRequest"/> instance for mocking. </returns>
-        public static ApprovalCallbackRequest ApprovalCallbackRequest(ApprovalCallbackRequestResourceRequestAction resourceRequestAction = default, ApprovalCallbackRequestApprovalStatus approvalStatus = default, string approvalCallbackPayload = null)
+        /// <returns> A new <see cref="Models.ApprovalCallbackContent"/> instance for mocking. </returns>
+        public static ApprovalCallbackContent ApprovalCallbackContent(PostActionResourceRequestAction resourceRequestAction = default, PostActionCallbackApprovalStatus approvalStatus = default, string approvalCallbackPayload = null)
         {
-            return new ApprovalCallbackRequest(resourceRequestAction, approvalStatus, approvalCallbackPayload, serializedAdditionalRawData: null);
+            return new ApprovalCallbackContent(resourceRequestAction, approvalStatus, approvalCallbackPayload, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ApprovalActionResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApprovalActionResult"/>. </summary>
         /// <param name="message"> Confirmation message indicating the result of the operation. </param>
-        /// <returns> A new <see cref="Models.ApprovalActionResponse"/> instance for mocking. </returns>
-        public static ApprovalActionResponse ApprovalActionResponse(string message = null)
+        /// <returns> A new <see cref="Models.ApprovalActionResult"/> instance for mocking. </returns>
+        public static ApprovalActionResult ApprovalActionResult(string message = null)
         {
-            return new ApprovalActionResponse(message, serializedAdditionalRawData: null);
+            return new ApprovalActionResult(message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.CommunityResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.VirtualEnclaveCommunityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -249,12 +249,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="VirtualEnclaves.CommunityResourceData"/> instance for mocking. </returns>
-        public static CommunityResourceData CommunityResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CommunityProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="VirtualEnclaves.VirtualEnclaveCommunityData"/> instance for mocking. </returns>
+        public static VirtualEnclaveCommunityData VirtualEnclaveCommunityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VirtualEnclaveCommunityProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CommunityResourceData(
+            return new VirtualEnclaveCommunityData(
                 id,
                 name,
                 resourceType,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CommunityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveCommunityProperties"/>. </summary>
         /// <param name="addressSpace"> Address Space. </param>
         /// <param name="dnsServers"> DNS Servers. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
@@ -279,16 +279,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="firewallSku"> SKU of the community's Azure Firewall (Basic, Standard, Premium). Standard is the default. </param>
         /// <param name="approvalSettings"> Approval requirements for various actions on the community's resources. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
-        /// <returns> A new <see cref="Models.CommunityProperties"/> instance for mocking. </returns>
-        public static CommunityProperties CommunityProperties(string addressSpace = null, IEnumerable<string> dnsServers = null, ProvisioningState? provisioningState = null, IEnumerable<ResourceIdentifier> resourceCollection = null, string managedResourceGroupName = null, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = null, IEnumerable<GovernedServiceItem> governedServiceList = null, CommunityPropertiesPolicyOverride? policyOverride = null, IEnumerable<RoleAssignmentItem> communityRoleAssignments = null, FirewallSKU? firewallSku = null, ApprovalSettings approvalSettings = null, MaintenanceModeConfigurationModel maintenanceModeConfiguration = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveCommunityProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveCommunityProperties VirtualEnclaveCommunityProperties(string addressSpace = null, IEnumerable<string> dnsServers = null, VirtualEnclaveProvisioningState? provisioningState = null, IEnumerable<ResourceIdentifier> resourceCollection = null, string managedResourceGroupName = null, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = null, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = null, VirtualEnclaveCommunityPolicyOverride? policyOverride = null, IEnumerable<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = null, VirtualEnclaveFirewallSku? firewallSku = null, VirtualEnclaveApprovalSettings approvalSettings = null, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = null)
         {
             dnsServers ??= new List<string>();
             resourceCollection ??= new List<ResourceIdentifier>();
             managedOnBehalfOfMoboBrokerResources ??= new List<SubResource>();
-            governedServiceList ??= new List<GovernedServiceItem>();
-            communityRoleAssignments ??= new List<RoleAssignmentItem>();
+            governedServiceList ??= new List<VirtualEnclaveGovernedService>();
+            communityRoleAssignments ??= new List<VirtualEnclaveRoleAssignmentItem>();
 
-            return new CommunityProperties(
+            return new VirtualEnclaveCommunityProperties(
                 addressSpace,
                 dnsServers?.ToList(),
                 provisioningState,
@@ -304,15 +304,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckAddressSpaceAvailabilityResponse"/>. </summary>
-        /// <param name="value"> Boolean representing whether the address space is available. </param>
-        /// <returns> A new <see cref="Models.CheckAddressSpaceAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckAddressSpaceAvailabilityResponse CheckAddressSpaceAvailabilityResponse(bool value = default)
+        /// <summary> Initializes a new instance of <see cref="Models.CheckAddressSpaceAvailabilityResult"/>. </summary>
+        /// <param name="isAvailable"> Boolean representing whether the address space is available. </param>
+        /// <returns> A new <see cref="Models.CheckAddressSpaceAvailabilityResult"/> instance for mocking. </returns>
+        public static CheckAddressSpaceAvailabilityResult CheckAddressSpaceAvailabilityResult(bool isAvailable = default)
         {
-            return new CheckAddressSpaceAvailabilityResponse(value, serializedAdditionalRawData: null);
+            return new CheckAddressSpaceAvailabilityResult(isAvailable, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.TransitHubResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.VirtualEnclaveTransitHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -320,12 +320,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="VirtualEnclaves.TransitHubResourceData"/> instance for mocking. </returns>
-        public static TransitHubResourceData TransitHubResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, TransitHubProperties properties = null)
+        /// <returns> A new <see cref="VirtualEnclaves.VirtualEnclaveTransitHubData"/> instance for mocking. </returns>
+        public static VirtualEnclaveTransitHubData VirtualEnclaveTransitHubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VirtualEnclaveTransitHubProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TransitHubResourceData(
+            return new VirtualEnclaveTransitHubData(
                 id,
                 name,
                 resourceType,
@@ -336,20 +336,20 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TransitHubProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveTransitHubProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="state"> The state of the transitHub. </param>
         /// <param name="transitOption"> The TransitOption of the transitHub. </param>
         /// <param name="resourceCollection"> List of resource ids modified by transitHubs. </param>
-        /// <returns> A new <see cref="Models.TransitHubProperties"/> instance for mocking. </returns>
-        public static TransitHubProperties TransitHubProperties(ProvisioningState? provisioningState = null, TransitHubState? state = null, TransitOption transitOption = null, IEnumerable<ResourceIdentifier> resourceCollection = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveTransitHubProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveTransitHubProperties VirtualEnclaveTransitHubProperties(VirtualEnclaveProvisioningState? provisioningState = null, TransitHubState? state = null, VirtualEnclaveTransitOptionProperties transitOption = null, IEnumerable<ResourceIdentifier> resourceCollection = null)
         {
             resourceCollection ??= new List<ResourceIdentifier>();
 
-            return new TransitHubProperties(provisioningState, state, transitOption, resourceCollection?.ToList(), serializedAdditionalRawData: null);
+            return new VirtualEnclaveTransitHubProperties(provisioningState, state, transitOption, resourceCollection?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.EnclaveConnectionResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.VirtualEnclaveConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -357,12 +357,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="VirtualEnclaves.EnclaveConnectionResourceData"/> instance for mocking. </returns>
-        public static EnclaveConnectionResourceData EnclaveConnectionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EnclaveConnectionProperties properties = null)
+        /// <returns> A new <see cref="VirtualEnclaves.VirtualEnclaveConnectionData"/> instance for mocking. </returns>
+        public static VirtualEnclaveConnectionData VirtualEnclaveConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VirtualEnclaveConnectionProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EnclaveConnectionResourceData(
+            return new VirtualEnclaveConnectionData(
                 id,
                 name,
                 resourceType,
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EnclaveConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveConnectionProperties"/>. </summary>
         /// <param name="state"> The state of the enclaveConnection. </param>
         /// <param name="communityResourceId"> Community Resource Id. </param>
         /// <param name="sourceResourceId"> Source Resource Id. </param>
@@ -381,12 +381,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="destinationEndpointId"> Destination Endpoint Resource Id. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="resourceCollection"> List of resource ids modified by enclave Connections. </param>
-        /// <returns> A new <see cref="Models.EnclaveConnectionProperties"/> instance for mocking. </returns>
-        public static EnclaveConnectionProperties EnclaveConnectionProperties(EnclaveConnectionState? state = null, ResourceIdentifier communityResourceId = null, ResourceIdentifier sourceResourceId = null, string sourceCidr = null, ResourceIdentifier destinationEndpointId = null, ProvisioningState? provisioningState = null, IEnumerable<ResourceIdentifier> resourceCollection = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveConnectionProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveConnectionProperties VirtualEnclaveConnectionProperties(EnclaveConnectionState? state = null, ResourceIdentifier communityResourceId = null, ResourceIdentifier sourceResourceId = null, string sourceCidr = null, ResourceIdentifier destinationEndpointId = null, VirtualEnclaveProvisioningState? provisioningState = null, IEnumerable<ResourceIdentifier> resourceCollection = null)
         {
             resourceCollection ??= new List<ResourceIdentifier>();
 
-            return new EnclaveConnectionProperties(
+            return new VirtualEnclaveConnectionProperties(
                 state,
                 communityResourceId,
                 sourceResourceId,
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.EnclaveEndpointResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.VirtualEnclaveEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -405,12 +405,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="VirtualEnclaves.EnclaveEndpointResourceData"/> instance for mocking. </returns>
-        public static EnclaveEndpointResourceData EnclaveEndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EnclaveEndpointProperties properties = null)
+        /// <returns> A new <see cref="VirtualEnclaves.VirtualEnclaveEndpointData"/> instance for mocking. </returns>
+        public static VirtualEnclaveEndpointData VirtualEnclaveEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VirtualEnclaveEndpointProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EnclaveEndpointResourceData(
+            return new VirtualEnclaveEndpointData(
                 id,
                 name,
                 resourceType,
@@ -421,20 +421,20 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EnclaveEndpointProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveEndpointProperties"/>. </summary>
         /// <param name="ruleCollection"> Enclave Endpoint Rule Collection. </param>
         /// <param name="resourceCollection"> List of resource ids created by community endpoint. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
-        /// <returns> A new <see cref="Models.EnclaveEndpointProperties"/> instance for mocking. </returns>
-        public static EnclaveEndpointProperties EnclaveEndpointProperties(IEnumerable<EnclaveEndpointDestinationRule> ruleCollection = null, IEnumerable<ResourceIdentifier> resourceCollection = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveEndpointProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveEndpointProperties VirtualEnclaveEndpointProperties(IEnumerable<EnclaveEndpointDestinationRule> ruleCollection = null, IEnumerable<ResourceIdentifier> resourceCollection = null, VirtualEnclaveProvisioningState? provisioningState = null)
         {
             ruleCollection ??= new List<EnclaveEndpointDestinationRule>();
             resourceCollection ??= new List<ResourceIdentifier>();
 
-            return new EnclaveEndpointProperties(ruleCollection?.ToList(), resourceCollection?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new VirtualEnclaveEndpointProperties(ruleCollection?.ToList(), resourceCollection?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.CommunityEndpointResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.VirtualEnclaveCommunityEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -442,12 +442,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="VirtualEnclaves.CommunityEndpointResourceData"/> instance for mocking. </returns>
-        public static CommunityEndpointResourceData CommunityEndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CommunityEndpointProperties properties = null)
+        /// <returns> A new <see cref="VirtualEnclaves.VirtualEnclaveCommunityEndpointData"/> instance for mocking. </returns>
+        public static VirtualEnclaveCommunityEndpointData VirtualEnclaveCommunityEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VirtualEnclaveCommunityEndpointProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CommunityEndpointResourceData(
+            return new VirtualEnclaveCommunityEndpointData(
                 id,
                 name,
                 resourceType,
@@ -458,29 +458,29 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CommunityEndpointProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveCommunityEndpointProperties"/>. </summary>
         /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
         /// <param name="resourceCollection"> List of resource ids created by community endpoint. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
-        /// <returns> A new <see cref="Models.CommunityEndpointProperties"/> instance for mocking. </returns>
-        public static CommunityEndpointProperties CommunityEndpointProperties(IEnumerable<CommunityEndpointDestinationRule> ruleCollection = null, IEnumerable<ResourceIdentifier> resourceCollection = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveCommunityEndpointProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveCommunityEndpointProperties VirtualEnclaveCommunityEndpointProperties(IEnumerable<CommunityEndpointDestinationRule> ruleCollection = null, IEnumerable<ResourceIdentifier> resourceCollection = null, VirtualEnclaveProvisioningState? provisioningState = null)
         {
             ruleCollection ??= new List<CommunityEndpointDestinationRule>();
             resourceCollection ??= new List<ResourceIdentifier>();
 
-            return new CommunityEndpointProperties(ruleCollection?.ToList(), resourceCollection?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new VirtualEnclaveCommunityEndpointProperties(ruleCollection?.ToList(), resourceCollection?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.ApprovalResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.VirtualEnclaveApprovalData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="VirtualEnclaves.ApprovalResourceData"/> instance for mocking. </returns>
-        public static ApprovalResourceData ApprovalResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApprovalProperties properties = null)
+        /// <returns> A new <see cref="VirtualEnclaves.VirtualEnclaveApprovalData"/> instance for mocking. </returns>
+        public static VirtualEnclaveApprovalData VirtualEnclaveApprovalData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VirtualEnclaveApprovalProperties properties = null)
         {
-            return new ApprovalResourceData(
+            return new VirtualEnclaveApprovalData(
                 id,
                 name,
                 resourceType,
@@ -489,16 +489,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaves.ApprovalResource"/> for mocking. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="data"> The resource that is the target of operations. </param>
-        /// <returns> A new <see cref="VirtualEnclaves.ApprovalResource"/> instance for mocking. </returns>
-        public static ApprovalResource ApprovalResource(ArmClient client = null, ApprovalResourceData data = null)
-        {
-            return new ApprovalResource(client, data);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApprovalProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveApprovalProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="parentResourceId"> Parameter for optimizing query results. </param>
         /// <param name="grandparentResourceId"> Parameter for optimizing query results. </param>
@@ -507,12 +498,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="createdOn"> Approval request creation time. </param>
         /// <param name="stateChangedOn"> Approval request state change time, time at which approval request state changed from pending to approved or rejected. </param>
         /// <param name="requestMetadata"> Request metadata for the approval request. </param>
-        /// <returns> A new <see cref="Models.ApprovalProperties"/> instance for mocking. </returns>
-        public static ApprovalProperties ApprovalProperties(ProvisioningState? provisioningState = null, ResourceIdentifier parentResourceId = null, ResourceIdentifier grandparentResourceId = null, IEnumerable<Approver> approvers = null, string ticketId = null, DateTimeOffset? createdOn = null, DateTimeOffset? stateChangedOn = null, RequestMetadata requestMetadata = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveApprovalProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveApprovalProperties VirtualEnclaveApprovalProperties(VirtualEnclaveProvisioningState? provisioningState = null, ResourceIdentifier parentResourceId = null, ResourceIdentifier grandparentResourceId = null, IEnumerable<VirtualEnclaveApprover> approvers = null, string ticketId = null, DateTimeOffset? createdOn = null, DateTimeOffset? stateChangedOn = null, ApprovalRequestMetadata requestMetadata = null)
         {
-            approvers ??= new List<Approver>();
+            approvers ??= new List<VirtualEnclaveApprover>();
 
-            return new ApprovalProperties(
+            return new VirtualEnclaveApprovalProperties(
                 provisioningState,
                 parentResourceId,
                 grandparentResourceId,
@@ -524,7 +515,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ApprovalPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEnclaveApprovalPatchProperties"/>. </summary>
         /// <param name="parentResourceId"> Parameter for optimizing query results. </param>
         /// <param name="grandparentResourceId"> Parameter for optimizing query results. </param>
         /// <param name="approvers"> List of approvers for the approval request. </param>
@@ -532,12 +523,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="createdOn"> Approval request creation time. </param>
         /// <param name="stateChangedOn"> Approval request state change time, time at which approval request state changed from pending to approved or rejected. </param>
         /// <param name="requestMetadata"> Request metadata for the approval request. </param>
-        /// <returns> A new <see cref="Models.ApprovalPatchProperties"/> instance for mocking. </returns>
-        public static ApprovalPatchProperties ApprovalPatchProperties(ResourceIdentifier parentResourceId = null, ResourceIdentifier grandparentResourceId = null, IEnumerable<Approver> approvers = null, string ticketId = null, DateTimeOffset? createdOn = null, DateTimeOffset? stateChangedOn = null, RequestMetadataUpdatableProperties requestMetadata = null)
+        /// <returns> A new <see cref="Models.VirtualEnclaveApprovalPatchProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveApprovalPatchProperties VirtualEnclaveApprovalPatchProperties(ResourceIdentifier parentResourceId = null, ResourceIdentifier grandparentResourceId = null, IEnumerable<VirtualEnclaveApprover> approvers = null, string ticketId = null, DateTimeOffset? createdOn = null, DateTimeOffset? stateChangedOn = null, ApprovalRequestMetadataPatch requestMetadata = null)
         {
-            approvers ??= new List<Approver>();
+            approvers ??= new List<VirtualEnclaveApprover>();
 
-            return new ApprovalPatchProperties(
+            return new VirtualEnclaveApprovalPatchProperties(
                 parentResourceId,
                 grandparentResourceId,
                 approvers?.ToList(),
@@ -548,15 +539,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RequestMetadataUpdatableProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApprovalRequestMetadataPatch"/>. </summary>
         /// <param name="resourceAction"> Resource Action of the item being approved or declined. </param>
         /// <param name="approvalCallbackRoute"> Route name for the approval callback. </param>
         /// <param name="approvalCallbackPayload"> Payload to be sent upon any action on approval request. </param>
         /// <param name="approvalStatus"> Status of the approval. Uses ApprovalStatus enum. </param>
-        /// <returns> A new <see cref="Models.RequestMetadataUpdatableProperties"/> instance for mocking. </returns>
-        public static RequestMetadataUpdatableProperties RequestMetadataUpdatableProperties(string resourceAction = null, string approvalCallbackRoute = null, string approvalCallbackPayload = null, ApprovalStatus? approvalStatus = null)
+        /// <returns> A new <see cref="Models.ApprovalRequestMetadataPatch"/> instance for mocking. </returns>
+        public static ApprovalRequestMetadataPatch ApprovalRequestMetadataPatch(string resourceAction = null, string approvalCallbackRoute = null, string approvalCallbackPayload = null, VirtualEnclaveApprovalStatus? approvalStatus = null)
         {
-            return new RequestMetadataUpdatableProperties(resourceAction, approvalCallbackRoute, approvalCallbackPayload, approvalStatus, serializedAdditionalRawData: null);
+            return new ApprovalRequestMetadataPatch(resourceAction, approvalCallbackRoute, approvalCallbackPayload, approvalStatus, serializedAdditionalRawData: null);
         }
     }
 }

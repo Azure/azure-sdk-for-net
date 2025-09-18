@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 return null;
             }
             ResourceIdentifier communityResourceId = default;
-            EnclaveVirtualNetworkModel enclaveVirtualNetwork = default;
+            EnclaveVirtualNetwork enclaveVirtualNetwork = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 }
                 if (property.NameEquals("enclaveVirtualNetwork"u8))
                 {
-                    enclaveVirtualNetwork = EnclaveVirtualNetworkModel.DeserializeEnclaveVirtualNetworkModel(property.Value, options);
+                    enclaveVirtualNetwork = EnclaveVirtualNetwork.DeserializeEnclaveVirtualNetwork(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
