@@ -4,7 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-[assembly: Azure.Core.AzureResourceProviderNamespace("Hci.Vm")]
+[assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.AzureStackHCI")]
 
 // Suppress AZC0030 for VirtualHardDiskUploadResponse as it's generated from TypeSpec and the name comes from the API specification
 [assembly: SuppressMessage("Azure.Sdk.Analyzers", "AZC0030:Model name 'VirtualHardDiskUploadResponse' ends with 'Response'. We suggest renaming it to 'VmVirtualHardDiskUploadResponseResult' or another name with this suffix.", Justification = "Generated from TypeSpec API specification - model name is defined in Azure REST API specs", Scope = "type", Target = "~T:Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskUploadResponse")]

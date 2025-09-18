@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkSecurityGroupData> value = default;
+            IReadOnlyList<HciVmNetworkSecurityGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<NetworkSecurityGroupData> array = new List<NetworkSecurityGroupData>();
+                    List<HciVmNetworkSecurityGroupData> array = new List<HciVmNetworkSecurityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(item, options));
+                        array.Add(HciVmNetworkSecurityGroupData.DeserializeHciVmNetworkSecurityGroupData(item, options));
                     }
                     value = array;
                     continue;

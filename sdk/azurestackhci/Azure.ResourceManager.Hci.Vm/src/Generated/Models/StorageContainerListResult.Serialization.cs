@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            IReadOnlyList<StorageContainerData> value = default;
+            IReadOnlyList<HciVmStorageContainerData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<StorageContainerData> array = new List<StorageContainerData>();
+                    List<HciVmStorageContainerData> array = new List<HciVmStorageContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageContainerData.DeserializeStorageContainerData(item, options));
+                        array.Add(HciVmStorageContainerData.DeserializeHciVmStorageContainerData(item, options));
                     }
                     value = array;
                     continue;

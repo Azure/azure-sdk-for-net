@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="VmDiskSecurityProfile"/>. </summary>
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. NOTE: It can be set for only Confidential VMs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmDiskSecurityProfile(SecurityEncryptionType? securityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VmDiskSecurityProfile(HciVmSecurityEncryptionType? securityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecurityEncryptionType = securityEncryptionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the EncryptionType of the managed disk. It is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. NOTE: It can be set for only Confidential VMs. </summary>
-        public SecurityEncryptionType? SecurityEncryptionType { get; set; }
+        public HciVmSecurityEncryptionType? SecurityEncryptionType { get; set; }
     }
 }

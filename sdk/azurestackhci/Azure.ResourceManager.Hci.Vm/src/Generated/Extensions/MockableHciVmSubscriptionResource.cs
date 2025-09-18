@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableHciVmSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _galleryImageClientDiagnostics;
-        private GalleryImagesRestOperations _galleryImageRestClient;
-        private ClientDiagnostics _logicalNetworkClientDiagnostics;
-        private LogicalNetworksRestOperations _logicalNetworkRestClient;
-        private ClientDiagnostics _marketplaceGalleryImageClientDiagnostics;
-        private MarketplaceGalleryImagesRestOperations _marketplaceGalleryImageRestClient;
-        private ClientDiagnostics _networkInterfaceClientDiagnostics;
-        private NetworkInterfacesRestOperations _networkInterfaceRestClient;
-        private ClientDiagnostics _networkSecurityGroupClientDiagnostics;
-        private NetworkSecurityGroupsRestOperations _networkSecurityGroupRestClient;
-        private ClientDiagnostics _storageContainerClientDiagnostics;
-        private StorageContainersRestOperations _storageContainerRestClient;
-        private ClientDiagnostics _virtualHardDiskClientDiagnostics;
-        private VirtualHardDisksRestOperations _virtualHardDiskRestClient;
+        private ClientDiagnostics _hciVmGalleryImageGalleryImagesClientDiagnostics;
+        private GalleryImagesRestOperations _hciVmGalleryImageGalleryImagesRestClient;
+        private ClientDiagnostics _hciVmLogicalNetworkLogicalNetworksClientDiagnostics;
+        private LogicalNetworksRestOperations _hciVmLogicalNetworkLogicalNetworksRestClient;
+        private ClientDiagnostics _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics;
+        private MarketplaceGalleryImagesRestOperations _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient;
+        private ClientDiagnostics _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics;
+        private NetworkInterfacesRestOperations _hciVmNetworkInterfaceNetworkInterfacesRestClient;
+        private ClientDiagnostics _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics;
+        private NetworkSecurityGroupsRestOperations _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient;
+        private ClientDiagnostics _hciVmStorageContainerStorageContainersClientDiagnostics;
+        private StorageContainersRestOperations _hciVmStorageContainerStorageContainersRestClient;
+        private ClientDiagnostics _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics;
+        private VirtualHardDisksRestOperations _hciVmVirtualHardDiskVirtualHardDisksRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableHciVmSubscriptionResource"/> class for mocking. </summary>
         protected MockableHciVmSubscriptionResource()
@@ -42,20 +42,20 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         {
         }
 
-        private ClientDiagnostics GalleryImageClientDiagnostics => _galleryImageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", GalleryImageResource.ResourceType.Namespace, Diagnostics);
-        private GalleryImagesRestOperations GalleryImageRestClient => _galleryImageRestClient ??= new GalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GalleryImageResource.ResourceType));
-        private ClientDiagnostics LogicalNetworkClientDiagnostics => _logicalNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", LogicalNetworkResource.ResourceType.Namespace, Diagnostics);
-        private LogicalNetworksRestOperations LogicalNetworkRestClient => _logicalNetworkRestClient ??= new LogicalNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LogicalNetworkResource.ResourceType));
-        private ClientDiagnostics MarketplaceGalleryImageClientDiagnostics => _marketplaceGalleryImageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", MarketplaceGalleryImageResource.ResourceType.Namespace, Diagnostics);
-        private MarketplaceGalleryImagesRestOperations MarketplaceGalleryImageRestClient => _marketplaceGalleryImageRestClient ??= new MarketplaceGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MarketplaceGalleryImageResource.ResourceType));
-        private ClientDiagnostics NetworkInterfaceClientDiagnostics => _networkInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", NetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-        private NetworkInterfacesRestOperations NetworkInterfaceRestClient => _networkInterfaceRestClient ??= new NetworkInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkInterfaceResource.ResourceType));
-        private ClientDiagnostics NetworkSecurityGroupClientDiagnostics => _networkSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", NetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-        private NetworkSecurityGroupsRestOperations NetworkSecurityGroupRestClient => _networkSecurityGroupRestClient ??= new NetworkSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkSecurityGroupResource.ResourceType));
-        private ClientDiagnostics StorageContainerClientDiagnostics => _storageContainerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", StorageContainerResource.ResourceType.Namespace, Diagnostics);
-        private StorageContainersRestOperations StorageContainerRestClient => _storageContainerRestClient ??= new StorageContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageContainerResource.ResourceType));
-        private ClientDiagnostics VirtualHardDiskClientDiagnostics => _virtualHardDiskClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", VirtualHardDiskResource.ResourceType.Namespace, Diagnostics);
-        private VirtualHardDisksRestOperations VirtualHardDiskRestClient => _virtualHardDiskRestClient ??= new VirtualHardDisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualHardDiskResource.ResourceType));
+        private ClientDiagnostics HciVmGalleryImageGalleryImagesClientDiagnostics => _hciVmGalleryImageGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmGalleryImageResource.ResourceType.Namespace, Diagnostics);
+        private GalleryImagesRestOperations HciVmGalleryImageGalleryImagesRestClient => _hciVmGalleryImageGalleryImagesRestClient ??= new GalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmGalleryImageResource.ResourceType));
+        private ClientDiagnostics HciVmLogicalNetworkLogicalNetworksClientDiagnostics => _hciVmLogicalNetworkLogicalNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmLogicalNetworkResource.ResourceType.Namespace, Diagnostics);
+        private LogicalNetworksRestOperations HciVmLogicalNetworkLogicalNetworksRestClient => _hciVmLogicalNetworkLogicalNetworksRestClient ??= new LogicalNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmLogicalNetworkResource.ResourceType));
+        private ClientDiagnostics HciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics => _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmMarketplaceGalleryImageResource.ResourceType.Namespace, Diagnostics);
+        private MarketplaceGalleryImagesRestOperations HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient => _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient ??= new MarketplaceGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmMarketplaceGalleryImageResource.ResourceType));
+        private ClientDiagnostics HciVmNetworkInterfaceNetworkInterfacesClientDiagnostics => _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
+        private NetworkInterfacesRestOperations HciVmNetworkInterfaceNetworkInterfacesRestClient => _hciVmNetworkInterfaceNetworkInterfacesRestClient ??= new NetworkInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmNetworkInterfaceResource.ResourceType));
+        private ClientDiagnostics HciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics => _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
+        private NetworkSecurityGroupsRestOperations HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient => _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient ??= new NetworkSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmNetworkSecurityGroupResource.ResourceType));
+        private ClientDiagnostics HciVmStorageContainerStorageContainersClientDiagnostics => _hciVmStorageContainerStorageContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmStorageContainerResource.ResourceType.Namespace, Diagnostics);
+        private StorageContainersRestOperations HciVmStorageContainerStorageContainersRestClient => _hciVmStorageContainerStorageContainersRestClient ??= new StorageContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmStorageContainerResource.ResourceType));
+        private ClientDiagnostics HciVmVirtualHardDiskVirtualHardDisksClientDiagnostics => _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmVirtualHardDiskResource.ResourceType.Namespace, Diagnostics);
+        private VirtualHardDisksRestOperations HciVmVirtualHardDiskVirtualHardDisksRestClient => _hciVmVirtualHardDiskVirtualHardDisksRestClient ??= new VirtualHardDisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmVirtualHardDiskResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <description><see cref="HciVmGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GalleryImageResource> GetGalleryImagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciVmGalleryImageResource> GetHciVmGalleryImagesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GalleryImageRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryImageResource(Client, GalleryImageData.DeserializeGalleryImageData(e)), GalleryImageClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetGalleryImages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmGalleryImageGalleryImagesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmGalleryImageGalleryImagesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmGalleryImageResource(Client, HciVmGalleryImageData.DeserializeHciVmGalleryImageData(e)), HciVmGalleryImageGalleryImagesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -110,17 +110,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <description><see cref="HciVmGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GalleryImageResource> GetGalleryImages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciVmGalleryImageResource> GetHciVmGalleryImages(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GalleryImageRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryImageResource(Client, GalleryImageData.DeserializeGalleryImageData(e)), GalleryImageClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetGalleryImages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmGalleryImageGalleryImagesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmGalleryImageGalleryImagesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmGalleryImageResource(Client, HciVmGalleryImageData.DeserializeHciVmGalleryImageData(e)), HciVmGalleryImageGalleryImagesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,17 +140,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LogicalNetworkResource"/></description>
+        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LogicalNetworkResource> GetLogicalNetworksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmLogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciVmLogicalNetworkResource> GetHciVmLogicalNetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LogicalNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicalNetworkRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), LogicalNetworkClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetLogicalNetworks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmLogicalNetworkLogicalNetworksRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmLogicalNetworkLogicalNetworksRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmLogicalNetworkResource(Client, HciVmLogicalNetworkData.DeserializeHciVmLogicalNetworkData(e)), HciVmLogicalNetworkLogicalNetworksClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmLogicalNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,17 +170,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LogicalNetworkResource"/></description>
+        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LogicalNetworkResource> GetLogicalNetworks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmLogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciVmLogicalNetworkResource> GetHciVmLogicalNetworks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LogicalNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicalNetworkRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), LogicalNetworkClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetLogicalNetworks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmLogicalNetworkLogicalNetworksRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmLogicalNetworkLogicalNetworksRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmLogicalNetworkResource(Client, HciVmLogicalNetworkData.DeserializeHciVmLogicalNetworkData(e)), HciVmLogicalNetworkLogicalNetworksClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmLogicalNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -200,17 +200,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciVmMarketplaceGalleryImageResource> GetHciVmMarketplaceGalleryImagesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceGalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceGalleryImageRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MarketplaceGalleryImageResource(Client, MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(e)), MarketplaceGalleryImageClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmMarketplaceGalleryImageResource(Client, HciVmMarketplaceGalleryImageData.DeserializeHciVmMarketplaceGalleryImageData(e)), HciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,17 +230,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciVmMarketplaceGalleryImageResource> GetHciVmMarketplaceGalleryImages(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceGalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceGalleryImageRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MarketplaceGalleryImageResource(Client, MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(e)), MarketplaceGalleryImageClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmMarketplaceGalleryImageResource(Client, HciVmMarketplaceGalleryImageData.DeserializeHciVmMarketplaceGalleryImageData(e)), HciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,17 +260,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciVmNetworkInterfaceResource> GetHciVmNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkInterfaceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkInterfaceResource(Client, HciVmNetworkInterfaceData.DeserializeHciVmNetworkInterfaceData(e)), HciVmNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmNetworkInterfaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,17 +290,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceResource> GetNetworkInterfaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciVmNetworkInterfaceResource> GetHciVmNetworkInterfaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkInterfaceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkInterfaceResource(Client, HciVmNetworkInterfaceData.DeserializeHciVmNetworkInterfaceData(e)), HciVmNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmNetworkInterfaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,17 +320,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityGroupResource> GetNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciVmNetworkSecurityGroupResource> GetHciVmNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), NetworkSecurityGroupClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetNetworkSecurityGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkSecurityGroupResource(Client, HciVmNetworkSecurityGroupData.DeserializeHciVmNetworkSecurityGroupData(e)), HciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmNetworkSecurityGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -350,17 +350,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityGroupResource> GetNetworkSecurityGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciVmNetworkSecurityGroupResource> GetHciVmNetworkSecurityGroups(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), NetworkSecurityGroupClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetNetworkSecurityGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkSecurityGroupResource(Client, HciVmNetworkSecurityGroupData.DeserializeHciVmNetworkSecurityGroupData(e)), HciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmNetworkSecurityGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -380,17 +380,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageContainerResource"/></description>
+        /// <description><see cref="HciVmStorageContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageContainerResource> GetStorageContainersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciVmStorageContainerResource> GetHciVmStorageContainersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageContainerRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageContainerRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageContainerResource(Client, StorageContainerData.DeserializeStorageContainerData(e)), StorageContainerClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetStorageContainers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmStorageContainerStorageContainersRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmStorageContainerStorageContainersRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmStorageContainerResource(Client, HciVmStorageContainerData.DeserializeHciVmStorageContainerData(e)), HciVmStorageContainerStorageContainersClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmStorageContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -410,17 +410,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageContainerResource"/></description>
+        /// <description><see cref="HciVmStorageContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageContainerResource> GetStorageContainers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciVmStorageContainerResource> GetHciVmStorageContainers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageContainerRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageContainerRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageContainerResource(Client, StorageContainerData.DeserializeStorageContainerData(e)), StorageContainerClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetStorageContainers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmStorageContainerStorageContainersRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmStorageContainerStorageContainersRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmStorageContainerResource(Client, HciVmStorageContainerData.DeserializeHciVmStorageContainerData(e)), HciVmStorageContainerStorageContainersClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmStorageContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -440,17 +440,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualHardDiskResource> GetVirtualHardDisksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHardDiskRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualHardDiskRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualHardDiskResource(Client, VirtualHardDiskData.DeserializeVirtualHardDiskData(e)), VirtualHardDiskClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetVirtualHardDisks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmVirtualHardDiskResource(Client, HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(e)), HciVmVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmVirtualHardDisks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -470,17 +470,17 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualHardDiskResource> GetVirtualHardDisks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHardDiskRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualHardDiskRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualHardDiskResource(Client, VirtualHardDiskData.DeserializeVirtualHardDiskData(e)), VirtualHardDiskClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetVirtualHardDisks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmVirtualHardDiskResource(Client, HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(e)), HciVmVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmVirtualHardDisks", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            IReadOnlyList<MarketplaceGalleryImageData> value = default;
+            IReadOnlyList<HciVmMarketplaceGalleryImageData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MarketplaceGalleryImageData> array = new List<MarketplaceGalleryImageData>();
+                    List<HciVmMarketplaceGalleryImageData> array = new List<HciVmMarketplaceGalleryImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(item, options));
+                        array.Add(HciVmMarketplaceGalleryImageData.DeserializeHciVmMarketplaceGalleryImageData(item, options));
                     }
                     value = array;
                     continue;

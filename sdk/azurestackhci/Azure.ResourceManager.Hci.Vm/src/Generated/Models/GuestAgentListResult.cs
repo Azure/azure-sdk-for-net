@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="GuestAgentListResult"/>. </summary>
         /// <param name="value"> The GuestAgent items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GuestAgentListResult(IEnumerable<GuestAgentData> value)
+        internal GuestAgentListResult(IEnumerable<HciVmGuestAgentData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="value"> The GuestAgent items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestAgentListResult(IReadOnlyList<GuestAgentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GuestAgentListResult(IReadOnlyList<HciVmGuestAgentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> The GuestAgent items on this page. </summary>
-        public IReadOnlyList<GuestAgentData> Value { get; }
+        public IReadOnlyList<HciVmGuestAgentData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            IReadOnlyList<VirtualMachineInstanceData> value = default;
+            IReadOnlyList<HciVmInstanceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<VirtualMachineInstanceData> array = new List<VirtualMachineInstanceData>();
+                    List<HciVmInstanceData> array = new List<HciVmInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineInstanceData.DeserializeVirtualMachineInstanceData(item, options));
+                        array.Add(HciVmInstanceData.DeserializeHciVmInstanceData(item, options));
                     }
                     value = array;
                     continue;

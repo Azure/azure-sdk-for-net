@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="StorageContainerListResult"/>. </summary>
         /// <param name="value"> The StorageContainer items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StorageContainerListResult(IEnumerable<StorageContainerData> value)
+        internal StorageContainerListResult(IEnumerable<HciVmStorageContainerData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="value"> The StorageContainer items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageContainerListResult(IReadOnlyList<StorageContainerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageContainerListResult(IReadOnlyList<HciVmStorageContainerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> The StorageContainer items on this page. </summary>
-        public IReadOnlyList<StorageContainerData> Value { get; }
+        public IReadOnlyList<HciVmStorageContainerData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

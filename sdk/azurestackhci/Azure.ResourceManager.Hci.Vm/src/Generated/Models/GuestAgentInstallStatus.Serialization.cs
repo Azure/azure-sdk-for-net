@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusChange))
+            if (options.Format != "W" && Optional.IsDefined(LastStatusChangedOn))
             {
                 writer.WritePropertyName("lastStatusChange"u8);
-                writer.WriteStringValue(LastStatusChange.Value, "O");
+                writer.WriteStringValue(LastStatusChangedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(AgentVersion))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             string vmUuid = default;
-            AzureStackHciVmStatusType? status = default;
+            HybridMachineAgentInstallationStatusType? status = default;
             DateTimeOffset? lastStatusChange = default;
             string agentVersion = default;
             IReadOnlyList<ResponseError> errorDetails = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    status = new AzureStackHciVmStatusType(property.Value.GetString());
+                    status = new HybridMachineAgentInstallationStatusType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastStatusChange"u8))

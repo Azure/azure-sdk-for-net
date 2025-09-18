@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GalleryImageData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryImageName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciVmGalleryImageData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        GalleryImageData value = default;
+                        HciVmGalleryImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
+                        value = HciVmGalleryImageData.DeserializeHciVmGalleryImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GalleryImageData)null, message.Response);
+                    return Response.FromValue((HciVmGalleryImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GalleryImageData> Get(string subscriptionId, string resourceGroupName, string galleryImageName, CancellationToken cancellationToken = default)
+        public Response<HciVmGalleryImageData> Get(string subscriptionId, string resourceGroupName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,19 +120,19 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        GalleryImageData value = default;
+                        HciVmGalleryImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
+                        value = HciVmGalleryImageData.DeserializeHciVmGalleryImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GalleryImageData)null, message.Response);
+                    return Response.FromValue((HciVmGalleryImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string galleryImageName, GalleryImageData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string galleryImageName, HciVmGalleryImageData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string galleryImageName, GalleryImageData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string galleryImageName, HciVmGalleryImageData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryImageName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string galleryImageName, GalleryImageData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string galleryImageName, HciVmGalleryImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryImageName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string galleryImageName, GalleryImageData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string galleryImageName, HciVmGalleryImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string galleryImageName, GalleryImagePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string galleryImageName, HciVmGalleryImagePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string galleryImageName, GalleryImagePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string galleryImageName, HciVmGalleryImagePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryImageName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryImageName, GalleryImagePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryImageName, HciVmGalleryImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryImageName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string galleryImageName, GalleryImagePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string galleryImageName, HciVmGalleryImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

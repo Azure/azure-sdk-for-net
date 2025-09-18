@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            IReadOnlyList<VirtualHardDiskData> value = default;
+            IReadOnlyList<HciVmVirtualHardDiskData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<VirtualHardDiskData> array = new List<VirtualHardDiskData>();
+                    List<HciVmVirtualHardDiskData> array = new List<HciVmVirtualHardDiskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHardDiskData.DeserializeVirtualHardDiskData(item, options));
+                        array.Add(HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(item, options));
                     }
                     value = array;
                     continue;

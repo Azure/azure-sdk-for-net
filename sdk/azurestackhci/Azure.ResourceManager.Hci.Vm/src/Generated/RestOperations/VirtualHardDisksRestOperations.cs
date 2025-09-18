@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualHardDiskData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualHardDiskName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciVmVirtualHardDiskData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        VirtualHardDiskData value = default;
+                        HciVmVirtualHardDiskData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VirtualHardDiskData.DeserializeVirtualHardDiskData(document.RootElement);
+                        value = HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualHardDiskData)null, message.Response);
+                    return Response.FromValue((HciVmVirtualHardDiskData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualHardDiskData> Get(string subscriptionId, string resourceGroupName, string virtualHardDiskName, CancellationToken cancellationToken = default)
+        public Response<HciVmVirtualHardDiskData> Get(string subscriptionId, string resourceGroupName, string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,19 +120,19 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        VirtualHardDiskData value = default;
+                        HciVmVirtualHardDiskData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VirtualHardDiskData.DeserializeVirtualHardDiskData(document.RootElement);
+                        value = HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualHardDiskData)null, message.Response);
+                    return Response.FromValue((HciVmVirtualHardDiskData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHardDiskName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHardDiskName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHardDiskName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHardDiskName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        internal RequestUriBuilder CreateUploadRequestUri(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskUploadContent content)
+        internal RequestUriBuilder CreateUploadRequestUri(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskUploadContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return uri;
         }
 
-        internal HttpMessage CreateUploadRequest(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskUploadContent content)
+        internal HttpMessage CreateUploadRequest(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskUploadContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHardDiskName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UploadAsync(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> UploadAsync(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHardDiskName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Upload(string subscriptionId, string resourceGroupName, string virtualHardDiskName, VirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
+        public Response Upload(string subscriptionId, string resourceGroupName, string virtualHardDiskName, HciVmVirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

@@ -33,266 +33,266 @@ namespace Azure.ResourceManager.Hci.Vm
         }
 
         /// <summary>
-        /// Gets an object representing a VirtualMachineInstanceResource along with the instance operations that can be performed on it in the ArmClient.
+        /// Gets an object representing a HciVmInstanceResource along with the instance operations that can be performed on it in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetVirtualMachineInstance(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmInstance(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
-        public static VirtualMachineInstanceResource GetVirtualMachineInstance(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
+        public static HciVmInstanceResource GetHciVmInstance(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetVirtualMachineInstance(scope);
+            return GetMockableHciVmArmClient(client).GetHciVmInstance(scope);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="GalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmGalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="HciVmGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetGalleryImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmGalleryImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GalleryImageResource"/> object. </returns>
-        public static GalleryImageResource GetGalleryImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmGalleryImageResource"/> object. </returns>
+        public static HciVmGalleryImageResource GetHciVmGalleryImageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetGalleryImageResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmGalleryImageResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="LogicalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmLogicalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmLogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HciVmLogicalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetLogicalNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmLogicalNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LogicalNetworkResource"/> object. </returns>
-        public static LogicalNetworkResource GetLogicalNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmLogicalNetworkResource"/> object. </returns>
+        public static HciVmLogicalNetworkResource GetHciVmLogicalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetLogicalNetworkResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmLogicalNetworkResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceGalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmMarketplaceGalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmMarketplaceGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="HciVmMarketplaceGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetMarketplaceGalleryImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmMarketplaceGalleryImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MarketplaceGalleryImageResource"/> object. </returns>
-        public static MarketplaceGalleryImageResource GetMarketplaceGalleryImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmMarketplaceGalleryImageResource"/> object. </returns>
+        public static HciVmMarketplaceGalleryImageResource GetHciVmMarketplaceGalleryImageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetMarketplaceGalleryImageResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmMarketplaceGalleryImageResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmNetworkInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmNetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="HciVmNetworkInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetNetworkInterfaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmNetworkInterfaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkInterfaceResource"/> object. </returns>
-        public static NetworkInterfaceResource GetNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmNetworkInterfaceResource"/> object. </returns>
+        public static HciVmNetworkInterfaceResource GetHciVmNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetNetworkInterfaceResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmNetworkInterfaceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmNetworkSecurityGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmNetworkSecurityGroupResource.CreateResourceIdentifier" /> to create a <see cref="HciVmNetworkSecurityGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetNetworkSecurityGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmNetworkSecurityGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkSecurityGroupResource"/> object. </returns>
-        public static NetworkSecurityGroupResource GetNetworkSecurityGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmNetworkSecurityGroupResource"/> object. </returns>
+        public static HciVmNetworkSecurityGroupResource GetHciVmNetworkSecurityGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetNetworkSecurityGroupResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmNetworkSecurityGroupResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SecurityRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmSecurityRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmSecurityRuleResource.CreateResourceIdentifier" /> to create a <see cref="HciVmSecurityRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetSecurityRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmSecurityRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SecurityRuleResource"/> object. </returns>
-        public static SecurityRuleResource GetSecurityRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmSecurityRuleResource"/> object. </returns>
+        public static HciVmSecurityRuleResource GetHciVmSecurityRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetSecurityRuleResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmSecurityRuleResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="StorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmStorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="HciVmStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetStorageContainerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmStorageContainerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageContainerResource"/> object. </returns>
-        public static StorageContainerResource GetStorageContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmStorageContainerResource"/> object. </returns>
+        public static HciVmStorageContainerResource GetHciVmStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetStorageContainerResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmStorageContainerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualHardDiskResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualHardDiskResource.CreateResourceIdentifier" /> to create a <see cref="VirtualHardDiskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmVirtualHardDiskResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmVirtualHardDiskResource.CreateResourceIdentifier" /> to create a <see cref="HciVmVirtualHardDiskResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetVirtualHardDiskResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmVirtualHardDiskResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualHardDiskResource"/> object. </returns>
-        public static VirtualHardDiskResource GetVirtualHardDiskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmVirtualHardDiskResource"/> object. </returns>
+        public static HciVmVirtualHardDiskResource GetHciVmVirtualHardDiskResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetVirtualHardDiskResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmVirtualHardDiskResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineInstanceResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmInstanceResource.CreateResourceIdentifier" /> to create a <see cref="HciVmInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetVirtualMachineInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
-        public static VirtualMachineInstanceResource GetVirtualMachineInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
+        public static HciVmInstanceResource GetHciVmInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetVirtualMachineInstanceResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmInstanceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridIdentityMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmHybridIdentityMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmHybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HciVmHybridIdentityMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHybridIdentityMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmHybridIdentityMetadataResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
-        public static HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmHybridIdentityMetadataResource"/> object. </returns>
+        public static HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetHybridIdentityMetadataResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmHybridIdentityMetadataResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AttestationStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttestationStatusResource.CreateResourceIdentifier" /> to create an <see cref="AttestationStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmAttestationStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmAttestationStatusResource.CreateResourceIdentifier" /> to create a <see cref="HciVmAttestationStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetAttestationStatusResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmAttestationStatusResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AttestationStatusResource"/> object. </returns>
-        public static AttestationStatusResource GetAttestationStatusResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmAttestationStatusResource"/> object. </returns>
+        public static HciVmAttestationStatusResource GetHciVmAttestationStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetAttestationStatusResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmAttestationStatusResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GuestAgentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="GuestAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciVmGuestAgentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVmGuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="HciVmGuestAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetGuestAgentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmArmClient.GetHciVmGuestAgentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GuestAgentResource"/> object. </returns>
-        public static GuestAgentResource GetGuestAgentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciVmGuestAgentResource"/> object. </returns>
+        public static HciVmGuestAgentResource GetHciVmGuestAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciVmArmClient(client).GetGuestAgentResource(id);
+            return GetMockableHciVmArmClient(client).GetHciVmGuestAgentResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of GalleryImageResources in the ResourceGroupResource.
+        /// Gets a collection of HciVmGalleryImageResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetGalleryImages()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmGalleryImages()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of GalleryImageResources and their operations over a GalleryImageResource. </returns>
-        public static GalleryImageCollection GetGalleryImages(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HciVmGalleryImageResources and their operations over a HciVmGalleryImageResource. </returns>
+        public static HciVmGalleryImageCollection GetHciVmGalleryImages(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetGalleryImages();
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmGalleryImages();
         }
 
         /// <summary>
@@ -312,12 +312,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <description><see cref="HciVmGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetGalleryImageAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmGalleryImageAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -326,11 +326,11 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<GalleryImageResource>> GetGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HciVmGalleryImageResource>> GetHciVmGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetGalleryImageAsync(galleryImageName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmGalleryImageAsync(galleryImageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -350,12 +350,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <description><see cref="HciVmGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetGalleryImage(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmGalleryImage(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -364,28 +364,28 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<GalleryImageResource> GetGalleryImage(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
+        public static Response<HciVmGalleryImageResource> GetHciVmGalleryImage(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetGalleryImage(galleryImageName, cancellationToken);
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmGalleryImage(galleryImageName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of LogicalNetworkResources in the ResourceGroupResource.
+        /// Gets a collection of HciVmLogicalNetworkResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetLogicalNetworks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmLogicalNetworks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of LogicalNetworkResources and their operations over a LogicalNetworkResource. </returns>
-        public static LogicalNetworkCollection GetLogicalNetworks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HciVmLogicalNetworkResources and their operations over a HciVmLogicalNetworkResource. </returns>
+        public static HciVmLogicalNetworkCollection GetHciVmLogicalNetworks(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetLogicalNetworks();
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmLogicalNetworks();
         }
 
         /// <summary>
@@ -405,12 +405,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LogicalNetworkResource"/></description>
+        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetLogicalNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmLogicalNetworkAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -419,11 +419,11 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="logicalNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LogicalNetworkResource>> GetLogicalNetworkAsync(this ResourceGroupResource resourceGroupResource, string logicalNetworkName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HciVmLogicalNetworkResource>> GetHciVmLogicalNetworkAsync(this ResourceGroupResource resourceGroupResource, string logicalNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetLogicalNetworkAsync(logicalNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmLogicalNetworkAsync(logicalNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -443,12 +443,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LogicalNetworkResource"/></description>
+        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetLogicalNetwork(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmLogicalNetwork(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -457,28 +457,28 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="logicalNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<LogicalNetworkResource> GetLogicalNetwork(this ResourceGroupResource resourceGroupResource, string logicalNetworkName, CancellationToken cancellationToken = default)
+        public static Response<HciVmLogicalNetworkResource> GetHciVmLogicalNetwork(this ResourceGroupResource resourceGroupResource, string logicalNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetLogicalNetwork(logicalNetworkName, cancellationToken);
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmLogicalNetwork(logicalNetworkName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of MarketplaceGalleryImageResources in the ResourceGroupResource.
+        /// Gets a collection of HciVmMarketplaceGalleryImageResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetMarketplaceGalleryImages()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmMarketplaceGalleryImages()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of MarketplaceGalleryImageResources and their operations over a MarketplaceGalleryImageResource. </returns>
-        public static MarketplaceGalleryImageCollection GetMarketplaceGalleryImages(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HciVmMarketplaceGalleryImageResources and their operations over a HciVmMarketplaceGalleryImageResource. </returns>
+        public static HciVmMarketplaceGalleryImageCollection GetHciVmMarketplaceGalleryImages(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetMarketplaceGalleryImages();
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmMarketplaceGalleryImages();
         }
 
         /// <summary>
@@ -498,12 +498,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetMarketplaceGalleryImageAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmMarketplaceGalleryImageAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -512,11 +512,11 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MarketplaceGalleryImageResource>> GetMarketplaceGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HciVmMarketplaceGalleryImageResource>> GetHciVmMarketplaceGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetMarketplaceGalleryImageAsync(marketplaceGalleryImageName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmMarketplaceGalleryImageAsync(marketplaceGalleryImageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -536,12 +536,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetMarketplaceGalleryImage(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmMarketplaceGalleryImage(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -550,28 +550,28 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<MarketplaceGalleryImageResource> GetMarketplaceGalleryImage(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
+        public static Response<HciVmMarketplaceGalleryImageResource> GetHciVmMarketplaceGalleryImage(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetMarketplaceGalleryImage(marketplaceGalleryImageName, cancellationToken);
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmMarketplaceGalleryImage(marketplaceGalleryImageName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkInterfaceResources in the ResourceGroupResource.
+        /// Gets a collection of HciVmNetworkInterfaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetNetworkInterfaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmNetworkInterfaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
-        public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HciVmNetworkInterfaceResources and their operations over a HciVmNetworkInterfaceResource. </returns>
+        public static HciVmNetworkInterfaceCollection GetHciVmNetworkInterfaces(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetNetworkInterfaces();
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmNetworkInterfaces();
         }
 
         /// <summary>
@@ -591,12 +591,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetNetworkInterfaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmNetworkInterfaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -605,11 +605,11 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HciVmNetworkInterfaceResource>> GetHciVmNetworkInterfaceAsync(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetNetworkInterfaceAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmNetworkInterfaceAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -629,12 +629,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetNetworkInterface(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmNetworkInterface(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -643,28 +643,28 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkInterfaceResource> GetNetworkInterface(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
+        public static Response<HciVmNetworkInterfaceResource> GetHciVmNetworkInterface(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetNetworkInterface(networkInterfaceName, cancellationToken);
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmNetworkInterface(networkInterfaceName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkSecurityGroupResources in the ResourceGroupResource.
+        /// Gets a collection of HciVmNetworkSecurityGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetNetworkSecurityGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmNetworkSecurityGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkSecurityGroupResources and their operations over a NetworkSecurityGroupResource. </returns>
-        public static NetworkSecurityGroupCollection GetNetworkSecurityGroups(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HciVmNetworkSecurityGroupResources and their operations over a HciVmNetworkSecurityGroupResource. </returns>
+        public static HciVmNetworkSecurityGroupCollection GetHciVmNetworkSecurityGroups(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetNetworkSecurityGroups();
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmNetworkSecurityGroups();
         }
 
         /// <summary>
@@ -684,12 +684,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetNetworkSecurityGroupAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmNetworkSecurityGroupAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -698,11 +698,11 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkSecurityGroupResource>> GetNetworkSecurityGroupAsync(this ResourceGroupResource resourceGroupResource, string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HciVmNetworkSecurityGroupResource>> GetHciVmNetworkSecurityGroupAsync(this ResourceGroupResource resourceGroupResource, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetNetworkSecurityGroupAsync(networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmNetworkSecurityGroupAsync(networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -722,12 +722,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetNetworkSecurityGroup(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmNetworkSecurityGroup(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -736,28 +736,28 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkSecurityGroupResource> GetNetworkSecurityGroup(this ResourceGroupResource resourceGroupResource, string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public static Response<HciVmNetworkSecurityGroupResource> GetHciVmNetworkSecurityGroup(this ResourceGroupResource resourceGroupResource, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetNetworkSecurityGroup(networkSecurityGroupName, cancellationToken);
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmNetworkSecurityGroup(networkSecurityGroupName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of StorageContainerResources in the ResourceGroupResource.
+        /// Gets a collection of HciVmStorageContainerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetStorageContainers()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmStorageContainers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of StorageContainerResources and their operations over a StorageContainerResource. </returns>
-        public static StorageContainerCollection GetStorageContainers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HciVmStorageContainerResources and their operations over a HciVmStorageContainerResource. </returns>
+        public static HciVmStorageContainerCollection GetHciVmStorageContainers(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetStorageContainers();
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmStorageContainers();
         }
 
         /// <summary>
@@ -777,12 +777,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageContainerResource"/></description>
+        /// <description><see cref="HciVmStorageContainerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetStorageContainerAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmStorageContainerAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -791,11 +791,11 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<StorageContainerResource>> GetStorageContainerAsync(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HciVmStorageContainerResource>> GetHciVmStorageContainerAsync(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetStorageContainerAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmStorageContainerAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -815,12 +815,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageContainerResource"/></description>
+        /// <description><see cref="HciVmStorageContainerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetStorageContainer(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmStorageContainer(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -829,28 +829,28 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<StorageContainerResource> GetStorageContainer(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
+        public static Response<HciVmStorageContainerResource> GetHciVmStorageContainer(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetStorageContainer(storageContainerName, cancellationToken);
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmStorageContainer(storageContainerName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of VirtualHardDiskResources in the ResourceGroupResource.
+        /// Gets a collection of HciVmVirtualHardDiskResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetVirtualHardDisks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmVirtualHardDisks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of VirtualHardDiskResources and their operations over a VirtualHardDiskResource. </returns>
-        public static VirtualHardDiskCollection GetVirtualHardDisks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HciVmVirtualHardDiskResources and their operations over a HciVmVirtualHardDiskResource. </returns>
+        public static HciVmVirtualHardDiskCollection GetHciVmVirtualHardDisks(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetVirtualHardDisks();
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmVirtualHardDisks();
         }
 
         /// <summary>
@@ -870,12 +870,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetVirtualHardDiskAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmVirtualHardDiskAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -884,11 +884,11 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualHardDiskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VirtualHardDiskResource>> GetVirtualHardDiskAsync(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HciVmVirtualHardDiskResource>> GetHciVmVirtualHardDiskAsync(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetVirtualHardDiskAsync(virtualHardDiskName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmVirtualHardDiskAsync(virtualHardDiskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -908,12 +908,12 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetVirtualHardDisk(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmResourceGroupResource.GetHciVmVirtualHardDisk(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -922,11 +922,11 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualHardDiskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<VirtualHardDiskResource> GetVirtualHardDisk(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
+        public static Response<HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisk(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetVirtualHardDisk(virtualHardDiskName, cancellationToken);
+            return GetMockableHciVmResourceGroupResource(resourceGroupResource).GetHciVmVirtualHardDisk(virtualHardDiskName, cancellationToken);
         }
 
         /// <summary>
@@ -946,23 +946,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <description><see cref="HciVmGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetGalleryImages(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmGalleryImages(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GalleryImageResource> GetGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVmGalleryImageResource> GetHciVmGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetGalleryImagesAsync(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmGalleryImagesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -982,23 +982,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <description><see cref="HciVmGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetGalleryImages(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmGalleryImages(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GalleryImageResource> GetGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVmGalleryImageResource> GetHciVmGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetGalleryImages(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmGalleryImages(cancellationToken);
         }
 
         /// <summary>
@@ -1018,23 +1018,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LogicalNetworkResource"/></description>
+        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetLogicalNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmLogicalNetworks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LogicalNetworkResource> GetLogicalNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmLogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVmLogicalNetworkResource> GetHciVmLogicalNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetLogicalNetworksAsync(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmLogicalNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1054,23 +1054,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LogicalNetworkResource"/></description>
+        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetLogicalNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmLogicalNetworks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LogicalNetworkResource> GetLogicalNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmLogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVmLogicalNetworkResource> GetHciVmLogicalNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetLogicalNetworks(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmLogicalNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1090,23 +1090,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetMarketplaceGalleryImages(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmMarketplaceGalleryImages(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVmMarketplaceGalleryImageResource> GetHciVmMarketplaceGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetMarketplaceGalleryImagesAsync(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmMarketplaceGalleryImagesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1126,23 +1126,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetMarketplaceGalleryImages(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmMarketplaceGalleryImages(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVmMarketplaceGalleryImageResource> GetHciVmMarketplaceGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetMarketplaceGalleryImages(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmMarketplaceGalleryImages(cancellationToken);
         }
 
         /// <summary>
@@ -1162,23 +1162,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetNetworkInterfaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmNetworkInterfaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVmNetworkInterfaceResource> GetHciVmNetworkInterfacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetNetworkInterfacesAsync(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmNetworkInterfacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1198,23 +1198,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetNetworkInterfaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmNetworkInterfaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkInterfaceResource> GetNetworkInterfaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVmNetworkInterfaceResource> GetHciVmNetworkInterfaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetNetworkInterfaces(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmNetworkInterfaces(cancellationToken);
         }
 
         /// <summary>
@@ -1234,23 +1234,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetNetworkSecurityGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmNetworkSecurityGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkSecurityGroupResource> GetNetworkSecurityGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVmNetworkSecurityGroupResource> GetHciVmNetworkSecurityGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetNetworkSecurityGroupsAsync(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmNetworkSecurityGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1270,23 +1270,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetNetworkSecurityGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmNetworkSecurityGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkSecurityGroupResource> GetNetworkSecurityGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVmNetworkSecurityGroupResource> GetHciVmNetworkSecurityGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetNetworkSecurityGroups(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmNetworkSecurityGroups(cancellationToken);
         }
 
         /// <summary>
@@ -1306,23 +1306,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageContainerResource"/></description>
+        /// <description><see cref="HciVmStorageContainerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetStorageContainers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmStorageContainers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageContainerResource> GetStorageContainersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVmStorageContainerResource> GetHciVmStorageContainersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetStorageContainersAsync(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmStorageContainersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1342,23 +1342,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageContainerResource"/></description>
+        /// <description><see cref="HciVmStorageContainerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetStorageContainers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmStorageContainers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageContainerResource> GetStorageContainers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVmStorageContainerResource> GetHciVmStorageContainers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetStorageContainers(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmStorageContainers(cancellationToken);
         }
 
         /// <summary>
@@ -1378,23 +1378,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetVirtualHardDisks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmVirtualHardDisks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualHardDiskResource> GetVirtualHardDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetVirtualHardDisksAsync(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmVirtualHardDisksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1414,23 +1414,23 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetVirtualHardDisks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciVmSubscriptionResource.GetHciVmVirtualHardDisks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualHardDiskResource> GetVirtualHardDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetVirtualHardDisks(cancellationToken);
+            return GetMockableHciVmSubscriptionResource(subscriptionResource).GetHciVmVirtualHardDisks(cancellationToken);
         }
     }
 }

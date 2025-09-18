@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetGalleryImages_ListGalleryImageBySubscription()
+        public async Task GetHciVmGalleryImages_ListGalleryImageBySubscription()
         {
             // Generated from example definition: 2025-06-01-preview/GalleryImages_ListAll.json
             // this example is just showing the usage of "GalleryImage_ListAll" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GalleryImageResource item in subscriptionResource.GetGalleryImagesAsync())
+            await foreach (HciVmGalleryImageResource item in subscriptionResource.GetHciVmGalleryImagesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                GalleryImageData resourceData = item.Data;
+                HciVmGalleryImageData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetLogicalNetworks_ListLogicalNetworkBySubscription()
+        public async Task GetHciVmLogicalNetworks_ListLogicalNetworkBySubscription()
         {
             // Generated from example definition: 2025-06-01-preview/LogicalNetworks_ListAll.json
             // this example is just showing the usage of "LogicalNetwork_ListAll" operation, for the dependent resources, they will have to be created separately.
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (LogicalNetworkResource item in subscriptionResource.GetLogicalNetworksAsync())
+            await foreach (HciVmLogicalNetworkResource item in subscriptionResource.GetHciVmLogicalNetworksAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                LogicalNetworkData resourceData = item.Data;
+                HciVmLogicalNetworkData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetMarketplaceGalleryImages_ListMarketplaceGalleryImageBySubscription()
+        public async Task GetHciVmMarketplaceGalleryImages_ListMarketplaceGalleryImageBySubscription()
         {
             // Generated from example definition: 2025-06-01-preview/MarketplaceGalleryImages_ListAll.json
             // this example is just showing the usage of "MarketplaceGalleryImage_ListAll" operation, for the dependent resources, they will have to be created separately.
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MarketplaceGalleryImageResource item in subscriptionResource.GetMarketplaceGalleryImagesAsync())
+            await foreach (HciVmMarketplaceGalleryImageResource item in subscriptionResource.GetHciVmMarketplaceGalleryImagesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MarketplaceGalleryImageData resourceData = item.Data;
+                HciVmMarketplaceGalleryImageData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkInterfaces_ListNetworkInterfaceBySubscription()
+        public async Task GetHciVmNetworkInterfaces_ListNetworkInterfaceBySubscription()
         {
             // Generated from example definition: 2025-06-01-preview/NetworkInterfaces_ListAll.json
             // this example is just showing the usage of "NetworkInterface_ListAll" operation, for the dependent resources, they will have to be created separately.
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkInterfaceResource item in subscriptionResource.GetNetworkInterfacesAsync())
+            await foreach (HciVmNetworkInterfaceResource item in subscriptionResource.GetHciVmNetworkInterfacesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkInterfaceData resourceData = item.Data;
+                HciVmNetworkInterfaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkSecurityGroups_ListAllNetworkSecurityGroups()
+        public async Task GetHciVmNetworkSecurityGroups_ListAllNetworkSecurityGroups()
         {
             // Generated from example definition: 2025-06-01-preview/NetworkSecurityGroups_ListAll.json
             // this example is just showing the usage of "NetworkSecurityGroup_ListAll" operation, for the dependent resources, they will have to be created separately.
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkSecurityGroupResource item in subscriptionResource.GetNetworkSecurityGroupsAsync())
+            await foreach (HciVmNetworkSecurityGroupResource item in subscriptionResource.GetHciVmNetworkSecurityGroupsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkSecurityGroupData resourceData = item.Data;
+                HciVmNetworkSecurityGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetStorageContainers_ListStorageContainerBySubscription()
+        public async Task GetHciVmStorageContainers_ListStorageContainerBySubscription()
         {
             // Generated from example definition: 2025-06-01-preview/StorageContainers_ListAll.json
             // this example is just showing the usage of "StorageContainer_ListAll" operation, for the dependent resources, they will have to be created separately.
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (StorageContainerResource item in subscriptionResource.GetStorageContainersAsync())
+            await foreach (HciVmStorageContainerResource item in subscriptionResource.GetHciVmStorageContainersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                StorageContainerData resourceData = item.Data;
+                HciVmStorageContainerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetVirtualHardDisks_ListVirtualHardDiskBySubscription()
+        public async Task GetHciVmVirtualHardDisks_ListVirtualHardDiskBySubscription()
         {
             // Generated from example definition: 2025-06-01-preview/VirtualHardDisks_ListAll.json
             // this example is just showing the usage of "VirtualHardDisk_ListAll" operation, for the dependent resources, they will have to be created separately.
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.Hci.Vm.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (VirtualHardDiskResource item in subscriptionResource.GetVirtualHardDisksAsync())
+            await foreach (HciVmVirtualHardDiskResource item in subscriptionResource.GetHciVmVirtualHardDisksAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                VirtualHardDiskData resourceData = item.Data;
+                HciVmVirtualHardDiskData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

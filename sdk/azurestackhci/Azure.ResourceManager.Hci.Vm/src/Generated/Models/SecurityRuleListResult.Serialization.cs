@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            IReadOnlyList<SecurityRuleData> value = default;
+            IReadOnlyList<HciVmSecurityRuleData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SecurityRuleData> array = new List<SecurityRuleData>();
+                    List<HciVmSecurityRuleData> array = new List<HciVmSecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
+                        array.Add(HciVmSecurityRuleData.DeserializeHciVmSecurityRuleData(item, options));
                     }
                     value = array;
                     continue;

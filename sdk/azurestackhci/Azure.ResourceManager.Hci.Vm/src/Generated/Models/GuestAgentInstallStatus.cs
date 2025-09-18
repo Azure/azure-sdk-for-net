@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="GuestAgentInstallStatus"/>. </summary>
         /// <param name="vmUuid"> Specifies the VM's unique SMBIOS ID. </param>
         /// <param name="status"> The installation status of the hybrid machine agent installation. </param>
-        /// <param name="lastStatusChange"> The time of the last status change. </param>
+        /// <param name="lastStatusChangedOn"> The time of the last status change. </param>
         /// <param name="agentVersion"> The hybrid machine agent full version. </param>
         /// <param name="errorDetails"> Details about the error state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestAgentInstallStatus(string vmUuid, AzureStackHciVmStatusType? status, DateTimeOffset? lastStatusChange, string agentVersion, IReadOnlyList<ResponseError> errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GuestAgentInstallStatus(string vmUuid, HybridMachineAgentInstallationStatusType? status, DateTimeOffset? lastStatusChangedOn, string agentVersion, IReadOnlyList<ResponseError> errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmUuid = vmUuid;
             Status = status;
-            LastStatusChange = lastStatusChange;
+            LastStatusChangedOn = lastStatusChangedOn;
             AgentVersion = agentVersion;
             ErrorDetails = errorDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Specifies the VM's unique SMBIOS ID. </summary>
         public string VmUuid { get; }
         /// <summary> The installation status of the hybrid machine agent installation. </summary>
-        public AzureStackHciVmStatusType? Status { get; }
+        public HybridMachineAgentInstallationStatusType? Status { get; }
         /// <summary> The time of the last status change. </summary>
-        public DateTimeOffset? LastStatusChange { get; }
+        public DateTimeOffset? LastStatusChangedOn { get; }
         /// <summary> The hybrid machine agent full version. </summary>
         public string AgentVersion { get; }
         /// <summary> Details about the error state. </summary>

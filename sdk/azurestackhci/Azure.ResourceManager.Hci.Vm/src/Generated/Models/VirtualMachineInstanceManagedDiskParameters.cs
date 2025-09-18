@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Specifies the security profile for the managed disk. </summary>
         internal VmDiskSecurityProfile SecurityProfile { get; set; }
         /// <summary> Specifies the EncryptionType of the managed disk. It is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. NOTE: It can be set for only Confidential VMs. </summary>
-        public SecurityEncryptionType? SecurityEncryptionType
+        public HciVmSecurityEncryptionType? SecurityEncryptionType
         {
             get => SecurityProfile is null ? default : SecurityProfile.SecurityEncryptionType;
             set

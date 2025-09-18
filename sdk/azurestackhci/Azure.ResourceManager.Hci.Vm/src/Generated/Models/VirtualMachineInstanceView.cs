@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceView"/>. </summary>
         /// <param name="vmAgent"> The VM Config Agent running on the virtual machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceView(VirtualMachineConfigAgentInstanceView vmAgent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineInstanceView(HciVmConfigAgentInstanceView vmAgent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmAgent = vmAgent;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The VM Config Agent running on the virtual machine. </summary>
-        public VirtualMachineConfigAgentInstanceView VmAgent { get; }
+        public HciVmConfigAgentInstanceView VmAgent { get; }
     }
 }

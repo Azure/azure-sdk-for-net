@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkInterfaceData> value = default;
+            IReadOnlyList<HciVmNetworkInterfaceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
+                    List<HciVmNetworkInterfaceData> array = new List<HciVmNetworkInterfaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
+                        array.Add(HciVmNetworkInterfaceData.DeserializeHciVmNetworkInterfaceData(item, options));
                     }
                     value = array;
                     continue;

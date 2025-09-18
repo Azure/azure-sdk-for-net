@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="MarketplaceGalleryImageListResult"/>. </summary>
         /// <param name="value"> The MarketplaceGalleryImage items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MarketplaceGalleryImageListResult(IEnumerable<MarketplaceGalleryImageData> value)
+        internal MarketplaceGalleryImageListResult(IEnumerable<HciVmMarketplaceGalleryImageData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="value"> The MarketplaceGalleryImage items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceGalleryImageListResult(IReadOnlyList<MarketplaceGalleryImageData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceGalleryImageListResult(IReadOnlyList<HciVmMarketplaceGalleryImageData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> The MarketplaceGalleryImage items on this page. </summary>
-        public IReadOnlyList<MarketplaceGalleryImageData> Value { get; }
+        public IReadOnlyList<HciVmMarketplaceGalleryImageData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

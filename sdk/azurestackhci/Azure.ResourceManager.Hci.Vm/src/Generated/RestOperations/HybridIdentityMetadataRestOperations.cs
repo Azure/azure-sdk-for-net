@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<HybridIdentityMetadataData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<HciVmHybridIdentityMetadataData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        HybridIdentityMetadataData value = default;
+                        HciVmHybridIdentityMetadataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(document.RootElement);
+                        value = HciVmHybridIdentityMetadataData.DeserializeHciVmHybridIdentityMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HybridIdentityMetadataData)null, message.Response);
+                    return Response.FromValue((HciVmHybridIdentityMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<HybridIdentityMetadataData> Get(string resourceUri, CancellationToken cancellationToken = default)
+        public Response<HciVmHybridIdentityMetadataData> Get(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        HybridIdentityMetadataData value = default;
+                        HciVmHybridIdentityMetadataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(document.RootElement);
+                        value = HciVmHybridIdentityMetadataData.DeserializeHciVmHybridIdentityMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HybridIdentityMetadataData)null, message.Response);
+                    return Response.FromValue((HciVmHybridIdentityMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

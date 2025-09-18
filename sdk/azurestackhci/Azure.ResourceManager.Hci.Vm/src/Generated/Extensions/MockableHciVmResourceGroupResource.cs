@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of GalleryImageResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of GalleryImageResources and their operations over a GalleryImageResource. </returns>
-        public virtual GalleryImageCollection GetGalleryImages()
+        /// <summary> Gets a collection of HciVmGalleryImageResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVmGalleryImageResources and their operations over a HciVmGalleryImageResource. </returns>
+        public virtual HciVmGalleryImageCollection GetHciVmGalleryImages()
         {
-            return GetCachedClient(client => new GalleryImageCollection(client, Id));
+            return GetCachedClient(client => new HciVmGalleryImageCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <description><see cref="HciVmGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GalleryImageResource>> GetGalleryImageAsync(string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciVmGalleryImageResource>> GetHciVmGalleryImageAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            return await GetGalleryImages().GetAsync(galleryImageName, cancellationToken).ConfigureAwait(false);
+            return await GetHciVmGalleryImages().GetAsync(galleryImageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <description><see cref="HciVmGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,47 +97,16 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GalleryImageResource> GetGalleryImage(string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual Response<HciVmGalleryImageResource> GetHciVmGalleryImage(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            return GetGalleryImages().Get(galleryImageName, cancellationToken);
+            return GetHciVmGalleryImages().Get(galleryImageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LogicalNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LogicalNetworkResources and their operations over a LogicalNetworkResource. </returns>
-        public virtual LogicalNetworkCollection GetLogicalNetworks()
+        /// <summary> Gets a collection of HciVmLogicalNetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVmLogicalNetworkResources and their operations over a HciVmLogicalNetworkResource. </returns>
+        public virtual HciVmLogicalNetworkCollection GetHciVmLogicalNetworks()
         {
-            return GetCachedClient(client => new LogicalNetworkCollection(client, Id));
-        }
-
-        /// <summary>
-        /// The operation to get a logical network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogicalNetwork_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogicalNetworkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="logicalNetworkName"> Name of the logical network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LogicalNetworkResource>> GetLogicalNetworkAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
-        {
-            return await GetLogicalNetworks().GetAsync(logicalNetworkName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new HciVmLogicalNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -157,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LogicalNetworkResource"/></description>
+        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,16 +135,47 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LogicalNetworkResource> GetLogicalNetwork(string logicalNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciVmLogicalNetworkResource>> GetHciVmLogicalNetworkAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetLogicalNetworks().Get(logicalNetworkName, cancellationToken);
+            return await GetHciVmLogicalNetworks().GetAsync(logicalNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of MarketplaceGalleryImageResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MarketplaceGalleryImageResources and their operations over a MarketplaceGalleryImageResource. </returns>
-        public virtual MarketplaceGalleryImageCollection GetMarketplaceGalleryImages()
+        /// <summary>
+        /// The operation to get a logical network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogicalNetwork_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="logicalNetworkName"> Name of the logical network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HciVmLogicalNetworkResource> GetHciVmLogicalNetwork(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new MarketplaceGalleryImageCollection(client, Id));
+            return GetHciVmLogicalNetworks().Get(logicalNetworkName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HciVmMarketplaceGalleryImageResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVmMarketplaceGalleryImageResources and their operations over a HciVmMarketplaceGalleryImageResource. </returns>
+        public virtual HciVmMarketplaceGalleryImageCollection GetHciVmMarketplaceGalleryImages()
+        {
+            return GetCachedClient(client => new HciVmMarketplaceGalleryImageCollection(client, Id));
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MarketplaceGalleryImageResource>> GetMarketplaceGalleryImageAsync(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciVmMarketplaceGalleryImageResource>> GetHciVmMarketplaceGalleryImageAsync(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            return await GetMarketplaceGalleryImages().GetAsync(marketplaceGalleryImageName, cancellationToken).ConfigureAwait(false);
+            return await GetHciVmMarketplaceGalleryImages().GetAsync(marketplaceGalleryImageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,47 +235,16 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MarketplaceGalleryImageResource> GetMarketplaceGalleryImage(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
+        public virtual Response<HciVmMarketplaceGalleryImageResource> GetHciVmMarketplaceGalleryImage(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            return GetMarketplaceGalleryImages().Get(marketplaceGalleryImageName, cancellationToken);
+            return GetHciVmMarketplaceGalleryImages().Get(marketplaceGalleryImageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkInterfaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
-        public virtual NetworkInterfaceCollection GetNetworkInterfaces()
+        /// <summary> Gets a collection of HciVmNetworkInterfaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVmNetworkInterfaceResources and their operations over a HciVmNetworkInterfaceResource. </returns>
+        public virtual HciVmNetworkInterfaceCollection GetHciVmNetworkInterfaces()
         {
-            return GetCachedClient(client => new NetworkInterfaceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a network interface
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkInterfaceName"> Name of the network interface. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkInterfaces().GetAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new HciVmNetworkInterfaceCollection(client, Id));
         }
 
         /// <summary>
@@ -295,7 +264,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,16 +273,47 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkInterfaceResource> GetNetworkInterface(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciVmNetworkInterfaceResource>> GetHciVmNetworkInterfaceAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return GetNetworkInterfaces().Get(networkInterfaceName, cancellationToken);
+            return await GetHciVmNetworkInterfaces().GetAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of NetworkSecurityGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkSecurityGroupResources and their operations over a NetworkSecurityGroupResource. </returns>
-        public virtual NetworkSecurityGroupCollection GetNetworkSecurityGroups()
+        /// <summary>
+        /// Gets a network interface
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterface_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkInterfaceName"> Name of the network interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HciVmNetworkInterfaceResource> GetHciVmNetworkInterface(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new NetworkSecurityGroupCollection(client, Id));
+            return GetHciVmNetworkInterfaces().Get(networkInterfaceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HciVmNetworkSecurityGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVmNetworkSecurityGroupResources and their operations over a HciVmNetworkSecurityGroupResource. </returns>
+        public virtual HciVmNetworkSecurityGroupCollection GetHciVmNetworkSecurityGroups()
+        {
+            return GetCachedClient(client => new HciVmNetworkSecurityGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityGroupResource>> GetNetworkSecurityGroupAsync(string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciVmNetworkSecurityGroupResource>> GetHciVmNetworkSecurityGroupAsync(string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetNetworkSecurityGroups().GetAsync(networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetHciVmNetworkSecurityGroups().GetAsync(networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,47 +373,16 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityGroupResource> GetNetworkSecurityGroup(string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<HciVmNetworkSecurityGroupResource> GetHciVmNetworkSecurityGroup(string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            return GetNetworkSecurityGroups().Get(networkSecurityGroupName, cancellationToken);
+            return GetHciVmNetworkSecurityGroups().Get(networkSecurityGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StorageContainerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StorageContainerResources and their operations over a StorageContainerResource. </returns>
-        public virtual StorageContainerCollection GetStorageContainers()
+        /// <summary> Gets a collection of HciVmStorageContainerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVmStorageContainerResources and their operations over a HciVmStorageContainerResource. </returns>
+        public virtual HciVmStorageContainerCollection GetHciVmStorageContainers()
         {
-            return GetCachedClient(client => new StorageContainerCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a storage container
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageContainerName"> Name of the storage container. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StorageContainerResource>> GetStorageContainerAsync(string storageContainerName, CancellationToken cancellationToken = default)
-        {
-            return await GetStorageContainers().GetAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new HciVmStorageContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -433,7 +402,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageContainerResource"/></description>
+        /// <description><see cref="HciVmStorageContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,16 +411,47 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StorageContainerResource> GetStorageContainer(string storageContainerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciVmStorageContainerResource>> GetHciVmStorageContainerAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
-            return GetStorageContainers().Get(storageContainerName, cancellationToken);
+            return await GetHciVmStorageContainers().GetAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of VirtualHardDiskResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualHardDiskResources and their operations over a VirtualHardDiskResource. </returns>
-        public virtual VirtualHardDiskCollection GetVirtualHardDisks()
+        /// <summary>
+        /// Gets a storage container
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageContainer_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciVmStorageContainerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageContainerName"> Name of the storage container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HciVmStorageContainerResource> GetHciVmStorageContainer(string storageContainerName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new VirtualHardDiskCollection(client, Id));
+            return GetHciVmStorageContainers().Get(storageContainerName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HciVmVirtualHardDiskResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVmVirtualHardDiskResources and their operations over a HciVmVirtualHardDiskResource. </returns>
+        public virtual HciVmVirtualHardDiskCollection GetHciVmVirtualHardDisks()
+        {
+            return GetCachedClient(client => new HciVmVirtualHardDiskCollection(client, Id));
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -480,9 +480,9 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualHardDiskResource>> GetVirtualHardDiskAsync(string virtualHardDiskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciVmVirtualHardDiskResource>> GetHciVmVirtualHardDiskAsync(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            return await GetVirtualHardDisks().GetAsync(virtualHardDiskName, cancellationToken).ConfigureAwait(false);
+            return await GetHciVmVirtualHardDisks().GetAsync(virtualHardDiskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -511,9 +511,9 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualHardDiskResource> GetVirtualHardDisk(string virtualHardDiskName, CancellationToken cancellationToken = default)
+        public virtual Response<HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisk(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            return GetVirtualHardDisks().Get(virtualHardDiskName, cancellationToken);
+            return GetHciVmVirtualHardDisks().Get(virtualHardDiskName, cancellationToken);
         }
     }
 }

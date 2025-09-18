@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            VirtualMachineConfigAgentInstanceView vmAgent = default;
+            HciVmConfigAgentInstanceView vmAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    vmAgent = VirtualMachineConfigAgentInstanceView.DeserializeVirtualMachineConfigAgentInstanceView(property.Value, options);
+                    vmAgent = HciVmConfigAgentInstanceView.DeserializeHciVmConfigAgentInstanceView(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

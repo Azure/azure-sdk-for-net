@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<AttestationStatusData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<HciVmAttestationStatusData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        AttestationStatusData value = default;
+                        HciVmAttestationStatusData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AttestationStatusData.DeserializeAttestationStatusData(document.RootElement);
+                        value = HciVmAttestationStatusData.DeserializeHciVmAttestationStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AttestationStatusData)null, message.Response);
+                    return Response.FromValue((HciVmAttestationStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<AttestationStatusData> Get(string resourceUri, CancellationToken cancellationToken = default)
+        public Response<HciVmAttestationStatusData> Get(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        AttestationStatusData value = default;
+                        HciVmAttestationStatusData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AttestationStatusData.DeserializeAttestationStatusData(document.RootElement);
+                        value = HciVmAttestationStatusData.DeserializeHciVmAttestationStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AttestationStatusData)null, message.Response);
+                    return Response.FromValue((HciVmAttestationStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<VirtualMachineInstanceData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<HciVmInstanceData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        VirtualMachineInstanceData value = default;
+                        HciVmInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VirtualMachineInstanceData.DeserializeVirtualMachineInstanceData(document.RootElement);
+                        value = HciVmInstanceData.DeserializeHciVmInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualMachineInstanceData)null, message.Response);
+                    return Response.FromValue((HciVmInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<VirtualMachineInstanceData> Get(string resourceUri, CancellationToken cancellationToken = default)
+        public Response<HciVmInstanceData> Get(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 case 200:
                     {
-                        VirtualMachineInstanceData value = default;
+                        HciVmInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VirtualMachineInstanceData.DeserializeVirtualMachineInstanceData(document.RootElement);
+                        value = HciVmInstanceData.DeserializeHciVmInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualMachineInstanceData)null, message.Response);
+                    return Response.FromValue((HciVmInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, VirtualMachineInstanceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, HciVmInstanceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, VirtualMachineInstanceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, HciVmInstanceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="data"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceUri, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceUri, HciVmInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(data, nameof(data));
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="data"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceUri, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceUri, HciVmInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(data, nameof(data));
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, VirtualMachineInstancePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, HciVmInstancePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceUri, VirtualMachineInstancePatch patch)
+        internal HttpMessage CreateUpdateRequest(string resourceUri, HciVmInstancePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="patch"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceUri, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceUri, HciVmInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="patch"/> is null. </exception>
-        public Response Update(string resourceUri, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string resourceUri, HciVmInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(patch, nameof(patch));
