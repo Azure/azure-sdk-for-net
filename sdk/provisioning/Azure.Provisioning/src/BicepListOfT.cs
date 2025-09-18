@@ -135,4 +135,6 @@ public class BicepList<T> :
     public static BicepList<T> FromExpression(Func<BicepExpression, T> referenceFactory, BicepExpression expression) =>
         new(expression) { _referenceFactory = referenceFactory };
     private Func<BicepExpression, T>? _referenceFactory = null;
+
+    private protected override BicepExpression CompileCore() => BicepTypeMapping.ToBicep(this, Format);
 }

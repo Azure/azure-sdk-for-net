@@ -129,4 +129,6 @@ public class BicepDictionary<T> :
     bool ICollection<KeyValuePair<string, IBicepValue>>.Remove(KeyValuePair<string, IBicepValue> item) => Remove(item.Key);
     IEnumerator<KeyValuePair<string, IBicepValue>> IEnumerable<KeyValuePair<string, IBicepValue>>.GetEnumerator() =>
         _values.Select(p => new KeyValuePair<string, IBicepValue>(p.Key, p.Value)).GetEnumerator();
+
+    private protected override BicepExpression CompileCore() => BicepTypeMapping.ToBicep(this, Format);
 }
