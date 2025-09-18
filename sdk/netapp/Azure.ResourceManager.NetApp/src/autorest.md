@@ -20,8 +20,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+ show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -224,6 +224,8 @@ rename-mapping:
   PoolChangeRequest: NetAppVolumePoolChangeContent
   ReestablishReplicationRequest: NetAppVolumeReestablishReplicationContent
   ReplicationStatus: NetAppVolumeReplicationStatus
+  ReplicationStatus.relationshipStatus: VolumeReplicationRelationshipStatus
+  ReplicationStatus.RelationshipStatus: VolumeReplicationRelationshipStatus
   SecurityStyle: NetAppVolumeSecurityStyle
   SnapshotRestoreFiles: NetAppVolumeSnapshotRestoreFilesContent
   SubvolumeModel: NetAppSubvolumeMetadata
@@ -260,6 +262,7 @@ rename-mapping:
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
   QuotaItem: NetAppSubscriptionQuotaItem
+
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
 
@@ -269,5 +272,14 @@ list-exception:
 directive:
   # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
-
+  
+  # # assigning formats
+  # # Fix ProvisioningState
+  - from: netapp.json
+    where: $.definitions
+    transform: >
+        $.replicationStatus.properties.relationshipStatus['x-ms-enum'] = {
+            "name": "VolumeReplicationRelationshipStatus",
+            "modelAsString": true
+          }
 ```

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Access permissions for the bucket. Either ReadOnly or ReadWrite. </summary>
+    /// <summary>
+    /// Access permissions for the bucket. Either ReadOnly or ReadWrite.
+    /// Serialized Name: BucketPatchPermissions
+    /// </summary>
     public readonly partial struct BucketPatchPermission : IEquatable<BucketPatchPermission>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string ReadOnlyValue = "ReadOnly";
         private const string ReadWriteValue = "ReadWrite";
 
-        /// <summary> Read-only access to bucket. </summary>
+        /// <summary>
+        /// Read-only access to bucket.
+        /// Serialized Name: BucketPatchPermissions.ReadOnly
+        /// </summary>
         public static BucketPatchPermission ReadOnly { get; } = new BucketPatchPermission(ReadOnlyValue);
-        /// <summary> Read-write access to bucket. </summary>
+        /// <summary>
+        /// Read-write access to bucket.
+        /// Serialized Name: BucketPatchPermissions.ReadWrite
+        /// </summary>
         public static BucketPatchPermission ReadWrite { get; } = new BucketPatchPermission(ReadWriteValue);
         /// <summary> Determines if two <see cref="BucketPatchPermission"/> values are the same. </summary>
         public static bool operator ==(BucketPatchPermission left, BucketPatchPermission right) => left.Equals(right);

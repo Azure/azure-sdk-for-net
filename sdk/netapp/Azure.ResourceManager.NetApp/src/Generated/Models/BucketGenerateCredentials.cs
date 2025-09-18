@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Bucket Access Key, Secret Key, and Expiry date and time of the key pair. </summary>
+    /// <summary>
+    /// Bucket Access Key, Secret Key, and Expiry date and time of the key pair
+    /// Serialized Name: BucketGenerateCredentials
+    /// </summary>
     public partial class BucketGenerateCredentials
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BucketGenerateCredentials"/>. </summary>
-        /// <param name="accessKey"> The Access Key that is required along with the Secret Key to access the bucket. </param>
-        /// <param name="secretKey"> The Secret Key that is required along with the Access Key to access the bucket. </param>
-        /// <param name="keyPairExpiry"> The bucket's Access and Secret key pair expiry date and time (in UTC). </param>
+        /// <param name="accessKey">
+        /// The Access Key that is required along with the Secret Key to access the bucket.
+        /// Serialized Name: BucketGenerateCredentials.accessKey
+        /// </param>
+        /// <param name="secretKey">
+        /// The Secret Key that is required along with the Access Key to access the bucket.
+        /// Serialized Name: BucketGenerateCredentials.secretKey
+        /// </param>
+        /// <param name="keyPairExpiry">
+        /// The bucket's Access and Secret key pair expiry date and time (in UTC).
+        /// Serialized Name: BucketGenerateCredentials.keyPairExpiry
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BucketGenerateCredentials(string accessKey, string secretKey, DateTimeOffset? keyPairExpiry, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Access Key that is required along with the Secret Key to access the bucket. </summary>
+        /// <summary>
+        /// The Access Key that is required along with the Secret Key to access the bucket.
+        /// Serialized Name: BucketGenerateCredentials.accessKey
+        /// </summary>
         public string AccessKey { get; }
-        /// <summary> The Secret Key that is required along with the Access Key to access the bucket. </summary>
+        /// <summary>
+        /// The Secret Key that is required along with the Access Key to access the bucket.
+        /// Serialized Name: BucketGenerateCredentials.secretKey
+        /// </summary>
         public string SecretKey { get; }
-        /// <summary> The bucket's Access and Secret key pair expiry date and time (in UTC). </summary>
+        /// <summary>
+        /// The bucket's Access and Secret key pair expiry date and time (in UTC).
+        /// Serialized Name: BucketGenerateCredentials.keyPairExpiry
+        /// </summary>
         public DateTimeOffset? KeyPairExpiry { get; }
     }
 }

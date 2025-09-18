@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Type of quota rule. </summary>
+    /// <summary>
+    /// Type of quota rule
+    /// Serialized Name: Type
+    /// </summary>
     public readonly partial struct NetAppVolumeQuotaType : IEquatable<NetAppVolumeQuotaType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string IndividualUserQuotaValue = "IndividualUserQuota";
         private const string IndividualGroupQuotaValue = "IndividualGroupQuota";
 
-        /// <summary> Default user quota. </summary>
+        /// <summary>
+        /// Default user quota
+        /// Serialized Name: Type.DefaultUserQuota
+        /// </summary>
         public static NetAppVolumeQuotaType DefaultUserQuota { get; } = new NetAppVolumeQuotaType(DefaultUserQuotaValue);
-        /// <summary> Default group quota. </summary>
+        /// <summary>
+        /// Default group quota
+        /// Serialized Name: Type.DefaultGroupQuota
+        /// </summary>
         public static NetAppVolumeQuotaType DefaultGroupQuota { get; } = new NetAppVolumeQuotaType(DefaultGroupQuotaValue);
-        /// <summary> Individual user quota. </summary>
+        /// <summary>
+        /// Individual user quota
+        /// Serialized Name: Type.IndividualUserQuota
+        /// </summary>
         public static NetAppVolumeQuotaType IndividualUserQuota { get; } = new NetAppVolumeQuotaType(IndividualUserQuotaValue);
-        /// <summary> Individual group quota. </summary>
+        /// <summary>
+        /// Individual group quota
+        /// Serialized Name: Type.IndividualGroupQuota
+        /// </summary>
         public static NetAppVolumeQuotaType IndividualGroupQuota { get; } = new NetAppVolumeQuotaType(IndividualGroupQuotaValue);
         /// <summary> Determines if two <see cref="NetAppVolumeQuotaType"/> values are the same. </summary>
         public static bool operator ==(NetAppVolumeQuotaType left, NetAppVolumeQuotaType right) => left.Equals(right);

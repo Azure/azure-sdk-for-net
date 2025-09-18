@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Replication properties. </summary>
+    /// <summary>
+    /// Replication properties
+    /// Serialized Name: ReplicationObject
+    /// </summary>
     public partial class NetAppReplicationObject
     {
         /// <summary>
@@ -53,17 +56,50 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
-        /// <param name="replicationId"> Id. </param>
-        /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
-        /// <param name="replicationSchedule"> Schedule. </param>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. Required for cross region and cross zone replication. </param>
-        /// <param name="remotePath"> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </param>
-        /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        /// <param name="destinationReplications"> A list of destination replications. </param>
-        /// <param name="externalReplicationSetupStatus"> Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup. </param>
-        /// <param name="externalReplicationSetupInfo"> Contains human-readable instructions on what the next step is to finish the external replication setup. </param>
-        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
-        /// <param name="relationshipStatus"> The status of the Volume Replication. </param>
+        /// <param name="replicationId">
+        /// Id
+        /// Serialized Name: ReplicationObject.replicationId
+        /// </param>
+        /// <param name="endpointType">
+        /// Indicates whether the local volume is the source or destination for the Volume Replication
+        /// Serialized Name: ReplicationObject.endpointType
+        /// </param>
+        /// <param name="replicationSchedule">
+        /// Schedule
+        /// Serialized Name: ReplicationObject.replicationSchedule
+        /// </param>
+        /// <param name="remoteVolumeResourceId">
+        /// The resource ID of the remote volume. Required for cross region and cross zone replication
+        /// Serialized Name: ReplicationObject.remoteVolumeResourceId
+        /// </param>
+        /// <param name="remotePath">
+        /// The full path to a volume that is to be migrated into ANF. Required for Migration volumes
+        /// Serialized Name: ReplicationObject.remotePath
+        /// </param>
+        /// <param name="remoteVolumeRegion">
+        /// The remote region for the other end of the Volume Replication.
+        /// Serialized Name: ReplicationObject.remoteVolumeRegion
+        /// </param>
+        /// <param name="destinationReplications">
+        /// A list of destination replications
+        /// Serialized Name: ReplicationObject.destinationReplications
+        /// </param>
+        /// <param name="externalReplicationSetupStatus">
+        /// Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup.
+        /// Serialized Name: ReplicationObject.externalReplicationSetupStatus
+        /// </param>
+        /// <param name="externalReplicationSetupInfo">
+        /// Contains human-readable instructions on what the next step is to finish the external replication setup.
+        /// Serialized Name: ReplicationObject.externalReplicationSetupInfo
+        /// </param>
+        /// <param name="mirrorState">
+        /// The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized.
+        /// Serialized Name: ReplicationObject.mirrorState
+        /// </param>
+        /// <param name="relationshipStatus">
+        /// The status of the Volume Replication
+        /// Serialized Name: ReplicationObject.relationshipStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, ExternalReplicationSetupStatus? externalReplicationSetupStatus, string externalReplicationSetupInfo, NetAppMirrorState? mirrorState, NetAppRelationshipStatus? relationshipStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,23 +116,50 @@ namespace Azure.ResourceManager.NetApp.Models
             RelationshipStatus = relationshipStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary> Schedule. </summary>
+        /// <summary>
+        /// Schedule
+        /// Serialized Name: ReplicationObject.replicationSchedule
+        /// </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
-        /// <summary> The resource ID of the remote volume. Required for cross region and cross zone replication. </summary>
+        /// <summary>
+        /// The resource ID of the remote volume. Required for cross region and cross zone replication
+        /// Serialized Name: ReplicationObject.remoteVolumeResourceId
+        /// </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }
-        /// <summary> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </summary>
+        /// <summary>
+        /// The full path to a volume that is to be migrated into ANF. Required for Migration volumes
+        /// Serialized Name: ReplicationObject.remotePath
+        /// </summary>
         public RemotePath RemotePath { get; set; }
-        /// <summary> The remote region for the other end of the Volume Replication. </summary>
+        /// <summary>
+        /// The remote region for the other end of the Volume Replication.
+        /// Serialized Name: ReplicationObject.remoteVolumeRegion
+        /// </summary>
         public string RemoteVolumeRegion { get; set; }
-        /// <summary> A list of destination replications. </summary>
+        /// <summary>
+        /// A list of destination replications
+        /// Serialized Name: ReplicationObject.destinationReplications
+        /// </summary>
         public IReadOnlyList<NetAppDestinationReplication> DestinationReplications { get; }
-        /// <summary> Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup. </summary>
+        /// <summary>
+        /// Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup.
+        /// Serialized Name: ReplicationObject.externalReplicationSetupStatus
+        /// </summary>
         public ExternalReplicationSetupStatus? ExternalReplicationSetupStatus { get; }
-        /// <summary> Contains human-readable instructions on what the next step is to finish the external replication setup. </summary>
+        /// <summary>
+        /// Contains human-readable instructions on what the next step is to finish the external replication setup.
+        /// Serialized Name: ReplicationObject.externalReplicationSetupInfo
+        /// </summary>
         public string ExternalReplicationSetupInfo { get; }
-        /// <summary> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
+        /// <summary>
+        /// The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized.
+        /// Serialized Name: ReplicationObject.mirrorState
+        /// </summary>
         public NetAppMirrorState? MirrorState { get; }
-        /// <summary> The status of the Volume Replication. </summary>
+        /// <summary>
+        /// The status of the Volume Replication
+        /// Serialized Name: ReplicationObject.relationshipStatus
+        /// </summary>
         public NetAppRelationshipStatus? RelationshipStatus { get; }
     }
 }

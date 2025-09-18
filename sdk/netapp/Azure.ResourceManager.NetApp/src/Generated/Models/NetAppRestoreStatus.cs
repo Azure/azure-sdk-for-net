@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Restore status. </summary>
+    /// <summary>
+    /// Restore status
+    /// Serialized Name: RestoreStatus
+    /// </summary>
     public partial class NetAppRestoreStatus
     {
         /// <summary>
@@ -51,12 +54,30 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
-        /// <param name="isHealthy"> Restore health status. </param>
-        /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
-        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
-        /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
-        /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
-        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <param name="isHealthy">
+        /// Restore health status
+        /// Serialized Name: RestoreStatus.healthy
+        /// </param>
+        /// <param name="relationshipStatus">
+        /// Status of the restore SnapMirror relationship
+        /// Serialized Name: RestoreStatus.relationshipStatus
+        /// </param>
+        /// <param name="mirrorState">
+        /// The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized.
+        /// Serialized Name: RestoreStatus.mirrorState
+        /// </param>
+        /// <param name="unhealthyReason">
+        /// Reason for the unhealthy restore relationship
+        /// Serialized Name: RestoreStatus.unhealthyReason
+        /// </param>
+        /// <param name="errorMessage">
+        /// Displays error message if the restore is in an error state
+        /// Serialized Name: RestoreStatus.errorMessage
+        /// </param>
+        /// <param name="totalTransferBytes">
+        /// Displays the total bytes transferred
+        /// Serialized Name: RestoreStatus.totalTransferBytes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppRestoreStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,17 +90,35 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Restore health status. </summary>
+        /// <summary>
+        /// Restore health status
+        /// Serialized Name: RestoreStatus.healthy
+        /// </summary>
         public bool? IsHealthy { get; }
-        /// <summary> Status of the restore SnapMirror relationship. </summary>
+        /// <summary>
+        /// Status of the restore SnapMirror relationship
+        /// Serialized Name: RestoreStatus.relationshipStatus
+        /// </summary>
         public NetAppRelationshipStatus? RelationshipStatus { get; }
-        /// <summary> The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
+        /// <summary>
+        /// The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized.
+        /// Serialized Name: RestoreStatus.mirrorState
+        /// </summary>
         public NetAppMirrorState? MirrorState { get; }
-        /// <summary> Reason for the unhealthy restore relationship. </summary>
+        /// <summary>
+        /// Reason for the unhealthy restore relationship
+        /// Serialized Name: RestoreStatus.unhealthyReason
+        /// </summary>
         public string UnhealthyReason { get; }
-        /// <summary> Displays error message if the restore is in an error state. </summary>
+        /// <summary>
+        /// Displays error message if the restore is in an error state
+        /// Serialized Name: RestoreStatus.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> Displays the total bytes transferred. </summary>
+        /// <summary>
+        /// Displays the total bytes transferred
+        /// Serialized Name: RestoreStatus.totalTransferBytes
+        /// </summary>
         public long? TotalTransferBytes { get; }
     }
 }

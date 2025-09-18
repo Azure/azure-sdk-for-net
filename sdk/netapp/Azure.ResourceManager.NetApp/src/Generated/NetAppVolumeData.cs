@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppVolume data model.
     /// Volume resource
+    /// Serialized Name: Volume
     /// </summary>
     public partial class NetAppVolumeData : TrackedResourceData
     {
@@ -53,9 +54,18 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
+        /// <param name="creationToken">
+        /// A unique file path for the volume. Used when creating mount targets
+        /// Serialized Name: Volume.properties.creationToken
+        /// </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// Serialized Name: Volume.properties.usageThreshold
+        /// </param>
+        /// <param name="subnetId">
+        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes
+        /// Serialized Name: Volume.properties.subnetId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppVolumeData(AzureLocation location, string creationToken, long usageThreshold, ResourceIdentifier subnetId) : base(location)
         {
@@ -79,73 +89,257 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="zones"> Availability Zone. </param>
-        /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
-        /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
-        /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="exportPolicy"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
-        /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
-        /// <param name="backupId"> Resource identifier used to identify the Backup. </param>
-        /// <param name="baremetalTenantId"> Unique Baremetal Tenant Identifier. </param>
-        /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
-        /// <param name="networkFeatures"> The original value of the network features type available to the volume at the time it was created. </param>
-        /// <param name="effectiveNetworkFeatures"> The effective value of the network features type available to the volume, or current effective state of update. </param>
-        /// <param name="networkSiblingSetId"> Network Sibling Set ID for the the group of volumes sharing networking resources. </param>
-        /// <param name="storageToNetworkProximity"> Provides storage to network proximity information for the volume. </param>
-        /// <param name="mountTargets"> List of mount targets. </param>
-        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </param>
-        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
-        /// <param name="acceptGrowCapacityPoolForShortTermCloneSplit"> While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted. </param>
-        /// <param name="isRestoring"> Restoring. </param>
-        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </param>
-        /// <param name="isKerberosEnabled"> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="securityStyle"> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </param>
-        /// <param name="isSmbEncryptionEnabled"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </param>
-        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <param name="isSmbContinuouslyAvailable"> Enables continuously available share property for smb volume. Only applicable for SMB volume. </param>
-        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
-        /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
-        /// <param name="encryptionKeySource"> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
-        /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
-        /// <param name="isLdapEnabled"> Specifies whether LDAP is enabled or not for a given NFS volume. </param>
-        /// <param name="ldapServerType"> Specifies the type of LDAP server for a given NFS volume. </param>
-        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
-        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
+        /// <param name="etag">
+        /// A unique read-only string that changes whenever the resource is updated.
+        /// Serialized Name: Volume.etag
+        /// </param>
+        /// <param name="zones">
+        /// Availability Zone
+        /// Serialized Name: Volume.zones
+        /// </param>
+        /// <param name="fileSystemId">
+        /// Unique FileSystem Identifier.
+        /// Serialized Name: Volume.properties.fileSystemId
+        /// </param>
+        /// <param name="creationToken">
+        /// A unique file path for the volume. Used when creating mount targets
+        /// Serialized Name: Volume.properties.creationToken
+        /// </param>
+        /// <param name="serviceLevel">
+        /// The service level of the file system
+        /// Serialized Name: Volume.properties.serviceLevel
+        /// </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// Serialized Name: Volume.properties.usageThreshold
+        /// </param>
+        /// <param name="exportPolicy">
+        /// Set of export policy rules
+        /// Serialized Name: Volume.properties.exportPolicy
+        /// </param>
+        /// <param name="protocolTypes">
+        /// Set of protocol types, default NFSv3, CIFS for SMB protocol
+        /// Serialized Name: Volume.properties.protocolTypes
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure lifecycle management
+        /// Serialized Name: Volume.properties.provisioningState
+        /// </param>
+        /// <param name="snapshotId">
+        /// Resource identifier used to identify the Snapshot.
+        /// Serialized Name: Volume.properties.snapshotId
+        /// </param>
+        /// <param name="deleteBaseSnapshot">
+        /// If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false
+        /// Serialized Name: Volume.properties.deleteBaseSnapshot
+        /// </param>
+        /// <param name="backupId">
+        /// Resource identifier used to identify the Backup.
+        /// Serialized Name: Volume.properties.backupId
+        /// </param>
+        /// <param name="baremetalTenantId">
+        /// Unique Baremetal Tenant Identifier.
+        /// Serialized Name: Volume.properties.baremetalTenantId
+        /// </param>
+        /// <param name="subnetId">
+        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes
+        /// Serialized Name: Volume.properties.subnetId
+        /// </param>
+        /// <param name="networkFeatures">
+        /// The original value of the network features type available to the volume at the time it was created.
+        /// Serialized Name: Volume.properties.networkFeatures
+        /// </param>
+        /// <param name="effectiveNetworkFeatures">
+        /// The effective value of the network features type available to the volume, or current effective state of update.
+        /// Serialized Name: Volume.properties.effectiveNetworkFeatures
+        /// </param>
+        /// <param name="networkSiblingSetId">
+        /// Network Sibling Set ID for the the group of volumes sharing networking resources.
+        /// Serialized Name: Volume.properties.networkSiblingSetId
+        /// </param>
+        /// <param name="storageToNetworkProximity">
+        /// Provides storage to network proximity information for the volume.
+        /// Serialized Name: Volume.properties.storageToNetworkProximity
+        /// </param>
+        /// <param name="mountTargets">
+        /// List of mount targets
+        /// Serialized Name: Volume.properties.mountTargets
+        /// </param>
+        /// <param name="volumeType">
+        /// What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone
+        /// Serialized Name: Volume.properties.volumeType
+        /// </param>
+        /// <param name="dataProtection">
+        /// DataProtection type volumes include an object containing details of the replication
+        /// Serialized Name: Volume.properties.dataProtection
+        /// </param>
+        /// <param name="acceptGrowCapacityPoolForShortTermCloneSplit">
+        /// While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted.
+        /// Serialized Name: Volume.properties.acceptGrowCapacityPoolForShortTermCloneSplit
+        /// </param>
+        /// <param name="isRestoring">
+        /// Restoring
+        /// Serialized Name: Volume.properties.isRestoring
+        /// </param>
+        /// <param name="isSnapshotDirectoryVisible">
+        /// If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true).
+        /// Serialized Name: Volume.properties.snapshotDirectoryVisible
+        /// </param>
+        /// <param name="isKerberosEnabled">
+        /// Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later
+        /// Serialized Name: Volume.properties.kerberosEnabled
+        /// </param>
+        /// <param name="securityStyle">
+        /// The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol
+        /// Serialized Name: Volume.properties.securityStyle
+        /// </param>
+        /// <param name="isSmbEncryptionEnabled">
+        /// Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later
+        /// Serialized Name: Volume.properties.smbEncryption
+        /// </param>
+        /// <param name="smbAccessBasedEnumeration">
+        /// Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume
+        /// Serialized Name: Volume.properties.smbAccessBasedEnumeration
+        /// </param>
+        /// <param name="smbNonBrowsable">
+        /// Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume
+        /// Serialized Name: Volume.properties.smbNonBrowsable
+        /// </param>
+        /// <param name="isSmbContinuouslyAvailable">
+        /// Enables continuously available share property for smb volume. Only applicable for SMB volume
+        /// Serialized Name: Volume.properties.smbContinuouslyAvailable
+        /// </param>
+        /// <param name="throughputMibps">
+        /// Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume
+        /// Serialized Name: Volume.properties.throughputMibps
+        /// </param>
+        /// <param name="actualThroughputMibps">
+        /// Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel
+        /// Serialized Name: Volume.properties.actualThroughputMibps
+        /// </param>
+        /// <param name="encryptionKeySource">
+        /// Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'
+        /// Serialized Name: Volume.properties.encryptionKeySource
+        /// </param>
+        /// <param name="keyVaultPrivateEndpointResourceId">
+        /// The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
+        /// Serialized Name: Volume.properties.keyVaultPrivateEndpointResourceId
+        /// </param>
+        /// <param name="isLdapEnabled">
+        /// Specifies whether LDAP is enabled or not for a given NFS volume.
+        /// Serialized Name: Volume.properties.ldapEnabled
+        /// </param>
+        /// <param name="ldapServerType">
+        /// Specifies the type of LDAP server for a given NFS volume.
+        /// Serialized Name: Volume.properties.ldapServerType
+        /// </param>
+        /// <param name="isCoolAccessEnabled">
+        /// Specifies whether Cool Access(tiering) is enabled for the volume.
+        /// Serialized Name: Volume.properties.coolAccess
+        /// </param>
+        /// <param name="coolnessPeriod">
+        /// Specifies the number of days after which data that is not accessed by clients will be tiered.
+        /// Serialized Name: Volume.properties.coolnessPeriod
+        /// </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
         ///  Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
         ///  OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
         ///  Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Serialized Name: Volume.properties.coolAccessRetrievalPolicy
         /// </param>
-        /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
-        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.  Avoid passing null value for unixPermissions in volume update operation, As per the behavior, If Null value is passed then user-visible unixPermissions value will became null, and user will not be able to get unixPermissions value. On safer side, actual unixPermissions value on volume will remain as its last saved value only. </param>
-        /// <param name="cloneProgress"> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </param>
-        /// <param name="fileAccessLogs"> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </param>
-        /// <param name="avsDataStore"> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </param>
-        /// <param name="dataStoreResourceId"> Data store resource unique identifier. </param>
-        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
-        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
-        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
-        /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB. </param>
-        /// <param name="volumeGroupName"> Volume Group Name. </param>
-        /// <param name="capacityPoolResourceId"> Pool Resource Id used in case of creating a volume through volume group. </param>
-        /// <param name="proximityPlacementGroupId"> Proximity placement group associated with the volume. </param>
-        /// <param name="t2Network"> T2 network information. </param>
-        /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
-        /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
-        /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
-        /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
-        /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
-        /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
-        /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
-        /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
-        /// <param name="language"> Language supported for volume. </param>
+        /// <param name="coolAccessTieringPolicy">
+        /// coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier.
+        /// Serialized Name: Volume.properties.coolAccessTieringPolicy
+        /// </param>
+        /// <param name="unixPermissions">
+        /// UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.  Avoid passing null value for unixPermissions in volume update operation, As per the behavior, If Null value is passed then user-visible unixPermissions value will became null, and user will not be able to get unixPermissions value. On safer side, actual unixPermissions value on volume will remain as its last saved value only.
+        /// Serialized Name: Volume.properties.unixPermissions
+        /// </param>
+        /// <param name="cloneProgress">
+        /// When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning.
+        /// Serialized Name: Volume.properties.cloneProgress
+        /// </param>
+        /// <param name="fileAccessLogs">
+        /// Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume.
+        /// Serialized Name: Volume.properties.fileAccessLogs
+        /// </param>
+        /// <param name="avsDataStore">
+        /// Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose
+        /// Serialized Name: Volume.properties.avsDataStore
+        /// </param>
+        /// <param name="dataStoreResourceId">
+        /// Data store resource unique identifier
+        /// Serialized Name: Volume.properties.dataStoreResourceId
+        /// </param>
+        /// <param name="isDefaultQuotaEnabled">
+        /// Specifies if default quota is enabled for the volume.
+        /// Serialized Name: Volume.properties.isDefaultQuotaEnabled
+        /// </param>
+        /// <param name="defaultUserQuotaInKiBs">
+        /// Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+        /// Serialized Name: Volume.properties.defaultUserQuotaInKiBs
+        /// </param>
+        /// <param name="defaultGroupQuotaInKiBs">
+        /// Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+        /// Serialized Name: Volume.properties.defaultGroupQuotaInKiBs
+        /// </param>
+        /// <param name="maximumNumberOfFiles">
+        /// Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB.
+        /// Serialized Name: Volume.properties.maximumNumberOfFiles
+        /// </param>
+        /// <param name="volumeGroupName">
+        /// Volume Group Name
+        /// Serialized Name: Volume.properties.volumeGroupName
+        /// </param>
+        /// <param name="capacityPoolResourceId">
+        /// Pool Resource Id used in case of creating a volume through volume group
+        /// Serialized Name: Volume.properties.capacityPoolResourceId
+        /// </param>
+        /// <param name="proximityPlacementGroupId">
+        /// Proximity placement group associated with the volume
+        /// Serialized Name: Volume.properties.proximityPlacementGroup
+        /// </param>
+        /// <param name="t2Network">
+        /// T2 network information
+        /// Serialized Name: Volume.properties.t2Network
+        /// </param>
+        /// <param name="volumeSpecName">
+        /// Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log
+        /// Serialized Name: Volume.properties.volumeSpecName
+        /// </param>
+        /// <param name="isEncrypted">
+        /// Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01.
+        /// Serialized Name: Volume.properties.encrypted
+        /// </param>
+        /// <param name="placementRules">
+        /// Application specific placement rules for the particular volume
+        /// Serialized Name: Volume.properties.placementRules
+        /// </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Serialized Name: Volume.properties.enableSubvolumes
+        /// </param>
+        /// <param name="provisionedAvailabilityZone">
+        /// The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides.
+        /// Serialized Name: Volume.properties.provisionedAvailabilityZone
+        /// </param>
+        /// <param name="isLargeVolume">
+        /// Specifies whether volume is a Large Volume or Regular Volume.
+        /// Serialized Name: Volume.properties.isLargeVolume
+        /// </param>
+        /// <param name="originatingResourceId">
+        /// Id of the snapshot or backup that the volume is restored from.
+        /// Serialized Name: Volume.properties.originatingResourceId
+        /// </param>
+        /// <param name="inheritedSizeInBytes">
+        /// Space shared by short term clone volume with parent volume in bytes.
+        /// Serialized Name: Volume.properties.inheritedSizeInBytes
+        /// </param>
+        /// <param name="language">
+        /// Language supported for volume.
+        /// Serialized Name: Volume.properties.language
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, LdapServerType? ldapServerType, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, NetAppVolumeLanguage? language, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -219,21 +413,45 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        /// <summary>
+        /// A unique read-only string that changes whenever the resource is updated.
+        /// Serialized Name: Volume.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> Availability Zone. </summary>
+        /// <summary>
+        /// Availability Zone
+        /// Serialized Name: Volume.zones
+        /// </summary>
         public IList<string> Zones { get; }
-        /// <summary> Unique FileSystem Identifier. </summary>
+        /// <summary>
+        /// Unique FileSystem Identifier.
+        /// Serialized Name: Volume.properties.fileSystemId
+        /// </summary>
         public Guid? FileSystemId { get; }
-        /// <summary> A unique file path for the volume. Used when creating mount targets. </summary>
+        /// <summary>
+        /// A unique file path for the volume. Used when creating mount targets
+        /// Serialized Name: Volume.properties.creationToken
+        /// </summary>
         public string CreationToken { get; set; }
-        /// <summary> The service level of the file system. </summary>
+        /// <summary>
+        /// The service level of the file system
+        /// Serialized Name: Volume.properties.serviceLevel
+        /// </summary>
         public NetAppFileServiceLevel? ServiceLevel { get; set; }
-        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </summary>
+        /// <summary>
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// Serialized Name: Volume.properties.usageThreshold
+        /// </summary>
         public long UsageThreshold { get; set; }
-        /// <summary> Set of export policy rules. </summary>
+        /// <summary>
+        /// Set of export policy rules
+        /// Serialized Name: Volume.properties.exportPolicy
+        /// </summary>
         internal VolumePropertiesExportPolicy ExportPolicy { get; set; }
-        /// <summary> Export policy rule. </summary>
+        /// <summary>
+        /// Export policy rule
+        /// Serialized Name: VolumePropertiesExportPolicy.rules
+        /// </summary>
         public IList<NetAppVolumeExportPolicyRule> ExportRules
         {
             get
@@ -244,118 +462,278 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
+        /// <summary>
+        /// Set of protocol types, default NFSv3, CIFS for SMB protocol
+        /// Serialized Name: Volume.properties.protocolTypes
+        /// </summary>
         public IList<string> ProtocolTypes { get; }
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: Volume.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> Resource identifier used to identify the Snapshot. </summary>
+        /// <summary>
+        /// Resource identifier used to identify the Snapshot.
+        /// Serialized Name: Volume.properties.snapshotId
+        /// </summary>
         public string SnapshotId { get; set; }
-        /// <summary> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </summary>
+        /// <summary>
+        /// If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false
+        /// Serialized Name: Volume.properties.deleteBaseSnapshot
+        /// </summary>
         public bool? DeleteBaseSnapshot { get; set; }
-        /// <summary> Resource identifier used to identify the Backup. </summary>
+        /// <summary>
+        /// Resource identifier used to identify the Backup.
+        /// Serialized Name: Volume.properties.backupId
+        /// </summary>
         public string BackupId { get; set; }
-        /// <summary> Unique Baremetal Tenant Identifier. </summary>
+        /// <summary>
+        /// Unique Baremetal Tenant Identifier.
+        /// Serialized Name: Volume.properties.baremetalTenantId
+        /// </summary>
         public string BaremetalTenantId { get; }
-        /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
+        /// <summary>
+        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes
+        /// Serialized Name: Volume.properties.subnetId
+        /// </summary>
         public ResourceIdentifier SubnetId { get; set; }
-        /// <summary> The original value of the network features type available to the volume at the time it was created. </summary>
+        /// <summary>
+        /// The original value of the network features type available to the volume at the time it was created.
+        /// Serialized Name: Volume.properties.networkFeatures
+        /// </summary>
         public NetAppNetworkFeature? NetworkFeatures { get; set; }
-        /// <summary> The effective value of the network features type available to the volume, or current effective state of update. </summary>
+        /// <summary>
+        /// The effective value of the network features type available to the volume, or current effective state of update.
+        /// Serialized Name: Volume.properties.effectiveNetworkFeatures
+        /// </summary>
         public NetAppNetworkFeature? EffectiveNetworkFeatures { get; }
-        /// <summary> Network Sibling Set ID for the the group of volumes sharing networking resources. </summary>
+        /// <summary>
+        /// Network Sibling Set ID for the the group of volumes sharing networking resources.
+        /// Serialized Name: Volume.properties.networkSiblingSetId
+        /// </summary>
         public Guid? NetworkSiblingSetId { get; }
-        /// <summary> Provides storage to network proximity information for the volume. </summary>
+        /// <summary>
+        /// Provides storage to network proximity information for the volume.
+        /// Serialized Name: Volume.properties.storageToNetworkProximity
+        /// </summary>
         public NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get; }
-        /// <summary> List of mount targets. </summary>
+        /// <summary>
+        /// List of mount targets
+        /// Serialized Name: Volume.properties.mountTargets
+        /// </summary>
         public IReadOnlyList<NetAppVolumeMountTarget> MountTargets { get; }
-        /// <summary> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </summary>
+        /// <summary>
+        /// What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone
+        /// Serialized Name: Volume.properties.volumeType
+        /// </summary>
         public string VolumeType { get; set; }
-        /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
+        /// <summary>
+        /// DataProtection type volumes include an object containing details of the replication
+        /// Serialized Name: Volume.properties.dataProtection
+        /// </summary>
         public NetAppVolumeDataProtection DataProtection { get; set; }
-        /// <summary> While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted. </summary>
+        /// <summary>
+        /// While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted.
+        /// Serialized Name: Volume.properties.acceptGrowCapacityPoolForShortTermCloneSplit
+        /// </summary>
         public AcceptGrowCapacityPoolForShortTermCloneSplit? AcceptGrowCapacityPoolForShortTermCloneSplit { get; set; }
-        /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </summary>
+        /// <summary>
+        /// If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true).
+        /// Serialized Name: Volume.properties.snapshotDirectoryVisible
+        /// </summary>
         public bool? IsSnapshotDirectoryVisible { get; set; }
-        /// <summary> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </summary>
+        /// <summary>
+        /// Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later
+        /// Serialized Name: Volume.properties.kerberosEnabled
+        /// </summary>
         public bool? IsKerberosEnabled { get; set; }
-        /// <summary> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </summary>
+        /// <summary>
+        /// The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol
+        /// Serialized Name: Volume.properties.securityStyle
+        /// </summary>
         public NetAppVolumeSecurityStyle? SecurityStyle { get; set; }
-        /// <summary> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </summary>
+        /// <summary>
+        /// Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later
+        /// Serialized Name: Volume.properties.smbEncryption
+        /// </summary>
         public bool? IsSmbEncryptionEnabled { get; set; }
-        /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        /// <summary>
+        /// Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume
+        /// Serialized Name: Volume.properties.smbAccessBasedEnumeration
+        /// </summary>
         public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
-        /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        /// <summary>
+        /// Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume
+        /// Serialized Name: Volume.properties.smbNonBrowsable
+        /// </summary>
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
-        /// <summary> Enables continuously available share property for smb volume. Only applicable for SMB volume. </summary>
+        /// <summary>
+        /// Enables continuously available share property for smb volume. Only applicable for SMB volume
+        /// Serialized Name: Volume.properties.smbContinuouslyAvailable
+        /// </summary>
         public bool? IsSmbContinuouslyAvailable { get; set; }
-        /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
+        /// <summary>
+        /// Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume
+        /// Serialized Name: Volume.properties.throughputMibps
+        /// </summary>
         public float? ThroughputMibps { get; set; }
-        /// <summary> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </summary>
+        /// <summary>
+        /// Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel
+        /// Serialized Name: Volume.properties.actualThroughputMibps
+        /// </summary>
         public float? ActualThroughputMibps { get; }
-        /// <summary> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </summary>
+        /// <summary>
+        /// Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'
+        /// Serialized Name: Volume.properties.encryptionKeySource
+        /// </summary>
         public NetAppEncryptionKeySource? EncryptionKeySource { get; set; }
-        /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
+        /// <summary>
+        /// The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
+        /// Serialized Name: Volume.properties.keyVaultPrivateEndpointResourceId
+        /// </summary>
         public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
-        /// <summary> Specifies whether LDAP is enabled or not for a given NFS volume. </summary>
+        /// <summary>
+        /// Specifies whether LDAP is enabled or not for a given NFS volume.
+        /// Serialized Name: Volume.properties.ldapEnabled
+        /// </summary>
         public bool? IsLdapEnabled { get; set; }
-        /// <summary> Specifies the type of LDAP server for a given NFS volume. </summary>
+        /// <summary>
+        /// Specifies the type of LDAP server for a given NFS volume.
+        /// Serialized Name: Volume.properties.ldapServerType
+        /// </summary>
         public LdapServerType? LdapServerType { get; set; }
-        /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
+        /// <summary>
+        /// Specifies whether Cool Access(tiering) is enabled for the volume.
+        /// Serialized Name: Volume.properties.coolAccess
+        /// </summary>
         public bool? IsCoolAccessEnabled { get; set; }
-        /// <summary> Specifies the number of days after which data that is not accessed by clients will be tiered. </summary>
+        /// <summary>
+        /// Specifies the number of days after which data that is not accessed by clients will be tiered.
+        /// Serialized Name: Volume.properties.coolnessPeriod
+        /// </summary>
         public int? CoolnessPeriod { get; set; }
         /// <summary>
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
         ///  Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
         ///  OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
         ///  Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Serialized Name: Volume.properties.coolAccessRetrievalPolicy
         /// </summary>
         public CoolAccessRetrievalPolicy? CoolAccessRetrievalPolicy { get; set; }
-        /// <summary> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </summary>
+        /// <summary>
+        /// coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier.
+        /// Serialized Name: Volume.properties.coolAccessTieringPolicy
+        /// </summary>
         public CoolAccessTieringPolicy? CoolAccessTieringPolicy { get; set; }
-        /// <summary> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.  Avoid passing null value for unixPermissions in volume update operation, As per the behavior, If Null value is passed then user-visible unixPermissions value will became null, and user will not be able to get unixPermissions value. On safer side, actual unixPermissions value on volume will remain as its last saved value only. </summary>
+        /// <summary>
+        /// UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.  Avoid passing null value for unixPermissions in volume update operation, As per the behavior, If Null value is passed then user-visible unixPermissions value will became null, and user will not be able to get unixPermissions value. On safer side, actual unixPermissions value on volume will remain as its last saved value only.
+        /// Serialized Name: Volume.properties.unixPermissions
+        /// </summary>
         public string UnixPermissions { get; set; }
-        /// <summary> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </summary>
+        /// <summary>
+        /// When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning.
+        /// Serialized Name: Volume.properties.cloneProgress
+        /// </summary>
         public int? CloneProgress { get; }
-        /// <summary> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </summary>
+        /// <summary>
+        /// Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume.
+        /// Serialized Name: Volume.properties.fileAccessLogs
+        /// </summary>
         public NetAppFileAccessLog? FileAccessLogs { get; }
-        /// <summary> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </summary>
+        /// <summary>
+        /// Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose
+        /// Serialized Name: Volume.properties.avsDataStore
+        /// </summary>
         public NetAppAvsDataStore? AvsDataStore { get; set; }
-        /// <summary> Data store resource unique identifier. </summary>
+        /// <summary>
+        /// Data store resource unique identifier
+        /// Serialized Name: Volume.properties.dataStoreResourceId
+        /// </summary>
         public IReadOnlyList<ResourceIdentifier> DataStoreResourceId { get; }
-        /// <summary> Specifies if default quota is enabled for the volume. </summary>
+        /// <summary>
+        /// Specifies if default quota is enabled for the volume.
+        /// Serialized Name: Volume.properties.isDefaultQuotaEnabled
+        /// </summary>
         public bool? IsDefaultQuotaEnabled { get; set; }
-        /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
+        /// <summary>
+        /// Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+        /// Serialized Name: Volume.properties.defaultUserQuotaInKiBs
+        /// </summary>
         public long? DefaultUserQuotaInKiBs { get; set; }
-        /// <summary> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </summary>
+        /// <summary>
+        /// Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+        /// Serialized Name: Volume.properties.defaultGroupQuotaInKiBs
+        /// </summary>
         public long? DefaultGroupQuotaInKiBs { get; set; }
-        /// <summary> Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB. </summary>
+        /// <summary>
+        /// Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB.
+        /// Serialized Name: Volume.properties.maximumNumberOfFiles
+        /// </summary>
         public long? MaximumNumberOfFiles { get; }
-        /// <summary> Volume Group Name. </summary>
+        /// <summary>
+        /// Volume Group Name
+        /// Serialized Name: Volume.properties.volumeGroupName
+        /// </summary>
         public string VolumeGroupName { get; }
-        /// <summary> Pool Resource Id used in case of creating a volume through volume group. </summary>
+        /// <summary>
+        /// Pool Resource Id used in case of creating a volume through volume group
+        /// Serialized Name: Volume.properties.capacityPoolResourceId
+        /// </summary>
         public ResourceIdentifier CapacityPoolResourceId { get; set; }
-        /// <summary> Proximity placement group associated with the volume. </summary>
+        /// <summary>
+        /// Proximity placement group associated with the volume
+        /// Serialized Name: Volume.properties.proximityPlacementGroup
+        /// </summary>
         public ResourceIdentifier ProximityPlacementGroupId { get; set; }
-        /// <summary> T2 network information. </summary>
+        /// <summary>
+        /// T2 network information
+        /// Serialized Name: Volume.properties.t2Network
+        /// </summary>
         public string T2Network { get; }
-        /// <summary> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </summary>
+        /// <summary>
+        /// Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log
+        /// Serialized Name: Volume.properties.volumeSpecName
+        /// </summary>
         public string VolumeSpecName { get; set; }
-        /// <summary> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </summary>
+        /// <summary>
+        /// Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01.
+        /// Serialized Name: Volume.properties.encrypted
+        /// </summary>
         public bool? IsEncrypted { get; }
-        /// <summary> Application specific placement rules for the particular volume. </summary>
+        /// <summary>
+        /// Application specific placement rules for the particular volume
+        /// Serialized Name: Volume.properties.placementRules
+        /// </summary>
         public IList<NetAppVolumePlacementRule> PlacementRules { get; }
-        /// <summary> Flag indicating whether subvolume operations are enabled on the volume. </summary>
+        /// <summary>
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Serialized Name: Volume.properties.enableSubvolumes
+        /// </summary>
         public EnableNetAppSubvolume? EnableSubvolumes { get; set; }
-        /// <summary> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </summary>
+        /// <summary>
+        /// The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides.
+        /// Serialized Name: Volume.properties.provisionedAvailabilityZone
+        /// </summary>
         public string ProvisionedAvailabilityZone { get; }
-        /// <summary> Specifies whether volume is a Large Volume or Regular Volume. </summary>
+        /// <summary>
+        /// Specifies whether volume is a Large Volume or Regular Volume.
+        /// Serialized Name: Volume.properties.isLargeVolume
+        /// </summary>
         public bool? IsLargeVolume { get; set; }
-        /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
+        /// <summary>
+        /// Id of the snapshot or backup that the volume is restored from.
+        /// Serialized Name: Volume.properties.originatingResourceId
+        /// </summary>
         public ResourceIdentifier OriginatingResourceId { get; }
-        /// <summary> Space shared by short term clone volume with parent volume in bytes. </summary>
+        /// <summary>
+        /// Space shared by short term clone volume with parent volume in bytes.
+        /// Serialized Name: Volume.properties.inheritedSizeInBytes
+        /// </summary>
         public long? InheritedSizeInBytes { get; }
-        /// <summary> Language supported for volume. </summary>
+        /// <summary>
+        /// Language supported for volume.
+        /// Serialized Name: Volume.properties.language
+        /// </summary>
         public NetAppVolumeLanguage? Language { get; set; }
     }
 }

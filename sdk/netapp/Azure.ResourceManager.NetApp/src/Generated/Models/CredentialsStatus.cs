@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// "NoCredentialsSet": Access and Secret key pair have not been generated.
     /// "CredentialsExpired": Access and Secret key pair have expired.
     /// "Active": The certificate has been installed and credentials are unexpired.
+    /// Serialized Name: CredentialsStatus
     /// </summary>
     public readonly partial struct CredentialsStatus : IEquatable<CredentialsStatus>
     {
@@ -32,11 +33,20 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string CredentialsExpiredValue = "CredentialsExpired";
         private const string ActiveValue = "Active";
 
-        /// <summary> Access and Secret key pair have not been generated. </summary>
+        /// <summary>
+        /// Access and Secret key pair have not been generated.
+        /// Serialized Name: CredentialsStatus.NoCredentialsSet
+        /// </summary>
         public static CredentialsStatus NoCredentialsSet { get; } = new CredentialsStatus(NoCredentialsSetValue);
-        /// <summary> Access and Secret key pair have expired. </summary>
+        /// <summary>
+        /// Access and Secret key pair have expired.
+        /// Serialized Name: CredentialsStatus.CredentialsExpired
+        /// </summary>
         public static CredentialsStatus CredentialsExpired { get; } = new CredentialsStatus(CredentialsExpiredValue);
-        /// <summary> The certificate has been installed on the bucket server and the bucket credentials are unexpired. </summary>
+        /// <summary>
+        /// The certificate has been installed on the bucket server and the bucket credentials are unexpired.
+        /// Serialized Name: CredentialsStatus.Active
+        /// </summary>
         public static CredentialsStatus Active { get; } = new CredentialsStatus(ActiveValue);
         /// <summary> Determines if two <see cref="CredentialsStatus"/> values are the same. </summary>
         public static bool operator ==(CredentialsStatus left, CredentialsStatus right) => left.Equals(right);

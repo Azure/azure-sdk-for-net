@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Quota Items. </summary>
+    /// <summary>
+    /// List of Quota Items
+    /// Serialized Name: QuotaItemList
+    /// </summary>
     internal partial class QuotaItemList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaItemList"/>. </summary>
-        /// <param name="value"> A list of QuotaItems. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of QuotaItems
+        /// Serialized Name: QuotaItemList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of results.
+        /// Serialized Name: QuotaItemList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of QuotaItems. </summary>
+        /// <summary>
+        /// A list of QuotaItems
+        /// Serialized Name: QuotaItemList.value
+        /// </summary>
         public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
+        /// <summary>
+        /// URL to get the next set of results.
+        /// Serialized Name: QuotaItemList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

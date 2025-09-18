@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            provisioningState = new NetAppProvisioningState(property0.Value.GetString());
+                            provisioningState = property0.Value.GetString().ToNetAppProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("status"u8))

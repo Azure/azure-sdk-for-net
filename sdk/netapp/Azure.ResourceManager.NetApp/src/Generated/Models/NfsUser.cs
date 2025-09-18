@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The effective NFS User ID and Group ID when accessing the volume data. </summary>
+    /// <summary>
+    /// The effective NFS User ID and Group ID when accessing the volume data.
+    /// Serialized Name: NfsUser
+    /// </summary>
     public partial class NfsUser
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NfsUser"/>. </summary>
-        /// <param name="userId"> The NFS user's UID. </param>
-        /// <param name="groupId"> The NFS user's GID. </param>
+        /// <param name="userId">
+        /// The NFS user's UID
+        /// Serialized Name: NfsUser.userId
+        /// </param>
+        /// <param name="groupId">
+        /// The NFS user's GID
+        /// Serialized Name: NfsUser.groupId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NfsUser(long? userId, long? groupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The NFS user's UID. </summary>
+        /// <summary>
+        /// The NFS user's UID
+        /// Serialized Name: NfsUser.userId
+        /// </summary>
         public long? UserId { get; set; }
-        /// <summary> The NFS user's GID. </summary>
+        /// <summary>
+        /// The NFS user's GID
+        /// Serialized Name: NfsUser.groupId
+        /// </summary>
         public long? GroupId { get; set; }
     }
 }

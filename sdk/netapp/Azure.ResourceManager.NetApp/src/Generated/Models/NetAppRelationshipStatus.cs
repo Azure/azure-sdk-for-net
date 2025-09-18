@@ -10,42 +10,11 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The status of the Volume Replication. </summary>
+    /// <summary>
+    /// The status of the Volume Replication
+    /// Serialized Name: RelationshipStatus
+    /// </summary>
     public readonly partial struct NetAppRelationshipStatus : IEquatable<NetAppRelationshipStatus>
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NetAppRelationshipStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetAppRelationshipStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string IdleValue = "Idle";
-        private const string TransferringValue = "Transferring";
-
-        /// <summary> No data is currently being transferred between volumes. </summary>
-        public static NetAppRelationshipStatus Idle { get; } = new NetAppRelationshipStatus(IdleValue);
-        /// <summary> Data is being transferred between volumes. </summary>
-        public static NetAppRelationshipStatus Transferring { get; } = new NetAppRelationshipStatus(TransferringValue);
-        /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are the same. </summary>
-        public static bool operator ==(NetAppRelationshipStatus left, NetAppRelationshipStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are not the same. </summary>
-        public static bool operator !=(NetAppRelationshipStatus left, NetAppRelationshipStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppRelationshipStatus"/>. </summary>
-        public static implicit operator NetAppRelationshipStatus(string value) => new NetAppRelationshipStatus(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is NetAppRelationshipStatus other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(NetAppRelationshipStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NIC information and list of volumes for which the NIC has the primary mount ip address. </summary>
+    /// <summary>
+    /// NIC information and list of volumes for which the NIC has the primary mount ip address.
+    /// Serialized Name: NicInfo
+    /// </summary>
     public partial class NicInfo
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NicInfo"/>. </summary>
-        /// <param name="ipAddress"> ipAddress. </param>
-        /// <param name="volumeResourceIds"> Volume resource Ids. </param>
+        /// <param name="ipAddress">
+        /// ipAddress
+        /// Serialized Name: NicInfo.ipAddress
+        /// </param>
+        /// <param name="volumeResourceIds">
+        /// Volume resource Ids
+        /// Serialized Name: NicInfo.volumeResourceIds
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NicInfo(string ipAddress, IReadOnlyList<ResourceIdentifier> volumeResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +72,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ipAddress. </summary>
+        /// <summary>
+        /// ipAddress
+        /// Serialized Name: NicInfo.ipAddress
+        /// </summary>
         public string IPAddress { get; }
-        /// <summary> Volume resource Ids. </summary>
+        /// <summary>
+        /// Volume resource Ids
+        /// Serialized Name: NicInfo.volumeResourceIds
+        /// </summary>
         public IReadOnlyList<ResourceIdentifier> VolumeResourceIds { get; }
     }
 }

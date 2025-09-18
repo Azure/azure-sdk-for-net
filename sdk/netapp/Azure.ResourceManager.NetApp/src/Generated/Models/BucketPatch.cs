@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Bucket resource. </summary>
+    /// <summary>
+    /// Bucket resource
+    /// Serialized Name: BucketPatch
+    /// </summary>
     public partial class BucketPatch : ResourceData
     {
         /// <summary>
@@ -57,11 +60,26 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="path"> The volume path mounted inside the bucket. </param>
-        /// <param name="fileSystemUser"> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
-        /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. </param>
+        /// <param name="path">
+        /// The volume path mounted inside the bucket.
+        /// Serialized Name: BucketPatch.properties.path
+        /// </param>
+        /// <param name="fileSystemUser">
+        /// File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both.
+        /// Serialized Name: BucketPatch.properties.fileSystemUser
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the resource
+        /// Serialized Name: BucketPatch.properties.provisioningState
+        /// </param>
+        /// <param name="server">
+        /// Properties of the server managing the lifecycle of volume buckets
+        /// Serialized Name: BucketPatch.properties.server
+        /// </param>
+        /// <param name="permissions">
+        /// Access permissions for the bucket. Either ReadOnly or ReadWrite.
+        /// Serialized Name: BucketPatch.properties.permissions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BucketPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, FileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, BucketServerPatchProperties server, BucketPatchPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,15 +91,30 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The volume path mounted inside the bucket. </summary>
+        /// <summary>
+        /// The volume path mounted inside the bucket.
+        /// Serialized Name: BucketPatch.properties.path
+        /// </summary>
         public string Path { get; set; }
-        /// <summary> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </summary>
+        /// <summary>
+        /// File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both.
+        /// Serialized Name: BucketPatch.properties.fileSystemUser
+        /// </summary>
         public FileSystemUser FileSystemUser { get; set; }
-        /// <summary> Provisioning state of the resource. </summary>
+        /// <summary>
+        /// Provisioning state of the resource
+        /// Serialized Name: BucketPatch.properties.provisioningState
+        /// </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
-        /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>
+        /// <summary>
+        /// Properties of the server managing the lifecycle of volume buckets
+        /// Serialized Name: BucketPatch.properties.server
+        /// </summary>
         public BucketServerPatchProperties Server { get; set; }
-        /// <summary> Access permissions for the bucket. Either ReadOnly or ReadWrite. </summary>
+        /// <summary>
+        /// Access permissions for the bucket. Either ReadOnly or ReadWrite.
+        /// Serialized Name: BucketPatch.properties.permissions
+        /// </summary>
         public BucketPatchPermission? Permissions { get; set; }
     }
 }
