@@ -15,11 +15,11 @@ using Azure.ResourceManager.Compute.Recommender;
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
     /// <summary> SpotPlacementScores API Input. </summary>
-    public partial class SpotPlacementScoresInput : IJsonModel<SpotPlacementScoresInput>
+    public partial class ComputeRecommenderGenerateContent : IJsonModel<ComputeRecommenderGenerateContent>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SpotPlacementScoresInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeRecommenderGenerateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpotPlacementScoresInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderGenerateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpotPlacementScoresInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderGenerateContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(DesiredLocations))
             {
@@ -84,24 +84,24 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SpotPlacementScoresInput IJsonModel<SpotPlacementScoresInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeRecommenderGenerateContent IJsonModel<ComputeRecommenderGenerateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SpotPlacementScoresInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeRecommenderGenerateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpotPlacementScoresInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderGenerateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpotPlacementScoresInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderGenerateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSpotPlacementScoresInput(document.RootElement, options);
+            return DeserializeComputeRecommenderGenerateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SpotPlacementScoresInput DeserializeSpotPlacementScoresInput(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeRecommenderGenerateContent DeserializeComputeRecommenderGenerateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,58 +165,58 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SpotPlacementScoresInput(desiredLocations ?? new ChangeTrackingList<AzureLocation>(), desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>(), desiredCount, availabilityZones, additionalBinaryDataProperties);
+            return new ComputeRecommenderGenerateContent(desiredLocations ?? new ChangeTrackingList<AzureLocation>(), desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>(), desiredCount, availabilityZones, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SpotPlacementScoresInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeRecommenderGenerateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpotPlacementScoresInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderGenerateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SpotPlacementScoresInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderGenerateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SpotPlacementScoresInput IPersistableModel<SpotPlacementScoresInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeRecommenderGenerateContent IPersistableModel<ComputeRecommenderGenerateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SpotPlacementScoresInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeRecommenderGenerateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpotPlacementScoresInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderGenerateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeSpotPlacementScoresInput(document.RootElement, options);
+                        return DeserializeComputeRecommenderGenerateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpotPlacementScoresInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderGenerateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SpotPlacementScoresInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeRecommenderGenerateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="spotPlacementScoresInput"> The <see cref="SpotPlacementScoresInput"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SpotPlacementScoresInput spotPlacementScoresInput)
+        /// <param name="computeRecommenderGenerateContent"> The <see cref="ComputeRecommenderGenerateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ComputeRecommenderGenerateContent computeRecommenderGenerateContent)
         {
-            if (spotPlacementScoresInput == null)
+            if (computeRecommenderGenerateContent == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(spotPlacementScoresInput, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(computeRecommenderGenerateContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

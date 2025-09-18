@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.Compute.Recommender
             return subscriptionResource.GetCachedClient(client => new MockableComputeRecommenderSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeDiagnosticBaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ComputeDiagnosticBaseResource"/> object. </returns>
-        public static ComputeDiagnosticBaseResource GetComputeDiagnosticBaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
+        public static ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeRecommenderArmClient(client).GetComputeDiagnosticBaseResource(id);
+            return GetMockableComputeRecommenderArmClient(client).GetComputeRecommenderDiagnosticResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeDiagnosticBaseResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="ComputeDiagnosticBaseResource"/> object. </returns>
-        public static ComputeDiagnosticBaseResource GetComputeDiagnosticBase(this SubscriptionResource subscriptionResource)
+        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
+        public static ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnostic(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeDiagnosticBase();
+            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeRecommenderDiagnostic();
         }
     }
 }

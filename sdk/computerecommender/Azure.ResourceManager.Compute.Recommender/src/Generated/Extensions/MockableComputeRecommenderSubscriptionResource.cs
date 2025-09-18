@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeDiagnosticBaseResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> Returns a <see cref="ComputeDiagnosticBaseResource"/> object. </returns>
-        public virtual ComputeDiagnosticBaseResource GetComputeDiagnosticBase()
+        /// <summary> Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
+        public virtual ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnostic()
         {
-            return new ComputeDiagnosticBaseResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "spot"));
+            return new ComputeRecommenderDiagnosticResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "spot"));
         }
     }
 }

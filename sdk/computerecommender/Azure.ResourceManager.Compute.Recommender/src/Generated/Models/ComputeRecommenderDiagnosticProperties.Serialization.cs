@@ -14,11 +14,11 @@ using Azure.ResourceManager.Compute.Recommender;
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
     /// <summary> Contains additional properties of a diagnostic. </summary>
-    internal partial class DiagnosticProperties : IJsonModel<DiagnosticProperties>
+    internal partial class ComputeRecommenderDiagnosticProperties : IJsonModel<ComputeRecommenderDiagnosticProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiagnosticProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeRecommenderDiagnosticProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(SupportedResourceTypes))
             {
@@ -68,24 +68,24 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticProperties IJsonModel<DiagnosticProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeRecommenderDiagnosticProperties IJsonModel<ComputeRecommenderDiagnosticProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiagnosticProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeRecommenderDiagnosticProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiagnosticProperties(document.RootElement, options);
+            return DeserializeComputeRecommenderDiagnosticProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DiagnosticProperties DeserializeDiagnosticProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeRecommenderDiagnosticProperties DeserializeComputeRecommenderDiagnosticProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,47 +121,47 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiagnosticProperties(supportedResourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ComputeRecommenderDiagnosticProperties(supportedResourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiagnosticProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeRecommenderDiagnosticProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticProperties IPersistableModel<DiagnosticProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeRecommenderDiagnosticProperties IPersistableModel<ComputeRecommenderDiagnosticProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiagnosticProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeRecommenderDiagnosticProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeDiagnosticProperties(document.RootElement, options);
+                        return DeserializeComputeRecommenderDiagnosticProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiagnosticProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeRecommenderDiagnosticProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

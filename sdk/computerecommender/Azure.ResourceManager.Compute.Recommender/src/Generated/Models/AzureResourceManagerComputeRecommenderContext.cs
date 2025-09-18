@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Compute.Recommender
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ComputeDiagnosticBaseData))]
-    [ModelReaderWriterBuildable(typeof(ComputeDiagnosticBaseResource))]
+    [ModelReaderWriterBuildable(typeof(ComputeRecommenderDiagnosticData))]
+    [ModelReaderWriterBuildable(typeof(ComputeRecommenderDiagnosticProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeRecommenderDiagnosticResource))]
+    [ModelReaderWriterBuildable(typeof(ComputeRecommenderGenerateContent))]
+    [ModelReaderWriterBuildable(typeof(ComputeRecommenderGenerateResult))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderPlacementScore))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderResourceSize))]
-    [ModelReaderWriterBuildable(typeof(DiagnosticProperties))]
-    [ModelReaderWriterBuildable(typeof(SpotPlacementScoresInput))]
-    [ModelReaderWriterBuildable(typeof(SpotPlacementScoresResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerComputeRecommenderContext : ModelReaderWriterContext
     {

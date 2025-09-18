@@ -18,11 +18,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Recommender
 {
     /// <summary> Contains metadata of a diagnostic type. </summary>
-    public partial class ComputeDiagnosticBaseData : IJsonModel<ComputeDiagnosticBaseData>
+    public partial class ComputeRecommenderDiagnosticData : IJsonModel<ComputeRecommenderDiagnosticData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeDiagnosticBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeRecommenderDiagnosticData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeDiagnosticBaseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeDiagnosticBaseData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.Compute.Recommender
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeDiagnosticBaseData IJsonModel<ComputeDiagnosticBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ComputeDiagnosticBaseData)JsonModelCreateCore(ref reader, options);
+        ComputeRecommenderDiagnosticData IJsonModel<ComputeRecommenderDiagnosticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ComputeRecommenderDiagnosticData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeDiagnosticBaseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeDiagnosticBaseData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeDiagnosticBaseData(document.RootElement, options);
+            return DeserializeComputeRecommenderDiagnosticData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeDiagnosticBaseData DeserializeComputeDiagnosticBaseData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeRecommenderDiagnosticData DeserializeComputeRecommenderDiagnosticData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Recommender
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DiagnosticProperties properties = default;
+            ComputeRecommenderDiagnosticProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                     {
                         continue;
                     }
-                    properties = DiagnosticProperties.DeserializeDiagnosticProperties(prop.Value, options);
+                    properties = ComputeRecommenderDiagnosticProperties.DeserializeComputeRecommenderDiagnosticProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeDiagnosticBaseData(
+            return new ComputeRecommenderDiagnosticData(
                 id,
                 name,
                 resourceType,
@@ -135,51 +135,51 @@ namespace Azure.ResourceManager.Compute.Recommender
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeDiagnosticBaseData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeRecommenderDiagnosticData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeDiagnosticBaseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeDiagnosticBaseData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeDiagnosticBaseData IPersistableModel<ComputeDiagnosticBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputeDiagnosticBaseData)PersistableModelCreateCore(data, options);
+        ComputeRecommenderDiagnosticData IPersistableModel<ComputeRecommenderDiagnosticData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputeRecommenderDiagnosticData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeDiagnosticBaseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeComputeDiagnosticBaseData(document.RootElement, options);
+                        return DeserializeComputeRecommenderDiagnosticData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeDiagnosticBaseData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeDiagnosticBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeRecommenderDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ComputeDiagnosticBaseData"/> from. </param>
-        internal static ComputeDiagnosticBaseData FromResponse(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ComputeRecommenderDiagnosticData"/> from. </param>
+        internal static ComputeRecommenderDiagnosticData FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeComputeDiagnosticBaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeComputeRecommenderDiagnosticData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

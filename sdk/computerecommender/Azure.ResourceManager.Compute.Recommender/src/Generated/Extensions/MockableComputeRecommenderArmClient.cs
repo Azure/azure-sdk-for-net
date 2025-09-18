@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeDiagnosticBaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComputeDiagnosticBaseResource"/> object. </returns>
-        public virtual ComputeDiagnosticBaseResource GetComputeDiagnosticBaseResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
+        public virtual ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnosticResource(ResourceIdentifier id)
         {
-            ComputeDiagnosticBaseResource.ValidateResourceId(id);
-            return new ComputeDiagnosticBaseResource(Client, id);
+            ComputeRecommenderDiagnosticResource.ValidateResourceId(id);
+            return new ComputeRecommenderDiagnosticResource(Client, id);
         }
     }
 }

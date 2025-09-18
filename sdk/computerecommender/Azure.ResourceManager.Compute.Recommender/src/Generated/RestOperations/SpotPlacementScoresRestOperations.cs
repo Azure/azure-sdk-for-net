@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Recommender
             return message;
         }
 
-        internal HttpMessage CreatePostRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGenerateRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
