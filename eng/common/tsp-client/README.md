@@ -21,6 +21,7 @@ cd eng/common/tsp-client
 
 # Install dependencies
 npm ci
+```
 
 ## Usage
 
@@ -65,7 +66,7 @@ If you need to manually update the tsp-client version:
    ```json
    {
      "dependencies": {
-       "@azure-tools/typespec-client-generator-cli": "0.8.0"
+       "@azure-tools/typespec-client-generator-cli": "0.28.1"
      }
    }
    ```
