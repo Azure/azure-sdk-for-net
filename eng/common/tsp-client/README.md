@@ -19,14 +19,12 @@ This directory contains npm package definitions for `@azure-tools/typespec-clien
 # Navigate to this directory
 cd eng/common/tsp-client
 
-# Install dependencies (for development/manual use)
+# Install dependencies
 npm ci
 
 ## Usage
 
-After installation, you can run tsp-client using one of these approaches:
-
-### Option 1: Change directory approach (recommended)
+After installation, you can run tsp-client by navigating to the directory and using npm exec:
 
 ```bash
 cd eng/common/tsp-client
@@ -41,33 +39,14 @@ npm exec --no -- tsp-client version
 npm exec --no -- tsp-client generate --output-dir ./generated
 
 # Initialize a new project
-npm exec --no -- tsp-client init --config ./tspconfig.yaml
-```
-
-### Option 2: Using environment variable
-
-```bash
-# Set repository root (adjust path as needed)
-export REPO_ROOT=$(git rev-parse --show-toplevel)
-
-# Get help
-npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client --help
-
-# Check version
-npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client version
-
-# Generate client code
-npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client generate --output-dir ./generated
-
-# Initialize a new project
-npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client init --config ./tspconfig.yaml
+npm exec --no -- tsp-client init --tsp-config ./tspconfig.yaml
 ```
 
 ## CI/CD Best Practices
 
 ```bash
 cd eng/common/tsp-client
-npm i --ignore-scripts --no-audit
+npm ci
 npm exec --no -- tsp-client init --update-if-exists --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/dee71463cbde1d416c47cf544e34f7966a94ddcb/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml
 ```
 
