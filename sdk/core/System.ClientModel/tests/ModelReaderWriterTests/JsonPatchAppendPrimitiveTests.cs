@@ -536,5 +536,38 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.AreEqual("{\"array\":[\"Hello\",\"World\",null]}", jp.ToString("J"));
         }
+
+        [Test]
+        public void Append_Mixed()
+        {
+            JsonPatch jp = new();
+
+            jp.Append("$.array"u8, "Hello");
+            jp.Append("$.array"u8, 42);
+            jp.Append("$.array"u8, true);
+            jp.AppendNull("$.array"u8);
+
+            Assert.AreEqual("Hello", jp.GetString("$.array[0]"u8));
+            Assert.AreEqual(42, jp.GetInt32("$.array[1]"u8));
+            Assert.AreEqual(42, jp.GetNullableValue<int>("$.array[1]"u8));
+            Assert.AreEqual(true, jp.GetBoolean("$.array[2]"u8));
+            Assert.AreEqual(true, jp.GetNullableValue<bool>("$.array[2]"u8));
+            Assert.AreEqual(null, jp.GetString("$.array[3]"u8));
+            Assert.AreEqual(null, jp.GetNullableValue<int>("$.array[3]"u8));
+            Assert.AreEqual(null, jp.GetNullableValue<bool>("$.array[3]"u8));
+
+            var ex = Assert.Throws<FormatException>(() => jp.GetInt32("$.array[0]"u8));
+            Assert.AreEqual("Value at '$.array[0]' is not a System.Int32.", ex!.Message);
+            ex = Assert.Throws<FormatException>(() => jp.GetBoolean("$.array[1]"u8));
+            Assert.AreEqual("Value at '$.array[1]' is not a System.Boolean.", ex!.Message);
+
+            // string always works
+            Assert.AreEqual("Hello", jp.GetString("$.array[0]"u8));
+            Assert.AreEqual("42", jp.GetString("$.array[1]"u8));
+            Assert.AreEqual("true", jp.GetString("$.array[2]"u8));
+            Assert.AreEqual(null, jp.GetString("$.array[3]"u8));
+
+            Assert.AreEqual("{\"array\":[\"Hello\",42,true,null]}", jp.ToString("J"));
+        }
     }
 }

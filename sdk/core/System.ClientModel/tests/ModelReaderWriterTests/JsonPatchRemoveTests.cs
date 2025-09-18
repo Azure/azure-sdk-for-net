@@ -931,12 +931,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void DateTime_NonEmpty()
         {
             // Use numeric placeholders to make initial JSON valid.
-            JsonPatch jp = new("{\"x\":0,\"y\":0}"u8.ToArray());
-            var dt1 = new DateTime(2024,1,2,3,4,5, DateTimeKind.Utc);
-            var dt2 = new DateTime(2025,2,3,4,5,6, DateTimeKind.Utc);
-
-            jp.Set("$.x"u8, dt1);
-            jp.Set("$.y"u8, dt2);
+            JsonPatch jp = new("{\"x\":\"12/25/2025 06:07:08\",\"y\":\"12/26/2025 06:07:08\"}"u8.ToArray());
+            var dt1 = new DateTime(2025, 12, 25, 6, 7, 8);
+            var dt2 = new DateTime(2025, 12, 26, 6, 7, 8);
 
             Assert.IsFalse(jp.IsRemoved("$.x"u8));
             Assert.IsFalse(jp.IsRemoved("$.y"u8));
@@ -1003,12 +1000,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void DateTimeOffset_NonEmpty()
         {
-            JsonPatch jp = new("{\"x\":0,\"y\":0}"u8.ToArray());
-            var dto1 = new DateTimeOffset(2024,1,2,3,4,5, TimeSpan.Zero);
-            var dto2 = new DateTimeOffset(2025,2,3,4,5,6, TimeSpan.Zero);
-
-            jp.Set("$.x"u8, dto1);
-            jp.Set("$.y"u8, dto2);
+            JsonPatch jp = new("{\"x\":\"12/25/2025 06:07:08 +02:00\",\"y\":\"12/26/2025 06:07:08 +02:00\"}"u8.ToArray());
+            var dto1 = new DateTimeOffset(2025, 12, 25, 6, 7, 8, TimeSpan.FromHours(2));
+            var dto2 = new DateTimeOffset(2025, 12, 26, 6, 7, 8, TimeSpan.FromHours(2));
 
             Assert.IsFalse(jp.IsRemoved("$.x"u8));
             Assert.IsFalse(jp.IsRemoved("$.y"u8));
@@ -1075,12 +1069,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void Guid_NonEmpty()
         {
-            JsonPatch jp = new("{\"x\":0,\"y\":0}"u8.ToArray());
+            JsonPatch jp = new("{\"x\":\"00000000-0000-0000-0000-000000000001\",\"y\":\"00000000-0000-0000-0000-000000000002\"}"u8.ToArray());
             var g1 = new Guid("00000000-0000-0000-0000-000000000001");
             var g2 = new Guid("00000000-0000-0000-0000-000000000002");
-
-            jp.Set("$.x"u8, g1);
-            jp.Set("$.y"u8, g2);
 
             Assert.IsFalse(jp.IsRemoved("$.x"u8));
             Assert.IsFalse(jp.IsRemoved("$.y"u8));
@@ -1147,12 +1138,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void TimeSpan_NonEmpty()
         {
-            JsonPatch jp = new("{\"x\":0,\"y\":0}"u8.ToArray());
-            var t1 = TimeSpan.FromHours(1);
-            var t2 = TimeSpan.FromMinutes(90);
-
-            jp.Set("$.x"u8, t1);
-            jp.Set("$.y"u8, t2);
+            JsonPatch jp = new("{\"x\":\"1.01:01:01.0010000\",\"y\":\"2.01:01:01.0010000\"}"u8.ToArray());
+            var t1 = new TimeSpan(1, 1, 1, 1, 1);
+            var t2 = new TimeSpan(2, 1, 1, 1, 1);
 
             Assert.IsFalse(jp.IsRemoved("$.x"u8));
             Assert.IsFalse(jp.IsRemoved("$.y"u8));
@@ -1178,6 +1166,74 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual($"No value found at JSON path '$.y'.", ex!.Message);
 
             Assert.AreEqual("{}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void RemoveFromMixedArray_Seed()
+        {
+            JsonPatch jp = new("[1, \"two\", {\"three\":3}, [4]]"u8.ToArray());
+
+            jp.Remove("$[1]"u8);
+
+            Assert.IsTrue(jp.Contains("$[1]"u8));
+
+            Assert.IsTrue(jp.IsRemoved("$[1]"u8));
+
+            Assert.AreEqual("[1, {\"three\":3}, [4]]", jp.ToString("J"));
+        }
+
+        [Test]
+        public void RemoveFromMixedArray_New()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$"u8, "[1, \"two\", {\"three\":3}, [4]]"u8);
+
+            jp.Remove("$[1]"u8);
+
+            Assert.AreEqual("[1, {\"three\":3}, [4]]", jp.ToString("J"));
+        }
+
+        [Test]
+        public void RemoveThenSetFromMixedArray_New()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$"u8, "[1,\"two\",{\"three\":3},[4]]"u8);
+
+            jp.Remove("$[1]"u8);
+            jp.Set("$[1]"u8, "new");
+
+            Assert.AreEqual("[1,\"new\",[4]]", jp.ToString("J"));
+        }
+
+        [Test]
+        public void RemoveFromMixedArray_Append()
+        {
+            JsonPatch jp = new();
+
+            jp.Append("$"u8, 1);
+            jp.Append("$"u8, "two");
+            jp.Append("$"u8, "{\"three\":3}"u8);
+            jp.Append("$"u8, "[4]"u8);
+
+            jp.Remove("$[1]"u8);
+
+            Assert.AreEqual("[1,{\"three\":3},[4]]", jp.ToString("J"));
+        }
+
+        [Test]
+        public void RemoveFromMultiDimensionalMixedArray()
+        {
+            JsonPatch jp = new("[[1,\"two\"],[{\"three\":3},[4]]]"u8.ToArray());
+
+            jp.Remove("$[0][1]"u8);
+            jp.Remove("$[1][0]"u8);
+
+            Assert.IsTrue(jp.IsRemoved("$[0][1]"u8));
+            Assert.IsTrue(jp.IsRemoved("$[1][0]"u8));
+
+            Assert.AreEqual("[[1],[[4]]]", jp.ToString("J"));
         }
     }
 }

@@ -32,6 +32,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$.a.b[0].c.d[1]['e'].f", "$.a.b[0].c.d[1]['e'].g", false)]
         [TestCase("$[\"f.oo\"]['bar']", "$['f.oo'].bar", true)]
         [TestCase("$['f.oo']['bar']", "$['f.oo'].bar", true)]
+        [TestCase("$['']", "$.", true)]
+        [TestCase("$['f.o.o']", "$['f.o.o']", true)]
+        [TestCase("$['f.o.o']", "$.f.o.o", false)]
+        [TestCase("$['mix\"quote']", "$['mix\"quote']", true)]
         public void Equals_ByteArray(string left, string right, bool expected)
         {
             var a = Encoding.UTF8.GetBytes(left);
@@ -96,6 +100,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$.x.y", "$[\"x\"].y")]
         [TestCase("$.x.y", "$['x']['y']")]
         [TestCase("$.foo.bar", "$['foo']['bar']")]
+        [TestCase("$.foo.bar", "$.foo.bar")]
         [TestCase("$.foo.bar", "$[\"foo\"].bar")]
         [TestCase("$.a.b[0].c", "$['a'].b[0]['c']")]
         [TestCase("$.foo.bar[2].baz", "$['foo']['bar'][2]['baz']")]

@@ -102,7 +102,7 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
                 }
                 inBracket = false;
             }
-            else if (current == (byte)'.' && inBracket)
+            else if (current == (byte)'.' && inBracket && !needEscapedDot)
             {
                 // need to keep the ['(.+)'] format
                 buffer[bytesWritten - 1] = (byte)'[';

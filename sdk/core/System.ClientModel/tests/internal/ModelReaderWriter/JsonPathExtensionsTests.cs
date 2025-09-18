@@ -434,5 +434,31 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             int bytesWritten = jsonPath.ConvertToJsonPointer(jsonPointerSpan, true);
             Assert.AreEqual(expectedJsonPointer, Encoding.UTF8.GetString(jsonPointerSpan.Slice(0, bytesWritten).ToArray()));
         }
+
+        [TestCase("{\"x\":1,\"y\":2}", "$.x", "{\"y\":2}")]
+        [TestCase("{\"x\":1,\"y\":2}", "$.y", "{\"x\":1}")]
+        [TestCase("{\"x\":1, \"y\":2 \r\n}", "$.y", "{\"x\":1}")]
+        [TestCase("{\"x\":{\"y\":1},\"a\":{\"b\":2}}", "$.x", "{\"a\":{\"b\":2}}")]
+        [TestCase("{\"x\":{\"y\":1},\"a\":{\"b\":2}}", "$.x.y", "{\"x\":{},\"a\":{\"b\":2}}")]
+        [TestCase("{\"x\":{\"y\":1},\"a\":{\"b\":2}}", "$.a", "{\"x\":{\"y\":1}}")]
+        [TestCase("{\"x\":{\"y\":1},\"a\":{\"b\":2}}", "$.a.b", "{\"x\":{\"y\":1},\"a\":{}}")]
+        [TestCase("{\"arr\":[1,2, \r\n3]}", "$.arr[2]", "{\"arr\":[1,2]}")]
+        [TestCase("{\"arr\":[1,2, \r\n3  ]}", "$.arr[2]", "{\"arr\":[1,2]}")]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[1]", "{\"arr\":[1,3]}")]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[0]", "{\"arr\":[2,3]}")]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[2]", "{\"arr\":[1,2]}")]
+        [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$.arr[0]", "{\"arr\":[[3,4],[5,6]]}")]
+        [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$.arr[1]", "{\"arr\":[[1,2],[5,6]]}")]
+        [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$.arr[2]", "{\"arr\":[[1,2],[3,4]]}")]
+        [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$.arr[0][0]", "{\"arr\":[[2],[3,4],[5,6]]}")]
+        [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$.arr[1][1]", "{\"arr\":[[1,2],[3],[5,6]]}")]
+        [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$.arr[2][0]", "{\"arr\":[[1,2],[3,4],[6]]}")]
+        public void RemoveAt(string jsonStr, string jsonPathStr, string expectedJsonPointer)
+        {
+            byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
+            var newJson = json.Remove(jsonPath.AsSpan());
+            Assert.AreEqual(expectedJsonPointer, Encoding.UTF8.GetString(newJson));
+        }
     }
 }

@@ -175,6 +175,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void IsRemoved_Behavior()
         {
             JsonPatch jp = new("{\"obj\":{\"a\":0,\"b\":1}}"u8.ToArray());
+
             jp.Set("$.obj.a"u8, 1);
             jp.Set("$.obj.b"u8, 2);
 
@@ -188,6 +189,35 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             var ex = Assert.Throws<KeyNotFoundException>(() => jp.GetInt32("$.obj.a"u8));
             Assert.AreEqual("No value found at JSON path '$.obj.a'.", ex!.Message);
+        }
+
+        [Test]
+        public void RemoveThenResetValue()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.p"u8, 5);
+            jp.Remove("$.p"u8);
+            jp.Set("$.p"u8, 10);
+            Assert.IsFalse(jp.IsRemoved("$.p"u8));
+            Assert.AreEqual(10, jp.GetInt32("$.p"u8));
+        }
+
+        [Test]
+        public void UnsupportedNullableType_Throws()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.c"u8, 1); // store as int
+            var ex = Assert.Throws<NotSupportedException>(() => jp.GetNullableValue<char>("$.c"u8));
+            Assert.AreEqual("Type 'System.Char' is not supported by GetNullableValue.", ex!.Message);
+        }
+
+        [Test]
+        public void ToString_InvalidFormat_Throws()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.x"u8, 1);
+            var ex = Assert.Throws<NotSupportedException>(() => jp.ToString("INVALID"));
+            Assert.AreEqual("The format 'INVALID' is not supported.", ex!.Message);
         }
     }
 }

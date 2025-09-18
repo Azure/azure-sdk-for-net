@@ -107,7 +107,7 @@ internal ref struct JsonPathReader
                 // if the next byte is '\'', or '"', it's a quoted string, otherwise it's an array start
                 if (_consumed + 1 >= _length)
                 {
-                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or array index after '['");
+                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or positive array index after '['");
                 }
 
                 var next = _jsonPath[_consumed + 1];
@@ -119,7 +119,7 @@ internal ref struct JsonPathReader
 
                 if (!IsDigit(next))
                 {
-                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or array index after '['");
+                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or positive array index after '['");
                 }
 
                 _consumed++; // Skip '['

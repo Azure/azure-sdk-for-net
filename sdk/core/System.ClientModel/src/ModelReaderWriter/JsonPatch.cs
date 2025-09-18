@@ -1314,7 +1314,7 @@ public partial struct JsonPatch
     /// <param name="arrayPath">The JSON path pointing at the array.</param>
     public void AppendNull(ReadOnlySpan<byte> arrayPath)
     {
-        SetInternal(arrayPath, new(ValueKind.Null | ValueKind.ArrayItemAppend, EncodedValue.Null.Value));
+        SetInternal(arrayPath, new(ValueKind.ArrayItemAppend, EncodedValue.Null.Value));
     }
     #endregion
 

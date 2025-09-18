@@ -364,6 +364,42 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
 
         [Test]
+        public void RemoveEntireExistingArray()
+        {
+            var model = GetInitialModel();
+
+            model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId1" });
+            model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId2" });
+
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3,\"virtualMachines\":[{\"id\":\"myExistingVmId1\"},{\"id\":\"myExistingVmId2\"}]},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                data.ToString());
+
+            var model2 = GetRoundTripModel(data);
+            Assert.AreEqual(2, model2.VirtualMachines.Count);
+            Assert.AreEqual("myExistingVmId1", model2.VirtualMachines[0].Id);
+            Assert.AreEqual("myExistingVmId2", model2.VirtualMachines[1].Id);
+
+            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myExistingVmId2\"}]", model2.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}", model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}", model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
+
+            model2.Patch.Remove("$.properties.virtualMachines"u8);
+
+            var data2 = ModelReaderWriter.Write(model2);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                data2.ToString());
+
+            var model3 = GetRoundTripModel(data2);
+
+            Assert.AreEqual(0, model3.VirtualMachines.Count);
+
+            AssertCommon(model, model2);
+        }
+
+        [Test]
         public void RemoveInvalidIndexFromArrayClrDoesNothing()
         {
             var model = GetInitialModel();

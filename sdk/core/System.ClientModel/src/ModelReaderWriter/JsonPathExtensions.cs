@@ -381,7 +381,7 @@ internal static class JsonPathExtensions
             return Array.Empty<byte>();
         }
 
-        Find(json.Span, jsonPath, out Utf8JsonReader jsonReader);
+        Find(json.Span, jsonPath, out Utf8JsonReader jsonReader, out Utf8JsonReader last);
 
         long endLeft = jsonReader.TokenStartIndex;
         jsonReader.Skip();
@@ -390,7 +390,12 @@ internal static class JsonPathExtensions
 
         if (jsonReader.TokenType == JsonTokenType.EndObject && !IsFirstProperty(json, jsonPath))
         {
-            endLeft--; //remove trailing comma
+            endLeft = last.BytesConsumed; //remove trailing comma / whitespace
+        }
+
+        if (jsonReader.TokenType == JsonTokenType.EndArray && !IsAtFirstIndex(json, jsonReader.TokenStartIndex))
+        {
+            endLeft = last.BytesConsumed; //remove trailing comma / whitespace
         }
 
         return [.. json.Slice(0, (int)endLeft).Span, .. json.Slice((int)startRight).Span];
@@ -847,9 +852,13 @@ internal static class JsonPathExtensions
         return target;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void Find(ReadOnlySpan<byte> json, ReadOnlySpan<byte> jsonPath, out Utf8JsonReader jsonReader)
+        => Find(json, jsonPath, out jsonReader, out _);
+
+    private static void Find(ReadOnlySpan<byte> json, ReadOnlySpan<byte> jsonPath, out Utf8JsonReader jsonReader, out Utf8JsonReader last)
     {
-        if (!TryFind(json, jsonPath, out jsonReader))
+        if (!TryFind(json, jsonPath, out jsonReader, out last))
         {
             throw new InvalidOperationException($"{Encoding.UTF8.GetString(jsonPath.ToArray())} was not found in the JSON structure.");
         }
@@ -857,7 +866,14 @@ internal static class JsonPathExtensions
 
     private static bool TryFind(ReadOnlySpan<byte> json, ReadOnlySpan<byte> jsonPath, out Utf8JsonReader jsonReader)
     {
+        Utf8JsonReader last = default;
+        return TryFind(json, jsonPath, out jsonReader, out last);
+    }
+
+    private static bool TryFind(ReadOnlySpan<byte> json, ReadOnlySpan<byte> jsonPath, out Utf8JsonReader jsonReader, out Utf8JsonReader last)
+    {
         jsonReader = default;
+        last = default;
 
         if (json.IsEmpty)
         {
@@ -866,7 +882,7 @@ internal static class JsonPathExtensions
 
         jsonReader = new Utf8JsonReader(json);
 
-        return jsonReader.Advance(jsonPath);
+        return jsonReader.Advance(jsonPath, ref last);
     }
 
     /// <summary>
@@ -907,8 +923,9 @@ internal static class JsonPathExtensions
     /// </summary>
     /// <param name="jsonReader">The <see cref="Utf8JsonReader"/> to advance.</param>
     /// <param name="jsonPath">The JSON path to advance to.</param>
+    /// <param name="last">The last state of <paramref name="jsonReader"/>.</param>
     /// <exception cref="ArgumentException">If <paramref name="jsonPath"/> does not start with '$'.</exception>
-    public static bool Advance(ref this Utf8JsonReader jsonReader, ReadOnlySpan<byte> jsonPath)
+    public static bool Advance(ref this Utf8JsonReader jsonReader, ReadOnlySpan<byte> jsonPath, ref Utf8JsonReader last)
     {
         if (jsonPath.IsEmpty || jsonPath[0] != (byte)'$')
         {
@@ -916,7 +933,35 @@ internal static class JsonPathExtensions
         }
 
         JsonPathReader pathReader = new(jsonPath);
-        return jsonReader.Advance(ref pathReader);
+        return jsonReader.Advance(ref pathReader, ref last);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool Advance(ref this Utf8JsonReader jsonReader, ReadOnlySpan<byte> jsonPath)
+    {
+        Utf8JsonReader last = default;
+        return jsonReader.Advance(jsonPath, ref last);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool Advance(ref this Utf8JsonReader jsonReader, ref JsonPathReader pathReader)
+    {
+        Utf8JsonReader last = default;
+        return jsonReader.Advance(ref pathReader, ref last);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool Read(ref this Utf8JsonReader jsonReader, ref Utf8JsonReader last)
+    {
+        last = jsonReader;
+        return jsonReader.Read();
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void Skip(ref this Utf8JsonReader jsonReader, ref Utf8JsonReader last)
+    {
+        last = jsonReader;
+        jsonReader.Skip();
     }
 
     /// <summary>
@@ -924,21 +969,22 @@ internal static class JsonPathExtensions
     /// </summary>
     /// <param name="jsonReader">The <see cref="Utf8JsonReader"/> to advance.</param>
     /// <param name="pathReader">The <paramref name="pathReader"/> that holds the JSON path to find.</param>
-    public static bool Advance(ref this Utf8JsonReader jsonReader, ref JsonPathReader pathReader)
+    /// <param name="last">The previous state of <paramref name="jsonReader"/>.</param>
+    public static bool Advance(ref this Utf8JsonReader jsonReader, ref JsonPathReader pathReader, ref Utf8JsonReader last)
     {
         while (pathReader.Read())
         {
             switch (pathReader.Current.TokenType)
             {
                 case JsonPathTokenType.Root:
-                    if (!jsonReader.Read())
+                    if (!jsonReader.Read(ref last))
                     {
                         return false;
                     }
                     break;
 
                 case JsonPathTokenType.Property:
-                    if (!SkipToProperty(ref jsonReader, pathReader))
+                    if (!SkipToProperty(ref jsonReader, pathReader, ref last))
                     {
                         return false;
                     }
@@ -947,7 +993,7 @@ internal static class JsonPathExtensions
                 case JsonPathTokenType.ArrayIndex:
                     if (jsonReader.TokenType == JsonTokenType.PropertyName)
                     {
-                        jsonReader.Read(); // Move to the value after the property name
+                        jsonReader.Read(ref last); // Move to the value after the property name
                     }
 
                     if (jsonReader.TokenType != JsonTokenType.StartArray)
@@ -961,7 +1007,7 @@ internal static class JsonPathExtensions
                         return false;
                     }
 
-                    if (!jsonReader.SkipToIndex(indexToFind, out _))
+                    if (!jsonReader.SkipToIndex(indexToFind, out _, ref last))
                     {
                         return false;
                     }
@@ -971,7 +1017,7 @@ internal static class JsonPathExtensions
                 case JsonPathTokenType.PropertySeparator:
                     if (jsonReader.TokenType == JsonTokenType.PropertyName)
                     {
-                        jsonReader.Read();
+                        jsonReader.Read(ref last);
                     }
                     break;
 
@@ -986,18 +1032,26 @@ internal static class JsonPathExtensions
         return false;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool SkipToIndex(ref this Utf8JsonReader jsonReader, int indexToFind, out int maxIndex)
+    {
+        Utf8JsonReader last = default;
+        return jsonReader.SkipToIndex(indexToFind, out maxIndex, ref last);
+    }
+
     /// <summary>
     /// Given a <see cref="Utf8JsonReader"/> positioned at the start of an array, skips to the specified index in the array.
     /// </summary>
     /// <param name="jsonReader">The <see cref="Utf8JsonReader"/> pointed at an array.</param>
     /// <param name="indexToFind">The index to skip to.</param>
     /// <param name="maxIndex">The max index found.</param>
+    /// <param name="last">The last state of <paramref name="jsonReader"/>.</param>
     /// <returns>Try if the index was found otherwise false.</returns>
-    internal static bool SkipToIndex(ref this Utf8JsonReader jsonReader, int indexToFind, out int maxIndex)
+    internal static bool SkipToIndex(ref this Utf8JsonReader jsonReader, int indexToFind, out int maxIndex, ref Utf8JsonReader last)
     {
         maxIndex = 0;
 
-        while (jsonReader.Read())
+        while (jsonReader.Read(ref last))
         {
             if (jsonReader.TokenType == JsonTokenType.EndArray)
             {
@@ -1011,7 +1065,7 @@ internal static class JsonPathExtensions
             else
             {
                 // Skip the value
-                jsonReader.Skip();
+                jsonReader.Skip(ref last);
             }
             maxIndex++;
         }
@@ -1019,14 +1073,14 @@ internal static class JsonPathExtensions
         return true;
     }
 
-    private static bool SkipToProperty(ref Utf8JsonReader jsonReader, JsonPathReader pathReader)
+    private static bool SkipToProperty(ref Utf8JsonReader jsonReader, JsonPathReader pathReader, ref Utf8JsonReader last)
     {
         if (jsonReader.TokenType != JsonTokenType.StartObject)
         {
             return false;
         }
 
-        while (jsonReader.Read())
+        while (jsonReader.Read(ref last))
         {
             if (jsonReader.TokenType == JsonTokenType.EndObject)
             {
@@ -1041,7 +1095,7 @@ internal static class JsonPathExtensions
             else
             {
                 // Skip the value
-                jsonReader.Skip();
+                jsonReader.Skip(ref last);
             }
         }
 

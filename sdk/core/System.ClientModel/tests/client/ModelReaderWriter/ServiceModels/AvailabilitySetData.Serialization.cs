@@ -101,8 +101,11 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 }
                 if (Patch.Contains("$.properties.virtualMachines"u8))
                 {
-                    writer.WritePropertyName("virtualMachines"u8);
-                    writer.WriteRawValue(Patch.GetJson("$.properties.virtualMachines"u8));
+                    if (!Patch.IsRemoved("$.properties.virtualMachines"u8))
+                    {
+                        writer.WritePropertyName("virtualMachines"u8);
+                        writer.WriteRawValue(Patch.GetJson("$.properties.virtualMachines"u8));
+                    }
                 }
                 else if (OptionalProperty.IsCollectionDefined(VirtualMachines))
                 {

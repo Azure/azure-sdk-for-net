@@ -221,7 +221,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             catch (FormatException ex)
             {
                 exceptionThrown = true;
-                Assert.AreEqual("Invalid JsonPath syntax at position 2: expected a property or array index after '['", ex.Message);
+                Assert.AreEqual("Invalid JsonPath syntax at position 2: expected a property or positive array index after '['", ex.Message);
             }
             Assert.IsTrue(exceptionThrown, "Expected FormatException for unsupported filter expression");
         }
@@ -418,6 +418,94 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             Assert.IsTrue(full.Read()); // Property c
             Assert.AreEqual(JsonPathTokenType.Property, full.Current.TokenType);
             Assert.AreEqual("c", Encoding.UTF8.GetString(full.Current.ValueSpan.ToArray()));
+        }
+
+        [Test]
+        public void Read_Invalid_UnclosedBracket_Throws()
+        {
+            var reader = new JsonPathReader("$['foo'"u8);
+            Assert.IsTrue(reader.Read()); // $
+            Assert.IsTrue(reader.Read()); // separator
+            bool exceptionThrown = false;
+            try
+            {
+                reader.Read();
+            }
+            catch (FormatException ex)
+            {
+                exceptionThrown = true;
+                Assert.AreEqual("Unterminated quoted string in JsonPath", ex.Message);
+            }
+            Assert.IsTrue(exceptionThrown, "Expected FormatException for unterminated quoted string");
+        }
+
+        [Test]
+        public void Read_Invalid_OpenBracket_NoFollowup_Throws()
+        {
+            var reader = new JsonPathReader("$["u8);
+            Assert.IsTrue(reader.Read()); // root
+            bool exceptionThrown = false;
+            try
+            {
+                reader.Read();
+            }
+            catch (FormatException ex)
+            {
+                exceptionThrown = true;
+                Assert.AreEqual("Invalid JsonPath syntax at position 2: expected a property or positive array index after '['", ex.Message);
+            }
+            Assert.IsTrue(exceptionThrown, "Expected FormatException for open bracket with no follow-up");
+        }
+
+        [Test]
+        public void Read_Invalid_UnclosedArrayIndex_Throws()
+        {
+            var reader = new JsonPathReader("$[123"u8);
+            Assert.IsTrue(reader.Read()); // root
+            bool exceptionThrown = false;
+            try
+            {
+                reader.Read();
+            }
+            catch (FormatException ex)
+            {
+                exceptionThrown = true;
+                Assert.AreEqual("Invalid JsonPath syntax at position 5: expected ']' after number", ex.Message);
+            }
+            Assert.IsTrue(exceptionThrown, "Expected FormatException for unclosed array index");
+        }
+
+        [Test]
+        public void Read_Invalid_NegativeIndex_Throws()
+        {
+            var reader = new JsonPathReader("$.arr[-1]"u8);
+            Assert.IsTrue(reader.Read()); // root
+            Assert.IsTrue(reader.Read()); // separator
+            Assert.IsTrue(reader.Read()); // property arr
+            bool exceptionThrown = false;
+            try
+            {
+                reader.Read();
+            }
+            catch (FormatException ex)
+            {
+                exceptionThrown = true;
+                Assert.AreEqual("Invalid JsonPath syntax at position 6: expected a property or positive array index after '['", ex.Message);
+            }
+            Assert.IsTrue(exceptionThrown, "Expected FormatException for negative array index");
+        }
+
+        [Test]
+        public void Read_TrailingDot_ParsesSeparatorThenEnd()
+        {
+            var reader = new JsonPathReader("$.foo."u8);
+            Assert.IsTrue(reader.Read()); // $
+            Assert.IsTrue(reader.Read()); // .
+            Assert.IsTrue(reader.Read()); // foo
+            Assert.IsTrue(reader.Read()); // trailing .
+            Assert.AreEqual(JsonPathTokenType.PropertySeparator, reader.Current.TokenType);
+            Assert.IsTrue(reader.Read());
+            Assert.AreEqual(JsonPathTokenType.End, reader.Current.TokenType);
         }
     }
 }
