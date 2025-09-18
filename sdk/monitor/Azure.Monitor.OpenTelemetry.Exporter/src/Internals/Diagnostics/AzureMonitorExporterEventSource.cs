@@ -458,5 +458,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(45, Message = "The {0} method received an AzureMonitorExporterOptions with EnableLiveMetrics set to true, which isn't supported. Note that LiveMetrics is only available via the UseAzureMonitorExporter API.", Level = EventLevel.Warning)]
         public void LiveMetricsNotSupported(string methodName) => WriteEvent(45, methodName);
+
+        [Event(46, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {1}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(46, previousCollectedTime, recentCollectedTime);
+
+        [Event(47, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {1}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(47, previousCollectedValue, recentCollectedValue);
+
+        [Event(48, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
+        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(48, period, diffValue, calculatedValue, processorCount, normalizedValue);
+
+        [NonEvent]
+        public void FailedToCollectProcessPrivateBytes(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                FailedToCollectProcessPrivateBytes(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(49, Message = "Failed to collect Process Private Bytes due to an exception. {0}", Level = EventLevel.Warning)]
+        public void FailedToCollectProcessPrivateBytes(string exceptionMessage) => WriteEvent(49, exceptionMessage);
     }
 }
