@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Information about svm peering process. </summary>
+    /// <summary>
+    /// Information about svm peering process
+    /// Serialized Name: SvmPeerCommandResponse
+    /// </summary>
     public partial class SvmPeerCommandResult
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SvmPeerCommandResult"/>. </summary>
-        /// <param name="svmPeeringCommand"> A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
+        /// <param name="svmPeeringCommand">
+        /// A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;
+        /// Serialized Name: SvmPeerCommandResponse.svmPeeringCommand
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SvmPeerCommandResult(string svmPeeringCommand, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </summary>
+        /// <summary>
+        /// A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;
+        /// Serialized Name: SvmPeerCommandResponse.svmPeeringCommand
+        /// </summary>
         public string SvmPeeringCommand { get; }
     }
 }

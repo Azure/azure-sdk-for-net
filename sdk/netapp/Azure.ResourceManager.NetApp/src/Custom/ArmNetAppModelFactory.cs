@@ -206,5 +206,25 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return NetAppSubscriptionQuotaItem(id: id, name: name, resourceType: resourceType, systemData: systemData, current: current, @default: @default, usage: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplicationStatus"/>. </summary>
+        /// <param name="isHealthy"> Replication health check. </param>
+        /// <param name="relationshipStatus"> Status of the mirror relationship. </param>
+        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="totalProgress"> The progress of the replication. </param>
+        /// <param name="errorMessage"> Displays error message if the replication is in an error state. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeReplicationStatus"/> instance for mocking. </returns>
+        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
+        {
+            VolumeReplicationRelationshipStatus volumeReplicationRelationshipStatus = new VolumeReplicationRelationshipStatus(relationshipStatus.ToString());
+
+            return new NetAppVolumeReplicationStatus(
+                isHealthy,
+                volumeReplicationRelationshipStatus,
+                mirrorState,
+                totalProgress,
+                errorMessage,
+                serializedAdditionalRawData: null);
+        }
     }
 }

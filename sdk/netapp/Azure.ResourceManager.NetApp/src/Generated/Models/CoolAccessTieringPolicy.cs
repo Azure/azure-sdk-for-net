@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </summary>
+    /// <summary>
+    /// coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier.
+    /// Serialized Name: CoolAccessTieringPolicy
+    /// </summary>
     public readonly partial struct CoolAccessTieringPolicy : IEquatable<CoolAccessTieringPolicy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string AutoValue = "Auto";
         private const string SnapshotOnlyValue = "SnapshotOnly";
 
-        /// <summary> Auto. </summary>
+        /// <summary>
+        /// Auto
+        /// Serialized Name: CoolAccessTieringPolicy.Auto
+        /// </summary>
         public static CoolAccessTieringPolicy Auto { get; } = new CoolAccessTieringPolicy(AutoValue);
-        /// <summary> SnapshotOnly. </summary>
+        /// <summary>
+        /// SnapshotOnly
+        /// Serialized Name: CoolAccessTieringPolicy.SnapshotOnly
+        /// </summary>
         public static CoolAccessTieringPolicy SnapshotOnly { get; } = new CoolAccessTieringPolicy(SnapshotOnlyValue);
         /// <summary> Determines if two <see cref="CoolAccessTieringPolicy"/> values are the same. </summary>
         public static bool operator ==(CoolAccessTieringPolicy left, CoolAccessTieringPolicy right) => left.Equals(right);

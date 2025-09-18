@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Indicates whether the replication is cross zone or cross region. </summary>
+    /// <summary>
+    /// Indicates whether the replication is cross zone or cross region.
+    /// Serialized Name: ReplicationType
+    /// </summary>
     public readonly partial struct NetAppReplicationType : IEquatable<NetAppReplicationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string CrossRegionReplicationValue = "CrossRegionReplication";
         private const string CrossZoneReplicationValue = "CrossZoneReplication";
 
-        /// <summary> Cross region replication. </summary>
+        /// <summary>
+        /// Cross region replication
+        /// Serialized Name: ReplicationType.CrossRegionReplication
+        /// </summary>
         public static NetAppReplicationType CrossRegionReplication { get; } = new NetAppReplicationType(CrossRegionReplicationValue);
-        /// <summary> Cross zone replication. </summary>
+        /// <summary>
+        /// Cross zone replication
+        /// Serialized Name: ReplicationType.CrossZoneReplication
+        /// </summary>
         public static NetAppReplicationType CrossZoneReplication { get; } = new NetAppReplicationType(CrossZoneReplicationValue);
         /// <summary> Determines if two <see cref="NetAppReplicationType"/> values are the same. </summary>
         public static bool operator ==(NetAppReplicationType left, NetAppReplicationType right) => left.Equals(right);

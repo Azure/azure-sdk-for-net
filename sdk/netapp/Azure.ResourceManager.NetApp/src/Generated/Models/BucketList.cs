@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of volume bucket resources. </summary>
+    /// <summary>
+    /// List of volume bucket resources
+    /// Serialized Name: BucketList
+    /// </summary>
     internal partial class BucketList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BucketList"/>. </summary>
-        /// <param name="value"> List of volume buckets. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// List of volume buckets
+        /// Serialized Name: BucketList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of results.
+        /// Serialized Name: BucketList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BucketList(IReadOnlyList<BucketData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volume buckets. </summary>
+        /// <summary>
+        /// List of volume buckets
+        /// Serialized Name: BucketList.value
+        /// </summary>
         public IReadOnlyList<BucketData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
+        /// <summary>
+        /// URL to get the next set of results.
+        /// Serialized Name: BucketList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

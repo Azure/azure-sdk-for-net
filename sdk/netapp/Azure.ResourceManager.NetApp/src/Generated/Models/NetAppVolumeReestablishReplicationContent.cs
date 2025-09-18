@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Re-establish request object supplied in the body of the operation. </summary>
+    /// <summary>
+    /// Re-establish request object supplied in the body of the operation.
+    /// Serialized Name: ReestablishReplicationRequest
+    /// </summary>
     public partial class NetAppVolumeReestablishReplicationContent
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReestablishReplicationContent"/>. </summary>
-        /// <param name="sourceVolumeId"> Resource id of the source volume for the replication. </param>
+        /// <param name="sourceVolumeId">
+        /// Resource id of the source volume for the replication
+        /// Serialized Name: ReestablishReplicationRequest.sourceVolumeId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeReestablishReplicationContent(ResourceIdentifier sourceVolumeId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource id of the source volume for the replication. </summary>
+        /// <summary>
+        /// Resource id of the source volume for the replication
+        /// Serialized Name: ReestablishReplicationRequest.sourceVolumeId
+        /// </summary>
         public ResourceIdentifier SourceVolumeId { get; set; }
     }
 }

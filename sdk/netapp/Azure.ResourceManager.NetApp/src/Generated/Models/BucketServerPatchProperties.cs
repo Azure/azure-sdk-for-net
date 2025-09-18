@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>
+    /// <summary>
+    /// Properties of the server managing the lifecycle of volume buckets
+    /// Serialized Name: BucketServerPatchProperties
+    /// </summary>
     public partial class BucketServerPatchProperties
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BucketServerPatchProperties"/>. </summary>
-        /// <param name="fqdn"> The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate. </param>
-        /// <param name="certificateObject"> A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner. </param>
+        /// <param name="fqdn">
+        /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
+        /// Serialized Name: BucketServerPatchProperties.fqdn
+        /// </param>
+        /// <param name="certificateObject">
+        /// A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner.
+        /// Serialized Name: BucketServerPatchProperties.certificateObject
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BucketServerPatchProperties(string fqdn, string certificateObject, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate. </summary>
+        /// <summary>
+        /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
+        /// Serialized Name: BucketServerPatchProperties.fqdn
+        /// </summary>
         public string Fqdn { get; set; }
-        /// <summary> A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner. </summary>
+        /// <summary>
+        /// A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner.
+        /// Serialized Name: BucketServerPatchProperties.certificateObject
+        /// </summary>
         public string CertificateObject { get; set; }
     }
 }

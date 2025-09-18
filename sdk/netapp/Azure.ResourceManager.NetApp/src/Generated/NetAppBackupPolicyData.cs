@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppBackupPolicy data model.
     /// Backup policy information
+    /// Serialized Name: BackupPolicy
     /// </summary>
     public partial class NetAppBackupPolicyData : TrackedResourceData
     {
@@ -65,15 +66,42 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="backupPolicyId"> Backup Policy GUID ID. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
-        /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
-        /// <param name="monthlyBackupsToKeep"> Monthly backups count to keep. </param>
-        /// <param name="volumesAssigned"> Volumes using current backup policy. </param>
-        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
-        /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
+        /// <param name="etag">
+        /// A unique read-only string that changes whenever the resource is updated.
+        /// Serialized Name: BackupPolicy.etag
+        /// </param>
+        /// <param name="backupPolicyId">
+        /// Backup Policy GUID ID
+        /// Serialized Name: BackupPolicy.properties.backupPolicyId
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure lifecycle management
+        /// Serialized Name: BackupPolicy.properties.provisioningState
+        /// </param>
+        /// <param name="dailyBackupsToKeep">
+        /// Daily backups count to keep
+        /// Serialized Name: BackupPolicy.properties.dailyBackupsToKeep
+        /// </param>
+        /// <param name="weeklyBackupsToKeep">
+        /// Weekly backups count to keep
+        /// Serialized Name: BackupPolicy.properties.weeklyBackupsToKeep
+        /// </param>
+        /// <param name="monthlyBackupsToKeep">
+        /// Monthly backups count to keep
+        /// Serialized Name: BackupPolicy.properties.monthlyBackupsToKeep
+        /// </param>
+        /// <param name="volumesAssigned">
+        /// Volumes using current backup policy
+        /// Serialized Name: BackupPolicy.properties.volumesAssigned
+        /// </param>
+        /// <param name="isEnabled">
+        /// The property to decide policy is enabled or not
+        /// Serialized Name: BackupPolicy.properties.enabled
+        /// </param>
+        /// <param name="volumeBackups">
+        /// A list of volumes assigned to this policy
+        /// Serialized Name: BackupPolicy.properties.volumeBackups
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? isEnabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -94,23 +122,50 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        /// <summary>
+        /// A unique read-only string that changes whenever the resource is updated.
+        /// Serialized Name: BackupPolicy.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> Backup Policy GUID ID. </summary>
+        /// <summary>
+        /// Backup Policy GUID ID
+        /// Serialized Name: BackupPolicy.properties.backupPolicyId
+        /// </summary>
         public ResourceIdentifier BackupPolicyId { get; }
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: BackupPolicy.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> Daily backups count to keep. </summary>
+        /// <summary>
+        /// Daily backups count to keep
+        /// Serialized Name: BackupPolicy.properties.dailyBackupsToKeep
+        /// </summary>
         public int? DailyBackupsToKeep { get; set; }
-        /// <summary> Weekly backups count to keep. </summary>
+        /// <summary>
+        /// Weekly backups count to keep
+        /// Serialized Name: BackupPolicy.properties.weeklyBackupsToKeep
+        /// </summary>
         public int? WeeklyBackupsToKeep { get; set; }
-        /// <summary> Monthly backups count to keep. </summary>
+        /// <summary>
+        /// Monthly backups count to keep
+        /// Serialized Name: BackupPolicy.properties.monthlyBackupsToKeep
+        /// </summary>
         public int? MonthlyBackupsToKeep { get; set; }
-        /// <summary> Volumes using current backup policy. </summary>
+        /// <summary>
+        /// Volumes using current backup policy
+        /// Serialized Name: BackupPolicy.properties.volumesAssigned
+        /// </summary>
         public int? VolumesAssigned { get; }
-        /// <summary> The property to decide policy is enabled or not. </summary>
+        /// <summary>
+        /// The property to decide policy is enabled or not
+        /// Serialized Name: BackupPolicy.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> A list of volumes assigned to this policy. </summary>
+        /// <summary>
+        /// A list of volumes assigned to this policy
+        /// Serialized Name: BackupPolicy.properties.volumeBackups
+        /// </summary>
         public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups { get; }
     }
 }

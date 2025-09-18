@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted. </summary>
+    /// <summary>
+    /// While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted.
+    /// Serialized Name: AcceptGrowCapacityPoolForShortTermCloneSplit
+    /// </summary>
     public readonly partial struct AcceptGrowCapacityPoolForShortTermCloneSplit : IEquatable<AcceptGrowCapacityPoolForShortTermCloneSplit>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string AcceptedValue = "Accepted";
         private const string DeclinedValue = "Declined";
 
-        /// <summary> Auto grow capacity pool for short term clone split is accepted. </summary>
+        /// <summary>
+        /// Auto grow capacity pool for short term clone split is accepted.
+        /// Serialized Name: AcceptGrowCapacityPoolForShortTermCloneSplit.Accepted
+        /// </summary>
         public static AcceptGrowCapacityPoolForShortTermCloneSplit Accepted { get; } = new AcceptGrowCapacityPoolForShortTermCloneSplit(AcceptedValue);
-        /// <summary> Auto grow capacity pool for short term clone split is declined. Short term clone volume creation will not be allowed, to create short term clone volume accept auto grow capacity pool. </summary>
+        /// <summary>
+        /// Auto grow capacity pool for short term clone split is declined. Short term clone volume creation will not be allowed, to create short term clone volume accept auto grow capacity pool.
+        /// Serialized Name: AcceptGrowCapacityPoolForShortTermCloneSplit.Declined
+        /// </summary>
         public static AcceptGrowCapacityPoolForShortTermCloneSplit Declined { get; } = new AcceptGrowCapacityPoolForShortTermCloneSplit(DeclinedValue);
         /// <summary> Determines if two <see cref="AcceptGrowCapacityPoolForShortTermCloneSplit"/> values are the same. </summary>
         public static bool operator ==(AcceptGrowCapacityPoolForShortTermCloneSplit left, AcceptGrowCapacityPoolForShortTermCloneSplit right) => left.Equals(right);

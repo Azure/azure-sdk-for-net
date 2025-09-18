@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Quota availability request content. </summary>
+    /// <summary>
+    /// Quota availability request content.
+    /// Serialized Name: QuotaAvailabilityRequest
+    /// </summary>
     public partial class NetAppQuotaAvailabilityContent
     {
         /// <summary>
@@ -46,9 +49,18 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityContent"/>. </summary>
-        /// <param name="name"> Name of the resource to verify. </param>
-        /// <param name="availabilityResourceType"> Resource type used for verification. </param>
-        /// <param name="resourceGroup"> Resource group name. </param>
+        /// <param name="name">
+        /// Name of the resource to verify.
+        /// Serialized Name: QuotaAvailabilityRequest.name
+        /// </param>
+        /// <param name="availabilityResourceType">
+        /// Resource type used for verification.
+        /// Serialized Name: QuotaAvailabilityRequest.type
+        /// </param>
+        /// <param name="resourceGroup">
+        /// Resource group name.
+        /// Serialized Name: QuotaAvailabilityRequest.resourceGroup
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceGroup"/> is null. </exception>
         public NetAppQuotaAvailabilityContent(string name, NetAppQuotaAvailabilityResourceType availabilityResourceType, string resourceGroup)
         {
@@ -61,9 +73,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityContent"/>. </summary>
-        /// <param name="name"> Name of the resource to verify. </param>
-        /// <param name="availabilityResourceType"> Resource type used for verification. </param>
-        /// <param name="resourceGroup"> Resource group name. </param>
+        /// <param name="name">
+        /// Name of the resource to verify.
+        /// Serialized Name: QuotaAvailabilityRequest.name
+        /// </param>
+        /// <param name="availabilityResourceType">
+        /// Resource type used for verification.
+        /// Serialized Name: QuotaAvailabilityRequest.type
+        /// </param>
+        /// <param name="resourceGroup">
+        /// Resource group name.
+        /// Serialized Name: QuotaAvailabilityRequest.resourceGroup
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppQuotaAvailabilityContent(string name, NetAppQuotaAvailabilityResourceType availabilityResourceType, string resourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,11 +99,20 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> Name of the resource to verify. </summary>
+        /// <summary>
+        /// Name of the resource to verify.
+        /// Serialized Name: QuotaAvailabilityRequest.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Resource type used for verification. </summary>
+        /// <summary>
+        /// Resource type used for verification.
+        /// Serialized Name: QuotaAvailabilityRequest.type
+        /// </summary>
         public NetAppQuotaAvailabilityResourceType AvailabilityResourceType { get; }
-        /// <summary> Resource group name. </summary>
+        /// <summary>
+        /// Resource group name.
+        /// Serialized Name: QuotaAvailabilityRequest.resourceGroup
+        /// </summary>
         public string ResourceGroup { get; }
     }
 }

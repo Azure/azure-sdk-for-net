@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> MultiAD Status for the account. </summary>
+    /// <summary>
+    /// MultiAD Status for the account
+    /// Serialized Name: MultiAdStatus
+    /// </summary>
     public readonly partial struct MultiAdStatus : IEquatable<MultiAdStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Account is MultiAD disabled, Means its a SharedAD or SingleAD account. </summary>
+        /// <summary>
+        /// Account is MultiAD disabled, Means its a SharedAD or SingleAD account.
+        /// Serialized Name: MultiAdStatus.Disabled
+        /// </summary>
         public static MultiAdStatus Disabled { get; } = new MultiAdStatus(DisabledValue);
-        /// <summary> Account is MultiAD enabled. </summary>
+        /// <summary>
+        /// Account is MultiAD enabled
+        /// Serialized Name: MultiAdStatus.Enabled
+        /// </summary>
         public static MultiAdStatus Enabled { get; } = new MultiAdStatus(EnabledValue);
         /// <summary> Determines if two <see cref="MultiAdStatus"/> values are the same. </summary>
         public static bool operator ==(MultiAdStatus left, MultiAdStatus right) => left.Equals(right);
