@@ -1,59 +1,50 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-		<Version>1.2.0-beta.1</Version>
-		<!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-		<ApiCompatVersion>1.1.0</ApiCompatVersion>
-		<Description>Triggers for Azure AD Authentication event custom extensions. Lets you focus on your business logic.</Description>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Azure.WebJobs" />
-		<PackageReference Include="Microsoft.AspNetCore.Http" />
-		<PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" />
-		<PackageReference Include="Microsoft.IdentityModel.Tokens" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Remove="HttpTriggerAttribute.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Include="Templates\ActionableTemplate.json" />
-		<EmbeddedResource Include="Templates\CloudEventActionableTemplate.json" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Update="AuthenticationEventResource.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>AuthenticationEventResource.resx</DependentUpon>
-		</Compile>
-		<Compile Update="AuthEventResourceAuthEventResource.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>AuthEventResourceAuthEventResource.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-
-	<ItemGroup>
-		<EmbeddedResource Update="AuthenticationEventResource.resx">
-		  <Generator>ResXFileCodeGenerator</Generator>
-		  <LastGenOutput>AuthenticationEventResource.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="AuthEventResourceAuthEventResource.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>AuthEventResourceAuthEventResource.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
-
-
-	<ItemGroup>
-		<Folder Include="Help\" />
-	</ItemGroup>
-
-
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <Version>1.2.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <Description>Triggers for Azure AD Authentication event custom extensions. Lets you focus on your business logic.</Description>
+    <AotCompatOptOut>true</AotCompatOptOut>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="HttpTriggerAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\ActionableTemplate.json" />
+    <EmbeddedResource Include="Templates\CloudEventActionableTemplate.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="AuthenticationEventResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AuthenticationEventResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="AuthEventResourceAuthEventResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AuthEventResourceAuthEventResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="AuthenticationEventResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AuthenticationEventResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AuthEventResourceAuthEventResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AuthEventResourceAuthEventResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Help\" />
+  </ItemGroup>
 </Project>
