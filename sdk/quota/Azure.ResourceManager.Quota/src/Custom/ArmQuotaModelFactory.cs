@@ -3,8 +3,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -20,6 +19,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static GroupQuotaDetails GroupQuotaDetails(string resourceName, long? limit, string comment, string unit, long? availableLimit = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null)
         {
             return GroupQuotaDetails(
@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName, long? limit, string comment, string unit, long? availableLimit = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null)
         {
             return GroupQuotaLimitProperties(
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Quota.Models
                 allocatedToSubscriptionsValue);
         }
 
-        // Add this custom code because its properties order changed, but the changed properties are all string, this actually replaces its generated overload.
+        /// Add this custom code because its properties order changed, but the changed properties are all string, this actually replaces its generated overload.
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaRequestBase"/>. </summary>
         /// <param name="limit"> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </param>
         /// <param name="value"> Resource name. </param>
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="region"> Location/Azure region for the quota requested for resource. </param>
         /// <param name="comments"> GroupQuota Request comments and details for request. This is optional paramter to provide more details related to the requested resource. </param>
         /// <returns> A new <see cref="Models.GroupQuotaRequestBase"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static GroupQuotaRequestBase GroupQuotaRequestBase(long? limit = default(long?), string region = null, string comments = null, string value = null, string localizedValue = null)
         {
             return new GroupQuotaRequestBase(
