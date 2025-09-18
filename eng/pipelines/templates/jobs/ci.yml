@@ -104,7 +104,8 @@ jobs:
             componentgovernance:
               enabled: true
             codeql:
-              binaryLanguages: csharp # Need to specify the language because we clone after the codeql initialize step
+              # Need to specify the language because we clone after the codeql initialize step
+              language: csharp, javascript
               compiled:
                 enabled: true
 

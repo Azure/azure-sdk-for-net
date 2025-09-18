@@ -7,7 +7,9 @@ import "./baz.tsp";
 import "./zoo.tsp";
 import "./routes.tsp";
 import "./endpoint.tsp";
-
+import "./selfhelp.tsp";
+import "./playwright.tsp";
+import "./databox.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -32,3 +34,6 @@ enum Versions {
 
 @@clientLocation(Bars.get, "Bar");
 @@clientLocation(Bars.update, "Bar");
+
+#suppress "deprecated"
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);

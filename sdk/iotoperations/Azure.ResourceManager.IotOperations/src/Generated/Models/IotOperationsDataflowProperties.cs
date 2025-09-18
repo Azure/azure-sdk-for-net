@@ -58,12 +58,14 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsDataflowProperties"/>. </summary>
         /// <param name="mode"> Mode for Dataflow. Optional; defaults to Enabled. </param>
+        /// <param name="requestDiskPersistence"> Disk persistence mode. </param>
         /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsDataflowProperties(IotOperationsOperationalMode? mode, IList<DataflowOperationProperties> operations, IotOperationsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotOperationsDataflowProperties(IotOperationsOperationalMode? mode, IotOperationsOperationalMode? requestDiskPersistence, IList<DataflowOperationProperties> operations, IotOperationsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
+            RequestDiskPersistence = requestDiskPersistence;
             Operations = operations;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -76,6 +78,8 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Mode for Dataflow. Optional; defaults to Enabled. </summary>
         public IotOperationsOperationalMode? Mode { get; set; }
+        /// <summary> Disk persistence mode. </summary>
+        public IotOperationsOperationalMode? RequestDiskPersistence { get; set; }
         /// <summary> List of operations including source and destination references as well as transformation. </summary>
         public IList<DataflowOperationProperties> Operations { get; }
         /// <summary> The status of the last operation. </summary>

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             ScheduleAvailabilityResponse scheduleAvailabilityResponse = default;
             TransportAvailabilityResponse transportAvailabilityResponse = default;
-            DataCenterAddressResult dataCenterAddressResponse = default;
+            DataCenterAddressResult datacenterAddressResponse = default;
             DeviceCapabilityResponse deviceCapabilityResponse = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
+                    datacenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deviceCapabilityResponse"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RegionConfigurationResult(scheduleAvailabilityResponse, transportAvailabilityResponse, dataCenterAddressResponse, deviceCapabilityResponse, serializedAdditionalRawData);
+            return new RegionConfigurationResult(scheduleAvailabilityResponse, transportAvailabilityResponse, datacenterAddressResponse, deviceCapabilityResponse, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionConfigurationResult>.Write(ModelReaderWriterOptions options)

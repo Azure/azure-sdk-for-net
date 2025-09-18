@@ -89,19 +89,19 @@
 # ServiceOwners:                                                   @mojayara @Prasanna-Padmanabhan
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @jhakulin @nick863
+/sdk/ai/                                                           @trangevi @dargilco @glharper @nick863
 
 # PRLabel: %AI Model Inference
-/sdk/ai/Azure.AI.Inference                                         @trangevi @dargilco @jhakulin @glharper
+/sdk/ai/Azure.AI.Inference                                         @trangevi @dargilco @glharper
 
 # ServiceLabel: %AI Model Inference
-# ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
+# ServiceOwners:                                                   @trangevi @dargilco @glharper
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects                                          @dargilco @jhakulin @nick863 @trangevi
+/sdk/ai/Azure.AI.Projects                                          @dargilco @nick863 @trangevi
 
 # ServiceLabel: %AI Projects
-# ServiceOwners:                                                   @dargilco @jhakulin @nick863 @trangevi
+# ServiceOwners:                                                   @dargilco @nick863 @trangevi
 
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
@@ -603,9 +603,6 @@
 # ServiceLabel: %Media Services
 # ServiceOwners:                                                   @naiteeks @bennage @giakas
 
-# PRLabel: %Microsoft Playwright Testing
-/sdk/playwrighttesting/                                            @puagarwa @ShreyaAnand
-
 # ServiceLabel: %Microsoft Playwright Testing
 # ServiceOwners:                                                   @puagarwa @ShreyaAnand
 
@@ -873,10 +870,10 @@
 # ServiceOwners:                                                   @shahbj79 @mit2nil @aygoya @ganganarayanan
 
 # PRLabel: %Synapse
-/sdk/synapse/                                                      @yanjungao718
+/sdk/synapse/                                                      @yanjungao718 @wanyang7
 
 # ServiceLabel: %Synapse
-# ServiceOwners:                                                   @yanjungao718
+# ServiceOwners:                                                   @yanjungao718 @wanyang7
 
 # PRLabel: %Tables
 /sdk/tables/                                                       @christothes @jorgerangel-msft
@@ -896,6 +893,12 @@
 
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners:                                                   @giakas
+
+# PRLabel: %Voice Live
+/sdk/ai/Azure.AI.VoiceLive/                                        @rhurey @xitzhang
+
+# ServiceLabel: %Voice Live
+# ServiceOwners:                                                   @rhurey @xitzhang
 
 # ServiceLabel: %Web Apps
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp
@@ -1028,10 +1031,10 @@
 # ServiceOwners:                                                   @emmeliaAra
 
 # PRLabel: %HybridConnectivity
-/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @PriyankaHariharan @apmehrotra
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @apmehrotra
 
 # ServiceLabel: %HybridConnectivity %Mgmt
-# ServiceOwners:                                                   @PriyankaHariharan @apmehrotra
+# ServiceOwners:                                                   @apmehrotra
 
 # PRLabel: %LambdaTest HyperExecute
 /sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @aggarwalsw
@@ -1161,6 +1164,14 @@
 
 # ServiceLabel: %Weights & Biases %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
+
+
+# PRLabel: %Workload Orchestration
+/sdk/workloadorchestration/Azure.ResourceManager.*/                @atharvau
+
+# ServiceLabel: %Workload Orchestration %Mgmt
+# ServiceOwners:                                                   @atharvau
+
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

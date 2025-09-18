@@ -29,7 +29,7 @@
           "decorators": []
         }
       ],
-      "namespace": "Client.ClientNamespace.Second.Model",
+      "namespace": "client.clientnamespace.second.sub",
       "isFixed": false,
       "isFlags": false,
       "usage": "Output,Json",
@@ -75,7 +75,7 @@
       "$id": "8",
       "kind": "model",
       "name": "FirstClientResult",
-      "namespace": "Client.ClientNamespace.FirstModel",
+      "namespace": "client.clientnamespace.first",
       "crossLanguageDefinitionId": "Client.ClientNamespace.FirstModel.FirstClientResult",
       "usage": "Output,Json",
       "decorators": [],
@@ -111,7 +111,7 @@
       "$id": "11",
       "kind": "model",
       "name": "SecondClientResult",
-      "namespace": "Client.ClientNamespace.Second.Model",
+      "namespace": "client.clientnamespace.second",
       "crossLanguageDefinitionId": "Client.ClientNamespace.Second.Model.SecondClientResult",
       "usage": "Output,Json",
       "decorators": [],
@@ -145,7 +145,7 @@
       "$id": "13",
       "kind": "client",
       "name": "ClientNamespaceFirstClient",
-      "namespace": "ClientNameSpaceClient",
+      "namespace": "client.clientnamespace",
       "methods": [
         {
           "$id": "14",
@@ -270,7 +270,7 @@
       "$id": "21",
       "kind": "client",
       "name": "ClientNamespaceSecondClient",
-      "namespace": "ClientNameSpaceClient.ClientNamespaceSecondClient",
+      "namespace": "client.clientnamespace.second",
       "methods": [
         {
           "$id": "22",

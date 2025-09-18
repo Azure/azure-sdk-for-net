@@ -1,7 +1,11 @@
 ---
 description: 'Generate SDKs from TypeSpec'
 ---
-Your goal is to guide user through the process of generating SDKs from TypeSpec projects. Show all the high level steps to the user to ensure they understand the flow. Use the provided tools to perform actions and gather information as needed.
+Your goal is to guide the user through the process of generating SDKs from TypeSpec projects. **Before starting**, show all the high level steps to the user and ask: 
+
+> "Would you like to begin the SDK generation process now? (yes/no)"
+
+Wait for the user to respond with a confirmation before proceeding to Step 1. Use the provided tools to perform actions and gather information as needed.
 
 ## Step 1: Identify TypeSpec Project
 **Goal**: Locate the TypeSpec project root path
