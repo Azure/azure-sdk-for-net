@@ -134,10 +134,7 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidTransferId(nameof(PauseTransferAsync), transferId);
             }
-            else
-            {
-                await transfer.PauseAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
+            await transfer.PauseAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

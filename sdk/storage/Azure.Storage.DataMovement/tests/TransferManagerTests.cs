@@ -345,7 +345,7 @@ public class TransferManagerTests
         }
     }
 
-        [Test]
+    [Test]
     [Combinatorial]
     public async Task TransferFailAtQueue(
         [Values(0, 1)] int failAt,
