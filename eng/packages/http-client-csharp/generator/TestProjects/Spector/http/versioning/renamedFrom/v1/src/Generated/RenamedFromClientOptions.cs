@@ -11,8 +11,6 @@ namespace Versioning.RenamedFrom
 {
     public partial class RenamedFromClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1;
-
         public RenamedFromClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

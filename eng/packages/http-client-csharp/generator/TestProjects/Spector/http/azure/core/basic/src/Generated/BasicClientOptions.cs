@@ -11,8 +11,6 @@ namespace _Specs_.Azure.Core.Basic
 {
     public partial class BasicClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
-
         public BasicClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

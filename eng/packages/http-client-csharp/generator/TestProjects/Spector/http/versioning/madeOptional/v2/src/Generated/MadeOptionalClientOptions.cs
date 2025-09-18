@@ -11,8 +11,6 @@ namespace Versioning.MadeOptional
 {
     public partial class MadeOptionalClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2;
-
         public MadeOptionalClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

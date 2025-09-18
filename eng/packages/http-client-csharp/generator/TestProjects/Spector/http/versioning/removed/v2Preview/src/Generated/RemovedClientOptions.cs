@@ -11,8 +11,6 @@ namespace Versioning.Removed
 {
     public partial class RemovedClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2preview;
-
         public RemovedClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

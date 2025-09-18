@@ -11,8 +11,6 @@ namespace Server.Path.Multiple
 {
     public partial class MultipleClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
-
         public MultipleClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

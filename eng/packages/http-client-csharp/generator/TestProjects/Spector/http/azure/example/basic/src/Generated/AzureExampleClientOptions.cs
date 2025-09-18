@@ -11,8 +11,6 @@ namespace AzureExampleBasicClient
 {
     public partial class AzureExampleClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
-
         public AzureExampleClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion

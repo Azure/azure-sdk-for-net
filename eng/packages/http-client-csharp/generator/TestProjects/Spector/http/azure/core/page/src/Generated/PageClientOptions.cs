@@ -11,8 +11,6 @@ namespace _Specs_.Azure.Core.Page
 {
     public partial class PageClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
-
         public PageClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         public enum ServiceVersion
