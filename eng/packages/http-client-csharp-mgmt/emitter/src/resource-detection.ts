@@ -283,7 +283,6 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
   for (const model of codeModel.models) {
     if (model.decorators?.some((d) => d.name == armResourceInternal)) {
-      model.crossLanguageDefinitionId;
       resourceModels.push(model);
     }
   }

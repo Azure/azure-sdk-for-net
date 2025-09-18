@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SignalR
       safeName: AzureResourceManagerSignalR
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.SignalR
+      ExpectedWarningsFilepath: None
