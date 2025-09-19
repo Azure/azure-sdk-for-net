@@ -94,7 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 builder.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
+                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions), new PerfCounterItemCounts()),
                     new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
                 }));
             });
@@ -118,6 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             TokenCredential credential = null,
             string name = null)
         {
+            // TODO: determine if we want to add support for perf counters here
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
@@ -201,6 +202,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 options.Credential ??= credential;
             }
 
+            // TODO: determine if we want to add support for perf counters here
             return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options)));
         }
 
@@ -269,6 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
+                // TODO: Do we need to support perf counters with this?
                 return new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(exporterOptions));
             });
         }
