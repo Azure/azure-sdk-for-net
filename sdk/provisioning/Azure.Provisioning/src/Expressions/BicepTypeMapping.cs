@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -60,8 +61,8 @@ internal static class BicepTypeMapping
             bool b => b.ToString(),
             int i => i.ToString(),
             long i => i.ToString(),
-            float f => f.ToString(),
-            double d => d.ToString(),
+            float f => f.ToString(CultureInfo.InvariantCulture),
+            double d => d.ToString(CultureInfo.InvariantCulture),
             string s => s,
             Uri u => u.AbsoluteUri,
             DateTimeOffset d => d.ToString("o"),
@@ -144,7 +145,7 @@ internal static class BicepTypeMapping
                 return BicepSyntax.Value((int)d);
             }
             // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
-            return BicepFunction.ParseJson(BicepSyntax.Value(d.ToString())).Compile();
+            return BicepFunction.ParseJson(BicepSyntax.Value(d.ToString(NumberFormatInfo.InvariantInfo))).Compile();
         }
 
         ArrayExpression ToArray(IEnumerable<object> seq) =>
