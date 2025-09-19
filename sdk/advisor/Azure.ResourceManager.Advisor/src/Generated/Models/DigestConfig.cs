@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of <see cref="DigestConfig"/>. </summary>
         public DigestConfig()
         {
-            Categories = new ChangeTrackingList<Category>();
+            Categories = new ChangeTrackingList<RecommendationCategory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DigestConfig"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="language"> Language for digest content body. Value must be ISO 639-1 code for one of Azure portal supported languages. Otherwise, it will be converted into one. Default value is English (en). </param>
         /// <param name="state"> State of digest configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DigestConfig(string name, string actionGroupResourceId, int? frequency, IList<Category> categories, string language, DigestConfigState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DigestConfig(string name, string actionGroupResourceId, int? frequency, IList<RecommendationCategory> categories, string language, DigestConfigState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ActionGroupResourceId = actionGroupResourceId;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Frequency that digest will be triggered, in days. Value must be between 7 and 30 days inclusive. </summary>
         public int? Frequency { get; set; }
         /// <summary> Categories to send digest for. If categories are not provided, then digest will be sent for all categories. </summary>
-        public IList<Category> Categories { get; }
+        public IList<RecommendationCategory> Categories { get; }
         /// <summary> Language for digest content body. Value must be ISO 639-1 code for one of Azure portal supported languages. Otherwise, it will be converted into one. Default value is English (en). </summary>
         public string Language { get; set; }
         /// <summary> State of digest configuration. </summary>
