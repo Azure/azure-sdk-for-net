@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(ResourceTypes))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
