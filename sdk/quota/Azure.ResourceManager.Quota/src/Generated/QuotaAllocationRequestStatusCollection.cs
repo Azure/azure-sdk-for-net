@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class QuotaAllocationRequestStatusCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics;
-        private readonly GroupQuotaSubscriptionAllocationRequestRestOperations _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient;
+        private readonly ClientDiagnostics _quotaAllocationRequestStatusClientDiagnostics;
+        private readonly QuotaAllocationRequestStatusesRestOperations _quotaAllocationRequestStatusRestClient;
         private readonly string _subscriptionId;
         private readonly string _groupQuotaName;
         private readonly string _resourceProviderName;
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Quota
             _subscriptionId = subscriptionId;
             _groupQuotaName = groupQuotaName;
             _resourceProviderName = resourceProviderName;
-            _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaAllocationRequestStatusResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(QuotaAllocationRequestStatusResource.ResourceType, out string quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestApiVersion);
-            _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient = new GroupQuotaSubscriptionAllocationRequestRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestApiVersion);
+            _quotaAllocationRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaAllocationRequestStatusResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(QuotaAllocationRequestStatusResource.ResourceType, out string quotaAllocationRequestStatusApiVersion);
+            _quotaAllocationRequestStatusRestClient = new QuotaAllocationRequestStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, quotaAllocationRequestStatusApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Get</description>
+        /// <description>QuotaAllocationRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Get");
+            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Get");
             scope.Start();
             try
             {
-                var response = await _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.GetAsync(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken).ConfigureAwait(false);
+                var response = await _quotaAllocationRequestStatusRestClient.GetAsync(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Get</description>
+        /// <description>QuotaAllocationRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Get");
+            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Get");
             scope.Start();
             try
             {
-                var response = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.Get(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken);
+                var response = _quotaAllocationRequestStatusRestClient.Get(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_List</description>
+        /// <description>QuotaAllocationRequestStatus_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.Quota
         /// | Field | Supported operators
         /// |---------------------|------------------------
         ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
+        /// location eq {location}
+        /// Example: $filter=location eq eastus
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -186,9 +186,9 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateListRequest(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateListNextPageRequest(nextLink, Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaAllocationRequestStatusResource(Client, QuotaAllocationRequestStatusData.DeserializeQuotaAllocationRequestStatusData(e)), _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, "QuotaAllocationRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaAllocationRequestStatusRestClient.CreateListRequest(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaAllocationRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaAllocationRequestStatusResource(Client, QuotaAllocationRequestStatusData.DeserializeQuotaAllocationRequestStatusData(e)), _quotaAllocationRequestStatusClientDiagnostics, Pipeline, "QuotaAllocationRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_List</description>
+        /// <description>QuotaAllocationRequestStatus_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -216,8 +216,8 @@ namespace Azure.ResourceManager.Quota
         /// | Field | Supported operators
         /// |---------------------|------------------------
         ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
+        /// location eq {location}
+        /// Example: $filter=location eq eastus
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateListRequest(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateListNextPageRequest(nextLink, Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaAllocationRequestStatusResource(Client, QuotaAllocationRequestStatusData.DeserializeQuotaAllocationRequestStatusData(e)), _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, "QuotaAllocationRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaAllocationRequestStatusRestClient.CreateListRequest(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaAllocationRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaAllocationRequestStatusResource(Client, QuotaAllocationRequestStatusData.DeserializeQuotaAllocationRequestStatusData(e)), _quotaAllocationRequestStatusClientDiagnostics, Pipeline, "QuotaAllocationRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Get</description>
+        /// <description>QuotaAllocationRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,11 +260,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Exists");
+            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.GetAsync(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _quotaAllocationRequestStatusRestClient.GetAsync(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Get</description>
+        /// <description>QuotaAllocationRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -303,11 +303,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Exists");
+            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Exists");
             scope.Start();
             try
             {
-                var response = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.Get(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken);
+                var response = _quotaAllocationRequestStatusRestClient.Get(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,11 +326,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Get</description>
+        /// <description>QuotaAllocationRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -346,11 +346,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetIfExists");
+            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.GetAsync(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _quotaAllocationRequestStatusRestClient.GetAsync(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<QuotaAllocationRequestStatusResource>(response.GetRawResponse());
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Get</description>
+        /// <description>QuotaAllocationRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -391,11 +391,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetIfExists");
+            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.Get(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken);
+                var response = _quotaAllocationRequestStatusRestClient.Get(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<QuotaAllocationRequestStatusResource>(response.GetRawResponse());
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());

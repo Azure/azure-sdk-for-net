@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class CurrentUsagesBaseCollection : ArmCollection, IEnumerable<CurrentUsagesBaseResource>, IAsyncEnumerable<CurrentUsagesBaseResource>
     {
-        private readonly ClientDiagnostics _currentUsagesBaseUsagesClientDiagnostics;
-        private readonly UsagesRestOperations _currentUsagesBaseUsagesRestClient;
+        private readonly ClientDiagnostics _currentUsagesBaseCurrentUsagesBasesClientDiagnostics;
+        private readonly CurrentUsagesBasesRestOperations _currentUsagesBaseCurrentUsagesBasesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CurrentUsagesBaseCollection"/> class for mocking. </summary>
         protected CurrentUsagesBaseCollection()
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CurrentUsagesBaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _currentUsagesBaseUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentUsagesBaseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CurrentUsagesBaseResource.ResourceType, out string currentUsagesBaseUsagesApiVersion);
-            _currentUsagesBaseUsagesRestClient = new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentUsagesBaseUsagesApiVersion);
+            _currentUsagesBaseCurrentUsagesBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentUsagesBaseResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CurrentUsagesBaseResource.ResourceType, out string currentUsagesBaseCurrentUsagesBasesApiVersion);
+            _currentUsagesBaseCurrentUsagesBasesRestClient = new CurrentUsagesBasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentUsagesBaseCurrentUsagesBasesApiVersion);
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
+            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
             scope.Start();
             try
             {
-                var response = await _currentUsagesBaseUsagesRestClient.GetAsync(Id, resourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _currentUsagesBaseCurrentUsagesBasesRestClient.GetAsync(Id, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
+            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
             scope.Start();
             try
             {
-                var response = _currentUsagesBaseUsagesRestClient.Get(Id, resourceName, cancellationToken);
+                var response = _currentUsagesBaseCurrentUsagesBasesRestClient.Get(Id, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <description>CurrentUsagesBase_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An async collection of <see cref="CurrentUsagesBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CurrentUsagesBaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseUsagesRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseUsagesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseCurrentUsagesBasesRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseCurrentUsagesBasesRestClient.CreateListNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseCurrentUsagesBasesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <description>CurrentUsagesBase_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Quota
         /// <returns> A collection of <see cref="CurrentUsagesBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CurrentUsagesBaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseUsagesRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseUsagesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseCurrentUsagesBasesRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseCurrentUsagesBasesRestClient.CreateListNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseCurrentUsagesBasesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
+            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _currentUsagesBaseUsagesRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _currentUsagesBaseCurrentUsagesBasesRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -258,11 +258,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
+            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = _currentUsagesBaseUsagesRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
+                var response = _currentUsagesBaseCurrentUsagesBasesRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,11 +306,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -331,11 +331,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
+            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _currentUsagesBaseUsagesRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _currentUsagesBaseCurrentUsagesBasesRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<CurrentUsagesBaseResource>(response.GetRawResponse());
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
@@ -356,11 +356,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -381,11 +381,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
+            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _currentUsagesBaseUsagesRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
+                var response = _currentUsagesBaseCurrentUsagesBasesRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<CurrentUsagesBaseResource>(response.GetRawResponse());
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());

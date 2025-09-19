@@ -35,10 +35,8 @@ namespace Azure.ResourceManager.Quota
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics;
-        private readonly GroupQuotaSubscriptionAllocationRestOperations _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient;
-        private readonly ClientDiagnostics _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestClientDiagnostics;
-        private readonly GroupQuotaSubscriptionAllocationRequestRestOperations _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestRestClient;
+        private readonly ClientDiagnostics _subscriptionQuotaAllocationsListClientDiagnostics;
+        private readonly SubscriptionQuotaAllocationsListsRestOperations _subscriptionQuotaAllocationsListRestClient;
         private readonly SubscriptionQuotaAllocationsListData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -63,12 +61,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SubscriptionQuotaAllocationsListResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationApiVersion);
-            _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient = new GroupQuotaSubscriptionAllocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationApiVersion);
-            _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestApiVersion);
-            _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestRestClient = new GroupQuotaSubscriptionAllocationRequestRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestApiVersion);
+            _subscriptionQuotaAllocationsListClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string subscriptionQuotaAllocationsListApiVersion);
+            _subscriptionQuotaAllocationsListRestClient = new SubscriptionQuotaAllocationsListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionQuotaAllocationsListApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -104,11 +99,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <description>SubscriptionQuotaAllocationsList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -119,11 +114,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListResource.Get");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListResource.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.ListAsync(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionQuotaAllocationsListRestClient.ListAsync(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());
@@ -144,11 +139,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <description>SubscriptionQuotaAllocationsList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -159,11 +154,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SubscriptionQuotaAllocationsListResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListResource.Get");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListResource.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.List(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), cancellationToken);
+                var response = _subscriptionQuotaAllocationsListRestClient.List(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());
@@ -184,11 +179,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Update</description>
+        /// <description>SubscriptionQuotaAllocationsList_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -204,12 +199,12 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListResource.Update");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListResource.Update");
             scope.Start();
             try
             {
-                var response = await _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestRestClient.UpdateAsync(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<SubscriptionQuotaAllocationsListResource>(new SubscriptionQuotaAllocationsListOperationSource(Client), _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data).Request, response, OperationFinalStateVia.Location);
+                var response = await _subscriptionQuotaAllocationsListRestClient.UpdateAsync(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data, cancellationToken).ConfigureAwait(false);
+                var operation = new QuotaArmOperation<SubscriptionQuotaAllocationsListResource>(new SubscriptionQuotaAllocationsListOperationSource(Client), _subscriptionQuotaAllocationsListClientDiagnostics, Pipeline, _subscriptionQuotaAllocationsListRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,11 +225,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Update</description>
+        /// <description>SubscriptionQuotaAllocationsList_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,12 +245,12 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListResource.Update");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListResource.Update");
             scope.Start();
             try
             {
-                var response = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestRestClient.Update(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data, cancellationToken);
-                var operation = new QuotaArmOperation<SubscriptionQuotaAllocationsListResource>(new SubscriptionQuotaAllocationsListOperationSource(Client), _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRequestRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data).Request, response, OperationFinalStateVia.Location);
+                var response = _subscriptionQuotaAllocationsListRestClient.Update(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data, cancellationToken);
+                var operation = new QuotaArmOperation<SubscriptionQuotaAllocationsListResource>(new SubscriptionQuotaAllocationsListOperationSource(Client), _subscriptionQuotaAllocationsListClientDiagnostics, Pipeline, _subscriptionQuotaAllocationsListRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

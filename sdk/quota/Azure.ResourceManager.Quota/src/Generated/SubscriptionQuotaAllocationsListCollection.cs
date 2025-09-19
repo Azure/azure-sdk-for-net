@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class SubscriptionQuotaAllocationsListCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics;
-        private readonly GroupQuotaSubscriptionAllocationRestOperations _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient;
+        private readonly ClientDiagnostics _subscriptionQuotaAllocationsListClientDiagnostics;
+        private readonly SubscriptionQuotaAllocationsListsRestOperations _subscriptionQuotaAllocationsListRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionQuotaAllocationsListCollection"/> class for mocking. </summary>
         protected SubscriptionQuotaAllocationsListCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SubscriptionQuotaAllocationsListCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", SubscriptionQuotaAllocationsListResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SubscriptionQuotaAllocationsListResource.ResourceType, out string subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationApiVersion);
-            _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient = new GroupQuotaSubscriptionAllocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationApiVersion);
+            _subscriptionQuotaAllocationsListClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", SubscriptionQuotaAllocationsListResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SubscriptionQuotaAllocationsListResource.ResourceType, out string subscriptionQuotaAllocationsListApiVersion);
+            _subscriptionQuotaAllocationsListRestClient = new SubscriptionQuotaAllocationsListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionQuotaAllocationsListApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <description>SubscriptionQuotaAllocationsList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.ListAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionQuotaAllocationsListRestClient.ListAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <description>SubscriptionQuotaAllocationsList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.List(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken);
+                var response = _subscriptionQuotaAllocationsListRestClient.List(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <description>SubscriptionQuotaAllocationsList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.ListAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionQuotaAllocationsListRestClient.ListAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <description>SubscriptionQuotaAllocationsList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
             scope.Start();
             try
             {
-                var response = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.List(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken);
+                var response = _subscriptionQuotaAllocationsListRestClient.List(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <description>SubscriptionQuotaAllocationsList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.ListAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionQuotaAllocationsListRestClient.ListAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<SubscriptionQuotaAllocationsListResource>(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());
@@ -304,11 +304,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <description>SubscriptionQuotaAllocationsList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
+            using var scope = _subscriptionQuotaAllocationsListClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.List(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken);
+                var response = _subscriptionQuotaAllocationsListRestClient.List(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<SubscriptionQuotaAllocationsListResource>(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());

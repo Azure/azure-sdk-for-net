@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -173,11 +173,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
+        /// <description>QuotaRequestDetails_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
+        /// <description>QuotaRequestDetails_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,6 +355,18 @@ namespace Azure.ResourceManager.Quota.Mocking
         {
             QuotaAllocationRequestStatusResource.ValidateResourceId(id);
             return new QuotaAllocationRequestStatusResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GroupQuotasEnforcementStatusResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotasEnforcementStatusResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotasEnforcementStatusResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GroupQuotasEnforcementStatusResource"/> object. </returns>
+        public virtual GroupQuotasEnforcementStatusResource GetGroupQuotasEnforcementStatusResource(ResourceIdentifier id)
+        {
+            GroupQuotasEnforcementStatusResource.ValidateResourceId(id);
+            return new GroupQuotasEnforcementStatusResource(Client, id);
         }
 
         /// <summary>
