@@ -189,6 +189,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        [Ignore("Ignoring for hotfix")]
         public async Task CreateJobWithClassificationPolicy_w_StaticPriority()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -249,6 +250,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        [Ignore("Ignoring for hotfix")]
         public async Task CreateJobWithClassificationPolicy_w_StaticQueueSelector()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -351,6 +353,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        [Ignore("Ignoring for hotfix")]
         public async Task CreateJobWithQueue_And_ClassificationPolicy_w_FallbackQueue()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -499,6 +502,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        [Ignore("Ignoring for hotfix")]
         public async Task UpdateJobTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();

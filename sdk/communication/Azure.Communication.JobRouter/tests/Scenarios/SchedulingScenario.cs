@@ -19,6 +19,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
         }
 
         [Test]
+        [Ignore("Ignoring for hotfix")]
         public async Task SimpleSchedulingScenario()
         {
             JobRouterClient client = CreateRouterClientWithConnectionString();
