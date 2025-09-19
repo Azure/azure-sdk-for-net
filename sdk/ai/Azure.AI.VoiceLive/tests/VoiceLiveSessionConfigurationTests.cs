@@ -82,8 +82,8 @@ namespace Azure.AI.VoiceLive.Tests
                 Model = TestConstants.ModelName,
                 Instructions = "You are a helpful assistant.",
                 TurnDetection = new ServerVad { Threshold = 0.5f, SilenceDurationMs = 500 },
-                InputAudioFormat = AudioFormat.Pcm16,
-                OutputAudioFormat = AudioFormat.Pcm16
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
             };
             // Ensure we control modalities explicitly (clear defaults then add back only text & audio)
             options.Modalities.Clear();

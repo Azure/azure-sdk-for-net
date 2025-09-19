@@ -29,8 +29,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="modalities"></param>
         /// <param name="animation"></param>
         /// <param name="instructions"></param>
-        /// <param name="inputAudio"></param>
-        /// <param name="inputAudioSamplingRate"></param>
+        /// <param name="inputAudioSamplingRate">
+        /// Input audio sampling rate in Hz. Available values:
+        /// - For pcm16: 8000, 16000, 24000
+        /// - For g711_alaw/g711_ulaw: 8000
+        /// </param>
         /// <param name="inputAudioFormat"></param>
         /// <param name="outputAudioFormat"></param>
         /// <param name="turnDetection"></param>
@@ -41,18 +44,16 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputAudioTimestampTypes"></param>
         /// <param name="tools"></param>
         /// <param name="temperature"></param>
-        /// <param name="agent"></param>
         /// <param name="voiceInternal"></param>
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="toolChoice"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveSessionOptions(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, RespondingAgentOptions agent, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionOptions(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
             Animation = animation;
             Instructions = instructions;
-            InputAudio = inputAudio;
             InputAudioSamplingRate = inputAudioSamplingRate;
             InputAudioFormat = inputAudioFormat;
             OutputAudioFormat = outputAudioFormat;
@@ -64,7 +65,6 @@ namespace Azure.AI.VoiceLive
             OutputAudioTimestampTypes = outputAudioTimestampTypes;
             Tools = tools;
             Temperature = temperature;
-            Agent = agent;
             VoiceInternal = voiceInternal;
             _maxResponseOutputTokens = maxResponseOutputTokens;
             _toolChoice = toolChoice;
@@ -83,17 +83,18 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets or sets the Instructions. </summary>
         public string Instructions { get; set; }
 
-        /// <summary> Gets or sets the InputAudio. </summary>
-        public InputAudio InputAudio { get; set; }
-
-        /// <summary> Gets or sets the InputAudioSamplingRate. </summary>
+        /// <summary>
+        /// Input audio sampling rate in Hz. Available values:
+        /// - For pcm16: 8000, 16000, 24000
+        /// - For g711_alaw/g711_ulaw: 8000
+        /// </summary>
         public int? InputAudioSamplingRate { get; set; }
 
         /// <summary> Gets or sets the InputAudioFormat. </summary>
-        public AudioFormat? InputAudioFormat { get; set; }
+        public InputAudioFormat? InputAudioFormat { get; set; }
 
         /// <summary> Gets or sets the OutputAudioFormat. </summary>
-        public AudioFormat? OutputAudioFormat { get; set; }
+        public OutputAudioFormat? OutputAudioFormat { get; set; }
 
         /// <summary> Gets or sets the TurnDetection. </summary>
         public TurnDetection TurnDetection { get; set; }
@@ -118,8 +119,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the Temperature. </summary>
         public float? Temperature { get; set; }
-
-        /// <summary> Gets or sets the Agent. </summary>
-        public RespondingAgentOptions Agent { get; set; }
     }
 }

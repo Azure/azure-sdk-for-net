@@ -139,8 +139,8 @@ public class CustomerServiceBot : IDisposable
             Model = _model,
             Instructions = _instructions,
             Voice = azureVoice,
-            InputAudioFormat = AudioFormat.Pcm16,
-            OutputAudioFormat = AudioFormat.Pcm16,
+            InputAudioFormat = InputAudioFormat.Pcm16,
+            OutputAudioFormat = OutputAudioFormat.Pcm16,
             TurnDetection = turnDetectionConfig
         };
 

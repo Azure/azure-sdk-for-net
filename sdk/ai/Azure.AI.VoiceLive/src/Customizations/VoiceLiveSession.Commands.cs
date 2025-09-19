@@ -476,7 +476,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="itemId"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task TruncateConversationAsync(string itemId, int contentIndex, TimeSpan audioEnd, CancellationToken cancellationToken = default)
+        public virtual async Task TruncateConversationAsync(string itemId, int contentIndex, TimeSpan audioEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             ThrowIfDisposed();
@@ -495,7 +495,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioEnd">Inclusive duration up to which audio is truncated</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="itemId"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
-        public virtual void TruncateConversation(string itemId, int contentIndex, TimeSpan audioEnd, CancellationToken cancellationToken = default)
+        public virtual void TruncateConversation(string itemId, int contentIndex, TimeSpan audioEnd = default, CancellationToken cancellationToken = default)
         {
             TruncateConversationAsync(itemId, contentIndex, audioEnd, cancellationToken).EnsureCompleted();
         }

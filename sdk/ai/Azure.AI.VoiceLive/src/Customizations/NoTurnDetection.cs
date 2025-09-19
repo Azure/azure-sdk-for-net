@@ -10,19 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Disables turn detection. </summary>
+    /// <summary> Server Speech Detection (Azure semantic VAD, default variant). </summary>
     public partial class NoTurnDetection : TurnDetection
     {
         /// <summary> Initializes a new instance of <see cref="NoTurnDetection"/>. </summary>
-        public NoTurnDetection() : base(TurnDetectionType.None)
-        {
-        }
+        public NoTurnDetection() : base(new TurnDetectionType("None")) { }
 
         /// <summary> Initializes a new instance of <see cref="NoTurnDetection"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NoTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
-        {
-        }
+        internal NoTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        { }
+
     }
 }

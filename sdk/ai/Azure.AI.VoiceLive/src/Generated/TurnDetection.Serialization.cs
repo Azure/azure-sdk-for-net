@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for turn detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NoTurnDetection"/>, <see cref="ServerVad"/>, <see cref="AzureSemanticVad"/>, <see cref="AzureSemanticVadEn"/>, <see cref="AzureSemanticVadServer"/>, and <see cref="AzureMultilingualSemanticVad"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerVad"/>, <see cref="AzureSemanticVad"/>, <see cref="AzureSemanticVadEn"/>, and <see cref="AzureMultilingualSemanticVad"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTurnDetection))]
     public abstract partial class TurnDetection : IJsonModel<TurnDetection>
@@ -42,7 +42,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(TurnDetection)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -89,16 +89,12 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "none":
-                        return NoTurnDetection.DeserializeNoTurnDetection(element, options);
                     case "server_vad":
                         return ServerVad.DeserializeServerVad(element, options);
                     case "azure_semantic_vad":
                         return AzureSemanticVad.DeserializeAzureSemanticVad(element, options);
                     case "azure_semantic_vad_en":
                         return AzureSemanticVadEn.DeserializeAzureSemanticVadEn(element, options);
-                    case "server_sd":
-                        return AzureSemanticVadServer.DeserializeAzureSemanticVadServer(element, options);
                     case "azure_semantic_vad_multilingual":
                         return AzureMultilingualSemanticVad.DeserializeAzureMultilingualSemanticVad(element, options);
                 }

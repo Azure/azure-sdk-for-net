@@ -13,8 +13,6 @@ namespace Azure.AI.VoiceLive
         /// <summary> Blendshapes. </summary>
         Blendshapes,
         /// <summary> VisemeId. </summary>
-        VisemeId,
-        /// <summary> Emotion. </summary>
-        Emotion
+        VisemeId
     }
 }

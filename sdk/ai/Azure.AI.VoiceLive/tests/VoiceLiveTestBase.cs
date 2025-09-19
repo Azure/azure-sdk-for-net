@@ -185,7 +185,7 @@ namespace Azure.AI.VoiceLive.Tests
             switch (voiceType)
             {
                 case "azure-platform":
-                    return new AzurePlatformVoice("en-US-AriaNeural");
+                    return new AzureStandardVoice("en-US-AriaNeural");
 
                 case "azure-custom":
                     RequireFeature(TestEnvironment.HasCustomVoice,
@@ -204,9 +204,6 @@ namespace Azure.AI.VoiceLive.Tests
                 case "openai":
                     return new OpenAIVoice(OAIVoice.Alloy);
 
-                case "llm":
-                    return new LlmVoice(LlmVoiceName.Cosyvoice);
-
                 default:
                     throw new ArgumentException($"Unknown voice type: {voiceType}");
             }
@@ -219,9 +216,6 @@ namespace Azure.AI.VoiceLive.Tests
         {
             switch (detectionType)
             {
-                case "none":
-                    return new NoTurnDetection();
-
                 case "server-vad":
                     return new ServerVad
                     {

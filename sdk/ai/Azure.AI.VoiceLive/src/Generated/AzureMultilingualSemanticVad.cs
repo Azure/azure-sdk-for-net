@@ -26,25 +26,17 @@ namespace Azure.AI.VoiceLive
         /// <param name="prefixPaddingMs"></param>
         /// <param name="silenceDurationMs"></param>
         /// <param name="endOfUtteranceDetection"></param>
-        /// <param name="negThreshold"></param>
         /// <param name="speechDurationMs"></param>
-        /// <param name="windowSize"></param>
-        /// <param name="distinctCiPhones"></param>
-        /// <param name="requireVowel"></param>
         /// <param name="removeFillerWords"></param>
         /// <param name="languages"></param>
         /// <param name="autoTruncate"></param>
-        internal AzureMultilingualSemanticVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, float? negThreshold, int? speechDurationMs, int? windowSize, int? distinctCiPhones, bool? requireVowel, bool? removeFillerWords, IList<string> languages, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
+        internal AzureMultilingualSemanticVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, IList<string> languages, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
             SilenceDurationMs = silenceDurationMs;
             EndOfUtteranceDetection = endOfUtteranceDetection;
-            NegThreshold = negThreshold;
             SpeechDurationMs = speechDurationMs;
-            WindowSize = windowSize;
-            DistinctCiPhones = distinctCiPhones;
-            RequireVowel = requireVowel;
             RemoveFillerWords = removeFillerWords;
             Languages = languages;
             AutoTruncate = autoTruncate;
@@ -62,20 +54,8 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets or sets the EndOfUtteranceDetection. </summary>
         public EouDetection EndOfUtteranceDetection { get; set; }
 
-        /// <summary> Gets or sets the NegThreshold. </summary>
-        public float? NegThreshold { get; set; }
-
         /// <summary> Gets or sets the SpeechDurationMs. </summary>
         public int? SpeechDurationMs { get; set; }
-
-        /// <summary> Gets or sets the WindowSize. </summary>
-        public int? WindowSize { get; set; }
-
-        /// <summary> Gets or sets the DistinctCiPhones. </summary>
-        public int? DistinctCiPhones { get; set; }
-
-        /// <summary> Gets or sets the RequireVowel. </summary>
-        public bool? RequireVowel { get; set; }
 
         /// <summary> Gets or sets the RemoveFillerWords. </summary>
         public bool? RemoveFillerWords { get; set; }

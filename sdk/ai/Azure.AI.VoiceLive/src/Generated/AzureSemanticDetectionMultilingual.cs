@@ -23,35 +23,13 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
         /// <param name="timeoutMs"> Gets or sets the Timeout. </param>
-        /// <param name="secondaryThreshold"></param>
-        /// <param name="secondaryTimeoutMs"> Gets or sets the SecondaryTimeout. </param>
-        /// <param name="disableRules"></param>
-        /// <param name="srBoost"></param>
-        /// <param name="extraImendCheck"></param>
-        internal AzureSemanticDetectionMultilingual(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, float? timeoutMs, float? secondaryThreshold, float? secondaryTimeoutMs, bool? disableRules, float? srBoost, bool? extraImendCheck) : base(model, additionalBinaryDataProperties)
+        internal AzureSemanticDetectionMultilingual(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, float? timeoutMs) : base(model, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             TimeoutMs = timeoutMs;
-            SecondaryThreshold = secondaryThreshold;
-            SecondaryTimeoutMs = secondaryTimeoutMs;
-            DisableRules = disableRules;
-            SrBoost = srBoost;
-            ExtraImendCheck = extraImendCheck;
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
         public float? Threshold { get; set; }
-
-        /// <summary> Gets or sets the SecondaryThreshold. </summary>
-        public float? SecondaryThreshold { get; set; }
-
-        /// <summary> Gets or sets the DisableRules. </summary>
-        public bool? DisableRules { get; set; }
-
-        /// <summary> Gets or sets the SrBoost. </summary>
-        public float? SrBoost { get; set; }
-
-        /// <summary> Gets or sets the ExtraImendCheck. </summary>
-        public bool? ExtraImendCheck { get; set; }
     }
 }

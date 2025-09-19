@@ -41,8 +41,8 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                     PrefixPadding = TimeSpan.FromMilliseconds(300),
                     SilenceDuration = TimeSpan.FromMilliseconds(500)
                 },
-                InputAudioFormat = AudioFormat.Pcm16,
-                OutputAudioFormat = AudioFormat.Pcm16
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
             };
 
             // Ensure modalities include audio
@@ -94,12 +94,10 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                 },
                 TurnDetection = new AzureSemanticVad()
                 {
-                    NegThreshold = 0.3f,
-                    WindowSize = 300,
                     RemoveFillerWords = true
                 },
-                InputAudioFormat = AudioFormat.Pcm16,
-                OutputAudioFormat = AudioFormat.Pcm16
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
             };
 
             // Ensure modalities include audio
@@ -148,8 +146,8 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                 Model = model,
                 Instructions = "You are a weather assistant. Use the get_current_weather function to help users with weather information.",
                 Voice = new AzureStandardVoice("en-US-AvaNeural"),
-                InputAudioFormat = AudioFormat.Pcm16,
-                OutputAudioFormat = AudioFormat.Pcm16
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
             };
 
             // Add the function tool

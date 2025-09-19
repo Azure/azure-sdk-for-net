@@ -67,7 +67,7 @@ namespace Azure.AI.VoiceLive
         /// given model. Defaults to `inf`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InputModality> modalities, string instructions, BinaryData voice, AudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InputModality> modalities, string instructions, BinaryData voice, OutputAudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Commit = commit;
             CancelPrevious = cancelPrevious;
@@ -138,12 +138,6 @@ namespace Azure.AI.VoiceLive
         /// <item>
         /// <description> <see cref="AzureVoice"/>. </description>
         /// </item>
-        /// <item>
-        /// <description> <see cref="LlmVoiceName"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="LlmVoice"/>. </description>
-        /// </item>
         /// </list>
         /// </remarks>
         /// </para>
@@ -172,7 +166,7 @@ namespace Azure.AI.VoiceLive
         public BinaryData Voice { get; set; }
 
         /// <summary> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </summary>
-        public AudioFormat? OutputAudioFormat { get; set; }
+        public OutputAudioFormat? OutputAudioFormat { get; set; }
 
         /// <summary> Tools (functions) available to the model. </summary>
         public IList<VoiceLiveToolDefinition> Tools { get; }

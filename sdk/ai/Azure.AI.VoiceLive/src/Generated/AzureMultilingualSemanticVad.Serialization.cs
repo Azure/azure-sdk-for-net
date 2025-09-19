@@ -54,30 +54,10 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("end_of_utterance_detection"u8);
                 writer.WriteObjectValue(EndOfUtteranceDetection, options);
             }
-            if (Optional.IsDefined(NegThreshold))
-            {
-                writer.WritePropertyName("neg_threshold"u8);
-                writer.WriteNumberValue(NegThreshold.Value);
-            }
             if (Optional.IsDefined(SpeechDurationMs))
             {
                 writer.WritePropertyName("speech_duration_ms"u8);
                 writer.WriteNumberValue(SpeechDurationMs.Value);
-            }
-            if (Optional.IsDefined(WindowSize))
-            {
-                writer.WritePropertyName("window_size"u8);
-                writer.WriteNumberValue(WindowSize.Value);
-            }
-            if (Optional.IsDefined(DistinctCiPhones))
-            {
-                writer.WritePropertyName("distinct_ci_phones"u8);
-                writer.WriteNumberValue(DistinctCiPhones.Value);
-            }
-            if (Optional.IsDefined(RequireVowel))
-            {
-                writer.WritePropertyName("require_vowel"u8);
-                writer.WriteBooleanValue(RequireVowel.Value);
             }
             if (Optional.IsDefined(RemoveFillerWords))
             {
@@ -137,11 +117,7 @@ namespace Azure.AI.VoiceLive
             int? prefixPaddingMs = default;
             int? silenceDurationMs = default;
             EouDetection endOfUtteranceDetection = default;
-            float? negThreshold = default;
             int? speechDurationMs = default;
-            int? windowSize = default;
-            int? distinctCiPhones = default;
-            bool? requireVowel = default;
             bool? removeFillerWords = default;
             IList<string> languages = default;
             bool? autoTruncate = default;
@@ -149,7 +125,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToTurnDetectionType();
+                    @type = new TurnDetectionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threshold"u8))
@@ -188,15 +164,6 @@ namespace Azure.AI.VoiceLive
                     endOfUtteranceDetection = EouDetection.DeserializeEouDetection(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("neg_threshold"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    negThreshold = prop.Value.GetSingle();
-                    continue;
-                }
                 if (prop.NameEquals("speech_duration_ms"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -204,33 +171,6 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     speechDurationMs = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("window_size"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    windowSize = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("distinct_ci_phones"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    distinctCiPhones = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("require_vowel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requireVowel = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("remove_filler_words"u8))
@@ -284,11 +224,7 @@ namespace Azure.AI.VoiceLive
                 prefixPaddingMs,
                 silenceDurationMs,
                 endOfUtteranceDetection,
-                negThreshold,
                 speechDurationMs,
-                windowSize,
-                distinctCiPhones,
-                requireVowel,
                 removeFillerWords,
                 languages ?? new ChangeTrackingList<string>(),
                 autoTruncate);

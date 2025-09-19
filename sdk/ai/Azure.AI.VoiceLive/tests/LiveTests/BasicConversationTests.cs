@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Microsoft.Extensions.Azure;
+//using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
@@ -43,7 +43,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                InputAudioFormat = AudioFormat.Pcm16
+                InputAudioFormat = InputAudioFormat.Pcm16
             };
 
             var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
@@ -54,7 +54,7 @@ namespace Azure.AI.VoiceLive.Tests
             var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
 
-            Assert.AreEqual(sessionUpdated.Session.InputAudioFormat, AudioFormat.Pcm16);
+            Assert.AreEqual(sessionUpdated.Session.InputAudioFormat, InputAudioFormat.Pcm16);
             Assert.AreEqual(sessionCreated.Session.Id, sessionUpdated.Session.Id);
             Assert.AreEqual(sessionCreated.Session.Model, sessionUpdated.Session.Model);
             Assert.AreEqual(sessionCreated.Session.Agent, sessionUpdated.Session.Agent);
@@ -131,7 +131,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
 
-            Assert.AreEqual(sessionUpdated.Session.InputAudioFormat, AudioFormat.Pcm16);
+            Assert.AreEqual(sessionUpdated.Session.InputAudioFormat, InputAudioFormat.Pcm16);
             Assert.AreEqual(sessionCreated.Session.Id, sessionUpdated.Session.Id);
             Assert.AreEqual(sessionCreated.Session.Model, sessionUpdated.Session.Model);
             Assert.AreEqual(sessionCreated.Session.Agent, sessionUpdated.Session.Agent);
@@ -144,7 +144,7 @@ namespace Azure.AI.VoiceLive.Tests
             await session.AddItemAsync(new UserMessageItem(new[] { content }), null, TimeoutToken).ConfigureAwait(false);
 
             var conversationItemCreated = await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
-            Assert.IsTrue(conversationItemCreated.PreviousItemId == null);
+            Assert.IsTrue(string.IsNullOrEmpty(conversationItemCreated.PreviousItemId));
             var message = SafeCast<ResponseMessageItem>(conversationItemCreated.Item);
             Assert.AreEqual(ResponseMessageRole.User, message.Role);
             Assert.AreEqual(1, message.Content.Count);
@@ -158,6 +158,21 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsTrue(responseItems.Count() > 0);
             responseItems.Insert(0, responseCreated);
             ValidateResponseUpdates(responseItems, string.Empty);
+
+            var callDone = responseItems.Where((s) =>
+            {
+                return s is SessionUpdateResponseFunctionCallArgumentsDone;
+            });
+
+            Assert.IsTrue(callDone.Count() == 1);
+            var callInfo = SafeCast<SessionUpdateResponseFunctionCallArgumentsDone>(callDone.First());
+
+            await session.AddItemAsync(new FunctionCallOutputItem(callInfo.CallId, "42"), TimeoutToken).ConfigureAwait(false);
+            var conversationItemCreated2 = await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+
+            await session.StartResponseAsync(TimeoutToken).ConfigureAwait(false);
+
+            var functionResponses = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
         }
 
         [LiveOnly]
@@ -185,7 +200,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
 
-            Assert.AreEqual(sessionUpdated.Session.InputAudioFormat, AudioFormat.Pcm16);
+            Assert.AreEqual(sessionUpdated.Session.InputAudioFormat, InputAudioFormat.Pcm16);
             Assert.AreEqual(sessionCreated.Session.Id, sessionUpdated.Session.Id);
             Assert.AreEqual(sessionCreated.Session.Model, sessionUpdated.Session.Model);
             Assert.AreEqual(sessionCreated.Session.Agent, sessionUpdated.Session.Agent);
@@ -216,6 +231,91 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsTrue(responseItems.Count() > 0);
             responseItems.Insert(0, responseCreated);
             ValidateResponseUpdates(responseItems, string.Empty);
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public async Task Truncate()
+        {
+            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+
+            var options = new VoiceLiveSessionOptions()
+            {
+                Model = "gpt-4o",
+                Modalities = { InputModality.Text }
+            };
+
+            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+
+            // Should get two updates back.
+            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+
+            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+
+            await session.AddItemAsync(new UserMessageItem(new InputTextContentPart("Hello")), null, TimeoutToken).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+
+            await session.AddItemAsync(new AssistantMessageItem(new OutputTextContentPart("Hello, how can I help you?")), null, TimeoutToken).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+
+            await session.AddItemAsync(new UserMessageItem(new InputTextContentPart("I'd like a taco")), null, TimeoutToken).ConfigureAwait(false);
+            var q1 = await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+
+            await session.AddItemAsync(new AssistantMessageItem(new OutputTextContentPart("I don't sell tacos")), null, TimeoutToken).ConfigureAwait(false);
+            var q2 = await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+
+            await session.AddItemAsync(new UserMessageItem(new InputTextContentPart("How about Choclates?")), null, TimeoutToken).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+
+            await session.AddItemAsync(new AssistantMessageItem(new OutputTextContentPart("ok")), null, TimeoutToken).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+
+            await session.TruncateConversationAsync(q1.Item.Id, 0, default, TimeoutToken).ConfigureAwait(false);
+            await session.DeleteItemAsync(q1.Item.Id, TimeoutToken).ConfigureAwait(false);
+
+            await Task.Delay(ActionTimeout).ConfigureAwait(false);
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public async Task SendMultipleAudioFrames()
+        {
+            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+
+            var options = new VoiceLiveSessionOptions()
+            {
+                Model = "gpt-4o",
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                TurnDetection = new NoTurnDetection()
+            };
+
+            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+
+            // Should get two updates back.
+            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+
+            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+
+            for (int i = 0; i < 300; i++)
+            {
+                await session.SendInputAudioAsync(BinaryData.FromBytes(new byte[3200]), TimeoutToken).ConfigureAwait(false);
+            }
+
+            // error
+            // await session.CommitInputAudioAsync(TimeoutToken).ConfigureAwait(false);
+
+            await session.ClearInputAudioAsync(TimeoutToken).ConfigureAwait(false);
+
+            // Now send audio:
+            await SendAudioAsync(session, "Weather.wav").ConfigureAwait(false);
+
+            var speechDetected = await GetNextUpdate<SessionUpdateInputAudioBufferSpeechStarted>(updatesEnum).ConfigureAwait(false);
         }
 
         private void ValidateResponseUpdates(List<SessionUpdate> responseItems, string previousItemId)

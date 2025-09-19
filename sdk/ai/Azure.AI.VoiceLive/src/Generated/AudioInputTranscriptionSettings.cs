@@ -20,7 +20,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="model">
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
-        /// 'azure-fast-transcription', 'azure-speech'.
+        /// 'azure-speech'.
         /// </param>
         public AudioInputTranscriptionSettings(AudioInputTranscriptionSettingsModel model)
         {
@@ -33,9 +33,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="model">
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
-        /// 'azure-fast-transcription', 'azure-speech'.
+        /// 'azure-speech'.
         /// </param>
-        /// <param name="language"> Optional BCP-47 language code (e.g., 'en-US'). </param>
+        /// <param name="language"> Optional language code in BCP-47 (e.g., 'en-US'), or ISO-639-1 (e.g., 'en'), or multi languages with auto detection, (e.g., 'en,zh'). </param>
         /// <param name="customSpeech"> Optional configuration for custom speech models. </param>
         /// <param name="phraseList"> Optional list of phrase hints to bias recognition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -51,11 +51,11 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
-        /// 'azure-fast-transcription', 'azure-speech'.
+        /// 'azure-speech'.
         /// </summary>
         public AudioInputTranscriptionSettingsModel Model { get; set; }
 
-        /// <summary> Optional BCP-47 language code (e.g., 'en-US'). </summary>
+        /// <summary> Optional language code in BCP-47 (e.g., 'en-US'), or ISO-639-1 (e.g., 'en'), or multi languages with auto detection, (e.g., 'en,zh'). </summary>
         public string Language { get; set; }
 
         /// <summary> Optional configuration for custom speech models. </summary>

@@ -44,31 +44,6 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutMs.Value);
             }
-            if (Optional.IsDefined(SecondaryThreshold))
-            {
-                writer.WritePropertyName("secondary_threshold"u8);
-                writer.WriteNumberValue(SecondaryThreshold.Value);
-            }
-            if (Optional.IsDefined(SecondaryTimeoutMs))
-            {
-                writer.WritePropertyName("secondary_timeout"u8);
-                writer.WriteNumberValue(SecondaryTimeoutMs.Value);
-            }
-            if (Optional.IsDefined(DisableRules))
-            {
-                writer.WritePropertyName("disable_rules"u8);
-                writer.WriteBooleanValue(DisableRules.Value);
-            }
-            if (Optional.IsDefined(SrBoost))
-            {
-                writer.WritePropertyName("sr_boost"u8);
-                writer.WriteNumberValue(SrBoost.Value);
-            }
-            if (Optional.IsDefined(ExtraImendCheck))
-            {
-                writer.WritePropertyName("extra_imend_check"u8);
-                writer.WriteBooleanValue(ExtraImendCheck.Value);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -100,11 +75,6 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             float? threshold = default;
             float? timeoutMs = default;
-            float? secondaryThreshold = default;
-            float? secondaryTimeoutMs = default;
-            bool? disableRules = default;
-            float? srBoost = default;
-            bool? extraImendCheck = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("model"u8))
@@ -130,66 +100,12 @@ namespace Azure.AI.VoiceLive
                     timeoutMs = prop.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("secondary_threshold"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    secondaryThreshold = prop.Value.GetSingle();
-                    continue;
-                }
-                if (prop.NameEquals("secondary_timeout"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    secondaryTimeoutMs = prop.Value.GetSingle();
-                    continue;
-                }
-                if (prop.NameEquals("disable_rules"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableRules = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("sr_boost"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    srBoost = prop.Value.GetSingle();
-                    continue;
-                }
-                if (prop.NameEquals("extra_imend_check"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    extraImendCheck = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureSemanticDetection(
-                model,
-                additionalBinaryDataProperties,
-                threshold,
-                timeoutMs,
-                secondaryThreshold,
-                secondaryTimeoutMs,
-                disableRules,
-                srBoost,
-                extraImendCheck);
+            return new AzureSemanticDetection(model, additionalBinaryDataProperties, threshold, timeoutMs);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
