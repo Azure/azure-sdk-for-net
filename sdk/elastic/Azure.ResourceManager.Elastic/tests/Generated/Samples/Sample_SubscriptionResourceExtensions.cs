@@ -19,40 +19,9 @@ namespace Azure.ResourceManager.Elastic.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetElasticMonitors_MonitorsList()
-        {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Monitors_List.json
-            // this example is just showing the usage of "Monitors_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ElasticMonitorResource item in subscriptionResource.GetElasticMonitorsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ElasticMonitorData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetElasticVersions_ElasticVersionsList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/ElasticVersions_List.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/ElasticVersions_List.json
             // this example is just showing the usage of "ElasticVersions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,9 +47,33 @@ namespace Azure.ResourceManager.Elastic.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetElasticToAzureSubscriptionMapping_OrganizationsGetElasticToAzureSubscriptionMapping()
+        {
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/Organizations_GetElasticToAzureSubscriptionMapping.json
+            // this example is just showing the usage of "Organizations_GetElasticToAzureSubscriptionMapping" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            ElasticOrganizationToAzureSubscriptionMappingResult result = await subscriptionResource.GetElasticToAzureSubscriptionMappingAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApiKey_OrganizationsGetApiKey()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Organizations_GetApiKey.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/Organizations_GetApiKey.json
             // this example is just showing the usage of "Organizations_GetApiKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,10 +95,10 @@ namespace Azure.ResourceManager.Elastic.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetElasticToAzureSubscriptionMapping_OrganizationsGetElasticToAzureSubscriptionMapping()
+        public async Task GetElasticMonitors_MonitorsList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Organizations_GetElasticToAzureSubscriptionMapping.json
-            // this example is just showing the usage of "Organizations_GetElasticToAzureSubscriptionMapping" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/Monitors_List.json
+            // this example is just showing the usage of "Monitors_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -118,10 +111,17 @@ namespace Azure.ResourceManager.Elastic.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation
-            ElasticOrganizationToAzureSubscriptionMappingResult result = await subscriptionResource.GetElasticToAzureSubscriptionMappingAsync();
+            // invoke the operation and iterate over the result
+            await foreach (ElasticMonitorResource item in subscriptionResource.GetElasticMonitorsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ElasticMonitorData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
     }
 }

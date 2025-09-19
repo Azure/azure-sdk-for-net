@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Elastic
 namespace: Azure.ResourceManager.Elastic
-require: https://github.com/Azure/azure-rest-api-specs/blob/700bd7b4e10d2bd83672ee56fd6aedcf7e195a06/specification/elastic/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/483240cc04b836dc5dd66b58ea3e4b848a13f731/specification/elastic/resource-manager/readme.md
 #tag: package-2024-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -123,4 +123,8 @@ override-operation-name:
   Organizations_GetApiKey: GetApiKey
   Organizations_GetElasticToAzureSubscriptionMapping: GetElasticToAzureSubscriptionMapping
 
+directive:
+- from: elastic.json
+  where: $.definitions.MonitoringTagRulesProperties.properties.provisioningState
+  transform: $['readOnly'] = false;
 ```

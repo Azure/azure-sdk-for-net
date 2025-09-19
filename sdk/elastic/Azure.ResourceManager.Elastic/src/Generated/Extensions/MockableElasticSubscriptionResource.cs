@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Elastic.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableElasticSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _elasticMonitorMonitorsClientDiagnostics;
-        private MonitorsRestOperations _elasticMonitorMonitorsRestClient;
         private ClientDiagnostics _elasticVersionsClientDiagnostics;
         private ElasticVersionsRestOperations _elasticVersionsRestClient;
         private ClientDiagnostics _organizationsClientDiagnostics;
         private OrganizationsRestOperations _organizationsRestClient;
+        private ClientDiagnostics _elasticMonitorMonitorsClientDiagnostics;
+        private MonitorsRestOperations _elasticMonitorMonitorsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableElasticSubscriptionResource"/> class for mocking. </summary>
         protected MockableElasticSubscriptionResource()
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Elastic.Mocking
         {
         }
 
-        private ClientDiagnostics ElasticMonitorMonitorsClientDiagnostics => _elasticMonitorMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitorResource.ResourceType.Namespace, Diagnostics);
-        private MonitorsRestOperations ElasticMonitorMonitorsRestClient => _elasticMonitorMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ElasticMonitorResource.ResourceType));
         private ClientDiagnostics ElasticVersionsClientDiagnostics => _elasticVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ElasticVersionsRestOperations ElasticVersionsRestClient => _elasticVersionsRestClient ??= new ElasticVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OrganizationsRestOperations OrganizationsRestClient => _organizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ElasticMonitorMonitorsClientDiagnostics => _elasticMonitorMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitorResource.ResourceType.Namespace, Diagnostics);
+        private MonitorsRestOperations ElasticMonitorMonitorsRestClient => _elasticMonitorMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ElasticMonitorResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -51,67 +51,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// List all monitors under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticMonitorResource> GetElasticMonitorsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), ElasticMonitorMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitors", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all monitors under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticMonitorResource> GetElasticMonitors(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), ElasticMonitorMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitors", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of available versions for a region.
+        /// Retrieve a list of all available Elastic versions for a specified region, helping you choose the best version for your deployment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -123,7 +63,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,7 +81,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Get a list of available versions for a region.
+        /// Retrieve a list of all available Elastic versions for a specified region, helping you choose the best version for your deployment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,7 +93,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,77 +111,9 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Fetch User API Key from internal database, if it was generated and stored while creating the Elasticsearch Organization.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/getOrganizationApiKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_GetApiKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ElasticUserApiKeyResult>> GetApiKeyAsync(ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKey");
-            scope.Start();
-            try
-            {
-                var response = await OrganizationsRestClient.GetApiKeyAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetch User API Key from internal database, if it was generated and stored while creating the Elasticsearch Organization.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/getOrganizationApiKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_GetApiKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ElasticUserApiKeyResult> GetApiKey(ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKey");
-            scope.Start();
-            try
-            {
-                var response = OrganizationsRestClient.GetApiKey(Id.SubscriptionId, body, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get Elastic Organization To Azure Subscription Mapping details for the logged-in user.
+        /// &gt;;
+        ///   /**
+        /// Retrieve mapping details between the Elastic Organization and Azure Subscription for the logged-in user.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -253,7 +125,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +147,9 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Get Elastic Organization To Azure Subscription Mapping details for the logged-in user.
+        /// &gt;;
+        ///   /**
+        /// Retrieve mapping details between the Elastic Organization and Azure Subscription for the logged-in user.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -287,7 +161,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +180,136 @@ namespace Azure.ResourceManager.Elastic.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Fetch the User API Key from the internal database, if it was generated and stored during the creation of the Elasticsearch Organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/getOrganizationApiKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organizations_GetApiKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ElasticUserApiKeyResult>> GetApiKeyAsync(ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKey");
+            scope.Start();
+            try
+            {
+                var response = await OrganizationsRestClient.GetApiKeyAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetch the User API Key from the internal database, if it was generated and stored during the creation of the Elasticsearch Organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/getOrganizationApiKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organizations_GetApiKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ElasticUserApiKeyResult> GetApiKey(ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKey");
+            scope.Start();
+            try
+            {
+                var response = OrganizationsRestClient.GetApiKey(Id.SubscriptionId, body, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ElasticMonitorResource> GetElasticMonitorsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), ElasticMonitorMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitors", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ElasticMonitorResource> GetElasticMonitors(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), ElasticMonitorMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitors", "value", "nextLink", cancellationToken);
         }
     }
 }

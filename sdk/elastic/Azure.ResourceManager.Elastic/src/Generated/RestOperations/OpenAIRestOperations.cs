@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Elastic
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> List OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> List all OpenAI integration rules for a given Elastic monitor resource, helping you manage AI-driven observability and monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> List OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> List all OpenAI integration rules for a given Elastic monitor resource, helping you manage AI-driven observability and monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> Get OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> Get detailed information about OpenAI integration rules for a given Elastic monitor resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> Get OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> Get detailed information about OpenAI integration rules for a given Elastic monitor resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -276,11 +276,11 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> Create or update a OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> Create or update an OpenAI integration rule for a given Elastic monitor resource, enabling advanced AI-driven observability and monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="integrationName"> OpenAI Integration name. </param>
+        /// <param name="monitorName"> The <see cref="string"/> to use. </param>
+        /// <param name="integrationName"> The <see cref="string"/> to use. </param>
         /// <param name="data"> The <see cref="ElasticOpenAIIntegrationData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/>, <paramref name="integrationName"/> or <paramref name="data"/> is null. </exception>
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> Create or update a OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> Create or update an OpenAI integration rule for a given Elastic monitor resource, enabling advanced AI-driven observability and monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="integrationName"> OpenAI Integration name. </param>
+        /// <param name="monitorName"> The <see cref="string"/> to use. </param>
+        /// <param name="integrationName"> The <see cref="string"/> to use. </param>
         /// <param name="data"> The <see cref="ElasticOpenAIIntegrationData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/>, <paramref name="integrationName"/> or <paramref name="data"/> is null. </exception>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> Delete OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> Delete an OpenAI integration rule for a given Elastic monitor resource, removing AI-driven observability and monitoring capabilities. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> Delete OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> Delete an OpenAI integration rule for a given Elastic monitor resource, removing AI-driven observability and monitoring capabilities. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> Get OpenAI integration status for a given integration. </summary>
+        /// <summary> Get the status of OpenAI integration for a given Elastic monitor resource, ensuring optimal observability and performance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> Get OpenAI integration status for a given integration. </summary>
+        /// <summary> Get the status of OpenAI integration for a given Elastic monitor resource, ensuring optimal observability and performance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> List OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> List all OpenAI integration rules for a given Elastic monitor resource, helping you manage AI-driven observability and monitoring. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> List OpenAI integration rule for a given monitor resource. </summary>
+        /// <summary> List all OpenAI integration rules for a given Elastic monitor resource, helping you manage AI-driven observability and monitoring. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

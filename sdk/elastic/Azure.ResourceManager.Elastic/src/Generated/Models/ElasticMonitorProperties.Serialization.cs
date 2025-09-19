@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 throw new FormatException($"The model {nameof(ElasticMonitorProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -99,6 +99,16 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("generateApiKey"u8);
                 writer.WriteBooleanValue(IsApiKeyGenerated.Value);
             }
+            if (Optional.IsDefined(HostingType))
+            {
+                writer.WritePropertyName("hostingType"u8);
+                writer.WriteStringValue(HostingType.Value.ToString());
+            }
+            if (Optional.IsDefined(ProjectDetails))
+            {
+                writer.WritePropertyName("projectDetails"u8);
+                writer.WriteObjectValue(ProjectDetails, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -149,6 +159,8 @@ namespace Azure.ResourceManager.Elastic.Models
             ElasticLiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
             bool? generateApiKey = default;
+            HostingType? hostingType = default;
+            ProjectDetails projectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,6 +262,24 @@ namespace Azure.ResourceManager.Elastic.Models
                     generateApiKey = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("hostingType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hostingType = new HostingType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("projectDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    projectDetails = ProjectDetails.DeserializeProjectDetails(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -270,6 +300,8 @@ namespace Azure.ResourceManager.Elastic.Models
                 liftrResourceCategory,
                 liftrResourcePreference,
                 generateApiKey,
+                hostingType,
+                projectDetails,
                 serializedAdditionalRawData);
         }
 

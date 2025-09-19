@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -52,24 +51,28 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticOpenAIIntegrationProperties"/>. </summary>
-        /// <param name="openAIResourceId"> The resource id of Open AI resource. </param>
+        /// <param name="openAIResourceId"> The resource name of Open AI resource. </param>
         /// <param name="openAIResourceEndpoint"> The API endpoint for Open AI resource. </param>
+        /// <param name="openAIConnectorId"> The connector id of Open AI resource. </param>
         /// <param name="key"> Value of API key for Open AI resource. </param>
         /// <param name="lastRefreshOn"> Last Update Timestamp for key updation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticOpenAIIntegrationProperties(ResourceIdentifier openAIResourceId, string openAIResourceEndpoint, string key, DateTimeOffset? lastRefreshOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticOpenAIIntegrationProperties(string openAIResourceId, string openAIResourceEndpoint, string openAIConnectorId, string key, DateTimeOffset? lastRefreshOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OpenAIResourceId = openAIResourceId;
             OpenAIResourceEndpoint = openAIResourceEndpoint;
+            OpenAIConnectorId = openAIConnectorId;
             Key = key;
             LastRefreshOn = lastRefreshOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource id of Open AI resource. </summary>
-        public ResourceIdentifier OpenAIResourceId { get; }
+        /// <summary> The resource name of Open AI resource. </summary>
+        public string OpenAIResourceId { get; set; }
         /// <summary> The API endpoint for Open AI resource. </summary>
-        public string OpenAIResourceEndpoint { get; }
+        public string OpenAIResourceEndpoint { get; set; }
+        /// <summary> The connector id of Open AI resource. </summary>
+        public string OpenAIConnectorId { get; set; }
         /// <summary> Value of API key for Open AI resource. </summary>
         public string Key { get; set; }
         /// <summary> Last Update Timestamp for key updation. </summary>
