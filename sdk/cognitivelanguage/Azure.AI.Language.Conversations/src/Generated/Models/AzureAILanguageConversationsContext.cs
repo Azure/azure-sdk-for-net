@@ -15,7 +15,6 @@ namespace Azure.AI.Language.Conversations
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AgeResolution))]
-    [ModelReaderWriterBuildable(typeof(AIConversation))]
     [ModelReaderWriterBuildable(typeof(AIConversationLanguageUnderstandingActionContent))]
     [ModelReaderWriterBuildable(typeof(AnalysisConfig))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationActionResult))]
@@ -38,7 +37,6 @@ namespace Azure.AI.Language.Conversations
     [ModelReaderWriterBuildable(typeof(ConversationalAIAnalysisInput))]
     [ModelReaderWriterBuildable(typeof(ConversationalAIEntity))]
     [ModelReaderWriterBuildable(typeof(ConversationalAIIntent))]
-    [ModelReaderWriterBuildable(typeof(ConversationalAIItem))]
     [ModelReaderWriterBuildable(typeof(ConversationalAIResult))]
     [ModelReaderWriterBuildable(typeof(ConversationalAITask))]
     [ModelReaderWriterBuildable(typeof(ConversationalAITaskResult))]

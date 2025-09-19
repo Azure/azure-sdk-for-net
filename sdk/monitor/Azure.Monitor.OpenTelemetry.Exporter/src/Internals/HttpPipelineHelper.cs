@@ -2,20 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
-
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
-using System.Diagnostics.CodeAnalysis;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -24,6 +23,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string RetryAfterHeaderName = "Retry-After";
 
         internal static int MinimumRetryInterval = 60000;
+
+        private static TransmissionResult CreateTransmissionResult() => new()
+        {
+            ExportResult = ExportResult.Failure,
+            WillRetry = false,
+            SavedToStorage = false,
+            DeletedBlob = false,
+            StatusCode = 0,
+            ItemsAccepted = null
+        };
+
+        private static bool IsRetriableStatus(int statusCode) => statusCode == ResponseStatusCodes.RequestTimeout
+                                                                                || statusCode == ResponseStatusCodes.ResponseCodeTooManyRequests
+                                                                                || statusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache
+                                                                                || statusCode == ResponseStatusCodes.Unauthorized
+                                                                                || statusCode == ResponseStatusCodes.Forbidden
+                                                                                || statusCode == ResponseStatusCodes.InternalServerError
+                                                                                || statusCode == ResponseStatusCodes.BadGateway
+                                                                                || statusCode == ResponseStatusCodes.ServiceUnavailable
+                                                                                || statusCode == ResponseStatusCodes.GatewayTimeout;
 
         internal static int GetItemsAccepted(HttpMessage message)
         {
@@ -180,118 +199,130 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return ExportResult.Failure;
         }
 
-        internal static ExportResult HandleFailures(HttpMessage httpMessage, PersistentBlobProvider blobProvider, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled)
+        /// <summary>
+        /// Centralized handling of a transmission result (exporter or storage origin).
+        /// Decides whether to persist for retry, delete existing storage blob, and logs telemetry.
+        /// </summary>
+        /// <param name="httpMessage">The HTTP message (request/response).</param>
+        /// <param name="blobProvider">Optional blob provider used to save new blobs.</param>
+        /// <param name="blob">Existing blob (when retransmitting from storage).</param>
+        /// <param name="connectionVars">Connection vars for logging.</param>
+        /// <param name="origin">Origin of telemetry (Exporter vs Storage).</param>
+        /// <param name="isAadEnabled">If AAD auth is enabled.</param>
+        /// <returns>TransmissionResult describing actions taken.</returns>
+        internal static TransmissionResult ProcessTransmissionResult(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled)
         {
-            ExportResult result = ExportResult.Failure;
-            int statusCode = 0;
-            byte[]? content;
+            var result = CreateTransmissionResult();
 
             if (!httpMessage.HasResponse)
             {
-                // HttpRequestException
-                if (TryGetRequestContent(httpMessage.Request.Content, out content))
+                if (origin != TelemetryItemOrigin.Storage)
                 {
-                    result = blobProvider.SaveTelemetry(content);
+                    HandleNetworkFailure(httpMessage, blobProvider, origin, ref result);
                 }
+
+                AzureMonitorExporterEventSource.Log.TransmissionFailed(
+                    origin: origin,
+                    statusCode: result.StatusCode,
+                    isAadEnabled: isAadEnabled,
+                    connectionVars: connectionVars,
+                    requestEndpoint: httpMessage.Request.Uri.Host,
+                    willRetry: result.WillRetry,
+                    response: null);
+
+                return result;
+            }
+
+            result.StatusCode = httpMessage.Response.Status;
+
+            if (result.StatusCode == ResponseStatusCodes.PartialSuccess)
+            {
+                HandlePartialSuccess(httpMessage, blobProvider, blob, origin, ref result);
+            }
+            else if (IsRetriableStatus(result.StatusCode))
+            {
+                HandleRetriableFailure(httpMessage, blobProvider, origin, ref result);
             }
             else
             {
-                statusCode = httpMessage.Response.Status;
-                switch (statusCode)
-                {
-                    case ResponseStatusCodes.PartialSuccess:
-                        // Parse retry-after header
-                        // Send Failed Messages To Storage
-                        if (TryGetTrackResponse(httpMessage, out TrackResponse? trackResponse))
-                        {
-                            content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
-                            if (content != null)
-                            {
-                                result = blobProvider.SaveTelemetry(content);
-                            }
-                        }
-                        break;
-                    case ResponseStatusCodes.RequestTimeout:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
-                    case ResponseStatusCodes.Unauthorized:
-                    case ResponseStatusCodes.Forbidden:
-                    case ResponseStatusCodes.InternalServerError:
-                    case ResponseStatusCodes.BadGateway:
-                    case ResponseStatusCodes.ServiceUnavailable:
-                    case ResponseStatusCodes.GatewayTimeout:
-                        // Send Messages To Storage
-                        if (TryGetRequestContent(httpMessage.Request.Content, out content))
-                        {
-                            result = blobProvider.SaveTelemetry(content);
-                        }
-                        break;
-                    default:
-                        // Log Non-Retriable Status and don't retry or store;
-                        break;
-                }
+                HandleNonRetriableFailure(blob, origin, ref result);
             }
 
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
                 origin: origin,
-                statusCode: statusCode,
+                statusCode: result.StatusCode,
                 isAadEnabled: isAadEnabled,
                 connectionVars: connectionVars,
                 requestEndpoint: httpMessage.Request.Uri.Host,
-                willRetry: (result == ExportResult.Success),
-                response: httpMessage.HasResponse ? httpMessage.Response : null);
+                willRetry: result.WillRetry,
+                response: httpMessage.Response);
 
             return result;
         }
 
-        internal static void HandleFailures(HttpMessage httpMessage, PersistentBlob blob, PersistentBlobProvider blobProvider, ConnectionVars connectionVars, bool isAadEnabled)
+        private static void HandleNetworkFailure(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, TelemetryItemOrigin origin, ref TransmissionResult result)
         {
-            int statusCode = 0;
-            bool willRetry = true;
-
-            if (httpMessage.HasResponse)
+            if (blobProvider != null && TryGetRequestContent(httpMessage.Request.Content, out var content))
             {
-                statusCode = httpMessage.Response.Status;
-                switch (statusCode)
+                result.ExportResult = blobProvider.SaveTelemetry(content);
+                result.WillRetry = (result.ExportResult == ExportResult.Success);
+                result.SavedToStorage = result.WillRetry;
+            }
+        }
+
+        private static void HandlePartialSuccess(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result)
+        {
+            if (!TryGetTrackResponse(httpMessage, out TrackResponse? trackResponse))
+            {
+                return;
+            }
+
+            result.ItemsAccepted = trackResponse.ItemsAccepted;
+            var partialContent = GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+            if (partialContent == null || blobProvider == null)
+            {
+                return;
+            }
+
+            if (origin == TelemetryItemOrigin.Storage && blob != null)
+            {
+                if (blob.TryDelete())
                 {
-                    case ResponseStatusCodes.PartialSuccess:
-                        // Parse retry-after header
-                        // Send Failed Messages To Storage
-                        // Delete existing file
-                        if (TryGetTrackResponse(httpMessage, out TrackResponse? trackResponse))
-                        {
-                            var content = GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
-                            if (content != null)
-                            {
-                                blob.TryDelete();
-                                blobProvider.SaveTelemetry(content);
-                            }
-                        }
-                        break;
-                    case ResponseStatusCodes.RequestTimeout:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
-                    case ResponseStatusCodes.Unauthorized:
-                    case ResponseStatusCodes.Forbidden:
-                    case ResponseStatusCodes.InternalServerError:
-                    case ResponseStatusCodes.BadGateway:
-                    case ResponseStatusCodes.ServiceUnavailable:
-                    case ResponseStatusCodes.GatewayTimeout:
-                        break;
-                    default:
-                        willRetry = false;
-                        break;
+                    result.DeletedBlob = true;
                 }
             }
 
-            AzureMonitorExporterEventSource.Log.TransmissionFailed(
-                origin: TelemetryItemOrigin.Storage,
-                isAadEnabled: isAadEnabled,
-                statusCode: statusCode,
-                connectionVars: connectionVars,
-                requestEndpoint: httpMessage.Request.Uri.Host,
-                willRetry: willRetry,
-                response: httpMessage.HasResponse ? httpMessage.Response : null);
+            result.ExportResult = blobProvider.SaveTelemetry(partialContent);
+            result.WillRetry = (result.ExportResult == ExportResult.Success);
+            result.SavedToStorage = result.WillRetry;
+        }
+
+        private static void HandleRetriableFailure(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, TelemetryItemOrigin origin, ref TransmissionResult result)
+        {
+            if (origin != TelemetryItemOrigin.Storage)
+            {
+                if (blobProvider != null && TryGetRequestContent(httpMessage.Request.Content, out var content))
+                {
+                    result.ExportResult = blobProvider.SaveTelemetry(content);
+                    result.WillRetry = (result.ExportResult == ExportResult.Success);
+                    result.SavedToStorage = result.WillRetry;
+                }
+            }
+            else if (origin == TelemetryItemOrigin.Storage)
+            {
+                result.WillRetry = true;
+            }
+        }
+
+        private static void HandleNonRetriableFailure(PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result)
+        {
+            if (origin == TelemetryItemOrigin.Storage && blob != null)
+            {
+                if (blob.TryDelete())
+                {
+                    result.DeletedBlob = true;
+                }
+            }
         }
     }
 }

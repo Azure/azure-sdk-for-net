@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The ToolChoiceFunctionObjectFunction. </summary>
-    public partial class ToolChoiceFunctionObjectFunction
+    internal partial class ToolChoiceFunctionObjectFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

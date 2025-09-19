@@ -15,8 +15,9 @@ namespace Azure.AI.VoiceLive
     {
         private readonly string _value;
         private const string Whisper1Value = "whisper-1";
+        private const string Gpt4oTranscribeValue = "gpt-4o-transcribe";
+        private const string Gpt4oMiniTranscribeValue = "gpt-4o-mini-transcribe";
         private const string AzureFastTranscriptionValue = "azure-fast-transcription";
-        private const string S2sIngraphValue = "s2s-ingraph";
         private const string AzureSpeechValue = "azure-speech";
 
         /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionSettingsModel"/>. </summary>
@@ -32,11 +33,14 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets the Whisper1. </summary>
         public static AudioInputTranscriptionSettingsModel Whisper1 { get; } = new AudioInputTranscriptionSettingsModel(Whisper1Value);
 
+        /// <summary> Gets the Gpt4oTranscribe. </summary>
+        public static AudioInputTranscriptionSettingsModel Gpt4oTranscribe { get; } = new AudioInputTranscriptionSettingsModel(Gpt4oTranscribeValue);
+
+        /// <summary> Gets the Gpt4oMiniTranscribe. </summary>
+        public static AudioInputTranscriptionSettingsModel Gpt4oMiniTranscribe { get; } = new AudioInputTranscriptionSettingsModel(Gpt4oMiniTranscribeValue);
+
         /// <summary> Gets the AzureFastTranscription. </summary>
         public static AudioInputTranscriptionSettingsModel AzureFastTranscription { get; } = new AudioInputTranscriptionSettingsModel(AzureFastTranscriptionValue);
-
-        /// <summary> Gets the S2sIngraph. </summary>
-        public static AudioInputTranscriptionSettingsModel S2sIngraph { get; } = new AudioInputTranscriptionSettingsModel(S2sIngraphValue);
 
         /// <summary> Gets the AzureSpeech. </summary>
         public static AudioInputTranscriptionSettingsModel AzureSpeech { get; } = new AudioInputTranscriptionSettingsModel(AzureSpeechValue);

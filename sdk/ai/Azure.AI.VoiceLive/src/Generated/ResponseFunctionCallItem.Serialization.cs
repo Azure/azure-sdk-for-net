@@ -81,7 +81,7 @@ namespace Azure.AI.VoiceLive
             string name = default;
             string callId = default;
             string arguments = default;
-            ResponseItemStatus status = default;
+            VoiceLiveResponseItemStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -116,7 +116,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new ResponseItemStatus(prop.Value.GetString());
+                    status = new VoiceLiveResponseItemStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

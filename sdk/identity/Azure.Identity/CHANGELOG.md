@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- TenantId is now configured via MSAL's `WithTenantId` instead of `WithTenantIdFromAuthority` to prevent malformed Uris to the authority.
+
 ### Other Changes
 
 ## 1.16.0 (2025-09-09)

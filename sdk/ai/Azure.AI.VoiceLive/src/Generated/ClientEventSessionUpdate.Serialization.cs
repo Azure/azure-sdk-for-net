@@ -70,7 +70,7 @@ namespace Azure.AI.VoiceLive
             ClientEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RequestSession session = default;
+            VoiceLiveSessionOptions session = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -85,7 +85,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("session"u8))
                 {
-                    session = RequestSession.DeserializeRequestSession(prop.Value, options);
+                    session = VoiceLiveSessionOptions.DeserializeVoiceLiveSessionOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
