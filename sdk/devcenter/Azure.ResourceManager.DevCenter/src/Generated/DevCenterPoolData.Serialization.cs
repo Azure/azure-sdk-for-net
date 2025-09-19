@@ -40,10 +40,20 @@ namespace Azure.ResourceManager.DevCenter
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(DevBoxDefinitionType))
+            {
+                writer.WritePropertyName("devBoxDefinitionType"u8);
+                writer.WriteStringValue(DevBoxDefinitionType.Value.ToString());
+            }
             if (Optional.IsDefined(DevBoxDefinitionName))
             {
                 writer.WritePropertyName("devBoxDefinitionName"u8);
                 writer.WriteStringValue(DevBoxDefinitionName);
+            }
+            if (Optional.IsDefined(DevBoxDefinition))
+            {
+                writer.WritePropertyName("devBoxDefinition"u8);
+                writer.WriteObjectValue(DevBoxDefinition, options);
             }
             if (Optional.IsDefined(NetworkConnectionName))
             {
@@ -65,6 +75,46 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("stopOnDisconnect"u8);
                 writer.WriteObjectValue(StopOnDisconnect, options);
             }
+            if (Optional.IsDefined(StopOnNoConnect))
+            {
+                writer.WritePropertyName("stopOnNoConnect"u8);
+                writer.WriteObjectValue(StopOnNoConnect, options);
+            }
+            if (Optional.IsDefined(SingleSignOnStatus))
+            {
+                writer.WritePropertyName("singleSignOnStatus"u8);
+                writer.WriteStringValue(SingleSignOnStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(VirtualNetworkType))
+            {
+                writer.WritePropertyName("virtualNetworkType"u8);
+                writer.WriteStringValue(VirtualNetworkType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ManagedVirtualNetworkRegions))
+            {
+                writer.WritePropertyName("managedVirtualNetworkRegions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedVirtualNetworkRegions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ActiveHoursConfiguration))
+            {
+                writer.WritePropertyName("activeHoursConfiguration"u8);
+                writer.WriteObjectValue(ActiveHoursConfiguration, options);
+            }
+            if (Optional.IsDefined(DevBoxTunnelEnableStatus))
+            {
+                writer.WritePropertyName("devBoxTunnelEnableStatus"u8);
+                writer.WriteStringValue(DevBoxTunnelEnableStatus.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
@@ -79,6 +129,11 @@ namespace Azure.ResourceManager.DevCenter
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(DevBoxCount))
+            {
+                writer.WritePropertyName("devBoxCount"u8);
+                writer.WriteNumberValue(DevBoxCount.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -114,13 +169,23 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            PoolDevBoxDefinitionType? devBoxDefinitionType = default;
             string devBoxDefinitionName = default;
+            PoolDevBox devBoxDefinition = default;
             string networkConnectionName = default;
             DevCenterLicenseType? licenseType = default;
             LocalAdminStatus? localAdministrator = default;
             StopOnDisconnectConfiguration stopOnDisconnect = default;
+            StopOnNoConnectConfiguration stopOnNoConnect = default;
+            SingleSignOnStatus? singleSignOnStatus = default;
+            string displayName = default;
+            VirtualNetworkType? virtualNetworkType = default;
+            IList<string> managedVirtualNetworkRegions = default;
+            ActiveHoursConfiguration activeHoursConfiguration = default;
+            DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default;
             DevCenterHealthStatus? healthStatus = default;
             IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails = default;
+            int? devBoxCount = default;
             DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -178,9 +243,27 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("devBoxDefinitionType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxDefinitionType = new PoolDevBoxDefinitionType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("devBoxDefinitionName"u8))
                         {
                             devBoxDefinitionName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("devBoxDefinition"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxDefinition = PoolDevBox.DeserializePoolDevBox(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkConnectionName"u8))
@@ -215,6 +298,70 @@ namespace Azure.ResourceManager.DevCenter
                             stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("stopOnNoConnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            stopOnNoConnect = StopOnNoConnectConfiguration.DeserializeStopOnNoConnectConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("singleSignOnStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            singleSignOnStatus = new SingleSignOnStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualNetworkType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualNetworkType = new VirtualNetworkType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("managedVirtualNetworkRegions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            managedVirtualNetworkRegions = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("activeHoursConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            activeHoursConfiguration = ActiveHoursConfiguration.DeserializeActiveHoursConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("devBoxTunnelEnableStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxTunnelEnableStatus = new DevBoxTunnelEnableStatus(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("healthStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -236,6 +383,15 @@ namespace Azure.ResourceManager.DevCenter
                                 array.Add(DevCenterHealthStatusDetail.DeserializeDevCenterHealthStatusDetail(item, options));
                             }
                             healthStatusDetails = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("devBoxCount"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -263,13 +419,23 @@ namespace Azure.ResourceManager.DevCenter
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                devBoxDefinitionType,
                 devBoxDefinitionName,
+                devBoxDefinition,
                 networkConnectionName,
                 licenseType,
                 localAdministrator,
                 stopOnDisconnect,
+                stopOnNoConnect,
+                singleSignOnStatus,
+                displayName,
+                virtualNetworkType,
+                managedVirtualNetworkRegions ?? new ChangeTrackingList<string>(),
+                activeHoursConfiguration,
+                devBoxTunnelEnableStatus,
                 healthStatus,
                 healthStatusDetails ?? new ChangeTrackingList<DevCenterHealthStatusDetail>(),
+                devBoxCount,
                 provisioningState,
                 serializedAdditionalRawData);
         }

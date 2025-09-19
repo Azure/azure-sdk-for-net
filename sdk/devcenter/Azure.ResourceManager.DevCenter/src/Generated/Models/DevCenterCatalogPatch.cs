@@ -52,23 +52,27 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalogPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="gitHub"> Properties for a GitHub catalog type. </param>
         /// <param name="adoGit"> Properties for an Azure DevOps catalog type. </param>
+        /// <param name="syncType"> Indicates the type of sync that is configured for the catalog. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterCatalogPatch(IDictionary<string, string> tags, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterCatalogPatch(DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, CatalogSyncType? syncType, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             GitHub = gitHub;
             AdoGit = adoGit;
+            SyncType = syncType;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> Properties for a GitHub catalog type. </summary>
         public DevCenterGitCatalog GitHub { get; set; }
         /// <summary> Properties for an Azure DevOps catalog type. </summary>
         public DevCenterGitCatalog AdoGit { get; set; }
+        /// <summary> Indicates the type of sync that is configured for the catalog. </summary>
+        public CatalogSyncType? SyncType { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

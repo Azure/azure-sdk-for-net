@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The location. </param>
         public DevCenterPoolData(AzureLocation location) : base(location)
         {
+            ManagedVirtualNetworkRegions = new ChangeTrackingList<string>();
             HealthStatusDetails = new ChangeTrackingList<DevCenterHealthStatusDetail>();
         }
 
@@ -65,24 +66,44 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="devBoxDefinitionName"> Name of a Dev Box definition in parent Project of this Pool. </param>
+        /// <param name="devBoxDefinitionType"> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </param>
+        /// <param name="devBoxDefinitionName"> Name of a Dev Box definition in parent Project of this Pool. Will be ignored if devBoxDefinitionType is Value. </param>
+        /// <param name="devBoxDefinition"> A definition of the machines that are created from this Pool. Will be ignored if devBoxDefinitionType is Reference or not provided. </param>
         /// <param name="networkConnectionName"> Name of a Network Connection in parent Project of this Pool. </param>
         /// <param name="licenseType"> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </param>
         /// <param name="localAdministrator"> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </param>
         /// <param name="stopOnDisconnect"> Stop on disconnect configuration settings for Dev Boxes created in this pool. </param>
+        /// <param name="stopOnNoConnect"> Stop on no connect configuration settings for Dev Boxes created in this pool. </param>
+        /// <param name="singleSignOnStatus"> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </param>
+        /// <param name="displayName"> The display name of the pool. </param>
+        /// <param name="virtualNetworkType"> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </param>
+        /// <param name="managedVirtualNetworkRegions"> The regions of the managed virtual network (required when managedNetworkType is Managed). </param>
+        /// <param name="activeHoursConfiguration"> Active hours configuration settings for Dev Boxes created in this pool. </param>
+        /// <param name="devBoxTunnelEnableStatus"> Indicates whether Dev Box Tunnel is enabled for a the pool. </param>
         /// <param name="healthStatus"> Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes. </param>
         /// <param name="healthStatusDetails"> Details on the Pool health status to help diagnose issues. This is only populated when the pool status indicates the pool is in a non-healthy state. </param>
+        /// <param name="devBoxCount"> Indicates the number of provisioned Dev Boxes in this pool. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string devBoxDefinitionName, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, DevCenterHealthStatus? healthStatus, IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, PoolDevBox devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, StopOnNoConnectConfiguration stopOnNoConnect, SingleSignOnStatus? singleSignOnStatus, string displayName, VirtualNetworkType? virtualNetworkType, IList<string> managedVirtualNetworkRegions, ActiveHoursConfiguration activeHoursConfiguration, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus, DevCenterHealthStatus? healthStatus, IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails, int? devBoxCount, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            DevBoxDefinitionType = devBoxDefinitionType;
             DevBoxDefinitionName = devBoxDefinitionName;
+            DevBoxDefinition = devBoxDefinition;
             NetworkConnectionName = networkConnectionName;
             LicenseType = licenseType;
             LocalAdministrator = localAdministrator;
             StopOnDisconnect = stopOnDisconnect;
+            StopOnNoConnect = stopOnNoConnect;
+            SingleSignOnStatus = singleSignOnStatus;
+            DisplayName = displayName;
+            VirtualNetworkType = virtualNetworkType;
+            ManagedVirtualNetworkRegions = managedVirtualNetworkRegions;
+            ActiveHoursConfiguration = activeHoursConfiguration;
+            DevBoxTunnelEnableStatus = devBoxTunnelEnableStatus;
             HealthStatus = healthStatus;
             HealthStatusDetails = healthStatusDetails;
+            DevBoxCount = devBoxCount;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -92,8 +113,12 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
-        /// <summary> Name of a Dev Box definition in parent Project of this Pool. </summary>
+        /// <summary> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </summary>
+        public PoolDevBoxDefinitionType? DevBoxDefinitionType { get; set; }
+        /// <summary> Name of a Dev Box definition in parent Project of this Pool. Will be ignored if devBoxDefinitionType is Value. </summary>
         public string DevBoxDefinitionName { get; set; }
+        /// <summary> A definition of the machines that are created from this Pool. Will be ignored if devBoxDefinitionType is Reference or not provided. </summary>
+        public PoolDevBox DevBoxDefinition { get; set; }
         /// <summary> Name of a Network Connection in parent Project of this Pool. </summary>
         public string NetworkConnectionName { get; set; }
         /// <summary> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </summary>
@@ -102,10 +127,26 @@ namespace Azure.ResourceManager.DevCenter
         public LocalAdminStatus? LocalAdministrator { get; set; }
         /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
         public StopOnDisconnectConfiguration StopOnDisconnect { get; set; }
+        /// <summary> Stop on no connect configuration settings for Dev Boxes created in this pool. </summary>
+        public StopOnNoConnectConfiguration StopOnNoConnect { get; set; }
+        /// <summary> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </summary>
+        public SingleSignOnStatus? SingleSignOnStatus { get; set; }
+        /// <summary> The display name of the pool. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </summary>
+        public VirtualNetworkType? VirtualNetworkType { get; set; }
+        /// <summary> The regions of the managed virtual network (required when managedNetworkType is Managed). </summary>
+        public IList<string> ManagedVirtualNetworkRegions { get; }
+        /// <summary> Active hours configuration settings for Dev Boxes created in this pool. </summary>
+        public ActiveHoursConfiguration ActiveHoursConfiguration { get; set; }
+        /// <summary> Indicates whether Dev Box Tunnel is enabled for a the pool. </summary>
+        public DevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus { get; set; }
         /// <summary> Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes. </summary>
         public DevCenterHealthStatus? HealthStatus { get; }
         /// <summary> Details on the Pool health status to help diagnose issues. This is only populated when the pool status indicates the pool is in a non-healthy state. </summary>
         public IReadOnlyList<DevCenterHealthStatusDetail> HealthStatusDetails { get; }
+        /// <summary> Indicates the number of provisioned Dev Boxes in this pool. </summary>
+        public int? DevBoxCount { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public DevCenterProvisioningState? ProvisioningState { get; }
     }

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Deletes a Scheduled.
+        /// Deletes a Schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterScheduleSchedulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Deletes a Scheduled.
+        /// Deletes a Schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterScheduleSchedulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Partially updates a Scheduled.
+        /// Partially updates a Schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterScheduleSchedulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, top, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterScheduleResource>(new DevCenterScheduleOperationSource(Client), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, top).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterScheduleResource>(new DevCenterScheduleOperationSource(Client), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, top).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Partially updates a Scheduled.
+        /// Partially updates a Schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterScheduleSchedulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, top, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterScheduleResource>(new DevCenterScheduleOperationSource(Client), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, top).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterScheduleResource>(new DevCenterScheduleOperationSource(Client), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, top).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

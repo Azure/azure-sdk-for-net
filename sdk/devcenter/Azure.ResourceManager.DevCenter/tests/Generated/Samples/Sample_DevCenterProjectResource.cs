@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ProjectsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Projects_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Projects_Get.json
             // this example is just showing the usage of "Projects_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterProjectResource created on azure
             // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ProjectsDelete()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Projects_Delete.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Projects_Delete.json
             // this example is just showing the usage of "Projects_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterProjectResource created on azure
             // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ProjectsUpdate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Projects_Patch.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Projects_Patch.json
             // this example is just showing the usage of "Projects_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterProjectResource created on azure
             // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
@@ -96,6 +96,8 @@ namespace Azure.ResourceManager.DevCenter.Samples
             DevCenterProjectPatch patch = new DevCenterProjectPatch
             {
                 Description = "This is my first project.",
+                DisplayName = "Dev",
+                CatalogItemSyncTypes = { CatalogItemType.EnvironmentDefinition },
                 Tags =
 {
 ["CostCenter"] = "R&D"
@@ -109,6 +111,61 @@ namespace Azure.ResourceManager.DevCenter.Samples
             DevCenterProjectData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetInheritedSettings_ProjectsGetInheritedSettings()
+        {
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Projects_GetInheritedSettings.json
+            // this example is just showing the usage of "Projects_GetInheritedSettings" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
+            string resourceGroupName = "rg1";
+            string projectName = "Contoso";
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
+
+            // invoke the operation
+            InheritedSettingsForProject result = await devCenterProject.GetInheritedSettingsAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSkus_SkusListByProject()
+        {
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Skus_ListByProject.json
+            // this example is just showing the usage of "Skus_ListByProject" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
+            string resourceGroupName = "rg1";
+            string projectName = "myProject";
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (DevCenterSkuDetails item in devCenterProject.GetSkusAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

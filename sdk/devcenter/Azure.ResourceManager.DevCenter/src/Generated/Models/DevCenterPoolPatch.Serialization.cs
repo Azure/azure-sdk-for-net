@@ -37,10 +37,20 @@ namespace Azure.ResourceManager.DevCenter.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(DevBoxDefinitionType))
+            {
+                writer.WritePropertyName("devBoxDefinitionType"u8);
+                writer.WriteStringValue(DevBoxDefinitionType.Value.ToString());
+            }
             if (Optional.IsDefined(DevBoxDefinitionName))
             {
                 writer.WritePropertyName("devBoxDefinitionName"u8);
                 writer.WriteStringValue(DevBoxDefinitionName);
+            }
+            if (Optional.IsDefined(DevBoxDefinition))
+            {
+                writer.WritePropertyName("devBoxDefinition"u8);
+                writer.WriteObjectValue(DevBoxDefinition, options);
             }
             if (Optional.IsDefined(NetworkConnectionName))
             {
@@ -61,6 +71,46 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
                 writer.WriteObjectValue(StopOnDisconnect, options);
+            }
+            if (Optional.IsDefined(StopOnNoConnect))
+            {
+                writer.WritePropertyName("stopOnNoConnect"u8);
+                writer.WriteObjectValue(StopOnNoConnect, options);
+            }
+            if (Optional.IsDefined(SingleSignOnStatus))
+            {
+                writer.WritePropertyName("singleSignOnStatus"u8);
+                writer.WriteStringValue(SingleSignOnStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(VirtualNetworkType))
+            {
+                writer.WritePropertyName("virtualNetworkType"u8);
+                writer.WriteStringValue(VirtualNetworkType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ManagedVirtualNetworkRegions))
+            {
+                writer.WritePropertyName("managedVirtualNetworkRegions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedVirtualNetworkRegions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ActiveHoursConfiguration))
+            {
+                writer.WritePropertyName("activeHoursConfiguration"u8);
+                writer.WriteObjectValue(ActiveHoursConfiguration, options);
+            }
+            if (Optional.IsDefined(DevBoxTunnelEnableStatus))
+            {
+                writer.WritePropertyName("devBoxTunnelEnableStatus"u8);
+                writer.WriteStringValue(DevBoxTunnelEnableStatus.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -87,11 +137,20 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             IDictionary<string, string> tags = default;
             AzureLocation? location = default;
+            PoolDevBoxDefinitionType? devBoxDefinitionType = default;
             string devBoxDefinitionName = default;
+            PoolDevBox devBoxDefinition = default;
             string networkConnectionName = default;
             DevCenterLicenseType? licenseType = default;
             LocalAdminStatus? localAdministrator = default;
             StopOnDisconnectConfiguration stopOnDisconnect = default;
+            StopOnNoConnectConfiguration stopOnNoConnect = default;
+            SingleSignOnStatus? singleSignOnStatus = default;
+            string displayName = default;
+            VirtualNetworkType? virtualNetworkType = default;
+            IList<string> managedVirtualNetworkRegions = default;
+            ActiveHoursConfiguration activeHoursConfiguration = default;
+            DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,9 +187,27 @@ namespace Azure.ResourceManager.DevCenter.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("devBoxDefinitionType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxDefinitionType = new PoolDevBoxDefinitionType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("devBoxDefinitionName"u8))
                         {
                             devBoxDefinitionName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("devBoxDefinition"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxDefinition = PoolDevBox.DeserializePoolDevBox(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkConnectionName"u8))
@@ -165,6 +242,70 @@ namespace Azure.ResourceManager.DevCenter.Models
                             stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("stopOnNoConnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            stopOnNoConnect = StopOnNoConnectConfiguration.DeserializeStopOnNoConnectConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("singleSignOnStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            singleSignOnStatus = new SingleSignOnStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualNetworkType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualNetworkType = new VirtualNetworkType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("managedVirtualNetworkRegions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            managedVirtualNetworkRegions = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("activeHoursConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            activeHoursConfiguration = ActiveHoursConfiguration.DeserializeActiveHoursConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("devBoxTunnelEnableStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxTunnelEnableStatus = new DevBoxTunnelEnableStatus(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -178,11 +319,20 @@ namespace Azure.ResourceManager.DevCenter.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 serializedAdditionalRawData,
+                devBoxDefinitionType,
                 devBoxDefinitionName,
+                devBoxDefinition,
                 networkConnectionName,
                 licenseType,
                 localAdministrator,
-                stopOnDisconnect);
+                stopOnDisconnect,
+                stopOnNoConnect,
+                singleSignOnStatus,
+                displayName,
+                virtualNetworkType,
+                managedVirtualNetworkRegions ?? new ChangeTrackingList<string>(),
+                activeHoursConfiguration,
+                devBoxTunnelEnableStatus);
         }
 
         BinaryData IPersistableModel<DevCenterPoolPatch>.Write(ModelReaderWriterOptions options)

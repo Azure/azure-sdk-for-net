@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.DevCenter
 
         private readonly ClientDiagnostics _devCenterClientDiagnostics;
         private readonly DevCentersRestOperations _devCenterRestClient;
-        private readonly ClientDiagnostics _devCenterImageImagesClientDiagnostics;
-        private readonly ImagesRestOperations _devCenterImageImagesRestClient;
+        private readonly ClientDiagnostics _imagesClientDiagnostics;
+        private readonly ImagesRestOperations _imagesRestClient;
         private readonly DevCenterData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -67,9 +67,8 @@ namespace Azure.ResourceManager.DevCenter
             _devCenterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string devCenterApiVersion);
             _devCenterRestClient = new DevCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterApiVersion);
-            _devCenterImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterImageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DevCenterImageResource.ResourceType, out string devCenterImageImagesApiVersion);
-            _devCenterImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterImageImagesApiVersion);
+            _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _imagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -165,75 +164,6 @@ namespace Azure.ResourceManager.DevCenter
             return GetAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevCenterGalleryResources in the DevCenter. </summary>
-        /// <returns> An object representing collection of DevCenterGalleryResources and their operations over a DevCenterGalleryResource. </returns>
-        public virtual DevCenterGalleryCollection GetDevCenterGalleries()
-        {
-            return GetCachedClient(client => new DevCenterGalleryCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a gallery
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Galleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="galleryName"> The name of the gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DevCenterGalleryResource>> GetDevCenterGalleryAsync(string galleryName, CancellationToken cancellationToken = default)
-        {
-            return await GetDevCenterGalleries().GetAsync(galleryName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a gallery
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Galleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="galleryName"> The name of the gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DevCenterGalleryResource> GetDevCenterGallery(string galleryName, CancellationToken cancellationToken = default)
-        {
-            return GetDevCenterGalleries().Get(galleryName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DevCenterCatalogResources in the DevCenter. </summary>
         /// <returns> An object representing collection of DevCenterCatalogResources and their operations over a DevCenterCatalogResource. </returns>
         public virtual DevCenterCatalogCollection GetDevCenterCatalogs()
@@ -242,7 +172,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a catalog
+        /// Gets a catalog.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -254,7 +184,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,7 +203,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a catalog
+        /// Gets a catalog.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -285,7 +215,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,6 +231,144 @@ namespace Azure.ResourceManager.DevCenter
         public virtual Response<DevCenterCatalogResource> GetDevCenterCatalog(string catalogName, CancellationToken cancellationToken = default)
         {
             return GetDevCenterCatalogs().Get(catalogName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevBoxDefinitionResources in the DevCenter. </summary>
+        /// <returns> An object representing collection of DevBoxDefinitionResources and their operations over a DevBoxDefinitionResource. </returns>
+        public virtual DevBoxDefinitionCollection GetDevBoxDefinitions()
+        {
+            return GetCachedClient(client => new DevBoxDefinitionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a Dev Box definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DevBoxDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevBoxDefinitionResource>> GetDevBoxDefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        {
+            return await GetDevBoxDefinitions().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Dev Box definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DevBoxDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevBoxDefinitionResource> GetDevBoxDefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        {
+            return GetDevBoxDefinitions().Get(devBoxDefinitionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevCenterEncryptionSetResources in the DevCenter. </summary>
+        /// <returns> An object representing collection of DevCenterEncryptionSetResources and their operations over a DevCenterEncryptionSetResource. </returns>
+        public virtual DevCenterEncryptionSetCollection GetDevCenterEncryptionSets()
+        {
+            return GetCachedClient(client => new DevCenterEncryptionSetCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a devcenter encryption set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/encryptionSets/{encryptionSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EncryptionSets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEncryptionSetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionSetName"> The name of the devcenter encryption set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="encryptionSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="encryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevCenterEncryptionSetResource>> GetDevCenterEncryptionSetAsync(string encryptionSetName, CancellationToken cancellationToken = default)
+        {
+            return await GetDevCenterEncryptionSets().GetAsync(encryptionSetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a devcenter encryption set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/encryptionSets/{encryptionSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EncryptionSets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEncryptionSetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionSetName"> The name of the devcenter encryption set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="encryptionSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="encryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevCenterEncryptionSetResource> GetDevCenterEncryptionSet(string encryptionSetName, CancellationToken cancellationToken = default)
+        {
+            return GetDevCenterEncryptionSets().Get(encryptionSetName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevCenterEnvironmentTypeResources in the DevCenter. </summary>
@@ -323,7 +391,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -354,7 +422,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,73 +440,142 @@ namespace Azure.ResourceManager.DevCenter
             return GetDevCenterEnvironmentTypes().Get(environmentTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevBoxDefinitionResources in the DevCenter. </summary>
-        /// <returns> An object representing collection of DevBoxDefinitionResources and their operations over a DevBoxDefinitionResource. </returns>
-        public virtual DevBoxDefinitionCollection GetDevBoxDefinitions()
+        /// <summary> Gets a collection of DevCenterGalleryResources in the DevCenter. </summary>
+        /// <returns> An object representing collection of DevCenterGalleryResources and their operations over a DevCenterGalleryResource. </returns>
+        public virtual DevCenterGalleryCollection GetDevCenterGalleries()
         {
-            return GetCachedClient(client => new DevBoxDefinitionCollection(client, Id));
+            return GetCachedClient(client => new DevCenterGalleryCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets a Dev Box definition
+        /// Gets a gallery.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_Get</description>
+        /// <description>Galleries_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <description><see cref="DevCenterGalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
+        /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevBoxDefinitionResource>> GetDevBoxDefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterGalleryResource>> GetDevCenterGalleryAsync(string galleryName, CancellationToken cancellationToken = default)
         {
-            return await GetDevBoxDefinitions().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterGalleries().GetAsync(galleryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a Dev Box definition
+        /// Gets a gallery.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_Get</description>
+        /// <description>Galleries_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <description><see cref="DevCenterGalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
+        /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevBoxDefinitionResource> GetDevBoxDefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterGalleryResource> GetDevCenterGallery(string galleryName, CancellationToken cancellationToken = default)
         {
-            return GetDevBoxDefinitions().Get(devBoxDefinitionName, cancellationToken);
+            return GetDevCenterGalleries().Get(galleryName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ProjectPolicyResources in the DevCenter. </summary>
+        /// <returns> An object representing collection of ProjectPolicyResources and their operations over a ProjectPolicyResource. </returns>
+        public virtual ProjectPolicyCollection GetProjectPolicies()
+        {
+            return GetCachedClient(client => new ProjectPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a specific project policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/projectPolicies/{projectPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectPolicyName"> The name of the project policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ProjectPolicyResource>> GetProjectPolicyAsync(string projectPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetProjectPolicies().GetAsync(projectPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific project policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/projectPolicies/{projectPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectPolicyName"> The name of the project policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ProjectPolicyResource> GetProjectPolicy(string projectPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetProjectPolicies().Get(projectPolicyName, cancellationToken);
         }
 
         /// <summary>
@@ -454,7 +591,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -494,7 +631,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,7 +659,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Deletes a devcenter
+        /// Deletes a devcenter.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -534,7 +671,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -551,7 +688,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterClientDiagnostics, Pipeline, _devCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterClientDiagnostics, Pipeline, _devCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -564,7 +701,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Deletes a devcenter
+        /// Deletes a devcenter.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -576,7 +713,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -593,7 +730,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterClientDiagnostics, Pipeline, _devCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterClientDiagnostics, Pipeline, _devCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -618,7 +755,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -639,7 +776,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterResource>(new DevCenterOperationSource(Client), _devCenterClientDiagnostics, Pipeline, _devCenterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterResource>(new DevCenterOperationSource(Client), _devCenterClientDiagnostics, Pipeline, _devCenterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -664,7 +801,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -685,7 +822,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterResource>(new DevCenterOperationSource(Client), _devCenterClientDiagnostics, Pipeline, _devCenterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterResource>(new DevCenterOperationSource(Client), _devCenterClientDiagnostics, Pipeline, _devCenterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -710,22 +847,18 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterImageResource> GetImagesAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevCenterImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterImageData> GetImagesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterImageImagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterImageImagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _imagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevCenterImageData.DeserializeDevCenterImageData(e), _imagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -741,22 +874,18 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterImageResource> GetImages(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterImageData> GetImages(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterImageImagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterImageImagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _imagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevCenterImageData.DeserializeDevCenterImageData(e), _imagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -772,7 +901,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -834,7 +963,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -896,7 +1025,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -953,7 +1082,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1010,7 +1139,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1070,7 +1199,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
