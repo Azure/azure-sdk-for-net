@@ -321,9 +321,9 @@ namespace Azure.Storage.DataMovement
         internal virtual async Task PauseAllRunningTransfersAsync(CancellationToken cancellationToken = default)
         {
             await Task.WhenAll(_transfers.Values
-            .Where(transfer => transfer.CanPause())
-            .Select(transfer => transfer.PauseAsync(cancellationToken)))
-            .ConfigureAwait(false);
+                .Where(transfer => transfer.CanPause())
+                .Select(transfer => transfer.PauseAsync(cancellationToken)))
+                .ConfigureAwait(false);
         }
 
         /// <summary>
