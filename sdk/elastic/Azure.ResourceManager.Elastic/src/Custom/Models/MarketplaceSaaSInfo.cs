@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier MarketplaceSubscriptionId
         {
-            get => MarketplaceSubscription?.Id != null ? new ResourceIdentifier(MarketplaceSubscription.Id) : null;
+            get => MarketplaceSubscription?.Id;
         }
     }
 }

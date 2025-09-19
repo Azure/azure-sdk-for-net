@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static MarketplaceSaaSInfo MarketplaceSaaSInfo(ResourceIdentifier marketplaceSubscriptionId = null, string marketplaceName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? isSubscribed = null)
         {
             return MarketplaceSaaSInfo(
-                marketplaceSubscriptionId != null ? MarketplaceSaaSInfoMarketplaceSubscription(id: marketplaceSubscriptionId?.ToString()) : null,
+                marketplaceSubscriptionId != null ? MarketplaceSaaSInfoMarketplaceSubscription(marketplaceSubscriptionId) : null,
                 marketplaceName,
                 marketplaceResourceId,
                 marketplaceStatus,

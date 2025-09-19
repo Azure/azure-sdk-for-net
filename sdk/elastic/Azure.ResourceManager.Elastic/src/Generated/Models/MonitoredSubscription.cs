@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscription"/>. </summary>
         /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public MonitoredSubscription(string subscriptionId)
+        public MonitoredSubscription(ResourceIdentifier subscriptionId)
         {
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="error"> The reason of not monitoring the subscription. </param>
         /// <param name="tagRules"> Definition of the properties for a TagRules resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscription(string subscriptionId, Status? status, string error, ElasticTagRuleProperties tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredSubscription(ResourceIdentifier subscriptionId, MonitoringStatus? status, string error, ElasticTagRuleProperties tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             Status = status;
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> The subscriptionId to be monitored. </summary>
-        public string SubscriptionId { get; set; }
+        public ResourceIdentifier SubscriptionId { get; set; }
         /// <summary> The state of monitoring. </summary>
-        public Status? Status { get; set; }
+        public MonitoringStatus? Status { get; set; }
         /// <summary> The reason of not monitoring the subscription. </summary>
         public string Error { get; set; }
         /// <summary> Definition of the properties for a TagRules resource. </summary>

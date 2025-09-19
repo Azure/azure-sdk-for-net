@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class ProjectDetails : IUtf8JsonSerializable, IJsonModel<ProjectDetails>
+    public partial class MonitorResourceProjectDetails : IUtf8JsonSerializable, IJsonModel<MonitorResourceProjectDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProjectDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorResourceProjectDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProjectDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorResourceProjectDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorResourceProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorResourceProjectDetails)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ProjectType))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Elastic.Models
             }
         }
 
-        ProjectDetails IJsonModel<ProjectDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MonitorResourceProjectDetails IJsonModel<MonitorResourceProjectDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorResourceProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorResourceProjectDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectDetails(document.RootElement, options);
+            return DeserializeMonitorResourceProjectDetails(document.RootElement, options);
         }
 
-        internal static ProjectDetails DeserializeProjectDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MonitorResourceProjectDetails DeserializeMonitorResourceProjectDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            ProjectType? projectType = default;
-            ConfigurationType? configurationType = default;
+            MonitorResourceProjectType? projectType = default;
+            ElasticsearchProjectConfigurationType? configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    projectType = new ProjectType(property.Value.GetString());
+                    projectType = new MonitorResourceProjectType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    configurationType = new ConfigurationType(property.Value.GetString());
+                    configurationType = new ElasticsearchProjectConfigurationType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProjectDetails(projectType, configurationType, serializedAdditionalRawData);
+            return new MonitorResourceProjectDetails(projectType, configurationType, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProjectDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MonitorResourceProjectDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorResourceProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorResourceProjectDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProjectDetails IPersistableModel<ProjectDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MonitorResourceProjectDetails IPersistableModel<MonitorResourceProjectDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorResourceProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeProjectDetails(document.RootElement, options);
+                        return DeserializeMonitorResourceProjectDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorResourceProjectDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProjectDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorResourceProjectDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

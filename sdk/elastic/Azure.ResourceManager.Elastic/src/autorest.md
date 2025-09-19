@@ -102,6 +102,16 @@ rename-mapping:
   VMIngestionDetailsResponse: VmIngestionDetailsResult
   VMResources: ElasticVMResourceInfo
   VMResources.vmResourceId: -|arm-id
+  ConfigurationType: ElasticsearchProjectConfigurationType
+  HostingType: MonitorResourceHostingType
+  MarketplaceSaaSInfoMarketplaceSubscription.id: -|arm-id
+  Operation: ResourcePatchOperation
+  MonitoredSubscription.subscriptionId: -|arm-id
+  ProjectDetails: MonitorResourceProjectDetails
+  ProjectType: MonitorResourceProjectType
+  Status: MonitoringStatus
+  ResubscribeProperties.subscriptionId: -|arm-id
+  SubscriptionList: MonitoredSubscriptionList
 
 prepend-rp-prefix:
   - MonitoringStatus
