@@ -366,35 +366,6 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetRadiusSecrets_ListAllVirtualNetworkGatewayRadiusServerSecrets()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/AllVirtualNetworkGatewayRadiusServerSecretsList.json
-            // this example is just showing the usage of "VirtualNetworkGateways_ListRadiusSecrets" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "72f988bf-86f1-41af-91ab-2d7cd0dddd4";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (RadiusAuthServer item in virtualNetworkGateway.GetRadiusSecretsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetLearnedRoutes_GetVirtualNetworkGatewayLearnedRoutes()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayLearnedRoutes.json

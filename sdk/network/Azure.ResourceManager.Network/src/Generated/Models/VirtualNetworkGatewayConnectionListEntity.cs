@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionProtocol"> Connection protocol used for this connection. </param>
         /// <param name="routingWeight"> The routing weight. </param>
         /// <param name="connectionMode"> The connection mode for this connection. </param>
-        /// <param name="sharedKey"> The IPSec shared key. We will no longer return sharedKey in VirtualNetworkGatewayConnection Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGatewayConnection GetSharedKey API to fetch connection sharedKey. </param>
+        /// <param name="sharedKey"> The IPSec shared key. </param>
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
         /// <param name="tunnelConnectionStatus"> Collection of all tunnels' connection health status. </param>
         /// <param name="egressBytesTransferred"> The egress bytes transferred in this connection. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The connection mode for this connection. </summary>
         [WirePath("properties.connectionMode")]
         public VirtualNetworkGatewayConnectionMode? ConnectionMode { get; set; }
-        /// <summary> The IPSec shared key. We will no longer return sharedKey in VirtualNetworkGatewayConnection Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGatewayConnection GetSharedKey API to fetch connection sharedKey. </summary>
+        /// <summary> The IPSec shared key. </summary>
         [WirePath("properties.sharedKey")]
         public string SharedKey { get; set; }
         /// <summary> Virtual Network Gateway connection status. </summary>

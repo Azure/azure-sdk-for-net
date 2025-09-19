@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ingressBytesTransferred"> Ingress bytes transferred. </param>
         /// <param name="egressBytesTransferred"> Egress bytes transferred. </param>
         /// <param name="connectionBandwidth"> Expected bandwidth in MBPS. </param>
-        /// <param name="sharedKey"> SharedKey for the vpn link connection. We will no longer return sharedKey in any Create/Update/Get/List/UpdateTags VpnGateway/VpnConnection/VpnLinkConnection APIs response. Please use 'Vpn Link Connections - List Default Shared Key' API to fetch Vpn link connection sharedKey. </param>
+        /// <param name="sharedKey"> SharedKey for the vpn connection. </param>
         /// <param name="enableBgp"> EnableBgp flag. </param>
         /// <param name="vpnGatewayCustomBgpAddresses"> vpnGatewayCustomBgpAddresses used by this connection. </param>
         /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Expected bandwidth in MBPS. </summary>
         [WirePath("properties.connectionBandwidth")]
         public int? ConnectionBandwidth { get; set; }
-        /// <summary> SharedKey for the vpn link connection. We will no longer return sharedKey in any Create/Update/Get/List/UpdateTags VpnGateway/VpnConnection/VpnLinkConnection APIs response. Please use 'Vpn Link Connections - List Default Shared Key' API to fetch Vpn link connection sharedKey. </summary>
+        /// <summary> SharedKey for the vpn connection. </summary>
         [WirePath("properties.sharedKey")]
         public string SharedKey { get; set; }
         /// <summary> EnableBgp flag. </summary>

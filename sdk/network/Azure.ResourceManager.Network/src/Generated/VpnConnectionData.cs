@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ingressBytesTransferred"> Ingress bytes transferred. </param>
         /// <param name="egressBytesTransferred"> Egress bytes transferred. </param>
         /// <param name="connectionBandwidth"> Expected bandwidth in MBPS. </param>
-        /// <param name="sharedKey"> Deprecated: SharedKey for the vpn connection. This is no more used. </param>
+        /// <param name="sharedKey"> SharedKey for the vpn connection. </param>
         /// <param name="enableBgp"> EnableBgp flag. </param>
         /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
         /// <param name="ipsecPolicies"> The IPSec Policies to be considered by this connection. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Expected bandwidth in MBPS. </summary>
         [WirePath("properties.connectionBandwidth")]
         public int? ConnectionBandwidth { get; set; }
-        /// <summary> Deprecated: SharedKey for the vpn connection. This is no more used. </summary>
+        /// <summary> SharedKey for the vpn connection. </summary>
         [WirePath("properties.sharedKey")]
         public string SharedKey { get; set; }
         /// <summary> EnableBgp flag. </summary>

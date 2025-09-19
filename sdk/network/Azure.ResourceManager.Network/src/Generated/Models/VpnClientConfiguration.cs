@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnAuthenticationTypes"> VPN authentication types for the virtual network gateway.. </param>
         /// <param name="vpnClientIPsecPolicies"> VpnClientIpsecPolicies for virtual network gateway P2S client. </param>
         /// <param name="radiusServerAddress"> The radius server address property of the VirtualNetworkGateway resource for vpn client connection. </param>
-        /// <param name="radiusServerSecret"> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. We will no longer return radiusServerSecret in VirtualNetworkGateway Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGateway ListRadiusSecrets API to fetch radius server secrets. </param>
+        /// <param name="radiusServerSecret"> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. </param>
         /// <param name="radiusServers"> The radiusServers property for multiple radius server configuration. </param>
         /// <param name="aadTenant"> The AADTenant property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
         /// <param name="aadAudience"> The AADAudience property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The radius server address property of the VirtualNetworkGateway resource for vpn client connection. </summary>
         [WirePath("radiusServerAddress")]
         public string RadiusServerAddress { get; set; }
-        /// <summary> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. We will no longer return radiusServerSecret in VirtualNetworkGateway Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGateway ListRadiusSecrets API to fetch radius server secrets. </summary>
+        /// <summary> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. </summary>
         [WirePath("radiusServerSecret")]
         public string RadiusServerSecret { get; set; }
         /// <summary> The radiusServers property for multiple radius server configuration. </summary>

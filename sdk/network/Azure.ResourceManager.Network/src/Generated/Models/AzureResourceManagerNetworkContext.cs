@@ -682,8 +682,6 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(QosPortRange))]
     [ModelReaderWriterBuildable(typeof(QueryInboundNatRulePortMappingContent))]
     [ModelReaderWriterBuildable(typeof(QueryTroubleshootingContent))]
-    [ModelReaderWriterBuildable(typeof(RadiusAuthServer))]
-    [ModelReaderWriterBuildable(typeof(RadiusAuthServerListResult))]
     [ModelReaderWriterBuildable(typeof(RadiusServer))]
     [ModelReaderWriterBuildable(typeof(ReachabilityAnalysisIntentData))]
     [ModelReaderWriterBuildable(typeof(ReachabilityAnalysisIntentListResult))]
