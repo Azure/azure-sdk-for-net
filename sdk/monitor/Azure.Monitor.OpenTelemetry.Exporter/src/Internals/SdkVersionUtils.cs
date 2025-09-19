@@ -40,6 +40,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
+        internal static string? ExtensionsVersion { get; private set; }
+
         internal static string? GetVersion(Type type)
         {
             try
@@ -101,6 +103,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     extensionVersion += "-d";
                 }
+
+                ExtensionsVersion = extensionVersion ?? "u"; // 'u' for Unknown
 
                 return string.Format(CultureInfo.InvariantCulture, $"{sdkVersionPrefix}dotnet{dotnetSdkVersion}:otel{otelSdkVersion}:ext{extensionVersion}");
             }
