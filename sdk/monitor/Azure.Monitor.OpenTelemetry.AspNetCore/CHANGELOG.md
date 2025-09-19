@@ -4,6 +4,10 @@
 
 ### Features Added
 
+* Added support for configuring sampling via OpenTelemetry environment variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`, `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for `microsoft.rate_limited`, sampling ratio 0.0–1.0 for `microsoft.fixed_percentage`).
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -260,7 +264,6 @@
 - Update OpenTelemetry dependencies
   ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
   - OpenTelemetry 1.7.0
-  - OpenTelemetry.Extensions.Hosting 1.7.0
   - NEW: OpenTelemetry.Instrumentation.AspNetCore 1.7.0
   - NEW: OpenTelemetry.Instrumentation.Http 1.7.0
 

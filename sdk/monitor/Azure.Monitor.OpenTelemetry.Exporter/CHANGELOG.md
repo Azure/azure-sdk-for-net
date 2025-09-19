@@ -4,6 +4,11 @@
 
 ### Features Added
 
+* Added support for configuring sampling via OpenTelemetry environment variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`, `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for `microsoft.rate_limited`, sampling ratio 0.0–1.0 for `microsoft.fixed_percentage`).
+  This now applies to both `UseAzureMonitorExporter` and the direct `Sdk.CreateTracerProviderBuilder().AddAzureMonitorTraceExporter(...)` path.
+
 ### Breaking Changes
 
 ### Bugs Fixed
