@@ -1,25 +1,26 @@
 <#
 .SYNOPSIS
-    Finds all packages in ci.yml files and adds AOT opt-out properties for packages that fail to build.
+    Finds Azure.ResourceManager packages in ci.yml files and adds AOT opt-out properties for packages that fail to build.
 
 .DESCRIPTION
-    This script searches through all subdirectories in the sdk folder and identifies packages from ci.yml files.
-    It extracts name values from Artifacts entries and organizes them by service directory.
-    For each package, it attempts to build the project. If the build fails, it adds <AotCompatOptOut>true</AotCompatOptOut> 
+    This script searches through all subdirectories in the sdk folder and identifies Azure.ResourceManager packages from ci.yml files.
+    It extracts name values from Artifacts entries in management (mgmt) ci.yml files and organizes them by service directory.
+    For each Azure.ResourceManager package, it attempts to build the project. If the build fails, it adds <AotCompatOptOut>true</AotCompatOptOut> 
     to the project file to opt out of AOT compatibility requirements.
     
 .PARAMETER SpecificPackages
-    Optional. An array of specific package names to process instead of scanning all packages.
-    Format: @("Azure.Core", "Azure.Identity")
+    Optional. An array of specific Azure.ResourceManager package names to process instead of scanning all packages.
+    Format: @("Azure.ResourceManager.Storage", "Azure.ResourceManager.KeyVault")
     
 .PARAMETER SpecificServiceDirectory
-    Optional. The name of a specific service directory to scan (e.g., "core", "identity").
+    Optional. The name of a specific service directory to scan (e.g., "storage", "keyvault").
     Use with SpecificPackages to narrow down the search.
     
 .NOTES
     File Name      : GetAOTStatusDataPlane.ps1
     Author         : GitHub Copilot
     Prerequisite   : PowerShell 5.1 or higher, .NET SDK
+    Focus         : Azure.ResourceManager packages (management plane) only
 #>
 
 param (
@@ -42,7 +43,7 @@ if ($SpecificServiceDirectory) {
         exit 1
     }
 } else {
-    Write-Host "Finding Artifacts entries and their names in ci.yml files in: $sdkDir" -ForegroundColor Cyan
+    Write-Host "Finding Azure.ResourceManager Artifacts entries and their names in ci.yml files in: $sdkDir" -ForegroundColor Cyan
     # List all directories under sdk
     $serviceDirs = Get-ChildItem -Path $sdkDir -Directory
 }
@@ -58,9 +59,9 @@ foreach ($serviceDir in $serviceDirs) {
     $currentDir++
     Write-Progress -Activity "Scanning sdk directories" -Status "Checking $($serviceDir.Name)" -PercentComplete (($currentDir / $totalDirs) * 100)
     
-    # Look for ci.yml and ci.{something}.yml files in this service directory, excluding mgmt variants
+    # Look for ci.yml and ci.{something}.yml files in this service directory, focusing on mgmt variants for ResourceManager packages
     $ciYmlFiles = Get-ChildItem -Path $serviceDir.FullName -Filter "ci*.yml" -Recurse -ErrorAction SilentlyContinue | 
-        Where-Object { $_.Name -eq "ci.yml" -or ($_.Name -match "^ci\..*\.yml$" -and $_.Name -notlike "*mgmt*") }
+        Where-Object { $_.Name -eq "ci.yml" -or ($_.Name -match "^ci\..*\.yml$" -and $_.Name -like "*mgmt*") }
     
     foreach ($ciYmlFile in $ciYmlFiles) {
         # Read the ci.yml file to extract artifact name
@@ -77,6 +78,11 @@ foreach ($serviceDir in $serviceDirs) {
                 
                 foreach ($nameMatch in $nameMatches) {
                     $packageName = $nameMatch.Groups[1].Value.Trim()
+                    
+                    # Only process Azure.ResourceManager packages
+                    if (-not $packageName.StartsWith("Azure.ResourceManager")) {
+                        continue
+                    }
                     
                     # Look for directoryName in the same artifact entry
                     $directoryName = $null
@@ -116,12 +122,12 @@ Write-Progress -Activity "Scanning sdk directories" -Completed
 
 # Display summary
 Write-Host "`nScanned $($serviceDirs.Count) service directories" -ForegroundColor Yellow
-Write-Host "Found $($foundPackages.Count) artifacts in ci.yml files:" -ForegroundColor Green
+Write-Host "Found $($foundPackages.Count) Azure.ResourceManager artifacts in ci.yml files:" -ForegroundColor Green
 
 if ($foundPackages.Count -gt 0) {
     $foundPackages | Format-Table -Property PackageName, ServiceDirectory, DirectoryName
 } else {
-    Write-Host "No artifacts found in ci.yml files." -ForegroundColor Red
+    Write-Host "No Azure.ResourceManager artifacts found in ci.yml files." -ForegroundColor Red
     exit 1
 }
 
@@ -146,8 +152,8 @@ if ($SpecificPackages -and $SpecificPackages.Count -gt 0) {
     Write-Host "Processing $($foundPackages.Count) selected packages." -ForegroundColor Cyan
 }
 
-# Process each package to build and check for AOT compatibility
-Write-Host "`nBuilding packages to check for AOT compatibility..." -ForegroundColor Cyan
+# Process each Azure.ResourceManager package to build and check for AOT compatibility
+Write-Host "`nBuilding Azure.ResourceManager packages to check for AOT compatibility..." -ForegroundColor Cyan
 
 $processedPackages = 0
 $successfulPackages = 0
