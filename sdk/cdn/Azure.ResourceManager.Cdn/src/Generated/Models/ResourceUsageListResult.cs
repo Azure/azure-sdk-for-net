@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceUsageListResult"/>. </summary>
-        internal ResourceUsageListResult()
+        /// <param name="value">
+        /// The ResourceUsage items on this page
+        /// Serialized Name: ResourceUsageListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ResourceUsageListResult(IEnumerable<CdnUsage> value)
         {
-            Value = new ChangeTrackingList<CdnUsage>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceUsageListResult"/>. </summary>
         /// <param name="value">
-        /// List of resource usages.
+        /// The ResourceUsage items on this page
         /// Serialized Name: ResourceUsageListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of custom domain objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: ResourceUsageListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceUsageListResult(IReadOnlyList<CdnUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceUsageListResult(IReadOnlyList<CdnUsage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceUsageListResult"/> for deserialization. </summary>
+        internal ResourceUsageListResult()
+        {
+        }
+
         /// <summary>
-        /// List of resource usages.
+        /// The ResourceUsage items on this page
         /// Serialized Name: ResourceUsageListResult.value
         /// </summary>
         public IReadOnlyList<CdnUsage> Value { get; }
         /// <summary>
-        /// URL to get the next set of custom domain objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: ResourceUsageListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }
