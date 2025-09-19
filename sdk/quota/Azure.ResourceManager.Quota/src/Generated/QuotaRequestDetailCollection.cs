@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
+        /// <description>QuotaRequestDetails_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
+        /// <description>QuotaRequestDetails_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_List</description>
+        /// <description>QuotaRequestDetails_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,9 +157,8 @@ namespace Azure.ResourceManager.Quota
         /// |---------------------|------------------------
         ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
-        ///  |provisioningState eq {QuotaRequestState}
-        ///  |resourceName eq {resourceName}
-        ///
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -181,11 +180,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_List</description>
+        /// <description>QuotaRequestDetails_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,9 +197,8 @@ namespace Azure.ResourceManager.Quota
         /// |---------------------|------------------------
         ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
-        ///  |provisioningState eq {QuotaRequestState}
-        ///  |resourceName eq {resourceName}
-        ///
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -222,11 +220,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
+        /// <description>QuotaRequestDetails_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,11 +263,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
+        /// <description>QuotaRequestDetails_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -308,11 +306,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
+        /// <description>QuotaRequestDetails_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,11 +351,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
+        /// <description>QuotaRequestDetails_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
