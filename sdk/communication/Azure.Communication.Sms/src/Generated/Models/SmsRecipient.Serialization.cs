@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System.Globalization;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
-    internal partial class SmsRecipient : IUtf8JsonSerializable
+    public partial class SmsRecipient : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +26,7 @@ namespace Azure.Communication.Sms.Models
             if (Optional.IsDefined(RepeatabilityFirstSent))
             {
                 writer.WritePropertyName("repeatabilityFirstSent"u8);
-                writer.WriteStringValue(RepeatabilityFirstSent);
+                writer.WriteStringValue(RepeatabilityFirstSent.Value.ToString("r", CultureInfo.InvariantCulture));
             }
             writer.WriteEndObject();
         }
