@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Object containing updates for patch operations. </summary>
     public partial class ConnectedClusterPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterPatch"/>. </summary>
         public ConnectedClusterPatch()
@@ -54,48 +26,103 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Describes the connected cluster resource properties that can be updated during PATCH operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterPatch(IDictionary<string, string> tags, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedClusterPatch(IDictionary<string, string> tags, ConnectedClusterPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Describes the connected cluster resource properties that can be updated during PATCH operation.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties")]
-        public BinaryData Properties { get; set; }
+
+        /// <summary> Describes the connected cluster resource properties that can be updated during PATCH operation. </summary>
+        internal ConnectedClusterPatchProperties Properties { get; set; }
+
+        /// <summary> Represents the distribution of the connected cluster. </summary>
+        public string Distribution
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Distribution;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterPatchProperties();
+                }
+                Properties.Distribution = value;
+            }
+        }
+
+        /// <summary> Represents the Kubernetes distribution version on this connected cluster. </summary>
+        public string DistributionVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DistributionVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterPatchProperties();
+                }
+                Properties.DistributionVersion = value;
+            }
+        }
+
+        /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
+        public AzureHybridBenefit? AzureHybridBenefit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureHybridBenefit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterPatchProperties();
+                }
+                Properties.AzureHybridBenefit = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether Gateway is enabled for the connected cluster resource. </summary>
+        internal Gateway Gateway
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Gateway;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterPatchProperties();
+                }
+                Properties.Gateway = value;
+            }
+        }
+
+        /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
+        public bool? GatewayEnabled
+        {
+            get
+            {
+                return Gateway is null ? default : Gateway.Enabled;
+            }
+            set
+            {
+                if (Gateway is null)
+                {
+                    Gateway = new Gateway();
+                }
+                Gateway.Enabled = value;
+            }
+        }
     }
 }

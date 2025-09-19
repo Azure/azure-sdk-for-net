@@ -13,150 +13,397 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    /// <summary>
-    /// A class representing the ConnectedCluster data model.
-    /// Represents a connected cluster.
-    /// </summary>
+    /// <summary> Represents a connected cluster. </summary>
     public partial class ConnectedClusterData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identity"/> or <paramref name="agentPublicKeyCertificate"/> is null. </exception>
-        public ConnectedClusterData(AzureLocation location, ManagedServiceIdentity identity, string agentPublicKeyCertificate) : base(location)
+        /// <param name="identity"> The identity of the connected cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentPublicKeyCertificate"/> or <paramref name="identity"/> is null. </exception>
+        public ConnectedClusterData(AzureLocation location, string agentPublicKeyCertificate, ManagedServiceIdentity identity) : base(location)
         {
-            Argument.AssertNotNull(identity, nameof(identity));
             Argument.AssertNotNull(agentPublicKeyCertificate, nameof(agentPublicKeyCertificate));
 
-            Identity = identity;
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
+            Identity = identity;
+            Properties = new ConnectedClusterProperties(agentPublicKeyCertificate);
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </param>
-        /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version of the connected cluster resource. </param>
-        /// <param name="totalNodeCount"> Number of nodes present in the connected cluster resource. </param>
-        /// <param name="totalCoreCount"> Number of CPU cores present in the connected cluster resource. </param>
-        /// <param name="agentVersion"> Version of the agent running on the connected cluster resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the connected cluster resource. </param>
-        /// <param name="distribution"> The Kubernetes distribution running on this connected cluster. </param>
-        /// <param name="infrastructure"> The infrastructure on which the Kubernetes cluster represented by this connected cluster is running on. </param>
-        /// <param name="offering"> Connected cluster offering. </param>
-        /// <param name="managedIdentityCertificateExpirationOn"> Expiration time of the managed identity certificate. </param>
-        /// <param name="lastConnectivityOn"> Time representing the last instance when heart beat was received from the cluster. </param>
-        /// <param name="connectivityStatus"> Represents the connectivity status of the connected cluster. </param>
-        /// <param name="privateLinkState"> Property which describes the state of private link on a connected cluster resource. </param>
-        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this connected cluster is assigned to, if any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ProvisioningState? provisioningState, string distribution, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectivityStatus? connectivityStatus, PrivateLinkState? privateLinkState, string privateLinkScopeResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the connected cluster resource properties. </param>
+        /// <param name="identity"> The identity of the connected cluster. </param>
+        /// <param name="kind"> The kind of connected cluster. </param>
+        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConnectedClusterProperties properties, ManagedServiceIdentity identity, ConnectedClusterKind? kind) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            AgentPublicKeyCertificate = agentPublicKeyCertificate;
-            KubernetesVersion = kubernetesVersion;
-            TotalNodeCount = totalNodeCount;
-            TotalCoreCount = totalCoreCount;
-            AgentVersion = agentVersion;
-            ProvisioningState = provisioningState;
-            Distribution = distribution;
-            Infrastructure = infrastructure;
-            Offering = offering;
-            ManagedIdentityCertificateExpirationOn = managedIdentityCertificateExpirationOn;
-            LastConnectivityOn = lastConnectivityOn;
-            ConnectivityStatus = connectivityStatus;
-            PrivateLinkState = privateLinkState;
-            PrivateLinkScopeResourceId = privateLinkScopeResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/> for deserialization. </summary>
-        internal ConnectedClusterData()
-        {
-        }
+        /// <summary> Describes the connected cluster resource properties. </summary>
+        internal ConnectedClusterProperties Properties { get; set; }
 
-        /// <summary> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </summary>
-        [WirePath("identity")]
+        /// <summary> The identity of the connected cluster. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The kind of connected cluster. </summary>
+        public ConnectedClusterKind? Kind { get; set; }
+
         /// <summary> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </summary>
-        [WirePath("properties.agentPublicKeyCertificate")]
-        public string AgentPublicKeyCertificate { get; set; }
+        public string AgentPublicKeyCertificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentPublicKeyCertificate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.AgentPublicKeyCertificate = value;
+            }
+        }
+
         /// <summary> The Kubernetes version of the connected cluster resource. </summary>
-        [WirePath("properties.kubernetesVersion")]
-        public string KubernetesVersion { get; }
+        public string KubernetesVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KubernetesVersion;
+            }
+        }
+
         /// <summary> Number of nodes present in the connected cluster resource. </summary>
-        [WirePath("properties.totalNodeCount")]
-        public int? TotalNodeCount { get; }
+        public int? TotalNodeCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalNodeCount;
+            }
+        }
+
         /// <summary> Number of CPU cores present in the connected cluster resource. </summary>
-        [WirePath("properties.totalCoreCount")]
-        public int? TotalCoreCount { get; }
+        public int? TotalCoreCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalCoreCount;
+            }
+        }
+
         /// <summary> Version of the agent running on the connected cluster resource. </summary>
-        [WirePath("properties.agentVersion")]
-        public string AgentVersion { get; }
+        public string AgentVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentVersion;
+            }
+        }
+
         /// <summary> Provisioning state of the connected cluster resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; set; }
+        public ProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.ProvisioningState = value.Value;
+            }
+        }
+
         /// <summary> The Kubernetes distribution running on this connected cluster. </summary>
-        [WirePath("properties.distribution")]
-        public string Distribution { get; set; }
+        public string Distribution
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Distribution;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.Distribution = value;
+            }
+        }
+
+        /// <summary> The Kubernetes distribution version on this connected cluster. </summary>
+        public string DistributionVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DistributionVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.DistributionVersion = value;
+            }
+        }
+
         /// <summary> The infrastructure on which the Kubernetes cluster represented by this connected cluster is running on. </summary>
-        [WirePath("properties.infrastructure")]
-        public string Infrastructure { get; set; }
+        public string Infrastructure
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Infrastructure;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.Infrastructure = value;
+            }
+        }
+
         /// <summary> Connected cluster offering. </summary>
-        [WirePath("properties.offering")]
-        public string Offering { get; }
+        public string Offering
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Offering;
+            }
+        }
+
         /// <summary> Expiration time of the managed identity certificate. </summary>
-        [WirePath("properties.managedIdentityCertificateExpirationTime")]
-        public DateTimeOffset? ManagedIdentityCertificateExpirationOn { get; }
+        public DateTimeOffset? ManagedIdentityCertificateExpirationTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedIdentityCertificateExpirationTime;
+            }
+        }
+
         /// <summary> Time representing the last instance when heart beat was received from the cluster. </summary>
-        [WirePath("properties.lastConnectivityTime")]
-        public DateTimeOffset? LastConnectivityOn { get; }
+        public DateTimeOffset? LastConnectivityTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastConnectivityTime;
+            }
+        }
+
         /// <summary> Represents the connectivity status of the connected cluster. </summary>
-        [WirePath("properties.connectivityStatus")]
-        public ConnectivityStatus? ConnectivityStatus { get; }
+        public ConnectivityStatus? ConnectivityStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectivityStatus;
+            }
+        }
+
         /// <summary> Property which describes the state of private link on a connected cluster resource. </summary>
-        [WirePath("properties.privateLinkState")]
-        public PrivateLinkState? PrivateLinkState { get; set; }
-        /// <summary> The resource id of the private link scope this connected cluster is assigned to, if any. </summary>
-        [WirePath("properties.privateLinkScopeResourceId")]
-        public string PrivateLinkScopeResourceId { get; set; }
+        public PrivateLinkState? PrivateLinkState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.PrivateLinkState = value.Value;
+            }
+        }
+
+        /// <summary> This is populated only if privateLinkState is enabled. The resource id of the private link scope this connected cluster is assigned to, if any. </summary>
+        public string PrivateLinkScopeResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkScopeResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.PrivateLinkScopeResourceId = value;
+            }
+        }
+
+        /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
+        public AzureHybridBenefit? AzureHybridBenefit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureHybridBenefit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.AzureHybridBenefit = value.Value;
+            }
+        }
+
+        /// <summary> AAD profile for the connected cluster. </summary>
+        public AadProfile AadProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AadProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.AadProfile = value;
+            }
+        }
+
+        /// <summary> Arc agentry configuration for the provisioned cluster. </summary>
+        public ArcAgentProfile ArcAgentProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArcAgentProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.ArcAgentProfile = value;
+            }
+        }
+
+        /// <summary> Security profile for the connected cluster. </summary>
+        internal SecurityProfile SecurityProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.SecurityProfile = value;
+            }
+        }
+
+        /// <summary> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </summary>
+        public OidcIssuerProfile OidcIssuerProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OidcIssuerProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.OidcIssuerProfile = value;
+            }
+        }
+
+        /// <summary> Details of the gateway used by the Arc router for connectivity. </summary>
+        internal Gateway Gateway
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Gateway;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedClusterProperties();
+                }
+                Properties.Gateway = value;
+            }
+        }
+
+        /// <summary> Configuration settings for customizing the behavior of the connected cluster. </summary>
+        public IList<ArcAgentryConfigurations> ArcAgentryConfigurations
+        {
+            get
+            {
+                return Properties.ArcAgentryConfigurations;
+            }
+        }
+
+        /// <summary> More properties related to the Connected Cluster. </summary>
+        public IReadOnlyDictionary<string, string> MiscellaneousProperties
+        {
+            get
+            {
+                return Properties.MiscellaneousProperties;
+            }
+        }
+
+        /// <summary> The workload identity feature webhook. </summary>
+        public SecurityProfileWorkloadIdentity SecurityWorkloadIdentity
+        {
+            get
+            {
+                return SecurityProfile is null ? default : SecurityProfile.WorkloadIdentity;
+            }
+            set
+            {
+                if (SecurityProfile is null)
+                {
+                    SecurityProfile = new SecurityProfile();
+                }
+                SecurityProfile.WorkloadIdentity = value;
+            }
+        }
+
+        /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
+        public bool? GatewayEnabled
+        {
+            get
+            {
+                return Gateway is null ? default : Gateway.Enabled;
+            }
+            set
+            {
+                if (Gateway is null)
+                {
+                    Gateway = new Gateway();
+                }
+                Gateway.Enabled = value;
+            }
+        }
     }
 }
