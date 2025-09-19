@@ -466,7 +466,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250805.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250917.1</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250918.1</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20250903.2</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

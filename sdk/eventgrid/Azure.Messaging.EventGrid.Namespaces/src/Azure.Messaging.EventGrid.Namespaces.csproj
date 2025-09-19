@@ -10,6 +10,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <AotCompatOptOut>true</AotCompatOptOut>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
