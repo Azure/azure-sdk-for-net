@@ -63,11 +63,6 @@ namespace Azure.AI.Translation.Text
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(Transliteration))
-            {
-                writer.WritePropertyName("transliteration"u8);
-                writer.WriteObjectValue(Transliteration, options);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -112,7 +107,6 @@ namespace Azure.AI.Translation.Text
             int? responseTokens = default;
             int? targetTokens = default;
             string text = default;
-            TransliteratedText transliteration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,15 +166,6 @@ namespace Azure.AI.Translation.Text
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transliteration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -195,7 +180,6 @@ namespace Azure.AI.Translation.Text
                 responseTokens,
                 targetTokens,
                 text,
-                transliteration,
                 serializedAdditionalRawData);
         }
 
