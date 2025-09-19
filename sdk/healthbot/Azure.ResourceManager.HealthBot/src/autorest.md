@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HealthBot
 namespace: Azure.ResourceManager.HealthBot
-require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/healthbot/resource-manager/readme.md
-tag: package-2021-08-24
+require: https://github.com/Azure/azure-rest-api-specs/blob/f14c85bfc754e27a997936632e6cbdd062bfe65b/specification/healthbot/resource-manager/readme.md
+#tag: package-2025-05-25
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -24,6 +24,7 @@ rename-mapping:
   HealthBotProperties.botManagementPortalLink: -|uri
   HealthBotProperties: HealthBotProperties
   KeyVaultProperties: HealthBotKeyVaultProperties
+  HealthBotKeysResponse: HealthBotKeysResult
 
 format-by-name-rules:
   'tenantId': 'uuid'
