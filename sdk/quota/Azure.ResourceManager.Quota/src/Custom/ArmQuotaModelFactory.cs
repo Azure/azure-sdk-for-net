@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Quota.Models
                 allocatedToSubscriptionsValue);
         }
 
-        /// Add this custom code because its properties order changed, but the changed properties are all string, this actually replaces its generated overload.
+        // Add this custom code because its properties order changed, but the changed properties are all string, this actually replaces its generated overload.
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaRequestBase"/>. </summary>
         /// <param name="limit"> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </param>
         /// <param name="value"> Resource name. </param>
