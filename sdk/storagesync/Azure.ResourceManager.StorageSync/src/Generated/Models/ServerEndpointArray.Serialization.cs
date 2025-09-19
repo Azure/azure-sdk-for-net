@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 return null;
             }
             IReadOnlyList<StorageSyncServerEndpointData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,13 +106,18 @@ namespace Azure.ResourceManager.StorageSync.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServerEndpointArray(value ?? new ChangeTrackingList<StorageSyncServerEndpointData>(), serializedAdditionalRawData);
+            return new ServerEndpointArray(value ?? new ChangeTrackingList<StorageSyncServerEndpointData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointArray>.Write(ModelReaderWriterOptions options)
