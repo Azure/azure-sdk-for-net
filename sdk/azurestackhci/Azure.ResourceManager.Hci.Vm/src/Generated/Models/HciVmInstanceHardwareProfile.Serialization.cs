@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HciVmSize? vmSize = default;
             int? processors = default;
             long? memoryMB = default;
-            HciVmInstanceHardwareProfileDynamicMemoryConfigiuration dynamicMemoryConfig = default;
+            HciVmInstanceHardwareProfileDynamicMemoryConfiguration dynamicMemoryConfig = default;
             IList<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    dynamicMemoryConfig = HciVmInstanceHardwareProfileDynamicMemoryConfigiuration.DeserializeHciVmInstanceHardwareProfileDynamicMemoryConfigiuration(property.Value, options);
+                    dynamicMemoryConfig = HciVmInstanceHardwareProfileDynamicMemoryConfiguration.DeserializeHciVmInstanceHardwareProfileDynamicMemoryConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualMachineGPUs"u8))

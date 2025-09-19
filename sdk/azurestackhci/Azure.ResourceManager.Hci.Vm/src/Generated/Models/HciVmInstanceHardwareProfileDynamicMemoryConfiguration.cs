@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Dynamic memory config. </summary>
-    public partial class HciVmInstanceHardwareProfileDynamicMemoryConfigiuration
+    public partial class HciVmInstanceHardwareProfileDynamicMemoryConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HciVmInstanceHardwareProfileDynamicMemoryConfigiuration"/>. </summary>
-        public HciVmInstanceHardwareProfileDynamicMemoryConfigiuration()
+        /// <summary> Initializes a new instance of <see cref="HciVmInstanceHardwareProfileDynamicMemoryConfiguration"/>. </summary>
+        public HciVmInstanceHardwareProfileDynamicMemoryConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciVmInstanceHardwareProfileDynamicMemoryConfigiuration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmInstanceHardwareProfileDynamicMemoryConfiguration"/>. </summary>
         /// <param name="maximumMemoryInMB"> Maximum memory in MB. </param>
         /// <param name="minimumMemoryInMB"> Minimum memory in MB. </param>
         /// <param name="targetMemoryBuffer"> Defines the amount of extra memory that should be reserved for a virtual machine instance at runtime, as a percentage of the total memory that the virtual machine instance is thought to need. This only applies to virtual systems with dynamic memory enabled. This property can be in the range of 5 to 2000. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceHardwareProfileDynamicMemoryConfigiuration(long? maximumMemoryInMB, long? minimumMemoryInMB, int? targetMemoryBuffer, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciVmInstanceHardwareProfileDynamicMemoryConfiguration(long? maximumMemoryInMB, long? minimumMemoryInMB, int? targetMemoryBuffer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaximumMemoryInMB = maximumMemoryInMB;
             MinimumMemoryInMB = minimumMemoryInMB;

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="dynamicMemoryConfig"> Dynamic memory config. </param>
         /// <param name="virtualMachineGPUs"> virtualMachineGPUs - list of gpus to be attached to the virtual machine instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceHardwareProfile(HciVmSize? vmSize, int? processors, long? memoryInMB, HciVmInstanceHardwareProfileDynamicMemoryConfigiuration dynamicMemoryConfig, IList<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciVmInstanceHardwareProfile(HciVmSize? vmSize, int? processors, long? memoryInMB, HciVmInstanceHardwareProfileDynamicMemoryConfiguration dynamicMemoryConfig, IList<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmSize = vmSize;
             Processors = processors;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> RAM in MB for the virtual machine instance. </summary>
         public long? MemoryInMB { get; set; }
         /// <summary> Dynamic memory config. </summary>
-        public HciVmInstanceHardwareProfileDynamicMemoryConfigiuration DynamicMemoryConfig { get; set; }
+        public HciVmInstanceHardwareProfileDynamicMemoryConfiguration DynamicMemoryConfig { get; set; }
         /// <summary> virtualMachineGPUs - list of gpus to be attached to the virtual machine instance. </summary>
         public IList<HciVmInstanceHardwareProfileGpuConfiguration> VirtualMachineGPUs { get; }
     }
