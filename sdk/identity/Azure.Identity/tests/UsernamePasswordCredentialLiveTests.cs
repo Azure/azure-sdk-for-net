@@ -37,6 +37,7 @@ namespace Azure.Identity.Tests
             Assert.IsNotNull(token.Token);
         }
 
+        [Ignore("Skipped: tenant requires MFA; test no longer valid for TME tenant.")]
         [Test]
         public async Task AuthenticateNoContext()
         {
