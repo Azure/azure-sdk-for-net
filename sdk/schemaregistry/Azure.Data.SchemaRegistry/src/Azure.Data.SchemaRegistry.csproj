@@ -8,6 +8,7 @@
     <PackageTags>Azure;Schema Registry;SchemaRegistry;.NET;Data;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,15 +1,24 @@
 # Release History
 
-## 12.3.0-beta.1 (Unreleased)
+## 12.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
 
 ### Other Changes
+
+## 12.3.0-beta.1 (2025-09-16)
+
+### Features Added
+- This release contains features and bug fixes to improve quality.
+
+## 12.2.2 (2025-09-10)
+
+### Bugs Fixed
+- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
 
 ## 12.2.1 (2025-08-06)
 

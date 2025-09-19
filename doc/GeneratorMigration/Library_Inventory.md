@@ -2,26 +2,27 @@
 
 ## Summary
 
-- Total libraries: 408
-- Management Plane (Swagger): 168
-- Management Plane (TSP-Old): 49
+- Total libraries: 412
+- Management Plane (Swagger): 167
+- Management Plane (TSP-Old): 52
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
-- Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 2
+- Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 3
 - Management Plane (TypeSpec - @typespec/http-client-csharp): 0
-- Data Plane (Swagger): 114
+- Data Plane (Swagger): 115
 - Data Plane (TSP-Old): 27
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 7
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 8
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 0
 - Data Plane (TypeSpec - @typespec/http-client-csharp): 2
-- No generator: 39
+- No generator: 38
 
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 7
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 8
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
+| ai | Azure.AI.VoiceLive | sdk/ai/Azure.AI.VoiceLive |
 | appconfiguration | Azure.Data.AppConfiguration | sdk/appconfiguration/Azure.Data.AppConfiguration |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces |
 | eventgrid | Azure.Messaging.EventGrid.SystemEvents | sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents |
@@ -78,7 +79,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 ## Data Plane Libraries using Swagger
 
-Total: 114
+Total: 115
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -142,7 +143,6 @@ Total: 114
 | monitor | Azure.Monitor.Query | sdk/monitor/Azure.Monitor.Query |
 | objectanchors | Azure.MixedReality.ObjectAnchors.Conversion | sdk/objectanchors/Azure.MixedReality.ObjectAnchors.Conversion |
 | personalizer | Azure.AI.Personalizer | sdk/personalizer/Azure.AI.Personalizer |
-| playwrighttesting | Azure.Developer.MicrosoftPlaywrightTesting.TestLogger | sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.TestLogger |
 | provisioning | Azure.Provisioning | sdk/provisioning/Azure.Provisioning |
 | provisioning | Azure.Provisioning.AppConfiguration | sdk/provisioning/Azure.Provisioning.AppConfiguration |
 | provisioning | Azure.Provisioning.AppContainers | sdk/provisioning/Azure.Provisioning.AppContainers |
@@ -158,6 +158,8 @@ Total: 114
 | provisioning | Azure.Provisioning.KeyVault | sdk/provisioning/Azure.Provisioning.KeyVault |
 | provisioning | Azure.Provisioning.Kubernetes | sdk/provisioning/Azure.Provisioning.Kubernetes |
 | provisioning | Azure.Provisioning.KubernetesConfiguration | sdk/provisioning/Azure.Provisioning.KubernetesConfiguration |
+| provisioning | Azure.Provisioning.Kusto | sdk/provisioning/Azure.Provisioning.Kusto |
+| provisioning | Azure.Provisioning.Network | sdk/provisioning/Azure.Provisioning.Network |
 | provisioning | Azure.Provisioning.OperationalInsights | sdk/provisioning/Azure.Provisioning.OperationalInsights |
 | provisioning | Azure.Provisioning.PostgreSql | sdk/provisioning/Azure.Provisioning.PostgreSql |
 | provisioning | Azure.Provisioning.Redis | sdk/provisioning/Azure.Provisioning.Redis |
@@ -200,17 +202,18 @@ Total: 114
 
 ## Management Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp-mgmt)
 
-TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp-mgmt, or through special handling for specific libraries. Total: 2
+TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp-mgmt, or through special handling for specific libraries. Total: 3
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
+| computerecommender | Azure.ResourceManager.Compute.Recommender | sdk/computerecommender/Azure.ResourceManager.Compute.Recommender |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot |
 | storageactions | Azure.ResourceManager.StorageActions | sdk/storageactions/Azure.ResourceManager.StorageActions |
 
 
 ## Management Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 49
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 52
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -225,11 +228,13 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | connectedcache | Azure.ResourceManager.ConnectedCache | sdk/connectedcache/Azure.ResourceManager.ConnectedCache |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | sdk/databasewatcher/Azure.ResourceManager.DatabaseWatcher |
+| databox | Azure.ResourceManager.DataBox | sdk/databox/Azure.ResourceManager.DataBox |
 | dellstorage | Azure.ResourceManager.Dell.Storage | sdk/dellstorage/Azure.ResourceManager.Dell.Storage |
 | dependencymap | Azure.ResourceManager.DependencyMap | sdk/dependencymap/Azure.ResourceManager.DependencyMap |
 | deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices |
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry |
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | sdk/devopsinfrastructure/Azure.ResourceManager.DevOpsInfrastructure |
+| disconnectedoperations | Azure.ResourceManager.DisconnectedOperations | sdk/disconnectedoperations/Azure.ResourceManager.DisconnectedOperations |
 | durabletask | Azure.ResourceManager.DurableTask | sdk/durabletask/Azure.ResourceManager.DurableTask |
 | elasticsan | Azure.ResourceManager.ElasticSan | sdk/elasticsan/Azure.ResourceManager.ElasticSan |
 | fabric | Azure.ResourceManager.Fabric | sdk/fabric/Azure.ResourceManager.Fabric |
@@ -248,10 +253,10 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | pineconevectordb | Azure.ResourceManager.PineconeVectorDB | sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | sdk/planetarycomputer/Azure.ResourceManager.PlanetaryComputer |
 | playwright | Azure.ResourceManager.Playwright | sdk/playwright/Azure.ResourceManager.Playwright |
-| playwrighttesting | Azure.ResourceManager.PlaywrightTesting | sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock |
 | recoveryservices | Azure.ResourceManager.RecoveryServices | sdk/recoveryservices/Azure.ResourceManager.RecoveryServices |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication |
+| resources | Azure.ResourceManager.Resources.Bicep | sdk/resources/Azure.ResourceManager.Resources.Bicep |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension |
 | selfhelp | Azure.ResourceManager.SelfHelp | sdk/selfhelp/Azure.ResourceManager.SelfHelp |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters |
@@ -262,12 +267,13 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | storagemover | Azure.ResourceManager.StorageMover | sdk/storagemover/Azure.ResourceManager.StorageMover |
 | terraform | Azure.ResourceManager.Terraform | sdk/terraform/Azure.ResourceManager.Terraform |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases |
+| workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | sdk/workloadorchestration/Azure.ResourceManager.WorkloadOrchestration |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance |
 
 
 ## Management Plane Libraries using Swagger
 
-Total: 168
+Total: 167
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -311,7 +317,6 @@ Total: 168
 | cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql | sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql |
 | costmanagement | Azure.ResourceManager.CostManagement | sdk/costmanagement/Azure.ResourceManager.CostManagement |
 | customer-insights | Azure.ResourceManager.CustomerInsights | sdk/customer-insights/Azure.ResourceManager.CustomerInsights |
-| databox | Azure.ResourceManager.DataBox | sdk/databox/Azure.ResourceManager.DataBox |
 | databoxedge | Azure.ResourceManager.DataBoxEdge | sdk/databoxedge/Azure.ResourceManager.DataBoxEdge |
 | datadog | Azure.ResourceManager.Datadog | sdk/datadog/Azure.ResourceManager.Datadog |
 | datafactory | Azure.ResourceManager.DataFactory | sdk/datafactory/Azure.ResourceManager.DataFactory |
@@ -443,7 +448,7 @@ Total: 168
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 39
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 38
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -475,7 +480,6 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 | loadtestservice | Azure.Developer.Playwright.NUnit | sdk/loadtestservice/Azure.Developer.Playwright.NUnit |
 | modelsrepository | Azure.IoT.ModelsRepository | sdk/modelsrepository/Azure.IoT.ModelsRepository |
 | monitor | Azure.Monitor.OpenTelemetry.AspNetCore | sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore |
-| playwrighttesting | Azure.Developer.MicrosoftPlaywrightTesting.NUnit | sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit |
 | provisioning | Azure.Provisioning.Deployment | sdk/provisioning/Azure.Provisioning.Deployment |
 | provisioning | Generator | sdk/provisioning/Generator |
 | servicebus | Azure.Messaging.ServiceBus | sdk/servicebus/Azure.Messaging.ServiceBus |

@@ -22,6 +22,17 @@ namespace Microsoft.ClientModel.TestFramework;
 public class TestProxyProcess
 {
     private static readonly string s_dotNetExe;
+    private readonly int? _proxyPortHttp;
+    private readonly int? _proxyPortHttps;
+    private readonly Process? _testProxyProcess;
+    private readonly StringBuilder _errorBuffer = new();
+    private static readonly object _lock = new();
+    private static TestProxyProcess? _shared;
+    private readonly StringBuilder _output = new();
+    private static readonly bool s_enableDebugProxyLogging;
+
+    internal virtual TestProxyAdminClient AdminClient { get; }
+    internal virtual TestProxyClient ProxyClient { get; }
 
     /// <summary>
     /// The IP address used for the test proxy. Uses 127.0.0.1 instead of localhost to avoid SSL callback slowness.
@@ -38,26 +49,6 @@ public class TestProxyProcess
     /// Gets the HTTPS port used by the test proxy.
     /// </summary>
     public int? ProxyPortHttps => _proxyPortHttps;
-
-    private readonly int? _proxyPortHttp;
-    private readonly int? _proxyPortHttps;
-    private readonly Process? _testProxyProcess;
-
-    /// <summary>
-    /// Gets the test framework client for interacting with the test proxy.
-    /// </summary>
-    internal virtual TestProxyAdminClient AdminClient { get; }
-
-    /// <summary>
-    /// Gets the test proxy client for proxy-specific operations.
-    /// </summary>
-    internal virtual TestProxyClient ProxyClient { get; }
-
-    private readonly StringBuilder _errorBuffer = new();
-    private static readonly object _lock = new();
-    private static TestProxyProcess? _shared;
-    private readonly StringBuilder _output = new();
-    private static readonly bool s_enableDebugProxyLogging;
 
     /// <summary>
     /// Initializes static members of the <see cref="TestProxyProcess"/> class.
@@ -102,24 +93,35 @@ public class TestProxyProcess
 
         debugMode |= environmentDebugMode;
 
-        ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
-            s_dotNetExe,
-            $"\"{proxyPath}\" start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
+        ProcessStartInfo testProxyProcessInfo;
+
+        if (proxyPath is not null)
         {
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            EnvironmentVariables =
-            {
-                ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
-                ["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableDebugProxyLogging ? "Debug" : "Error",
-                ["Logging__LogLevel__Default"] = "Error",
-                ["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableDebugProxyLogging ? "Information" : "Error",
-                ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
-                ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
-                ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
-            }
-        };
+            testProxyProcessInfo = new ProcessStartInfo(
+                s_dotNetExe,
+                $"\"{proxyPath}\" start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
+        }
+        else
+        {
+            TryRestoreLocalTools();
+
+            testProxyProcessInfo = new ProcessStartInfo(
+                s_dotNetExe,
+                $"tool run test-proxy start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
+        }
+
+        testProxyProcessInfo.UseShellExecute = false;
+        testProxyProcessInfo.RedirectStandardOutput = true;
+        testProxyProcessInfo.RedirectStandardError = true;
+
+        // Set environment variables
+        testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0";
+        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableDebugProxyLogging ? "Debug" : "Error";
+        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Default"] = "Error";
+        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableDebugProxyLogging ? "Information" : "Error";
+        testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information";
+        testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath;
+        testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword;
 
         _testProxyProcess = Process.Start(testProxyProcessInfo);
 
@@ -168,7 +170,13 @@ public class TestProxyProcess
 
         if (_proxyPortHttp == null || _proxyPortHttps == null)
         {
-            CheckForErrors();
+            if (_errorBuffer.Length > 0)
+            {
+                var error = _errorBuffer.ToString();
+                _errorBuffer.Clear();
+                throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
+            }
+
             // if no errors, fallback to this exception
             throw new InvalidOperationException("Failed to start the test proxy. One or both of the ports was not populated." + Environment.NewLine +
                                                 $"http: {_proxyPortHttp}" + Environment.NewLine +
@@ -192,49 +200,6 @@ public class TestProxyProcess
             });
     }
 
-    /// <summary>
-    /// Starts the test proxy
-    /// </summary>
-    /// <param name="debugMode">If true, the proxy will be configured to look for port 5000 and 5001, which is the default used when running the proxy locally in debug mode.</param>
-    /// <returns>The started TestProxy instance.</returns>
-    public static TestProxyProcess Start(bool debugMode = false)
-    {
-        if (_shared != null)
-        {
-            return _shared;
-        }
-
-        lock (_lock)
-        {
-            var shared = _shared;
-            if (shared == null)
-            {
-                shared = new TestProxyProcess(typeof(TestProxyProcess)
-                    .Assembly
-                    .GetCustomAttributes<AssemblyMetadataAttribute>()
-                    .Single(a => a.Key == "TestProxyPath")
-                    .Value,
-                    debugMode);
-
-                AppDomain.CurrentDomain.DomainUnload += (_, _) =>
-                {
-                    shared._testProxyProcess?.Kill();
-                };
-
-                _shared = shared;
-            }
-
-            return shared;
-        }
-    }
-
-    /// <summary>
-    /// Attempts to parse a port number from test proxy output for the specified scheme.
-    /// </summary>
-    /// <param name="output">The output line from the test proxy.</param>
-    /// <param name="scheme">The URI scheme (http or https) to parse.</param>
-    /// <param name="port">When this method returns, contains the parsed port number if successful; otherwise, null.</param>
-    /// <returns>true if the port was successfully parsed; otherwise, false.</returns>
     private static bool TryParsePort(string? output, string scheme, out int? port)
     {
         if (output == null)
@@ -258,6 +223,90 @@ public class TestProxyProcess
         return false;
     }
 
+    private static void TryRestoreLocalTools()
+    {
+        try
+        {
+            var currentDir = Directory.GetCurrentDirectory();
+            while (currentDir != null)
+            {
+                var toolsJsonPath = Path.Combine(currentDir, ".config", "dotnet-tools.json");
+                if (File.Exists(toolsJsonPath))
+                {
+                    // Found a tools manifest, try to restore
+                    var processInfo = new ProcessStartInfo
+                    {
+                        FileName = s_dotNetExe,
+                        Arguments = "tool restore",
+                        WorkingDirectory = currentDir,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
+
+                    using var process = Process.Start(processInfo);
+                    if (process != null)
+                    {
+                        process.WaitForExit(30000);
+                    }
+                    break;
+                }
+
+                var parentDir = Directory.GetParent(currentDir);
+                currentDir = parentDir?.FullName;
+            }
+        }
+        catch
+        {
+            // If restore fails, silently continue - the dotnet test-proxy command will handle it
+        }
+    }
+
+    /// <summary>
+    /// Starts the test proxy
+    /// </summary>
+    /// <param name="debugMode">If true, the proxy will be configured to look for port 5000 and 5001, which is the default used when running the proxy locally in debug mode.</param>
+    /// <returns>The started TestProxy instance.</returns>
+    public static TestProxyProcess Start(bool debugMode = false)
+    {
+        if (_shared != null)
+        {
+            return _shared;
+        }
+
+        lock (_lock)
+        {
+            var shared = _shared;
+            if (shared == null)
+            {
+                var proxyPath = GetTestProxyPath();
+                shared = new TestProxyProcess(proxyPath, debugMode);
+
+                AppDomain.CurrentDomain.DomainUnload += (_, _) =>
+                {
+                    shared._testProxyProcess?.Kill();
+                };
+
+                _shared = shared;
+            }
+
+            return shared;
+        }
+    }
+
+    private static string? GetTestProxyPath()
+    {
+        // Look for environment variable override
+        var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_EXE_PATH");
+        if (!string.IsNullOrEmpty(envPath))
+        {
+            return envPath;
+        }
+
+        return null;
+    }
+
     /// <summary>
     /// Checks the test proxy output for any logged information and errors.
     /// If debug logging is enabled, outputs the collected logs and clears the buffer.
@@ -278,15 +327,6 @@ public class TestProxyProcess
             }
         }
 
-        CheckForErrors();
-    }
-
-    /// <summary>
-    /// Checks for any errors in the error buffer and throws an exception if errors are found.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">Thrown when errors are found in the test proxy.</exception>
-    private void CheckForErrors()
-    {
         if (_errorBuffer.Length > 0)
         {
             var error = _errorBuffer.ToString();

@@ -10,11 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// A base representation for a voicelive tool_choice selecting a named tool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolChoiceFunctionObject"/>.
-    /// </summary>
-    public abstract partial class ToolChoiceObject
+    internal abstract partial class ToolChoiceObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

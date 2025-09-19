@@ -30,14 +30,14 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
+        /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"> The ID of the response. </param>
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> Base64-encoded audio data delta. </param>
-        /// <param name="eventId"></param>
-        internal SessionUpdateResponseAudioDelta(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseAudioDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -75,8 +75,5 @@ namespace Azure.AI.VoiceLive
         /// </para>
         /// </summary>
         public BinaryData Delta { get; }
-
-        /// <summary> Gets the EventId. </summary>
-        public override string EventId { get; }
     }
 }

@@ -74,6 +74,8 @@
     "cpus",
     "cref",
     "Dapr",
+    "decompile",
+    "decompiled",
     "deduplication",
     "deletesas",
     "deserializable",
@@ -1821,6 +1823,13 @@
         "Akri",
         "Bucketized"
       ]
+    },
+    {
+      "filename": "**/sdk/workloadorchestration/**/*.cs",
+      "words": [
+        "Inprogress",
+        "Undeployed"
+       ]
     }
   ],
   "allowCompoundWords": true

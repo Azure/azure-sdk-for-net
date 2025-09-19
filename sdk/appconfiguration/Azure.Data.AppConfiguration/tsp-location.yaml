@@ -1,4 +1,4 @@
 repo: Azure/azure-rest-api-specs
 directory: "specification/appconfiguration/AppConfiguration"
-commit: 5c7a5cda1558804a0b52001cdf23c4e3ef225567
+commit: cee8b51dc487fd473e2214a32d8eb1083cdabd21
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"
