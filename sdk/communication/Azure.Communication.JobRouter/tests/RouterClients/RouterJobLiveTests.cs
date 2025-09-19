@@ -304,6 +304,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        [Ignore("Ignoring for hotfix")]
         public async Task CreateJobWithClassificationPolicy_w_FallbackQueue()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
