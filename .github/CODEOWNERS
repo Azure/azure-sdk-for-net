@@ -1160,7 +1160,7 @@
 # ServiceOwners:                                                   @bsomeshekar
 
 # ServiceLabel: %Virtual Enclaves %Mgmt
-# ServiceOwners:                                                   @jchavaherrera @Azure/azure-virtual-enclaves
+# ServiceOwners:                                                   @jchavaherrera
 
 # PRLabel: %Weights & Biases
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw
