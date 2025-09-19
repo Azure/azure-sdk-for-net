@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup, options);
             }
+            if (Optional.IsDefined(DataApi))
+            {
+                writer.WritePropertyName("dataApi"u8);
+                writer.WriteObjectValue(DataApi, options);
+            }
             if (Optional.IsCollectionDefined(PreviewFeatures))
             {
                 writer.WritePropertyName("previewFeatures"u8);
@@ -83,6 +88,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AuthConfig))
+            {
+                writer.WritePropertyName("authConfig"u8);
+                writer.WriteObjectValue(AuthConfig, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +139,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
             ShardingProperties sharding = default;
             ComputeProperties compute = default;
             BackupProperties backup = default;
+            DataApiProperties dataApi = default;
             IList<MongoClusterPreviewFeature> previewFeatures = default;
+            AuthConfigProperties authConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,6 +214,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     backup = BackupProperties.DeserializeBackupProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("dataApi"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataApi = DataApiProperties.DeserializeDataApiProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("previewFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -214,6 +235,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
                         array.Add(new MongoClusterPreviewFeature(item.GetString()));
                     }
                     previewFeatures = array;
+                    continue;
+                }
+                if (property.NameEquals("authConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authConfig = AuthConfigProperties.DeserializeAuthConfigProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -231,7 +261,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 sharding,
                 compute,
                 backup,
+                dataApi,
                 previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>(),
+                authConfig,
                 serializedAdditionalRawData);
         }
 

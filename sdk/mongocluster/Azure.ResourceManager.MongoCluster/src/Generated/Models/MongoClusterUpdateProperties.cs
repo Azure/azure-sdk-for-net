@@ -60,9 +60,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="sharding"> The sharding properties of the mongo cluster. </param>
         /// <param name="compute"> The compute properties of the mongo cluster. </param>
         /// <param name="backup"> The backup properties of the mongo cluster. </param>
+        /// <param name="dataApi"> The Data API properties of the mongo cluster. </param>
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
+        /// <param name="authConfig"> The authentication configuration for the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator, string serverVersion, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, StorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, IList<MongoClusterPreviewFeature> previewFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator, string serverVersion, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, StorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, DataApiProperties dataApi, IList<MongoClusterPreviewFeature> previewFeatures, AuthConfigProperties authConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Administrator = administrator;
             ServerVersion = serverVersion;
@@ -72,7 +74,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
             Sharding = sharding;
             Compute = compute;
             Backup = backup;
+            DataApi = dataApi;
             PreviewFeatures = previewFeatures;
+            AuthConfig = authConfig;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -97,19 +101,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> The storage properties of the mongo cluster. </summary>
-        internal StorageProperties Storage { get; set; }
-        /// <summary> The size of the data disk assigned to each server. </summary>
-        public long? StorageSizeGb
-        {
-            get => Storage is null ? default : Storage.SizeGb;
-            set
-            {
-                if (Storage is null)
-                    Storage = new StorageProperties();
-                Storage.SizeGb = value;
-            }
-        }
-
+        public StorageProperties Storage { get; set; }
         /// <summary> The sharding properties of the mongo cluster. </summary>
         internal ShardingProperties Sharding { get; set; }
         /// <summary> Number of shards to provision on the cluster. </summary>
@@ -146,7 +138,33 @@ namespace Azure.ResourceManager.MongoCluster.Models
             get => Backup is null ? default : Backup.EarliestRestoreTime;
         }
 
+        /// <summary> The Data API properties of the mongo cluster. </summary>
+        internal DataApiProperties DataApi { get; set; }
+        /// <summary> The mode to indicate whether the Mongo Data API is enabled for a cluster. </summary>
+        public DataApiMode? DataApiMode
+        {
+            get => DataApi is null ? default : DataApi.Mode;
+            set
+            {
+                if (DataApi is null)
+                    DataApi = new DataApiProperties();
+                DataApi.Mode = value;
+            }
+        }
+
         /// <summary> List of private endpoint connections. </summary>
         public IList<MongoClusterPreviewFeature> PreviewFeatures { get; }
+        /// <summary> The authentication configuration for the cluster. </summary>
+        internal AuthConfigProperties AuthConfig { get; set; }
+        /// <summary> Allowed authentication modes for data access on the cluster. </summary>
+        public IList<AuthenticationMode> AuthConfigAllowedModes
+        {
+            get
+            {
+                if (AuthConfig is null)
+                    AuthConfig = new AuthConfigProperties();
+                return AuthConfig.AllowedModes;
+            }
+        }
     }
 }
