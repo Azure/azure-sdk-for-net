@@ -299,7 +299,8 @@
         "Wdac",
         "Adou",
         "Drtm",
-        "Hvci"
+        "Hvci",
+        "SEVSNP"
       ]
     },
     {
@@ -1825,6 +1826,15 @@
       ]
     },
     {
+<<<<<<< HEAD
+=======
+      "filename": "/sdk/virtualenclaves/**/*.cs",
+      "words": [
+        "mobo"
+      ]
+    },
+    {
+>>>>>>> 55d5a2fdb94afd7949d951566821912afaacc538
       "filename": "**/sdk/workloadorchestration/**/*.cs",
       "words": [
         "Inprogress",

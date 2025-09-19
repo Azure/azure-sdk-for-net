@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DisconnectedOperations.Models;
 using Azure.ResourceManager.Models;
+<<<<<<<< HEAD:sdk/disconnectedoperations/Azure.ResourceManager.DisconnectedOperations/src/Generated/DisconnectedOperationsImageData.cs
 
 namespace Azure.ResourceManager.DisconnectedOperations
 {
@@ -18,6 +19,17 @@ namespace Azure.ResourceManager.DisconnectedOperations
     /// Holds the release information of a disconnected operations image.
     /// </summary>
     public partial class DisconnectedOperationsImageData : ResourceData
+========
+using Azure.ResourceManager.WorkloadOrchestration.Models;
+
+namespace Azure.ResourceManager.WorkloadOrchestration
+{
+    /// <summary>
+    /// A class representing the EdgeSiteReference data model.
+    /// Site Reference Resource
+    /// </summary>
+    public partial class EdgeSiteReferenceData : ResourceData
+>>>>>>>> 55d5a2fdb94afd7949d951566821912afaacc538:sdk/workloadorchestration/Azure.ResourceManager.WorkloadOrchestration/src/Generated/EdgeSiteReferenceData.cs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +63,42 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+<<<<<<<< HEAD:sdk/disconnectedoperations/Azure.ResourceManager.DisconnectedOperations/src/Generated/DisconnectedOperationsImageData.cs
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsImageData"/>. </summary>
         internal DisconnectedOperationsImageData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsImageData"/>. </summary>
+========
+        /// <summary> Initializes a new instance of <see cref="EdgeSiteReferenceData"/>. </summary>
+        public EdgeSiteReferenceData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeSiteReferenceData"/>. </summary>
+>>>>>>>> 55d5a2fdb94afd7949d951566821912afaacc538:sdk/workloadorchestration/Azure.ResourceManager.WorkloadOrchestration/src/Generated/EdgeSiteReferenceData.cs
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<<< HEAD:sdk/disconnectedoperations/Azure.ResourceManager.DisconnectedOperations/src/Generated/DisconnectedOperationsImageData.cs
         internal DisconnectedOperationsImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DisconnectedOperationsImageProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+========
+        internal EdgeSiteReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EdgeSiteReferenceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+>>>>>>>> 55d5a2fdb94afd7949d951566821912afaacc538:sdk/workloadorchestration/Azure.ResourceManager.WorkloadOrchestration/src/Generated/EdgeSiteReferenceData.cs
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+<<<<<<<< HEAD:sdk/disconnectedoperations/Azure.ResourceManager.DisconnectedOperations/src/Generated/DisconnectedOperationsImageData.cs
         public DisconnectedOperationsImageProperties Properties { get; }
+========
+        public EdgeSiteReferenceProperties Properties { get; set; }
+>>>>>>>> 55d5a2fdb94afd7949d951566821912afaacc538:sdk/workloadorchestration/Azure.ResourceManager.WorkloadOrchestration/src/Generated/EdgeSiteReferenceData.cs
     }
 }

@@ -1159,6 +1159,9 @@
 # ServiceLabel: %SiteManager %Mgmt
 # ServiceOwners:                                                   @bsomeshekar
 
+# ServiceLabel: %Virtual Enclaves %Mgmt
+# ServiceOwners:                                                   @jchavaherrera
+
 # PRLabel: %Weights & Biases
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw
 

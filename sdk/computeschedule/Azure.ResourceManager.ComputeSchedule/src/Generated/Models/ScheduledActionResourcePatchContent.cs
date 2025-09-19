@@ -9,10 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+<<<<<<<< HEAD:sdk/computeschedule/Azure.ResourceManager.ComputeSchedule/src/Generated/Models/ScheduledActionResourcePatchContent.cs
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Request model perform a resource operation in a list of resources. </summary>
     public partial class ScheduledActionResourcePatchContent
+========
+namespace Azure.ResourceManager.WorkloadOrchestration.Models
+{
+    /// <summary> The response of a Schema list operation. </summary>
+    internal partial class SchemaListResult
+>>>>>>>> 55d5a2fdb94afd7949d951566821912afaacc538:sdk/workloadorchestration/Azure.ResourceManager.WorkloadOrchestration/src/Generated/Models/SchemaListResult.cs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,6 +53,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+<<<<<<<< HEAD:sdk/computeschedule/Azure.ResourceManager.ComputeSchedule/src/Generated/Models/ScheduledActionResourcePatchContent.cs
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourcePatchContent"/>. </summary>
         /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
@@ -72,5 +80,37 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> The list of resources we watch to patch. </summary>
         public IList<ScheduledActionResourceData> Resources { get; }
+========
+        /// <summary> Initializes a new instance of <see cref="SchemaListResult"/>. </summary>
+        /// <param name="value"> The Schema items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SchemaListResult(IEnumerable<EdgeSchemaData> value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SchemaListResult"/>. </summary>
+        /// <param name="value"> The Schema items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaListResult(IReadOnlyList<EdgeSchemaData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SchemaListResult"/> for deserialization. </summary>
+        internal SchemaListResult()
+        {
+        }
+
+        /// <summary> The Schema items on this page. </summary>
+        public IReadOnlyList<EdgeSchemaData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
+>>>>>>>> 55d5a2fdb94afd7949d951566821912afaacc538:sdk/workloadorchestration/Azure.ResourceManager.WorkloadOrchestration/src/Generated/Models/SchemaListResult.cs
     }
 }
