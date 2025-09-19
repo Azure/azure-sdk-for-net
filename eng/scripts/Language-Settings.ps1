@@ -64,27 +64,47 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp.IncludedForValidation = $false
     $pkgProp.DirectoryPath = ($pkgProp.DirectoryPath)
 
+    # Check if IsAotCompatible property is set in the csproj file
+    $isAotCompatible = $false
+    $csprojPath = Join-Path -Path $pkgProp.DirectoryPath -ChildPath "src\$pkgName.csproj"
+    if (Test-Path $csprojPath) {
+      try {
+        [xml]$csprojXml = Get-Content -Path $csprojPath
+        $aotCompatibleNodes = $csprojXml.SelectNodes("//IsAotCompatible")
+        foreach ($node in $aotCompatibleNodes) {
+          # Check if the value is true (regardless of condition)
+          $value = $node.InnerText
+          if ($value -eq "true") {
+            $isAotCompatible = $true
+            break
+          }
+        }
+      } catch {
+        Write-Verbose "Error reading csproj file $csprojPath for AOT compatibility check: $_"
+      }
+    }
+
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
     if ($ciProps) {
-      # CheckAOTCompat is opt _in_, so we should default to false if not specified
+      # see if the check is set in Ci.yml
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
       if ($null -ne $shouldAot) {
         $parsedBool = $null
         if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
           $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
         }
-
-        # when AOTCompat is true, there is an additional parameter we need to retrieve
-        $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
-        if ($aotArtifacts) {
-          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
-          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
-        }
       }
       else {
-        $pkgProp.CIParameters["CheckAOTCompat"] = $false
-        $pkgProp.CIParameters["AOTTestInputs"] = @()
+        # respect the ci file first, but if it is not specified, then we should check the project file
+        $pkgProp.CIParameters["CheckAOTCompat"] = $isAotCompatible
+      }
+
+      # when AOTCompat is true, there is an additional parameter we need to retrieve
+      $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
+      if ($aotArtifacts) {
+        $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
+        $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
       }
 
       # BuildSnippets is opt _out_, so we should default to true if not specified
