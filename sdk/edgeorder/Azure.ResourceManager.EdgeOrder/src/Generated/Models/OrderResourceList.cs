@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OrderResourceList"/>. </summary>
-        internal OrderResourceList()
+        /// <param name="value"> The OrderResource items on this page. </param>
+        internal OrderResourceList(IEnumerable<EdgeOrderData> value)
         {
-            Value = new ChangeTrackingList<EdgeOrderData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="OrderResourceList"/>. </summary>
-        /// <param name="value"> List of order resources. </param>
-        /// <param name="nextLink"> Link for the next set of order resources. </param>
+        /// <param name="value"> The OrderResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrderResourceList(IReadOnlyList<EdgeOrderData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OrderResourceList(IReadOnlyList<EdgeOrderData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of order resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderResourceList"/> for deserialization. </summary>
+        internal OrderResourceList()
+        {
+        }
+
+        /// <summary> The OrderResource items on this page. </summary>
         public IReadOnlyList<EdgeOrderData> Value { get; }
-        /// <summary> Link for the next set of order resources. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
