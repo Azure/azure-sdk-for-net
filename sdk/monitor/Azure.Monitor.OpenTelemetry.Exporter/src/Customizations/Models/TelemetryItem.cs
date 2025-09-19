@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags["ai.user.userAgent"] = userAgent;
             }
 
-            SetAuthenticatedUserId(ref activityTagsProcessor);
+            SetUserIdAndAuthenticatedUserId(ref activityTagsProcessor);
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
 
             if (sampleRate != 100f)
@@ -149,11 +149,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetAuthenticatedUserId(ref ActivityTagsProcessor activityTagsProcessor)
+        private void SetUserIdAndAuthenticatedUserId(ref ActivityTagsProcessor activityTagsProcessor)
         {
             if (activityTagsProcessor.EndUserId != null)
             {
                 Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = activityTagsProcessor.EndUserId.Truncate(SchemaConstants.Tags_AiUserAuthUserId_MaxLength);
+            }
+
+            if (activityTagsProcessor.EndUserPseudoId != null)
+            {
+                Tags[ContextTagKeys.AiUserId.ToString()] = activityTagsProcessor.EndUserPseudoId.Truncate(SchemaConstants.Tags_AiUserId_MaxLength);
             }
         }
     }

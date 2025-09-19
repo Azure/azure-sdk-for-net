@@ -4,6 +4,8 @@
 
 ### Features Added
 
+* Added mapping for `enduser.pseudo.id` attribute to `user_Id`
+
 ### Breaking Changes
 
 ### Bugs Fixed
