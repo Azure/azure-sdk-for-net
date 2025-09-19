@@ -66,6 +66,16 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("metricResourceId"u8);
                 writer.WriteStringValue(MetricResourceId.Value);
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsDefined(PlatformCapabilities))
+            {
+                writer.WritePropertyName("platformCapabilities"u8);
+                writer.WriteObjectValue(PlatformCapabilities, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -100,6 +110,8 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier source = default;
             string topicType = default;
             Guid? metricResourceId = default;
+            KeyEncryption encryption = default;
+            PlatformCapabilities platformCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,6 +209,24 @@ namespace Azure.ResourceManager.EventGrid
                             metricResourceId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = KeyEncryption.DeserializeKeyEncryption(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("platformCapabilities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            platformCapabilities = PlatformCapabilities.DeserializePlatformCapabilities(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -218,6 +248,8 @@ namespace Azure.ResourceManager.EventGrid
                 source,
                 topicType,
                 metricResourceId,
+                encryption,
+                platformCapabilities,
                 serializedAdditionalRawData);
         }
 
@@ -416,6 +448,48 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     builder.Append("    metricResourceId: ");
                     builder.AppendLine($"'{MetricResourceId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CustomerManagedKeyEncryption", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    encryption: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      encryption: {");
+                builder.Append("        customerManagedKeyEncryption: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Encryption))
+                {
+                    builder.Append("    encryption: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Encryption, options, 4, false, "    encryption: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ConfidentialComputeMode", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    platformCapabilities: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      platformCapabilities: {");
+                builder.AppendLine("        confidentialCompute: {");
+                builder.Append("          mode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("        }");
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PlatformCapabilities))
+                {
+                    builder.Append("    platformCapabilities: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PlatformCapabilities, options, 4, false, "    platformCapabilities: ");
                 }
             }
 
