@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -149,6 +150,217 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(
                 StorageChecksumAlgorithm.MD5,
                 TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task CreateFile_Data_SuccessfulHashComputation()
+        {
+            StorageChecksumAlgorithm algorithm = StorageChecksumAlgorithm.MD5;
+            await using IDisposingContainer<ShareClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(algorithm));
+            ShareClientOptions clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            ShareClient container = InstrumentClient(new ShareClient(disposingContainer.Container.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
+            ShareFileClient fileClient = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(GetNewResourceName()));
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
+            {
+                ShareFileCreateOptions options = new ShareFileCreateOptions
+                {
+                    Content = stream,
+                    TransferValidation = new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = algorithm
+                    }
+                };
+
+                await fileClient.CreateAsync(maxSize: Constants.KB, options: options);
+            }
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public virtual async Task CreateFile_Data_UsePrecalculatedHashSuccess()
+        {
+            StorageChecksumAlgorithm algorithm = StorageChecksumAlgorithm.MD5;
+            await using IDisposingContainer<ShareClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+            // checksum is expected
+            byte[] precalculatedChecksum = MD5.Create().ComputeHash(data);
+
+            // make pipeline assertion for checking precalculated checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(algorithm, expectedChecksum: precalculatedChecksum));
+            ShareClientOptions clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            ShareClient container = InstrumentClient(new ShareClient(disposingContainer.Container.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
+            ShareFileClient fileClient = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(GetNewResourceName()));
+
+            using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
+            {
+                ShareFileCreateOptions options = new ShareFileCreateOptions
+                {
+                    Content = stream,
+                    TransferValidation = new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = algorithm,
+                        PrecalculatedChecksum = precalculatedChecksum
+                    }
+                };
+
+                await fileClient.CreateAsync(maxSize: Constants.KB, options: options);
+            }
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public virtual async Task CreateFile_Data_UsePrecalculatedHashFail()
+        {
+            StorageChecksumAlgorithm algorithm = StorageChecksumAlgorithm.MD5;
+            await using IDisposingContainer<ShareClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+            // service throws different error for crc only when checksum size in incorrect; we don't want to test that
+            long checksumSizeBytes = 16;
+            // checksum needs to be wrong so we detect difference from auto-SDK correct calculation
+            byte[] precalculatedChecksum = GetRandomBuffer(checksumSizeBytes);
+
+            // make pipeline assertion for checking precalculated checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(algorithm, expectedChecksum: precalculatedChecksum));
+            ShareClientOptions clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            ShareClient container = InstrumentClient(new ShareClient(disposingContainer.Container.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
+            ShareFileClient fileClient = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(GetNewResourceName()));
+
+            using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
+            {
+                ShareFileCreateOptions options = new ShareFileCreateOptions
+                {
+                    Content = stream,
+                    TransferValidation = new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = algorithm,
+                        PrecalculatedChecksum = precalculatedChecksum
+                    }
+                };
+
+                // Act
+                AsyncTestDelegate operation = async () => await fileClient.CreateAsync(maxSize: Constants.KB, options: options);
+
+                // Assert
+                AssertWriteChecksumMismatch(operation, algorithm);
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public virtual async Task CreateFile_Data_MismatchedHashThrows()
+        {
+            StorageChecksumAlgorithm algorithm = StorageChecksumAlgorithm.MD5;
+            await using IDisposingContainer<ShareClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+
+            // Tamper with stream contents in the pipeline to simulate silent failure in the transit layer
+            var streamTamperPolicy = new TamperStreamContentsPolicy();
+            ShareClientOptions clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(streamTamperPolicy, HttpPipelinePosition.PerCall);
+
+            ShareClient container = InstrumentClient(new ShareClient(disposingContainer.Container.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
+            ShareFileClient fileClient = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(GetNewResourceName()));
+
+            using (var stream = new MemoryStream(data))
+            {
+                ShareFileCreateOptions options = new ShareFileCreateOptions
+                {
+                    Content = stream,
+                    TransferValidation = new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = algorithm
+                    }
+                };
+
+                // Act
+                streamTamperPolicy.TransformRequestBody = true;
+                AsyncTestDelegate operation = async () => await fileClient.CreateAsync(maxSize: Constants.KB, options: options);
+
+                // Assert
+                AssertWriteChecksumMismatch(operation, algorithm);
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public virtual async Task CreateFile_Data_DisablesDefaultClientValidationOptions()
+        {
+            await using IDisposingContainer<ShareClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+
+            // make pipeline assertion for checking checksum was not present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: request =>
+            {
+                if (request.Headers.Contains("Content-MD5"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+                if (request.Headers.Contains("x-ms-content-crc64"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+            });
+            ShareClientOptions clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            ShareClient container = InstrumentClient(new ShareClient(disposingContainer.Container.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
+            ShareFileClient fileClient = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(GetNewResourceName()));
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
+            {
+                ShareFileCreateOptions options = new ShareFileCreateOptions
+                {
+                    Content = stream,
+                    TransferValidation = new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.None // disable
+                    }
+                };
+
+                await fileClient.CreateAsync(maxSize: Constants.KB, options: options);
+            }
+
+            // Assert
+            // Assertion was in the pipeline
         }
     }
 }
