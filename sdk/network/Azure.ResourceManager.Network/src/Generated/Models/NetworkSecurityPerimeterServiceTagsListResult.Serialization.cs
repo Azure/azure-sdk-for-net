@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkSecurityPerimeterServiceTagsResource> value = default;
+            IReadOnlyList<NetworkSecurityPerimeterServiceTags> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeterServiceTagsResource> array = new List<NetworkSecurityPerimeterServiceTagsResource>();
+                    List<NetworkSecurityPerimeterServiceTags> array = new List<NetworkSecurityPerimeterServiceTags>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterServiceTagsResource.DeserializeNetworkSecurityPerimeterServiceTagsResource(item, options));
+                        array.Add(NetworkSecurityPerimeterServiceTags.DeserializeNetworkSecurityPerimeterServiceTags(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkSecurityPerimeterServiceTagsListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterServiceTagsResource>(), nextLink, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterServiceTagsListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterServiceTags>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

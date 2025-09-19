@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network.Samples
             AzureFirewallResource azureFirewall = client.GetAzureFirewallResource(azureFirewallResourceId);
 
             // invoke the operation
-            FirewallPacketCaptureRequestParameters firewallPacketCaptureRequestParameters = new FirewallPacketCaptureRequestParameters
+            FirewallPacketCaptureRequestContent content = new FirewallPacketCaptureRequestContent
             {
                 DurationInSeconds = 300,
                 NumberOfPacketsToCapture = 5000,
@@ -305,7 +305,7 @@ Destinations = {"10.1.2.0"},
 DestinationPorts = {"123", "80"},
 }},
             };
-            await azureFirewall.PacketCaptureAsync(WaitUntil.Completed, firewallPacketCaptureRequestParameters);
+            await azureFirewall.PacketCaptureAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }
@@ -331,7 +331,7 @@ DestinationPorts = {"123", "80"},
             AzureFirewallResource azureFirewall = client.GetAzureFirewallResource(azureFirewallResourceId);
 
             // invoke the operation
-            FirewallPacketCaptureRequestParameters firewallPacketCaptureRequestParameters = new FirewallPacketCaptureRequestParameters
+            FirewallPacketCaptureRequestContent content = new FirewallPacketCaptureRequestContent
             {
                 DurationInSeconds = 300,
                 NumberOfPacketsToCapture = 5000,
@@ -358,8 +358,8 @@ DestinationPorts = {"123", "80"},
 }},
                 Operation = AzureFirewallPacketCaptureOperationType.Status,
             };
-            ArmOperation<AzureFirewallPacketCaptureResponse> lro = await azureFirewall.PacketCaptureOperationAsync(WaitUntil.Completed, firewallPacketCaptureRequestParameters);
-            AzureFirewallPacketCaptureResponse result = lro.Value;
+            ArmOperation<AzureFirewallPacketCaptureResult> lro = await azureFirewall.PacketCaptureOperationAsync(WaitUntil.Completed, content);
+            AzureFirewallPacketCaptureResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

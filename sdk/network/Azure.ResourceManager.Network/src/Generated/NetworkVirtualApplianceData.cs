@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
         /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
         /// <param name="privateIPAddress"> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </param>
-        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<WritableSubResource> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, string privateIPAddress) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<WritableSubResource> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, IPAddress privateIPAddress) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Identity = identity;
             ETag = etag;
@@ -182,6 +183,6 @@ namespace Azure.ResourceManager.Network
         public IList<NvaInterfaceConfigurationsProperties> NvaInterfaceConfigurations { get; }
         /// <summary> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </summary>
         [WirePath("properties.privateIpAddress")]
-        public string PrivateIPAddress { get; }
+        public IPAddress PrivateIPAddress { get; }
     }
 }

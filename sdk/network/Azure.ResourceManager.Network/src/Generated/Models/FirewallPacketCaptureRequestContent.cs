@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Azure Firewall Packet Capture Parameters. </summary>
-    public partial class FirewallPacketCaptureRequestParameters
+    public partial class FirewallPacketCaptureRequestContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureRequestParameters"/>. </summary>
-        public FirewallPacketCaptureRequestParameters()
+        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureRequestContent"/>. </summary>
+        public FirewallPacketCaptureRequestContent()
         {
             Flags = new ChangeTrackingList<AzureFirewallPacketCaptureFlags>();
             Filters = new ChangeTrackingList<AzureFirewallPacketCaptureRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureRequestParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureRequestContent"/>. </summary>
         /// <param name="durationInSeconds"> Duration of packet capture in seconds. If the field is not provided, the default value is 60. </param>
         /// <param name="numberOfPacketsToCapture"> Number of packets to be captured. If the field is not provided, the default value is 1000. </param>
         /// <param name="sasUri"> Upload capture location. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="filters"> Rules to filter packet captures. </param>
         /// <param name="operation"> The Azure Firewall packet capture operation to perform. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPacketCaptureRequestParameters(int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters, AzureFirewallPacketCaptureOperationType? operation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirewallPacketCaptureRequestContent(int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters, AzureFirewallPacketCaptureOperationType? operation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DurationInSeconds = durationInSeconds;
             NumberOfPacketsToCapture = numberOfPacketsToCapture;

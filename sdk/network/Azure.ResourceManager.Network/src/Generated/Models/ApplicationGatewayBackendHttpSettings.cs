@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="affinityCookieName"> Cookie name to use for the affinity cookie. </param>
         /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
         /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
-        /// <param name="dedicatedBackendConnection"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
-        /// <param name="validateCertChainAndExpiry"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
-        /// <param name="validateSNI"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
+        /// <param name="isDedicatedBackendConnectionEnabled"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
+        /// <param name="isValidateCertChainAndExpiryEnabled"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
+        /// <param name="isValidateSniEnabled"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
         /// <param name="sniName"> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, bool? dedicatedBackendConnection, bool? validateCertChainAndExpiry, bool? validateSNI, string sniName, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, bool? isDedicatedBackendConnectionEnabled, bool? isValidateCertChainAndExpiryEnabled, bool? isValidateSniEnabled, string sniName, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Port = port;
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Network.Models
             AffinityCookieName = affinityCookieName;
             ProbeEnabled = probeEnabled;
             Path = path;
-            DedicatedBackendConnection = dedicatedBackendConnection;
-            ValidateCertChainAndExpiry = validateCertChainAndExpiry;
-            ValidateSNI = validateSNI;
+            IsDedicatedBackendConnectionEnabled = isDedicatedBackendConnectionEnabled;
+            IsValidateCertChainAndExpiryEnabled = isValidateCertChainAndExpiryEnabled;
+            IsValidateSniEnabled = isValidateSniEnabled;
             SniName = sniName;
             ProvisioningState = provisioningState;
         }
@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.Network.Models
         public string Path { get; set; }
         /// <summary> Enable or disable dedicated connection per backend server. Default is set to false. </summary>
         [WirePath("properties.dedicatedBackendConnection")]
-        public bool? DedicatedBackendConnection { get; set; }
+        public bool? IsDedicatedBackendConnectionEnabled { get; set; }
         /// <summary> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </summary>
         [WirePath("properties.validateCertChainAndExpiry")]
-        public bool? ValidateCertChainAndExpiry { get; set; }
+        public bool? IsValidateCertChainAndExpiryEnabled { get; set; }
         /// <summary> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </summary>
         [WirePath("properties.validateSNI")]
-        public bool? ValidateSNI { get; set; }
+        public bool? IsValidateSniEnabled { get; set; }
         /// <summary> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </summary>
         [WirePath("properties.sniName")]
         public string SniName { get; set; }

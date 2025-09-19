@@ -120,20 +120,20 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(DedicatedBackendConnection))
+            if (Optional.IsDefined(IsDedicatedBackendConnectionEnabled))
             {
                 writer.WritePropertyName("dedicatedBackendConnection"u8);
-                writer.WriteBooleanValue(DedicatedBackendConnection.Value);
+                writer.WriteBooleanValue(IsDedicatedBackendConnectionEnabled.Value);
             }
-            if (Optional.IsDefined(ValidateCertChainAndExpiry))
+            if (Optional.IsDefined(IsValidateCertChainAndExpiryEnabled))
             {
                 writer.WritePropertyName("validateCertChainAndExpiry"u8);
-                writer.WriteBooleanValue(ValidateCertChainAndExpiry.Value);
+                writer.WriteBooleanValue(IsValidateCertChainAndExpiryEnabled.Value);
             }
-            if (Optional.IsDefined(ValidateSNI))
+            if (Optional.IsDefined(IsValidateSniEnabled))
             {
                 writer.WritePropertyName("validateSNI"u8);
-                writer.WriteBooleanValue(ValidateSNI.Value);
+                writer.WriteBooleanValue(IsValidateSniEnabled.Value);
             }
             if (Optional.IsDefined(SniName))
             {
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DedicatedBackendConnection), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDedicatedBackendConnectionEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    dedicatedBackendConnection: ");
@@ -742,15 +742,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             else
             {
-                if (Optional.IsDefined(DedicatedBackendConnection))
+                if (Optional.IsDefined(IsDedicatedBackendConnectionEnabled))
                 {
                     builder.Append("    dedicatedBackendConnection: ");
-                    var boolValue = DedicatedBackendConnection.Value == true ? "true" : "false";
+                    var boolValue = IsDedicatedBackendConnectionEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateCertChainAndExpiry), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidateCertChainAndExpiryEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    validateCertChainAndExpiry: ");
@@ -758,15 +758,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             else
             {
-                if (Optional.IsDefined(ValidateCertChainAndExpiry))
+                if (Optional.IsDefined(IsValidateCertChainAndExpiryEnabled))
                 {
                     builder.Append("    validateCertChainAndExpiry: ");
-                    var boolValue = ValidateCertChainAndExpiry.Value == true ? "true" : "false";
+                    var boolValue = IsValidateCertChainAndExpiryEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateSNI), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidateSniEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    validateSNI: ");
@@ -774,10 +774,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             else
             {
-                if (Optional.IsDefined(ValidateSNI))
+                if (Optional.IsDefined(IsValidateSniEnabled))
                 {
                     builder.Append("    validateSNI: ");
-                    var boolValue = ValidateSNI.Value == true ? "true" : "false";
+                    var boolValue = IsValidateSniEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

@@ -10332,8 +10332,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of network security perimeter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkSecurityPerimeterServiceTagsResource> GetNetworkSecurityPerimeterServiceTagsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTagsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -10365,8 +10365,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of network security perimeter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkSecurityPerimeterServiceTagsResource> GetNetworkSecurityPerimeterServiceTags(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTags(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

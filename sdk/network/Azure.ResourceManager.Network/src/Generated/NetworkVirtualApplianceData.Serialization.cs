@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             writer.WriteEndObject();
         }
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.Network
             VirtualApplianceDelegationProperties delegation = default;
             PartnerManagedResourceProperties partnerManagedResource = default;
             IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default;
-            string privateIPAddress = default;
+            IPAddress privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -541,7 +542,11 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("privateIpAddress"u8))
                         {
-                            privateIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -1169,15 +1174,7 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(PrivateIPAddress))
                 {
                     builder.Append("    privateIpAddress: ");
-                    if (PrivateIPAddress.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrivateIPAddress}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrivateIPAddress}'");
-                    }
+                    builder.AppendLine($"'{PrivateIPAddress.ToString()}'");
                 }
             }
 

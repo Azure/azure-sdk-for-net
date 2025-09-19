@@ -1594,13 +1594,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="affinityCookieName"> Cookie name to use for the affinity cookie. </param>
         /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
         /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
-        /// <param name="dedicatedBackendConnection"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
-        /// <param name="validateCertChainAndExpiry"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
-        /// <param name="validateSNI"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
+        /// <param name="isDedicatedBackendConnectionEnabled"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
+        /// <param name="isValidateCertChainAndExpiryEnabled"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
+        /// <param name="isValidateSniEnabled"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
         /// <param name="sniName"> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayBackendHttpSettings"/> instance for mocking. </returns>
-        public static ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, ApplicationGatewayProtocol? protocol = null, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = null, int? requestTimeoutInSeconds = null, ResourceIdentifier probeId = null, IEnumerable<WritableSubResource> authenticationCertificates = null, IEnumerable<WritableSubResource> trustedRootCertificates = null, ApplicationGatewayConnectionDraining connectionDraining = null, string hostName = null, bool? pickHostNameFromBackendAddress = null, string affinityCookieName = null, bool? probeEnabled = null, string path = null, bool? dedicatedBackendConnection = null, bool? validateCertChainAndExpiry = null, bool? validateSNI = null, string sniName = null, NetworkProvisioningState? provisioningState = null)
+        public static ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, ApplicationGatewayProtocol? protocol = null, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = null, int? requestTimeoutInSeconds = null, ResourceIdentifier probeId = null, IEnumerable<WritableSubResource> authenticationCertificates = null, IEnumerable<WritableSubResource> trustedRootCertificates = null, ApplicationGatewayConnectionDraining connectionDraining = null, string hostName = null, bool? pickHostNameFromBackendAddress = null, string affinityCookieName = null, bool? probeEnabled = null, string path = null, bool? isDedicatedBackendConnectionEnabled = null, bool? isValidateCertChainAndExpiryEnabled = null, bool? isValidateSniEnabled = null, string sniName = null, NetworkProvisioningState? provisioningState = null)
         {
             authenticationCertificates ??= new List<WritableSubResource>();
             trustedRootCertificates ??= new List<WritableSubResource>();
@@ -1624,9 +1624,9 @@ namespace Azure.ResourceManager.Network.Models
                 affinityCookieName,
                 probeEnabled,
                 path,
-                dedicatedBackendConnection,
-                validateCertChainAndExpiry,
-                validateSNI,
+                isDedicatedBackendConnectionEnabled,
+                isValidateCertChainAndExpiryEnabled,
+                isValidateSniEnabled,
                 sniName,
                 provisioningState);
         }
@@ -2495,13 +2495,13 @@ namespace Azure.ResourceManager.Network.Models
             return new LearnedIPPrefixesListResult(ipPrefixes?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AzureFirewallPacketCaptureResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureFirewallPacketCaptureResult"/>. </summary>
         /// <param name="statusCode"> The response code of the performed packet capture operation. </param>
         /// <param name="message"> Localized Message String of The Result Of The Azure Firewall Packet Capture Operation. </param>
-        /// <returns> A new <see cref="Models.AzureFirewallPacketCaptureResponse"/> instance for mocking. </returns>
-        public static AzureFirewallPacketCaptureResponse AzureFirewallPacketCaptureResponse(AzureFirewallPacketCaptureResponseCode? statusCode = null, string message = null)
+        /// <returns> A new <see cref="Models.AzureFirewallPacketCaptureResult"/> instance for mocking. </returns>
+        public static AzureFirewallPacketCaptureResult AzureFirewallPacketCaptureResult(AzureFirewallPacketCaptureResultCode? statusCode = null, string message = null)
         {
-            return new AzureFirewallPacketCaptureResponse(statusCode, message, serializedAdditionalRawData: null);
+            return new AzureFirewallPacketCaptureResult(statusCode, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureFirewallFqdnTag"/>. </summary>
@@ -5316,14 +5316,14 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterServiceTagsResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterServiceTags"/>. </summary>
         /// <param name="serviceTags"> NSP service tags. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterServiceTagsResource"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterServiceTagsResource NetworkSecurityPerimeterServiceTagsResource(IEnumerable<string> serviceTags = null)
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterServiceTags"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterServiceTags NetworkSecurityPerimeterServiceTags(IEnumerable<string> serviceTags = null)
         {
             serviceTags ??= new List<string>();
 
-            return new NetworkSecurityPerimeterServiceTagsResource(serviceTags?.ToList(), serializedAdditionalRawData: null);
+            return new NetworkSecurityPerimeterServiceTags(serviceTags?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.ReachabilityAnalysisIntentData"/>. </summary>
@@ -5449,7 +5449,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
         /// <param name="privateIPAddress"> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </param>
         /// <returns> A new <see cref="Network.NetworkVirtualApplianceData"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, ETag? etag = null, VirtualApplianceSkuProperties nvaSku = null, string addressPrefix = null, IEnumerable<string> bootStrapConfigurationBlobs = null, ResourceIdentifier virtualHubId = null, IEnumerable<string> cloudInitConfigurationBlobs = null, string cloudInitConfiguration = null, long? virtualApplianceAsn = null, string sshPublicKey = null, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics = null, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = null, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics = null, IEnumerable<WritableSubResource> internetIngressPublicIPs = null, IEnumerable<WritableSubResource> virtualApplianceSites = null, IEnumerable<WritableSubResource> virtualApplianceConnections = null, IEnumerable<WritableSubResource> inboundSecurityRules = null, NetworkProvisioningState? provisioningState = null, string deploymentType = null, VirtualApplianceDelegationProperties delegation = null, PartnerManagedResourceProperties partnerManagedResource = null, IEnumerable<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = null, string privateIPAddress = null)
+        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, ETag? etag = null, VirtualApplianceSkuProperties nvaSku = null, string addressPrefix = null, IEnumerable<string> bootStrapConfigurationBlobs = null, ResourceIdentifier virtualHubId = null, IEnumerable<string> cloudInitConfigurationBlobs = null, string cloudInitConfiguration = null, long? virtualApplianceAsn = null, string sshPublicKey = null, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics = null, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = null, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics = null, IEnumerable<WritableSubResource> internetIngressPublicIPs = null, IEnumerable<WritableSubResource> virtualApplianceSites = null, IEnumerable<WritableSubResource> virtualApplianceConnections = null, IEnumerable<WritableSubResource> inboundSecurityRules = null, NetworkProvisioningState? provisioningState = null, string deploymentType = null, VirtualApplianceDelegationProperties delegation = null, PartnerManagedResourceProperties partnerManagedResource = null, IEnumerable<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = null, IPAddress privateIPAddress = null)
         {
             tags ??= new Dictionary<string, string>();
             bootStrapConfigurationBlobs ??= new List<string>();
@@ -9164,7 +9164,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, ResourceIdentifier probeId, IEnumerable<WritableSubResource> authenticationCertificates, IEnumerable<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, NetworkProvisioningState? provisioningState)
         {
-            return ApplicationGatewayBackendHttpSettings(id: id, name: name, resourceType: resourceType, etag: etag, port: port, protocol: protocol, cookieBasedAffinity: cookieBasedAffinity, requestTimeoutInSeconds: requestTimeoutInSeconds, probeId: probeId, authenticationCertificates: authenticationCertificates, trustedRootCertificates: trustedRootCertificates, connectionDraining: connectionDraining, hostName: hostName, pickHostNameFromBackendAddress: pickHostNameFromBackendAddress, affinityCookieName: affinityCookieName, probeEnabled: probeEnabled, path: path, dedicatedBackendConnection: default, validateCertChainAndExpiry: default, validateSNI: default, sniName: default, provisioningState: provisioningState);
+            return ApplicationGatewayBackendHttpSettings(id: id, name: name, resourceType: resourceType, etag: etag, port: port, protocol: protocol, cookieBasedAffinity: cookieBasedAffinity, requestTimeoutInSeconds: requestTimeoutInSeconds, probeId: probeId, authenticationCertificates: authenticationCertificates, trustedRootCertificates: trustedRootCertificates, connectionDraining: connectionDraining, hostName: hostName, pickHostNameFromBackendAddress: pickHostNameFromBackendAddress, affinityCookieName: affinityCookieName, probeEnabled: probeEnabled, path: path, isDedicatedBackendConnectionEnabled: default, isValidateCertChainAndExpiryEnabled: default, isValidateSniEnabled: default, sniName: default, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.AzureFirewallData" />. </summary>

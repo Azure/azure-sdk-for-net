@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkSecurityPerimeterServiceTagsResource : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterServiceTagsResource>
+    public partial class NetworkSecurityPerimeterServiceTags : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterServiceTags>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterServiceTagsResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterServiceTags>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetworkSecurityPerimeterServiceTagsResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeterServiceTags>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterServiceTagsResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterServiceTags>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterServiceTagsResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterServiceTags)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(ServiceTags))
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        NetworkSecurityPerimeterServiceTagsResource IJsonModel<NetworkSecurityPerimeterServiceTagsResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterServiceTags IJsonModel<NetworkSecurityPerimeterServiceTags>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterServiceTagsResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterServiceTags>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterServiceTagsResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterServiceTags)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkSecurityPerimeterServiceTagsResource(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeterServiceTags(document.RootElement, options);
         }
 
-        internal static NetworkSecurityPerimeterServiceTagsResource DeserializeNetworkSecurityPerimeterServiceTagsResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityPerimeterServiceTags DeserializeNetworkSecurityPerimeterServiceTags(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkSecurityPerimeterServiceTagsResource(serviceTags ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterServiceTags(serviceTags ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Network.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NetworkSecurityPerimeterServiceTagsResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityPerimeterServiceTags>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterServiceTagsResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterServiceTags>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -173,26 +173,26 @@ namespace Azure.ResourceManager.Network.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterServiceTagsResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterServiceTags)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetworkSecurityPerimeterServiceTagsResource IPersistableModel<NetworkSecurityPerimeterServiceTagsResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterServiceTags IPersistableModel<NetworkSecurityPerimeterServiceTags>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterServiceTagsResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterServiceTags>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkSecurityPerimeterServiceTagsResource(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeterServiceTags(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterServiceTagsResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterServiceTags)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkSecurityPerimeterServiceTagsResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeterServiceTags>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

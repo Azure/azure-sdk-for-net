@@ -2854,12 +2854,12 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location of network security perimeter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterServiceTagsResource> GetNetworkSecurityPerimeterServiceTagsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTagsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterServiceTagsRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterServiceTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterServiceTagsResource.DeserializeNetworkSecurityPerimeterServiceTagsResource(e), NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterServiceTags.DeserializeNetworkSecurityPerimeterServiceTags(e), NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2881,12 +2881,12 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location of network security perimeter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterServiceTagsResource> GetNetworkSecurityPerimeterServiceTags(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTags(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterServiceTagsRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterServiceTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterServiceTagsResource.DeserializeNetworkSecurityPerimeterServiceTagsResource(e), NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterServiceTags.DeserializeNetworkSecurityPerimeterServiceTags(e), NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

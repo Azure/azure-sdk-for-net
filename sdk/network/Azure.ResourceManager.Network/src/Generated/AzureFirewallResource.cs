@@ -452,19 +452,19 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="firewallPacketCaptureRequestParameters"> Parameters supplied to run packet capture on azure firewall. </param>
+        /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallPacketCaptureRequestParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation> PacketCaptureAsync(WaitUntil waitUntil, FirewallPacketCaptureRequestParameters firewallPacketCaptureRequestParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> PacketCaptureAsync(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(firewallPacketCaptureRequestParameters, nameof(firewallPacketCaptureRequestParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallResource.PacketCapture");
             scope.Start();
             try
             {
-                var response = await _azureFirewallRestClient.PacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallPacketCaptureRequestParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreatePacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallPacketCaptureRequestParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _azureFirewallRestClient.PacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(_azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreatePacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -498,19 +498,19 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="firewallPacketCaptureRequestParameters"> Parameters supplied to run packet capture on azure firewall. </param>
+        /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallPacketCaptureRequestParameters"/> is null. </exception>
-        public virtual ArmOperation PacketCapture(WaitUntil waitUntil, FirewallPacketCaptureRequestParameters firewallPacketCaptureRequestParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation PacketCapture(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(firewallPacketCaptureRequestParameters, nameof(firewallPacketCaptureRequestParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallResource.PacketCapture");
             scope.Start();
             try
             {
-                var response = _azureFirewallRestClient.PacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallPacketCaptureRequestParameters, cancellationToken);
-                var operation = new NetworkArmOperation(_azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreatePacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallPacketCaptureRequestParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _azureFirewallRestClient.PacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkArmOperation(_azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreatePacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -544,19 +544,19 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="firewallPacketCaptureRequestParameters"> Parameters supplied to run packet capture on azure firewall. </param>
+        /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallPacketCaptureRequestParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<AzureFirewallPacketCaptureResponse>> PacketCaptureOperationAsync(WaitUntil waitUntil, FirewallPacketCaptureRequestParameters firewallPacketCaptureRequestParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<AzureFirewallPacketCaptureResult>> PacketCaptureOperationAsync(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(firewallPacketCaptureRequestParameters, nameof(firewallPacketCaptureRequestParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallResource.PacketCaptureOperation");
             scope.Start();
             try
             {
-                var response = await _azureFirewallRestClient.PacketCaptureOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallPacketCaptureRequestParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<AzureFirewallPacketCaptureResponse>(new AzureFirewallPacketCaptureResponseOperationSource(), _azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreatePacketCaptureOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallPacketCaptureRequestParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _azureFirewallRestClient.PacketCaptureOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<AzureFirewallPacketCaptureResult>(new AzureFirewallPacketCaptureResultOperationSource(), _azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreatePacketCaptureOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -590,19 +590,19 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="firewallPacketCaptureRequestParameters"> Parameters supplied to run packet capture on azure firewall. </param>
+        /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallPacketCaptureRequestParameters"/> is null. </exception>
-        public virtual ArmOperation<AzureFirewallPacketCaptureResponse> PacketCaptureOperation(WaitUntil waitUntil, FirewallPacketCaptureRequestParameters firewallPacketCaptureRequestParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<AzureFirewallPacketCaptureResult> PacketCaptureOperation(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(firewallPacketCaptureRequestParameters, nameof(firewallPacketCaptureRequestParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallResource.PacketCaptureOperation");
             scope.Start();
             try
             {
-                var response = _azureFirewallRestClient.PacketCaptureOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallPacketCaptureRequestParameters, cancellationToken);
-                var operation = new NetworkArmOperation<AzureFirewallPacketCaptureResponse>(new AzureFirewallPacketCaptureResponseOperationSource(), _azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreatePacketCaptureOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallPacketCaptureRequestParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _azureFirewallRestClient.PacketCaptureOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkArmOperation<AzureFirewallPacketCaptureResult>(new AzureFirewallPacketCaptureResultOperationSource(), _azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreatePacketCaptureOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

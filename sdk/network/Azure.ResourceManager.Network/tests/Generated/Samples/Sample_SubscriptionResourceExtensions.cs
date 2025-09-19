@@ -1070,7 +1070,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westus");
-            await foreach (NetworkSecurityPerimeterServiceTagsResource item in subscriptionResource.GetNetworkSecurityPerimeterServiceTagsAsync(location))
+            await foreach (NetworkSecurityPerimeterServiceTags item in subscriptionResource.GetNetworkSecurityPerimeterServiceTagsAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Resource containing list of NSP service tags. </summary>
-    public partial class NetworkSecurityPerimeterServiceTagsResource
+    /// <summary> Response of an Azure Firewall Packet Capture Operation. </summary>
+    public partial class AzureFirewallPacketCaptureResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,23 +45,27 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterServiceTagsResource"/>. </summary>
-        internal NetworkSecurityPerimeterServiceTagsResource()
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureResult"/>. </summary>
+        internal AzureFirewallPacketCaptureResult()
         {
-            ServiceTags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterServiceTagsResource"/>. </summary>
-        /// <param name="serviceTags"> NSP service tags. </param>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureResult"/>. </summary>
+        /// <param name="statusCode"> The response code of the performed packet capture operation. </param>
+        /// <param name="message"> Localized Message String of The Result Of The Azure Firewall Packet Capture Operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterServiceTagsResource(IReadOnlyList<string> serviceTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureFirewallPacketCaptureResult(AzureFirewallPacketCaptureResultCode? statusCode, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ServiceTags = serviceTags;
+            StatusCode = statusCode;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> NSP service tags. </summary>
-        [WirePath("serviceTags")]
-        public IReadOnlyList<string> ServiceTags { get; }
+        /// <summary> The response code of the performed packet capture operation. </summary>
+        [WirePath("statusCode")]
+        public AzureFirewallPacketCaptureResultCode? StatusCode { get; }
+        /// <summary> Localized Message String of The Result Of The Azure Firewall Packet Capture Operation. </summary>
+        [WirePath("message")]
+        public string Message { get; }
     }
 }
