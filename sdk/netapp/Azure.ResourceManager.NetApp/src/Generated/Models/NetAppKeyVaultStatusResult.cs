@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Result of getKeyVaultStatus with information about how volumes under NetApp account are encrypted. </summary>
+    /// <summary>
+    /// Result of getKeyVaultStatus with information about how volumes under NetApp account are encrypted.
+    /// Serialized Name: GetKeyVaultStatusResponse
+    /// </summary>
     public partial class NetAppKeyVaultStatusResult
     {
         /// <summary>
@@ -53,10 +56,22 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultStatusResult"/>. </summary>
-        /// <param name="keyVaultUri"> The URI of the key vault/managed HSM that should be used for encryption. </param>
-        /// <param name="keyName"> The name of the key that should be used for encryption. </param>
-        /// <param name="keyVaultResourceId"> Azure resource ID of the key vault/managed HSM that should be used for encryption. </param>
-        /// <param name="keyVaultPrivateEndpoints"> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </param>
+        /// <param name="keyVaultUri">
+        /// The URI of the key vault/managed HSM that should be used for encryption.
+        /// Serialized Name: GetKeyVaultStatusResponse.properties.keyVaultUri
+        /// </param>
+        /// <param name="keyName">
+        /// The name of the key that should be used for encryption.
+        /// Serialized Name: GetKeyVaultStatusResponse.properties.keyName
+        /// </param>
+        /// <param name="keyVaultResourceId">
+        /// Azure resource ID of the key vault/managed HSM that should be used for encryption.
+        /// Serialized Name: GetKeyVaultStatusResponse.properties.keyVaultResourceId
+        /// </param>
+        /// <param name="keyVaultPrivateEndpoints">
+        /// Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint.
+        /// Serialized Name: GetKeyVaultStatusResponse.properties.keyVaultPrivateEndpoints
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppKeyVaultStatusResult(Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, IReadOnlyList<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,13 +82,25 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The URI of the key vault/managed HSM that should be used for encryption. </summary>
+        /// <summary>
+        /// The URI of the key vault/managed HSM that should be used for encryption.
+        /// Serialized Name: GetKeyVaultStatusResponse.properties.keyVaultUri
+        /// </summary>
         public Uri KeyVaultUri { get; }
-        /// <summary> The name of the key that should be used for encryption. </summary>
+        /// <summary>
+        /// The name of the key that should be used for encryption.
+        /// Serialized Name: GetKeyVaultStatusResponse.properties.keyName
+        /// </summary>
         public string KeyName { get; }
-        /// <summary> Azure resource ID of the key vault/managed HSM that should be used for encryption. </summary>
+        /// <summary>
+        /// Azure resource ID of the key vault/managed HSM that should be used for encryption.
+        /// Serialized Name: GetKeyVaultStatusResponse.properties.keyVaultResourceId
+        /// </summary>
         public ResourceIdentifier KeyVaultResourceId { get; }
-        /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
+        /// <summary>
+        /// Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint.
+        /// Serialized Name: GetKeyVaultStatusResponse.properties.keyVaultPrivateEndpoints
+        /// </summary>
         public IReadOnlyList<NetAppKeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints { get; }
     }
 }

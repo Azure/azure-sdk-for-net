@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Subvolumes. </summary>
+    /// <summary>
+    /// List of Subvolumes
+    /// Serialized Name: SubvolumesList
+    /// </summary>
     internal partial class SubvolumesList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubvolumesList"/>. </summary>
-        /// <param name="value"> A list of Subvolumes. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of Subvolumes
+        /// Serialized Name: SubvolumesList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of results.
+        /// Serialized Name: SubvolumesList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubvolumesList(IReadOnlyList<NetAppSubvolumeInfoData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of Subvolumes. </summary>
+        /// <summary>
+        /// A list of Subvolumes
+        /// Serialized Name: SubvolumesList.value
+        /// </summary>
         public IReadOnlyList<NetAppSubvolumeInfoData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
+        /// <summary>
+        /// URL to get the next set of results.
+        /// Serialized Name: SubvolumesList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
