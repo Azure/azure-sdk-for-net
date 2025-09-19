@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/e09cd33f2f497a30aff4d6ca706e4fd01cbb384d/specification/network/resource-manager/readme.md
-#tag: package-2024-07-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/cbfe154470792d8aea255885a4a96609603982cc/specification/network/resource-manager/readme.md
+#tag: package-2024-10-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -54,7 +54,10 @@ rename-mapping:
   AdminState: ExpressRouteGatewayAdminState
   ApplicationGateway.zones: AvailabilityZones
   ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
+  ApplicationGatewayBackendHttpSettings.properties.dedicatedBackendConnection: IsDedicatedBackendConnectionEnabled
   ApplicationGatewayBackendHttpSettings.properties.requestTimeout: RequestTimeoutInSeconds
+  ApplicationGatewayBackendHttpSettings.properties.validateCertChainAndExpiry: IsValidateCertChainAndExpiryEnabled
+  ApplicationGatewayBackendHttpSettings.properties.validateSNI: IsValidateSniEnabled
   ApplicationGatewayBackendSettings.properties.timeout: TimeoutInSeconds
   ApplicationGatewayConnectionDraining.drainTimeoutInSec: DrainTimeoutInSeconds
   ApplicationGatewayPrivateEndpointConnection.properties.privateLinkServiceConnectionState: connectionState
@@ -69,6 +72,8 @@ rename-mapping:
   AzureFirewallApplicationRuleCollection: AzureFirewallApplicationRuleCollectionData
   AzureFirewallNatRuleCollection: AzureFirewallNatRuleCollectionData
   AzureFirewallNetworkRuleCollection: AzureFirewallNetworkRuleCollectionData
+  AzureFirewallPacketCaptureResponse: AzureFirewallPacketCaptureResult
+  AzureFirewallPacketCaptureResponseCode: AzureFirewallPacketCaptureResultCode
   ConfigurationGroup: NetworkConfigurationGroup
   ConfigurationType: NetworkConfigurationDeploymentType
   ConnectionMonitor: ConnectionMonitorInput
@@ -99,7 +104,7 @@ rename-mapping:
   ExplicitProxy: FirewallPolicyExplicitProxy
   ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
   FilterItems: IdpsQueryFilterItems
-  FirewallPacketCaptureParameters: FirewallPacketCaptureRequestParameters   # To workaround breaking change in FirewallPacketCaptureParameters, we have to keep the old codes and rename it
+  FirewallPacketCaptureParameters: FirewallPacketCaptureRequestContent
   FirewallPolicyFilterRuleCollection: FirewallPolicyFilterRuleCollectionInfo
   FirewallPolicyNatRuleCollection: FirewallPolicyNatRuleCollectionInfo
   FirewallPolicyRuleCollection: FirewallPolicyRuleCollectionInfo
@@ -138,10 +143,12 @@ rename-mapping:
   LoadBalancerHealthPerRulePerBackendAddress.networkInterfaceIPConfigurationId: NetworkInterfaceIPConfigurationResourceId|arm-id
   LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
   MigratedPools: MigrateLoadBalancerToIPBasedResult
+  NspServiceTagsResource: NetworkSecurityPerimeterServiceTags
   NetworkManagerConnection.properties.networkManagerId: -|arm-id
   NetworkManagerDeploymentStatus.deploymentStatus: DeploymentState
   NetworkManagerDeploymentStatusParameter: NetworkManagerDeploymentStatusContent
   NetworkManagerSecurityGroupItem.networkGroupId: -|arm-id
+  NetworkVirtualAppliance.properties.privateIpAddress: -|ip-address
   NetworkVirtualApplianceConnection.properties.routingConfiguration: ConnectionRoutingConfiguration
   NextStep: RouteMapNextStepBehavior
   OrderBy: IdpsQueryOrderBy

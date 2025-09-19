@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -187,6 +188,21 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("partnerManagedResource"u8);
                 writer.WriteObjectValue(PartnerManagedResource, options);
             }
+            if (Optional.IsCollectionDefined(NvaInterfaceConfigurations))
+            {
+                writer.WritePropertyName("nvaInterfaceConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in NvaInterfaceConfigurations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            {
+                writer.WritePropertyName("privateIpAddress"u8);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -236,6 +252,8 @@ namespace Azure.ResourceManager.Network
             string deploymentType = default;
             VirtualApplianceDelegationProperties delegation = default;
             PartnerManagedResourceProperties partnerManagedResource = default;
+            IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default;
+            IPAddress privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -508,6 +526,29 @@ namespace Azure.ResourceManager.Network
                             partnerManagedResource = PartnerManagedResourceProperties.DeserializePartnerManagedResourceProperties(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("nvaInterfaceConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<NvaInterfaceConfigurationsProperties> array = new List<NvaInterfaceConfigurationsProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(NvaInterfaceConfigurationsProperties.DeserializeNvaInterfaceConfigurationsProperties(item, options));
+                            }
+                            nvaInterfaceConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("privateIpAddress"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateIPAddress = IPAddress.Parse(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -544,7 +585,9 @@ namespace Azure.ResourceManager.Network
                 provisioningState,
                 deploymentType,
                 delegation,
-                partnerManagedResource);
+                partnerManagedResource,
+                nvaInterfaceConfigurations ?? new ChangeTrackingList<NvaInterfaceConfigurationsProperties>(),
+                privateIPAddress);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -1094,6 +1137,44 @@ namespace Azure.ResourceManager.Network
                 {
                     builder.Append("    partnerManagedResource: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PartnerManagedResource, options, 4, false, "    partnerManagedResource: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NvaInterfaceConfigurations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    nvaInterfaceConfigurations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NvaInterfaceConfigurations))
+                {
+                    if (NvaInterfaceConfigurations.Any())
+                    {
+                        builder.Append("    nvaInterfaceConfigurations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NvaInterfaceConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    nvaInterfaceConfigurations: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateIpAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateIPAddress))
+                {
+                    builder.Append("    privateIpAddress: ");
+                    builder.AppendLine($"'{PrivateIPAddress.ToString()}'");
                 }
             }
 
