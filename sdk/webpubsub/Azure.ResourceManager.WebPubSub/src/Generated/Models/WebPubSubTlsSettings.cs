@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubTlsSettings"/>. </summary>
-        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. </param>
+        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebPubSubTlsSettings(bool? isClientCertEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Request client certificate during TLS handshake if enabled. </summary>
+        /// <summary> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </summary>
         [WirePath("clientCertEnabled")]
         public bool? IsClientCertEnabled { get; set; }
     }
