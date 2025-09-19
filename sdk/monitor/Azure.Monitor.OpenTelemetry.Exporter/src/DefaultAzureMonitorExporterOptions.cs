@@ -112,7 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         }
                         break;
                     default:
-                        AzureMonitorExporterEventSource.Log.InvalidSamplerType(samplerType);
+                        AzureMonitorExporterEventSource.Log.InvalidSamplerType(samplerType ?? string.Empty);
                         break;
                 }
             }

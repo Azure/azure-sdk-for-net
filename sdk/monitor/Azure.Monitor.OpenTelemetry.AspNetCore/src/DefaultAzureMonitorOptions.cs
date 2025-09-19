@@ -109,7 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         }
                         break;
                     default:
-                        AzureMonitorAspNetCoreEventSource.Log.InvalidSamplerType(samplerType);
+                        AzureMonitorAspNetCoreEventSource.Log.InvalidSamplerType(samplerType ?? string.Empty);
                         break;
                 }
             }
