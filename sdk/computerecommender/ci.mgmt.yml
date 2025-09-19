@@ -11,16 +11,16 @@ pr:
   paths:
     include:
     - sdk/computerecommender/ci.mgmt.yml
-    - sdk/computerecommender/Azure.ResourceManager.ComputeRecommender
+    - sdk/computerecommender/Azure.ResourceManager.Compute.Recommender
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: computerecommender
     Artifacts:
-    - name: Azure.ResourceManager.ComputeRecommender
+    - name: Azure.ResourceManager.Compute.Recommender
       safeName: AzureResourceManagerComputeRecommender
     CheckAOTCompat: true
     AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ComputeRecommender
+    - ArtifactName: Azure.ResourceManager.Compute.Recommender
       ExpectedWarningsFilepath: None
