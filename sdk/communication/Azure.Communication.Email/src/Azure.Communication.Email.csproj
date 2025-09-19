@@ -4,7 +4,7 @@
     <AssemblyTitle>Azure Communication Email Service</AssemblyTitle>
     <Version>1.0.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Email Service;Microsoft;Azure;Azure Communication Service;Azure Communication Email Service;Email;Communication</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
