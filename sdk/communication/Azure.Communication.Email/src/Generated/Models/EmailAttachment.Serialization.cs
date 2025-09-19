@@ -21,11 +21,6 @@ namespace Azure.Communication.Email
             writer.WriteStringValue(ContentType);
             writer.WritePropertyName("contentInBase64"u8);
             writer.WriteBase64StringValue(Content.ToArray(), "D");
-            if (Optional.IsDefined(ContentId))
-            {
-                writer.WritePropertyName("contentId"u8);
-                writer.WriteStringValue(ContentId);
-            }
             writer.WriteEndObject();
         }
 
