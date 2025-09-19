@@ -74,21 +74,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             try
             {
                 var samplerKey = samplerType!.Trim().ToLowerInvariant();
+                string samplerArgValue = samplerArg ?? string.Empty; // ensure non-null for logging
                 switch (samplerKey)
                 {
                     case "microsoft.rate_limited":
-                        if (double.TryParse(samplerArg, NumberStyles.Float, CultureInfo.InvariantCulture, out var tracesPerSecond) && tracesPerSecond >= 0)
+                        if (double.TryParse(samplerArg, NumberStyles.Float, CultureInfo.InvariantCulture, out var tracesPerSecond))
                         {
-                            options.TracesPerSecond = tracesPerSecond;
+                            if (tracesPerSecond >= 0)
+                            {
+                                options.TracesPerSecond = tracesPerSecond;
+                            }
+                            else
+                            {
+                                AzureMonitorExporterEventSource.Log.InvalidSamplerArgument(samplerKey, samplerArgValue);
+                            }
+                        }
+                        else
+                        {
+                            AzureMonitorExporterEventSource.Log.InvalidSamplerArgument(samplerKey, samplerArgValue);
                         }
                         break;
                     case "microsoft.fixed_percentage":
-                        if (double.TryParse(samplerArg, NumberStyles.Float, CultureInfo.InvariantCulture, out var ratio) && ratio >= 0.0 && ratio <= 1.0)
+                        if (double.TryParse(samplerArg, NumberStyles.Float, CultureInfo.InvariantCulture, out var ratio))
                         {
-                            options.SamplingRatio = (float)ratio;
+                            if (ratio >= 0.0 && ratio <= 1.0)
+                            {
+                                options.SamplingRatio = (float)ratio;
+                            }
+                            else
+                            {
+                                AzureMonitorExporterEventSource.Log.InvalidSamplerArgument(samplerKey, samplerArgValue);
+                            }
+                        }
+                        else
+                        {
+                            AzureMonitorExporterEventSource.Log.InvalidSamplerArgument(samplerKey, samplerArgValue);
                         }
                         break;
                     default:
+                        AzureMonitorExporterEventSource.Log.InvalidSamplerType(samplerType);
                         break;
                 }
             }
