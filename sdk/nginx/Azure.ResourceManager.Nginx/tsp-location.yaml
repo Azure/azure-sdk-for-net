@@ -1,0 +1,4 @@
+directory: specification/nginx/Nginx.Management
+repo: Azure/azure-rest-api-specs-pr
+commit: 4f797a5eb9eeab449121a1a84a65bb481bdd8c01
+additionalDirectories: []
