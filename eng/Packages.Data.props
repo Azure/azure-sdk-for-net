@@ -321,7 +321,7 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Core" Version="1.47.3" />
-    <PackageReference Update="Azure.Identity" Version="1.15.0" />
+    <PackageReference Update="Azure.Identity" Version="1.16.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
