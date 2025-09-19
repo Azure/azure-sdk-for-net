@@ -91,7 +91,28 @@ public class BicepList<T> :
             }
             else
             {
-                return _values[index];
+                if (index < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), "Index must be non-negative.");
+                }
+                // ensure there is a value
+                if (index >= _values.Count)
+                {
+                    return new BicepListIndexer<T>(_self, index);
+                }
+                // now we have a value
+                var value = (IBicepValue)_values[index];
+                switch (value.Kind)
+                {
+                    case BicepValueKind.Unset:
+                        return new BicepListIndexer<T>(_self, index);
+                    case BicepValueKind.Expression:
+                        return new BicepListIndexer<T>(_self, index, value.Expression!);
+                    case BicepValueKind.Literal:
+                        return new BicepListIndexer<T>(_self, index, (T)value.LiteralValue!);
+                    default:
+                        throw new InvalidOperationException($"Unknown {value.Kind}!");
+                }
             }
         }
         set
@@ -104,13 +125,48 @@ public class BicepList<T> :
         }
     }
 
-    public void Insert(int index, BicepValue<T> item) => _values.Insert(index, item);
-    public void Add(BicepValue<T> item) => _values.Add(item);
+    public void Insert(int index, BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot insert into {_self?.PropertyName}");
+        }
+        _values.Insert(index, item);
+    }
+    public void Add(BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot add to {_self?.PropertyName}");
+        }
+        _values.Add(item);
+    }
 
     // TODO: Decide whether it's important to "unlink" resources on removal
-    public void RemoveAt(int index) => _values.RemoveAt(index);
-    public void Clear() => _values.Clear();
-    public bool Remove(BicepValue<T> item) => _values.Remove(item);
+    public void RemoveAt(int index)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot remove from {_self?.PropertyName}");
+        }
+        _values.RemoveAt(index);
+    }
+    public void Clear()
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot clear {_self?.PropertyName}");
+        }
+        _values.Clear();
+    }
+    public bool Remove(BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot remove from {_self?.PropertyName}");
+        }
+        return _values.Remove(item);
+    }
 
     public int Count => _values.Count;
     public bool IsReadOnly => _values.IsReadOnly;
