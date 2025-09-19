@@ -57,10 +57,12 @@ Wait for the user to respond with a confirmation before proceeding to Step 1. Us
 **Goal**: Determine how to generate SDKs
 **Actions**:
 1. Present options: "How would you like to generate SDKs?"
-    - Option A: "Generate SDK locally". This is currently supported only for Python. Do not recommend this for other languages.
+    - Option A: "Generate SDK locally".
     - Option B: "Use SDK generation pipeline"
 2. Based on selection:
-    - If Option A: Refer to #file:create-sdk-locally.instructions.md and then proceed to Step 6
+    - If Option A: 
+        - Follow #file:./local-sdk-workflow.instructions.md to generate and compile the SDK.
+        - After SDK has been generated, to continue the SDK release, users can create the SDK pull request manually then proceed to Step 9.
     - If Option B: Continue to Step 6
 **Success Criteria**: SDK generation method selected
 
