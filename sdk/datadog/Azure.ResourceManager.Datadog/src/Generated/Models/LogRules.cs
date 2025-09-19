@@ -52,26 +52,26 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogRules"/>. </summary>
-        /// <param name="sendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
-        /// <param name="sendSubscriptionLogs"> Flag specifying if Azure subscription logs should be sent for the Monitor resource. </param>
-        /// <param name="sendResourceLogs"> Flag specifying if Azure resource logs should be sent for the Monitor resource. </param>
+        /// <param name="isSendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
+        /// <param name="isSendSubscriptionLogs"> Flag specifying if Azure subscription logs should be sent for the Monitor resource. </param>
+        /// <param name="isSendResourceLogs"> Flag specifying if Azure resource logs should be sent for the Monitor resource. </param>
         /// <param name="filteringTags"> List of filtering tags to be used for capturing logs. This only takes effect if SendResourceLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogRules(bool? sendAadLogs, bool? sendSubscriptionLogs, bool? sendResourceLogs, IList<FilteringTag> filteringTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LogRules(bool? isSendAadLogs, bool? isSendSubscriptionLogs, bool? isSendResourceLogs, IList<FilteringTag> filteringTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SendAadLogs = sendAadLogs;
-            SendSubscriptionLogs = sendSubscriptionLogs;
-            SendResourceLogs = sendResourceLogs;
+            IsSendAadLogs = isSendAadLogs;
+            IsSendSubscriptionLogs = isSendSubscriptionLogs;
+            IsSendResourceLogs = isSendResourceLogs;
             FilteringTags = filteringTags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag specifying if AAD logs should be sent for the Monitor resource. </summary>
-        public bool? SendAadLogs { get; set; }
+        public bool? IsSendAadLogs { get; set; }
         /// <summary> Flag specifying if Azure subscription logs should be sent for the Monitor resource. </summary>
-        public bool? SendSubscriptionLogs { get; set; }
+        public bool? IsSendSubscriptionLogs { get; set; }
         /// <summary> Flag specifying if Azure resource logs should be sent for the Monitor resource. </summary>
-        public bool? SendResourceLogs { get; set; }
+        public bool? IsSendResourceLogs { get; set; }
         /// <summary> List of filtering tags to be used for capturing logs. This only takes effect if SendResourceLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>
         public IList<FilteringTag> FilteringTags { get; }
     }

@@ -8,7 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Datadog
 namespace: Azure.ResourceManager.Datadog
-require: https://github.com/Azure/azure-rest-api-specs/blob/066eb8c81e14e0f3b22b6700c67693eef5f79ea9/specification/datadog/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c37407dc4b8c49dd01fe73d9278e5c21beea169c/specification/datadog/resource-manager/readme.md
+# tag: package-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -50,7 +51,35 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  DatadogAgreementResource: DatadogAgreementResourceProperties
+  DatadogAgreementResource: DatadogAgreementResourceContent
   MonitoredResource: MonitoredResourceContent
+  BillingInfoResponse: DatadogBillingInfoResult
+  CreateResourceSupportedResponse: DatadogCreateResourceSupportedResult
+  DatadogMonitorResourceUpdateParameters: DatadogMonitorResourceUpdateContent
+  DatadogApiKey: DatadogApiKeyContent
+  LinkedResource: LinkedInfo
+  Status: MonitoredStatus
+  DatadogAgreementResourceListResponse: DatadogAgreementResourceListResult
+  DatadogApiKeyListResponse: DatadogApiKeyListResult
+  DatadogHostListResponse: DatadogHostListResult
+  DatadogMonitorResourceListResponse: DatadogMonitorResourceListResult
+  DatadogSingleSignOnResourceListResponse: DatadogSingleSignOnResourceListResult
+  LinkedResourceListResponse: LinkedResourceListResult
+  MonitoredResourceListResponse: MonitoredResourceListResult
+  MonitoringTagRulesListResponse: MonitoringTagRulesListResult
+  CreateResourceSupportedResponseList: CreateResourceSupportedResultList
+  Operation: OperationData
+  CreateResourceSupportedProperties.creationSupported: IsCreationSupported
+  MarketplaceSaaSInfo.subscribed: IsSubscribed
+  DatadogAgreementProperties.accepted: IsAccepted
+  DatadogOrganizationProperties.cspm: IsCspm
+  LogRules.sendAadLogs: IsSendAadLogs
+  LogRules.sendSubscriptionLogs: IsSendSubscriptionLogs
+  LogRules.sendResourceLogs: IsSendResourceLogs
+  MonitorUpdateProperties.cspm: IsCspm
+  MonitoredResource.sendingMetrics: IsSendingMetrics
+  MonitoredResource.sendingLogs: IsSendingLogs
+  MonitoringTagRulesProperties.automuting: IsAutomuting
+  MonitoringTagRulesProperties.customMetrics: IsCustomMetrics
 
 ```

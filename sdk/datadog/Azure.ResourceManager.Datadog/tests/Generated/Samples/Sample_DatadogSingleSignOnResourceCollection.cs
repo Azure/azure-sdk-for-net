@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Datadog.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Datadog.Samples
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SingleSignOnConfigurationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_CreateOrUpdate.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/SingleSignOnConfigurations_CreateOrUpdate.json
             // this example is just showing the usage of "SingleSignOnConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,7 +41,14 @@ namespace Azure.ResourceManager.Datadog.Samples
 
             // invoke the operation
             string configurationName = "default";
-            DatadogSingleSignOnResourceData data = new DatadogSingleSignOnResourceData();
+            DatadogSingleSignOnResourceData data = new DatadogSingleSignOnResourceData
+            {
+                Properties = new DatadogSingleSignOnProperties
+                {
+                    SingleSignOnState = SingleSignOnState.Enable,
+                    EnterpriseAppId = "00000000-0000-0000-0000-000000000000",
+                },
+            };
             ArmOperation<DatadogSingleSignOnResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
             DatadogSingleSignOnResource result = lro.Value;
 
@@ -55,7 +63,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SingleSignOnConfigurationsGet()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/SingleSignOnConfigurations_Get.json
             // this example is just showing the usage of "SingleSignOnConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +97,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SingleSignOnConfigurationsList()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_List.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/SingleSignOnConfigurations_List.json
             // this example is just showing the usage of "SingleSignOnConfigurations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +133,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SingleSignOnConfigurationsGet()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/SingleSignOnConfigurations_Get.json
             // this example is just showing the usage of "SingleSignOnConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +163,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SingleSignOnConfigurationsGet()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/SingleSignOnConfigurations_Get.json
             // this example is just showing the usage of "SingleSignOnConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
