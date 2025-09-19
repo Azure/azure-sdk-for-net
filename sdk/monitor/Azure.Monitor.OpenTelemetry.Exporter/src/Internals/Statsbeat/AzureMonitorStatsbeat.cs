@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
         }
 
-        private static VmMetadataResponse? GetVmMetadataResponse()
+        internal static VmMetadataResponse? GetVmMetadataResponse()
         {
             try
             {
