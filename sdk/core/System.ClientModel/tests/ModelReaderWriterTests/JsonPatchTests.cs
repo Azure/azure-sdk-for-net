@@ -455,7 +455,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new();
             var ex = Assert.Throws<ArgumentNullException>(() => jp.ToString(null!));
+#if NETFRAMEWORK
+            Assert.AreEqual("Value cannot be null.\r\nParameter name: format", ex!.Message);
+#else
             Assert.AreEqual("Value cannot be null. (Parameter 'format')", ex!.Message);
+#endif
         }
     }
 }

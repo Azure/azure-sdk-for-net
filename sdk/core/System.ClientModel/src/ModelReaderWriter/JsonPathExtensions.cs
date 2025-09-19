@@ -43,10 +43,6 @@ internal static class JsonPathExtensions
             switch (reader.Current.TokenType)
             {
                 case JsonPathTokenType.Root:
-                    if (reader.Peek().TokenType == JsonPathTokenType.End)
-                    {
-                        buffer[bytesWritten++] = (byte)'/';
-                    }
                     break;
                 case JsonPathTokenType.Property:
                     buffer[bytesWritten++] = (byte)'/';
@@ -343,6 +339,11 @@ internal static class JsonPathExtensions
         while (--index >= 0 && jsonPath[index] != (byte)'[')
         {
             //skip to array start
+        }
+
+        if (index < 0 || jsonPath[index] != (byte)'[')
+        {
+            return Array.Empty<byte>();
         }
 
         var indexSpan = jsonPath.Slice(index + 1);

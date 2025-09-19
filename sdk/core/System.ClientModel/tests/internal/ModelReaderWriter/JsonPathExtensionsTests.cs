@@ -91,10 +91,38 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$[0]", true)]
         [TestCase("$.x[0]", true)]
         [TestCase("$[0].x", false)]
-        public void IsArrayIndex_Positive(string jsonPathStr, bool expected)
+        [TestCase("$[]", false)]
+        [TestCase("abc", false)]
+        [TestCase("$[1]", true)]
+        [TestCase("$[12]", true)]
+        [TestCase("$.a[10]", true)]
+        [TestCase("$.a[10].b", false)]
+        [TestCase("$.a[1][2]", true)]
+        [TestCase("$[0005]", true)]
+        [TestCase("$[2147483647]", true)]
+        [TestCase("$[18446744073709551615]", true)]
+        [TestCase("$[1a]", false)]
+        [TestCase("$[-1]", false)]
+        [TestCase("$[+1]", false)]
+        [TestCase("$[1.2]", false)]
+        [TestCase("$[1 ]", false)]
+        [TestCase("$[ 1]", false)]
+        [TestCase("$['0']", false)]
+        [TestCase("$[\"0\"]", false)]
+        [TestCase("$[[1]]", false)]
+        [TestCase("$.a[1", false)]
+        [TestCase("$.a1]", false)]
+        [TestCase("abc[3]", true)]
+        [TestCase("$[1", false)]
+        [TestCase("$[1]]", false)]
+        [TestCase("1111]", false)]
+        public void IsArrayIndex(string jsonPathStr, bool expected)
         {
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
             Assert.AreEqual(expected, jsonPath.IsArrayIndex());
+
+            byte[] jsonPathArray = jsonPath.ToArray();
+            Assert.AreEqual(expected, jsonPathArray.IsArrayIndex());
         }
 
         [TestCase("$[0][1].a", "$[0][1].a")]
@@ -132,6 +160,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("prop[0].x", "prop")]
         [TestCase("['pr\"op'][0].x", "pr\"op")]
         [TestCase("['pr.op'][0].x", "pr.op")]
+        [TestCase("", "")]
+        [TestCase("prop", "prop")]
         public void GetPropertyNameFromSlice(string jsonSliceStr, string expected)
         {
             ReadOnlySpan<byte> jsonSlice = Encoding.UTF8.GetBytes(jsonSliceStr);
@@ -159,6 +189,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$[0]", "$")]
         [TestCase("$['f.oo'].bar", "$['f.oo']")]
         [TestCase("$.bar['f.oo']", "$.bar")]
+        [TestCase("$", "$")]
+        [TestCase("$prop", "")]
+        [TestCase("$prop']", "")]
+        [TestCase("$prop\"]", "")]
         public void GetParent(string jsonPathStr, string expected)
         {
             var result = Encoding.UTF8.GetBytes(jsonPathStr).GetParent();
@@ -170,6 +204,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$['0']", "")]
         [TestCase("$.a[12]", "12")]
         [TestCase("$['a'][\"b\"]", "")]
+        [TestCase("$.a", "")]
+        [TestCase("$1]", "")]
         public void GetIndexSpan_Value(string jsonPathStr, string expected)
         {
             var index = Encoding.UTF8.GetBytes(jsonPathStr).GetIndexSpan();
@@ -465,6 +501,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$.arr[0][0]", "{\"arr\":[[2],[3,4],[5,6]]}")]
         [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$.arr[1][1]", "{\"arr\":[[1,2],[3],[5,6]]}")]
         [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$.arr[2][0]", "{\"arr\":[[1,2],[3,4],[6]]}")]
+        [TestCase("{\"arr\":[[1,2],[3,4],[5,6]]}", "$", "")]
         public void RemoveAt(string jsonStr, string jsonPathStr, string expectedJsonPointer)
         {
             byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
