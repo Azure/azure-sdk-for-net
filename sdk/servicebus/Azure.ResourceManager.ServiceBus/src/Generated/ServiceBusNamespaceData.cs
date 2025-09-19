@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="updatedOn"> The time the namespace was updated. </param>
         /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="isZoneRedundant"> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </param>
+        /// <param name="isZoneRedundant"> This property reflects if zone redundancy has been enabled for namespaces in regions that support availability zones. </param>
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Identifier for Azure Insights metrics. </summary>
         [WirePath("properties.metricId")]
         public string MetricId { get; }
-        /// <summary> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </summary>
+        /// <summary> This property reflects if zone redundancy has been enabled for namespaces in regions that support availability zones. </summary>
         [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> Properties of BYOK Encryption description. </summary>
