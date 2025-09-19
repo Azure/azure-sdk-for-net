@@ -1461,7 +1461,6 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(distributionPolicyId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1530,7 +1529,6 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(classificationPolicyId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1599,7 +1597,6 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(exceptionPolicyId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1668,7 +1665,6 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(queueId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
