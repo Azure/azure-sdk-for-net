@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RelayNameSpaceGet()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceGet.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/NameSpaces/RelayNameSpaceGet.json
             // this example is just showing the usage of "Namespaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RelayNameSpaceDelete()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceDelete.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/NameSpaces/RelayNameSpaceDelete.json
             // this example is just showing the usage of "Namespaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RelayNameSpaceUpdate()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceUpdate.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/NameSpaces/RelayNameSpaceUpdate.json
             // this example is just showing the usage of "Namespaces_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
