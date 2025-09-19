@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSearchServices_SearchListServicesBySubscription()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchListServicesBySubscription.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2025-10-01-preview/examples/SearchListServicesBySubscription.json
             // this example is just showing the usage of "Services_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckSearchServiceNameAvailability_SearchCheckNameAvailability()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCheckNameAvailability.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2025-10-01-preview/examples/SearchCheckNameAvailability.json
             // this example is just showing the usage of "Services_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUsagesBySubscription_GetQuotaUsagesList()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/GetQuotaUsagesList.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2025-10-01-preview/examples/GetQuotaUsagesList.json
             // this example is just showing the usage of "Usages_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UsageBySubscriptionSku_GetQuotaUsage()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/GetQuotaUsage.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2025-10-01-preview/examples/GetQuotaUsage.json
             // this example is just showing the usage of "UsageBySubscriptionSku" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

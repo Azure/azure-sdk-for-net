@@ -16,10 +16,17 @@ namespace Azure.ResourceManager.Search
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AzureActiveDirectoryApplicationCredentials))]
+    [ModelReaderWriterBuildable(typeof(DataIdentity))]
+    [ModelReaderWriterBuildable(typeof(DataNoneIdentity))]
     [ModelReaderWriterBuildable(typeof(DataPlaneAadOrApiKeyAuthOption))]
+    [ModelReaderWriterBuildable(typeof(DataUserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(FeatureOffering))]
     [ModelReaderWriterBuildable(typeof(ListQueryKeysResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(OfferingsByRegion))]
+    [ModelReaderWriterBuildable(typeof(OfferingsListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesResult))]
     [ModelReaderWriterBuildable(typeof(QuotaUsageResult))]
     [ModelReaderWriterBuildable(typeof(QuotaUsageResultName))]
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SearchPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(SearchPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(SearchPrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(SearchResourceEncryptionKey))]
     [ModelReaderWriterBuildable(typeof(SearchServiceAdminKeyResult))]
     [ModelReaderWriterBuildable(typeof(SearchServiceData))]
     [ModelReaderWriterBuildable(typeof(SearchServiceIPRule))]
@@ -62,7 +70,10 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(SkuOffering))]
+    [ModelReaderWriterBuildable(typeof(SkuOfferingLimits))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownDataIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerSearchContext : ModelReaderWriterContext
