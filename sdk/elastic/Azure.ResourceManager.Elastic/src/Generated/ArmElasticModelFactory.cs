@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="key"> Value of API key for Open AI resource. </param>
         /// <param name="lastRefreshOn"> Last Update Timestamp for key updation. </param>
         /// <returns> A new <see cref="Models.ElasticOpenAIIntegrationProperties"/> instance for mocking. </returns>
-        public static ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(string openAIResourceId = null, string openAIResourceEndpoint = null, string openAIConnectorId = null, string key = null, DateTimeOffset? lastRefreshOn = null)
+        public static ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(ResourceIdentifier openAIResourceId = null, string openAIResourceEndpoint = null, string openAIConnectorId = null, string key = null, DateTimeOffset? lastRefreshOn = null)
         {
             return new ElasticOpenAIIntegrationProperties(
                 openAIResourceId,
@@ -506,6 +506,18 @@ namespace Azure.ResourceManager.Elastic.Models
         public static ConnectedPartnerResourceProperties ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, ResourceIdentifier azureResourceId, AzureLocation? location)
         {
             return ConnectedPartnerResourceProperties(partnerDeploymentName: partnerDeploymentName, partnerDeploymentUri: partnerDeploymentUri, azureResourceId: azureResourceId, location: location, connectedPartnerResourcePropertiesType: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties" />. </summary>
+        /// <param name="openAIResourceId"> The resource id of Open AI resource. </param>
+        /// <param name="openAIResourceEndpoint"> The API endpoint for Open AI resource. </param>
+        /// <param name="key"> Value of API key for Open AI resource. </param>
+        /// <param name="lastRefreshOn"> Last Update Timestamp for key updation. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(ResourceIdentifier openAIResourceId, string openAIResourceEndpoint, string key, DateTimeOffset? lastRefreshOn)
+        {
+            return ElasticOpenAIIntegrationProperties(openAIResourceId: openAIResourceId, openAIResourceEndpoint: openAIResourceEndpoint, openAIConnectorId: default, key: key, lastRefreshOn: lastRefreshOn);
         }
     }
 }

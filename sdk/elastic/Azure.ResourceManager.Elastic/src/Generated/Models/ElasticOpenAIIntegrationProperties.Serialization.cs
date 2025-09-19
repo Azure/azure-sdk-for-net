@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            string openAIResourceId = default;
+            ResourceIdentifier openAIResourceId = default;
             string openAIResourceEndpoint = default;
             string openAIConnectorId = default;
             string key = default;
@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 if (property.NameEquals("openAIResourceId"u8))
                 {
-                    openAIResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    openAIResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("openAIResourceEndpoint"u8))

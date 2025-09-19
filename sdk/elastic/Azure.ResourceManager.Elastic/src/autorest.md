@@ -60,6 +60,7 @@ rename-mapping:
   ElasticVersionListProperties.version: AvailableVersion
   OpenAIIntegrationRPModel: ElasticOpenAIIntegration
   OpenAIIntegrationProperties: ElasticOpenAIIntegrationProperties
+  OpenAIIntegrationProperties.openAIResourceId: -|arm-id
   BillingInfoResponse: ElasticBillingInfoResult
   ConnectedPartnerResourceProperties.azureResourceId: -|arm-id
   ConnectedPartnerResourcesListFormat: ConnectedPartnerResourceInfo
@@ -124,7 +125,10 @@ override-operation-name:
   Organizations_GetElasticToAzureSubscriptionMapping: GetElasticToAzureSubscriptionMapping
 
 directive:
-- from: elastic.json
-  where: $.definitions.MonitoringTagRulesProperties.properties.provisioningState
-  transform: $['readOnly'] = false;
+  - from: elastic.json
+    where: $.definitions.MonitoringTagRulesProperties.properties.provisioningState
+    transform: $['readOnly'] = false;
+  - from: elastic.json
+    where: $.definitions.MonitorProperties.properties.provisioningState
+    transform: $['readOnly'] = false;
 ```
