@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         private const string WindowsClientValue = "Windows_Client";
 
-        /// <summary> Windows_Client. </summary>
+        /// <summary> Windows Client license type. </summary>
         public static DevCenterLicenseType WindowsClient { get; } = new DevCenterLicenseType(WindowsClientValue);
         /// <summary> Determines if two <see cref="DevCenterLicenseType"/> values are the same. </summary>
         public static bool operator ==(DevCenterLicenseType left, DevCenterLicenseType right) => left.Equals(right);

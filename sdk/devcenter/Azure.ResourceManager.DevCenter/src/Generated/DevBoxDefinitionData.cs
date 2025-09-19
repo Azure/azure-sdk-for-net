@@ -71,9 +71,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="imageValidationStatus"> Validation status of the configured image. </param>
         /// <param name="imageValidationErrorDetails"> Details for image validator error. Populated when the image validation is not successful. </param>
+        /// <param name="validationStatus"> Validation status for the Dev Box Definition. </param>
         /// <param name="activeImageReference"> Image reference information for the currently active image (only populated during updates). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, DevCenterImageReference activeImageReference, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, CatalogResourceValidationStatus? validationStatus, DevCenterImageReference activeImageReference, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ImageReference = imageReference;
             Sku = sku;
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.DevCenter
             ProvisioningState = provisioningState;
             ImageValidationStatus = imageValidationStatus;
             ImageValidationErrorDetails = imageValidationErrorDetails;
+            ValidationStatus = validationStatus;
             ActiveImageReference = activeImageReference;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -105,6 +107,8 @@ namespace Azure.ResourceManager.DevCenter
         public ImageValidationStatus? ImageValidationStatus { get; }
         /// <summary> Details for image validator error. Populated when the image validation is not successful. </summary>
         public ImageValidationErrorDetails ImageValidationErrorDetails { get; }
+        /// <summary> Validation status for the Dev Box Definition. </summary>
+        public CatalogResourceValidationStatus? ValidationStatus { get; }
         /// <summary> Image reference information for the currently active image (only populated during updates). </summary>
         public DevCenterImageReference ActiveImageReference { get; }
     }

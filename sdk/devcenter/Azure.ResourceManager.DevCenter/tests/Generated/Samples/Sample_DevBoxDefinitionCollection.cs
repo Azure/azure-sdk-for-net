@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DevBoxDefinitionsCreate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/DevBoxDefinitions_Create.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/DevBoxDefinitions_Create.json
             // this example is just showing the usage of "DevBoxDefinitions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterResource created on azure
             // for more information of creating DevCenterResource, please refer to the document of DevCenterResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             ResourceIdentifier devCenterResourceId = DevCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             {
                 ImageReference = new DevCenterImageReference
                 {
-                    Id = new ResourceIdentifier("/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/Example/providers/Microsoft.DevCenter/devcenters/Contoso/galleries/contosogallery/images/exampleImage/version/1.0.0"),
+                    Id = new ResourceIdentifier("/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/Example/providers/Microsoft.DevCenter/devcenters/Contoso/galleries/contosogallery/images/exampleImage/versions/1.0.0"),
                 },
                 Sku = new DevCenterSku("Preview"),
                 HibernateSupport = DevCenterHibernateSupport.IsEnabled,
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DevBoxDefinitionsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/DevBoxDefinitions_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/DevBoxDefinitions_Get.json
             // this example is just showing the usage of "DevBoxDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterResource created on azure
             // for more information of creating DevCenterResource, please refer to the document of DevCenterResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             ResourceIdentifier devCenterResourceId = DevCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DevBoxDefinitionsListByDevCenter()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/DevBoxDefinitions_ListByDevCenter.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/DevBoxDefinitions_ListByDevCenter.json
             // this example is just showing the usage of "DevBoxDefinitions_ListByDevCenter" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterResource created on azure
             // for more information of creating DevCenterResource, please refer to the document of DevCenterResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             ResourceIdentifier devCenterResourceId = DevCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_DevBoxDefinitionsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/DevBoxDefinitions_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/DevBoxDefinitions_Get.json
             // this example is just showing the usage of "DevBoxDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterResource created on azure
             // for more information of creating DevCenterResource, please refer to the document of DevCenterResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             ResourceIdentifier devCenterResourceId = DevCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DevBoxDefinitionsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/DevBoxDefinitions_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/DevBoxDefinitions_Get.json
             // this example is just showing the usage of "DevBoxDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterResource created on azure
             // for more information of creating DevCenterResource, please refer to the document of DevCenterResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             ResourceIdentifier devCenterResourceId = DevCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName);

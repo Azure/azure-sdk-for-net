@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name, options);
             }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,6 +100,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             long? limit = default;
             DevCenterUsageUnit? unit = default;
             DevCenterUsageName name = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,13 +141,24 @@ namespace Azure.ResourceManager.DevCenter.Models
                     name = DevCenterUsageName.DeserializeDevCenterUsageName(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevCenterUsage(currentValue, limit, unit, name, serializedAdditionalRawData);
+            return new DevCenterUsage(
+                currentValue,
+                limit,
+                unit,
+                name,
+                id,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterUsage>.Write(ModelReaderWriterOptions options)

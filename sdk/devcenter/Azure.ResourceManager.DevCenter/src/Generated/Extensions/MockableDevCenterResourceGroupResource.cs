@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -100,6 +100,75 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         public virtual Response<DevCenterResource> GetDevCenter(string devCenterName, CancellationToken cancellationToken = default)
         {
             return GetDevCenters().Get(devCenterName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevCenterNetworkConnectionResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
+        public virtual DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections()
+        {
+            return GetCachedClient(client => new DevCenterNetworkConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a network connection resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevCenterNetworkConnectionResource>> GetDevCenterNetworkConnectionAsync(string networkConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetDevCenterNetworkConnections().GetAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a network connection resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnection(string networkConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetDevCenterNetworkConnections().Get(networkConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevCenterProjectResources in the ResourceGroupResource. </summary>
@@ -122,7 +191,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +222,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,75 +238,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         public virtual Response<DevCenterProjectResource> GetDevCenterProject(string projectName, CancellationToken cancellationToken = default)
         {
             return GetDevCenterProjects().Get(projectName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DevCenterNetworkConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
-        public virtual DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections()
-        {
-            return GetCachedClient(client => new DevCenterNetworkConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a network connection resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DevCenterNetworkConnectionResource>> GetDevCenterNetworkConnectionAsync(string networkConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetDevCenterNetworkConnections().GetAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a network connection resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnection(string networkConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetDevCenterNetworkConnections().Get(networkConnectionName, cancellationToken);
         }
     }
 }

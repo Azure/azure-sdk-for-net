@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         private const string DailyValue = "Daily";
 
-        /// <summary> Daily. </summary>
+        /// <summary> The scheduled task will run daily. </summary>
         public static DevCenterScheduledFrequency Daily { get; } = new DevCenterScheduledFrequency(DailyValue);
         /// <summary> Determines if two <see cref="DevCenterScheduledFrequency"/> values are the same. </summary>
         public static bool operator ==(DevCenterScheduledFrequency left, DevCenterScheduledFrequency right) => left.Equals(right);

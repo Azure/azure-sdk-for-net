@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.DevCenter
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DevCenterId))
@@ -54,6 +59,41 @@ namespace Azure.ResourceManager.DevCenter
             {
                 writer.WritePropertyName("maxDevBoxesPerUser"u8);
                 writer.WriteNumberValue(MaxDevBoxesPerUser.Value);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(CatalogSettings))
+            {
+                writer.WritePropertyName("catalogSettings"u8);
+                writer.WriteObjectValue(CatalogSettings, options);
+            }
+            if (Optional.IsDefined(CustomizationSettings))
+            {
+                writer.WritePropertyName("customizationSettings"u8);
+                writer.WriteObjectValue(CustomizationSettings, options);
+            }
+            if (Optional.IsDefined(DevBoxAutoDeleteSettings))
+            {
+                writer.WritePropertyName("devBoxAutoDeleteSettings"u8);
+                writer.WriteObjectValue(DevBoxAutoDeleteSettings, options);
+            }
+            if (Optional.IsDefined(AzureAiServicesSettings))
+            {
+                writer.WritePropertyName("azureAiServicesSettings"u8);
+                writer.WriteObjectValue(AzureAiServicesSettings, options);
+            }
+            if (Optional.IsDefined(ServerlessGpuSessionsSettings))
+            {
+                writer.WritePropertyName("serverlessGpuSessionsSettings"u8);
+                writer.WriteObjectValue(ServerlessGpuSessionsSettings, options);
+            }
+            if (Optional.IsDefined(WorkspaceStorageSettings))
+            {
+                writer.WritePropertyName("workspaceStorageSettings"u8);
+                writer.WriteObjectValue(WorkspaceStorageSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -88,6 +128,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -97,12 +138,28 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier devCenterId = default;
             string description = default;
             int? maxDevBoxesPerUser = default;
+            string displayName = default;
+            ProjectCatalogSettings catalogSettings = default;
+            ProjectCustomizationSettings customizationSettings = default;
+            DevBoxAutoDeleteSettings devBoxAutoDeleteSettings = default;
+            AzureAiServicesSettings azureAiServicesSettings = default;
+            ServerlessGpuSessionsSettings serverlessGpuSessionsSettings = default;
+            WorkspaceStorageSettings workspaceStorageSettings = default;
             DevCenterProvisioningState? provisioningState = default;
             Uri devCenterUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDevCenterContext.Default);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -178,6 +235,65 @@ namespace Azure.ResourceManager.DevCenter
                             maxDevBoxesPerUser = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("catalogSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            catalogSettings = ProjectCatalogSettings.DeserializeProjectCatalogSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("customizationSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            customizationSettings = ProjectCustomizationSettings.DeserializeProjectCustomizationSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("devBoxAutoDeleteSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxAutoDeleteSettings = DevBoxAutoDeleteSettings.DeserializeDevBoxAutoDeleteSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("azureAiServicesSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            azureAiServicesSettings = AzureAiServicesSettings.DeserializeAzureAiServicesSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("serverlessGpuSessionsSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serverlessGpuSessionsSettings = ServerlessGpuSessionsSettings.DeserializeServerlessGpuSessionsSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("workspaceStorageSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            workspaceStorageSettings = WorkspaceStorageSettings.DeserializeWorkspaceStorageSettings(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -212,9 +328,17 @@ namespace Azure.ResourceManager.DevCenter
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 devCenterId,
                 description,
                 maxDevBoxesPerUser,
+                displayName,
+                catalogSettings,
+                customizationSettings,
+                devBoxAutoDeleteSettings,
+                azureAiServicesSettings,
+                serverlessGpuSessionsSettings,
+                workspaceStorageSettings,
                 provisioningState,
                 devCenterUri,
                 serializedAdditionalRawData);

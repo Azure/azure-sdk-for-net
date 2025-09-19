@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("deploymentTargetId"u8);
                 writer.WriteStringValue(DeploymentTargetId);
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -121,6 +126,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             ResourceIdentifier deploymentTargetId = default;
+            string displayName = default;
             EnvironmentTypeEnableStatus? status = default;
             ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment = default;
             IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
@@ -169,6 +175,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                             deploymentTargetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -214,6 +225,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 deploymentTargetId,
+                displayName,
                 status,
                 creatorRoleAssignment,
                 userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),

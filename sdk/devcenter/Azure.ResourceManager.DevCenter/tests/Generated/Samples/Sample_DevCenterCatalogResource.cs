@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CatalogsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Catalogs_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Catalogs_Get.json
             // this example is just showing the usage of "Catalogs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterCatalogResource created on azure
             // for more information of creating DevCenterCatalogResource, please refer to the document of DevCenterCatalogResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string catalogName = "CentralCatalog";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_CatalogsDelete()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Catalogs_Delete.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Catalogs_Delete.json
             // this example is just showing the usage of "Catalogs_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterCatalogResource created on azure
             // for more information of creating DevCenterCatalogResource, please refer to the document of DevCenterCatalogResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string catalogName = "CentralCatalog";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CatalogsUpdate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Catalogs_Patch.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Catalogs_Patch.json
             // this example is just showing the usage of "Catalogs_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterCatalogResource created on azure
             // for more information of creating DevCenterCatalogResource, please refer to the document of DevCenterCatalogResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string catalogName = "CentralCatalog";
@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
                 {
                     Path = "/environments",
                 },
+                SyncType = CatalogSyncType.Scheduled,
             };
             ArmOperation<DevCenterCatalogResource> lro = await devCenterCatalog.UpdateAsync(WaitUntil.Completed, patch);
             DevCenterCatalogResource result = lro.Value;
@@ -115,9 +116,63 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Connect_CatalogsConnect()
+        {
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Catalogs_Connect.json
+            // this example is just showing the usage of "Catalogs_Connect" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevCenterCatalogResource created on azure
+            // for more information of creating DevCenterCatalogResource, please refer to the document of DevCenterCatalogResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
+            string resourceGroupName = "rg1";
+            string devCenterName = "Contoso";
+            string catalogName = "CentralCatalog";
+            ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
+            DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
+
+            // invoke the operation
+            await devCenterCatalog.ConnectAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSyncErrorDetails_CatalogsGetSyncErrorDetails()
+        {
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Catalogs_GetSyncErrorDetails.json
+            // this example is just showing the usage of "Catalogs_GetSyncErrorDetails" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevCenterCatalogResource created on azure
+            // for more information of creating DevCenterCatalogResource, please refer to the document of DevCenterCatalogResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
+            string resourceGroupName = "rg1";
+            string devCenterName = "Contoso";
+            string catalogName = "CentralCatalog";
+            ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
+            DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
+
+            // invoke the operation
+            SyncErrorDetails result = await devCenterCatalog.GetSyncErrorDetailsAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Sync_CatalogsSync()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Catalogs_Sync.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Catalogs_Sync.json
             // this example is just showing the usage of "Catalogs_Sync" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +182,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterCatalogResource created on azure
             // for more information of creating DevCenterCatalogResource, please refer to the document of DevCenterCatalogResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string catalogName = "CentralCatalog";

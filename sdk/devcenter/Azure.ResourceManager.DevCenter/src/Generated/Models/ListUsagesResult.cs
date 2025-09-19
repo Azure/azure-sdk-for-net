@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
-        internal ListUsagesResult()
+        /// <param name="value"> The Usage items on this page. </param>
+        internal ListUsagesResult(IEnumerable<DevCenterUsage> value)
         {
-            Value = new ChangeTrackingList<DevCenterUsage>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
-        /// <param name="value"> The array page of Usages. </param>
-        /// <param name="nextLink"> The link to get the next page of Usage result. </param>
+        /// <param name="value"> The Usage items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListUsagesResult(IReadOnlyList<DevCenterUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListUsagesResult(IReadOnlyList<DevCenterUsage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The array page of Usages. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/> for deserialization. </summary>
+        internal ListUsagesResult()
+        {
+        }
+
+        /// <summary> The Usage items on this page. </summary>
         public IReadOnlyList<DevCenterUsage> Value { get; }
-        /// <summary> The link to get the next page of Usage result. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

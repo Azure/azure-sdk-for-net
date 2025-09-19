@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalogData"/>. </summary>
         public DevCenterCatalogData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalogData"/>. </summary>
@@ -63,16 +64,26 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="gitHub"> Properties for a GitHub catalog type. </param>
         /// <param name="adoGit"> Properties for an Azure DevOps catalog type. </param>
+        /// <param name="syncType"> Indicates the type of sync that is configured for the catalog. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="syncState"> The synchronization state of the catalog. </param>
+        /// <param name="lastSyncStats"> Stats of the latest synchronization. </param>
+        /// <param name="connectionState"> The connection state of the catalog. </param>
+        /// <param name="lastConnectionOn"> When the catalog was last connected. </param>
         /// <param name="lastSyncOn"> When the catalog was last synced. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, DateTimeOffset? lastSyncOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DevCenterCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, CatalogSyncType? syncType, IDictionary<string, string> tags, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, SyncStats lastSyncStats, CatalogConnectionState? connectionState, DateTimeOffset? lastConnectionOn, DateTimeOffset? lastSyncOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GitHub = gitHub;
             AdoGit = adoGit;
+            SyncType = syncType;
+            Tags = tags;
             ProvisioningState = provisioningState;
             SyncState = syncState;
+            LastSyncStats = lastSyncStats;
+            ConnectionState = connectionState;
+            LastConnectionOn = lastConnectionOn;
             LastSyncOn = lastSyncOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -81,10 +92,20 @@ namespace Azure.ResourceManager.DevCenter
         public DevCenterGitCatalog GitHub { get; set; }
         /// <summary> Properties for an Azure DevOps catalog type. </summary>
         public DevCenterGitCatalog AdoGit { get; set; }
+        /// <summary> Indicates the type of sync that is configured for the catalog. </summary>
+        public CatalogSyncType? SyncType { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public DevCenterProvisioningState? ProvisioningState { get; }
         /// <summary> The synchronization state of the catalog. </summary>
         public DevCenterCatalogSyncState? SyncState { get; }
+        /// <summary> Stats of the latest synchronization. </summary>
+        public SyncStats LastSyncStats { get; }
+        /// <summary> The connection state of the catalog. </summary>
+        public CatalogConnectionState? ConnectionState { get; }
+        /// <summary> When the catalog was last connected. </summary>
+        public DateTimeOffset? LastConnectionOn { get; }
         /// <summary> When the catalog was last synced. </summary>
         public DateTimeOffset? LastSyncOn { get; }
     }

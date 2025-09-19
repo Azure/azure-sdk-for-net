@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("deploymentTargetId"u8);
                 writer.WriteStringValue(DeploymentTargetId);
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -75,6 +80,11 @@ namespace Azure.ResourceManager.DevCenter
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(EnvironmentCount))
+            {
+                writer.WritePropertyName("environmentCount"u8);
+                writer.WriteNumberValue(EnvironmentCount.Value);
             }
             writer.WriteEndObject();
         }
@@ -107,10 +117,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceType type = default;
             SystemData systemData = default;
             ResourceIdentifier deploymentTargetId = default;
+            string displayName = default;
             EnvironmentTypeEnableStatus? status = default;
             ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment = default;
             IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
             DevCenterProvisioningState? provisioningState = default;
+            int? environmentCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,6 +197,11 @@ namespace Azure.ResourceManager.DevCenter
                             deploymentTargetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -226,6 +243,15 @@ namespace Azure.ResourceManager.DevCenter
                             provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("environmentCount"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            environmentCount = property0.Value.GetInt32();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -244,10 +270,12 @@ namespace Azure.ResourceManager.DevCenter
                 location,
                 identity,
                 deploymentTargetId,
+                displayName,
                 status,
                 creatorRoleAssignment,
                 userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
                 provisioningState,
+                environmentCount,
                 serializedAdditionalRawData);
         }
 

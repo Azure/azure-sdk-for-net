@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> Result of the project environment type list operation. </summary>
+    /// <summary> Paged collection of ProjectEnvironmentType items. </summary>
     internal partial class ProjectEnvironmentTypeListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProjectEnvironmentTypeListResult"/>. </summary>
-        internal ProjectEnvironmentTypeListResult()
+        /// <param name="value"> The ProjectEnvironmentType items on this page. </param>
+        internal ProjectEnvironmentTypeListResult(IEnumerable<DevCenterProjectEnvironmentData> value)
         {
-            Value = new ChangeTrackingList<DevCenterProjectEnvironmentData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectEnvironmentTypeListResult"/>. </summary>
-        /// <param name="value"> Current page of results. </param>
-        /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
+        /// <param name="value"> The ProjectEnvironmentType items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectEnvironmentTypeListResult(IReadOnlyList<DevCenterProjectEnvironmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectEnvironmentTypeListResult(IReadOnlyList<DevCenterProjectEnvironmentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Current page of results. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectEnvironmentTypeListResult"/> for deserialization. </summary>
+        internal ProjectEnvironmentTypeListResult()
+        {
+        }
+
+        /// <summary> The ProjectEnvironmentType items on this page. </summary>
         public IReadOnlyList<DevCenterProjectEnvironmentData> Value { get; }
-        /// <summary> URL to get the next set of results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             writer.WriteEndObject();
         }
 
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.DevCenter
             ResourceType type = default;
             SystemData systemData = default;
             DevCenterProvisioningState? provisioningState = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,6 +125,11 @@ namespace Azure.ResourceManager.DevCenter
                             provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -134,6 +145,7 @@ namespace Azure.ResourceManager.DevCenter
                 type,
                 systemData,
                 provisioningState,
+                displayName,
                 serializedAdditionalRawData);
         }
 

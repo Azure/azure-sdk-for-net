@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> Results of the project list operation. </summary>
+    /// <summary> Paged collection of Project items. </summary>
     internal partial class ProjectListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProjectListResult"/>. </summary>
-        internal ProjectListResult()
+        /// <param name="value"> The Project items on this page. </param>
+        internal ProjectListResult(IEnumerable<DevCenterProjectData> value)
         {
-            Value = new ChangeTrackingList<DevCenterProjectData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectListResult"/>. </summary>
-        /// <param name="value"> Current page of results. </param>
-        /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
+        /// <param name="value"> The Project items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectListResult(IReadOnlyList<DevCenterProjectData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectListResult(IReadOnlyList<DevCenterProjectData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Current page of results. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectListResult"/> for deserialization. </summary>
+        internal ProjectListResult()
+        {
+        }
+
+        /// <summary> The Project items on this page. </summary>
         public IReadOnlyList<DevCenterProjectData> Value { get; }
-        /// <summary> URL to get the next set of results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

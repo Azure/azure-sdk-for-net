@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PoolsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Pools_Get.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterPoolResource created on azure
             // for more information of creating DevCenterPoolResource, please refer to the document of DevCenterPoolResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
             string poolName = "DevPool";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PoolsGetUnhealthyStatus()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_GetUnhealthyStatus.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Pools_GetUnhealthyStatus.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterPoolResource created on azure
             // for more information of creating DevCenterPoolResource, please refer to the document of DevCenterPoolResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
             string poolName = "DevPool";
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_PoolsDelete()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_Delete.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Pools_Delete.json
             // this example is just showing the usage of "Pools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterPoolResource created on azure
             // for more information of creating DevCenterPoolResource, please refer to the document of DevCenterPoolResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
             string poolName = "poolName";
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PoolsUpdate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_Patch.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Pools_Patch.json
             // this example is just showing the usage of "Pools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterPoolResource created on azure
             // for more information of creating DevCenterPoolResource, please refer to the document of DevCenterPoolResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
             string poolName = "DevPool";
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RunHealthChecks_PoolsRefreshStatus()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_RunHealthChecks.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Pools_RunHealthChecks.json
             // this example is just showing the usage of "Pools_RunHealthChecks" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this DevCenterPoolResource created on azure
             // for more information of creating DevCenterPoolResource, please refer to the document of DevCenterPoolResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
             string poolName = "DevPool";

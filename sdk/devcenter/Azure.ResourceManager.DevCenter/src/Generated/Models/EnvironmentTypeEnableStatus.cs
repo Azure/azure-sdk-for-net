@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string IsEnabledValue = "Enabled";
         private const string IsDisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Environment type is enabled. </summary>
         public static EnvironmentTypeEnableStatus IsEnabled { get; } = new EnvironmentTypeEnableStatus(IsEnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> Environment type is disabled. </summary>
         public static EnvironmentTypeEnableStatus IsDisabled { get; } = new EnvironmentTypeEnableStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="EnvironmentTypeEnableStatus"/> values are the same. </summary>
         public static bool operator ==(EnvironmentTypeEnableStatus left, EnvironmentTypeEnableStatus right) => left.Equals(right);

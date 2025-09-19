@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string IsEnabledValue = "Enabled";
         private const string IsDisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Stop on disconnect is enabled. </summary>
         public static StopOnDisconnectEnableStatus IsEnabled { get; } = new StopOnDisconnectEnableStatus(IsEnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> Stop on disconnect is disabled. </summary>
         public static StopOnDisconnectEnableStatus IsDisabled { get; } = new StopOnDisconnectEnableStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="StopOnDisconnectEnableStatus"/> values are the same. </summary>
         public static bool operator ==(StopOnDisconnectEnableStatus left, StopOnDisconnectEnableStatus right) => left.Equals(right);

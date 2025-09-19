@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string RolloutInProgressValue = "RolloutInProgress";
         private const string StorageProvisioningFailedValue = "StorageProvisioningFailed";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Not specified provisioning state. </summary>
         public static DevCenterProvisioningState NotSpecified { get; } = new DevCenterProvisioningState(NotSpecifiedValue);
-        /// <summary> Accepted. </summary>
+        /// <summary> Accepted provisioning state. </summary>
         public static DevCenterProvisioningState Accepted { get; } = new DevCenterProvisioningState(AcceptedValue);
-        /// <summary> Running. </summary>
+        /// <summary> Running provisioning state. </summary>
         public static DevCenterProvisioningState Running { get; } = new DevCenterProvisioningState(RunningValue);
-        /// <summary> Creating. </summary>
+        /// <summary> Creating provisioning state. </summary>
         public static DevCenterProvisioningState Creating { get; } = new DevCenterProvisioningState(CreatingValue);
-        /// <summary> Created. </summary>
+        /// <summary> Created provisioning state. </summary>
         public static DevCenterProvisioningState Created { get; } = new DevCenterProvisioningState(CreatedValue);
-        /// <summary> Updating. </summary>
+        /// <summary> Updating provisioning state. </summary>
         public static DevCenterProvisioningState Updating { get; } = new DevCenterProvisioningState(UpdatingValue);
-        /// <summary> Updated. </summary>
+        /// <summary> Updated provisioning state. </summary>
         public static DevCenterProvisioningState Updated { get; } = new DevCenterProvisioningState(UpdatedValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> Deleting provisioning state. </summary>
         public static DevCenterProvisioningState Deleting { get; } = new DevCenterProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+        /// <summary> Deleted provisioning state. </summary>
         public static DevCenterProvisioningState Deleted { get; } = new DevCenterProvisioningState(DeletedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Succeeded provisioning state. </summary>
         public static DevCenterProvisioningState Succeeded { get; } = new DevCenterProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Failed provisioning state. </summary>
         public static DevCenterProvisioningState Failed { get; } = new DevCenterProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Canceled provisioning state. </summary>
         public static DevCenterProvisioningState Canceled { get; } = new DevCenterProvisioningState(CanceledValue);
-        /// <summary> MovingResources. </summary>
+        /// <summary> Moving resources provisioning state. </summary>
         public static DevCenterProvisioningState MovingResources { get; } = new DevCenterProvisioningState(MovingResourcesValue);
-        /// <summary> TransientFailure. </summary>
+        /// <summary> Transient failure provisioning state. </summary>
         public static DevCenterProvisioningState TransientFailure { get; } = new DevCenterProvisioningState(TransientFailureValue);
-        /// <summary> RolloutInProgress. </summary>
+        /// <summary> Rollout in progress provisioning state. </summary>
         public static DevCenterProvisioningState RolloutInProgress { get; } = new DevCenterProvisioningState(RolloutInProgressValue);
-        /// <summary> StorageProvisioningFailed. </summary>
+        /// <summary> Storage provisioning failed provisioning state. </summary>
         public static DevCenterProvisioningState StorageProvisioningFailed { get; } = new DevCenterProvisioningState(StorageProvisioningFailedValue);
         /// <summary> Determines if two <see cref="DevCenterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DevCenterProvisioningState left, DevCenterProvisioningState right) => left.Equals(right);

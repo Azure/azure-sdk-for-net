@@ -18,20 +18,22 @@ namespace Azure.ResourceManager.DevCenter.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableDevCenterSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
+        private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
+        private ClientDiagnostics _checkScopedNameAvailabilityClientDiagnostics;
+        private CheckScopedNameAvailabilityRestOperations _checkScopedNameAvailabilityRestClient;
         private ClientDiagnostics _devCenterClientDiagnostics;
         private DevCentersRestOperations _devCenterRestClient;
-        private ClientDiagnostics _devCenterProjectProjectsClientDiagnostics;
-        private ProjectsRestOperations _devCenterProjectProjectsRestClient;
         private ClientDiagnostics _operationStatusesClientDiagnostics;
         private OperationStatusesRestOperations _operationStatusesRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
         private UsagesRestOperations _usagesRestClient;
-        private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
-        private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
-        private ClientDiagnostics _skusClientDiagnostics;
-        private SkusRestOperations _skusRestClient;
         private ClientDiagnostics _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics;
         private NetworkConnectionsRestOperations _devCenterNetworkConnectionNetworkConnectionsRestClient;
+        private ClientDiagnostics _devCenterProjectProjectsClientDiagnostics;
+        private ProjectsRestOperations _devCenterProjectProjectsRestClient;
+        private ClientDiagnostics _skusClientDiagnostics;
+        private SkusRestOperations _skusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDevCenterSubscriptionResource"/> class for mocking. </summary>
         protected MockableDevCenterSubscriptionResource()
@@ -45,25 +47,179 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
         }
 
+        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CheckScopedNameAvailabilityClientDiagnostics => _checkScopedNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CheckScopedNameAvailabilityRestOperations CheckScopedNameAvailabilityRestClient => _checkScopedNameAvailabilityRestClient ??= new CheckScopedNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics DevCenterClientDiagnostics => _devCenterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterResource.ResourceType.Namespace, Diagnostics);
         private DevCentersRestOperations DevCenterRestClient => _devCenterRestClient ??= new DevCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevCenterResource.ResourceType));
-        private ClientDiagnostics DevCenterProjectProjectsClientDiagnostics => _devCenterProjectProjectsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterProjectResource.ResourceType.Namespace, Diagnostics);
-        private ProjectsRestOperations DevCenterProjectProjectsRestClient => _devCenterProjectProjectsRestClient ??= new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevCenterProjectResource.ResourceType));
         private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationStatusesRestOperations OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics DevCenterNetworkConnectionNetworkConnectionsClientDiagnostics => _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
         private NetworkConnectionsRestOperations DevCenterNetworkConnectionNetworkConnectionsRestClient => _devCenterNetworkConnectionNetworkConnectionsRestClient ??= new NetworkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevCenterNetworkConnectionResource.ResourceType));
+        private ClientDiagnostics DevCenterProjectProjectsClientDiagnostics => _devCenterProjectProjectsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterProjectResource.ResourceType.Namespace, Diagnostics);
+        private ProjectsRestOperations DevCenterProjectProjectsRestClient => _devCenterProjectProjectsRestClient ??= new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevCenterProjectResource.ResourceType));
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.CheckDevCenterNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await CheckNameAvailabilityRestClient.ExecuteAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.CheckDevCenterNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = CheckNameAvailabilityRestClient.Execute(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkScopedNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckScopedNameAvailability_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DevCenterNameAvailabilityResult>> ExecuteCheckScopedNameAvailabilityAsync(CheckScopedNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = CheckScopedNameAvailabilityClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.ExecuteCheckScopedNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await CheckScopedNameAvailabilityRestClient.ExecuteAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkScopedNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckScopedNameAvailability_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DevCenterNameAvailabilityResult> ExecuteCheckScopedNameAvailability(CheckScopedNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = CheckScopedNameAvailabilityClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.ExecuteCheckScopedNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = CheckScopedNameAvailabilityRestClient.Execute(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -79,7 +235,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,7 +266,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,68 +285,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Lists all projects in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterProjects", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all projects in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterProjectResource> GetDevCenterProjects(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterProjects", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Gets the current status of an async operation.
         /// <list type="bullet">
         /// <item>
@@ -203,11 +297,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -243,11 +337,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -283,11 +377,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -310,11 +404,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterUsage> GetDevCenterUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
@@ -325,137 +419,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Check the availability of name for resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_Execute</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The required parameters for checking if resource name is available. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.CheckDevCenterNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await CheckNameAvailabilityRestClient.ExecuteAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Check the availability of name for resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_Execute</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The required parameters for checking if resource name is available. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.CheckDevCenterNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = CheckNameAvailabilityRestClient.Execute(Id.SubscriptionId, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists the Microsoft.DevCenter SKUs available in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevCenterSkuDetails.DeserializeDevCenterSkuDetails(e), SkusClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the Microsoft.DevCenter SKUs available in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevCenterSkuDetails.DeserializeDevCenterSkuDetails(e), SkusClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists network connections in a subscription
+        /// Lists network connections in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -467,7 +431,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -486,7 +450,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Lists network connections in a subscription
+        /// Lists network connections in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -498,7 +462,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,6 +478,122 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), DevCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterNetworkConnections", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all projects in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterProjects", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all projects in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterProjectResource> GetDevCenterProjects(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterProjects", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the Microsoft.DevCenter SKUs available in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevCenterSkuDetails.DeserializeDevCenterSkuDetails(e), SkusClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the Microsoft.DevCenter SKUs available in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevCenterSkuDetails.DeserializeDevCenterSkuDetails(e), SkusClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
         }
     }
 }

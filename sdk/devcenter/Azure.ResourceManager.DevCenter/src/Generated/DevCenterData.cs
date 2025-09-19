@@ -65,12 +65,22 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Managed identity properties. </param>
+        /// <param name="encryption"> Encryption settings to be used for server-side encryption for proprietary content (such as catalogs, logs, customizations). </param>
+        /// <param name="displayName"> The display name of the devcenter. </param>
+        /// <param name="projectCatalogSettings"> Dev Center settings to be used when associating a project with a catalog. </param>
+        /// <param name="networkSettings"> Network settings that will be enforced on network resources associated with the Dev Center. </param>
+        /// <param name="devBoxProvisioningSettings"> Settings to be used in the provisioning of all Dev Boxes that belong to this dev center. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="devCenterUri"> The URI of the Dev Center. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DevCenterProvisioningState? provisioningState, Uri devCenterUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Encryption encryption, string displayName, DevCenterProjectCatalogSettings projectCatalogSettings, DevCenterNetworkSettings networkSettings, DevBoxProvisioningSettings devBoxProvisioningSettings, DevCenterProvisioningState? provisioningState, Uri devCenterUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
+            Encryption = encryption;
+            DisplayName = displayName;
+            ProjectCatalogSettings = projectCatalogSettings;
+            NetworkSettings = networkSettings;
+            DevBoxProvisioningSettings = devBoxProvisioningSettings;
             ProvisioningState = provisioningState;
             DevCenterUri = devCenterUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -83,6 +93,64 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Encryption settings to be used for server-side encryption for proprietary content (such as catalogs, logs, customizations). </summary>
+        internal Encryption Encryption { get; set; }
+        /// <summary> All Customer-managed key encryption properties for the resource. </summary>
+        public CustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
+            set
+            {
+                if (Encryption is null)
+                    Encryption = new Encryption();
+                Encryption.CustomerManagedKeyEncryption = value;
+            }
+        }
+
+        /// <summary> The display name of the devcenter. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> Dev Center settings to be used when associating a project with a catalog. </summary>
+        internal DevCenterProjectCatalogSettings ProjectCatalogSettings { get; set; }
+        /// <summary> Whether project catalogs associated with projects in this dev center can be configured to sync catalog items. </summary>
+        public CatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus
+        {
+            get => ProjectCatalogSettings is null ? default : ProjectCatalogSettings.CatalogItemSyncEnableStatus;
+            set
+            {
+                if (ProjectCatalogSettings is null)
+                    ProjectCatalogSettings = new DevCenterProjectCatalogSettings();
+                ProjectCatalogSettings.CatalogItemSyncEnableStatus = value;
+            }
+        }
+
+        /// <summary> Network settings that will be enforced on network resources associated with the Dev Center. </summary>
+        internal DevCenterNetworkSettings NetworkSettings { get; set; }
+        /// <summary> Indicates whether pools in this Dev Center can use Microsoft Hosted Networks. Defaults to Enabled if not set. </summary>
+        public MicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus
+        {
+            get => NetworkSettings is null ? default : NetworkSettings.MicrosoftHostedNetworkEnableStatus;
+            set
+            {
+                if (NetworkSettings is null)
+                    NetworkSettings = new DevCenterNetworkSettings();
+                NetworkSettings.MicrosoftHostedNetworkEnableStatus = value;
+            }
+        }
+
+        /// <summary> Settings to be used in the provisioning of all Dev Boxes that belong to this dev center. </summary>
+        internal DevBoxProvisioningSettings DevBoxProvisioningSettings { get; set; }
+        /// <summary> Indicates whether to install the Azure Monitor Agent service on Dev Boxes that belong to this dev center. </summary>
+        public InstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus
+        {
+            get => DevBoxProvisioningSettings is null ? default : DevBoxProvisioningSettings.InstallAzureMonitorAgentEnableStatus;
+            set
+            {
+                if (DevBoxProvisioningSettings is null)
+                    DevBoxProvisioningSettings = new DevBoxProvisioningSettings();
+                DevBoxProvisioningSettings.InstallAzureMonitorAgentEnableStatus = value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
         public DevCenterProvisioningState? ProvisioningState { get; }
         /// <summary> The URI of the Dev Center. </summary>

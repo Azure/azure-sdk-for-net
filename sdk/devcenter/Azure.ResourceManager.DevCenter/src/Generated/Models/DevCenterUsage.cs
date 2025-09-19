@@ -55,13 +55,15 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="limit"> The limit integer. </param>
         /// <param name="unit"> The unit details. </param>
         /// <param name="name"> The name. </param>
+        /// <param name="id"> The fully qualified arm resource id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterUsage(long? currentValue, long? limit, DevCenterUsageUnit? unit, DevCenterUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterUsage(long? currentValue, long? limit, DevCenterUsageUnit? unit, DevCenterUsageName name, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentValue = currentValue;
             Limit = limit;
             Unit = unit;
             Name = name;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,5 +75,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterUsageUnit? Unit { get; }
         /// <summary> The name. </summary>
         public DevCenterUsageName Name { get; }
+        /// <summary> The fully qualified arm resource id. </summary>
+        public string Id { get; }
     }
 }

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string IsEnabledValue = "Enabled";
         private const string IsDisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Schedule is enabled. </summary>
         public static DevCenterScheduleEnableStatus IsEnabled { get; } = new DevCenterScheduleEnableStatus(IsEnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> Schedule is disabled. </summary>
         public static DevCenterScheduleEnableStatus IsDisabled { get; } = new DevCenterScheduleEnableStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="DevCenterScheduleEnableStatus"/> values are the same. </summary>
         public static bool operator ==(DevCenterScheduleEnableStatus left, DevCenterScheduleEnableStatus right) => left.Equals(right);

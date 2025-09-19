@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2025-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> List Dev Box definitions for a devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> List Dev Box definitions for a devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a Dev Box definition. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a Dev Box definition. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates a Dev Box definition. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates a Dev Box definition. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates a Dev Box definition. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates a Dev Box definition. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes a Dev Box definition. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -501,7 +501,6 @@ namespace Azure.ResourceManager.DevCenter
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -511,7 +510,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes a Dev Box definition. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -529,7 +528,6 @@ namespace Azure.ResourceManager.DevCenter
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -583,7 +581,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> List Dev Box definitions configured for a project. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -613,7 +611,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> List Dev Box definitions configured for a project. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -681,7 +679,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a Dev Box definition configured for a project. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -714,7 +712,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a Dev Box definition configured for a project. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
@@ -770,7 +768,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> List Dev Box definitions for a devcenter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -802,7 +800,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> List Dev Box definitions for a devcenter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -856,7 +854,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> List Dev Box definitions configured for a project. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -888,7 +886,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> List Dev Box definitions configured for a project. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>

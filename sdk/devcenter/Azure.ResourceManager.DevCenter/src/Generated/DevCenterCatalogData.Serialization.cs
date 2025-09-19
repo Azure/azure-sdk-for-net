@@ -50,6 +50,22 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("adoGit"u8);
                 writer.WriteObjectValue(AdoGit, options);
             }
+            if (Optional.IsDefined(SyncType))
+            {
+                writer.WritePropertyName("syncType"u8);
+                writer.WriteStringValue(SyncType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -59,6 +75,21 @@ namespace Azure.ResourceManager.DevCenter
             {
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastSyncStats))
+            {
+                writer.WritePropertyName("lastSyncStats"u8);
+                writer.WriteObjectValue(LastSyncStats, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
+            {
+                writer.WritePropertyName("connectionState"u8);
+                writer.WriteStringValue(ConnectionState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastConnectionOn))
+            {
+                writer.WritePropertyName("lastConnectionTime"u8);
+                writer.WriteStringValue(LastConnectionOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
             {
@@ -94,8 +125,13 @@ namespace Azure.ResourceManager.DevCenter
             SystemData systemData = default;
             DevCenterGitCatalog gitHub = default;
             DevCenterGitCatalog adoGit = default;
+            CatalogSyncType? syncType = default;
+            IDictionary<string, string> tags = default;
             DevCenterProvisioningState? provisioningState = default;
             DevCenterCatalogSyncState? syncState = default;
+            SyncStats lastSyncStats = default;
+            CatalogConnectionState? connectionState = default;
+            DateTimeOffset? lastConnectionTime = default;
             DateTimeOffset? lastSyncTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -152,6 +188,29 @@ namespace Azure.ResourceManager.DevCenter
                             adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("syncType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            syncType = new CatalogSyncType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("tags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            tags = dictionary;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -168,6 +227,33 @@ namespace Azure.ResourceManager.DevCenter
                                 continue;
                             }
                             syncState = new DevCenterCatalogSyncState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("lastSyncStats"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastSyncStats = SyncStats.DeserializeSyncStats(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("connectionState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectionState = new CatalogConnectionState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("lastConnectionTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastConnectionTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("lastSyncTime"u8))
@@ -195,8 +281,13 @@ namespace Azure.ResourceManager.DevCenter
                 systemData,
                 gitHub,
                 adoGit,
+                syncType,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
                 syncState,
+                lastSyncStats,
+                connectionState,
+                lastConnectionTime,
                 lastSyncTime,
                 serializedAdditionalRawData);
         }

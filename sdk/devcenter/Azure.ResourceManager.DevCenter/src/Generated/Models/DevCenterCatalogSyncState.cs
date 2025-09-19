@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Succeeded synchronization state. </summary>
         public static DevCenterCatalogSyncState Succeeded { get; } = new DevCenterCatalogSyncState(SucceededValue);
-        /// <summary> InProgress. </summary>
+        /// <summary> In progress synchronization state. </summary>
         public static DevCenterCatalogSyncState InProgress { get; } = new DevCenterCatalogSyncState(InProgressValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Failed synchronization state. </summary>
         public static DevCenterCatalogSyncState Failed { get; } = new DevCenterCatalogSyncState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Canceled synchronization state. </summary>
         public static DevCenterCatalogSyncState Canceled { get; } = new DevCenterCatalogSyncState(CanceledValue);
         /// <summary> Determines if two <see cref="DevCenterCatalogSyncState"/> values are the same. </summary>
         public static bool operator ==(DevCenterCatalogSyncState left, DevCenterCatalogSyncState right) => left.Equals(right);

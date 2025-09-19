@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a network connection resource
+        /// Gets a network connection resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a network connection resource
+        /// Gets a network connection resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Deletes a Network Connections resource
+        /// Deletes a Network Connections resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterNetworkConnectionNetworkConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Deletes a Network Connections resource
+        /// Deletes a Network Connections resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Partially updates a Network Connection
+        /// Partially updates a Network Connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterNetworkConnectionNetworkConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Partially updates a Network Connection
+        /// Partially updates a Network Connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -342,93 +342,9 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers a new health check run. The execution and health check result can be tracked via the network Connection health check details
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/runHealthChecks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_RunHealthChecks</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RunHealthChecksAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics.CreateScope("DevCenterNetworkConnectionResource.RunHealthChecks");
-            scope.Start();
-            try
-            {
-                var response = await _devCenterNetworkConnectionNetworkConnectionsRestClient.RunHealthChecksAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers a new health check run. The execution and health check result can be tracked via the network Connection health check details
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/runHealthChecks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_RunHealthChecks</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RunHealthChecks(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics.CreateScope("DevCenterNetworkConnectionResource.RunHealthChecks");
-            scope.Start();
-            try
-            {
-                var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.RunHealthChecks(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -451,7 +367,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -482,7 +398,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -501,6 +417,90 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
+        /// Triggers a new health check run. The execution and health check result can be tracked via the network Connection health check details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/runHealthChecks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_RunHealthChecks</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RunHealthChecksAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics.CreateScope("DevCenterNetworkConnectionResource.RunHealthChecks");
+            scope.Start();
+            try
+            {
+                var response = await _devCenterNetworkConnectionNetworkConnectionsRestClient.RunHealthChecksAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers a new health check run. The execution and health check result can be tracked via the network Connection health check details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/runHealthChecks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_RunHealthChecks</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation RunHealthChecks(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics.CreateScope("DevCenterNetworkConnectionResource.RunHealthChecks");
+            scope.Start();
+            try
+            {
+                var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.RunHealthChecks(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

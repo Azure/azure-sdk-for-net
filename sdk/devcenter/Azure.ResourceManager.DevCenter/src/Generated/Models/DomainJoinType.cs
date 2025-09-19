@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         private const string HybridAadJoinValue = "HybridAzureADJoin";
         private const string AadJoinValue = "AzureADJoin";
+        private const string NoneValue = "None";
 
-        /// <summary> HybridAzureADJoin. </summary>
+        /// <summary> Hybrid Azure AD Join type. </summary>
         public static DomainJoinType HybridAadJoin { get; } = new DomainJoinType(HybridAadJoinValue);
-        /// <summary> AzureADJoin. </summary>
+        /// <summary> Azure AD Join type. </summary>
         public static DomainJoinType AadJoin { get; } = new DomainJoinType(AadJoinValue);
+        /// <summary> No Active Directory join type. </summary>
+        public static DomainJoinType None { get; } = new DomainJoinType(NoneValue);
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are the same. </summary>
         public static bool operator ==(DomainJoinType left, DomainJoinType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are not the same. </summary>

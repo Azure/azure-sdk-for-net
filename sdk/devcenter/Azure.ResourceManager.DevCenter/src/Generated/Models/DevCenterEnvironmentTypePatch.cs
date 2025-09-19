@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentTypePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="displayName"> The display name of the environment type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironmentTypePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterEnvironmentTypePatch(IDictionary<string, string> tags, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            DisplayName = displayName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> The display name of the environment type. </summary>
+        public string DisplayName { get; set; }
     }
 }

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> Results of the Dev Box definition list operation. </summary>
+    /// <summary> Paged collection of DevBoxDefinition items. </summary>
     internal partial class DevBoxDefinitionListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionListResult"/>. </summary>
-        internal DevBoxDefinitionListResult()
+        /// <param name="value"> The DevBoxDefinition items on this page. </param>
+        internal DevBoxDefinitionListResult(IEnumerable<DevBoxDefinitionData> value)
         {
-            Value = new ChangeTrackingList<DevBoxDefinitionData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionListResult"/>. </summary>
-        /// <param name="value"> Current page of results. </param>
-        /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
+        /// <param name="value"> The DevBoxDefinition items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxDefinitionListResult(IReadOnlyList<DevBoxDefinitionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevBoxDefinitionListResult(IReadOnlyList<DevBoxDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Current page of results. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionListResult"/> for deserialization. </summary>
+        internal DevBoxDefinitionListResult()
+        {
+        }
+
+        /// <summary> The DevBoxDefinition items on this page. </summary>
         public IReadOnlyList<DevBoxDefinitionData> Value { get; }
-        /// <summary> URL to get the next set of results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

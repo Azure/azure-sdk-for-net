@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.DevCenter
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            string displayName = default;
             DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -136,6 +142,11 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -160,6 +171,7 @@ namespace Azure.ResourceManager.DevCenter
                 type,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                displayName,
                 provisioningState,
                 serializedAdditionalRawData);
         }

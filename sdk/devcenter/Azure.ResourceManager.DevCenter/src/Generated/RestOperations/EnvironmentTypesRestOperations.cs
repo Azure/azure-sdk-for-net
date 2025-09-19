@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2025-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists environment types for the devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists environment types for the devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets an environment type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets an environment type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates an environment type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -308,6 +308,7 @@ namespace Azure.ResourceManager.DevCenter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         DevCenterEnvironmentTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates an environment type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -341,6 +342,7 @@ namespace Azure.ResourceManager.DevCenter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         DevCenterEnvironmentTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
@@ -395,7 +397,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates an environment type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -428,7 +430,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates an environment type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -499,7 +501,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes an environment type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -526,7 +528,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes an environment type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -576,7 +578,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists environment types for the devcenter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -608,7 +610,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists environment types for the devcenter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> Results of the image list operation. </summary>
+    /// <summary> Paged collection of Image items. </summary>
     internal partial class DevCenterImageListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterImageListResult"/>. </summary>
-        internal DevCenterImageListResult()
+        /// <param name="value"> The Image items on this page. </param>
+        internal DevCenterImageListResult(IEnumerable<DevCenterImageData> value)
         {
-            Value = new ChangeTrackingList<DevCenterImageData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterImageListResult"/>. </summary>
-        /// <param name="value"> Current page of results. </param>
-        /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
+        /// <param name="value"> The Image items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterImageListResult(IReadOnlyList<DevCenterImageData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterImageListResult(IReadOnlyList<DevCenterImageData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Current page of results. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageListResult"/> for deserialization. </summary>
+        internal DevCenterImageListResult()
+        {
+        }
+
+        /// <summary> The Image items on this page. </summary>
         public IReadOnlyList<DevCenterImageData> Value { get; }
-        /// <summary> URL to get the next set of results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
