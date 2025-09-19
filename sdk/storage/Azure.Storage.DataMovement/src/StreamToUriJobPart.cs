@@ -395,7 +395,7 @@ namespace Azure.Storage.DataMovement
                 cancellationToken: _cancellationToken).ConfigureAwait(false);
 
             // Dispose the handlers
-            await DisposeHandlersAsync().ConfigureAwait(false);
+            await CleanUpHandlersAsync().ConfigureAwait(false);
 
             // Set completion status to completed
             await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
@@ -495,11 +495,11 @@ namespace Azure.Storage.DataMovement
             await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
-        public override async Task DisposeHandlersAsync()
+        public override async Task CleanUpHandlersAsync()
         {
             if (_commitBlockHandler != default)
             {
-                await _commitBlockHandler.TryComplete().ConfigureAwait(false);
+                await _commitBlockHandler.CleanUpAsync().ConfigureAwait(false);
                 _commitBlockHandler = null;
             }
         }

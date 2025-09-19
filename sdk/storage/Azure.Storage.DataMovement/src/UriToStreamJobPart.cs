@@ -317,7 +317,7 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
-                await DisposeHandlersAsync().ConfigureAwait(false);
+                await CleanUpHandlersAsync().ConfigureAwait(false);
 
                 // Update the transfer status
                 await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
@@ -466,11 +466,11 @@ namespace Azure.Storage.DataMovement
             await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
-        public override async Task DisposeHandlersAsync()
+        public override async Task CleanUpHandlersAsync()
         {
             if (_downloadChunkHandler != default)
             {
-                await _downloadChunkHandler.TryCompleteAsync().ConfigureAwait(false);
+                await _downloadChunkHandler.CleanUpAsync().ConfigureAwait(false);
                 _downloadChunkHandler = null;
             }
         }

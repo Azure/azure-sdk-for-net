@@ -49,10 +49,10 @@ namespace Azure.Storage.DataMovement
             _progressProcessor.Process = ProcessProgressEvent;
         }
 
-        public async Task TryCompleteAsync()
+        public async Task CleanUpAsync()
         {
             // This will close the channel and block on all pending items being processed
-            await _progressProcessor.TryCompleteAsync().ConfigureAwait(false);
+            await _progressProcessor.CleanUpAsync().ConfigureAwait(false);
         }
 
         public async ValueTask IncrementCompletedFilesAsync(CancellationToken cancellationToken)

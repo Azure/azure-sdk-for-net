@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement.Tests
             return new(Task.CompletedTask);
         }
 
-        public bool TryComplete() => true;
+        public Task CleanUpAsync() => Task.CompletedTask;
 
         /// <summary>
         /// Attmpts to read an item from internal queue, then completes
@@ -70,11 +70,6 @@ namespace Azure.Storage.DataMovement.Tests
                 steps++;
             }
             return steps;
-        }
-
-        public Task<bool> TryCompleteAsync()
-        {
-            return Task.FromResult(true);
         }
     }
 }

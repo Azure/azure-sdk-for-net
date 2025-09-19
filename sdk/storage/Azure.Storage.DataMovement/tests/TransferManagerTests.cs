@@ -93,9 +93,9 @@ public class TransferManagerTests
             chunksProcessor.VerifyNoOtherCalls();
         }
 
-        jobsProcessor.Verify(jobsProcessor => jobsProcessor.TryCompleteAsync(), Times.Once);
-        partsProcessor.Verify(partsProcessor => partsProcessor.TryCompleteAsync(), Times.Once);
-        chunksProcessor.Verify(chunksProcessor => chunksProcessor.TryCompleteAsync(), Times.Once);
+        jobsProcessor.Verify(jobsProcessor => jobsProcessor.CleanUpAsync(), Times.Once);
+        partsProcessor.Verify(partsProcessor => partsProcessor.CleanUpAsync(), Times.Once);
+        chunksProcessor.Verify(chunksProcessor => chunksProcessor.CleanUpAsync(), Times.Once);
 
         jobsProcessor.VerifyNoOtherCalls();
         partsProcessor.VerifyNoOtherCalls();

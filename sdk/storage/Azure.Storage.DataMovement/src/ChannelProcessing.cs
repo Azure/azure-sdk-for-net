@@ -15,7 +15,7 @@ internal delegate Task ProcessAsync<T>(T item);
 internal interface IProcessor<TItem>
 {
     ValueTask QueueAsync(TItem item, CancellationToken cancellationToken);
-    Task<bool> TryCompleteAsync();
+    Task CleanUpAsync();
     ProcessAsync<TItem> Process { get; set; }
 }
 
@@ -87,11 +87,10 @@ internal static class ChannelProcessing
             await _channel.Writer.WriteAsync(item, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<bool> TryCompleteAsync()
+        public async Task CleanUpAsync()
         {
-            bool completionValue = _channel.Writer.TryComplete();
+            _channel.Writer.TryComplete();
             await _processorTaskCompletionSource.Task.ConfigureAwait(false);
-            return completionValue;
         }
 
         protected abstract ValueTask NotifyOfPendingItemProcessing();

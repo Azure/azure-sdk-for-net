@@ -460,15 +460,15 @@ namespace Azure.Storage.DataMovement
         {
             if (_jobsProcessor != default)
             {
-                await _jobsProcessor.TryCompleteAsync().ConfigureAwait(false);
+                await _jobsProcessor.CleanUpAsync().ConfigureAwait(false);
             }
             if (_partsProcessor != default)
             {
-                await _partsProcessor.TryCompleteAsync().ConfigureAwait(false);
+                await _partsProcessor.CleanUpAsync().ConfigureAwait(false);
             }
             if (_chunksProcessor != default)
             {
-                await _chunksProcessor.TryCompleteAsync().ConfigureAwait(false);
+                await _chunksProcessor.CleanUpAsync().ConfigureAwait(false);
             }
             _transfers.Clear();
             GC.SuppressFinalize(this);

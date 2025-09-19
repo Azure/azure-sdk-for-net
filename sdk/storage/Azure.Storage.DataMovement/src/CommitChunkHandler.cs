@@ -83,10 +83,10 @@ namespace Azure.Storage.DataMovement
             _isChunkHandlerRunning = true;
         }
 
-        public Task TryComplete()
+        public Task CleanUpAsync()
         {
             _isChunkHandlerRunning = false;
-            return _stageChunkProcessor.TryCompleteAsync();
+            return _stageChunkProcessor.CleanUpAsync();
         }
 
         public async ValueTask QueueChunkAsync(QueueStageChunkArgs args, CancellationToken cancellationToken = default)

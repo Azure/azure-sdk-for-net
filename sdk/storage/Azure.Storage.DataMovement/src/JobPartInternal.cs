@@ -237,7 +237,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Disposes of chunk handler.
         /// </summary>
-        public abstract Task DisposeHandlersAsync();
+        public abstract Task CleanUpHandlersAsync();
 
         /// <summary>
         /// Triggers the cancellation for the Job Part.
@@ -367,7 +367,7 @@ namespace Azure.Storage.DataMovement
                     .ConfigureAwait(false);
             }
             //TODO: figure out why we set the Completed state here and not just wait for all the chunks to finish
-            await DisposeHandlersAsync().ConfigureAwait(false);
+            await CleanUpHandlersAsync().ConfigureAwait(false);
             await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
         }
 
@@ -585,7 +585,7 @@ namespace Azure.Storage.DataMovement
                     TransferState newState = JobPartStatus.State == TransferState.Pausing ?
                         TransferState.Paused :
                         TransferState.Completed;
-                    await DisposeHandlersAsync().ConfigureAwait(false);
+                    await CleanUpHandlersAsync().ConfigureAwait(false);
                     await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
             }

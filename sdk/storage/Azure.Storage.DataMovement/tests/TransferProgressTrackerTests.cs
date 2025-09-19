@@ -57,8 +57,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await Process(item);
             }
 
-            public bool TryComplete() => true;
-            public Task<bool> TryCompleteAsync() => Task.FromResult(true);
+            public Task CleanUpAsync() => Task.CompletedTask;
         }
 
         private static void AssertProgressUpdates(List<TransferProgress> expected,  List<TransferProgress> actual)

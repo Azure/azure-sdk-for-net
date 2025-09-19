@@ -191,7 +191,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await downloadChunkHandler.TryCompleteAsync();
+            await downloadChunkHandler.CleanUpAsync();
         }
 
         [Test]
@@ -247,7 +247,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await downloadChunkHandler.TryCompleteAsync();
+            await downloadChunkHandler.CleanUpAsync();
         }
 
         [Test]
@@ -302,7 +302,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await downloadChunkHandler.TryCompleteAsync();
+            await downloadChunkHandler.CleanUpAsync();
         }
 
         [Test]
@@ -356,7 +356,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await downloadChunkHandler.TryCompleteAsync();
+            await downloadChunkHandler.CleanUpAsync();
         }
 
         [Test]
@@ -397,7 +397,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Cleanup
-            await downloadChunkHandler.TryCompleteAsync();
+            await downloadChunkHandler.CleanUpAsync();
         }
 
         [Test]
@@ -437,11 +437,11 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await downloadChunkHandler.TryCompleteAsync();
+            await downloadChunkHandler.CleanUpAsync();
         }
 
         [Test]
-        public async Task TryCompleteAsync()
+        public async Task CleanUpAsync()
         {
             // Arrange - Create DownloadChunkHandler then Dispose it so the event handler is disposed
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
@@ -461,7 +461,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: CancellationToken.None);
 
             // Act
-            await downloadChunkHandler.TryCompleteAsync();
+            await downloadChunkHandler.CleanUpAsync();
 
             Assert.ThrowsAsync<ChannelClosedException>(async () =>
                 await downloadChunkHandler.QueueChunkAsync(default));

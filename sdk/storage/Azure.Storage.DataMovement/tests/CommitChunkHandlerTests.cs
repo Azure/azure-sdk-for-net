@@ -185,7 +185,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -240,7 +240,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -281,7 +281,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Cleanup
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -333,7 +333,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -388,7 +388,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -429,7 +429,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Cleanup
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -470,7 +470,7 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Cleanup
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -510,11 +510,11 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             // Cleanup
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
-        public async Task TryComplete()
+        public async Task CleanUpAsync()
         {
             // Arrange - Create CommitChunkHandler then Dispose it so the event handler is disposed
             MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
@@ -536,7 +536,7 @@ namespace Azure.Storage.DataMovement.Tests
                 CancellationToken.None);
 
             // Act
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
 
             Assert.ThrowsAsync<ChannelClosedException>(async () =>
                 await commitBlockHandler.QueueChunkAsync(default));
@@ -606,7 +606,7 @@ namespace Azure.Storage.DataMovement.Tests
             mockCommitChunkBehaviors.QueueCommitBlockTask.Verify(b => b(properties));
 
             // Cleanup
-            await commitBlockHandler.TryComplete();
+            await commitBlockHandler.CleanUpAsync();
         }
     }
 }
