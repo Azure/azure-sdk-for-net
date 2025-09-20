@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- The default service version is now `2025-07-01`.
+
 ## 4.8.0 (2025-06-13)
 
 ### Other Changes
