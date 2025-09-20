@@ -1,6 +1,6 @@
 # Release History
 
-## 12.3.0-beta.1 (Unreleased)
+## 12.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -16,6 +16,11 @@
 - Fixed bug where referenced `TransferOperation` from the transfers stored in the `TransferManager` after they reach a `Completed` or `Paused` state where not being removed.
 
 ### Other Changes
+
+## 12.3.0-beta.1 (2025-09-16)
+
+### Features Added
+- This release contains features and bug fixes to improve quality.
 
 ## 12.2.2 (2025-09-10)
 

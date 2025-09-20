@@ -75,7 +75,7 @@ namespace Azure.AI.VoiceLive
             ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ServerEventErrorError error = default;
+            SessionUpdateErrorDetails error = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -90,7 +90,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    error = ServerEventErrorError.DeserializeServerEventErrorError(prop.Value, options);
+                    error = SessionUpdateErrorDetails.DeserializeSessionUpdateErrorDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The representation of a voicelive tool_choice selecting a named function tool. </summary>
-    public partial class ToolChoiceFunctionObject : ToolChoiceObject
+    internal partial class ToolChoiceFunctionObject : ToolChoiceObject
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/>. </summary>
         /// <param name="function"></param>

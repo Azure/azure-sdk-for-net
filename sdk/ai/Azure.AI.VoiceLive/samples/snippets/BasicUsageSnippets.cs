@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
 
             // Configure session for voice conversation
-            SessionOptions sessionOptions = new SessionOptions()
+            VoiceLiveSessionOptions sessionOptions = new()
             {
                 Model = model,
                 Instructions = "You are a helpful AI assistant. Respond naturally and conversationally.",
@@ -84,7 +84,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
 
             #region Snippet:AdvancedVoiceConfiguration
-            SessionOptions sessionOptions = new SessionOptions()
+            VoiceLiveSessionOptions sessionOptions = new()
             {
                 Model = model,
                 Instructions = "You are a customer service representative. Be helpful and professional.",
@@ -143,7 +143,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                     """)
             };
 
-            SessionOptions sessionOptions = new SessionOptions()
+            VoiceLiveSessionOptions sessionOptions = new()
             {
                 Model = model,
                 Instructions = "You are a weather assistant. Use the get_current_weather function to help users with weather information.",

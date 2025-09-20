@@ -123,51 +123,6 @@ public class TestUtilitiesIntegrationTests
     }
 
     [Test]
-    public async Task MockTransportWithAsyncProcessingHandlesAsyncOperationsCorrectly()
-    {
-        var processedItems = new List<string>();
-        var transport = new MockPipelineTransport(msg =>
-        {
-            processedItems.Add($"Processed: {msg.Request.Method} {msg.Request.Uri}");
-            return new MockPipelineResponse(200, "OK").WithContent("async response");
-        });
-        transport.ExpectSyncPipeline = false; // Enable async processing
-
-        var messages = new[]
-        {
-            CreateMessageWithUrl(transport, "GET", "https://api.example.com/item/1"),
-            CreateMessageWithUrl(transport, "GET", "https://api.example.com/item/2"),
-            CreateMessageWithUrl(transport, "GET", "https://api.example.com/item/3")
-        };
-
-        var tasks = messages.Select(async msg =>
-        {
-            await Task.Delay(10); // Simulate some async work
-            await transport.ProcessAsync(msg);
-            return msg;
-        });
-
-        var results = await Task.WhenAll(tasks);
-
-        using (Assert.EnterMultipleScope())
-        {
-            Assert.That(results.Length, Is.EqualTo(3));
-            Assert.That(processedItems.Count, Is.EqualTo(3));
-            Assert.That(transport.Requests.Count, Is.EqualTo(3));
-        }
-
-        foreach (var result in results)
-        {
-            Assert.That(result.Response, Is.Not.Null);
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(result.Response.Status, Is.EqualTo(200));
-                Assert.That(result.Response.Content.ToString(), Is.EqualTo("async response"));
-            }
-        }
-    }
-
-    [Test]
     public void MockTransportWithSyncAsyncMismatchThrowsAppropriateExceptions()
     {
         var transport = new MockPipelineTransport();

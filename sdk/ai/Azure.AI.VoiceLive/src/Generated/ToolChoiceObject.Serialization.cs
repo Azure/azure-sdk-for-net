@@ -11,12 +11,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// A base representation for a voicelive tool_choice selecting a named tool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolChoiceFunctionObject"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownToolChoiceObject))]
-    public abstract partial class ToolChoiceObject : IJsonModel<ToolChoiceObject>
+    internal abstract partial class ToolChoiceObject : IJsonModel<ToolChoiceObject>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceObject"/> for deserialization. </summary>
         internal ToolChoiceObject()

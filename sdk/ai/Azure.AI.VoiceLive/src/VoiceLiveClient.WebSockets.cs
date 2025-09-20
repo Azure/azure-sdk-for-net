@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
         public virtual async Task<VoiceLiveSession> StartSessionAsync(
-            RequestSession sessionConfig,
+            VoiceLiveSessionOptions sessionConfig,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sessionConfig, nameof(sessionConfig));
@@ -86,7 +86,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>A new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
         public virtual VoiceLiveSession StartSession(
-            RequestSession sessionConfig,
+            VoiceLiveSessionOptions sessionConfig,
             CancellationToken cancellationToken = default)
         {
             return StartSessionAsync(sessionConfig, cancellationToken).EnsureCompleted();
