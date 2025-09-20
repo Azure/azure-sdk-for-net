@@ -22,11 +22,8 @@ namespace MgmtTypeSpec
 
         /// <summary> Initializes a new instance of <see cref="ZooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public ZooData(string location) : base(location)
+        public ZooData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
         }
 
         /// <summary> Initializes a new instance of <see cref="ZooData"/>. </summary>
@@ -39,7 +36,7 @@ namespace MgmtTypeSpec
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        internal ZooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, ZooProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal ZooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ZooProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

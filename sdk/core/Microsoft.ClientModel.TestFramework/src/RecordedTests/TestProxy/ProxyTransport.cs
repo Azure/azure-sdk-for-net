@@ -46,7 +46,8 @@ public class ProxyTransport : PipelineTransport
         var handler = new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate?.Issuer == certIssuer,
-            AllowAutoRedirect = false
+            AllowAutoRedirect = false,
+            UseCookies = false
         };
         _innerTransport = new HttpClientPipelineTransport(new HttpClient(handler));
     }

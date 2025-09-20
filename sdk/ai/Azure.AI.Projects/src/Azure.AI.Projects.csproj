@@ -9,6 +9,7 @@
     <GenerateAPIListing>true</GenerateAPIListing>
     <LangVersion>latest</LangVersion>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>

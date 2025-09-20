@@ -191,5 +191,14 @@ namespace MgmtTypeSpec.Mocking
             PlaywrightQuotaResource.ValidateResourceId(id);
             return new PlaywrightQuotaResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
+        public virtual JobResource GetJobResource(ResourceIdentifier id)
+        {
+            JobResource.ValidateResourceId(id);
+            return new JobResource(Client, id);
+        }
     }
 }

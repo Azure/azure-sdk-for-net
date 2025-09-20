@@ -603,9 +603,6 @@
 # ServiceLabel: %Media Services
 # ServiceOwners:                                                   @naiteeks @bennage @giakas
 
-# PRLabel: %Microsoft Playwright Testing
-/sdk/playwrighttesting/                                            @puagarwa @ShreyaAnand
-
 # ServiceLabel: %Microsoft Playwright Testing
 # ServiceOwners:                                                   @puagarwa @ShreyaAnand
 
@@ -1161,6 +1158,9 @@
 
 # ServiceLabel: %SiteManager %Mgmt
 # ServiceOwners:                                                   @bsomeshekar
+
+# ServiceLabel: %Virtual Enclaves %Mgmt
+# ServiceOwners:                                                   @jchavaherrera
 
 # PRLabel: %Weights & Biases
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw
