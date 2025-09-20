@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Added `UniformResourceIdentifiers` and `IpAddresses` collection properties in `SubjectAlternativeNames`.
+
 ### Bugs Fixed
 
 ### Other Changes
