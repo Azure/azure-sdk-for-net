@@ -203,7 +203,7 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP
         private static SocketsHttpHandler ApplyOptionsToHandler(SocketsHttpHandler httpHandler, HttpPipelineTransportOptions? options)
         {
-            #if NET5_0_OR_GREATER
+            #if NET8_0_OR_GREATER
             if (options == null || OperatingSystem.IsBrowser() || OperatingSystem.IsWasi())
             #else
             if (options == null || RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
