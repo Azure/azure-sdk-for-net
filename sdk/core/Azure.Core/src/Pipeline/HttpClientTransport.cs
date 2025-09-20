@@ -153,7 +153,11 @@ namespace Azure.Core.Pipeline
 
         private static HttpMessageHandler CreateDefaultHandler(HttpPipelineTransportOptions? options = null)
         {
+            #if NET8_0_OR_GREATER
+            if (OperatingSystem.IsBrowser() || OperatingSystem.IsWasi())
+            #else
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+            #endif
             {
                 // UseCookies is not supported on "browser"
                 return new HttpClientHandler();
@@ -168,7 +172,11 @@ namespace Azure.Core.Pipeline
 
         private static void SetProxySettings(HttpMessageHandler messageHandler)
         {
+            #if NET8_0_OR_GREATER
+            if (OperatingSystem.IsBrowser() || OperatingSystem.IsWasi())
+            #else
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+            #endif
             {
                 return;
             }
@@ -195,7 +203,11 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP
         private static SocketsHttpHandler ApplyOptionsToHandler(SocketsHttpHandler httpHandler, HttpPipelineTransportOptions? options)
         {
+            #if NET5_0_OR_GREATER
+            if (options == null || OperatingSystem.IsBrowser() || OperatingSystem.IsWasi())
+            #else
             if (options == null || RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+            #endif
             {
                 return httpHandler;
             }
@@ -224,7 +236,11 @@ namespace Azure.Core.Pipeline
 #else
         private static HttpClientHandler ApplyOptionsToHandler(HttpClientHandler httpHandler, HttpPipelineTransportOptions? options)
         {
+            #if NET8_0_OR_GREATER
+            if (options == null || OperatingSystem.IsBrowser() || OperatingSystem.IsWasi())
+            #else
             if (options == null || RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+            #endif
             {
                 return httpHandler;
             }

@@ -156,7 +156,11 @@ namespace Azure.Core.Pipeline
             {
                 // Disable response caching and enable streaming in Blazor apps
                 // see https://github.com/dotnet/aspnetcore/blob/3143d9550014006080bb0def5b5c96608b025a13/src/Components/WebAssembly/WebAssembly/src/Http/WebAssemblyHttpRequestMessageExtensions.cs
+                #if NET8_0_OR_GREATER
+                if (OperatingSystem.IsBrowser() || OperatingSystem.IsWasi())
+                #else
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+                #endif
                 {
                     SetPropertiesOrOptions(currentRequest, "WebAssemblyFetchOptions", new Dictionary<string, object> { { "cache", "no-store" } });
                     SetPropertiesOrOptions(currentRequest, "WebAssemblyEnableStreamingResponse", true);

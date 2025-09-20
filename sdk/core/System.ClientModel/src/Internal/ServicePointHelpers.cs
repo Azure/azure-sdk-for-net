@@ -58,7 +58,11 @@ internal static class ServicePointHelpers
 #endif
     public static void SetLimits(HttpMessageHandler messageHandler)
     {
+        #if NET8_0_OR_GREATER
+        if (OperatingSystem.IsBrowser() || OperatingSystem.IsWasi())
+        #else
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+        #endif
         {
             return;
         }
