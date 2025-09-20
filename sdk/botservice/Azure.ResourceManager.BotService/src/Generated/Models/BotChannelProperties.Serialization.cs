@@ -38,15 +38,8 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStringValue(ChannelName);
             if (Optional.IsDefined(ETag))
             {
-                if (ETag != null)
-                {
-                    writer.WritePropertyName("etag"u8);
-                    writer.WriteStringValue(ETag.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("etag");
-                }
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
