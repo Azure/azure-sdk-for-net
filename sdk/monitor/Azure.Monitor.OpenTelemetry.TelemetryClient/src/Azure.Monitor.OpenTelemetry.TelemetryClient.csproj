@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>An OpenTelemetry .NET telemetry client for Azure Monitor</Description>
+    <AssemblyTitle>AzureMonitor OpenTelemetry Telemetry Client</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure Monitor OpenTelemetry Telemetry Client ApplicationInsights</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Versions are defined in eng/Packages.Data.props -->
+    <!-- Whenever updating OpenTelemetry dependencies, confirm that Test dependencies are also updated. -->
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter"/>
+  </ItemGroup>
+
+</Project>
