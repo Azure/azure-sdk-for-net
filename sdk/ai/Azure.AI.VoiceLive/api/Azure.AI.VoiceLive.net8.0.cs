@@ -174,13 +174,6 @@ namespace Azure.AI.VoiceLive
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureCustomVoice>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureCustomVoice>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureMultiLingualSemanticVad
-    {
-        public AzureMultiLingualSemanticVad() { }
-        public System.TimeSpan PrefixPadding { get { throw null; } set { } }
-        public System.TimeSpan SilenceDuration { get { throw null; } set { } }
-        public System.TimeSpan SpeechDuration { get { throw null; } set { } }
-    }
     public partial class AzurePersonalVoice : Azure.AI.VoiceLive.AzureVoice, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzurePersonalVoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzurePersonalVoice>
     {
         public AzurePersonalVoice(string name, Azure.AI.VoiceLive.PersonalVoiceModels model) { }
@@ -1443,12 +1436,6 @@ namespace Azure.AI.VoiceLive
         Azure.AI.VoiceLive.SessionUpdateResponseDone System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseDone>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseDone>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseDone>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SessionUpdateResponseEmotionHypothesis
-    {
-        public SessionUpdateResponseEmotionHypothesis() { }
-        public System.TimeSpan AudioDuration { get { throw null; } }
-        public System.TimeSpan AudioOffset { get { throw null; } }
     }
     public partial class SessionUpdateResponseFunctionCallArgumentsDelta : Azure.AI.VoiceLive.SessionUpdate, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta>
     {
