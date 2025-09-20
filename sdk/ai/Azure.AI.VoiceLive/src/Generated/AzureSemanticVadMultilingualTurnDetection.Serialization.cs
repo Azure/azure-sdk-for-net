@@ -13,11 +13,11 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Server Speech Detection (Azure semantic VAD). </summary>
-    public partial class AzureMultilingualSemanticVad : IJsonModel<AzureMultilingualSemanticVad>
+    public partial class AzureSemanticVadMultilingualTurnDetection : IJsonModel<AzureSemanticVadMultilingualTurnDetection>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureMultilingualSemanticVad>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureSemanticVadMultilingualTurnDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMultilingualSemanticVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVadMultilingualTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMultilingualSemanticVad)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSemanticVadMultilingualTurnDetection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Threshold))
@@ -88,24 +88,24 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureMultilingualSemanticVad IJsonModel<AzureMultilingualSemanticVad>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureMultilingualSemanticVad)JsonModelCreateCore(ref reader, options);
+        AzureSemanticVadMultilingualTurnDetection IJsonModel<AzureSemanticVadMultilingualTurnDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureSemanticVadMultilingualTurnDetection)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TurnDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMultilingualSemanticVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVadMultilingualTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMultilingualSemanticVad)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSemanticVadMultilingualTurnDetection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureMultilingualSemanticVad(document.RootElement, options);
+            return DeserializeAzureSemanticVadMultilingualTurnDetection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureMultilingualSemanticVad DeserializeAzureMultilingualSemanticVad(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureSemanticVadMultilingualTurnDetection DeserializeAzureSemanticVadMultilingualTurnDetection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -217,7 +217,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureMultilingualSemanticVad(
+            return new AzureSemanticVadMultilingualTurnDetection(
                 @type,
                 additionalBinaryDataProperties,
                 threshold,
@@ -231,43 +231,43 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureMultilingualSemanticVad>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureSemanticVadMultilingualTurnDetection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMultilingualSemanticVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVadMultilingualTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMultilingualSemanticVad)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSemanticVadMultilingualTurnDetection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureMultilingualSemanticVad IPersistableModel<AzureMultilingualSemanticVad>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureMultilingualSemanticVad)PersistableModelCreateCore(data, options);
+        AzureSemanticVadMultilingualTurnDetection IPersistableModel<AzureSemanticVadMultilingualTurnDetection>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureSemanticVadMultilingualTurnDetection)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TurnDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMultilingualSemanticVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVadMultilingualTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeAzureMultilingualSemanticVad(document.RootElement, options);
+                        return DeserializeAzureSemanticVadMultilingualTurnDetection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMultilingualSemanticVad)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSemanticVadMultilingualTurnDetection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureMultilingualSemanticVad>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureSemanticVadMultilingualTurnDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

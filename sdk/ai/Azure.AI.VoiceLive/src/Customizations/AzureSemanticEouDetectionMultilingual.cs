@@ -4,12 +4,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure semantic end-of-utterance detection (default). </summary>
-    public partial class AzureSemanticDetectionMultilingual
+    public partial class AzureSemanticEouDetectionMultilingual
     {
         /// <summary> Gets or sets the Timeout. </summary>
         internal float? TimeoutMs { get; set; }
@@ -19,16 +18,6 @@ namespace Azure.AI.VoiceLive
         {
             get => TimeSpan.FromMilliseconds(TimeoutMs ?? 0);
             set => TimeoutMs = (float)value.TotalMilliseconds;
-        }
-
-        /// <summary> Gets or sets the SecondaryTimeout. </summary>
-        internal float? SecondaryTimeoutMs { get; set; }
-
-        /// <summary> Gets or sets the SecondaryTimeout. </summary>
-        public TimeSpan SecondaryTimeout
-        {
-            get => TimeSpan.FromMilliseconds(SecondaryTimeoutMs ?? 0);
-            set => SecondaryTimeoutMs = (float)value.TotalMilliseconds;
         }
     }
 }

@@ -12,12 +12,12 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Azure semantic end-of-utterance detection (English-optimized). </summary>
-    public partial class AzureSemanticDetectionEn : IJsonModel<AzureSemanticDetectionEn>
+    /// <summary> Azure semantic end-of-utterance detection (default). </summary>
+    public partial class AzureSemanticEouDetection : IJsonModel<AzureSemanticEouDetection>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureSemanticDetectionEn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureSemanticEouDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticEouDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureSemanticDetectionEn)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSemanticEouDetection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Threshold))
@@ -48,24 +48,24 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureSemanticDetectionEn IJsonModel<AzureSemanticDetectionEn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureSemanticDetectionEn)JsonModelCreateCore(ref reader, options);
+        AzureSemanticEouDetection IJsonModel<AzureSemanticEouDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureSemanticEouDetection)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EouDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticEouDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureSemanticDetectionEn)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSemanticEouDetection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureSemanticDetectionEn(document.RootElement, options);
+            return DeserializeAzureSemanticEouDetection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureSemanticDetectionEn DeserializeAzureSemanticDetectionEn(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureSemanticEouDetection DeserializeAzureSemanticEouDetection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,47 +105,47 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureSemanticDetectionEn(model, additionalBinaryDataProperties, threshold, timeoutMs);
+            return new AzureSemanticEouDetection(model, additionalBinaryDataProperties, threshold, timeoutMs);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureSemanticDetectionEn>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureSemanticEouDetection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticEouDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureSemanticDetectionEn)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSemanticEouDetection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureSemanticDetectionEn IPersistableModel<AzureSemanticDetectionEn>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureSemanticDetectionEn)PersistableModelCreateCore(data, options);
+        AzureSemanticEouDetection IPersistableModel<AzureSemanticEouDetection>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureSemanticEouDetection)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EouDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticEouDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeAzureSemanticDetectionEn(document.RootElement, options);
+                        return DeserializeAzureSemanticEouDetection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureSemanticDetectionEn)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSemanticEouDetection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureSemanticDetectionEn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureSemanticEouDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

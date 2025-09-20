@@ -8,7 +8,7 @@ using System;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base model for VAD-based turn detection. </summary>
-    public partial class AzureSemanticVadServer
+    public partial class AzureSemanticVadEnTurnDetection
     {
         /// <summary> Gets or sets the PrefixPaddingMs. </summary>
         internal int? PrefixPaddingMs { get; set; }

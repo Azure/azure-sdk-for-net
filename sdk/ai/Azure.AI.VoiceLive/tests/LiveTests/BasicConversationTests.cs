@@ -281,6 +281,96 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
+        public async Task DefaultAndUpdateTurnDetectionAzureSemanticVadEnTurnDetection()
+        {
+            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+
+            var options = new VoiceLiveSessionOptions()
+            {
+                Model = "gpt-4o",
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                TurnDetection = new AzureSemanticVadEnTurnDetection()
+            };
+
+            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+
+            // Should get two updates back.
+            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+
+            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+
+            var defaultTurnDetection = sessionCreated.Session.TurnDetection;
+            Assert.IsTrue(defaultTurnDetection is ServerVadTurnDetection, $"Default turn detection was {defaultTurnDetection.GetType().Name} and not {typeof(ServerVadTurnDetection).Name}");
+
+            var modifiedTurnDetection = sessionUpdated.Session.TurnDetection;
+            Assert.IsTrue(modifiedTurnDetection is AzureSemanticVadEnTurnDetection, $"Updated turn detection was {modifiedTurnDetection.GetType().Name} and not {typeof(AzureSemanticVadEnTurnDetection).Name}");
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public async Task DefaultAndUpdateTurnDetectionNoTurnDetection()
+        {
+            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+
+            var options = new VoiceLiveSessionOptions()
+            {
+                Model = "gpt-4o",
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                TurnDetection = new NoTurnDetection()
+            };
+
+            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+
+            // Should get two updates back.
+            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+
+            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+
+            var defaultTurnDetection = sessionCreated.Session.TurnDetection;
+            Assert.IsTrue(defaultTurnDetection is ServerVadTurnDetection, $"Default turn detection was {defaultTurnDetection.GetType().Name} and not {typeof(ServerVadTurnDetection).Name}");
+
+            var modifiedTurnDetection = sessionUpdated.Session.TurnDetection;
+            Assert.IsTrue(modifiedTurnDetection is NoTurnDetection, $"Updated turn detection was {modifiedTurnDetection?.GetType().Name} and not {typeof(NoTurnDetection).Name}");
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public async Task DefaultAndUpdateTurnDetectionAzureSemanticVadMultilingualTurnDetection()
+        {
+            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+
+            var options = new VoiceLiveSessionOptions()
+            {
+                Model = "gpt-4o",
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                TurnDetection = new AzureSemanticVadMultilingualTurnDetection()
+            };
+
+            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+
+            // Should get two updates back.
+            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+
+            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+
+            var defaultTurnDetection = sessionCreated.Session.TurnDetection;
+            Assert.IsTrue(defaultTurnDetection is ServerVadTurnDetection, $"Default turn detection was {defaultTurnDetection.GetType().Name} and not {typeof(ServerVadTurnDetection).Name}");
+
+            var modifiedTurnDetection = sessionUpdated.Session.TurnDetection;
+            Assert.IsTrue(modifiedTurnDetection is AzureSemanticVadMultilingualTurnDetection, $"Updated turn detection was {modifiedTurnDetection.GetType().Name} and not {typeof(AzureSemanticVadMultilingualTurnDetection).Name}");
+        }
+
+        [LiveOnly]
+        [TestCase]
         public async Task SendMultipleAudioFrames()
         {
             var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
@@ -308,12 +398,14 @@ namespace Azure.AI.VoiceLive.Tests
             }
 
             // error
-            // await session.CommitInputAudioAsync(TimeoutToken).ConfigureAwait(false);
+            await session.CommitInputAudioAsync(TimeoutToken).ConfigureAwait(false);
 
             await session.ClearInputAudioAsync(TimeoutToken).ConfigureAwait(false);
 
             // Now send audio:
             await SendAudioAsync(session, "Weather.wav").ConfigureAwait(false);
+
+            await Task.Delay(TimeSpan.FromSeconds(5));
 
             var speechDetected = await GetNextUpdate<SessionUpdateInputAudioBufferSpeechStarted>(updatesEnum).ConfigureAwait(false);
         }

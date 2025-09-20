@@ -28,10 +28,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NoTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureSemanticVad)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NoTurnDetection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
            
@@ -79,7 +79,7 @@ namespace Azure.AI.VoiceLive
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureSemanticVad)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NoTurnDetection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TurnDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NoTurnDetection >)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -100,7 +100,7 @@ namespace Azure.AI.VoiceLive
                         return DeserializeNoTurnDetection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureSemanticVad)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NoTurnDetection)} does not support reading '{options.Format}' format.");
             }
         }
 

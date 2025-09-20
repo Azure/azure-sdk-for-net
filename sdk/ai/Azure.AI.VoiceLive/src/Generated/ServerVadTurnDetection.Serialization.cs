@@ -13,11 +13,11 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base model for VAD-based turn detection. </summary>
-    public partial class ServerVad : IJsonModel<ServerVad>
+    public partial class ServerVadTurnDetection : IJsonModel<ServerVadTurnDetection>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ServerVad>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServerVadTurnDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServerVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerVadTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerVad)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerVadTurnDetection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Threshold))
@@ -63,24 +63,24 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServerVad IJsonModel<ServerVad>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServerVad)JsonModelCreateCore(ref reader, options);
+        ServerVadTurnDetection IJsonModel<ServerVadTurnDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServerVadTurnDetection)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TurnDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServerVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerVadTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerVad)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerVadTurnDetection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServerVad(document.RootElement, options);
+            return DeserializeServerVadTurnDetection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ServerVad DeserializeServerVad(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServerVadTurnDetection DeserializeServerVadTurnDetection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServerVad(
+            return new ServerVadTurnDetection(
                 @type,
                 additionalBinaryDataProperties,
                 threshold,
@@ -161,43 +161,43 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServerVad>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServerVadTurnDetection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServerVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerVadTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ServerVad)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerVadTurnDetection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServerVad IPersistableModel<ServerVad>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServerVad)PersistableModelCreateCore(data, options);
+        ServerVadTurnDetection IPersistableModel<ServerVadTurnDetection>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServerVadTurnDetection)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TurnDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServerVad>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerVadTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeServerVad(document.RootElement, options);
+                        return DeserializeServerVadTurnDetection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerVad)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerVadTurnDetection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServerVad>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServerVadTurnDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.AI.VoiceLive.Tests
                 Voice = new AzureStandardVoice(TestConstants.VoiceName),
                 Model = TestConstants.ModelName,
                 Instructions = "You are a helpful assistant.",
-                TurnDetection = new ServerVad { Threshold = 0.5f, SilenceDurationMs = 500 },
+                TurnDetection = new ServerVadTurnDetection { Threshold = 0.5f, SilenceDurationMs = 500 },
                 InputAudioFormat = InputAudioFormat.Pcm16,
                 OutputAudioFormat = OutputAudioFormat.Pcm16
             };

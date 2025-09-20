@@ -217,7 +217,7 @@ namespace Azure.AI.VoiceLive.Tests
             switch (detectionType)
             {
                 case "server-vad":
-                    return new ServerVad
+                    return new ServerVadTurnDetection
                     {
                         Threshold = 0.5f,
                         SilenceDurationMs = 500,
@@ -225,14 +225,14 @@ namespace Azure.AI.VoiceLive.Tests
                     };
 
                 case "azure-semantic":
-                    return new AzureSemanticVad
+                    return new AzureSemanticVadTurnDetection
                     {
                         Languages = { "en-US" },
                         Threshold = 0.7f
                     };
 
                 case "azure-multilingual":
-                    return new AzureMultilingualSemanticVad
+                    return new AzureSemanticVadMultilingualTurnDetection
                     {
                         Languages = { "en-US", "es-ES", "fr-FR" },
                         Threshold = 0.7f

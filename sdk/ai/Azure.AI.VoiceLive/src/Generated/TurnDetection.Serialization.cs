@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for turn detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerVad"/>, <see cref="AzureSemanticVad"/>, <see cref="AzureSemanticVadEn"/>, and <see cref="AzureMultilingualSemanticVad"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetection"/>, <see cref="AzureSemanticVadEnTurnDetection"/>, and <see cref="AzureSemanticVadMultilingualTurnDetection"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTurnDetection))]
     public abstract partial class TurnDetection : IJsonModel<TurnDetection>
@@ -90,13 +90,13 @@ namespace Azure.AI.VoiceLive
                 switch (discriminator.GetString())
                 {
                     case "server_vad":
-                        return ServerVad.DeserializeServerVad(element, options);
+                        return ServerVadTurnDetection.DeserializeServerVadTurnDetection(element, options);
                     case "azure_semantic_vad":
-                        return AzureSemanticVad.DeserializeAzureSemanticVad(element, options);
+                        return AzureSemanticVadTurnDetection.DeserializeAzureSemanticVadTurnDetection(element, options);
                     case "azure_semantic_vad_en":
-                        return AzureSemanticVadEn.DeserializeAzureSemanticVadEn(element, options);
+                        return AzureSemanticVadEnTurnDetection.DeserializeAzureSemanticVadEnTurnDetection(element, options);
                     case "azure_semantic_vad_multilingual":
-                        return AzureMultilingualSemanticVad.DeserializeAzureMultilingualSemanticVad(element, options);
+                        return AzureSemanticVadMultilingualTurnDetection.DeserializeAzureSemanticVadMultilingualTurnDetection(element, options);
                 }
             }
             return UnknownTurnDetection.DeserializeUnknownTurnDetection(element, options);

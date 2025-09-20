@@ -10,15 +10,16 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Server Speech Detection (Azure semantic VAD, English-only). </summary>
-    public partial class AzureSemanticVadEn : TurnDetection
+    /// <summary> Server Speech Detection (Azure semantic VAD, default variant). </summary>
+    public partial class AzureSemanticVadTurnDetection : TurnDetection
     {
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadEn"/>. </summary>
-        public AzureSemanticVadEn() : base(TurnDetectionType.AzureSemanticVadEn)
+        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadTurnDetection"/>. </summary>
+        public AzureSemanticVadTurnDetection() : base(TurnDetectionType.AzureSemanticVad)
         {
+            Languages = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadEn"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadTurnDetection"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
@@ -27,8 +28,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="endOfUtteranceDetection"></param>
         /// <param name="speechDurationMs"> Gets or sets the SpeechDurationMs. </param>
         /// <param name="removeFillerWords"></param>
+        /// <param name="languages"></param>
         /// <param name="autoTruncate"></param>
-        internal AzureSemanticVadEn(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
+        internal AzureSemanticVadTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, IList<string> languages, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
@@ -36,6 +38,7 @@ namespace Azure.AI.VoiceLive
             EndOfUtteranceDetection = endOfUtteranceDetection;
             SpeechDurationMs = speechDurationMs;
             RemoveFillerWords = removeFillerWords;
+            Languages = languages;
             AutoTruncate = autoTruncate;
         }
 
@@ -47,6 +50,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the RemoveFillerWords. </summary>
         public bool? RemoveFillerWords { get; set; }
+
+        /// <summary> Gets the Languages. </summary>
+        public IList<string> Languages { get; }
 
         /// <summary> Gets or sets the AutoTruncate. </summary>
         public bool? AutoTruncate { get; set; }

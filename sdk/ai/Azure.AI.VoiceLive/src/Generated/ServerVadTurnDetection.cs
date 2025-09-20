@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base model for VAD-based turn detection. </summary>
-    public partial class ServerVad : TurnDetection
+    public partial class ServerVadTurnDetection : TurnDetection
     {
-        /// <summary> Initializes a new instance of <see cref="ServerVad"/>. </summary>
-        public ServerVad() : base(TurnDetectionType.ServerVad)
+        /// <summary> Initializes a new instance of <see cref="ServerVadTurnDetection"/>. </summary>
+        public ServerVadTurnDetection() : base(TurnDetectionType.ServerVad)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerVad"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerVadTurnDetection"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
@@ -26,7 +26,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="silenceDurationMs"> Gets or sets the SilenceDurationMs. </param>
         /// <param name="endOfUtteranceDetection"></param>
         /// <param name="autoTruncate"></param>
-        internal ServerVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
+        internal ServerVadTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;

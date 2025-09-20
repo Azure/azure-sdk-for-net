@@ -126,7 +126,7 @@ public class CustomerServiceBot : IDisposable
         var azureVoice = new AzureStandardVoice(_voice);
 
         // Create strongly typed turn detection configuration
-        var turnDetectionConfig = new ServerVad
+        var turnDetectionConfig = new ServerVadTurnDetection
         {
             Threshold = 0.5f,
             PrefixPadding = TimeSpan.FromMilliseconds(300),

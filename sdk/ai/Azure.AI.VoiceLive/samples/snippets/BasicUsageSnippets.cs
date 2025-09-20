@@ -35,7 +35,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                 Model = model,
                 Instructions = "You are a helpful AI assistant. Respond naturally and conversationally.",
                 Voice = new AzureStandardVoice("en-US-AvaNeural"),
-                TurnDetection = new ServerVad()
+                TurnDetection = new AzureSemanticVadTurnDetection()
                 {
                     Threshold = 0.5f,
                     PrefixPadding = TimeSpan.FromMilliseconds(300),
@@ -92,7 +92,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                 {
                     Temperature = 0.8f
                 },
-                TurnDetection = new AzureSemanticVad()
+                TurnDetection = new AzureSemanticVadTurnDetection()
                 {
                     RemoveFillerWords = true
                 },

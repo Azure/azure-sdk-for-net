@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure semantic end-of-utterance detection (English-optimized). </summary>
-    public partial class AzureSemanticDetectionEn : EouDetection
+    public partial class AzureSemanticEnEouDetection : EouDetection
     {
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticDetectionEn"/>. </summary>
-        public AzureSemanticDetectionEn() : base(EOUDetectionModel.SemanticDetectionV1En)
+        /// <summary> Initializes a new instance of <see cref="AzureSemanticEnEouDetection"/>. </summary>
+        public AzureSemanticEnEouDetection() : base(EOUDetectionModel.SemanticDetectionV1En)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticDetectionEn"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSemanticEnEouDetection"/>. </summary>
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
-        /// <param name="timeoutMs"> Gets or sets the Timeout. </param>
-        internal AzureSemanticDetectionEn(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, float? timeoutMs) : base(model, additionalBinaryDataProperties)
+        /// <param name="timeoutMs"></param>
+        internal AzureSemanticEnEouDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, float? timeoutMs) : base(model, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             TimeoutMs = timeoutMs;
@@ -31,5 +31,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the Threshold. </summary>
         public float? Threshold { get; set; }
+
+        /// <summary> Gets or sets the TimeoutMs. </summary>
+        public float? TimeoutMs { get; set; }
     }
 }

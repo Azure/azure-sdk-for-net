@@ -78,7 +78,6 @@ namespace Azure.AI.VoiceLive
             int? inputAudioSamplingRate = default;
             InputAudioFormat? inputAudioFormat = default;
             OutputAudioFormat? outputAudioFormat = default;
-            TurnDetection turnDetection = default;
             AudioNoiseReduction inputAudioNoiseReduction = default;
             AudioEchoCancellation inputAudioEchoCancellation = default;
             AvatarConfiguration avatar = default;
@@ -89,6 +88,7 @@ namespace Azure.AI.VoiceLive
             BinaryData voiceInternal = default;
             BinaryData maxResponseOutputTokens = default;
             BinaryData toolChoice = default;
+            BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RespondingAgentOptions agent = default;
             string id = default;
@@ -152,16 +152,6 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     outputAudioFormat = new OutputAudioFormat(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("turn_detection"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        turnDetection = null;
-                        continue;
-                    }
-                    turnDetection = TurnDetection.DeserializeTurnDetection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("input_audio_noise_reduction"u8))
@@ -264,6 +254,15 @@ namespace Azure.AI.VoiceLive
                     toolChoice = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("turn_detection"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    turnDetection = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (prop.NameEquals("agent"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -291,7 +290,6 @@ namespace Azure.AI.VoiceLive
                 inputAudioSamplingRate,
                 inputAudioFormat,
                 outputAudioFormat,
-                turnDetection,
                 inputAudioNoiseReduction,
                 inputAudioEchoCancellation,
                 avatar,
@@ -302,6 +300,7 @@ namespace Azure.AI.VoiceLive
                 voiceInternal,
                 maxResponseOutputTokens,
                 toolChoice,
+                turnDetection,
                 additionalBinaryDataProperties,
                 agent,
                 id);

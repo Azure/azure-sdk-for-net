@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure semantic end-of-utterance detection (default). </summary>
-    public partial class AzureSemanticDetection : EouDetection
+    public partial class AzureSemanticEouDetection : EouDetection
     {
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticDetection"/>. </summary>
-        public AzureSemanticDetection() : base(EOUDetectionModel.SemanticDetectionV1)
+        /// <summary> Initializes a new instance of <see cref="AzureSemanticEouDetection"/>. </summary>
+        public AzureSemanticEouDetection() : base(EOUDetectionModel.SemanticDetectionV1)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticDetection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSemanticEouDetection"/>. </summary>
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
         /// <param name="timeoutMs"> Gets or sets the Timeout. </param>
-        internal AzureSemanticDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, float? timeoutMs) : base(model, additionalBinaryDataProperties)
+        internal AzureSemanticEouDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, float? timeoutMs) : base(model, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             TimeoutMs = timeoutMs;

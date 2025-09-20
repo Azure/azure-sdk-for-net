@@ -36,7 +36,6 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="inputAudioFormat"></param>
         /// <param name="outputAudioFormat"></param>
-        /// <param name="turnDetection"></param>
         /// <param name="inputAudioNoiseReduction"></param>
         /// <param name="inputAudioEchoCancellation"></param>
         /// <param name="avatar"></param>
@@ -47,8 +46,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="voiceInternal"></param>
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="toolChoice"></param>
+        /// <param name="turnDetection"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveSessionOptions(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionOptions(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -57,7 +57,6 @@ namespace Azure.AI.VoiceLive
             InputAudioSamplingRate = inputAudioSamplingRate;
             InputAudioFormat = inputAudioFormat;
             OutputAudioFormat = outputAudioFormat;
-            TurnDetection = turnDetection;
             InputAudioNoiseReduction = inputAudioNoiseReduction;
             InputAudioEchoCancellation = inputAudioEchoCancellation;
             Avatar = avatar;
@@ -68,6 +67,7 @@ namespace Azure.AI.VoiceLive
             VoiceInternal = voiceInternal;
             _maxResponseOutputTokens = maxResponseOutputTokens;
             _toolChoice = toolChoice;
+            _turnDetection = turnDetection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -95,9 +95,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the OutputAudioFormat. </summary>
         public OutputAudioFormat? OutputAudioFormat { get; set; }
-
-        /// <summary> Gets or sets the TurnDetection. </summary>
-        public TurnDetection TurnDetection { get; set; }
 
         /// <summary> Gets or sets the InputAudioNoiseReduction. </summary>
         public AudioNoiseReduction InputAudioNoiseReduction { get; set; }
