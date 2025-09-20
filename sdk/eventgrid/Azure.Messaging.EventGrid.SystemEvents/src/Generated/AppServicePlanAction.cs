@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Type of action on the app service plan. </summary>
-    public readonly partial struct AppServicePlanAction : IEquatable<AppServicePlanAction>
+    public readonly partial struct AppServicePlanAction : ValueType, IEquatable<AppServicePlanAction>
     {
         private readonly string _value;
         /// <summary> App Service plan is being updated. </summary>

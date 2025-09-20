@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Supported permissions for data actions. </summary>
-    public readonly partial struct KeyVaultDataAction : IEquatable<KeyVaultDataAction>
+    public readonly partial struct KeyVaultDataAction : ValueType, IEquatable<KeyVaultDataAction>
     {
         private readonly string _value;
         /// <summary> Read HSM key metadata. </summary>

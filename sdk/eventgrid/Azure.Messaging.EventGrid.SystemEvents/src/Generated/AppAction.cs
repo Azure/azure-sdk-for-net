@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Type of action of the operation. </summary>
-    public readonly partial struct AppAction : IEquatable<AppAction>
+    public readonly partial struct AppAction : ValueType, IEquatable<AppAction>
     {
         private readonly string _value;
         /// <summary> Web app was restarted. </summary>

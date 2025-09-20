@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Communication model identifier kind. </summary>
-    public readonly partial struct AcsCommunicationIdentifierKind : IEquatable<AcsCommunicationIdentifierKind>
+    public readonly partial struct AcsCommunicationIdentifierKind : ValueType, IEquatable<AcsCommunicationIdentifierKind>
     {
         private readonly string _value;
         /// <summary> Unknown. </summary>

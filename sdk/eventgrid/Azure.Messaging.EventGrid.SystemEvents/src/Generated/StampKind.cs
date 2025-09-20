@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Kind of environment where app service plan is. </summary>
-    public readonly partial struct StampKind : IEquatable<StampKind>
+    public readonly partial struct StampKind : ValueType, IEquatable<StampKind>
     {
         private readonly string _value;
         /// <summary> App Service Plan is running on a public stamp. </summary>

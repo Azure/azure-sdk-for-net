@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> EventGrid MQTT Client Disconnection Reason. </summary>
-    public readonly partial struct EventGridMqttClientDisconnectionReason : IEquatable<EventGridMqttClientDisconnectionReason>
+    public readonly partial struct EventGridMqttClientDisconnectionReason : ValueType, IEquatable<EventGridMqttClientDisconnectionReason>
     {
         private readonly string _value;
         /// <summary> The client got disconnected for any authentication reasons (for example, certificate expired, client got disabled, or client configuration changed). </summary>
