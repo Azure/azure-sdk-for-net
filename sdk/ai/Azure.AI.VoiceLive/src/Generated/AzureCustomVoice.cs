@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Azure custom voice configuration (preferred). </summary>
+    /// <summary> Azure custom voice configuration. </summary>
     public partial class AzureCustomVoice : AzureVoice
     {
         /// <summary> Initializes a new instance of <see cref="AzureCustomVoice"/>. </summary>

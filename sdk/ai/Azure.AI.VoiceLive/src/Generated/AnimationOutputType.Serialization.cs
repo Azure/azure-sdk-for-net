@@ -16,7 +16,6 @@ namespace Azure.AI.VoiceLive
         {
             AnimationOutputType.Blendshapes => "blendshapes",
             AnimationOutputType.VisemeId => "viseme_id",
-            AnimationOutputType.Emotion => "emotion",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AnimationOutputType value.")
         };
 
@@ -30,10 +29,6 @@ namespace Azure.AI.VoiceLive
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "viseme_id"))
             {
                 return AnimationOutputType.VisemeId;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "emotion"))
-            {
-                return AnimationOutputType.Emotion;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AnimationOutputType value.");
         }

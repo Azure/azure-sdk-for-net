@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
             }
             else if (instance.FunctionName is not null)
             {
-                var functionObject = new ToolChoiceFunctionObjectFunction(name: instance.FunctionName);
+                var functionObject = new ToolChoiceFunctionObject(name: instance.FunctionName);
                 writer.WriteObjectValue(functionObject, options);
             }
         }
@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive
         {
             if (element.ValueKind == JsonValueKind.Object)
             {
-                var functionObject = ToolChoiceFunctionObjectFunction.DeserializeToolChoiceFunctionObjectFunction(element, options);
+                var functionObject = ToolChoiceFunctionObject.DeserializeToolChoiceFunctionObject(element, options);
                 return new ToolChoiceOption(functionObject.Name);
             }
             if (element.ValueKind == JsonValueKind.String)

@@ -29,12 +29,6 @@ namespace Azure.AI.VoiceLive
         /// <item>
         /// <description> <see cref="AzureVoice"/>. </description>
         /// </item>
-        /// <item>
-        /// <description> <see cref="LlmVoiceName"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="LlmVoice"/>. </description>
-        /// </item>
         /// </list>
         /// </remarks>
         /// </para>

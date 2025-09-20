@@ -18,8 +18,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        /// <param name="audioOffsetMs"></param>
-        /// <param name="audioDurationMs"></param>
+        /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
+        /// <param name="audioDurationMs"> Gets the AudioDurationMs. </param>
         /// <param name="text"></param>
         internal SessionUpdateResponseAudioTimestampDelta(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text) : base(ServerEventType.ResponseAudioTimestampDelta)
         {
@@ -40,8 +40,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        /// <param name="audioOffsetMs"></param>
-        /// <param name="audioDurationMs"></param>
+        /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
+        /// <param name="audioDurationMs"> Gets the AudioDurationMs. </param>
         /// <param name="text"></param>
         /// <param name="timestampType"></param>
         internal SessionUpdateResponseAudioTimestampDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType) : base(@type, eventId, additionalBinaryDataProperties)
@@ -67,12 +67,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the ContentIndex. </summary>
         public int ContentIndex { get; }
-
-        /// <summary> Gets the AudioOffsetMs. </summary>
-        public int AudioOffsetMs { get; }
-
-        /// <summary> Gets the AudioDurationMs. </summary>
-        public int AudioDurationMs { get; }
 
         /// <summary> Gets the Text. </summary>
         public string Text { get; }

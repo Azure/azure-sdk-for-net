@@ -51,9 +51,6 @@ namespace Azure.AI.VoiceLive
         /// <summary> The index of the content part that was truncated. </summary>
         public int ContentIndex { get; }
 
-        /// <summary> The duration up to which the audio was truncated, in milliseconds. </summary>
-        public int AudioEndMs { get; }
-
         /// <summary> Gets the EventId. </summary>
         public override string EventId { get; }
     }

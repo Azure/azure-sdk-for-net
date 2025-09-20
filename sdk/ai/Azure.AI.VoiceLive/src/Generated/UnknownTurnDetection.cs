@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="UnknownTurnDetection"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal UnknownTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

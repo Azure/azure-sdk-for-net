@@ -23,11 +23,13 @@ namespace Azure.AI.VoiceLive
         /// <param name="modalities"></param>
         /// <param name="animation"></param>
         /// <param name="instructions"></param>
-        /// <param name="inputAudio"></param>
-        /// <param name="inputAudioSamplingRate"></param>
+        /// <param name="inputAudioSamplingRate">
+        /// Input audio sampling rate in Hz. Available values:
+        /// - For pcm16: 8000, 16000, 24000
+        /// - For g711_alaw/g711_ulaw: 8000
+        /// </param>
         /// <param name="inputAudioFormat"></param>
         /// <param name="outputAudioFormat"></param>
-        /// <param name="turnDetection"></param>
         /// <param name="inputAudioNoiseReduction"></param>
         /// <param name="inputAudioEchoCancellation"></param>
         /// <param name="avatar"></param>
@@ -35,16 +37,21 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputAudioTimestampTypes"></param>
         /// <param name="tools"></param>
         /// <param name="temperature"></param>
-        /// <param name="agent"></param>
         /// <param name="voiceInternal"></param>
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="toolChoice"></param>
+        /// <param name="turnDetection"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="agent"></param>
         /// <param name="id"></param>
-        internal VoiceLiveSessionResponse(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, RespondingAgentOptions agent, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(model, modalities, animation, instructions, inputAudio, inputAudioSamplingRate, inputAudioFormat, outputAudioFormat, turnDetection, inputAudioNoiseReduction, inputAudioEchoCancellation, avatar, inputAudioTranscription, outputAudioTimestampTypes, tools, temperature, agent, voiceInternal, maxResponseOutputTokens, toolChoice, additionalBinaryDataProperties)
+        internal VoiceLiveSessionResponse(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties, RespondingAgentOptions agent, string id) : base(model, modalities, animation, instructions, inputAudioSamplingRate, inputAudioFormat, outputAudioFormat, inputAudioNoiseReduction, inputAudioEchoCancellation, avatar, inputAudioTranscription, outputAudioTimestampTypes, tools, temperature, voiceInternal, maxResponseOutputTokens, toolChoice, turnDetection, additionalBinaryDataProperties)
         {
+            Agent = agent;
             Id = id;
         }
+
+        /// <summary> Gets the Agent. </summary>
+        public RespondingAgentOptions Agent { get; }
 
         /// <summary> Gets the Id. </summary>
         public string Id { get; }

@@ -15,6 +15,11 @@ namespace Azure.AI.VoiceLive
     /// <summary> Configuration for input audio noise reduction. </summary>
     public partial class AudioNoiseReduction : IJsonModel<AudioNoiseReduction>
     {
+        /// <summary> Initializes a new instance of <see cref="AudioNoiseReduction"/> for deserialization. </summary>
+        internal AudioNoiseReduction()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AudioNoiseReduction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -34,7 +39,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(AudioNoiseReduction)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToSerialString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -77,13 +82,13 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = default;
+            AudioNoiseReductionType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = prop.Value.GetString().ToAudioNoiseReductionType();
                     continue;
                 }
                 if (options.Format != "W")

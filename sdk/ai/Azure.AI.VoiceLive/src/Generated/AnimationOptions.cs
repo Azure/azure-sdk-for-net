@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Configuration for animation outputs including blendshapes, visemes, and emotion metadata. </summary>
+    /// <summary> Configuration for animation outputs including blendshapes and visemes metadata. </summary>
     public partial class AnimationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -25,13 +25,11 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="AnimationOptions"/>. </summary>
         /// <param name="modelName"> The name of the animation model to use. </param>
         /// <param name="outputs"> Set of output data types requested from the animation system. </param>
-        /// <param name="emotionDetectionIntervalMs"> Interval for emotion detection in milliseconds. If not set, emotion detection is disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnimationOptions(string modelName, IList<AnimationOutputType> outputs, int? emotionDetectionIntervalMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnimationOptions(string modelName, IList<AnimationOutputType> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelName = modelName;
             Outputs = outputs;
-            EmotionDetectionIntervalMs = emotionDetectionIntervalMs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,8 +38,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Set of output data types requested from the animation system. </summary>
         public IList<AnimationOutputType> Outputs { get; }
-
-        /// <summary> Interval for emotion detection in milliseconds. If not set, emotion detection is disabled. </summary>
-        public int? EmotionDetectionIntervalMs { get; set; }
     }
 }

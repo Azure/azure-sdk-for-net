@@ -17,7 +17,6 @@ namespace Azure.AI.VoiceLive
         private const string Whisper1Value = "whisper-1";
         private const string Gpt4oTranscribeValue = "gpt-4o-transcribe";
         private const string Gpt4oMiniTranscribeValue = "gpt-4o-mini-transcribe";
-        private const string AzureFastTranscriptionValue = "azure-fast-transcription";
         private const string AzureSpeechValue = "azure-speech";
 
         /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionSettingsModel"/>. </summary>
@@ -38,9 +37,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the Gpt4oMiniTranscribe. </summary>
         public static AudioInputTranscriptionSettingsModel Gpt4oMiniTranscribe { get; } = new AudioInputTranscriptionSettingsModel(Gpt4oMiniTranscribeValue);
-
-        /// <summary> Gets the AzureFastTranscription. </summary>
-        public static AudioInputTranscriptionSettingsModel AzureFastTranscription { get; } = new AudioInputTranscriptionSettingsModel(AzureFastTranscriptionValue);
 
         /// <summary> Gets the AzureSpeech. </summary>
         public static AudioInputTranscriptionSettingsModel AzureSpeech { get; } = new AudioInputTranscriptionSettingsModel(AzureSpeechValue);

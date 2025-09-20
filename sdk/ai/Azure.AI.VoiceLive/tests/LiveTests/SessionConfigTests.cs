@@ -35,7 +35,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                InputAudioFormat = AudioFormat.Pcm16,
+                InputAudioFormat = InputAudioFormat.Pcm16,
                 Voice = voice
             };
 

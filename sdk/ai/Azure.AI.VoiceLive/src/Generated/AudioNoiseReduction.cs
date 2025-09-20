@@ -17,20 +17,22 @@ namespace Azure.AI.VoiceLive
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AudioNoiseReduction"/>. </summary>
-        public AudioNoiseReduction()
+        /// <param name="type"> The type of noise reduction model. </param>
+        public AudioNoiseReduction(AudioNoiseReductionType @type)
         {
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="AudioNoiseReduction"/>. </summary>
         /// <param name="type"> The type of noise reduction model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AudioNoiseReduction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AudioNoiseReduction(AudioNoiseReductionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of noise reduction model. </summary>
-        public string Type { get; } = "azure_deep_noise_suppression";
+        public AudioNoiseReductionType Type { get; set; }
     }
 }

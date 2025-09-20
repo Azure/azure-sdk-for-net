@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="UnknownResponseStatusDetails"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownResponseStatusDetails(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownResponseStatusDetails(VoiceLiveResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

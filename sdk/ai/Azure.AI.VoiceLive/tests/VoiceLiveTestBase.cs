@@ -185,7 +185,7 @@ namespace Azure.AI.VoiceLive.Tests
             switch (voiceType)
             {
                 case "azure-platform":
-                    return new AzurePlatformVoice("en-US-AriaNeural");
+                    return new AzureStandardVoice("en-US-AriaNeural");
 
                 case "azure-custom":
                     RequireFeature(TestEnvironment.HasCustomVoice,
@@ -199,13 +199,10 @@ namespace Azure.AI.VoiceLive.Tests
                         "Personal voice not configured");
                     return new AzurePersonalVoice(
                         TestEnvironment.PersonalVoiceName,
-                        (AzurePersonalVoiceModel)Enum.Parse(typeof(AzurePersonalVoiceModel), TestEnvironment.PersonalVoiceModel));
+                        new PersonalVoiceModels(TestEnvironment.PersonalVoiceModel));
 
                 case "openai":
                     return new OpenAIVoice(OAIVoice.Alloy);
-
-                case "llm":
-                    return new LlmVoice(LlmVoiceName.Cosyvoice);
 
                 default:
                     throw new ArgumentException($"Unknown voice type: {voiceType}");
@@ -219,11 +216,8 @@ namespace Azure.AI.VoiceLive.Tests
         {
             switch (detectionType)
             {
-                case "none":
-                    return new NoTurnDetection();
-
                 case "server-vad":
-                    return new ServerVad
+                    return new ServerVadTurnDetection
                     {
                         Threshold = 0.5f,
                         SilenceDurationMs = 500,
@@ -231,14 +225,14 @@ namespace Azure.AI.VoiceLive.Tests
                     };
 
                 case "azure-semantic":
-                    return new AzureSemanticVad
+                    return new AzureSemanticVadTurnDetection
                     {
                         Languages = { "en-US" },
                         Threshold = 0.7f
                     };
 
                 case "azure-multilingual":
-                    return new AzureMultilingualSemanticVad
+                    return new AzureSemanticVadMultilingualTurnDetection
                     {
                         Languages = { "en-US", "es-ES", "fr-FR" },
                         Threshold = 0.7f

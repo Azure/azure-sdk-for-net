@@ -47,7 +47,7 @@ namespace Azure.AI.VoiceLive
                 writer.WriteNumberValue(Temperature.Value);
             }
             writer.WritePropertyName("model"u8);
-            writer.WriteStringValue(Model.ToSerialString());
+            writer.WriteStringValue(Model.ToString());
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -79,7 +79,7 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             float? temperature = default;
-            AzurePersonalVoiceModel model = default;
+            PersonalVoiceModels model = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -103,7 +103,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("model"u8))
                 {
-                    model = prop.Value.GetString().ToAzurePersonalVoiceModel();
+                    model = new PersonalVoiceModels(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

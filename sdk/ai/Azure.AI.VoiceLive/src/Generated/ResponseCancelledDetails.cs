@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ResponseCancelledDetails"/>. </summary>
         /// <param name="reason"></param>
-        internal ResponseCancelledDetails(ResponseCancelledDetailsReason reason) : base("cancelled")
+        internal ResponseCancelledDetails(ResponseCancelledDetailsReason reason) : base(VoiceLiveResponseStatus.Cancelled)
         {
             Reason = reason;
         }
@@ -24,7 +24,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="reason"></param>
-        internal ResponseCancelledDetails(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseCancelledDetailsReason reason) : base(@type, additionalBinaryDataProperties)
+        internal ResponseCancelledDetails(VoiceLiveResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseCancelledDetailsReason reason) : base(@type, additionalBinaryDataProperties)
         {
             Reason = reason;
         }

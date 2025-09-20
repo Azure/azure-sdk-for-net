@@ -6,6 +6,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -77,6 +78,47 @@ namespace Azure.AI.VoiceLive
             {
                 var persistable = value as IPersistableModel<ToolChoiceOption>;
                 _toolChoice = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
+            }
+        }
+
+        [CodeGenMember("TurnDetection")]
+        private BinaryData _turnDetection;
+
+        /// <summary>
+        /// Gets or sets the TurnDetection.
+        /// </summary>
+        public TurnDetection TurnDetection
+        {
+            get
+            {
+                var tdAsString = _turnDetection?.ToString();
+                if (string.IsNullOrEmpty(tdAsString))
+                {
+                    return null;
+                }
+                else if ("null" == tdAsString.ToLower(System.Globalization.CultureInfo.InvariantCulture))
+                {
+                    return new NoTurnDetection();
+                }
+                else
+                {
+                    using (JsonDocument document = JsonDocument.Parse(_turnDetection))
+                    {
+                        return TurnDetection.DeserializeTurnDetection(document.RootElement, new ModelReaderWriterOptions("J"));
+                    }
+                }
+            }
+            set
+            {
+                if (value.Type == new TurnDetectionType("None"))
+                {
+                    _turnDetection = BinaryData.FromString(" null");
+                }
+                else
+                {
+                    var persist = value as IPersistableModel<TurnDetection>;
+                    _turnDetection = persist.Write(new ModelReaderWriterOptions("J"));
+                }
             }
         }
     }
