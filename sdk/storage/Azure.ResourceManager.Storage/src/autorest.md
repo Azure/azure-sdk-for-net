@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://github.com/Azure/azure-rest-api-specs/blob/2219e4e4e0409bcb88a2b82e8febe1a3baecaf18/specification/storage/resource-manager/readme.md
-#tag: package-2024-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/9e8f84cab64ffb562abbb0790f2b1e7a707b5ad6/specification/storage/resource-manager/readme.md
+#tag: package-2025-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -171,6 +171,7 @@ rename-mapping:
     BlobInventoryPolicyRule.enabled: IsEnabled
     BlobInventoryPolicySchema.enabled: IsEnabled
     ActiveDirectoryProperties: StorageActiveDirectoryProperties
+    ActiveDirectoryProperties.domainGuid: ActiveDirectoryDomainGuid
     AccountType: ActiveDirectoryAccountType
     StorageAccount.properties.failoverInProgress: IsFailoverInProgress
     StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
@@ -263,7 +264,9 @@ rename-mapping:
     StorageTaskReportProperties.finishTime: FinishedOn|date-time
     TriggerParameters: ExecutionTriggerParameters
     TriggerParametersUpdate: ExecutionTriggerParametersUpdate
-    TriggerType: ExecutionTriggerType
+    TriggerType: TaskExecutionTriggerType
+    ExecutionTrigger.type: TaskExecutionTriggerType
+    ExecutionTriggerUpdate.type: TaskExecutionTriggerType
     ObjectReplicationPolicyPropertiesMetrics.enabled: IsMetricsEnabled
     AccountLimits: FileServiceAccountLimits
     AccountUsage: FileServiceAccountUsage
