@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Composition types. </summary>
-    public readonly partial struct SnapshotComposition : IEquatable<SnapshotComposition>
+    public readonly partial struct SnapshotComposition : ValueType, IEquatable<SnapshotComposition>
     {
         private readonly string _value;
         /// <summary> The 'key' composition type. </summary>

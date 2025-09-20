@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
-    public partial class ConfigurationSnapshot : IJsonModel<ConfigurationSnapshot>
+    public partial class ConfigurationSnapshot : global::.IUtf8JsonSerializable, IJsonModel<ConfigurationSnapshot>
     {
         /// <summary> Initializes a new instance of <see cref="ConfigurationSnapshot"/> for deserialization. </summary>
         internal ConfigurationSnapshot()
@@ -32,11 +32,11 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSnapshot IJsonModel<ConfigurationSnapshot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfigurationSnapshot IJsonModel<ConfigurationSnapshot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConfigurationSnapshot)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationSnapshot JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override global::.IUtf8JsonSerializable JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -51,7 +51,7 @@ namespace Azure.Data.AppConfiguration
         BinaryData IPersistableModel<ConfigurationSnapshot>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -65,11 +65,11 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSnapshot IPersistableModel<ConfigurationSnapshot>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfigurationSnapshot IPersistableModel<ConfigurationSnapshot>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConfigurationSnapshot)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationSnapshot PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override global::.IUtf8JsonSerializable PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

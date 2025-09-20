@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal readonly partial struct PutKeyValueRequestContentType : IEquatable<PutKeyValueRequestContentType>
+    internal readonly partial struct PutKeyValueRequestContentType : ValueType, IEquatable<PutKeyValueRequestContentType>
     {
         private readonly string _value;
         private const string ApplicationVndMicrosoftAppconfigKvJsonValue = "application/vnd.microsoft.appconfig.kv+json";

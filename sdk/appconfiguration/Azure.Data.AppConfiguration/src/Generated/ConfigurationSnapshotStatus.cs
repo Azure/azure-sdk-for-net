@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Snapshot status. </summary>
-    public readonly partial struct ConfigurationSnapshotStatus : IEquatable<ConfigurationSnapshotStatus>
+    public readonly partial struct ConfigurationSnapshotStatus : ValueType, IEquatable<ConfigurationSnapshotStatus>
     {
         private readonly string _value;
         /// <summary> Provisioning. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Voice configuration for LLM (Large Language Model) voices. </summary>
-    public partial class LlmVoice
+    public partial class LlmVoice : VoiceProvider
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

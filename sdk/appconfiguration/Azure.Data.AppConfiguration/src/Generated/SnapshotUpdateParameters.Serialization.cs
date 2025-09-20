@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class SnapshotUpdateParameters : IJsonModel<SnapshotUpdateParameters>
+    internal partial class SnapshotUpdateParameters : global::.IUtf8JsonSerializable, IJsonModel<SnapshotUpdateParameters>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -25,13 +25,14 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SnapshotUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SnapshotUpdateParameters)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -56,11 +57,11 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SnapshotUpdateParameters IJsonModel<SnapshotUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SnapshotUpdateParameters IJsonModel<SnapshotUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SnapshotUpdateParameters)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SnapshotUpdateParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override global::.IUtf8JsonSerializable JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SnapshotUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -104,7 +105,7 @@ namespace Azure.Data.AppConfiguration
         BinaryData IPersistableModel<SnapshotUpdateParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SnapshotUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -118,11 +119,11 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SnapshotUpdateParameters IPersistableModel<SnapshotUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SnapshotUpdateParameters IPersistableModel<SnapshotUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => (SnapshotUpdateParameters)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SnapshotUpdateParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override global::.IUtf8JsonSerializable PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SnapshotUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

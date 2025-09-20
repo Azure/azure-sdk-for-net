@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Snapshot fields. </summary>
-    public readonly partial struct SnapshotFields : IEquatable<SnapshotFields>
+    public readonly partial struct SnapshotFields : ValueType, IEquatable<SnapshotFields>
     {
         private readonly string _value;
         /// <summary> Name field. </summary>

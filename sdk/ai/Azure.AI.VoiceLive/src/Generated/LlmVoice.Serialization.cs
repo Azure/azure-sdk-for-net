@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Voice configuration for LLM (Large Language Model) voices. </summary>
-    public partial class LlmVoice : IJsonModel<LlmVoice>
+    public partial class LlmVoice : VoiceProvider, IJsonModel<LlmVoice>
     {
         /// <summary> Initializes a new instance of <see cref="LlmVoice"/> for deserialization. </summary>
         internal LlmVoice()
@@ -31,13 +31,14 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LlmVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LlmVoice)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
@@ -61,11 +62,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LlmVoice IJsonModel<LlmVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LlmVoice IJsonModel<LlmVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LlmVoice)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LlmVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override object JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LlmVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -111,7 +112,7 @@ namespace Azure.AI.VoiceLive
         BinaryData IPersistableModel<LlmVoice>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LlmVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -125,11 +126,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LlmVoice IPersistableModel<LlmVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LlmVoice IPersistableModel<LlmVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (LlmVoice)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LlmVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override object PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LlmVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
