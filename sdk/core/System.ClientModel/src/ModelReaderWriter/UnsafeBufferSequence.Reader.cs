@@ -100,6 +100,12 @@ internal partial class UnsafeBufferSequence
             {
                 throw new InvalidOperationException($"Length of serialized model is too long.  Value was {length} max is {int.MaxValue}");
             }
+            if (_count == 1)
+            {
+                var arr = new byte[_buffers[0].Written];
+                Buffer.BlockCopy(_buffers[0].Array, 0, arr, 0, _buffers[0].Written);
+                return new BinaryData(arr);
+            }
             using var stream = new MemoryStream((int)length);
             CopyTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
