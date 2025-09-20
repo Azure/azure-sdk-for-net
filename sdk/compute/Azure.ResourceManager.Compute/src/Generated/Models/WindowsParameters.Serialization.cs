@@ -74,6 +74,26 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("maxPatchPublishDate"u8);
                 writer.WriteStringValue(MaxPatchPublishOn.Value, "O");
             }
+            if (Optional.IsCollectionDefined(PatchNameMasksToInclude))
+            {
+                writer.WritePropertyName("patchNameMasksToInclude"u8);
+                writer.WriteStartArray();
+                foreach (var item in PatchNameMasksToInclude)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PatchNameMasksToExclude))
+            {
+                writer.WritePropertyName("patchNameMasksToExclude"u8);
+                writer.WriteStartArray();
+                foreach (var item in PatchNameMasksToExclude)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -116,6 +136,8 @@ namespace Azure.ResourceManager.Compute.Models
             IList<string> kbNumbersToExclude = default;
             bool? excludeKbsRequiringReboot = default;
             DateTimeOffset? maxPatchPublishDate = default;
+            IList<string> patchNameMasksToInclude = default;
+            IList<string> patchNameMasksToExclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,6 +202,34 @@ namespace Azure.ResourceManager.Compute.Models
                     maxPatchPublishDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("patchNameMasksToInclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    patchNameMasksToInclude = array;
+                    continue;
+                }
+                if (property.NameEquals("patchNameMasksToExclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    patchNameMasksToExclude = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -192,6 +242,8 @@ namespace Azure.ResourceManager.Compute.Models
                 kbNumbersToExclude ?? new ChangeTrackingList<string>(),
                 excludeKbsRequiringReboot,
                 maxPatchPublishDate,
+                patchNameMasksToInclude ?? new ChangeTrackingList<string>(),
+                patchNameMasksToExclude ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
