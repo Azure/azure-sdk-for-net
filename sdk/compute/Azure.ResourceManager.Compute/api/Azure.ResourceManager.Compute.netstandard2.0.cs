@@ -8185,6 +8185,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ScheduledEventsPolicy() { }
         public Azure.ResourceManager.Compute.Models.AllInstancesDown AllInstancesDown { get { throw null; } set { } }
         public bool? AutomaticallyApprove { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? Enable { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.UserInitiatedRedeploy UserInitiatedRedeploy { get { throw null; } set { } }

@@ -7,12 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations. </summary>
     public partial class ScheduledEventsPolicy
     {
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Enable { get; set; }
     }
 }
