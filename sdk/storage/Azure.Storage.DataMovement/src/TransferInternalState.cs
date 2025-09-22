@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement
 
         internal bool TriggerCancellation()
         {
-            if (!CancellationTokenSource.IsCancellationRequested)
+            if (CancellationTokenSource?.IsCancellationRequested == false)
             {
                 CancellationTokenSource.Cancel();
                 // Dispose the CancellationTokenSource after cancellation to release resources.

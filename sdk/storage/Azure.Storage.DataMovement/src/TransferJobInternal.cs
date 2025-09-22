@@ -387,7 +387,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>The task to wait until the cancellation has been triggered.</returns>
         public async Task TriggerJobCancellationAsync()
         {
-            if (!_transferOperation._state.CancellationTokenSource.IsCancellationRequested)
+            if (_transferOperation._state.CancellationTokenSource?.IsCancellationRequested == false)
             {
                 await OnJobStateChangedAsync(TransferState.Stopping).ConfigureAwait(false);
                 _transferOperation._state.TriggerCancellation();
@@ -421,18 +421,39 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
                 _transferOperation.Status.SetFailedItem();
+
+                try
+                {
+                    await TriggerJobCancellationAsync().ConfigureAwait(false);
+                }
+                catch (Exception cancellationException)
+                {
+                    if (TransferFailedEventHandler != null)
+                    {
+                        await TransferFailedEventHandler.RaiseAsync(
+                            new TransferItemFailedEventArgs(
+                                _transferOperation.Id,
+                                _sourceResourceContainer,
+                                _destinationResourceContainer,
+                                cancellationException,
+                                false,
+                                _cancellationToken),
+                            nameof(TransferJobInternal),
+                            nameof(TransferFailedEventHandler),
+                            ClientDiagnostics)
+                            .ConfigureAwait(false);
+                    }
+                }
             }
 
             try
             {
-                await TriggerJobCancellationAsync().ConfigureAwait(false);
-
                 // If we're failing from a Transfer Job point, it means we have aborted the job
                 // at the listing phase. However it's possible that some job parts may be in flight
                 // and we have to check if they're finished cleaning up yet.
                 await CheckAndUpdateStatusAsync().ConfigureAwait(false);
             }
-            catch (Exception cancellationException)
+            catch (Exception statusUpdateException)
             {
                 if (TransferFailedEventHandler != null)
                 {
@@ -441,7 +462,7 @@ namespace Azure.Storage.DataMovement
                             _transferOperation.Id,
                             _sourceResourceContainer,
                             _destinationResourceContainer,
-                            cancellationException,
+                            statusUpdateException,
                             false,
                             _cancellationToken),
                         nameof(TransferJobInternal),

@@ -434,8 +434,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.IsTrue(transferOperation.HasCompleted);
             Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
             Assert.AreEqual(true, transferOperation.Status.HasFailedItems);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
+            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
         }
 
         [RecordedTest]
