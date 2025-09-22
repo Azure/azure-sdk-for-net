@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WebPubSubPrivateEndpointConnectionsUpdate()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubPrivateEndpointConnections_Update.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubPrivateEndpointConnections_Update.json
             // this example is just showing the usage of "WebPubSubPrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             string privateEndpointConnectionName = "mywebpubsubservice.1fa229cd-bf3f-47f0-8c49-afb36723997e";
             WebPubSubPrivateEndpointConnectionData data = new WebPubSubPrivateEndpointConnectionData
             {
-                PrivateEndpointId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
                 ConnectionState = new WebPubSubPrivateLinkServiceConnectionState
                 {
                     Status = WebPubSubPrivateLinkServiceConnectionStatus.Approved,
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WebPubSubPrivateEndpointConnectionsGet()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubPrivateEndpointConnections_Get.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubPrivateEndpointConnections_Get.json
             // this example is just showing the usage of "WebPubSubPrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WebPubSubPrivateEndpointConnectionsList()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubPrivateEndpointConnections_List.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubPrivateEndpointConnections_List.json
             // this example is just showing the usage of "WebPubSubPrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_WebPubSubPrivateEndpointConnectionsGet()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubPrivateEndpointConnections_Get.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubPrivateEndpointConnections_Get.json
             // this example is just showing the usage of "WebPubSubPrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WebPubSubPrivateEndpointConnectionsGet()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubPrivateEndpointConnections_Get.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubPrivateEndpointConnections_Get.json
             // this example is just showing the usage of "WebPubSubPrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
