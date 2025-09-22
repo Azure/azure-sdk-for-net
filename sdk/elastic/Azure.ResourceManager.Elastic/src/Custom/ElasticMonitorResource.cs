@@ -11,7 +11,7 @@ using Azure.ResourceManager.Elastic.Models;
 
 namespace Azure.ResourceManager.Elastic
 {
-    // Added these methods due to the patch operation changed to LRO in api version 2025-06-01
+    // Added these methods because the PATCH operation changed to LRO in API version 2025-06-01.
     public partial class ElasticMonitorResource
     {
         /// <summary>
