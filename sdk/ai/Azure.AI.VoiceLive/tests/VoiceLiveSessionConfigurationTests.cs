@@ -81,16 +81,16 @@ namespace Azure.AI.VoiceLive.Tests
                 Voice = new AzureStandardVoice(TestConstants.VoiceName),
                 Model = TestConstants.ModelName,
                 Instructions = "You are a helpful assistant.",
-                TurnDetection = new ServerVad { Threshold = 0.5f, SilenceDurationMs = 500 },
-                InputAudioFormat = AudioFormat.Pcm16,
-                OutputAudioFormat = AudioFormat.Pcm16
+                TurnDetection = new ServerVadTurnDetection { Threshold = 0.5f, SilenceDurationMs = 500 },
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
             };
             // Ensure we control modalities explicitly (clear defaults then add back only text & audio)
             options.Modalities.Clear();
             options.Modalities.Add(InputModality.Text);
             options.Modalities.Add(InputModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(options);
+            await session.ConfigureSessionAsync(options);
 
             var updateMessages = GetSentMessagesOfType(fake, "session.update");
             Assert.That(updateMessages, Is.Not.Empty, "Expected at least one session.update message to be sent.");
@@ -129,7 +129,7 @@ namespace Azure.AI.VoiceLive.Tests
             options.Tools.Add(new VoiceLiveFunctionDefinition("get_weather") { Description = "Gets the weather." });
             options.Tools.Add(new VoiceLiveFunctionDefinition("book_flight") { Description = "Books a flight." });
 
-            await session.ConfigureConversationSessionAsync(options);
+            await session.ConfigureSessionAsync(options);
 
             var updateMessages = GetSentMessagesOfType(fake, "session.update");
             Assert.That(updateMessages, Is.Not.Empty, "Expected session.update message.");
@@ -146,7 +146,7 @@ namespace Azure.AI.VoiceLive.Tests
         public void ConfigureConversationSession_NullOptions_Throws()
         {
             var session = CreateSessionWithFakeSocket(out _);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await session.ConfigureConversationSessionAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await session.ConfigureSessionAsync(null));
         }
 
         [Test]
@@ -162,8 +162,8 @@ namespace Azure.AI.VoiceLive.Tests
             options2.Modalities.Clear();
             options2.Modalities.Add(InputModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(options1);
-            await session.ConfigureConversationSessionAsync(options2);
+            await session.ConfigureSessionAsync(options1);
+            await session.ConfigureSessionAsync(options2);
 
             var updateMessages = GetSentMessagesOfType(fake, "session.update");
             Assert.That(updateMessages.Count, Is.GreaterThanOrEqualTo(2), "Expected two session.update messages after two configuration calls.");

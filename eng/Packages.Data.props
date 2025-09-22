@@ -92,6 +92,7 @@
     <PackageReference Update="System.Memory.Data" Version="8.0.1" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
+    <PackageReference Update="System.Net.ServerSentEvents" Version="9.0.9" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
     <PackageReference Update="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
@@ -125,7 +126,7 @@
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.15.0" />
+    <PackageReference Update="Azure.Identity" Version="1.16.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.7.0" />
@@ -321,7 +322,7 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Core" Version="1.47.3" />
-    <PackageReference Update="Azure.Identity" Version="1.15.0" />
+    <PackageReference Update="Azure.Identity" Version="1.16.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
@@ -466,7 +467,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250805.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250918.1</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250922.1</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20250903.2</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

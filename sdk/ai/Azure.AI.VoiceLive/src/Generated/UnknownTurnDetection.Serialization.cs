@@ -71,7 +71,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToTurnDetectionType();
+                    @type = new TurnDetectionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
