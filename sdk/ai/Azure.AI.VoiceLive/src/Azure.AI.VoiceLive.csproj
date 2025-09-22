@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       This is the Azure.AI.VoiceLive client library for working with the Azure VoiceLive service.
@@ -17,7 +17,7 @@
       See https://aka.ms/voicelivesdk-net for more inforamtion.
     </Description>
     <AssemblyTitle>Microsoft Azure.AI.VoiceLive client library</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure.AI.VoiceLive</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
