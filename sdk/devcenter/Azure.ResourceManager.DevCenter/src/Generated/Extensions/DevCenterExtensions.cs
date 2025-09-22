@@ -205,22 +205,22 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectCatalogEnvironmentDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectCatalogEnvironmentDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectCatalogEnvironmentDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectCatalogEnvironmentDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectCatalogEnvironmentDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectCatalogEnvironmentDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectCatalogEnvironmentDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterProjectCatalogEnvironmentDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> object. </returns>
-        public static ProjectCatalogEnvironmentDefinitionResource GetProjectCatalogEnvironmentDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectCatalogEnvironmentDefinitionResource"/> object. </returns>
+        public static DevCenterProjectCatalogEnvironmentDefinitionResource GetDevCenterProjectCatalogEnvironmentDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectCatalogEnvironmentDefinitionResource(id);
+            return GetMockableDevCenterArmClient(client).GetDevCenterProjectCatalogEnvironmentDefinitionResource(id);
         }
 
         /// <summary>
@@ -243,22 +243,22 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectCatalogImageDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectCatalogImageDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectCatalogImageDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectCatalogImageDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectCatalogImageDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectCatalogImageDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectCatalogImageDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterProjectCatalogImageDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectCatalogImageDefinitionResource"/> object. </returns>
-        public static ProjectCatalogImageDefinitionResource GetProjectCatalogImageDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectCatalogImageDefinitionResource"/> object. </returns>
+        public static DevCenterProjectCatalogImageDefinitionResource GetDevCenterProjectCatalogImageDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectCatalogImageDefinitionResource(id);
+            return GetMockableDevCenterArmClient(client).GetDevCenterProjectCatalogImageDefinitionResource(id);
         }
 
         /// <summary>
@@ -281,41 +281,41 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectCatalogImageDefinitionBuildResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectCatalogImageDefinitionBuildResource.CreateResourceIdentifier" /> to create a <see cref="ProjectCatalogImageDefinitionBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectCatalogImageDefinitionBuildResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectCatalogImageDefinitionBuildResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectCatalogImageDefinitionBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectCatalogImageDefinitionBuildResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterProjectCatalogImageDefinitionBuildResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectCatalogImageDefinitionBuildResource"/> object. </returns>
-        public static ProjectCatalogImageDefinitionBuildResource GetProjectCatalogImageDefinitionBuildResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectCatalogImageDefinitionBuildResource"/> object. </returns>
+        public static DevCenterProjectCatalogImageDefinitionBuildResource GetDevCenterProjectCatalogImageDefinitionBuildResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectCatalogImageDefinitionBuildResource(id);
+            return GetMockableDevCenterArmClient(client).GetDevCenterProjectCatalogImageDefinitionBuildResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterCustomizationTaskResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterCustomizationTaskResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterCustomizationTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CustomizationTaskResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CustomizationTaskResource.CreateResourceIdentifier" /> to create a <see cref="CustomizationTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterCustomizationTaskResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetCustomizationTaskResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DevCenterCustomizationTaskResource"/> object. </returns>
-        public static DevCenterCustomizationTaskResource GetDevCenterCustomizationTaskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomizationTaskResource"/> object. </returns>
+        public static CustomizationTaskResource GetCustomizationTaskResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetDevCenterCustomizationTaskResource(id);
+            return GetMockableDevCenterArmClient(client).GetCustomizationTaskResource(id);
         }
 
         /// <summary>
@@ -433,22 +433,22 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectImageResource.CreateResourceIdentifier" /> to create a <see cref="ProjectImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectImageResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterProjectImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectImageResource"/> object. </returns>
-        public static ProjectImageResource GetProjectImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectImageResource"/> object. </returns>
+        public static DevCenterProjectImageResource GetDevCenterProjectImageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectImageResource(id);
+            return GetMockableDevCenterArmClient(client).GetDevCenterProjectImageResource(id);
         }
 
         /// <summary>
@@ -471,41 +471,41 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectImageVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterProjectImageVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectImageVersionResource"/> object. </returns>
-        public static ProjectImageVersionResource GetProjectImageVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectImageVersionResource"/> object. </returns>
+        public static DevCenterProjectImageVersionResource GetDevCenterProjectImageVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectImageVersionResource(id);
+            return GetMockableDevCenterArmClient(client).GetDevCenterProjectImageVersionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ProjectPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterProjectPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectPolicyResource"/> object. </returns>
-        public static ProjectPolicyResource GetProjectPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectPolicyResource"/> object. </returns>
+        public static DevCenterProjectPolicyResource GetDevCenterProjectPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectPolicyResource(id);
+            return GetMockableDevCenterArmClient(client).GetDevCenterProjectPolicyResource(id);
         }
 
         /// <summary>

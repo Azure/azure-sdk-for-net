@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> Paged collection of CustomizationTask items. </summary>
-    internal partial class CustomizationTaskListResult
+    /// <summary> The project policy properties for partial update. Properties not provided in the update request will not be changed. </summary>
+    public partial class DevCenterProjectPolicyPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,32 +45,27 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CustomizationTaskListResult"/>. </summary>
-        /// <param name="value"> The CustomizationTask items on this page. </param>
-        internal CustomizationTaskListResult(IEnumerable<CustomizationTaskData> value)
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectPolicyPatch"/>. </summary>
+        public DevCenterProjectPolicyPatch()
         {
-            Value = value.ToList();
+            ResourcePolicies = new ChangeTrackingList<ProjectPolicyUpdateResourcePolicy>();
+            Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomizationTaskListResult"/>. </summary>
-        /// <param name="value"> The CustomizationTask items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectPolicyPatch"/>. </summary>
+        /// <param name="resourcePolicies"> Resource policies that are a part of this project policy. </param>
+        /// <param name="scopes"> Resources that have access to the shared resources that are a part of this project policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomizationTaskListResult(IReadOnlyList<CustomizationTaskData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterProjectPolicyPatch(IList<ProjectPolicyUpdateResourcePolicy> resourcePolicies, IList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            ResourcePolicies = resourcePolicies;
+            Scopes = scopes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomizationTaskListResult"/> for deserialization. </summary>
-        internal CustomizationTaskListResult()
-        {
-        }
-
-        /// <summary> The CustomizationTask items on this page. </summary>
-        public IReadOnlyList<CustomizationTaskData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Resource policies that are a part of this project policy. </summary>
+        public IList<ProjectPolicyUpdateResourcePolicy> ResourcePolicies { get; }
+        /// <summary> Resources that have access to the shared resources that are a part of this project policy. </summary>
+        public IList<string> Scopes { get; }
     }
 }

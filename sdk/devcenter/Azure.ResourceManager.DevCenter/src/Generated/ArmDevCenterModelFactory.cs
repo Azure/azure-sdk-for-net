@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new ImageDefinitionBuildTaskParametersItem(key, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterCustomizationTaskData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.CustomizationTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -630,12 +630,12 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="inputs"> Inputs to the task. </param>
         /// <param name="timeout"> The default timeout for the task. </param>
         /// <param name="validationStatus"> Validation status for the Task. </param>
-        /// <returns> A new <see cref="DevCenter.DevCenterCustomizationTaskData"/> instance for mocking. </returns>
-        public static DevCenterCustomizationTaskData DevCenterCustomizationTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, CustomizationTaskInput> inputs = null, int? timeout = null, CatalogResourceValidationStatus? validationStatus = null)
+        /// <returns> A new <see cref="DevCenter.CustomizationTaskData"/> instance for mocking. </returns>
+        public static CustomizationTaskData CustomizationTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, CustomizationTaskInput> inputs = null, int? timeout = null, CatalogResourceValidationStatus? validationStatus = null)
         {
             inputs ??= new Dictionary<string, CustomizationTaskInput>();
 
-            return new DevCenterCustomizationTaskData(
+            return new CustomizationTaskData(
                 id,
                 name,
                 resourceType,

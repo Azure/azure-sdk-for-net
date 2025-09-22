@@ -143,15 +143,15 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectCatalogEnvironmentDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectCatalogEnvironmentDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectCatalogEnvironmentDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectCatalogEnvironmentDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> object. </returns>
-        public virtual ProjectCatalogEnvironmentDefinitionResource GetProjectCatalogEnvironmentDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectCatalogEnvironmentDefinitionResource"/> object. </returns>
+        public virtual DevCenterProjectCatalogEnvironmentDefinitionResource GetDevCenterProjectCatalogEnvironmentDefinitionResource(ResourceIdentifier id)
         {
-            ProjectCatalogEnvironmentDefinitionResource.ValidateResourceId(id);
-            return new ProjectCatalogEnvironmentDefinitionResource(Client, id);
+            DevCenterProjectCatalogEnvironmentDefinitionResource.ValidateResourceId(id);
+            return new DevCenterProjectCatalogEnvironmentDefinitionResource(Client, id);
         }
 
         /// <summary>
@@ -167,15 +167,15 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectCatalogImageDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectCatalogImageDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectCatalogImageDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectCatalogImageDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectCatalogImageDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectCatalogImageDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectCatalogImageDefinitionResource"/> object. </returns>
-        public virtual ProjectCatalogImageDefinitionResource GetProjectCatalogImageDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectCatalogImageDefinitionResource"/> object. </returns>
+        public virtual DevCenterProjectCatalogImageDefinitionResource GetDevCenterProjectCatalogImageDefinitionResource(ResourceIdentifier id)
         {
-            ProjectCatalogImageDefinitionResource.ValidateResourceId(id);
-            return new ProjectCatalogImageDefinitionResource(Client, id);
+            DevCenterProjectCatalogImageDefinitionResource.ValidateResourceId(id);
+            return new DevCenterProjectCatalogImageDefinitionResource(Client, id);
         }
 
         /// <summary>
@@ -191,27 +191,27 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectCatalogImageDefinitionBuildResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectCatalogImageDefinitionBuildResource.CreateResourceIdentifier" /> to create a <see cref="ProjectCatalogImageDefinitionBuildResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectCatalogImageDefinitionBuildResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectCatalogImageDefinitionBuildResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectCatalogImageDefinitionBuildResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectCatalogImageDefinitionBuildResource"/> object. </returns>
-        public virtual ProjectCatalogImageDefinitionBuildResource GetProjectCatalogImageDefinitionBuildResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectCatalogImageDefinitionBuildResource"/> object. </returns>
+        public virtual DevCenterProjectCatalogImageDefinitionBuildResource GetDevCenterProjectCatalogImageDefinitionBuildResource(ResourceIdentifier id)
         {
-            ProjectCatalogImageDefinitionBuildResource.ValidateResourceId(id);
-            return new ProjectCatalogImageDefinitionBuildResource(Client, id);
+            DevCenterProjectCatalogImageDefinitionBuildResource.ValidateResourceId(id);
+            return new DevCenterProjectCatalogImageDefinitionBuildResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterCustomizationTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterCustomizationTaskResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterCustomizationTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CustomizationTaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CustomizationTaskResource.CreateResourceIdentifier" /> to create a <see cref="CustomizationTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterCustomizationTaskResource"/> object. </returns>
-        public virtual DevCenterCustomizationTaskResource GetDevCenterCustomizationTaskResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomizationTaskResource"/> object. </returns>
+        public virtual CustomizationTaskResource GetCustomizationTaskResource(ResourceIdentifier id)
         {
-            DevCenterCustomizationTaskResource.ValidateResourceId(id);
-            return new DevCenterCustomizationTaskResource(Client, id);
+            CustomizationTaskResource.ValidateResourceId(id);
+            return new CustomizationTaskResource(Client, id);
         }
 
         /// <summary>
@@ -287,15 +287,15 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectImageResource.CreateResourceIdentifier" /> to create a <see cref="ProjectImageResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectImageResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectImageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectImageResource"/> object. </returns>
-        public virtual ProjectImageResource GetProjectImageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectImageResource"/> object. </returns>
+        public virtual DevCenterProjectImageResource GetDevCenterProjectImageResource(ResourceIdentifier id)
         {
-            ProjectImageResource.ValidateResourceId(id);
-            return new ProjectImageResource(Client, id);
+            DevCenterProjectImageResource.ValidateResourceId(id);
+            return new DevCenterProjectImageResource(Client, id);
         }
 
         /// <summary>
@@ -311,27 +311,27 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectImageVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectImageVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectImageVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectImageVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectImageVersionResource"/> object. </returns>
-        public virtual ProjectImageVersionResource GetProjectImageVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectImageVersionResource"/> object. </returns>
+        public virtual DevCenterProjectImageVersionResource GetDevCenterProjectImageVersionResource(ResourceIdentifier id)
         {
-            ProjectImageVersionResource.ValidateResourceId(id);
-            return new ProjectImageVersionResource(Client, id);
+            DevCenterProjectImageVersionResource.ValidateResourceId(id);
+            return new DevCenterProjectImageVersionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ProjectPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectPolicyResource"/> object. </returns>
-        public virtual ProjectPolicyResource GetProjectPolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectPolicyResource"/> object. </returns>
+        public virtual DevCenterProjectPolicyResource GetDevCenterProjectPolicyResource(ResourceIdentifier id)
         {
-            ProjectPolicyResource.ValidateResourceId(id);
-            return new ProjectPolicyResource(Client, id);
+            DevCenterProjectPolicyResource.ValidateResourceId(id);
+            return new DevCenterProjectPolicyResource(Client, id);
         }
 
         /// <summary>

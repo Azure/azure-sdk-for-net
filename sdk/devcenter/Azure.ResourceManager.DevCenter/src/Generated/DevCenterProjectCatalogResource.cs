@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DevCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ProjectCatalogEnvironmentDefinitionResources in the DevCenterProjectCatalog. </summary>
-        /// <returns> An object representing collection of ProjectCatalogEnvironmentDefinitionResources and their operations over a ProjectCatalogEnvironmentDefinitionResource. </returns>
-        public virtual ProjectCatalogEnvironmentDefinitionCollection GetProjectCatalogEnvironmentDefinitions()
+        /// <summary> Gets a collection of DevCenterProjectCatalogEnvironmentDefinitionResources in the DevCenterProjectCatalog. </summary>
+        /// <returns> An object representing collection of DevCenterProjectCatalogEnvironmentDefinitionResources and their operations over a DevCenterProjectCatalogEnvironmentDefinitionResource. </returns>
+        public virtual DevCenterProjectCatalogEnvironmentDefinitionCollection GetDevCenterProjectCatalogEnvironmentDefinitions()
         {
-            return GetCachedClient(client => new ProjectCatalogEnvironmentDefinitionCollection(client, Id));
+            return GetCachedClient(client => new DevCenterProjectCatalogEnvironmentDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogEnvironmentDefinitionResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogEnvironmentDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectCatalogEnvironmentDefinitionResource>> GetProjectCatalogEnvironmentDefinitionAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectCatalogEnvironmentDefinitionResource>> GetDevCenterProjectCatalogEnvironmentDefinitionAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await GetProjectCatalogEnvironmentDefinitions().GetAsync(environmentDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterProjectCatalogEnvironmentDefinitions().GetAsync(environmentDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogEnvironmentDefinitionResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogEnvironmentDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,47 +154,16 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectCatalogEnvironmentDefinitionResource> GetProjectCatalogEnvironmentDefinition(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectCatalogEnvironmentDefinitionResource> GetDevCenterProjectCatalogEnvironmentDefinition(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetProjectCatalogEnvironmentDefinitions().Get(environmentDefinitionName, cancellationToken);
+            return GetDevCenterProjectCatalogEnvironmentDefinitions().Get(environmentDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProjectCatalogImageDefinitionResources in the DevCenterProjectCatalog. </summary>
-        /// <returns> An object representing collection of ProjectCatalogImageDefinitionResources and their operations over a ProjectCatalogImageDefinitionResource. </returns>
-        public virtual ProjectCatalogImageDefinitionCollection GetProjectCatalogImageDefinitions()
+        /// <summary> Gets a collection of DevCenterProjectCatalogImageDefinitionResources in the DevCenterProjectCatalog. </summary>
+        /// <returns> An object representing collection of DevCenterProjectCatalogImageDefinitionResources and their operations over a DevCenterProjectCatalogImageDefinitionResource. </returns>
+        public virtual DevCenterProjectCatalogImageDefinitionCollection GetDevCenterProjectCatalogImageDefinitions()
         {
-            return GetCachedClient(client => new ProjectCatalogImageDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an Image Definition from the catalog.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/imageDefinitions/{imageDefinitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectCatalogImageDefinitions_GetByProjectCatalog</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogImageDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="imageDefinitionName"> The name of the Image Definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectCatalogImageDefinitionResource>> GetProjectCatalogImageDefinitionAsync(string imageDefinitionName, CancellationToken cancellationToken = default)
-        {
-            return await GetProjectCatalogImageDefinitions().GetAsync(imageDefinitionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new DevCenterProjectCatalogImageDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -214,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogImageDefinitionResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogImageDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,9 +192,40 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="imageDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectCatalogImageDefinitionResource> GetProjectCatalogImageDefinition(string imageDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectCatalogImageDefinitionResource>> GetDevCenterProjectCatalogImageDefinitionAsync(string imageDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetProjectCatalogImageDefinitions().Get(imageDefinitionName, cancellationToken);
+            return await GetDevCenterProjectCatalogImageDefinitions().GetAsync(imageDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an Image Definition from the catalog.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/imageDefinitions/{imageDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectCatalogImageDefinitions_GetByProjectCatalog</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectCatalogImageDefinitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="imageDefinitionName"> The name of the Image Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevCenterProjectCatalogImageDefinitionResource> GetDevCenterProjectCatalogImageDefinition(string imageDefinitionName, CancellationToken cancellationToken = default)
+        {
+            return GetDevCenterProjectCatalogImageDefinitions().Get(imageDefinitionName, cancellationToken);
         }
 
         /// <summary>

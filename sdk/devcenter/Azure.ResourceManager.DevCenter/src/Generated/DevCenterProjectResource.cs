@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.DevCenter
             return GetProjectDevBoxDefinitions().Get(devBoxDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProjectImageResources in the DevCenterProject. </summary>
-        /// <returns> An object representing collection of ProjectImageResources and their operations over a ProjectImageResource. </returns>
-        public virtual ProjectImageCollection GetProjectImages()
+        /// <summary> Gets a collection of DevCenterProjectImageResources in the DevCenterProject. </summary>
+        /// <returns> An object representing collection of DevCenterProjectImageResources and their operations over a DevCenterProjectImageResource. </returns>
+        public virtual DevCenterProjectImageCollection GetDevCenterProjectImages()
         {
-            return GetCachedClient(client => new ProjectImageCollection(client, Id));
+            return GetCachedClient(client => new DevCenterProjectImageCollection(client, Id));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectImageResource"/></description>
+        /// <description><see cref="DevCenterProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,9 +335,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectImageResource>> GetProjectImageAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectImageResource>> GetDevCenterProjectImageAsync(string imageName, CancellationToken cancellationToken = default)
         {
-            return await GetProjectImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterProjectImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectImageResource"/></description>
+        /// <description><see cref="DevCenterProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectImageResource> GetProjectImage(string imageName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectImageResource> GetDevCenterProjectImage(string imageName, CancellationToken cancellationToken = default)
         {
-            return GetProjectImages().Get(imageName, cancellationToken);
+            return GetDevCenterProjectImages().Get(imageName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AllowedEnvironmentTypeResources in the DevCenterProject. </summary>
