@@ -104,7 +104,7 @@ namespace Azure.AI.Translation.Text
             return new TargetDictionaryLanguage(name, nativeName, dir, code, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.TranslateBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.TranslateInputItem"/>. </summary>
         /// <param name="text"> Text to translate. </param>
         /// <param name="script"> Specifies the script of the input text. </param>
         /// <param name="language">
@@ -120,12 +120,12 @@ namespace Azure.AI.Translation.Text
         /// complete element. Possible values are: plain (default) or html.
         /// </param>
         /// <param name="targets"> Translation target parameters. </param>
-        /// <returns> A new <see cref="Text.TranslateBody"/> instance for mocking. </returns>
-        public static TranslateBody TranslateBody(string text = null, string script = null, string language = null, TextType? textType = null, IEnumerable<TranslateTarget> targets = null)
+        /// <returns> A new <see cref="Text.TranslateInputItem"/> instance for mocking. </returns>
+        public static TranslateInputItem TranslateInputItem(string text = null, string script = null, string language = null, TextType? textType = null, IEnumerable<TranslateTarget> targets = null)
         {
             targets ??= new List<TranslateTarget>();
 
-            return new TranslateBody(
+            return new TranslateInputItem(
                 text,
                 script,
                 language,
@@ -197,6 +197,16 @@ namespace Azure.AI.Translation.Text
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Text.TranslationResult"/>. </summary>
+        /// <param name="values"> Array of the translated text elements. </param>
+        /// <returns> A new <see cref="Text.TranslationResult"/> instance for mocking. </returns>
+        public static TranslationResult TranslationResult(IEnumerable<TranslatedTextItem> values = null)
+        {
+            values ??= new List<TranslatedTextItem>();
+
+            return new TranslationResult(values?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Text.TranslatedTextItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="translations">
@@ -243,6 +253,16 @@ namespace Azure.AI.Translation.Text
                 targetTokens,
                 text,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Text.TransliterateResult"/>. </summary>
+        /// <param name="values"> Array of transliterated texts. </param>
+        /// <returns> A new <see cref="Text.TransliterateResult"/> instance for mocking. </returns>
+        public static TransliterateResult TransliterateResult(IEnumerable<TransliteratedText> values = null)
+        {
+            values ??= new List<TransliteratedText>();
+
+            return new TransliterateResult(values?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TransliteratedText"/>. </summary>

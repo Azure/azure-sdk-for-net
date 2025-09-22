@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Request body for the translate API. </summary>
-    public partial class TranslateBody
+    /// <summary> Response for the transliteration API. </summary>
+    public partial class TransliterateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,31 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TranslateBody"/>. </summary>
-        /// <param name="inputs"> Array of the input text elements to translate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public TranslateBody(IEnumerable<TranslateInputItem> inputs)
+        /// <summary> Initializes a new instance of <see cref="TransliterateResult"/>. </summary>
+        /// <param name="values"> Array of transliterated texts. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
+        internal TransliterateResult(IEnumerable<TransliteratedText> values)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(values, nameof(values));
 
-            Inputs = inputs.ToList();
+            Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslateBody"/>. </summary>
-        /// <param name="inputs"> Array of the input text elements to translate. </param>
+        /// <summary> Initializes a new instance of <see cref="TransliterateResult"/>. </summary>
+        /// <param name="values"> Array of transliterated texts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslateBody(IList<TranslateInputItem> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TransliterateResult(IReadOnlyList<TransliteratedText> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Inputs = inputs;
+            Values = values;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslateBody"/> for deserialization. </summary>
-        internal TranslateBody()
+        /// <summary> Initializes a new instance of <see cref="TransliterateResult"/> for deserialization. </summary>
+        internal TransliterateResult()
         {
         }
 
-        /// <summary> Array of the input text elements to translate. </summary>
-        public IList<TranslateInputItem> Inputs { get; }
+        /// <summary> Array of transliterated texts. </summary>
+        public IReadOnlyList<TransliteratedText> Values { get; }
     }
 }
