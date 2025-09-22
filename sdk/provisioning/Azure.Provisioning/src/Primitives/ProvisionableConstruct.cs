@@ -210,7 +210,6 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     /// <inheritdoc />
     bool IBicepValue.IsEmpty =>
         _kind == BicepValueKind.Unset ||
-        _kind == BicepValueKind.Expression ||
         _kind == BicepValueKind.Literal && ProvisionableProperties.All(p => p.Value.IsEmpty);
 
     /// <inheritdoc />
