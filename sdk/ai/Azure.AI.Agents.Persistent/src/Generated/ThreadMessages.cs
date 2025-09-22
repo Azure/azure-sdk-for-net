@@ -77,7 +77,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(content, nameof(content));
 
             CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, attachments?.ToList() as IReadOnlyList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await CreateMessageAsync(threadId, createMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
@@ -107,7 +107,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(content, nameof(content));
 
             CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, attachments?.ToList() as IReadOnlyList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = CreateMessage(threadId, createMessageRequest.ToRequestContent(), context);
             return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
@@ -123,7 +123,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetMessageAsync(threadId, messageId, context).ConfigureAwait(false);
             return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
@@ -139,7 +139,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetMessage(threadId, messageId, context);
             return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
@@ -239,7 +239,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UpdateMessageAsync(threadId, messageId, updateMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
@@ -257,7 +257,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = UpdateMessage(threadId, messageId, updateMessageRequest.ToRequestContent(), context);
             return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
@@ -359,7 +359,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await InternalDeleteMessageAsync(threadId, messageId, context).ConfigureAwait(false);
             return Response.FromValue(MessageDeletionStatus.FromResponse(response), response);
         }
@@ -375,7 +375,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = InternalDeleteMessage(threadId, messageId, context);
             return Response.FromValue(MessageDeletionStatus.FromResponse(response), response);
         }
@@ -567,17 +567,6 @@ namespace Azure.AI.Agents.Persistent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

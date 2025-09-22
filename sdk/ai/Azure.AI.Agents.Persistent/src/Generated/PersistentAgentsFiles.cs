@@ -54,7 +54,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         internal virtual async Task<Response<InternalFileListResponse>> InternalListFilesAsync(PersistentAgentFilePurpose? purpose = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await InternalListFilesAsync(purpose?.ToString(), context).ConfigureAwait(false);
             return Response.FromValue(InternalFileListResponse.FromResponse(response), response);
         }
@@ -64,7 +64,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         internal virtual Response<InternalFileListResponse> InternalListFiles(PersistentAgentFilePurpose? purpose = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = InternalListFiles(purpose?.ToString(), context);
             return Response.FromValue(InternalFileListResponse.FromResponse(response), response);
         }
@@ -226,7 +226,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await InternalDeleteFileAsync(fileId, context).ConfigureAwait(false);
             return Response.FromValue(InternalFileDeletionStatus.FromResponse(response), response);
         }
@@ -240,7 +240,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = InternalDeleteFile(fileId, context);
             return Response.FromValue(InternalFileDeletionStatus.FromResponse(response), response);
         }
@@ -332,7 +332,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetFileAsync(fileId, context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
@@ -346,7 +346,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetFile(fileId, context);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
@@ -438,7 +438,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetFileContentAsync(fileId, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
@@ -452,7 +452,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetFileContent(fileId, context);
             return Response.FromValue(response.Content, response);
         }
@@ -613,17 +613,6 @@ namespace Azure.AI.Agents.Persistent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
             return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

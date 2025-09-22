@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -62,7 +61,7 @@ namespace Azure.AI.Agents.Persistent
 
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
@@ -80,7 +79,7 @@ namespace Azure.AI.Agents.Persistent
 
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
@@ -94,7 +93,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(body, nameof(body));
 
             using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
@@ -108,7 +107,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(body, nameof(body));
 
             using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }

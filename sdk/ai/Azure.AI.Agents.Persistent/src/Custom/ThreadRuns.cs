@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -25,7 +24,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <param name="threadRunStepsClient">The thread run steps client to be used.</param>
-        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, ThreadRunSteps threadRunStepsClient): this (
+        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, ThreadRunSteps threadRunStepsClient) : this(
                 clientDiagnostics: clientDiagnostics,
                 pipeline: pipeline,
                 tokenCredential: tokenCredential,
@@ -444,7 +443,7 @@ namespace Azure.AI.Agents.Persistent
                 toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
                 stream,
                 null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return SubmitToolOutputsInternal(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest.ToRequestContent(), context);
         }
 
@@ -459,7 +458,7 @@ namespace Azure.AI.Agents.Persistent
         {
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(
                 toolOutputs.ToList(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return await SubmitToolOutputsInternalAsync(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
         }
 
@@ -501,7 +500,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolApprovals"> The list of tool approvals to provide as part of an submission to an agent thread run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
-        public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<ToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default,  CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<ToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = SubmitToolOutputsToRunInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken);
@@ -594,21 +593,26 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            return GetRunsAsync(threadId, limit, order, after, before, cancellationToken.ToRequestContext());
+        }
+
+        internal AsyncPageable<ThreadRun> GetRunsAsync(string threadId, int? limit, ListSortOrder? order, string after, string before, RequestContext requestContext)
+        {
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunsRequest(
                 threadId: threadId,
                 limit: limit,
                 order: order?.ToString(),
                 after: continuationToken,
                 before: before,
-                context: context);
+                context: requestContext);
+
             return new ContinuationTokenPageableAsync<ThreadRun>(
                 createPageRequest: PageRequest,
                 valueFactory: e => ThreadRun.DeserializeThreadRun(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context,
+                requestContext: requestContext,
                 after: after
             );
         }
@@ -633,7 +637,7 @@ namespace Azure.AI.Agents.Persistent
                 order: order?.ToString(),
                 after: continuationToken,
                 before: before,
-                context:context);
+                context: context);
             return new ContinuationTokenPageable<ThreadRun>(
                 createPageRequest: PageRequest,
                 valueFactory: e => ThreadRun.DeserializeThreadRun(e),

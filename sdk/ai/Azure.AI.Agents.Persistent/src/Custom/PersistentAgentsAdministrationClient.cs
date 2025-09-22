@@ -512,26 +512,6 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary>
-        /// [Protocol Method] Creates a new agent thread and immediately starts a run using that new thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateThreadAndRunAsync(string,PersistentAgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateThreadAndRunAsync(RequestContent content, RequestContext context = null)
         {
             using var otelScope = OpenTelemetryScope.StartCreateRun(content, _endpoint);

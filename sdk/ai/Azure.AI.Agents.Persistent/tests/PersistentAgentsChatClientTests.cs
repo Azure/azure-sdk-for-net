@@ -5,9 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.AI;
@@ -344,6 +348,47 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.Throws<ArgumentNullException>(() => chatClient.GetService(null));
         }
 
+        [RecordedTest]
+        public async Task TestUserAgentAsync()
+        {
+            using var handler = new AssertUserAgentHttpHandler();
+            using var httpClient = new HttpClient(handler);
+            var client = new PersistentAgentsClient(TestEnvironment.PROJECT_ENDPOINT, DelegatedTokenCredential.Create((_, _) => new AccessToken()), new() { Transport = new HttpClientTransport(httpClient) });
+
+            PersistentAgentsChatClient chatClient = new(client, _agentId, _threadId);
+
+            List<ChatMessage> chatHistory = [new ChatMessage(ChatRole.User, "Get Mike's favourite word")];
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await chatClient.GetResponseAsync(chatHistory));
+            ChatResponse response1 = await chatClient.GetResponseAsync(chatHistory);
+            ChatResponse response2 = await chatClient.GetResponseAsync([.. response1.Messages, new ChatMessage(ChatRole.User, "What do you think about that?")]);
+            List<ChatResponseUpdate> responseStream1 = await chatClient.GetStreamingResponseAsync(chatHistory).ToListAsync();
+            List<ChatResponseUpdate> responseStream2 = await chatClient.GetStreamingResponseAsync([.. response1.Messages, new ChatMessage(ChatRole.User, "What do you think about that?")]).ToListAsync();
+        }
+
+        private class AssertUserAgentHttpHandler : DelegatingHandler
+        {
+            public AssertUserAgentHttpHandler() : base(new HttpClientHandler())
+            {
+            }
+
+            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+            {
+                Assert.True(request.Headers.UserAgent.Any(h => h.Product.Name == "MEAI"));
+
+                return base.SendAsync(request, cancellationToken);
+            }
+
+#if NET8_0_OR_GREATER
+            protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                Assert.GreaterOrEqual(1, request.Headers.UserAgent.Any(h => h.Product.Name == "MEAI"));
+
+                return base.Send(request, cancellationToken);
+            }
+#endif
+        }
+
         #region Helpers
         private class CompositeDisposable : IDisposable
         {
@@ -375,7 +420,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }));
         }
 
-        private PersistentAgentsClient GetClient()
+        private PersistentAgentsClient GetClient(HttpClientHandler handler = null)
         {
             var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions());
@@ -398,6 +443,32 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             return new PersistentAgentsClient(admClient);
+        }
+
+        private (PersistentAgentsClient PersistentClient, HttpClient HttpClient) GetClientFromHandler(HttpMessageHandler handler)
+        {
+            var httpClient = new HttpClient(handler);
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+            PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions() { Transport = new HttpClientTransport(httpClient) });
+            PersistentAgentsAdministrationClient admClient;
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new MockCredential(), opts));
+                return (new PersistentAgentsClient(admClient), httpClient);
+            }
+
+            var cli = Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
+            if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
+            {
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new AzureCliCredential(), opts));
+            }
+            else
+            {
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new DefaultAzureCredential(), opts));
+            }
+
+            return (new PersistentAgentsClient(admClient), httpClient);
         }
 
         #endregion

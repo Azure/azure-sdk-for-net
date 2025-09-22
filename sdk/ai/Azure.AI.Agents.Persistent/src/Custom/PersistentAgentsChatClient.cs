@@ -4,8 +4,10 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -13,6 +15,8 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.Extensions.AI;
 
 namespace Azure.AI.Agents.Persistent
@@ -88,7 +92,7 @@ namespace Azure.AI.Agents.Persistent
             ThreadRun? threadRun = null;
             if (threadId is not null)
             {
-                await foreach (ThreadRun? run in _client!.Runs.GetRunsAsync(threadId, limit: 1, ListSortOrder.Descending, cancellationToken: cancellationToken).ConfigureAwait(false))
+                await foreach (ThreadRun? run in _client!.Runs.GetRunsAsync(threadId, limit: 1, order: ListSortOrder.Descending, after: null, before: null, requestContext: ToUserAgentRequestContext(cancellationToken)).ConfigureAwait(false))
                 {
                     if (run.Status != RunStatus.Completed && run.Status != RunStatus.Cancelled && run.Status != RunStatus.Failed && run.Status != RunStatus.Expired)
                     {
@@ -108,21 +112,21 @@ namespace Azure.AI.Agents.Persistent
                 // There's an active run and we have tool results to submit, so submit the results and continue streaming.
                 // This is going to ignore any additional messages in the run options, as we are only submitting tool outputs,
                 // but there doesn't appear to be a way to submit additional messages, and having such additional messages is rare.
-                updates = _client!.Runs.SubmitToolOutputsToStreamAsync(threadRun, toolOutputs, cancellationToken);
+                updates = _client!.Runs.SubmitToolOutputsToStreamAsync(threadRun, toolOutputs, ToUserAgentRequestContext(cancellationToken));
             }
             else
             {
                 if (threadId is null)
                 {
                     // No thread ID was provided, so create a new thread.
-                    PersistentAgentThread thread = await _client!.Threads.CreateThreadAsync(runOptions.ThreadOptions.Messages, runOptions.ToolResources, runOptions.Metadata, cancellationToken).ConfigureAwait(false);
+                    PersistentAgentThread thread = await _client!.Threads.CreateThreadAsync(runOptions.ThreadOptions.Messages, runOptions.ToolResources, runOptions.Metadata, ToUserAgentRequestContext(cancellationToken)).ConfigureAwait(false);
                     runOptions.ThreadOptions.Messages.Clear();
                     threadId = thread.Id;
                 }
                 else if (threadRun is not null)
                 {
                     // There was an active run; we need to cancel it before starting a new run.
-                    await _client!.Runs.CancelRunAsync(threadId, threadRun.Id, cancellationToken).ConfigureAwait(false);
+                    await _client!.Runs.CancelRunAsync(threadId, threadRun.Id, ToUserAgentRequestContext(cancellationToken)).ConfigureAwait(false);
                     threadRun = null;
                 }
 
@@ -151,7 +155,7 @@ namespace Azure.AI.Agents.Persistent
                     threadId: threadId,
                     agentId: _agentId,
                     options: opts,
-                    cancellationToken: cancellationToken
+                    ToUserAgentRequestContext(cancellationToken)
                 );
             }
 
@@ -285,7 +289,8 @@ namespace Azure.AI.Agents.Persistent
             // Load details about the agent if not already loaded.
             if (_agent is null)
             {
-                PersistentAgent agent = await _client!.Administration.GetAgentAsync(_agentId, cancellationToken).ConfigureAwait(false);
+                var response = await _client!.Administration.GetAgentAsync(_agentId, ToUserAgentRequestContext(cancellationToken)).ConfigureAwait(false);
+                var agent = Response.FromValue(PersistentAgent.FromResponse(response), response);
                 Interlocked.CompareExchange(ref _agent, agent, null);
             }
 
@@ -577,6 +582,62 @@ namespace Azure.AI.Agents.Persistent
             }
 
             return runId;
+        }
+
+        /// <summary>Creates a <see cref="RequestOptions"/> configured for use with OpenAI.</summary>
+        private static RequestContext ToUserAgentRequestContext(CancellationToken cancellationToken)
+        {
+            RequestContext requestContext = new()
+            {
+                CancellationToken = cancellationToken
+            };
+
+            requestContext.AddPolicy(MeaiUserAgentPolicy.Instance, HttpPipelinePosition.PerCall);
+
+            return requestContext;
+        }
+
+        private sealed class MeaiUserAgentPolicy : HttpPipelineSynchronousPolicy
+        {
+            public static MeaiUserAgentPolicy Instance { get; } = new MeaiUserAgentPolicy();
+
+            private static readonly string _userAgentValue = CreateUserAgentValue();
+
+            private static void AddUserAgentHeader(HttpMessage message) =>
+                message.Request.Headers.Add("User-Agent", _userAgentValue);
+
+            private static string CreateUserAgentValue()
+            {
+                const string Name = "MEAI";
+
+                if (typeof(IChatClient).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion is string version)
+                {
+                    int pos = version.IndexOf('+');
+                    if (pos >= 0)
+                    {
+                        version = version.Substring(0, pos);
+                    }
+
+                    if (version.Length > 0)
+                    {
+                        return $"{Name}/{version}";
+                    }
+                }
+
+                return Name;
+            }
+
+            public override ValueTask ProcessAsync(Core.HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                AddUserAgentHeader(message);
+                return ProcessNextAsync(message, pipeline);
+            }
+
+            public override void Process(Core.HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                AddUserAgentHeader(message);
+                ProcessNext(message, pipeline);
+            }
         }
 
         [JsonSerializable(typeof(JsonElement))]

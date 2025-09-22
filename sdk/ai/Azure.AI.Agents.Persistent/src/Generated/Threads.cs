@@ -64,8 +64,24 @@ namespace Azure.AI.Agents.Persistent
         public virtual async Task<Response<PersistentAgentThread>> CreateThreadAsync(IEnumerable<ThreadMessageOptions> messages = null, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateThreadRequest createThreadRequest = new CreateThreadRequest(messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await CreateThreadAsync(createThreadRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(PersistentAgentThread.FromResponse(response), response);
+        }
+
+        /// <summary> Creates a new thread. Threads contain messages and can be run by agents. </summary>
+        /// <param name="messages"> The initial messages to associate with the new thread. </param>
+        /// <param name="toolResources">
+        /// A set of resources that are made available to the agent's tools in this thread. The resources are specific to the
+        /// type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires
+        /// a list of vector store IDs.
+        /// </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="requestContext"> The request context to use. </param>
+        internal async Task<Response<PersistentAgentThread>> CreateThreadAsync(IEnumerable<ThreadMessageOptions> messages, ToolResources toolResources, IReadOnlyDictionary<string, string> metadata, RequestContext requestContext)
+        {
+            CreateThreadRequest createThreadRequest = new CreateThreadRequest(messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            Response response = await CreateThreadAsync(createThreadRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentThread.FromResponse(response), response);
         }
 
@@ -81,7 +97,7 @@ namespace Azure.AI.Agents.Persistent
         public virtual Response<PersistentAgentThread> CreateThread(IEnumerable<ThreadMessageOptions> messages = null, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateThreadRequest createThreadRequest = new CreateThreadRequest(messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = CreateThread(createThreadRequest.ToRequestContent(), context);
             return Response.FromValue(PersistentAgentThread.FromResponse(response), response);
         }
@@ -95,7 +111,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetThreadAsync(threadId, context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentThread.FromResponse(response), response);
         }
@@ -109,7 +125,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetThread(threadId, context);
             return Response.FromValue(PersistentAgentThread.FromResponse(response), response);
         }
@@ -208,7 +224,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest(toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UpdateThreadAsync(threadId, updateThreadRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentThread.FromResponse(response), response);
         }
@@ -229,7 +245,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest(toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = UpdateThread(threadId, updateThreadRequest.ToRequestContent(), context);
             return Response.FromValue(PersistentAgentThread.FromResponse(response), response);
         }
@@ -325,7 +341,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await InternalDeleteThreadAsync(threadId, context).ConfigureAwait(false);
             return Response.FromValue(ThreadDeletionStatus.FromResponse(response), response);
         }
@@ -339,7 +355,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = InternalDeleteThread(threadId, context);
             return Response.FromValue(ThreadDeletionStatus.FromResponse(response), response);
         }
@@ -513,17 +529,6 @@ namespace Azure.AI.Agents.Persistent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

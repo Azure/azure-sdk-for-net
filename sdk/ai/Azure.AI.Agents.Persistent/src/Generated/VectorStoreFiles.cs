@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await CreateVectorStoreFileAsync(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(VectorStoreFile.FromResponse(response), response);
         }
@@ -85,7 +85,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = CreateVectorStoreFile(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context);
             return Response.FromValue(VectorStoreFile.FromResponse(response), response);
         }
@@ -183,7 +183,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetVectorStoreFileAsync(vectorStoreId, fileId, context).ConfigureAwait(false);
             return Response.FromValue(VectorStoreFile.FromResponse(response), response);
         }
@@ -199,7 +199,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetVectorStoreFile(vectorStoreId, fileId, context);
             return Response.FromValue(VectorStoreFile.FromResponse(response), response);
         }
@@ -297,7 +297,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await InternalDeleteVectorStoreFileAsync(vectorStoreId, fileId, context).ConfigureAwait(false);
             return Response.FromValue(InternalVectorStoreFileDeletionStatus.FromResponse(response), response);
         }
@@ -313,7 +313,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = InternalDeleteVectorStoreFile(vectorStoreId, fileId, context);
             return Response.FromValue(InternalVectorStoreFileDeletionStatus.FromResponse(response), response);
         }
@@ -486,17 +486,6 @@ namespace Azure.AI.Agents.Persistent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

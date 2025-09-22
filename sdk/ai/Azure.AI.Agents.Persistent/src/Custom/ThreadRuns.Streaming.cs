@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.AI.Agents.Persistent.Telemetry;
+using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -101,6 +101,24 @@ namespace Azure.AI.Agents.Persistent
         public virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string agentId, CreateRunStreamingOptions options, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
+            RequestContext context = cancellationToken.ToRequestContext();
+            return CreateRunStreamingAsync(threadId, agentId, options, context);
+        }
+
+        /// <summary>
+        /// Begins a new streaming <see cref="ThreadRun"/> that evaluates a <see cref="PersistentAgentThread"/> using a specified
+        /// <see cref="PersistentAgent"/>.
+        /// </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="agentId"> The ID of the agent that should run the thread. </param>
+        /// <param name="options"> The additional options needed to create a streaming run. </param>
+        /// <param name="requestContext"> The request context to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="agentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        internal AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string agentId, CreateRunStreamingOptions options, RequestContext requestContext)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
             var scope = OpenTelemetryScope.StartCreateRunStreaming(threadId, agentId, _endpoint);
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(agentId, nameof(agentId));
@@ -124,16 +142,15 @@ namespace Azure.AI.Agents.Persistent
                 parallelToolCalls: options.ParallelToolCalls,
                 metadata: options.Metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData: null);
-            RequestContext context = FromCancellationToken(cancellationToken);
 
             async Task<Response> sendRequestAsync() =>
-                await CreateRunStreamingAsync(threadId, createRunRequest.ToRequestContent(), context, include: options?.Include).ConfigureAwait(false);
+                await CreateRunStreamingAsync(threadId, createRunRequest.ToRequestContent(), requestContext, include: options?.Include).ConfigureAwait(false);
 
             AsyncCollectionResult<StreamingUpdate> submitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currRetry) =>
             this.SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, currRetry, default);
             async Task<Response<ThreadRun>> cancelRunAsync(string runId) => await this.CancelRunAsync(threadId, runId).ConfigureAwait(false);
             return new AsyncStreamingUpdateCollection(
-                cancellationToken,
+                requestContext.CancellationToken,
                 options?.AutoFunctionCallOptions,
                 0,
                 sendRequestAsync,
@@ -250,7 +267,7 @@ namespace Azure.AI.Agents.Persistent
                 parallelToolCalls: options.ParallelToolCalls,
                 metadata: options.Metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData: null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
 
             Response sendRequest() => CreateRunStreaming(threadId, createRunRequest.ToRequestContent(), context, include: options?.Include);
             CollectionResult<StreamingUpdate> submitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currRetry) =>
@@ -324,7 +341,7 @@ namespace Azure.AI.Agents.Persistent
                 toolApprovals: toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
                 true,
                 null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context);
             CollectionResult<StreamingUpdate> submitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currRetry) =>
                 this.SubmitToolOutputsToStreamWitAutoFunctionCall(run, toolOutputs, toolApprovals, currentRetry);
@@ -352,7 +369,17 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, null, Int32.MaxValue, cancellationToken);
+            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, null, Int32.MaxValue, cancellationToken.ToRequestContext(), null);
+        }
+
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        internal AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, RequestContext requestContext)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            Argument.AssertNotNull(run, nameof(run));
+            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+
+            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, null, Int32.MaxValue, requestContext, null);
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
@@ -368,19 +395,19 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, Int32.MaxValue, cancellationToken);
+            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, Int32.MaxValue, cancellationToken.ToRequestContext(), null);
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
         /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
         /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
         /// <param name="toolApprovals">A list of tool approvals for the MCP call.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="requestContext"> The request context to use. </param>
         /// <param name="currentRetry"> The count of current retry of auto function calls.  Cancel the run if reach to the maxinum. </param>
         /// <param name="autoFunctionCallOptions">If specified, function calls defined in tools will be called automatically.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        internal virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamWitAutoFunctionCallAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currentRetry = 0, CancellationToken cancellationToken = default, AutoFunctionCallOptions autoFunctionCallOptions = null)
+        internal virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamWitAutoFunctionCallAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currentRetry, RequestContext requestContext, AutoFunctionCallOptions autoFunctionCallOptions = null)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
             var scope = OpenTelemetryScope.StartCreateRunStreaming(run.Id, run.AssistantId, _endpoint);
@@ -397,14 +424,13 @@ namespace Azure.AI.Agents.Persistent
                 toolApprovals: toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
                 stream: true,
                 serializedAdditionalRawData: null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            async Task<Response> sendRequestAsync() => await SubmitToolOutputsInternalAsync(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+            async Task<Response> sendRequestAsync() => await SubmitToolOutputsInternalAsync(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
             AsyncCollectionResult<StreamingUpdate> submitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currRetry) =>
-                this.SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, currRetry);
+                this.SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, currRetry, CancellationToken.None.ToRequestContext(), null);
             async Task<Response<ThreadRun>> cancelRunAsync(string runId) => await this.CancelRunAsync(run.ThreadId, runId).ConfigureAwait(false);
 
             return new AsyncStreamingUpdateCollection(
-                cancellationToken,
+                requestContext.CancellationToken,
                 autoFunctionCallOptions,
                 currentRetry,
                 sendRequestAsync,
