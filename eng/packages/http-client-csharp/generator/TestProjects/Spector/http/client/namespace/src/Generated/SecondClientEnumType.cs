@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Client.ClientNamespace.Second.Model
+namespace client.clientnamespace.second.sub
 {
     public readonly partial struct SecondClientEnumType : IEquatable<SecondClientEnumType>
     {

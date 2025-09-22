@@ -20,7 +20,7 @@ try
     }
     else
     {
-        global::Samples.Models.ResponseTypeData current = (this.Get(cancellationToken)).Value.Data;
+        global::Samples.Models.ResponseTypeData current = (this.Get(cancellationToken: cancellationToken)).Value.Data;
         global::Samples.Models.ResponseTypeData patch = new global::Samples.Models.ResponseTypeData();
         foreach (global::System.Collections.Generic.KeyValuePair<string, string> tag in current.Tags)
         {

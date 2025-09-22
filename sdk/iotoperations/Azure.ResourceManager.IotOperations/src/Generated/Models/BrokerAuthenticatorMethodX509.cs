@@ -54,11 +54,13 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorMethodX509"/>. </summary>
         /// <param name="authorizationAttributes"> X509 authorization attributes properties. </param>
         /// <param name="trustedClientCaCert"> Name of the trusted client ca cert resource. </param>
+        /// <param name="additionalValidation"> X509 authentication attributes properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerAuthenticatorMethodX509(IDictionary<string, BrokerAuthenticatorMethodX509Attributes> authorizationAttributes, string trustedClientCaCert, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BrokerAuthenticatorMethodX509(IDictionary<string, BrokerAuthenticatorMethodX509Attributes> authorizationAttributes, string trustedClientCaCert, BrokerAuthenticatorValidationMethod? additionalValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthorizationAttributes = authorizationAttributes;
             TrustedClientCaCert = trustedClientCaCert;
+            AdditionalValidation = additionalValidation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -66,5 +68,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public IDictionary<string, BrokerAuthenticatorMethodX509Attributes> AuthorizationAttributes { get; }
         /// <summary> Name of the trusted client ca cert resource. </summary>
         public string TrustedClientCaCert { get; set; }
+        /// <summary> X509 authentication attributes properties. </summary>
+        public BrokerAuthenticatorValidationMethod? AdditionalValidation { get; set; }
     }
 }

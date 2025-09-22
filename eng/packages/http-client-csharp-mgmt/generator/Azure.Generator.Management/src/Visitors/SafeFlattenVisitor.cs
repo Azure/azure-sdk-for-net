@@ -138,23 +138,46 @@ namespace Azure.Generator.Management.Visitors
             foreach (var property in model.Properties)
             {
                 if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(property.Type, out var typeProvider)
-                    && typeProvider is ModelProvider modelProvider
-                    && modelProvider.Properties.Count == 1)
+                    && typeProvider is ModelProvider modelProvider)
                 {
+                    var innerProperties = PropertyHelpers.GetAllProperties(modelProvider);
+                    // only safe flatten single property
+                    if (innerProperties.Count != 1)
+                    {
+                        continue;
+                    }
+
+                    // skip discriminator property
+                    if (property.IsDiscriminator)
+                    {
+                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning", "Discriminator property should not be flattened.");
+                        continue;
+                    }
+
                     var innerProperty = modelProvider.Properties.Single();
                     isFlattened = true;
 
                     // flatten the single property to public and associate it with the internal property
-                    var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = GetFlags(property, innerProperty);
+                    var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = PropertyHelpers.GetFlags(property, innerProperty);
                     var flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, property); // TODO: handle name conflicts
                     var flattenPropertyBody = new MethodPropertyBody(
-                        BuildGetter(includeGetterNullCheck, property, modelProvider, innerProperty),
-                        isFlattenedPropertyReadOnly ? null : BuildSetter(includeSetterNullCheck, modelProvider, property, innerProperty)
+                        PropertyHelpers.BuildGetter(includeGetterNullCheck, property, modelProvider, innerProperty),
+                        isFlattenedPropertyReadOnly ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, property, innerProperty)
                     );
 
                     // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
                     var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
-                    var flattenedProperty = new PropertyProvider(innerProperty.Description, innerProperty.Modifiers, isOverriddenValueType ? innerProperty.Type.WithNullable(true) : innerProperty.Type, flattenPropertyName, flattenPropertyBody, model, innerProperty.ExplicitInterface, innerProperty.WireInfo, innerProperty.Attributes);
+                    var flattenedProperty =
+                        new PropertyProvider(
+                            innerProperty.Description,
+                            innerProperty.Modifiers,
+                            isOverriddenValueType ? innerProperty.Type.WithNullable(true) : innerProperty.Type,
+                            flattenPropertyName,
+                            flattenPropertyBody,
+                            model,
+                            innerProperty.ExplicitInterface,
+                            null,
+                            innerProperty.Attributes);
 
                     // make the internalized properties internal
                     property.Update(modifiers: property.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
@@ -167,118 +190,6 @@ namespace Azure.Generator.Management.Visitors
             {
                 _flattenedModelTypes[model.Type] = map;
             }
-        }
-
-        private static (bool IsReadOnly, bool? IncludeGetterNullCheck, bool IncludeSetterNullCheck) GetFlags(PropertyProvider property, PropertyProvider innerProperty)
-        {
-            var isInnerPropertyReadOnly = !innerProperty.Body.HasSetter;
-            var isPropertyReadOnly = !property.Body.HasSetter;
-            if (!isPropertyReadOnly && isInnerPropertyReadOnly)
-            {
-                if (HasDefaultPublicCtor(innerProperty.EnclosingType as ModelProvider))
-                {
-                    if (innerProperty.Type.Arguments.Count > 0)
-                        return (true, true, false);
-                    else
-                        return (true, false, false);
-                }
-                else
-                {
-                    return (false, false, false);
-                }
-            }
-            else if (!isPropertyReadOnly && !isInnerPropertyReadOnly)
-            {
-                if (HasDefaultPublicCtor(innerProperty.EnclosingType as ModelProvider))
-                    return (false, false, true);
-                else
-                    return (false, false, false);
-            }
-
-            return (true, null, false);
-        }
-
-        private static bool HasDefaultPublicCtor(ModelProvider? innerModel)
-        {
-            if (innerModel is null)
-                return false;
-
-            foreach (var ctor in innerModel.Constructors)
-            {
-                if (ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !ctor.Signature.Parameters.Any())
-                    return true;
-            }
-
-            return false;
-        }
-
-        private MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, ModelProvider innerModel, PropertyProvider singleProperty)
-        {
-            var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
-            if (includeGetterNullCheck == true)
-            {
-                return new List<MethodBodyStatement> {
-                    new IfStatement(checkNullExpression)
-                    {
-                        internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
-                    },
-                    Return(new MemberExpression(internalProperty, singleProperty.Name))
-                };
-            }
-            else if (includeGetterNullCheck == false)
-            {
-                return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, singleProperty.Name)));
-            }
-            else
-            {
-                if (innerModel.Type.IsNullable)
-                {
-                    return Return(new MemberExpression(internalProperty.AsVariableExpression.NullConditional(), singleProperty.Name));
-                }
-                return Return(new MemberExpression(internalProperty, singleProperty.Name));
-            }
-        }
-
-        private MethodBodyStatement BuildSetter(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
-        {
-            var isOverriddenValueType = PropertyHelpers.IsOverriddenValueType(innerProperty);
-            var setter = new List<MethodBodyStatement>();
-            var internalPropertyExpression = This.Property(internalProperty.Name);
-            if (includeSetterCheck)
-            {
-                if (isOverriddenValueType)
-                {
-                    var ifStatement = new IfStatement(Value.Property(nameof(Nullable<int>.HasValue)))
-                    {
-                        new IfStatement(internalPropertyExpression.Is(Null))
-                        {
-                            internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate(),
-                            internalPropertyExpression.Property(innerProperty.Name).Assign(Value.Property(nameof(Nullable<int>.Value))).Terminate()
-                        }
-                    };
-                    setter.Add(new IfElseStatement(ifStatement, internalProperty.AsVariableExpression.Assign(Null).Terminate()));
-                }
-                else
-                {
-                    setter.Add(new IfStatement(internalPropertyExpression.Is(Null))
-                    {
-                        internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
-                    });
-                    setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(Value).Terminate());
-                }
-            }
-            else
-            {
-                if (isOverriddenValueType)
-                {
-                    setter.Add(internalPropertyExpression.Assign(new TernaryConditionalExpression(Value.Property(nameof(Nullable<int>.HasValue)), New.Instance(innerModel.Type!, Value.Property(nameof(Nullable<int>.Value))), Default)).Terminate());
-                }
-                else
-                {
-                    setter.Add(internalPropertyExpression.Assign(New.Instance(innerModel.Type, Value)).Terminate());
-                }
-            }
-            return setter;
         }
     }
 }
