@@ -100,7 +100,7 @@ overload with object which introduces lots of failure cases where a library user
 we cannot deal with generically.
 
 ```c#
-JsonPatch jp = new("{\"x\":{\"y\":[null,null,{\"z\":5}]}}"u8.ToArray();
+JsonPatch jp = new("{\"x\":{\"y\":[null,null,{\"z\":5}]}}"u8.ToArray());
 jp.SetNull("$.x.y[2]"u8);
 Console.WriteLine(jp); // [{"op":"replace","path":"/x/y/2","value":null}]
 Console.WriteLine(jp.ToString("J")); // {"x":{"y":[null,null,null]}}
