@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<ImageDefinitionBuildData> value = default;
+            IReadOnlyList<DevCenterImageDefinitionBuildData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ImageDefinitionBuildData> array = new List<ImageDefinitionBuildData>();
+                    List<DevCenterImageDefinitionBuildData> array = new List<DevCenterImageDefinitionBuildData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageDefinitionBuildData.DeserializeImageDefinitionBuildData(item, options));
+                        array.Add(DevCenterImageDefinitionBuildData.DeserializeDevCenterImageDefinitionBuildData(item, options));
                     }
                     value = array;
                     continue;

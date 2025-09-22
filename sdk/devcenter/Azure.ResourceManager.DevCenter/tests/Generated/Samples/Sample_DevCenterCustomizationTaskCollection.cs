@@ -13,14 +13,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
-    public partial class Sample_DevcenterCatalogEnvironmentDefinitionCollection
+    public partial class Sample_DevCenterCustomizationTaskCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_EnvironmentDefinitionsGet()
+        public async Task Get_CustomizationTasksGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/EnvironmentDefinitions_Get.json
-            // this example is just showing the usage of "EnvironmentDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/CustomizationTasks_Get.json
+            // this example is just showing the usage of "CustomizationTasks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -32,30 +32,30 @@ namespace Azure.ResourceManager.DevCenter.Samples
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string catalogName = "myCatalog";
+            string catalogName = "CentralCatalog";
             ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
             DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
 
-            // get the collection of this DevcenterCatalogEnvironmentDefinitionResource
-            DevcenterCatalogEnvironmentDefinitionCollection collection = devCenterCatalog.GetDevcenterCatalogEnvironmentDefinitions();
+            // get the collection of this DevCenterCustomizationTaskResource
+            DevCenterCustomizationTaskCollection collection = devCenterCatalog.GetDevCenterCustomizationTasks();
 
             // invoke the operation
-            string environmentDefinitionName = "myEnvironmentDefinition";
-            DevcenterCatalogEnvironmentDefinitionResource result = await collection.GetAsync(environmentDefinitionName);
+            string taskName = "SampleTask";
+            DevCenterCustomizationTaskResource result = await collection.GetAsync(taskName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DevCenterEnvironmentDefinitionData resourceData = result.Data;
+            DevCenterCustomizationTaskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_EnvironmentDefinitionsListByCatalog()
+        public async Task GetAll_CustomizationTasksListByCatalog()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/EnvironmentDefinitions_ListByCatalog.json
-            // this example is just showing the usage of "EnvironmentDefinitions_ListByCatalog" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/CustomizationTasks_ListByCatalog.json
+            // this example is just showing the usage of "CustomizationTasks_ListByCatalog" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.DevCenter.Samples
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string catalogName = "myCatalog";
+            string catalogName = "CentralCatalog";
             ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
             DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
 
-            // get the collection of this DevcenterCatalogEnvironmentDefinitionResource
-            DevcenterCatalogEnvironmentDefinitionCollection collection = devCenterCatalog.GetDevcenterCatalogEnvironmentDefinitions();
+            // get the collection of this DevCenterCustomizationTaskResource
+            DevCenterCustomizationTaskCollection collection = devCenterCatalog.GetDevCenterCustomizationTasks();
 
             // invoke the operation and iterate over the result
-            await foreach (DevcenterCatalogEnvironmentDefinitionResource item in collection.GetAllAsync())
+            await foreach (DevCenterCustomizationTaskResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DevCenterEnvironmentDefinitionData resourceData = item.Data;
+                DevCenterCustomizationTaskData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_EnvironmentDefinitionsGet()
+        public async Task Exists_CustomizationTasksGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/EnvironmentDefinitions_Get.json
-            // this example is just showing the usage of "EnvironmentDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/CustomizationTasks_Get.json
+            // this example is just showing the usage of "CustomizationTasks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,26 +104,26 @@ namespace Azure.ResourceManager.DevCenter.Samples
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string catalogName = "myCatalog";
+            string catalogName = "CentralCatalog";
             ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
             DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
 
-            // get the collection of this DevcenterCatalogEnvironmentDefinitionResource
-            DevcenterCatalogEnvironmentDefinitionCollection collection = devCenterCatalog.GetDevcenterCatalogEnvironmentDefinitions();
+            // get the collection of this DevCenterCustomizationTaskResource
+            DevCenterCustomizationTaskCollection collection = devCenterCatalog.GetDevCenterCustomizationTasks();
 
             // invoke the operation
-            string environmentDefinitionName = "myEnvironmentDefinition";
-            bool result = await collection.ExistsAsync(environmentDefinitionName);
+            string taskName = "SampleTask";
+            bool result = await collection.ExistsAsync(taskName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_EnvironmentDefinitionsGet()
+        public async Task GetIfExists_CustomizationTasksGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/EnvironmentDefinitions_Get.json
-            // this example is just showing the usage of "EnvironmentDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/CustomizationTasks_Get.json
+            // this example is just showing the usage of "CustomizationTasks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.DevCenter.Samples
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string catalogName = "myCatalog";
+            string catalogName = "CentralCatalog";
             ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
             DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
 
-            // get the collection of this DevcenterCatalogEnvironmentDefinitionResource
-            DevcenterCatalogEnvironmentDefinitionCollection collection = devCenterCatalog.GetDevcenterCatalogEnvironmentDefinitions();
+            // get the collection of this DevCenterCustomizationTaskResource
+            DevCenterCustomizationTaskCollection collection = devCenterCatalog.GetDevCenterCustomizationTasks();
 
             // invoke the operation
-            string environmentDefinitionName = "myEnvironmentDefinition";
-            NullableResponse<DevcenterCatalogEnvironmentDefinitionResource> response = await collection.GetIfExistsAsync(environmentDefinitionName);
-            DevcenterCatalogEnvironmentDefinitionResource result = response.HasValue ? response.Value : null;
+            string taskName = "SampleTask";
+            NullableResponse<DevCenterCustomizationTaskResource> response = await collection.GetIfExistsAsync(taskName);
+            DevCenterCustomizationTaskResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DevCenterEnvironmentDefinitionData resourceData = result.Data;
+                DevCenterCustomizationTaskData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

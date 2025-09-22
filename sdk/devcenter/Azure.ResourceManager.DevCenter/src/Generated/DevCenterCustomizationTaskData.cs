@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing the CustomizationTask data model.
+    /// A class representing the DevCenterCustomizationTask data model.
     /// Represents a Task to be used in customizing a Dev Box.
     /// </summary>
-    public partial class CustomizationTaskData : ResourceData
+    public partial class DevCenterCustomizationTaskData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CustomizationTaskData"/>. </summary>
-        public CustomizationTaskData()
+        /// <summary> Initializes a new instance of <see cref="DevCenterCustomizationTaskData"/>. </summary>
+        public DevCenterCustomizationTaskData()
         {
             Inputs = new ChangeTrackingDictionary<string, CustomizationTaskInput>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomizationTaskData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCustomizationTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="timeout"> The default timeout for the task. </param>
         /// <param name="validationStatus"> Validation status for the Task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomizationTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, CustomizationTaskInput> inputs, int? timeout, CatalogResourceValidationStatus? validationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DevCenterCustomizationTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, CustomizationTaskInput> inputs, int? timeout, CatalogResourceValidationStatus? validationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Inputs = inputs;
             Timeout = timeout;

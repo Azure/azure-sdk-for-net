@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectCatalogResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectCatalogResource.CreateResourceIdentifier" /> to create a <see cref="ProjectCatalogResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectCatalogResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectCatalogResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectCatalogResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectCatalogResource"/> object. </returns>
-        public virtual ProjectCatalogResource GetProjectCatalogResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectCatalogResource"/> object. </returns>
+        public virtual DevCenterProjectCatalogResource GetDevCenterProjectCatalogResource(ResourceIdentifier id)
         {
-            ProjectCatalogResource.ValidateResourceId(id);
-            return new ProjectCatalogResource(Client, id);
+            DevCenterProjectCatalogResource.ValidateResourceId(id);
+            return new DevCenterProjectCatalogResource(Client, id);
         }
 
         /// <summary>
@@ -203,15 +203,15 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CustomizationTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomizationTaskResource.CreateResourceIdentifier" /> to create a <see cref="CustomizationTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DevCenterCustomizationTaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterCustomizationTaskResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterCustomizationTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomizationTaskResource"/> object. </returns>
-        public virtual CustomizationTaskResource GetCustomizationTaskResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterCustomizationTaskResource"/> object. </returns>
+        public virtual DevCenterCustomizationTaskResource GetDevCenterCustomizationTaskResource(ResourceIdentifier id)
         {
-            CustomizationTaskResource.ValidateResourceId(id);
-            return new CustomizationTaskResource(Client, id);
+            DevCenterCustomizationTaskResource.ValidateResourceId(id);
+            return new DevCenterCustomizationTaskResource(Client, id);
         }
 
         /// <summary>

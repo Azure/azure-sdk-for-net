@@ -16,11 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class CustomizationTaskData : IUtf8JsonSerializable, IJsonModel<CustomizationTaskData>
+    public partial class DevCenterEnvironmentDefinitionData : IUtf8JsonSerializable, IJsonModel<DevCenterEnvironmentDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomizationTaskData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterEnvironmentDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CustomizationTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DevCenterEnvironmentDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,30 +31,34 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizationTaskData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironmentDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomizationTaskData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterEnvironmentDefinitionData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Inputs))
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteStartObject();
-                foreach (var item in Inputs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timeout))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteNumberValue(Timeout.Value);
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in Parameters)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(TemplatePath))
+            {
+                writer.WritePropertyName("templatePath"u8);
+                writer.WriteStringValue(TemplatePath);
             }
             if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
             {
@@ -64,19 +68,19 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteEndObject();
         }
 
-        CustomizationTaskData IJsonModel<CustomizationTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DevCenterEnvironmentDefinitionData IJsonModel<DevCenterEnvironmentDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizationTaskData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironmentDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomizationTaskData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterEnvironmentDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomizationTaskData(document.RootElement, options);
+            return DeserializeDevCenterEnvironmentDefinitionData(document.RootElement, options);
         }
 
-        internal static CustomizationTaskData DeserializeCustomizationTaskData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DevCenterEnvironmentDefinitionData DeserializeDevCenterEnvironmentDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,8 +92,9 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IReadOnlyDictionary<string, CustomizationTaskInput> inputs = default;
-            int? timeout = default;
+            string description = default;
+            IReadOnlyList<EnvironmentDefinitionContent> parameters = default;
+            string templatePath = default;
             CatalogResourceValidationStatus? validationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -128,27 +133,28 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("inputs"u8))
+                        if (property0.NameEquals("description"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, CustomizationTaskInput> dictionary = new Dictionary<string, CustomizationTaskInput>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, CustomizationTaskInput.DeserializeCustomizationTaskInput(property1.Value, options));
-                            }
-                            inputs = dictionary;
+                            description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("timeout"u8))
+                        if (property0.NameEquals("parameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            timeout = property0.Value.GetInt32();
+                            List<EnvironmentDefinitionContent> array = new List<EnvironmentDefinitionContent>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(EnvironmentDefinitionContent.DeserializeEnvironmentDefinitionContent(item, options));
+                            }
+                            parameters = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("templatePath"u8))
+                        {
+                            templatePath = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("validationStatus"u8))
@@ -169,46 +175,47 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomizationTaskData(
+            return new DevCenterEnvironmentDefinitionData(
                 id,
                 name,
                 type,
                 systemData,
-                inputs ?? new ChangeTrackingDictionary<string, CustomizationTaskInput>(),
-                timeout,
+                description,
+                parameters ?? new ChangeTrackingList<EnvironmentDefinitionContent>(),
+                templatePath,
                 validationStatus,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CustomizationTaskData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DevCenterEnvironmentDefinitionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizationTaskData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironmentDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CustomizationTaskData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterEnvironmentDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CustomizationTaskData IPersistableModel<CustomizationTaskData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DevCenterEnvironmentDefinitionData IPersistableModel<DevCenterEnvironmentDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizationTaskData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironmentDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCustomizationTaskData(document.RootElement, options);
+                        return DeserializeDevCenterEnvironmentDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomizationTaskData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterEnvironmentDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CustomizationTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DevCenterEnvironmentDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

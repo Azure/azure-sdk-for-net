@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomizationTaskListResult"/>. </summary>
         /// <param name="value"> The CustomizationTask items on this page. </param>
-        internal CustomizationTaskListResult(IEnumerable<CustomizationTaskData> value)
+        internal CustomizationTaskListResult(IEnumerable<DevCenterCustomizationTaskData> value)
         {
             Value = value.ToList();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="value"> The CustomizationTask items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomizationTaskListResult(IReadOnlyList<CustomizationTaskData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomizationTaskListResult(IReadOnlyList<DevCenterCustomizationTaskData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> The CustomizationTask items on this page. </summary>
-        public IReadOnlyList<CustomizationTaskData> Value { get; }
+        public IReadOnlyList<DevCenterCustomizationTaskData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="ImageDefinitionBuildListResult"/>. </summary>
         /// <param name="value"> The ImageDefinitionBuild items on this page. </param>
-        internal ImageDefinitionBuildListResult(IEnumerable<ImageDefinitionBuildData> value)
+        internal ImageDefinitionBuildListResult(IEnumerable<DevCenterImageDefinitionBuildData> value)
         {
             Value = value.ToList();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="value"> The ImageDefinitionBuild items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDefinitionBuildListResult(IReadOnlyList<ImageDefinitionBuildData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImageDefinitionBuildListResult(IReadOnlyList<DevCenterImageDefinitionBuildData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> The ImageDefinitionBuild items on this page. </summary>
-        public IReadOnlyList<ImageDefinitionBuildData> Value { get; }
+        public IReadOnlyList<DevCenterImageDefinitionBuildData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

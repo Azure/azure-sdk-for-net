@@ -11,19 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevcenterCatalogEnvironmentDefinitionResource : IJsonModel<EnvironmentDefinitionData>
+    public partial class DevcenterCatalogEnvironmentDefinitionResource : IJsonModel<DevCenterEnvironmentDefinitionData>
     {
-        private static EnvironmentDefinitionData s_dataDeserializationInstance;
-        private static EnvironmentDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static DevCenterEnvironmentDefinitionData s_dataDeserializationInstance;
+        private static DevCenterEnvironmentDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        void IJsonModel<EnvironmentDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EnvironmentDefinitionData>)Data).Write(writer, options);
+        void IJsonModel<DevCenterEnvironmentDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterEnvironmentDefinitionData>)Data).Write(writer, options);
 
-        EnvironmentDefinitionData IJsonModel<EnvironmentDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EnvironmentDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
+        DevCenterEnvironmentDefinitionData IJsonModel<DevCenterEnvironmentDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterEnvironmentDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EnvironmentDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EnvironmentDefinitionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
+        BinaryData IPersistableModel<DevCenterEnvironmentDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterEnvironmentDefinitionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        EnvironmentDefinitionData IPersistableModel<EnvironmentDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EnvironmentDefinitionData>(data, options, AzureResourceManagerDevCenterContext.Default);
+        DevCenterEnvironmentDefinitionData IPersistableModel<DevCenterEnvironmentDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterEnvironmentDefinitionData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<EnvironmentDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EnvironmentDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DevCenterEnvironmentDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterEnvironmentDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnvironmentDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterEnvironmentDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -213,13 +213,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        EnvironmentDefinitionData value = default;
+                        DevCenterEnvironmentDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EnvironmentDefinitionData.DeserializeEnvironmentDefinitionData(document.RootElement);
+                        value = DevCenterEnvironmentDefinitionData.DeserializeDevCenterEnvironmentDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnvironmentDefinitionData)null, message.Response);
+                    return Response.FromValue((DevCenterEnvironmentDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnvironmentDefinitionData> Get(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public Response<DevCenterEnvironmentDefinitionData> Get(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -248,13 +248,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        EnvironmentDefinitionData value = default;
+                        DevCenterEnvironmentDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EnvironmentDefinitionData.DeserializeEnvironmentDefinitionData(document.RootElement);
+                        value = DevCenterEnvironmentDefinitionData.DeserializeDevCenterEnvironmentDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnvironmentDefinitionData)null, message.Response);
+                    return Response.FromValue((DevCenterEnvironmentDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnvironmentDefinitionData>> GetByProjectCatalogAsync(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterEnvironmentDefinitionData>> GetByProjectCatalogAsync(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -537,13 +537,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        EnvironmentDefinitionData value = default;
+                        DevCenterEnvironmentDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EnvironmentDefinitionData.DeserializeEnvironmentDefinitionData(document.RootElement);
+                        value = DevCenterEnvironmentDefinitionData.DeserializeDevCenterEnvironmentDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnvironmentDefinitionData)null, message.Response);
+                    return Response.FromValue((DevCenterEnvironmentDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnvironmentDefinitionData> GetByProjectCatalog(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public Response<DevCenterEnvironmentDefinitionData> GetByProjectCatalog(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -572,13 +572,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        EnvironmentDefinitionData value = default;
+                        DevCenterEnvironmentDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EnvironmentDefinitionData.DeserializeEnvironmentDefinitionData(document.RootElement);
+                        value = DevCenterEnvironmentDefinitionData.DeserializeDevCenterEnvironmentDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnvironmentDefinitionData)null, message.Response);
+                    return Response.FromValue((DevCenterEnvironmentDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

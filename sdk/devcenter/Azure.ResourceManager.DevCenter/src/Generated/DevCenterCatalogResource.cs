@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.DevCenter
             return GetDevcenterCatalogImageDefinitions().Get(imageDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CustomizationTaskResources in the DevCenterCatalog. </summary>
-        /// <returns> An object representing collection of CustomizationTaskResources and their operations over a CustomizationTaskResource. </returns>
-        public virtual CustomizationTaskCollection GetCustomizationTasks()
+        /// <summary> Gets a collection of DevCenterCustomizationTaskResources in the DevCenterCatalog. </summary>
+        /// <returns> An object representing collection of DevCenterCustomizationTaskResources and their operations over a DevCenterCustomizationTaskResource. </returns>
+        public virtual DevCenterCustomizationTaskCollection GetDevCenterCustomizationTasks()
         {
-            return GetCachedClient(client => new CustomizationTaskCollection(client, Id));
+            return GetCachedClient(client => new DevCenterCustomizationTaskCollection(client, Id));
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomizationTaskResource>> GetCustomizationTaskAsync(string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCustomizationTaskResource>> GetDevCenterCustomizationTaskAsync(string taskName, CancellationToken cancellationToken = default)
         {
-            return await GetCustomizationTasks().GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterCustomizationTasks().GetAsync(taskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomizationTaskResource> GetCustomizationTask(string taskName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCustomizationTaskResource> GetDevCenterCustomizationTask(string taskName, CancellationToken cancellationToken = default)
         {
-            return GetCustomizationTasks().Get(taskName, cancellationToken);
+            return GetDevCenterCustomizationTasks().Get(taskName, cancellationToken);
         }
 
         /// <summary>

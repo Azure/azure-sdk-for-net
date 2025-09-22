@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenter.EnvironmentDefinitionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterEnvironmentDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -344,12 +343,12 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="parameters"> Input parameters passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <param name="validationStatus"> Validation status for the environment definition. </param>
-        /// <returns> A new <see cref="DevCenter.EnvironmentDefinitionData"/> instance for mocking. </returns>
-        public static EnvironmentDefinitionData EnvironmentDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<EnvironmentDefinitionContent> parameters = null, string templatePath = null, CatalogResourceValidationStatus? validationStatus = null)
+        /// <returns> A new <see cref="DevCenter.DevCenterEnvironmentDefinitionData"/> instance for mocking. </returns>
+        public static DevCenterEnvironmentDefinitionData DevCenterEnvironmentDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<EnvironmentDefinitionContent> parameters = null, string templatePath = null, CatalogResourceValidationStatus? validationStatus = null)
         {
             parameters ??= new List<EnvironmentDefinitionContent>();
 
-            return new EnvironmentDefinitionData(
+            return new DevCenterEnvironmentDefinitionData(
                 id,
                 name,
                 resourceType,
@@ -433,7 +432,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new CatalogSyncError(path, errorDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenter.ImageDefinitionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterImageDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -449,13 +448,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="tasks"> Tasks to run at Dev Box provisioning time. </param>
         /// <param name="userTasks"> Tasks to run when a user first logs into a Dev Box. </param>
         /// <param name="extends"> Another Image Definition that this one extends. </param>
-        /// <returns> A new <see cref="DevCenter.ImageDefinitionData"/> instance for mocking. </returns>
-        public static ImageDefinitionData ImageDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterImageReference imageReference = null, Uri fileUri = null, LatestImageBuild latestBuild = null, ImageValidationStatus? imageValidationStatus = null, ImageValidationErrorDetails imageValidationErrorDetails = null, CatalogResourceValidationStatus? validationStatus = null, DevCenterImageReference activeImageReference = null, AutoImageBuildStatus? autoImageBuild = null, IEnumerable<CustomizationTaskInstance> tasks = null, IEnumerable<CustomizationTaskInstance> userTasks = null, ImageDefinitionReference extends = null)
+        /// <returns> A new <see cref="DevCenter.DevCenterImageDefinitionData"/> instance for mocking. </returns>
+        public static DevCenterImageDefinitionData DevCenterImageDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterImageReference imageReference = null, Uri fileUri = null, LatestImageBuild latestBuild = null, ImageValidationStatus? imageValidationStatus = null, ImageValidationErrorDetails imageValidationErrorDetails = null, CatalogResourceValidationStatus? validationStatus = null, DevCenterImageReference activeImageReference = null, AutoImageBuildStatus? autoImageBuild = null, IEnumerable<CustomizationTaskInstance> tasks = null, IEnumerable<CustomizationTaskInstance> userTasks = null, ImageDefinitionReference extends = null)
         {
             tasks ??= new List<CustomizationTaskInstance>();
             userTasks ??= new List<CustomizationTaskInstance>();
 
-            return new ImageDefinitionData(
+            return new DevCenterImageDefinitionData(
                 id,
                 name,
                 resourceType,
@@ -503,7 +502,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new ImageValidationErrorDetails(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenter.ImageDefinitionBuildData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterImageDefinitionBuildData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -513,10 +512,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="startOn"> Start time of the task group. </param>
         /// <param name="endOn"> End time of the task group. </param>
         /// <param name="errorDetails"> Details for image creation error. Populated when the image creation is not successful. </param>
-        /// <returns> A new <see cref="DevCenter.ImageDefinitionBuildData"/> instance for mocking. </returns>
-        public static ImageDefinitionBuildData ImageDefinitionBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterImageReference imageReference = null, ImageDefinitionBuildStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, ImageCreationErrorDetails errorDetails = null)
+        /// <returns> A new <see cref="DevCenter.DevCenterImageDefinitionBuildData"/> instance for mocking. </returns>
+        public static DevCenterImageDefinitionBuildData DevCenterImageDefinitionBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterImageReference imageReference = null, ImageDefinitionBuildStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, ImageCreationErrorDetails errorDetails = null)
         {
-            return new ImageDefinitionBuildData(
+            return new DevCenterImageDefinitionBuildData(
                 id,
                 name,
                 resourceType,
@@ -623,7 +622,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new ImageDefinitionBuildTaskParametersItem(key, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenter.CustomizationTaskData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterCustomizationTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -631,12 +630,12 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="inputs"> Inputs to the task. </param>
         /// <param name="timeout"> The default timeout for the task. </param>
         /// <param name="validationStatus"> Validation status for the Task. </param>
-        /// <returns> A new <see cref="DevCenter.CustomizationTaskData"/> instance for mocking. </returns>
-        public static CustomizationTaskData CustomizationTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, CustomizationTaskInput> inputs = null, int? timeout = null, CatalogResourceValidationStatus? validationStatus = null)
+        /// <returns> A new <see cref="DevCenter.DevCenterCustomizationTaskData"/> instance for mocking. </returns>
+        public static DevCenterCustomizationTaskData DevCenterCustomizationTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, CustomizationTaskInput> inputs = null, int? timeout = null, CatalogResourceValidationStatus? validationStatus = null)
         {
             inputs ??= new Dictionary<string, CustomizationTaskInput>();
 
-            return new CustomizationTaskData(
+            return new DevCenterCustomizationTaskData(
                 id,
                 name,
                 resourceType,

@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectCatalogResource created on azure
-            // for more information of creating ProjectCatalogResource, please refer to the document of ProjectCatalogResource
+            // this example assumes you already have this DevCenterProjectCatalogResource created on azure
+            // for more information of creating DevCenterProjectCatalogResource, please refer to the document of DevCenterProjectCatalogResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProject";
             string catalogName = "TeamCatalog";
-            ResourceIdentifier projectCatalogResourceId = ProjectCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, catalogName);
-            ProjectCatalogResource projectCatalog = client.GetProjectCatalogResource(projectCatalogResourceId);
+            ResourceIdentifier devCenterProjectCatalogResourceId = DevCenterProjectCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, catalogName);
+            DevCenterProjectCatalogResource devCenterProjectCatalog = client.GetDevCenterProjectCatalogResource(devCenterProjectCatalogResourceId);
 
             // get the collection of this ProjectCatalogImageDefinitionResource
-            ProjectCatalogImageDefinitionCollection collection = projectCatalog.GetProjectCatalogImageDefinitions();
+            ProjectCatalogImageDefinitionCollection collection = devCenterProjectCatalog.GetProjectCatalogImageDefinitions();
 
             // invoke the operation
             string imageDefinitionName = "WebDevBox";
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ImageDefinitionData resourceData = result.Data;
+            DevCenterImageDefinitionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -62,24 +62,24 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectCatalogResource created on azure
-            // for more information of creating ProjectCatalogResource, please refer to the document of ProjectCatalogResource
+            // this example assumes you already have this DevCenterProjectCatalogResource created on azure
+            // for more information of creating DevCenterProjectCatalogResource, please refer to the document of DevCenterProjectCatalogResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProject";
             string catalogName = "TeamCatalog";
-            ResourceIdentifier projectCatalogResourceId = ProjectCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, catalogName);
-            ProjectCatalogResource projectCatalog = client.GetProjectCatalogResource(projectCatalogResourceId);
+            ResourceIdentifier devCenterProjectCatalogResourceId = DevCenterProjectCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, catalogName);
+            DevCenterProjectCatalogResource devCenterProjectCatalog = client.GetDevCenterProjectCatalogResource(devCenterProjectCatalogResourceId);
 
             // get the collection of this ProjectCatalogImageDefinitionResource
-            ProjectCatalogImageDefinitionCollection collection = projectCatalog.GetProjectCatalogImageDefinitions();
+            ProjectCatalogImageDefinitionCollection collection = devCenterProjectCatalog.GetProjectCatalogImageDefinitions();
 
             // invoke the operation and iterate over the result
             await foreach (ProjectCatalogImageDefinitionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ImageDefinitionData resourceData = item.Data;
+                DevCenterImageDefinitionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectCatalogResource created on azure
-            // for more information of creating ProjectCatalogResource, please refer to the document of ProjectCatalogResource
+            // this example assumes you already have this DevCenterProjectCatalogResource created on azure
+            // for more information of creating DevCenterProjectCatalogResource, please refer to the document of DevCenterProjectCatalogResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProject";
             string catalogName = "TeamCatalog";
-            ResourceIdentifier projectCatalogResourceId = ProjectCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, catalogName);
-            ProjectCatalogResource projectCatalog = client.GetProjectCatalogResource(projectCatalogResourceId);
+            ResourceIdentifier devCenterProjectCatalogResourceId = DevCenterProjectCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, catalogName);
+            DevCenterProjectCatalogResource devCenterProjectCatalog = client.GetDevCenterProjectCatalogResource(devCenterProjectCatalogResourceId);
 
             // get the collection of this ProjectCatalogImageDefinitionResource
-            ProjectCatalogImageDefinitionCollection collection = projectCatalog.GetProjectCatalogImageDefinitions();
+            ProjectCatalogImageDefinitionCollection collection = devCenterProjectCatalog.GetProjectCatalogImageDefinitions();
 
             // invoke the operation
             string imageDefinitionName = "WebDevBox";
@@ -130,17 +130,17 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectCatalogResource created on azure
-            // for more information of creating ProjectCatalogResource, please refer to the document of ProjectCatalogResource
+            // this example assumes you already have this DevCenterProjectCatalogResource created on azure
+            // for more information of creating DevCenterProjectCatalogResource, please refer to the document of DevCenterProjectCatalogResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProject";
             string catalogName = "TeamCatalog";
-            ResourceIdentifier projectCatalogResourceId = ProjectCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, catalogName);
-            ProjectCatalogResource projectCatalog = client.GetProjectCatalogResource(projectCatalogResourceId);
+            ResourceIdentifier devCenterProjectCatalogResourceId = DevCenterProjectCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, catalogName);
+            DevCenterProjectCatalogResource devCenterProjectCatalog = client.GetDevCenterProjectCatalogResource(devCenterProjectCatalogResourceId);
 
             // get the collection of this ProjectCatalogImageDefinitionResource
-            ProjectCatalogImageDefinitionCollection collection = projectCatalog.GetProjectCatalogImageDefinitions();
+            ProjectCatalogImageDefinitionCollection collection = devCenterProjectCatalog.GetProjectCatalogImageDefinitions();
 
             // invoke the operation
             string imageDefinitionName = "WebDevBox";
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ImageDefinitionData resourceData = result.Data;
+                DevCenterImageDefinitionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

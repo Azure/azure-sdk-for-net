@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter
 
         private readonly ClientDiagnostics _devcenterCatalogImageDefinitionDevCenterCatalogImageDefinitionsClientDiagnostics;
         private readonly DevCenterCatalogImageDefinitionsRestOperations _devcenterCatalogImageDefinitionDevCenterCatalogImageDefinitionsRestClient;
-        private readonly ImageDefinitionData _data;
+        private readonly DevCenterImageDefinitionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/catalogs/imageDefinitions";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of the <see cref="DevcenterCatalogImageDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevcenterCatalogImageDefinitionResource(ArmClient client, ImageDefinitionData data) : this(client, data.Id)
+        internal DevcenterCatalogImageDefinitionResource(ArmClient client, DevCenterImageDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ImageDefinitionData Data
+        public virtual DevCenterImageDefinitionData Data
         {
             get
             {

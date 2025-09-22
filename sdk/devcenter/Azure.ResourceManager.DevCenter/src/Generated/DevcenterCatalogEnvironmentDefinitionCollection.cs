@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogEnvironmentDefinitionResource(Client, EnvironmentDefinitionData.DeserializeEnvironmentDefinitionData(e)), _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics, Pipeline, "DevcenterCatalogEnvironmentDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogEnvironmentDefinitionResource(Client, DevCenterEnvironmentDefinitionData.DeserializeDevCenterEnvironmentDefinitionData(e)), _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics, Pipeline, "DevcenterCatalogEnvironmentDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogEnvironmentDefinitionResource(Client, EnvironmentDefinitionData.DeserializeEnvironmentDefinitionData(e)), _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics, Pipeline, "DevcenterCatalogEnvironmentDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogEnvironmentDefinitionResource(Client, DevCenterEnvironmentDefinitionData.DeserializeDevCenterEnvironmentDefinitionData(e)), _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics, Pipeline, "DevcenterCatalogEnvironmentDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

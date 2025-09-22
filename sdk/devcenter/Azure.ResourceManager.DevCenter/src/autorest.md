@@ -122,7 +122,7 @@ rename-mapping:
   CheckNameAvailabilityResponse: DevCenterNameAvailabilityResult
   CheckNameAvailabilityReason: DevCenterNameUnavailableReason
   ProjectEnvironmentType: DevCenterProjectEnvironment
-  ImageVersion.properties.osDiskImageSizeInGb:  OsDiskImageSizeInGB
+  ImageVersion.properties.osDiskImageSizeInGb: OsDiskImageSizeInGB
   ImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
   EnvironmentDefinitionParameter: EnvironmentDefinitionContent
   EnvironmentDefinitionParameter.id: -|uuid
@@ -138,6 +138,10 @@ rename-mapping:
   SyncErrorDetails: CatalogSyncErrorDetails
   SingleSignOnStatus: PoolUpdateSingleSignOnStatus
   ResourcePolicy: ProjectPolicyUpdateResourcePolicy
+  CustomizationTask: DevCenterCustomizationTask
+  EnvironmentDefinition: DevCenterEnvironmentDefinition
+  ImageDefinitionBuild: DevCenterImageDefinitionBuild
+  ImageDefinition: DevCenterImageDefinition
 
 override-operation-name:
   OperationStatuses_Get: GetDevCenterOperationStatus
@@ -156,13 +160,11 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}: DevBoxDefinition
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions: ProjectDevBoxDefinition
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}: ProjectDevBoxDefinition
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs: DevCenterCatalog
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}: DevCenterCatalog
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images: DevCenterImage
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}: DevCenterImage
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions: ImageVersion
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}: ImageVersion
-  
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}: ImageVersion  # It is originally called ImageVersion and cannot be renamed to DevCenterImageVersion.
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}: DevCenterProjectCatalog
+
 directive:
   # Add missing parameters
   - from: swagger-document

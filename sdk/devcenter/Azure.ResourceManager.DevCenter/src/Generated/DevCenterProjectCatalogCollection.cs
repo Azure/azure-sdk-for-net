@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProjectCatalogResource"/> and their operations.
-    /// Each <see cref="ProjectCatalogResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectResource"/>.
-    /// To get a <see cref="ProjectCatalogCollection"/> instance call the GetProjectCatalogs method from an instance of <see cref="DevCenterProjectResource"/>.
+    /// A class representing a collection of <see cref="DevCenterProjectCatalogResource"/> and their operations.
+    /// Each <see cref="DevCenterProjectCatalogResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectResource"/>.
+    /// To get a <see cref="DevCenterProjectCatalogCollection"/> instance call the GetDevCenterProjectCatalogs method from an instance of <see cref="DevCenterProjectResource"/>.
     /// </summary>
-    public partial class ProjectCatalogCollection : ArmCollection, IEnumerable<ProjectCatalogResource>, IAsyncEnumerable<ProjectCatalogResource>
+    public partial class DevCenterProjectCatalogCollection : ArmCollection, IEnumerable<DevCenterProjectCatalogResource>, IAsyncEnumerable<DevCenterProjectCatalogResource>
     {
-        private readonly ClientDiagnostics _projectCatalogClientDiagnostics;
-        private readonly ProjectCatalogsRestOperations _projectCatalogRestClient;
+        private readonly ClientDiagnostics _devCenterProjectCatalogProjectCatalogsClientDiagnostics;
+        private readonly ProjectCatalogsRestOperations _devCenterProjectCatalogProjectCatalogsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectCatalogCollection"/> class for mocking. </summary>
-        protected ProjectCatalogCollection()
+        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectCatalogCollection"/> class for mocking. </summary>
+        protected DevCenterProjectCatalogCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectCatalogCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectCatalogCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ProjectCatalogCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterProjectCatalogCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _projectCatalogClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectCatalogResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ProjectCatalogResource.ResourceType, out string projectCatalogApiVersion);
-            _projectCatalogRestClient = new ProjectCatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectCatalogApiVersion);
+            _devCenterProjectCatalogProjectCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterProjectCatalogResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DevCenterProjectCatalogResource.ResourceType, out string devCenterProjectCatalogProjectCatalogsApiVersion);
+            _devCenterProjectCatalogProjectCatalogsRestClient = new ProjectCatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterProjectCatalogProjectCatalogsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProjectCatalogResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DevCenterProjectCatalogResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogCollection.CreateOrUpdate");
+            using var scope = _devCenterProjectCatalogProjectCatalogsClientDiagnostics.CreateScope("DevCenterProjectCatalogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _projectCatalogRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<ProjectCatalogResource>(new ProjectCatalogOperationSource(Client), _projectCatalogClientDiagnostics, Pipeline, _projectCatalogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _devCenterProjectCatalogProjectCatalogsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DevCenterArmOperation<DevCenterProjectCatalogResource>(new DevCenterProjectCatalogOperationSource(Client), _devCenterProjectCatalogProjectCatalogsClientDiagnostics, Pipeline, _devCenterProjectCatalogProjectCatalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProjectCatalogResource> CreateOrUpdate(WaitUntil waitUntil, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DevCenterProjectCatalogResource> CreateOrUpdate(WaitUntil waitUntil, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogCollection.CreateOrUpdate");
+            using var scope = _devCenterProjectCatalogProjectCatalogsClientDiagnostics.CreateScope("DevCenterProjectCatalogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _projectCatalogRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<ProjectCatalogResource>(new ProjectCatalogOperationSource(Client), _projectCatalogClientDiagnostics, Pipeline, _projectCatalogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _devCenterProjectCatalogProjectCatalogsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data, cancellationToken);
+                var operation = new DevCenterArmOperation<DevCenterProjectCatalogResource>(new DevCenterProjectCatalogOperationSource(Client), _devCenterProjectCatalogProjectCatalogsClientDiagnostics, Pipeline, _devCenterProjectCatalogProjectCatalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        public virtual async Task<Response<ProjectCatalogResource>> GetAsync(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectCatalogResource>> GetAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogCollection.Get");
+            using var scope = _devCenterProjectCatalogProjectCatalogsClientDiagnostics.CreateScope("DevCenterProjectCatalogCollection.Get");
             scope.Start();
             try
             {
-                var response = await _projectCatalogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterProjectCatalogProjectCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectCatalogResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        public virtual Response<ProjectCatalogResource> Get(string catalogName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectCatalogResource> Get(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogCollection.Get");
+            using var scope = _devCenterProjectCatalogProjectCatalogsClientDiagnostics.CreateScope("DevCenterProjectCatalogCollection.Get");
             scope.Start();
             try
             {
-                var response = _projectCatalogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken);
+                var response = _devCenterProjectCatalogProjectCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectCatalogResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,18 +256,18 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectCatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProjectCatalogResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevCenterProjectCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterProjectCatalogResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectCatalogRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectCatalogRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _projectCatalogClientDiagnostics, Pipeline, "ProjectCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectCatalogProjectCatalogsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectCatalogProjectCatalogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _devCenterProjectCatalogProjectCatalogsClientDiagnostics, Pipeline, "DevCenterProjectCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -287,18 +287,18 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectCatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProjectCatalogResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterProjectCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterProjectCatalogResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectCatalogRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectCatalogRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _projectCatalogClientDiagnostics, Pipeline, "ProjectCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectCatalogProjectCatalogsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectCatalogProjectCatalogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _devCenterProjectCatalogProjectCatalogsClientDiagnostics, Pipeline, "DevCenterProjectCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogCollection.Exists");
+            using var scope = _devCenterProjectCatalogProjectCatalogsClientDiagnostics.CreateScope("DevCenterProjectCatalogCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _projectCatalogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterProjectCatalogProjectCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogCollection.Exists");
+            using var scope = _devCenterProjectCatalogProjectCatalogsClientDiagnostics.CreateScope("DevCenterProjectCatalogCollection.Exists");
             scope.Start();
             try
             {
-                var response = _projectCatalogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken);
+                var response = _devCenterProjectCatalogProjectCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,18 +412,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ProjectCatalogResource>> GetIfExistsAsync(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DevCenterProjectCatalogResource>> GetIfExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogCollection.GetIfExists");
+            using var scope = _devCenterProjectCatalogProjectCatalogsClientDiagnostics.CreateScope("DevCenterProjectCatalogCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _projectCatalogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterProjectCatalogProjectCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<ProjectCatalogResource>(response.GetRawResponse());
-                return Response.FromValue(new ProjectCatalogResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<DevCenterProjectCatalogResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,18 +457,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        public virtual NullableResponse<ProjectCatalogResource> GetIfExists(string catalogName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DevCenterProjectCatalogResource> GetIfExists(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogCollection.GetIfExists");
+            using var scope = _devCenterProjectCatalogProjectCatalogsClientDiagnostics.CreateScope("DevCenterProjectCatalogCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _projectCatalogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken);
+                var response = _devCenterProjectCatalogProjectCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<ProjectCatalogResource>(response.GetRawResponse());
-                return Response.FromValue(new ProjectCatalogResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<DevCenterProjectCatalogResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        IEnumerator<ProjectCatalogResource> IEnumerable<ProjectCatalogResource>.GetEnumerator()
+        IEnumerator<DevCenterProjectCatalogResource> IEnumerable<DevCenterProjectCatalogResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.DevCenter
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ProjectCatalogResource> IAsyncEnumerable<ProjectCatalogResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DevCenterProjectCatalogResource> IAsyncEnumerable<DevCenterProjectCatalogResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

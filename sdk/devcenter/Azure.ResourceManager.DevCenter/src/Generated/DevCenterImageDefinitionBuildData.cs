@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing the ImageDefinitionBuild data model.
+    /// A class representing the DevCenterImageDefinitionBuild data model.
     /// Represents a specific build of an Image Definition.
     /// </summary>
-    public partial class ImageDefinitionBuildData : ResourceData
+    public partial class DevCenterImageDefinitionBuildData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ImageDefinitionBuildData"/>. </summary>
-        public ImageDefinitionBuildData()
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageDefinitionBuildData"/>. </summary>
+        public DevCenterImageDefinitionBuildData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageDefinitionBuildData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageDefinitionBuildData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="endOn"> End time of the task group. </param>
         /// <param name="errorDetails"> Details for image creation error. Populated when the image creation is not successful. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDefinitionBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterImageReference imageReference, ImageDefinitionBuildStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ImageCreationErrorDetails errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DevCenterImageDefinitionBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterImageReference imageReference, ImageDefinitionBuildStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ImageCreationErrorDetails errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ImageReference = imageReference;
             Status = status;

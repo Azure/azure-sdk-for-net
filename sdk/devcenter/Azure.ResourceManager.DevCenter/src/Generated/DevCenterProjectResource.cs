@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.DevCenter
             return GetProjectAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProjectCatalogResources in the DevCenterProject. </summary>
-        /// <returns> An object representing collection of ProjectCatalogResources and their operations over a ProjectCatalogResource. </returns>
-        public virtual ProjectCatalogCollection GetProjectCatalogs()
+        /// <summary> Gets a collection of DevCenterProjectCatalogResources in the DevCenterProject. </summary>
+        /// <returns> An object representing collection of DevCenterProjectCatalogResources and their operations over a DevCenterProjectCatalogResource. </returns>
+        public virtual DevCenterProjectCatalogCollection GetDevCenterProjectCatalogs()
         {
-            return GetCachedClient(client => new ProjectCatalogCollection(client, Id));
+            return GetCachedClient(client => new DevCenterProjectCatalogCollection(client, Id));
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectCatalogResource>> GetProjectCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectCatalogResource>> GetDevCenterProjectCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            return await GetProjectCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterProjectCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectCatalogResource"/></description>
+        /// <description><see cref="DevCenterProjectCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectCatalogResource> GetProjectCatalog(string catalogName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectCatalogResource> GetDevCenterProjectCatalog(string catalogName, CancellationToken cancellationToken = default)
         {
-            return GetProjectCatalogs().Get(catalogName, cancellationToken);
+            return GetDevCenterProjectCatalogs().Get(catalogName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ProjectDevBoxDefinitionResources in the DevCenterProject. </summary>

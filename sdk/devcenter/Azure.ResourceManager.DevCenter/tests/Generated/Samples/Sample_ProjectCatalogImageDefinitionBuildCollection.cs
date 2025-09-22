@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ImageDefinitionBuildData resourceData = result.Data;
+            DevCenterImageDefinitionBuildData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ImageDefinitionBuildData resourceData = item.Data;
+                DevCenterImageDefinitionBuildData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ImageDefinitionBuildData resourceData = result.Data;
+                DevCenterImageDefinitionBuildData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

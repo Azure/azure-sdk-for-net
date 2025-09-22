@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing the EnvironmentDefinition data model.
+    /// A class representing the DevCenterEnvironmentDefinition data model.
     /// Represents an environment definition catalog item.
     /// </summary>
-    public partial class EnvironmentDefinitionData : ResourceData
+    public partial class DevCenterEnvironmentDefinitionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionData"/>. </summary>
-        public EnvironmentDefinitionData()
+        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentDefinitionData"/>. </summary>
+        public DevCenterEnvironmentDefinitionData()
         {
             Parameters = new ChangeTrackingList<EnvironmentDefinitionContent>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <param name="validationStatus"> Validation status for the environment definition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IReadOnlyList<EnvironmentDefinitionContent> parameters, string templatePath, CatalogResourceValidationStatus? validationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DevCenterEnvironmentDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IReadOnlyList<EnvironmentDefinitionContent> parameters, string templatePath, CatalogResourceValidationStatus? validationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Parameters = parameters;

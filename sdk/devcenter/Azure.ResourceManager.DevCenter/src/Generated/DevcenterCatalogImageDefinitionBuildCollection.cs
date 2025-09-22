@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient.CreateListByImageDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient.CreateListByImageDefinitionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogImageDefinitionBuildResource(Client, ImageDefinitionBuildData.DeserializeImageDefinitionBuildData(e)), _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsClientDiagnostics, Pipeline, "DevcenterCatalogImageDefinitionBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogImageDefinitionBuildResource(Client, DevCenterImageDefinitionBuildData.DeserializeDevCenterImageDefinitionBuildData(e)), _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsClientDiagnostics, Pipeline, "DevcenterCatalogImageDefinitionBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient.CreateListByImageDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient.CreateListByImageDefinitionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogImageDefinitionBuildResource(Client, ImageDefinitionBuildData.DeserializeImageDefinitionBuildData(e)), _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsClientDiagnostics, Pipeline, "DevcenterCatalogImageDefinitionBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogImageDefinitionBuildResource(Client, DevCenterImageDefinitionBuildData.DeserializeDevCenterImageDefinitionBuildData(e)), _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsClientDiagnostics, Pipeline, "DevcenterCatalogImageDefinitionBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

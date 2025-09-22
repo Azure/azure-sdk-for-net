@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter
 
         private readonly ClientDiagnostics _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics;
         private readonly EnvironmentDefinitionsRestOperations _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient;
-        private readonly EnvironmentDefinitionData _data;
+        private readonly DevCenterEnvironmentDefinitionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/catalogs/environmentDefinitions";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of the <see cref="DevcenterCatalogEnvironmentDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevcenterCatalogEnvironmentDefinitionResource(ArmClient client, EnvironmentDefinitionData data) : this(client, data.Id)
+        internal DevcenterCatalogEnvironmentDefinitionResource(ArmClient client, DevCenterEnvironmentDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EnvironmentDefinitionData Data
+        public virtual DevCenterEnvironmentDefinitionData Data
         {
             get
             {

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProjectCatalogEnvironmentDefinitionResource"/> and their operations.
-    /// Each <see cref="ProjectCatalogEnvironmentDefinitionResource"/> in the collection will belong to the same instance of <see cref="ProjectCatalogResource"/>.
-    /// To get a <see cref="ProjectCatalogEnvironmentDefinitionCollection"/> instance call the GetProjectCatalogEnvironmentDefinitions method from an instance of <see cref="ProjectCatalogResource"/>.
+    /// Each <see cref="ProjectCatalogEnvironmentDefinitionResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectCatalogResource"/>.
+    /// To get a <see cref="ProjectCatalogEnvironmentDefinitionCollection"/> instance call the GetProjectCatalogEnvironmentDefinitions method from an instance of <see cref="DevCenterProjectCatalogResource"/>.
     /// </summary>
     public partial class ProjectCatalogEnvironmentDefinitionCollection : ArmCollection, IEnumerable<ProjectCatalogEnvironmentDefinitionResource>, IAsyncEnumerable<ProjectCatalogEnvironmentDefinitionResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProjectCatalogResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProjectCatalogResource.ResourceType), nameof(id));
+            if (id.ResourceType != DevCenterProjectCatalogResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterProjectCatalogResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.CreateListByProjectCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.CreateListByProjectCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogEnvironmentDefinitionResource(Client, EnvironmentDefinitionData.DeserializeEnvironmentDefinitionData(e)), _projectCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics, Pipeline, "ProjectCatalogEnvironmentDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogEnvironmentDefinitionResource(Client, DevCenterEnvironmentDefinitionData.DeserializeDevCenterEnvironmentDefinitionData(e)), _projectCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics, Pipeline, "ProjectCatalogEnvironmentDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.CreateListByProjectCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.CreateListByProjectCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogEnvironmentDefinitionResource(Client, EnvironmentDefinitionData.DeserializeEnvironmentDefinitionData(e)), _projectCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics, Pipeline, "ProjectCatalogEnvironmentDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogEnvironmentDefinitionResource(Client, DevCenterEnvironmentDefinitionData.DeserializeDevCenterEnvironmentDefinitionData(e)), _projectCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics, Pipeline, "ProjectCatalogEnvironmentDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

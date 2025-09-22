@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionListResult"/>. </summary>
         /// <param name="value"> The EnvironmentDefinition items on this page. </param>
-        internal EnvironmentDefinitionListResult(IEnumerable<EnvironmentDefinitionData> value)
+        internal EnvironmentDefinitionListResult(IEnumerable<DevCenterEnvironmentDefinitionData> value)
         {
             Value = value.ToList();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="value"> The EnvironmentDefinition items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinitionListResult(IReadOnlyList<EnvironmentDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnvironmentDefinitionListResult(IReadOnlyList<DevCenterEnvironmentDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> The EnvironmentDefinition items on this page. </summary>
-        public IReadOnlyList<EnvironmentDefinitionData> Value { get; }
+        public IReadOnlyList<DevCenterEnvironmentDefinitionData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -11,19 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevcenterCatalogImageDefinitionResource : IJsonModel<ImageDefinitionData>
+    public partial class DevcenterCatalogImageDefinitionResource : IJsonModel<DevCenterImageDefinitionData>
     {
-        private static ImageDefinitionData s_dataDeserializationInstance;
-        private static ImageDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static DevCenterImageDefinitionData s_dataDeserializationInstance;
+        private static DevCenterImageDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        void IJsonModel<ImageDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ImageDefinitionData>)Data).Write(writer, options);
+        void IJsonModel<DevCenterImageDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterImageDefinitionData>)Data).Write(writer, options);
 
-        ImageDefinitionData IJsonModel<ImageDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImageDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
+        DevCenterImageDefinitionData IJsonModel<DevCenterImageDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterImageDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ImageDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImageDefinitionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
+        BinaryData IPersistableModel<DevCenterImageDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterImageDefinitionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        ImageDefinitionData IPersistableModel<ImageDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImageDefinitionData>(data, options, AzureResourceManagerDevCenterContext.Default);
+        DevCenterImageDefinitionData IPersistableModel<DevCenterImageDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterImageDefinitionData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<ImageDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImageDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DevCenterImageDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterImageDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

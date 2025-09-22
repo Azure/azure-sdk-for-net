@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CustomizationTaskResource"/> and their operations.
-    /// Each <see cref="CustomizationTaskResource"/> in the collection will belong to the same instance of <see cref="DevCenterCatalogResource"/>.
-    /// To get a <see cref="CustomizationTaskCollection"/> instance call the GetCustomizationTasks method from an instance of <see cref="DevCenterCatalogResource"/>.
+    /// A class representing a collection of <see cref="DevCenterCustomizationTaskResource"/> and their operations.
+    /// Each <see cref="DevCenterCustomizationTaskResource"/> in the collection will belong to the same instance of <see cref="DevCenterCatalogResource"/>.
+    /// To get a <see cref="DevCenterCustomizationTaskCollection"/> instance call the GetDevCenterCustomizationTasks method from an instance of <see cref="DevCenterCatalogResource"/>.
     /// </summary>
-    public partial class CustomizationTaskCollection : ArmCollection, IEnumerable<CustomizationTaskResource>, IAsyncEnumerable<CustomizationTaskResource>
+    public partial class DevCenterCustomizationTaskCollection : ArmCollection, IEnumerable<DevCenterCustomizationTaskResource>, IAsyncEnumerable<DevCenterCustomizationTaskResource>
     {
-        private readonly ClientDiagnostics _customizationTaskClientDiagnostics;
-        private readonly CustomizationTasksRestOperations _customizationTaskRestClient;
+        private readonly ClientDiagnostics _devCenterCustomizationTaskCustomizationTasksClientDiagnostics;
+        private readonly CustomizationTasksRestOperations _devCenterCustomizationTaskCustomizationTasksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CustomizationTaskCollection"/> class for mocking. </summary>
-        protected CustomizationTaskCollection()
+        /// <summary> Initializes a new instance of the <see cref="DevCenterCustomizationTaskCollection"/> class for mocking. </summary>
+        protected DevCenterCustomizationTaskCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CustomizationTaskCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterCustomizationTaskCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal CustomizationTaskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterCustomizationTaskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _customizationTaskClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", CustomizationTaskResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CustomizationTaskResource.ResourceType, out string customizationTaskApiVersion);
-            _customizationTaskRestClient = new CustomizationTasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, customizationTaskApiVersion);
+            _devCenterCustomizationTaskCustomizationTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterCustomizationTaskResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DevCenterCustomizationTaskResource.ResourceType, out string devCenterCustomizationTaskCustomizationTasksApiVersion);
+            _devCenterCustomizationTaskCustomizationTasksRestClient = new CustomizationTasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterCustomizationTaskCustomizationTasksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
-        public virtual async Task<Response<CustomizationTaskResource>> GetAsync(string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCustomizationTaskResource>> GetAsync(string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using var scope = _customizationTaskClientDiagnostics.CreateScope("CustomizationTaskCollection.Get");
+            using var scope = _devCenterCustomizationTaskCustomizationTasksClientDiagnostics.CreateScope("DevCenterCustomizationTaskCollection.Get");
             scope.Start();
             try
             {
-                var response = await _customizationTaskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterCustomizationTaskCustomizationTasksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomizationTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCustomizationTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
-        public virtual Response<CustomizationTaskResource> Get(string taskName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCustomizationTaskResource> Get(string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using var scope = _customizationTaskClientDiagnostics.CreateScope("CustomizationTaskCollection.Get");
+            using var scope = _devCenterCustomizationTaskCustomizationTasksClientDiagnostics.CreateScope("DevCenterCustomizationTaskCollection.Get");
             scope.Start();
             try
             {
-                var response = _customizationTaskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken);
+                var response = _devCenterCustomizationTaskCustomizationTasksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomizationTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCustomizationTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomizationTaskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomizationTaskResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevCenterCustomizationTaskResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterCustomizationTaskResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _customizationTaskRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customizationTaskRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomizationTaskResource(Client, CustomizationTaskData.DeserializeCustomizationTaskData(e)), _customizationTaskClientDiagnostics, Pipeline, "CustomizationTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterCustomizationTaskCustomizationTasksRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterCustomizationTaskCustomizationTasksRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterCustomizationTaskResource(Client, DevCenterCustomizationTaskData.DeserializeDevCenterCustomizationTaskData(e)), _devCenterCustomizationTaskCustomizationTasksClientDiagnostics, Pipeline, "DevCenterCustomizationTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomizationTaskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomizationTaskResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterCustomizationTaskResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterCustomizationTaskResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _customizationTaskRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customizationTaskRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomizationTaskResource(Client, CustomizationTaskData.DeserializeCustomizationTaskData(e)), _customizationTaskClientDiagnostics, Pipeline, "CustomizationTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterCustomizationTaskCustomizationTasksRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterCustomizationTaskCustomizationTasksRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterCustomizationTaskResource(Client, DevCenterCustomizationTaskData.DeserializeDevCenterCustomizationTaskData(e)), _devCenterCustomizationTaskCustomizationTasksClientDiagnostics, Pipeline, "DevCenterCustomizationTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using var scope = _customizationTaskClientDiagnostics.CreateScope("CustomizationTaskCollection.Exists");
+            using var scope = _devCenterCustomizationTaskCustomizationTasksClientDiagnostics.CreateScope("DevCenterCustomizationTaskCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _customizationTaskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterCustomizationTaskCustomizationTasksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using var scope = _customizationTaskClientDiagnostics.CreateScope("CustomizationTaskCollection.Exists");
+            using var scope = _devCenterCustomizationTaskCustomizationTasksClientDiagnostics.CreateScope("DevCenterCustomizationTaskCollection.Exists");
             scope.Start();
             try
             {
-                var response = _customizationTaskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken: cancellationToken);
+                var response = _devCenterCustomizationTaskCustomizationTasksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,18 +314,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
-        public virtual async Task<NullableResponse<CustomizationTaskResource>> GetIfExistsAsync(string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DevCenterCustomizationTaskResource>> GetIfExistsAsync(string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using var scope = _customizationTaskClientDiagnostics.CreateScope("CustomizationTaskCollection.GetIfExists");
+            using var scope = _devCenterCustomizationTaskCustomizationTasksClientDiagnostics.CreateScope("DevCenterCustomizationTaskCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _customizationTaskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterCustomizationTaskCustomizationTasksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<CustomizationTaskResource>(response.GetRawResponse());
-                return Response.FromValue(new CustomizationTaskResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<DevCenterCustomizationTaskResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterCustomizationTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomizationTaskResource"/></description>
+        /// <description><see cref="DevCenterCustomizationTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,18 +359,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
-        public virtual NullableResponse<CustomizationTaskResource> GetIfExists(string taskName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DevCenterCustomizationTaskResource> GetIfExists(string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using var scope = _customizationTaskClientDiagnostics.CreateScope("CustomizationTaskCollection.GetIfExists");
+            using var scope = _devCenterCustomizationTaskCustomizationTasksClientDiagnostics.CreateScope("DevCenterCustomizationTaskCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _customizationTaskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken: cancellationToken);
+                var response = _devCenterCustomizationTaskCustomizationTasksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<CustomizationTaskResource>(response.GetRawResponse());
-                return Response.FromValue(new CustomizationTaskResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<DevCenterCustomizationTaskResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterCustomizationTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        IEnumerator<CustomizationTaskResource> IEnumerable<CustomizationTaskResource>.GetEnumerator()
+        IEnumerator<DevCenterCustomizationTaskResource> IEnumerable<DevCenterCustomizationTaskResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.DevCenter
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CustomizationTaskResource> IAsyncEnumerable<CustomizationTaskResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DevCenterCustomizationTaskResource> IAsyncEnumerable<DevCenterCustomizationTaskResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

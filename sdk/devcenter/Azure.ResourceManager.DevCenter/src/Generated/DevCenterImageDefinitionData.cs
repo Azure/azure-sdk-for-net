@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing the ImageDefinition data model.
+    /// A class representing the DevCenterImageDefinition data model.
     /// Represents a definition for an Image.
     /// </summary>
-    public partial class ImageDefinitionData : ResourceData
+    public partial class DevCenterImageDefinitionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ImageDefinitionData"/>. </summary>
-        public ImageDefinitionData()
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageDefinitionData"/>. </summary>
+        public DevCenterImageDefinitionData()
         {
             Tasks = new ChangeTrackingList<CustomizationTaskInstance>();
             UserTasks = new ChangeTrackingList<CustomizationTaskInstance>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageDefinitionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="userTasks"> Tasks to run when a user first logs into a Dev Box. </param>
         /// <param name="extends"> Another Image Definition that this one extends. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterImageReference imageReference, Uri fileUri, LatestImageBuild latestBuild, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, CatalogResourceValidationStatus? validationStatus, DevCenterImageReference activeImageReference, AutoImageBuildStatus? autoImageBuild, IList<CustomizationTaskInstance> tasks, IList<CustomizationTaskInstance> userTasks, ImageDefinitionReference extends, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DevCenterImageDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterImageReference imageReference, Uri fileUri, LatestImageBuild latestBuild, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, CatalogResourceValidationStatus? validationStatus, DevCenterImageReference activeImageReference, AutoImageBuildStatus? autoImageBuild, IList<CustomizationTaskInstance> tasks, IList<CustomizationTaskInstance> userTasks, ImageDefinitionReference extends, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ImageReference = imageReference;
             FileUri = fileUri;

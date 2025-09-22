@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="imageDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageDefinitionData>> GetByProjectCatalogAsync(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string imageDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageDefinitionData>> GetByProjectCatalogAsync(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string imageDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -213,13 +213,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageDefinitionData value = default;
+                        DevCenterImageDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ImageDefinitionData.DeserializeImageDefinitionData(document.RootElement);
+                        value = DevCenterImageDefinitionData.DeserializeDevCenterImageDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ImageDefinitionData)null, message.Response);
+                    return Response.FromValue((DevCenterImageDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="imageDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageDefinitionData> GetByProjectCatalog(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string imageDefinitionName, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageDefinitionData> GetByProjectCatalog(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string imageDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -248,13 +248,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageDefinitionData value = default;
+                        DevCenterImageDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ImageDefinitionData.DeserializeImageDefinitionData(document.RootElement);
+                        value = DevCenterImageDefinitionData.DeserializeDevCenterImageDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ImageDefinitionData)null, message.Response);
+                    return Response.FromValue((DevCenterImageDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProjectCatalogImageDefinitionResource"/> and their operations.
-    /// Each <see cref="ProjectCatalogImageDefinitionResource"/> in the collection will belong to the same instance of <see cref="ProjectCatalogResource"/>.
-    /// To get a <see cref="ProjectCatalogImageDefinitionCollection"/> instance call the GetProjectCatalogImageDefinitions method from an instance of <see cref="ProjectCatalogResource"/>.
+    /// Each <see cref="ProjectCatalogImageDefinitionResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectCatalogResource"/>.
+    /// To get a <see cref="ProjectCatalogImageDefinitionCollection"/> instance call the GetProjectCatalogImageDefinitions method from an instance of <see cref="DevCenterProjectCatalogResource"/>.
     /// </summary>
     public partial class ProjectCatalogImageDefinitionCollection : ArmCollection, IEnumerable<ProjectCatalogImageDefinitionResource>, IAsyncEnumerable<ProjectCatalogImageDefinitionResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProjectCatalogResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProjectCatalogResource.ResourceType), nameof(id));
+            if (id.ResourceType != DevCenterProjectCatalogResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterProjectCatalogResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectCatalogImageDefinitionRestClient.CreateListByProjectCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectCatalogImageDefinitionRestClient.CreateListByProjectCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogImageDefinitionResource(Client, ImageDefinitionData.DeserializeImageDefinitionData(e)), _projectCatalogImageDefinitionClientDiagnostics, Pipeline, "ProjectCatalogImageDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogImageDefinitionResource(Client, DevCenterImageDefinitionData.DeserializeDevCenterImageDefinitionData(e)), _projectCatalogImageDefinitionClientDiagnostics, Pipeline, "ProjectCatalogImageDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectCatalogImageDefinitionRestClient.CreateListByProjectCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectCatalogImageDefinitionRestClient.CreateListByProjectCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogImageDefinitionResource(Client, ImageDefinitionData.DeserializeImageDefinitionData(e)), _projectCatalogImageDefinitionClientDiagnostics, Pipeline, "ProjectCatalogImageDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectCatalogImageDefinitionResource(Client, DevCenterImageDefinitionData.DeserializeDevCenterImageDefinitionData(e)), _projectCatalogImageDefinitionClientDiagnostics, Pipeline, "ProjectCatalogImageDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

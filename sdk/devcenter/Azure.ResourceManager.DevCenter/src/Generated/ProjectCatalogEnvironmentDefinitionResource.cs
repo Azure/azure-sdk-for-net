@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevCenter
     /// A Class representing a ProjectCatalogEnvironmentDefinition along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectCatalogEnvironmentDefinitionResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetProjectCatalogEnvironmentDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectCatalogResource"/> using the GetProjectCatalogEnvironmentDefinition method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectCatalogResource"/> using the GetProjectCatalogEnvironmentDefinition method.
     /// </summary>
     public partial class ProjectCatalogEnvironmentDefinitionResource : ArmResource
     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DevCenter
         private readonly EnvironmentDefinitionsRestOperations _projectCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient;
         private readonly ClientDiagnostics _projectCatalogEnvironmentDefinitionsClientDiagnostics;
         private readonly ProjectCatalogEnvironmentDefinitionsRestOperations _projectCatalogEnvironmentDefinitionsRestClient;
-        private readonly EnvironmentDefinitionData _data;
+        private readonly DevCenterEnvironmentDefinitionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/catalogs/environmentDefinitions";
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of the <see cref="ProjectCatalogEnvironmentDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProjectCatalogEnvironmentDefinitionResource(ArmClient client, EnvironmentDefinitionData data) : this(client, data.Id)
+        internal ProjectCatalogEnvironmentDefinitionResource(ArmClient client, DevCenterEnvironmentDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EnvironmentDefinitionData Data
+        public virtual DevCenterEnvironmentDefinitionData Data
         {
             get
             {

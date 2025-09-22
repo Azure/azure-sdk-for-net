@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<CustomizationTaskData> value = default;
+            IReadOnlyList<DevCenterCustomizationTaskData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CustomizationTaskData> array = new List<CustomizationTaskData>();
+                    List<DevCenterCustomizationTaskData> array = new List<DevCenterCustomizationTaskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomizationTaskData.DeserializeCustomizationTaskData(item, options));
+                        array.Add(DevCenterCustomizationTaskData.DeserializeDevCenterCustomizationTaskData(item, options));
                     }
                     value = array;
                     continue;

@@ -12,25 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class ProjectCatalogOperationSource : IOperationSource<ProjectCatalogResource>
+    internal class DevCenterProjectCatalogOperationSource : IOperationSource<DevCenterProjectCatalogResource>
     {
         private readonly ArmClient _client;
 
-        internal ProjectCatalogOperationSource(ArmClient client)
+        internal DevCenterProjectCatalogOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        ProjectCatalogResource IOperationSource<ProjectCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevCenterProjectCatalogResource IOperationSource<DevCenterProjectCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<DevCenterCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
-            return new ProjectCatalogResource(_client, data);
+            return new DevCenterProjectCatalogResource(_client, data);
         }
 
-        async ValueTask<ProjectCatalogResource> IOperationSource<ProjectCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevCenterProjectCatalogResource> IOperationSource<DevCenterProjectCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<DevCenterCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
-            return await Task.FromResult(new ProjectCatalogResource(_client, data)).ConfigureAwait(false);
+            return await Task.FromResult(new DevCenterProjectCatalogResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

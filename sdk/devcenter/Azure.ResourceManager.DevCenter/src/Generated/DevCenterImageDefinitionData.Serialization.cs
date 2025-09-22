@@ -16,11 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class ImageDefinitionData : IUtf8JsonSerializable, IJsonModel<ImageDefinitionData>
+    public partial class DevCenterImageDefinitionData : IUtf8JsonSerializable, IJsonModel<DevCenterImageDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterImageDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ImageDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DevCenterImageDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterImageDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDefinitionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterImageDefinitionData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -108,19 +108,19 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteEndObject();
         }
 
-        ImageDefinitionData IJsonModel<ImageDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DevCenterImageDefinitionData IJsonModel<DevCenterImageDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterImageDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDefinitionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterImageDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageDefinitionData(document.RootElement, options);
+            return DeserializeDevCenterImageDefinitionData(document.RootElement, options);
         }
 
-        internal static ImageDefinitionData DeserializeImageDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DevCenterImageDefinitionData DeserializeDevCenterImageDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImageDefinitionData(
+            return new DevCenterImageDefinitionData(
                 id,
                 name,
                 type,
@@ -317,35 +317,35 @@ namespace Azure.ResourceManager.DevCenter
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ImageDefinitionData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DevCenterImageDefinitionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterImageDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImageDefinitionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterImageDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImageDefinitionData IPersistableModel<ImageDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DevCenterImageDefinitionData IPersistableModel<DevCenterImageDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterImageDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeImageDefinitionData(document.RootElement, options);
+                        return DeserializeDevCenterImageDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageDefinitionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterImageDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImageDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DevCenterImageDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
