@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="marketplaceSaaSResourceName"> Name of the Marketplace SaaS Resource. </param>
         /// <returns> A new <see cref="Models.MarketplaceSaaSResourceDetailsResult"/> instance for mocking. </returns>
-        public static MarketplaceSaaSResourceDetailsResult MarketplaceSaaSResourceDetailsResult(string marketplaceSaaSResourceId = null, string planId = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string marketplaceSaaSResourceName = null)
+        public static MarketplaceSaaSResourceDetailsResult MarketplaceSaaSResourceDetailsResult(ResourceIdentifier marketplaceSaaSResourceId = null, string planId = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string marketplaceSaaSResourceName = null)
         {
             return new MarketplaceSaaSResourceDetailsResult(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, serializedAdditionalRawData: null);
         }
@@ -99,21 +99,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateResourceSupportedProperties"/>. </summary>
         /// <param name="name"> The ARM id of the subscription. </param>
-        /// <param name="creationSupported"> Indicates if selected subscription supports Dynatrace resource creation, if not it is already being monitored for the selected organization via multi subscription feature. </param>
+        /// <param name="isCreationSupported"> Indicates if selected subscription supports Dynatrace resource creation, if not it is already being monitored for the selected organization via multi subscription feature. </param>
         /// <returns> A new <see cref="Models.CreateResourceSupportedProperties"/> instance for mocking. </returns>
-        public static CreateResourceSupportedProperties CreateResourceSupportedProperties(string name = null, bool? creationSupported = null)
+        public static CreateResourceSupportedProperties CreateResourceSupportedProperties(string name = null, bool? isCreationSupported = null)
         {
-            return new CreateResourceSupportedProperties(name, creationSupported, serializedAdditionalRawData: null);
+            return new CreateResourceSupportedProperties(name, isCreationSupported, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MetricsStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DynatraceMetricsStatusResult"/>. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
-        /// <returns> A new <see cref="Models.MetricsStatusResult"/> instance for mocking. </returns>
-        public static MetricsStatusResult MetricsStatusResult(IEnumerable<string> azureResourceIds = null)
+        /// <returns> A new <see cref="Models.DynatraceMetricsStatusResult"/> instance for mocking. </returns>
+        public static DynatraceMetricsStatusResult DynatraceMetricsStatusResult(IEnumerable<string> azureResourceIds = null)
         {
             azureResourceIds ??= new List<string>();
 
-            return new MetricsStatusResult(azureResourceIds?.ToList(), serializedAdditionalRawData: null);
+            return new DynatraceMetricsStatusResult(azureResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceSsoDetailsResult"/>. </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </param>
         /// <returns> A new <see cref="Dynatrace.MonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
-        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionList properties = null)
+        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynatraceMonitoredSubscriptionList properties = null)
         {
             return new MonitoredSubscriptionPropertyData(
                 id,
@@ -244,16 +244,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DynatraceMonitoredSubscriptionList"/>. </summary>
         /// <param name="operation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <returns> A new <see cref="Models.SubscriptionList"/> instance for mocking. </returns>
-        public static SubscriptionList SubscriptionList(SubscriptionListOperation? operation = null, IEnumerable<MonitoredSubscription> monitoredSubscriptionList = null, DynatraceProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.DynatraceMonitoredSubscriptionList"/> instance for mocking. </returns>
+        public static DynatraceMonitoredSubscriptionList DynatraceMonitoredSubscriptionList(DynatraceMonitoredSubscriptionListOperation? operation = null, IEnumerable<DynatraceMonitoredSubscription> monitoredSubscriptionList = null, DynatraceProvisioningState? provisioningState = null)
         {
-            monitoredSubscriptionList ??= new List<MonitoredSubscription>();
+            monitoredSubscriptionList ??= new List<DynatraceMonitoredSubscription>();
 
-            return new SubscriptionList(operation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new DynatraceMonitoredSubscriptionList(operation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitoringTagRulesProperties"/>. </summary>

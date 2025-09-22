@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Response of get metrics status operation. </summary>
-    public partial class MetricsStatusResult
+    public partial class DynatraceMetricsStatusResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MetricsStatusResult"/>. </summary>
-        internal MetricsStatusResult()
+        /// <summary> Initializes a new instance of <see cref="DynatraceMetricsStatusResult"/>. </summary>
+        internal DynatraceMetricsStatusResult()
         {
             AzureResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMetricsStatusResult"/>. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsStatusResult(IReadOnlyList<string> azureResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynatraceMetricsStatusResult(IReadOnlyList<string> azureResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureResourceIds = azureResourceIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;

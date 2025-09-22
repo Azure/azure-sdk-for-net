@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationSupported))
+            if (options.Format != "W" && Optional.IsDefined(IsCreationSupported))
             {
                 writer.WritePropertyName("creationSupported"u8);
-                writer.WriteBooleanValue(CreationSupported.Value);
+                writer.WriteBooleanValue(IsCreationSupported.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

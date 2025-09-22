@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 return null;
             }
-            SubscriptionList properties = default;
+            DynatraceMonitoredSubscriptionList properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dynatrace
                     {
                         continue;
                     }
-                    properties = SubscriptionList.DeserializeSubscriptionList(property.Value, options);
+                    properties = DynatraceMonitoredSubscriptionList.DeserializeDynatraceMonitoredSubscriptionList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -47,18 +47,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionIdContent"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceSubscriptionId"/> is null. </exception>
-        public MarketplaceSubscriptionIdContent(string marketplaceSubscriptionId)
+        public MarketplaceSubscriptionIdContent(Guid marketplaceSubscriptionId)
         {
-            Argument.AssertNotNull(marketplaceSubscriptionId, nameof(marketplaceSubscriptionId));
-
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionIdContent"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSubscriptionIdContent(string marketplaceSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceSubscriptionIdContent(Guid marketplaceSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -70,6 +67,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         }
 
         /// <summary> Marketplace Subscription Id. </summary>
-        public string MarketplaceSubscriptionId { get; }
+        public Guid MarketplaceSubscriptionId { get; }
     }
 }

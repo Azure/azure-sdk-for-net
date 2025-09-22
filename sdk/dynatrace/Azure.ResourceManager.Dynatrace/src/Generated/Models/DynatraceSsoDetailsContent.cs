@@ -63,13 +63,5 @@ namespace Azure.ResourceManager.Dynatrace.Models
             UserPrincipal = userPrincipal;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsContent"/> for deserialization. </summary>
-        internal DynatraceSsoDetailsContent()
-        {
-        }
-
-        /// <summary> user principal id of the user. </summary>
-        public string UserPrincipal { get; }
     }
 }

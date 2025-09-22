@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            string marketplaceSubscriptionId = default;
+            Guid marketplaceSubscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("marketplaceSubscriptionId"u8))
                 {
-                    marketplaceSubscriptionId = property.Value.GetString();
+                    marketplaceSubscriptionId = property.Value.GetGuid();
                     continue;
                 }
                 if (options.Format != "W")

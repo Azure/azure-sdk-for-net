@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Initializes a new instance of <see cref="CreateResourceSupportedProperties"/>. </summary>
         /// <param name="name"> The ARM id of the subscription. </param>
-        /// <param name="creationSupported"> Indicates if selected subscription supports Dynatrace resource creation, if not it is already being monitored for the selected organization via multi subscription feature. </param>
+        /// <param name="isCreationSupported"> Indicates if selected subscription supports Dynatrace resource creation, if not it is already being monitored for the selected organization via multi subscription feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateResourceSupportedProperties(string name, bool? creationSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateResourceSupportedProperties(string name, bool? isCreationSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            CreationSupported = creationSupported;
+            IsCreationSupported = isCreationSupported;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ARM id of the subscription. </summary>
         public string Name { get; }
         /// <summary> Indicates if selected subscription supports Dynatrace resource creation, if not it is already being monitored for the selected organization via multi subscription feature. </summary>
-        public bool? CreationSupported { get; }
+        public bool? IsCreationSupported { get; }
     }
 }

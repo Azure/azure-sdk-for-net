@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class LogStatusContent : IUtf8JsonSerializable, IJsonModel<LogStatusContent>
+    public partial class DynatraceMetricStatusContent : IUtf8JsonSerializable, IJsonModel<DynatraceMetricStatusContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogStatusContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMetricStatusContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LogStatusContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DynatraceMetricStatusContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogStatusContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMetricStatusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogStatusContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMetricStatusContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(MonitoredResourceIds))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
-        LogStatusContent IJsonModel<LogStatusContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DynatraceMetricStatusContent IJsonModel<DynatraceMetricStatusContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogStatusContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMetricStatusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogStatusContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMetricStatusContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLogStatusContent(document.RootElement, options);
+            return DeserializeDynatraceMetricStatusContent(document.RootElement, options);
         }
 
-        internal static LogStatusContent DeserializeLogStatusContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DynatraceMetricStatusContent DeserializeDynatraceMetricStatusContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -106,38 +106,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LogStatusContent(monitoredResourceIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DynatraceMetricStatusContent(monitoredResourceIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LogStatusContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DynatraceMetricStatusContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogStatusContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMetricStatusContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LogStatusContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMetricStatusContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LogStatusContent IPersistableModel<LogStatusContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DynatraceMetricStatusContent IPersistableModel<DynatraceMetricStatusContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogStatusContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMetricStatusContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLogStatusContent(document.RootElement, options);
+                        return DeserializeDynatraceMetricStatusContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogStatusContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMetricStatusContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LogStatusContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DynatraceMetricStatusContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            string marketplaceSaaSResourceId = default;
+            ResourceIdentifier marketplaceSaaSResourceId = default;
             string planId = default;
             DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             string marketplaceSaaSResourceName = default;
@@ -101,7 +101,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 if (property.NameEquals("marketplaceSaaSResourceId"u8))
                 {
-                    marketplaceSaaSResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    marketplaceSaaSResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("planId"u8))

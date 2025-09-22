@@ -16,6 +16,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
+# mgmt-debug:
+#  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
@@ -58,7 +61,6 @@ rename-mapping:
   ProvisioningState: DynatraceProvisioningState
   SingleSignOnStates: DynatraceSingleSignOnState
   MonitorResource: DynatraceMonitor
-  AccountInfoSecure: DynatraceAccountCredentialsInfo
   AppServiceInfo: DynatraceOneAgentEnabledAppServiceInfo
   AppServiceInfo.resourceId: -|arm-id
   VMInfo: DynatraceMonitorVmInfo
@@ -97,25 +99,17 @@ rename-mapping:
   SendActivityLogsStatus: ActivityLogsSendingStatus
   SendingLogsStatus: LogsSendingStatus
   SendingMetricsStatus: MetricsSendingStatus
-  MetricsStatusResponse: MetricsStatusResult
+  MetricsStatusResponse: DynatraceMetricsStatusResult
+  LogStatusRequest: DynatraceMetricStatusContent
   MarketplaceSaaSResourceDetailsResponse: MarketplaceSaaSResourceDetailsResult
+  MarketplaceSaaSResourceDetailsResponse.marketplaceSaaSResourceId : -|arm-id
   ConnectedResourcesCountResponse: ConnectedResourcesCountResult
-
-directive:
-  - from: swagger-document
-    where: $.definitions.ManagedIdentityType
-    transform: >
-      $ = {
-          "type": "string",
-          "description": "The kind of managed identity assigned to this resource.",
-          "enum": [
-            "SystemAssigned",
-            "UserAssigned",
-            "SystemAndUserAssigned"
-          ],
-          "x-ms-enum": {
-            "name": "ManagedIdentityType",
-            "modelAsString": true
-          }
-        }
+  Action: DynatraceAgentAction
+  CreateResourceSupportedProperties.creationSupported: IsCreationSupported
+  MarketplaceSubscriptionIdRequest.marketplaceSubscriptionId: -|uuid
+  MonitoredSubscription: DynatraceMonitoredSubscription
+  MonitoredSubscription.subscriptionId: -|uuid
+  Status: DynatraceMonitoringState
+  SubscriptionList: DynatraceMonitoredSubscriptionList
+  SubscriptionListOperation: DynatraceMonitoredSubscriptionListOperation
 ```
