@@ -17,12 +17,34 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesModelFactory
     {
+        /// <summary> Represents a connected cluster. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the connected cluster resource properties. </param>
+        /// <param name="identity"> The identity of the connected cluster. </param>
+        /// <param name="kind"> The kind of connected cluster. </param>
+        /// <returns> A new <see cref="Kubernetes.ConnectedClusterData"/> instance for mocking. </returns>
+        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConnectedClusterProperties properties = default, ManagedServiceIdentity identity = default, ConnectedClusterKind? kind = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConnectedClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                identity,
+                kind);
+        }
+
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the connected cluster resource. </param>
         /// <param name="totalNodeCount"> Number of nodes present in the connected cluster resource. </param>
@@ -46,48 +68,37 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="gatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
-        /// <param name="identity"> The identity of the connected cluster. </param>
-        /// <param name="kind"> The kind of connected cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentPublicKeyCertificate"/> is null. </exception>
-        /// <returns> A new <see cref="Kubernetes.ConnectedClusterData"/> instance for mocking. </returns>
-        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationTime = default, DateTimeOffset? lastConnectivityTime = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, SecurityProfileWorkloadIdentity securityWorkloadIdentity = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IList<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default, ManagedServiceIdentity identity = default, ConnectedClusterKind? kind = default)
+        /// <returns> A new <see cref="Models.ConnectedClusterProperties"/> instance for mocking. </returns>
+        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationTime = default, DateTimeOffset? lastConnectivityTime = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, SecurityProfileWorkloadIdentity securityWorkloadIdentity = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            arcAgentryConfigurations ??= new ChangeTrackingList<ArcAgentryConfigurations>();
+            miscellaneousProperties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ConnectedClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                agentPublicKeyCertificate is null || kubernetesVersion is null || totalNodeCount is null || totalCoreCount is null || agentVersion is null || provisioningState is null || distribution is null || distributionVersion is null || infrastructure is null || offering is null || managedIdentityCertificateExpirationTime is null || lastConnectivityTime is null || connectivityStatus is null || privateLinkState is null || privateLinkScopeResourceId is null || azureHybridBenefit is null || aadProfile is null || arcAgentProfile is null || securityProfile is null || oidcIssuerProfile is null || gateway is null || arcAgentryConfigurations is null || miscellaneousProperties is null ? default : new ConnectedClusterProperties(
-                    agentPublicKeyCertificate,
-                    kubernetesVersion,
-                    totalNodeCount,
-                    totalCoreCount,
-                    agentVersion,
-                    provisioningState,
-                    distribution,
-                    distributionVersion,
-                    infrastructure,
-                    offering,
-                    managedIdentityCertificateExpirationTime,
-                    lastConnectivityTime,
-                    connectivityStatus,
-                    privateLinkState,
-                    privateLinkScopeResourceId,
-                    azureHybridBenefit,
-                    aadProfile,
-                    arcAgentProfile,
-                    securityProfile,
-                    oidcIssuerProfile,
-                    gateway,
-                    arcAgentryConfigurations,
-                    miscellaneousProperties),
-                identity,
-                kind);
+            return new ConnectedClusterProperties(
+                agentPublicKeyCertificate,
+                kubernetesVersion,
+                totalNodeCount,
+                totalCoreCount,
+                agentVersion,
+                provisioningState,
+                distribution,
+                distributionVersion,
+                infrastructure,
+                offering,
+                managedIdentityCertificateExpirationTime,
+                lastConnectivityTime,
+                connectivityStatus,
+                privateLinkState,
+                privateLinkScopeResourceId,
+                azureHybridBenefit,
+                aadProfile,
+                arcAgentProfile,
+                securityWorkloadIdentity is null ? default : new SecurityProfile(securityWorkloadIdentity, new Dictionary<string, BinaryData>()),
+                oidcIssuerProfile,
+                gatewayEnabled is null ? default : new Gateway(gatewayEnabled, new Dictionary<string, BinaryData>()),
+                arcAgentryConfigurations.ToList(),
+                miscellaneousProperties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> AAD Profile specifies attributes for Azure Active Directory integration. </summary>
@@ -155,17 +166,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new OidcIssuerProfile(enabled, issuerUri, selfHostedIssuerUri, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Object containing updates for patch operations. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="distribution"> Represents the distribution of the connected cluster. </param>
-        /// <param name="distributionVersion"> Represents the Kubernetes distribution version on this connected cluster. </param>
-        /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
-        /// <param name="gatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
+        /// <param name="properties"> Describes the connected cluster resource properties that can be updated during PATCH operation. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterPatch"/> instance for mocking. </returns>
-        public static ConnectedClusterPatch ConnectedClusterPatch(IDictionary<string, string> tags = default, string distribution = default, string distributionVersion = default, AzureHybridBenefit? azureHybridBenefit = default, bool? gatewayEnabled = default)
+        public static ConnectedClusterPatch ConnectedClusterPatch(IDictionary<string, string> tags = default, ConnectedClusterPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ConnectedClusterPatch(tags, distribution is null || distributionVersion is null || azureHybridBenefit is null || gateway is null ? default : new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, gateway), additionalBinaryDataProperties: null);
+            return new ConnectedClusterPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ListClusterUserCredentialProperties. </summary>

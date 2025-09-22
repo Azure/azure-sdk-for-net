@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    internal partial class ConnectedClusters
+    internal partial class ConnectedCluster
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ConnectedClusters for mocking. </summary>
-        protected ConnectedClusters()
+        /// <summary> Initializes a new instance of ConnectedCluster for mocking. </summary>
+        protected ConnectedCluster()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectedClusters. </summary>
+        /// <summary> Initializes a new instance of ConnectedCluster. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ConnectedClusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ConnectedCluster(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

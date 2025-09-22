@@ -15,21 +15,21 @@ using Azure.ResourceManager.Kubernetes.Models;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    internal partial class ConnectedClustersGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<ConnectedClusterData>
+    internal partial class ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<ConnectedClusterData>
     {
-        private readonly ConnectedClusters _client;
+        private readonly ConnectedCluster _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ConnectedClustersGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ConnectedClusters client used to send requests. </param>
+        /// <summary> Initializes a new instance of ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ConnectedCluster client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public ConnectedClustersGetByResourceGroupAsyncCollectionResultOfT(ConnectedClusters client, string subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT(ConnectedCluster client, string subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Kubernetes
             _context = context;
         }
 
-        /// <summary> Gets the pages of ConnectedClustersGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConnectedClustersGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ConnectedClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

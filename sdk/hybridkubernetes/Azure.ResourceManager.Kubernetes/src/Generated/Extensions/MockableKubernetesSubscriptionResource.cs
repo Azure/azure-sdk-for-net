@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableKubernetesSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _connectedClustersClientDiagnostics;
-        private ConnectedClusters _connectedClustersRestClient;
+        private ClientDiagnostics _connectedClusterClientDiagnostics;
+        private ConnectedCluster _connectedClusterRestClient;
 
         /// <summary> Initializes a new instance of MockableKubernetesSubscriptionResource for mocking. </summary>
         protected MockableKubernetesSubscriptionResource()
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         {
         }
 
-        private ClientDiagnostics ConnectedClustersClientDiagnostics => _connectedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kubernetes.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ConnectedClusterClientDiagnostics => _connectedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kubernetes.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConnectedClusters ConnectedClustersRestClient => _connectedClustersRestClient ??= new ConnectedClusters(ConnectedClustersClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private ConnectedCluster ConnectedClusterRestClient => _connectedClusterRestClient ??= new ConnectedCluster(ConnectedClusterClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
         /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClustersGetBySubscriptionAsyncCollectionResultOfT(ConnectedClustersRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionAsyncCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
         }
 
         /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClustersGetBySubscriptionCollectionResultOfT(ConnectedClustersRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
+            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
         }
     }
 }

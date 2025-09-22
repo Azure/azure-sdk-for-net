@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Properties which can be patched on the connected cluster resource. </summary>
-    internal partial class ConnectedClusterPatchProperties
+    public partial class ConnectedClusterPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

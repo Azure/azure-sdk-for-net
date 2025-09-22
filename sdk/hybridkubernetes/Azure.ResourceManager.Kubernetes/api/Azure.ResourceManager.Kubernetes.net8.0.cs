@@ -246,6 +246,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         private readonly int _dummyPrimitive;
         public ConnectedClusterKind(string value) { throw null; }
         public static Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind AWS { get { throw null; } }
+        public static Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind GCP { get { throw null; } }
         public static Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind ProvisionedCluster { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -279,6 +280,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit? AzureHybridBenefit { get { throw null; } set { } }
         public string Distribution { get { throw null; } set { } }
         public string DistributionVersion { get { throw null; } set { } }
+        public bool? GatewayEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Kubernetes.Models.ConnectedClusterPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Kubernetes.Models.ConnectedClusterPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

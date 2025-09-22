@@ -14,7 +14,7 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Properties which can be patched on the connected cluster resource. </summary>
-    internal partial class ConnectedClusterPatchProperties : IJsonModel<ConnectedClusterPatchProperties>
+    public partial class ConnectedClusterPatchProperties : IJsonModel<ConnectedClusterPatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

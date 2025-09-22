@@ -14,35 +14,31 @@ using Azure.ResourceManager.Kubernetes.Models;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    internal partial class ConnectedClustersGetByResourceGroupCollectionResultOfT : Pageable<ConnectedClusterData>
+    internal partial class ConnectedClusterGetBySubscriptionCollectionResultOfT : Pageable<ConnectedClusterData>
     {
-        private readonly ConnectedClusters _client;
+        private readonly ConnectedCluster _client;
         private readonly string _subscriptionId;
-        private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ConnectedClustersGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ConnectedClusters client used to send requests. </param>
+        /// <summary> Initializes a new instance of ConnectedClusterGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ConnectedCluster client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public ConnectedClustersGetByResourceGroupCollectionResultOfT(ConnectedClusters client, string subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public ConnectedClusterGetBySubscriptionCollectionResultOfT(ConnectedCluster client, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
             _context = context;
         }
 
-        /// <summary> Gets the pages of ConnectedClustersGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConnectedClusterGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConnectedClustersGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ConnectedClusterGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ConnectedClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -68,8 +64,8 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConnectedClusterCollection.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableKubernetesSubscriptionResource.GetConnectedClusters");
             scope.Start();
             try
             {
