@@ -238,7 +238,7 @@ namespace Azure.Provisioning.Tests.Primitives
         }
 
         [Test]
-        public async Task ValidateConstructFromBicepExpression()
+        public async Task ValidateConstructFromBicepExpression_LowLevelApi()
         {
             await using var test = new Trycep();
             test.Define(
