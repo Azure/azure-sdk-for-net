@@ -74,6 +74,8 @@
     "cpus",
     "cref",
     "Dapr",
+    "decompile",
+    "decompiled",
     "deduplication",
     "deletesas",
     "deserializable",
@@ -297,7 +299,8 @@
         "Wdac",
         "Adou",
         "Drtm",
-        "Hvci"
+        "Hvci",
+        "SEVSNP"
       ]
     },
     {
@@ -1814,6 +1817,26 @@
         "Acks",
         "acks"
       ]
+    },
+    {
+      "filename": "**/sdk/iotoperations/**/*.cs",
+      "words": [
+        "Akri",
+        "Bucketized"
+      ]
+    },
+    {
+      "filename": "/sdk/virtualenclaves/**/*.cs",
+      "words": [
+        "mobo"
+      ]
+    },
+    {
+      "filename": "**/sdk/workloadorchestration/**/*.cs",
+      "words": [
+        "Inprogress",
+        "Undeployed"
+       ]
     }
   ],
   "allowCompoundWords": true

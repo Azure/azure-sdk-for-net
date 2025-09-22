@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Client.ClientNamespace.Second.Model
+using client.clientnamespace.second.sub;
+
+namespace client.clientnamespace.second
 {
     public partial class SecondClientResult
     {

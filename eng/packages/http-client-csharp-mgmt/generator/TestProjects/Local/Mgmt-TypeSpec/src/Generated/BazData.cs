@@ -21,11 +21,8 @@ namespace MgmtTypeSpec
 
         /// <summary> Initializes a new instance of <see cref="BazData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public BazData(string location) : base(location)
+        public BazData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
         }
 
         /// <summary> Initializes a new instance of <see cref="BazData"/>. </summary>
@@ -37,7 +34,7 @@ namespace MgmtTypeSpec
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal BazData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, BazProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal BazData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, BazProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

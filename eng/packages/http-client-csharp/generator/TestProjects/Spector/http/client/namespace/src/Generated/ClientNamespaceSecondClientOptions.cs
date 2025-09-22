@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace ClientNameSpaceClient._ClientNamespaceSecondClient
+namespace client.clientnamespace.second
 {
     public partial class ClientNamespaceSecondClientOptions : ClientOptions
     {

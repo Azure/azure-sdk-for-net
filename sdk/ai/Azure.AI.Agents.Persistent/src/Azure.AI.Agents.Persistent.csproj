@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Azure.AI.Agents.Persistent client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Agents.Persistent client library</AssemblyTitle>
-    <Version>1.2.0-beta.4</Version>
+    <Version>1.2.0-beta.6</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Agents.Persistent</PackageTags>

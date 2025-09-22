@@ -88,7 +88,7 @@ namespace MgmtTypeSpec
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             FooProperties properties = default;
             ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace MgmtTypeSpec
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
