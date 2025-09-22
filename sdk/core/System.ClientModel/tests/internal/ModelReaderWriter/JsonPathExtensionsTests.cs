@@ -315,8 +315,15 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("{\"a\":1,\"b\":2}", "$.c", false)]
         [TestCase("{\"arr\":[1,2,3]}", "$.arr[1]", true)]
         [TestCase("{\"arr\":[1,2,3]}", "$.arr[5]", false)]
+        [TestCase("{\"arr\":[]}", "$.arr[0]", false)]
+        [TestCase("{\"arr\":[]}", "$.arr", true)]
         [TestCase("{}", "$", true)]
-        public void Advance_JsonPath(string jsonStr, string jsonPathStr, bool expected)
+        [TestCase("{}", "$.x", false)]
+        [TestCase("{\"x\":{\"y\":{\"z\":1}}}", "$.x", true)]
+        [TestCase("{\"x\":{\"y\":{\"z\":1}}}", "$.x.y", true)]
+        [TestCase("{\"x\":{\"y\":{\"z\":1}}}", "$.x.y.z", true)]
+        [TestCase("{\"x\":{\"y\":{\"z\":1}}}", "$.x.y.z.a", false)]
+        public void Advance(string jsonStr, string jsonPathStr, bool expected)
         {
             ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
@@ -324,21 +331,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var reader = new Utf8JsonReader(json.Span);
             bool result = reader.Advance(jsonPath);
             Assert.AreEqual(expected, result);
-        }
 
-        [TestCase("{\"a\":1,\"b\":2}", "$.a", true)]
-        [TestCase("{\"a\":1,\"b\":2}", "$.c", false)]
-        [TestCase("{\"arr\":[1,2,3]}", "$.arr[1]", true)]
-        [TestCase("{\"arr\":[1,2,3]}", "$.arr[5]", false)]
-        [TestCase("{}", "$", true)]
-        public void Advance_PathReader(string jsonStr, string jsonPathStr, bool expected)
-        {
-            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
-            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
-
-            var reader = new Utf8JsonReader(json.Span);
+            var jsonReader = new Utf8JsonReader(json.Span);
             var pathReader = new JsonPathReader(jsonPath);
-            bool result = reader.Advance(ref pathReader);
+            result = jsonReader.Advance(ref pathReader);
             Assert.AreEqual(expected, result);
         }
 
@@ -346,6 +342,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("{\"arr\":[]}", "$.arr", "", "1", "{\"arr\":[1]}")]
         [TestCase("{\"obj\":{}}", "$.obj", "prop", "value", "{\"obj\":{\"prop\":value}}")]
         [TestCase("{\"arr\":[1,2]}", "$.arr", "", "3", "{\"arr\":[1,2,3]}")]
+        [TestCase("{\"obj\":{\"x\":1}}", "$.obj", "prop", "value", "{\"obj\":{\"x\":1,\"prop\":value}}")]
         public void Insert(string jsonStr, string jsonPathStr, string propertyNameStr, string newValue, string expected)
         {
             ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
