@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 return null;
             }
-            ResourceManager.Models.ManagedServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

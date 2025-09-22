@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDynatraceModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectedResourcesCountResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedResourcesCountResult"/>. </summary>
         /// <param name="connectedResourcesCount"> Count of the connected resources. </param>
-        /// <returns> A new <see cref="Models.ConnectedResourcesCountResponse"/> instance for mocking. </returns>
-        public static ConnectedResourcesCountResponse ConnectedResourcesCountResponse(long? connectedResourcesCount = null)
+        /// <returns> A new <see cref="Models.ConnectedResourcesCountResult"/> instance for mocking. </returns>
+        public static ConnectedResourcesCountResult ConnectedResourcesCountResult(long? connectedResourcesCount = null)
         {
-            return new ConnectedResourcesCountResponse(connectedResourcesCount, serializedAdditionalRawData: null);
+            return new ConnectedResourcesCountResult(connectedResourcesCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSResourceDetailsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSResourceDetailsResult"/>. </summary>
         /// <param name="marketplaceSaaSResourceId"> Id of the Marketplace SaaS Resource. </param>
         /// <param name="planId"> Id of the plan. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="marketplaceSaaSResourceName"> Name of the Marketplace SaaS Resource. </param>
-        /// <returns> A new <see cref="Models.MarketplaceSaaSResourceDetailsResponse"/> instance for mocking. </returns>
-        public static MarketplaceSaaSResourceDetailsResponse MarketplaceSaaSResourceDetailsResponse(string marketplaceSaaSResourceId = null, string planId = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string marketplaceSaaSResourceName = null)
+        /// <returns> A new <see cref="Models.MarketplaceSaaSResourceDetailsResult"/> instance for mocking. </returns>
+        public static MarketplaceSaaSResourceDetailsResult MarketplaceSaaSResourceDetailsResult(string marketplaceSaaSResourceId = null, string planId = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string marketplaceSaaSResourceName = null)
         {
-            return new MarketplaceSaaSResourceDetailsResponse(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, serializedAdditionalRawData: null);
+            return new MarketplaceSaaSResourceDetailsResult(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Dynatrace.DynatraceMonitorData"/>. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Dynatrace.DynatraceMonitorData"/> instance for mocking. </returns>
-        public static DynatraceMonitorData DynatraceMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceManager.Models.ManagedServiceIdentity identity = null, DynatraceMonitoringStatus? monitoringStatus = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew = null, DynatraceEnvironmentProperties dynatraceEnvironmentProperties = null, DynatraceMonitorUserInfo userInfo = null, DynatraceBillingPlanInfo planData = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, DynatraceProvisioningState? provisioningState = null)
+        public static DynatraceMonitorData DynatraceMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, DynatraceMonitoringStatus? monitoringStatus = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew = null, DynatraceEnvironmentProperties dynatraceEnvironmentProperties = null, DynatraceMonitorUserInfo userInfo = null, DynatraceBillingPlanInfo planData = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, DynatraceProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new CreateResourceSupportedProperties(name, creationSupported, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MetricsStatusResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsStatusResult"/>. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
-        /// <returns> A new <see cref="Models.MetricsStatusResponse"/> instance for mocking. </returns>
-        public static MetricsStatusResponse MetricsStatusResponse(IEnumerable<string> azureResourceIds = null)
+        /// <returns> A new <see cref="Models.MetricsStatusResult"/> instance for mocking. </returns>
+        public static MetricsStatusResult MetricsStatusResult(IEnumerable<string> azureResourceIds = null)
         {
             azureResourceIds ??= new List<string>();
 
-            return new MetricsStatusResponse(azureResourceIds?.ToList(), serializedAdditionalRawData: null);
+            return new MetricsStatusResult(azureResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceSsoDetailsResult"/>. </summary>

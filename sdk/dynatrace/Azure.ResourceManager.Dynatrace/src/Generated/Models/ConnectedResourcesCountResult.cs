@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> Response of get metrics status operation. </summary>
-    public partial class MetricsStatusResponse
+    /// <summary> Response for getting Connected resources for a MP SaaS Resource. </summary>
+    public partial class ConnectedResourcesCountResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MetricsStatusResponse"/>. </summary>
-        internal MetricsStatusResponse()
+        /// <summary> Initializes a new instance of <see cref="ConnectedResourcesCountResult"/>. </summary>
+        internal ConnectedResourcesCountResult()
         {
-            AzureResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsStatusResponse"/>. </summary>
-        /// <param name="azureResourceIds"> Azure resource IDs. </param>
+        /// <summary> Initializes a new instance of <see cref="ConnectedResourcesCountResult"/>. </summary>
+        /// <param name="connectedResourcesCount"> Count of the connected resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsStatusResponse(IReadOnlyList<string> azureResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedResourcesCountResult(long? connectedResourcesCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AzureResourceIds = azureResourceIds;
+            ConnectedResourcesCount = connectedResourcesCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure resource IDs. </summary>
-        public IReadOnlyList<string> AzureResourceIds { get; }
+        /// <summary> Count of the connected resources. </summary>
+        public long? ConnectedResourcesCount { get; }
     }
 }

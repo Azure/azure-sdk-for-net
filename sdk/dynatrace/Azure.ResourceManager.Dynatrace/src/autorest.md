@@ -97,14 +97,25 @@ rename-mapping:
   SendActivityLogsStatus: ActivityLogsSendingStatus
   SendingLogsStatus: LogsSendingStatus
   SendingMetricsStatus: MetricsSendingStatus
-  ManagedServiceIdentity:
+  MetricsStatusResponse: MetricsStatusResult
+  MarketplaceSaaSResourceDetailsResponse: MarketplaceSaaSResourceDetailsResult
+  ConnectedResourcesCountResponse: ConnectedResourcesCountResult
 
 directive:
-  - from: dynatrace.json
+  - from: swagger-document
     where: $.definitions.ManagedIdentityType
     transform: >
-      $["x-ms-enum"] =  {
-        "name": "ManagedIdentityType",
-        "modelAsString": true
-      };
+      $ = {
+          "type": "string",
+          "description": "The kind of managed identity assigned to this resource.",
+          "enum": [
+            "SystemAssigned",
+            "UserAssigned",
+            "SystemAndUserAssigned"
+          ],
+          "x-ms-enum": {
+            "name": "ManagedIdentityType",
+            "modelAsString": true
+          }
+        }
 ```

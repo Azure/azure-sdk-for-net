@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Dynatrace
             JsonSerializer.Serialize(writer, Identity, serializeOptions);
         }
 
-        internal static void ReadIdentity(JsonProperty property, ref ManagedServiceIdentity identity)
+        internal static void ReadIdentity(JsonProperty property, ref ResourceManager.Models.ManagedServiceIdentity identity)
         {
             var serializeOptions = new JsonSerializerOptions { Converters = { new DynatraceManagedServiceIdentityTypeConverter() } };
-            identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+            identity = JsonSerializer.Deserialize<ResourceManager.Models.ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
         }
     }
 }

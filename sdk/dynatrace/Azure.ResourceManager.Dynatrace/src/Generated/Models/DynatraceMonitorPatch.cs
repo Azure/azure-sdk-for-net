@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="properties"> The set of properties that can be updated in a PATCH request to a monitor resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceMonitorPatch(IDictionary<string, string> tags, MonitorUpdateProperties properties, ResourceManager.Models.ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynatraceMonitorPatch(IDictionary<string, string> tags, MonitorUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Properties = properties;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ResourceManager.Models.ManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class ConnectedResourcesCountResponse : IUtf8JsonSerializable, IJsonModel<ConnectedResourcesCountResponse>
+    public partial class ConnectedResourcesCountResult : IUtf8JsonSerializable, IJsonModel<ConnectedResourcesCountResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedResourcesCountResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedResourcesCountResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectedResourcesCountResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectedResourcesCountResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourcesCountResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourcesCountResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedResourcesCountResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedResourcesCountResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ConnectedResourcesCount))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
-        ConnectedResourcesCountResponse IJsonModel<ConnectedResourcesCountResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConnectedResourcesCountResult IJsonModel<ConnectedResourcesCountResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourcesCountResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourcesCountResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedResourcesCountResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedResourcesCountResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectedResourcesCountResponse(document.RootElement, options);
+            return DeserializeConnectedResourcesCountResult(document.RootElement, options);
         }
 
-        internal static ConnectedResourcesCountResponse DeserializeConnectedResourcesCountResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConnectedResourcesCountResult DeserializeConnectedResourcesCountResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectedResourcesCountResponse(connectedResourcesCount, serializedAdditionalRawData);
+            return new ConnectedResourcesCountResult(connectedResourcesCount, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConnectedResourcesCountResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConnectedResourcesCountResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourcesCountResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourcesCountResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedResourcesCountResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedResourcesCountResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectedResourcesCountResponse IPersistableModel<ConnectedResourcesCountResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConnectedResourcesCountResult IPersistableModel<ConnectedResourcesCountResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourcesCountResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourcesCountResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectedResourcesCountResponse(document.RootElement, options);
+                        return DeserializeConnectedResourcesCountResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedResourcesCountResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedResourcesCountResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectedResourcesCountResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectedResourcesCountResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

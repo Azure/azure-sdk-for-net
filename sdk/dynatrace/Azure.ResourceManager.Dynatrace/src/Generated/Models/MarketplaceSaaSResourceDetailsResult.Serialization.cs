@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class MarketplaceSaaSResourceDetailsResponse : IUtf8JsonSerializable, IJsonModel<MarketplaceSaaSResourceDetailsResponse>
+    public partial class MarketplaceSaaSResourceDetailsResult : IUtf8JsonSerializable, IJsonModel<MarketplaceSaaSResourceDetailsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceSaaSResourceDetailsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceSaaSResourceDetailsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MarketplaceSaaSResourceDetailsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MarketplaceSaaSResourceDetailsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(MarketplaceSaaSResourceId))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
-        MarketplaceSaaSResourceDetailsResponse IJsonModel<MarketplaceSaaSResourceDetailsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MarketplaceSaaSResourceDetailsResult IJsonModel<MarketplaceSaaSResourceDetailsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMarketplaceSaaSResourceDetailsResponse(document.RootElement, options);
+            return DeserializeMarketplaceSaaSResourceDetailsResult(document.RootElement, options);
         }
 
-        internal static MarketplaceSaaSResourceDetailsResponse DeserializeMarketplaceSaaSResourceDetailsResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MarketplaceSaaSResourceDetailsResult DeserializeMarketplaceSaaSResourceDetailsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -129,38 +129,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MarketplaceSaaSResourceDetailsResponse(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, serializedAdditionalRawData);
+            return new MarketplaceSaaSResourceDetailsResult(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MarketplaceSaaSResourceDetailsResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MarketplaceSaaSResourceDetailsResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MarketplaceSaaSResourceDetailsResponse IPersistableModel<MarketplaceSaaSResourceDetailsResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MarketplaceSaaSResourceDetailsResult IPersistableModel<MarketplaceSaaSResourceDetailsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMarketplaceSaaSResourceDetailsResponse(document.RootElement, options);
+                        return DeserializeMarketplaceSaaSResourceDetailsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MarketplaceSaaSResourceDetailsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MarketplaceSaaSResourceDetailsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

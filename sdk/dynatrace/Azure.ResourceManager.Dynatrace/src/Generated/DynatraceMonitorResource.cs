@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="content"> The details of the metric status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MetricsStatusResponse>> GetMetricStatusAsync(MetricStatusContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricsStatusResult>> GetMetricStatusAsync(MetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMetricStatus");
             scope.Start();
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="content"> The details of the metric status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MetricsStatusResponse> GetMetricStatus(MetricStatusContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricsStatusResult> GetMetricStatus(MetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMetricStatus");
             scope.Start();
