@@ -61,7 +61,7 @@ Append will also utilize json projection if the path doesn't exist yet.
 
 ```c#
 JsonPatch jp = new();
-jp.Append("$.x[1]", 1);
+jp.Append("$.x[1]"u8, 1);
 Console.WriteLine(jp); // [{"op":"add","path":"/x","value":[null,[1]]}]
 Console.WriteLine(jp.ToString("J")); // {"x":[null,[1]]}
 ```
