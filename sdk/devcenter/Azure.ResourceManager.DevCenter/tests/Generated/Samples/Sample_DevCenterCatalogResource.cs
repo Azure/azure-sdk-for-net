@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
 
             // invoke the operation
-            SyncErrorDetails result = await devCenterCatalog.GetSyncErrorDetailsAsync();
+            CatalogSyncErrorDetails result = await devCenterCatalog.GetSyncErrorDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

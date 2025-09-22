@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ProjectCatalogResource projectCatalog = client.GetProjectCatalogResource(projectCatalogResourceId);
 
             // invoke the operation
-            SyncErrorDetails result = await projectCatalog.GetSyncErrorDetailsAsync();
+            CatalogSyncErrorDetails result = await projectCatalog.GetSyncErrorDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

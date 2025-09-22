@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterProjectImageResource"/> and their operations.
-    /// Each <see cref="DevCenterProjectImageResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectResource"/>.
-    /// To get a <see cref="DevCenterProjectImageCollection"/> instance call the GetDevCenterProjectImages method from an instance of <see cref="DevCenterProjectResource"/>.
+    /// A class representing a collection of <see cref="ProjectImageResource"/> and their operations.
+    /// Each <see cref="ProjectImageResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectResource"/>.
+    /// To get a <see cref="ProjectImageCollection"/> instance call the GetProjectImages method from an instance of <see cref="DevCenterProjectResource"/>.
     /// </summary>
-    public partial class DevCenterProjectImageCollection : ArmCollection, IEnumerable<DevCenterProjectImageResource>, IAsyncEnumerable<DevCenterProjectImageResource>
+    public partial class ProjectImageCollection : ArmCollection, IEnumerable<ProjectImageResource>, IAsyncEnumerable<ProjectImageResource>
     {
-        private readonly ClientDiagnostics _devCenterProjectImageImagesClientDiagnostics;
-        private readonly ImagesRestOperations _devCenterProjectImageImagesRestClient;
+        private readonly ClientDiagnostics _projectImageImagesClientDiagnostics;
+        private readonly ImagesRestOperations _projectImageImagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectImageCollection"/> class for mocking. </summary>
-        protected DevCenterProjectImageCollection()
+        /// <summary> Initializes a new instance of the <see cref="ProjectImageCollection"/> class for mocking. </summary>
+        protected ProjectImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DevCenterProjectImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devCenterProjectImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterProjectImageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DevCenterProjectImageResource.ResourceType, out string devCenterProjectImageImagesApiVersion);
-            _devCenterProjectImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterProjectImageImagesApiVersion);
+            _projectImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectImageResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ProjectImageResource.ResourceType, out string projectImageImagesApiVersion);
+            _projectImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectImageImagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual async Task<Response<DevCenterProjectImageResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectImageResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterProjectImageImagesClientDiagnostics.CreateScope("DevCenterProjectImageCollection.Get");
+            using var scope = _projectImageImagesClientDiagnostics.CreateScope("ProjectImageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _devCenterProjectImageImagesRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken).ConfigureAwait(false);
+                var response = await _projectImageImagesRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevCenterProjectImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual Response<DevCenterProjectImageResource> Get(string imageName, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectImageResource> Get(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterProjectImageImagesClientDiagnostics.CreateScope("DevCenterProjectImageCollection.Get");
+            using var scope = _projectImageImagesClientDiagnostics.CreateScope("ProjectImageCollection.Get");
             scope.Start();
             try
             {
-                var response = _devCenterProjectImageImagesRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken);
+                var response = _projectImageImagesRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevCenterProjectImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterProjectImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterProjectImageResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProjectImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProjectImageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectImageImagesRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectImageImagesRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterProjectImageImagesClientDiagnostics, Pipeline, "DevCenterProjectImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectImageImagesRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectImageImagesRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _projectImageImagesClientDiagnostics, Pipeline, "ProjectImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterProjectImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterProjectImageResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProjectImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProjectImageResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectImageImagesRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectImageImagesRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterProjectImageImagesClientDiagnostics, Pipeline, "DevCenterProjectImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectImageImagesRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectImageImagesRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _projectImageImagesClientDiagnostics, Pipeline, "ProjectImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterProjectImageImagesClientDiagnostics.CreateScope("DevCenterProjectImageCollection.Exists");
+            using var scope = _projectImageImagesClientDiagnostics.CreateScope("ProjectImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _devCenterProjectImageImagesRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _projectImageImagesRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterProjectImageImagesClientDiagnostics.CreateScope("DevCenterProjectImageCollection.Exists");
+            using var scope = _projectImageImagesClientDiagnostics.CreateScope("ProjectImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _devCenterProjectImageImagesRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
+                var response = _projectImageImagesRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,18 +312,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual async Task<NullableResponse<DevCenterProjectImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ProjectImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterProjectImageImagesClientDiagnostics.CreateScope("DevCenterProjectImageCollection.GetIfExists");
+            using var scope = _projectImageImagesClientDiagnostics.CreateScope("ProjectImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _devCenterProjectImageImagesRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _projectImageImagesRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<DevCenterProjectImageResource>(response.GetRawResponse());
-                return Response.FromValue(new DevCenterProjectImageResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ProjectImageResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,18 +357,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual NullableResponse<DevCenterProjectImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ProjectImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterProjectImageImagesClientDiagnostics.CreateScope("DevCenterProjectImageCollection.GetIfExists");
+            using var scope = _projectImageImagesClientDiagnostics.CreateScope("ProjectImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _devCenterProjectImageImagesRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
+                var response = _projectImageImagesRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<DevCenterProjectImageResource>(response.GetRawResponse());
-                return Response.FromValue(new DevCenterProjectImageResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ProjectImageResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        IEnumerator<DevCenterProjectImageResource> IEnumerable<DevCenterProjectImageResource>.GetEnumerator()
+        IEnumerator<ProjectImageResource> IEnumerable<ProjectImageResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DevCenter
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DevCenterProjectImageResource> IAsyncEnumerable<DevCenterProjectImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ProjectImageResource> IAsyncEnumerable<ProjectImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

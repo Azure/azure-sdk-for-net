@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="id"> The fully qualified arm resource id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterUsage(long? currentValue, long? limit, DevCenterUsageUnit? unit, DevCenterUsageName name, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterUsage(long? currentValue, long? limit, DevCenterUsageUnit? unit, DevCenterUsageName name, ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentValue = currentValue;
             Limit = limit;
@@ -76,6 +77,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> The name. </summary>
         public DevCenterUsageName Name { get; }
         /// <summary> The fully qualified arm resource id. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

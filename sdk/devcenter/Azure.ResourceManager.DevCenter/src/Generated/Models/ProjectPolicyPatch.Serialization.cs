@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            IList<ResourcePolicy> resourcePolicies = default;
+            IList<ProjectPolicyUpdateResourcePolicy> resourcePolicies = default;
             IList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            List<ResourcePolicy> array = new List<ResourcePolicy>();
+                            List<ProjectPolicyUpdateResourcePolicy> array = new List<ProjectPolicyUpdateResourcePolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourcePolicy.DeserializeResourcePolicy(item, options));
+                                array.Add(ProjectPolicyUpdateResourcePolicy.DeserializeProjectPolicyUpdateResourcePolicy(item, options));
                             }
                             resourcePolicies = array;
                             continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProjectPolicyPatch(resourcePolicies ?? new ChangeTrackingList<ResourcePolicy>(), scopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ProjectPolicyPatch(resourcePolicies ?? new ChangeTrackingList<ProjectPolicyUpdateResourcePolicy>(), scopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectPolicyPatch>.Write(ModelReaderWriterOptions options)

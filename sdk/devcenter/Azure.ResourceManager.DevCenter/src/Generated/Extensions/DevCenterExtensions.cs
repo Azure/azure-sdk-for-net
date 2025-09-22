@@ -433,22 +433,22 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterProjectImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterProjectImageResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProjectImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectImageResource.CreateResourceIdentifier" /> to create a <see cref="ProjectImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterProjectImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DevCenterProjectImageResource"/> object. </returns>
-        public static DevCenterProjectImageResource GetDevCenterProjectImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProjectImageResource"/> object. </returns>
+        public static ProjectImageResource GetProjectImageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetDevCenterProjectImageResource(id);
+            return GetMockableDevCenterArmClient(client).GetProjectImageResource(id);
         }
 
         /// <summary>

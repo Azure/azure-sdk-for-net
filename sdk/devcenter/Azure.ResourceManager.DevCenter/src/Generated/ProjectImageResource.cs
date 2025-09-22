@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing a DevCenterProjectImage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterProjectImageResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterProjectImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetDevCenterProjectImage method.
+    /// A Class representing a ProjectImage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectImageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProjectImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetProjectImage method.
     /// </summary>
-    public partial class DevCenterProjectImageResource : ArmResource
+    public partial class ProjectImageResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DevCenterProjectImageResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ProjectImageResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="projectName"> The projectName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.DevCenter
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _devCenterProjectImageImagesClientDiagnostics;
-        private readonly ImagesRestOperations _devCenterProjectImageImagesRestClient;
+        private readonly ClientDiagnostics _projectImageImagesClientDiagnostics;
+        private readonly ImagesRestOperations _projectImageImagesRestClient;
         private readonly DevCenterImageData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/images";
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectImageResource"/> class for mocking. </summary>
-        protected DevCenterProjectImageResource()
+        /// <summary> Initializes a new instance of the <see cref="ProjectImageResource"/> class for mocking. </summary>
+        protected ProjectImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevCenterProjectImageResource(ArmClient client, DevCenterImageData data) : this(client, data.Id)
+        internal ProjectImageResource(ArmClient client, DevCenterImageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DevCenterProjectImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devCenterProjectImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string devCenterProjectImageImagesApiVersion);
-            _devCenterProjectImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterProjectImageImagesApiVersion);
+            _projectImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string projectImageImagesApiVersion);
+            _projectImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectImageImagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ProjectImageVersionResources in the DevCenterProjectImage. </summary>
+        /// <summary> Gets a collection of ProjectImageVersionResources in the ProjectImage. </summary>
         /// <returns> An object representing collection of ProjectImageVersionResources and their operations over a ProjectImageVersionResource. </returns>
         public virtual ProjectImageVersionCollection GetProjectImageVersions()
         {
@@ -174,21 +174,21 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DevCenterProjectImageResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectImageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _devCenterProjectImageImagesClientDiagnostics.CreateScope("DevCenterProjectImageResource.Get");
+            using var scope = _projectImageImagesClientDiagnostics.CreateScope("ProjectImageResource.Get");
             scope.Start();
             try
             {
-                var response = await _devCenterProjectImageImagesRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _projectImageImagesRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevCenterProjectImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,21 +214,21 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectImageResource"/></description>
+        /// <description><see cref="ProjectImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DevCenterProjectImageResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProjectImageResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _devCenterProjectImageImagesClientDiagnostics.CreateScope("DevCenterProjectImageResource.Get");
+            using var scope = _projectImageImagesClientDiagnostics.CreateScope("ProjectImageResource.Get");
             scope.Start();
             try
             {
-                var response = _devCenterProjectImageImagesRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _projectImageImagesRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevCenterProjectImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

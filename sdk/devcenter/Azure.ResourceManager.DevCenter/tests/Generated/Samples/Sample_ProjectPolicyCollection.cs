@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             string projectPolicyName = "DevOnlyResources";
             ProjectPolicyData data = new ProjectPolicyData
             {
-                ResourcePolicies = {new ResourcePolicy
+                ResourcePolicies = {new ProjectPolicyUpdateResourcePolicy
 {
 Resources = "/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff1/resourceGroups/rg1/providers/Microsoft.DevCenter/devcenters/Contoso/attachednetworks/network-westus3",
 }},

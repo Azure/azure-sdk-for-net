@@ -854,11 +854,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterImageData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterImageData> GetImagesAsync(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevCenterImageData> GetImagesByDevCenterAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _imagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevCenterImageData.DeserializeDevCenterImageData(e), _imagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevCenterImageData.DeserializeDevCenterImageData(e), _imagesClientDiagnostics, Pipeline, "DevCenterResource.GetImagesByDevCenter", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -881,11 +881,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterImageData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterImageData> GetImages(int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevCenterImageData> GetImagesByDevCenter(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _imagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevCenterImageData.DeserializeDevCenterImageData(e), _imagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevCenterImageData.DeserializeDevCenterImageData(e), _imagesClientDiagnostics, Pipeline, "DevCenterResource.GetImagesByDevCenter", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

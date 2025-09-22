@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DevCenter
             IDictionary<string, string> tags = default;
             DevCenterProvisioningState? provisioningState = default;
             DevCenterCatalogSyncState? syncState = default;
-            SyncStats lastSyncStats = default;
+            CatalogSyncStats lastSyncStats = default;
             CatalogConnectionState? connectionState = default;
             DateTimeOffset? lastConnectionTime = default;
             DateTimeOffset? lastSyncTime = default;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            lastSyncStats = SyncStats.DeserializeSyncStats(property0.Value, options);
+                            lastSyncStats = CatalogSyncStats.DeserializeCatalogSyncStats(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectionState"u8))

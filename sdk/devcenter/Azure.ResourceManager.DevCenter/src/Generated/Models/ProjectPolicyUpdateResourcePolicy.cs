@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> A resource policy. </summary>
-    public partial class ResourcePolicy
+    public partial class ProjectPolicyUpdateResourcePolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourcePolicy"/>. </summary>
-        public ResourcePolicy()
+        /// <summary> Initializes a new instance of <see cref="ProjectPolicyUpdateResourcePolicy"/>. </summary>
+        public ProjectPolicyUpdateResourcePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourcePolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectPolicyUpdateResourcePolicy"/>. </summary>
         /// <param name="resources"> Resources that are included and shared as a part of a project policy. </param>
         /// <param name="filter"> Optional. When specified, this expression is used to filter the resources. </param>
         /// <param name="action"> Policy action to be taken on the resources. This is optional, and defaults to allow. </param>
         /// <param name="resourceType"> Optional. The resource type being restricted or allowed by a project policy. Used with a given action to restrict or allow access to a resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourcePolicy(string resources, string filter, PolicyAction? action, DevCenterResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectPolicyUpdateResourcePolicy(string resources, string filter, PolicyAction? action, DevCenterResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Resources = resources;
             Filter = filter;

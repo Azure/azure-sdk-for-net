@@ -16,9 +16,6 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
-  skipped-operations: 
-    - ImageVersions_GetByProject
-    - ImageVersions_ListByProject
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -128,8 +125,19 @@ rename-mapping:
   ImageVersion.properties.osDiskImageSizeInGb:  OsDiskImageSizeInGB
   ImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
   EnvironmentDefinitionParameter: EnvironmentDefinitionContent
+  EnvironmentDefinitionParameter.id: -|uuid
+  EnvironmentDefinitionParameter.readOnly: IsReadOnly
+  EnvironmentDefinitionParameter.required: IsRequired
+  ParameterType: EnvironmentDefinitionParameterType
   PoolDevBoxDefinition: PoolDevBox
   CatalogUpdate: DevCenterCatalogPatch
+  CheckScopedNameAvailabilityRequest.type: -|resource-type
+  CustomizationTaskInput.required: IsRequired
+  Usage.id: -|arm-id
+  SyncStats: CatalogSyncStats
+  SyncErrorDetails: CatalogSyncErrorDetails
+  SingleSignOnStatus: PoolUpdateSingleSignOnStatus
+  ResourcePolicy: ProjectPolicyUpdateResourcePolicy
 
 override-operation-name:
   OperationStatuses_Get: GetDevCenterOperationStatus
@@ -137,6 +145,7 @@ override-operation-name:
   CheckNameAvailability_Execute: CheckDevCenterNameAvailability
   Skus_ListBySubscription: GetDevCenterSkusBySubscription
   NetworkConnections_ListOutboundNetworkDependenciesEndpoints: GetOutboundEnvironmentEndpoints
+  Images_ListByDevCenter: GetImagesByDevCenter
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks: AttachedNetworkConnection
@@ -151,10 +160,9 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}: DevCenterCatalog
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images: DevCenterImage
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}: DevCenterImage
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images/{imageName}: DevCenterProjectImage
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions: ImageVersion
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}: ImageVersion
-
+  
 directive:
   # Add missing parameters
   - from: swagger-document

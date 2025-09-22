@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class ResourcePolicy : IUtf8JsonSerializable, IJsonModel<ResourcePolicy>
+    public partial class ProjectPolicyUpdateResourcePolicy : IUtf8JsonSerializable, IJsonModel<ProjectPolicyUpdateResourcePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProjectPolicyUpdateResourcePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourcePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProjectPolicyUpdateResourcePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourcePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyUpdateResourcePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcePolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectPolicyUpdateResourcePolicy)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Resources))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
         }
 
-        ResourcePolicy IJsonModel<ResourcePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProjectPolicyUpdateResourcePolicy IJsonModel<ProjectPolicyUpdateResourcePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourcePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyUpdateResourcePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcePolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectPolicyUpdateResourcePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourcePolicy(document.RootElement, options);
+            return DeserializeProjectPolicyUpdateResourcePolicy(document.RootElement, options);
         }
 
-        internal static ResourcePolicy DeserializeResourcePolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProjectPolicyUpdateResourcePolicy DeserializeProjectPolicyUpdateResourcePolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -133,38 +133,38 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourcePolicy(resources, filter, action, resourceType, serializedAdditionalRawData);
+            return new ProjectPolicyUpdateResourcePolicy(resources, filter, action, resourceType, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResourcePolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProjectPolicyUpdateResourcePolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourcePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyUpdateResourcePolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourcePolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectPolicyUpdateResourcePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourcePolicy IPersistableModel<ResourcePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProjectPolicyUpdateResourcePolicy IPersistableModel<ProjectPolicyUpdateResourcePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourcePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyUpdateResourcePolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourcePolicy(document.RootElement, options);
+                        return DeserializeProjectPolicyUpdateResourcePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourcePolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectPolicyUpdateResourcePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourcePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProjectPolicyUpdateResourcePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

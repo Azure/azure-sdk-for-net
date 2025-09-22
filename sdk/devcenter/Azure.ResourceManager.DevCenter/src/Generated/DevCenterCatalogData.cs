@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="lastConnectionOn"> When the catalog was last connected. </param>
         /// <param name="lastSyncOn"> When the catalog was last synced. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, CatalogSyncType? syncType, IDictionary<string, string> tags, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, SyncStats lastSyncStats, CatalogConnectionState? connectionState, DateTimeOffset? lastConnectionOn, DateTimeOffset? lastSyncOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DevCenterCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, CatalogSyncType? syncType, IDictionary<string, string> tags, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, CatalogSyncStats lastSyncStats, CatalogConnectionState? connectionState, DateTimeOffset? lastConnectionOn, DateTimeOffset? lastSyncOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GitHub = gitHub;
             AdoGit = adoGit;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> The synchronization state of the catalog. </summary>
         public DevCenterCatalogSyncState? SyncState { get; }
         /// <summary> Stats of the latest synchronization. </summary>
-        public SyncStats LastSyncStats { get; }
+        public CatalogSyncStats LastSyncStats { get; }
         /// <summary> The connection state of the catalog. </summary>
         public CatalogConnectionState? ConnectionState { get; }
         /// <summary> When the catalog was last connected. </summary>

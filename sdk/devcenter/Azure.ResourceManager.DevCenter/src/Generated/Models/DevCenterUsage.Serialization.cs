@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             long? limit = default;
             DevCenterUsageUnit? unit = default;
             DevCenterUsageName name = default;
-            string id = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

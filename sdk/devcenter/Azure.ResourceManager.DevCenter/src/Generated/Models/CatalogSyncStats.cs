@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Stats of the synchronization. </summary>
-    public partial class SyncStats
+    public partial class CatalogSyncStats
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SyncStats"/>. </summary>
-        internal SyncStats()
+        /// <summary> Initializes a new instance of <see cref="CatalogSyncStats"/>. </summary>
+        internal CatalogSyncStats()
         {
             SyncedCatalogItemTypes = new ChangeTrackingList<CatalogItemType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SyncStats"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogSyncStats"/>. </summary>
         /// <param name="added"> Count of catalog items added during synchronization. </param>
         /// <param name="updated"> Count of catalog items updated during synchronization. </param>
         /// <param name="unchanged"> Count of catalog items that were unchanged during synchronization. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="synchronizationErrors"> Count of synchronization errors that occured during synchronization. </param>
         /// <param name="syncedCatalogItemTypes"> Indicates catalog item types that were synced. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SyncStats(int? added, int? updated, int? unchanged, int? removed, int? validationErrors, int? synchronizationErrors, IReadOnlyList<CatalogItemType> syncedCatalogItemTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CatalogSyncStats(int? added, int? updated, int? unchanged, int? removed, int? validationErrors, int? synchronizationErrors, IReadOnlyList<CatalogItemType> syncedCatalogItemTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Added = added;
             Updated = updated;

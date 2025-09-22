@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<ResourcePolicy> resourcePolicies = default;
+            IList<ProjectPolicyUpdateResourcePolicy> resourcePolicies = default;
             IList<string> scopes = default;
             DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            List<ResourcePolicy> array = new List<ResourcePolicy>();
+                            List<ProjectPolicyUpdateResourcePolicy> array = new List<ProjectPolicyUpdateResourcePolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourcePolicy.DeserializeResourcePolicy(item, options));
+                                array.Add(ProjectPolicyUpdateResourcePolicy.DeserializeProjectPolicyUpdateResourcePolicy(item, options));
                             }
                             resourcePolicies = array;
                             continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter
                 name,
                 type,
                 systemData,
-                resourcePolicies ?? new ChangeTrackingList<ResourcePolicy>(),
+                resourcePolicies ?? new ChangeTrackingList<ProjectPolicyUpdateResourcePolicy>(),
                 scopes ?? new ChangeTrackingList<string>(),
                 provisioningState,
                 serializedAdditionalRawData);

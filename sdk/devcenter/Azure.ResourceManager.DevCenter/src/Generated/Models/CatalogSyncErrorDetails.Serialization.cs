@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class SyncErrorDetails : IUtf8JsonSerializable, IJsonModel<SyncErrorDetails>
+    public partial class CatalogSyncErrorDetails : IUtf8JsonSerializable, IJsonModel<CatalogSyncErrorDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncErrorDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatalogSyncErrorDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SyncErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CatalogSyncErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyncErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogSyncErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncErrorDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CatalogSyncErrorDetails)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(OperationError))
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
         }
 
-        SyncErrorDetails IJsonModel<SyncErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CatalogSyncErrorDetails IJsonModel<CatalogSyncErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyncErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogSyncErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncErrorDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CatalogSyncErrorDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSyncErrorDetails(document.RootElement, options);
+            return DeserializeCatalogSyncErrorDetails(document.RootElement, options);
         }
 
-        internal static SyncErrorDetails DeserializeSyncErrorDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CatalogSyncErrorDetails DeserializeCatalogSyncErrorDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -146,38 +146,38 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SyncErrorDetails(operationError, conflicts ?? new ChangeTrackingList<CatalogConflictError>(), errors ?? new ChangeTrackingList<CatalogSyncError>(), serializedAdditionalRawData);
+            return new CatalogSyncErrorDetails(operationError, conflicts ?? new ChangeTrackingList<CatalogConflictError>(), errors ?? new ChangeTrackingList<CatalogSyncError>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SyncErrorDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CatalogSyncErrorDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyncErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogSyncErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SyncErrorDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CatalogSyncErrorDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SyncErrorDetails IPersistableModel<SyncErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CatalogSyncErrorDetails IPersistableModel<CatalogSyncErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyncErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogSyncErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSyncErrorDetails(document.RootElement, options);
+                        return DeserializeCatalogSyncErrorDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncErrorDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CatalogSyncErrorDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SyncErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CatalogSyncErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

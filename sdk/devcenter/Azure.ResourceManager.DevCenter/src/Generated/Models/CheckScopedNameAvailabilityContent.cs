@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="scope"> The resource id to scope the name check. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckScopedNameAvailabilityContent(string name, string resourceType, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CheckScopedNameAvailabilityContent(string name, ResourceType? resourceType, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceType = resourceType;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
         /// <summary> The resource id to scope the name check. </summary>
         public string Scope { get; set; }
     }

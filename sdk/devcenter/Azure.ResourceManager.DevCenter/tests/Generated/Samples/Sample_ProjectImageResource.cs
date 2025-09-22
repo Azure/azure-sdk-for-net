@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
-    public partial class Sample_DevCenterProjectImageResource
+    public partial class Sample_ProjectImageResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevCenterProjectImageResource created on azure
-            // for more information of creating DevCenterProjectImageResource, please refer to the document of DevCenterProjectImageResource
+            // this example assumes you already have this ProjectImageResource created on azure
+            // for more information of creating ProjectImageResource, please refer to the document of ProjectImageResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string projectName = "myProject";
             string imageName = "~gallery~DefaultDevGallery~ContosoBaseImage";
-            ResourceIdentifier devCenterProjectImageResourceId = DevCenterProjectImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, imageName);
-            DevCenterProjectImageResource devCenterProjectImage = client.GetDevCenterProjectImageResource(devCenterProjectImageResourceId);
+            ResourceIdentifier projectImageResourceId = ProjectImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, imageName);
+            ProjectImageResource projectImage = client.GetProjectImageResource(projectImageResourceId);
 
             // invoke the operation
-            DevCenterProjectImageResource result = await devCenterProjectImage.GetAsync();
+            ProjectImageResource result = await projectImage.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

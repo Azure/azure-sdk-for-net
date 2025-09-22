@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(Id.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReadOnly))
+            if (options.Format != "W" && Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
-                writer.WriteBooleanValue(ReadOnly.Value);
+                writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Required))
+            if (options.Format != "W" && Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            string id = default;
+            Guid? id = default;
             string name = default;
             string description = default;
-            ParameterType? type = default;
+            EnvironmentDefinitionParameterType? type = default;
             bool? readOnly = default;
             bool? required = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -113,7 +113,11 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -132,7 +136,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    type = new ParameterType(property.Value.GetString());
+                    type = new EnvironmentDefinitionParameterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("readOnly"u8))

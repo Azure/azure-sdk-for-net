@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
-    public partial class Sample_DevCenterProjectImageCollection
+    public partial class Sample_ProjectImageCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
-            // get the collection of this DevCenterProjectImageResource
-            DevCenterProjectImageCollection collection = devCenterProject.GetDevCenterProjectImages();
+            // get the collection of this ProjectImageResource
+            ProjectImageCollection collection = devCenterProject.GetProjectImages();
 
             // invoke the operation
             string imageName = "~gallery~DefaultDevGallery~ContosoBaseImage";
-            DevCenterProjectImageResource result = await collection.GetAsync(imageName);
+            ProjectImageResource result = await collection.GetAsync(imageName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
-            // get the collection of this DevCenterProjectImageResource
-            DevCenterProjectImageCollection collection = devCenterProject.GetDevCenterProjectImages();
+            // get the collection of this ProjectImageResource
+            ProjectImageCollection collection = devCenterProject.GetProjectImages();
 
             // invoke the operation and iterate over the result
-            await foreach (DevCenterProjectImageResource item in collection.GetAllAsync())
+            await foreach (ProjectImageResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
-            // get the collection of this DevCenterProjectImageResource
-            DevCenterProjectImageCollection collection = devCenterProject.GetDevCenterProjectImages();
+            // get the collection of this ProjectImageResource
+            ProjectImageCollection collection = devCenterProject.GetProjectImages();
 
             // invoke the operation
             string imageName = "~gallery~DefaultDevGallery~ContosoBaseImage";
@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
-            // get the collection of this DevCenterProjectImageResource
-            DevCenterProjectImageCollection collection = devCenterProject.GetDevCenterProjectImages();
+            // get the collection of this ProjectImageResource
+            ProjectImageCollection collection = devCenterProject.GetProjectImages();
 
             // invoke the operation
             string imageName = "~gallery~DefaultDevGallery~ContosoBaseImage";
-            NullableResponse<DevCenterProjectImageResource> response = await collection.GetIfExistsAsync(imageName);
-            DevCenterProjectImageResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ProjectImageResource> response = await collection.GetIfExistsAsync(imageName);
+            ProjectImageResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

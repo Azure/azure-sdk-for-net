@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class SyncStats : IUtf8JsonSerializable, IJsonModel<SyncStats>
+    public partial class CatalogSyncStats : IUtf8JsonSerializable, IJsonModel<CatalogSyncStats>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncStats>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatalogSyncStats>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SyncStats>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CatalogSyncStats>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyncStats>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogSyncStats>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncStats)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CatalogSyncStats)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Added))
@@ -91,19 +91,19 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
         }
 
-        SyncStats IJsonModel<SyncStats>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CatalogSyncStats IJsonModel<CatalogSyncStats>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyncStats>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogSyncStats>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncStats)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CatalogSyncStats)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSyncStats(document.RootElement, options);
+            return DeserializeCatalogSyncStats(document.RootElement, options);
         }
 
-        internal static SyncStats DeserializeSyncStats(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CatalogSyncStats DeserializeCatalogSyncStats(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SyncStats(
+            return new CatalogSyncStats(
                 added,
                 updated,
                 unchanged,
@@ -207,35 +207,35 @@ namespace Azure.ResourceManager.DevCenter.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SyncStats>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CatalogSyncStats>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyncStats>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogSyncStats>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SyncStats)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CatalogSyncStats)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SyncStats IPersistableModel<SyncStats>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CatalogSyncStats IPersistableModel<CatalogSyncStats>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyncStats>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogSyncStats>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSyncStats(document.RootElement, options);
+                        return DeserializeCatalogSyncStats(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncStats)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CatalogSyncStats)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SyncStats>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CatalogSyncStats>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

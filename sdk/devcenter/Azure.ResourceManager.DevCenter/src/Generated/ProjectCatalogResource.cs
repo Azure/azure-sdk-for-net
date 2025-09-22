@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SyncErrorDetails>> GetSyncErrorDetailsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CatalogSyncErrorDetails>> GetSyncErrorDetailsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogResource.GetSyncErrorDetails");
             scope.Start();
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SyncErrorDetails> GetSyncErrorDetails(CancellationToken cancellationToken = default)
+        public virtual Response<CatalogSyncErrorDetails> GetSyncErrorDetails(CancellationToken cancellationToken = default)
         {
             using var scope = _projectCatalogClientDiagnostics.CreateScope("ProjectCatalogResource.GetSyncErrorDetails");
             scope.Start();

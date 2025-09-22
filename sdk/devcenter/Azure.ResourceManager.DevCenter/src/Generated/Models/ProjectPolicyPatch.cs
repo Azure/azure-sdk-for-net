@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="ProjectPolicyPatch"/>. </summary>
         public ProjectPolicyPatch()
         {
-            ResourcePolicies = new ChangeTrackingList<ResourcePolicy>();
+            ResourcePolicies = new ChangeTrackingList<ProjectPolicyUpdateResourcePolicy>();
             Scopes = new ChangeTrackingList<string>();
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="resourcePolicies"> Resource policies that are a part of this project policy. </param>
         /// <param name="scopes"> Resources that have access to the shared resources that are a part of this project policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectPolicyPatch(IList<ResourcePolicy> resourcePolicies, IList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectPolicyPatch(IList<ProjectPolicyUpdateResourcePolicy> resourcePolicies, IList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourcePolicies = resourcePolicies;
             Scopes = scopes;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Resource policies that are a part of this project policy. </summary>
-        public IList<ResourcePolicy> ResourcePolicies { get; }
+        public IList<ProjectPolicyUpdateResourcePolicy> ResourcePolicies { get; }
         /// <summary> Resources that have access to the shared resources that are a part of this project policy. </summary>
         public IList<string> Scopes { get; }
     }

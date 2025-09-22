@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             LocalAdminStatus? localAdministrator = default;
             StopOnDisconnectConfiguration stopOnDisconnect = default;
             StopOnNoConnectConfiguration stopOnNoConnect = default;
-            SingleSignOnStatus? singleSignOnStatus = default;
+            PoolUpdateSingleSignOnStatus? singleSignOnStatus = default;
             string displayName = default;
             VirtualNetworkType? virtualNetworkType = default;
             IList<string> managedVirtualNetworkRegions = default;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            singleSignOnStatus = new SingleSignOnStatus(property0.Value.GetString());
+                            singleSignOnStatus = new PoolUpdateSingleSignOnStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))

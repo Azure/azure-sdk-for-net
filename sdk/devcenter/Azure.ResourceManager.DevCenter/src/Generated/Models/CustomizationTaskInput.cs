@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="CustomizationTaskInput"/>. </summary>
         /// <param name="description"> Description of the input. </param>
         /// <param name="inputType"> Type of the input. </param>
-        /// <param name="required"> Whether or not the input is required. </param>
+        /// <param name="isRequired"> Whether or not the input is required. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomizationTaskInput(string description, CustomizationTaskInputType? inputType, bool? required, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomizationTaskInput(string description, CustomizationTaskInputType? inputType, bool? isRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             InputType = inputType;
-            Required = required;
+            IsRequired = isRequired;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Type of the input. </summary>
         public CustomizationTaskInputType? InputType { get; }
         /// <summary> Whether or not the input is required. </summary>
-        public bool? Required { get; }
+        public bool? IsRequired { get; }
     }
 }

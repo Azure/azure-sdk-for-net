@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of <see cref="ProjectPolicyData"/>. </summary>
         public ProjectPolicyData()
         {
-            ResourcePolicies = new ChangeTrackingList<ResourcePolicy>();
+            ResourcePolicies = new ChangeTrackingList<ProjectPolicyUpdateResourcePolicy>();
             Scopes = new ChangeTrackingList<string>();
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="scopes"> Resources that have access to the shared resources that are a part of this project policy. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ResourcePolicy> resourcePolicies, IList<string> scopes, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ProjectPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ProjectPolicyUpdateResourcePolicy> resourcePolicies, IList<string> scopes, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourcePolicies = resourcePolicies;
             Scopes = scopes;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Resource policies that are a part of this project policy. </summary>
-        public IList<ResourcePolicy> ResourcePolicies { get; }
+        public IList<ProjectPolicyUpdateResourcePolicy> ResourcePolicies { get; }
         /// <summary> Resources that have access to the shared resources that are a part of this project policy. </summary>
         public IList<string> Scopes { get; }
         /// <summary> The provisioning state of the resource. </summary>

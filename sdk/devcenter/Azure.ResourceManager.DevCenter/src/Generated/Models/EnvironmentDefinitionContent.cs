@@ -55,31 +55,31 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="name"> Display name of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
         /// <param name="parameterType"> A string of one of the basic JSON types (number, integer, array, object, boolean, string). </param>
-        /// <param name="readOnly"> Whether or not this parameter is read-only.  If true, default should have a value. </param>
-        /// <param name="required"> Whether or not this parameter is required. </param>
+        /// <param name="isReadOnly"> Whether or not this parameter is read-only.  If true, default should have a value. </param>
+        /// <param name="isRequired"> Whether or not this parameter is required. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinitionContent(string id, string name, string description, ParameterType? parameterType, bool? readOnly, bool? required, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnvironmentDefinitionContent(Guid? id, string name, string description, EnvironmentDefinitionParameterType? parameterType, bool? isReadOnly, bool? isRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Description = description;
             ParameterType = parameterType;
-            ReadOnly = readOnly;
-            Required = required;
+            IsReadOnly = isReadOnly;
+            IsRequired = isRequired;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique ID of the parameter. </summary>
-        public string Id { get; }
+        public Guid? Id { get; }
         /// <summary> Display name of the parameter. </summary>
         public string Name { get; }
         /// <summary> Description of the parameter. </summary>
         public string Description { get; }
         /// <summary> A string of one of the basic JSON types (number, integer, array, object, boolean, string). </summary>
-        public ParameterType? ParameterType { get; }
+        public EnvironmentDefinitionParameterType? ParameterType { get; }
         /// <summary> Whether or not this parameter is read-only.  If true, default should have a value. </summary>
-        public bool? ReadOnly { get; }
+        public bool? IsReadOnly { get; }
         /// <summary> Whether or not this parameter is required. </summary>
-        public bool? Required { get; }
+        public bool? IsRequired { get; }
     }
 }

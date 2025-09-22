@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="managedVirtualNetworkRegions"> The regions of the managed virtual network (required when managedNetworkType is Managed). </param>
         /// <param name="activeHoursConfiguration"> Active hours configuration settings for Dev Boxes created in this pool. </param>
         /// <param name="devBoxTunnelEnableStatus"> Indicates whether Dev Box Tunnel is enabled for a the pool. </param>
-        internal DevCenterPoolPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, PoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, PoolDevBox devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, StopOnNoConnectConfiguration stopOnNoConnect, SingleSignOnStatus? singleSignOnStatus, string displayName, VirtualNetworkType? virtualNetworkType, IList<string> managedVirtualNetworkRegions, ActiveHoursConfiguration activeHoursConfiguration, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus) : base(tags, location, serializedAdditionalRawData)
+        internal DevCenterPoolPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, PoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, PoolDevBox devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, StopOnNoConnectConfiguration stopOnNoConnect, PoolUpdateSingleSignOnStatus? singleSignOnStatus, string displayName, VirtualNetworkType? virtualNetworkType, IList<string> managedVirtualNetworkRegions, ActiveHoursConfiguration activeHoursConfiguration, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus) : base(tags, location, serializedAdditionalRawData)
         {
             DevBoxDefinitionType = devBoxDefinitionType;
             DevBoxDefinitionName = devBoxDefinitionName;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Stop on no connect configuration settings for Dev Boxes created in this pool. </summary>
         public StopOnNoConnectConfiguration StopOnNoConnect { get; set; }
         /// <summary> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </summary>
-        public SingleSignOnStatus? SingleSignOnStatus { get; set; }
+        public PoolUpdateSingleSignOnStatus? SingleSignOnStatus { get; set; }
         /// <summary> The display name of the pool. </summary>
         public string DisplayName { get; set; }
         /// <summary> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </summary>

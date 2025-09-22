@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(InputType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Required))
+            if (options.Format != "W" && Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

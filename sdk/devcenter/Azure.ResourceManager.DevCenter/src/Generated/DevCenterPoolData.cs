@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="devBoxCount"> Indicates the number of provisioned Dev Boxes in this pool. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, PoolDevBox devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, StopOnNoConnectConfiguration stopOnNoConnect, SingleSignOnStatus? singleSignOnStatus, string displayName, VirtualNetworkType? virtualNetworkType, IList<string> managedVirtualNetworkRegions, ActiveHoursConfiguration activeHoursConfiguration, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus, DevCenterHealthStatus? healthStatus, IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails, int? devBoxCount, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, PoolDevBox devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, StopOnNoConnectConfiguration stopOnNoConnect, PoolUpdateSingleSignOnStatus? singleSignOnStatus, string displayName, VirtualNetworkType? virtualNetworkType, IList<string> managedVirtualNetworkRegions, ActiveHoursConfiguration activeHoursConfiguration, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus, DevCenterHealthStatus? healthStatus, IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails, int? devBoxCount, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             DevBoxDefinitionType = devBoxDefinitionType;
             DevBoxDefinitionName = devBoxDefinitionName;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Stop on no connect configuration settings for Dev Boxes created in this pool. </summary>
         public StopOnNoConnectConfiguration StopOnNoConnect { get; set; }
         /// <summary> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </summary>
-        public SingleSignOnStatus? SingleSignOnStatus { get; set; }
+        public PoolUpdateSingleSignOnStatus? SingleSignOnStatus { get; set; }
         /// <summary> The display name of the pool. </summary>
         public string DisplayName { get; set; }
         /// <summary> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </summary>

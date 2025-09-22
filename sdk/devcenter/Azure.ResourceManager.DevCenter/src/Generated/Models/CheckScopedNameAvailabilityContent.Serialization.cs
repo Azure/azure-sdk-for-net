@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Scope))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 return null;
             }
             string name = default;
-            string type = default;
+            ResourceType? type = default;
             string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,7 +100,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scope"u8))

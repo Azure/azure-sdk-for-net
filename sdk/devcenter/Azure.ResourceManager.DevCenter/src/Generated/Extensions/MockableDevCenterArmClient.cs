@@ -287,15 +287,15 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterProjectImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterProjectImageResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectImageResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ProjectImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectImageResource.CreateResourceIdentifier" /> to create a <see cref="ProjectImageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterProjectImageResource"/> object. </returns>
-        public virtual DevCenterProjectImageResource GetDevCenterProjectImageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProjectImageResource"/> object. </returns>
+        public virtual ProjectImageResource GetProjectImageResource(ResourceIdentifier id)
         {
-            DevCenterProjectImageResource.ValidateResourceId(id);
-            return new DevCenterProjectImageResource(Client, id);
+            ProjectImageResource.ValidateResourceId(id);
+            return new ProjectImageResource(Client, id);
         }
 
         /// <summary>

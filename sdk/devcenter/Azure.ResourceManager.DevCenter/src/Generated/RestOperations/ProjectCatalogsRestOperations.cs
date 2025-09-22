@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SyncErrorDetails>> GetSyncErrorDetailsAsync(string subscriptionId, string resourceGroupName, string projectName, string catalogName, CancellationToken cancellationToken = default)
+        public async Task<Response<CatalogSyncErrorDetails>> GetSyncErrorDetailsAsync(string subscriptionId, string resourceGroupName, string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -689,9 +689,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        SyncErrorDetails value = default;
+                        CatalogSyncErrorDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SyncErrorDetails.DeserializeSyncErrorDetails(document.RootElement);
+                        value = CatalogSyncErrorDetails.DeserializeCatalogSyncErrorDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SyncErrorDetails> GetSyncErrorDetails(string subscriptionId, string resourceGroupName, string projectName, string catalogName, CancellationToken cancellationToken = default)
+        public Response<CatalogSyncErrorDetails> GetSyncErrorDetails(string subscriptionId, string resourceGroupName, string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -720,9 +720,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        SyncErrorDetails value = default;
+                        CatalogSyncErrorDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SyncErrorDetails.DeserializeSyncErrorDetails(document.RootElement);
+                        value = CatalogSyncErrorDetails.DeserializeCatalogSyncErrorDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

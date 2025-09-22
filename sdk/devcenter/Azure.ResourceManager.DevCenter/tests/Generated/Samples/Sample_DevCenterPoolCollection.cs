@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
                     Status = StopOnNoConnectEnableStatus.Enabled,
                     GracePeriodMinutes = 120,
                 },
-                SingleSignOnStatus = SingleSignOnStatus.Disabled,
+                SingleSignOnStatus = PoolUpdateSingleSignOnStatus.Disabled,
                 DisplayName = "Developer Pool",
                 VirtualNetworkType = VirtualNetworkType.Unmanaged,
                 ActiveHoursConfiguration = new ActiveHoursConfiguration
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
                     Status = StopOnNoConnectEnableStatus.Enabled,
                     GracePeriodMinutes = 120,
                 },
-                SingleSignOnStatus = SingleSignOnStatus.Disabled,
+                SingleSignOnStatus = PoolUpdateSingleSignOnStatus.Disabled,
                 DisplayName = "Developer Pool",
                 VirtualNetworkType = VirtualNetworkType.Managed,
                 ManagedVirtualNetworkRegions = { "centralus" },
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
                     Status = StopOnNoConnectEnableStatus.Enabled,
                     GracePeriodMinutes = 120,
                 },
-                SingleSignOnStatus = SingleSignOnStatus.Disabled,
+                SingleSignOnStatus = PoolUpdateSingleSignOnStatus.Disabled,
                 DisplayName = "Developer Pool",
                 VirtualNetworkType = VirtualNetworkType.Unmanaged,
             };

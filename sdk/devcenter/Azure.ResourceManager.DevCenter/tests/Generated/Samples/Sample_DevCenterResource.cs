@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetImages_ImagesListByDevCenter()
+        public async Task GetImagesByDevCenter_ImagesListByDevCenter()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/Images_ListByDevCenter.json
             // this example is just showing the usage of "Images_ListByDevCenter" operation, for the dependent resources, they will have to be created separately.
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             DevCenterResource devCenter = client.GetDevCenterResource(devCenterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DevCenterImageData item in devCenter.GetImagesAsync())
+            await foreach (DevCenterImageData item in devCenter.GetImagesByDevCenterAsync())
             {
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");

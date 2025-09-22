@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             CheckScopedNameAvailabilityContent content = new CheckScopedNameAvailabilityContent
             {
                 Name = "name1",
-                ResourceType = "Microsoft.DevCenter/devcenters/catalogs",
+                ResourceType = new ResourceType("Microsoft.DevCenter/devcenters/catalogs"),
                 Scope = "/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/rg1/providers/Microsoft.DevCenter/devcenters/Contoso",
             };
             DevCenterNameAvailabilityResult result = await subscriptionResource.ExecuteCheckScopedNameAvailabilityAsync(content);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             CheckScopedNameAvailabilityContent content = new CheckScopedNameAvailabilityContent
             {
                 Name = "name1",
-                ResourceType = "Microsoft.DevCenter/projects/catalogs",
+                ResourceType = new ResourceType("Microsoft.DevCenter/projects/catalogs"),
                 Scope = "/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/rg1/providers/Microsoft.DevCenter/projects/DevProject",
             };
             DevCenterNameAvailabilityResult result = await subscriptionResource.ExecuteCheckScopedNameAvailabilityAsync(content);

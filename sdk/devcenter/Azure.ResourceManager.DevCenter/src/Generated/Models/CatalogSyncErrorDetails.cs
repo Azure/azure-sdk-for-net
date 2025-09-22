@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Synchronization error details. </summary>
-    public partial class SyncErrorDetails
+    public partial class CatalogSyncErrorDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SyncErrorDetails"/>. </summary>
-        internal SyncErrorDetails()
+        /// <summary> Initializes a new instance of <see cref="CatalogSyncErrorDetails"/>. </summary>
+        internal CatalogSyncErrorDetails()
         {
             Conflicts = new ChangeTrackingList<CatalogConflictError>();
             Errors = new ChangeTrackingList<CatalogSyncError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SyncErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogSyncErrorDetails"/>. </summary>
         /// <param name="operationError"> Error information for the overall synchronization operation. </param>
         /// <param name="conflicts"> Catalog items that have conflicting names. </param>
         /// <param name="errors"> Errors that occured during synchronization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SyncErrorDetails(CatalogErrorDetails operationError, IReadOnlyList<CatalogConflictError> conflicts, IReadOnlyList<CatalogSyncError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CatalogSyncErrorDetails(CatalogErrorDetails operationError, IReadOnlyList<CatalogConflictError> conflicts, IReadOnlyList<CatalogSyncError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationError = operationError;
             Conflicts = conflicts;

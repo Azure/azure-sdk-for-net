@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="id"> The fully qualified arm resource id. </param>
         /// <returns> A new <see cref="Models.DevCenterUsage"/> instance for mocking. </returns>
-        public static DevCenterUsage DevCenterUsage(long? currentValue = null, long? limit = null, DevCenterUsageUnit? unit = null, DevCenterUsageName name = null, string id = null)
+        public static DevCenterUsage DevCenterUsage(long? currentValue = null, long? limit = null, DevCenterUsageUnit? unit = null, DevCenterUsageName name = null, ResourceIdentifier id = null)
         {
             return new DevCenterUsage(
                 currentValue,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="lastConnectionOn"> When the catalog was last connected. </param>
         /// <param name="lastSyncOn"> When the catalog was last synced. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterCatalogData"/> instance for mocking. </returns>
-        public static DevCenterCatalogData DevCenterCatalogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterGitCatalog gitHub = null, DevCenterGitCatalog adoGit = null, CatalogSyncType? syncType = null, IDictionary<string, string> tags = null, DevCenterProvisioningState? provisioningState = null, DevCenterCatalogSyncState? syncState = null, SyncStats lastSyncStats = null, CatalogConnectionState? connectionState = null, DateTimeOffset? lastConnectionOn = null, DateTimeOffset? lastSyncOn = null)
+        public static DevCenterCatalogData DevCenterCatalogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterGitCatalog gitHub = null, DevCenterGitCatalog adoGit = null, CatalogSyncType? syncType = null, IDictionary<string, string> tags = null, DevCenterProvisioningState? provisioningState = null, DevCenterCatalogSyncState? syncState = null, CatalogSyncStats lastSyncStats = null, CatalogConnectionState? connectionState = null, DateTimeOffset? lastConnectionOn = null, DateTimeOffset? lastSyncOn = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SyncStats"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CatalogSyncStats"/>. </summary>
         /// <param name="added"> Count of catalog items added during synchronization. </param>
         /// <param name="updated"> Count of catalog items updated during synchronization. </param>
         /// <param name="unchanged"> Count of catalog items that were unchanged during synchronization. </param>
@@ -318,12 +318,12 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="validationErrors"> Count of catalog items that had validation errors during synchronization. </param>
         /// <param name="synchronizationErrors"> Count of synchronization errors that occured during synchronization. </param>
         /// <param name="syncedCatalogItemTypes"> Indicates catalog item types that were synced. </param>
-        /// <returns> A new <see cref="Models.SyncStats"/> instance for mocking. </returns>
-        public static SyncStats SyncStats(int? added = null, int? updated = null, int? unchanged = null, int? removed = null, int? validationErrors = null, int? synchronizationErrors = null, IEnumerable<CatalogItemType> syncedCatalogItemTypes = null)
+        /// <returns> A new <see cref="Models.CatalogSyncStats"/> instance for mocking. </returns>
+        public static CatalogSyncStats CatalogSyncStats(int? added = null, int? updated = null, int? unchanged = null, int? removed = null, int? validationErrors = null, int? synchronizationErrors = null, IEnumerable<CatalogItemType> syncedCatalogItemTypes = null)
         {
             syncedCatalogItemTypes ??= new List<CatalogItemType>();
 
-            return new SyncStats(
+            return new CatalogSyncStats(
                 added,
                 updated,
                 unchanged,
@@ -365,18 +365,18 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="name"> Display name of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
         /// <param name="parameterType"> A string of one of the basic JSON types (number, integer, array, object, boolean, string). </param>
-        /// <param name="readOnly"> Whether or not this parameter is read-only.  If true, default should have a value. </param>
-        /// <param name="required"> Whether or not this parameter is required. </param>
+        /// <param name="isReadOnly"> Whether or not this parameter is read-only.  If true, default should have a value. </param>
+        /// <param name="isRequired"> Whether or not this parameter is required. </param>
         /// <returns> A new <see cref="Models.EnvironmentDefinitionContent"/> instance for mocking. </returns>
-        public static EnvironmentDefinitionContent EnvironmentDefinitionContent(string id = null, string name = null, string description = null, ParameterType? parameterType = null, bool? readOnly = null, bool? required = null)
+        public static EnvironmentDefinitionContent EnvironmentDefinitionContent(Guid? id = null, string name = null, string description = null, EnvironmentDefinitionParameterType? parameterType = null, bool? isReadOnly = null, bool? isRequired = null)
         {
             return new EnvironmentDefinitionContent(
                 id,
                 name,
                 description,
                 parameterType,
-                readOnly,
-                required,
+                isReadOnly,
+                isRequired,
                 serializedAdditionalRawData: null);
         }
 
@@ -399,17 +399,17 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new CatalogErrorDetails(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SyncErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CatalogSyncErrorDetails"/>. </summary>
         /// <param name="operationError"> Error information for the overall synchronization operation. </param>
         /// <param name="conflicts"> Catalog items that have conflicting names. </param>
         /// <param name="errors"> Errors that occured during synchronization. </param>
-        /// <returns> A new <see cref="Models.SyncErrorDetails"/> instance for mocking. </returns>
-        public static SyncErrorDetails SyncErrorDetails(CatalogErrorDetails operationError = null, IEnumerable<CatalogConflictError> conflicts = null, IEnumerable<CatalogSyncError> errors = null)
+        /// <returns> A new <see cref="Models.CatalogSyncErrorDetails"/> instance for mocking. </returns>
+        public static CatalogSyncErrorDetails CatalogSyncErrorDetails(CatalogErrorDetails operationError = null, IEnumerable<CatalogConflictError> conflicts = null, IEnumerable<CatalogSyncError> errors = null)
         {
             conflicts ??= new List<CatalogConflictError>();
             errors ??= new List<CatalogSyncError>();
 
-            return new SyncErrorDetails(operationError, conflicts?.ToList(), errors?.ToList(), serializedAdditionalRawData: null);
+            return new CatalogSyncErrorDetails(operationError, conflicts?.ToList(), errors?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CatalogConflictError"/>. </summary>
@@ -649,11 +649,11 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="Models.CustomizationTaskInput"/>. </summary>
         /// <param name="description"> Description of the input. </param>
         /// <param name="inputType"> Type of the input. </param>
-        /// <param name="required"> Whether or not the input is required. </param>
+        /// <param name="isRequired"> Whether or not the input is required. </param>
         /// <returns> A new <see cref="Models.CustomizationTaskInput"/> instance for mocking. </returns>
-        public static CustomizationTaskInput CustomizationTaskInput(string description = null, CustomizationTaskInputType? inputType = null, bool? required = null)
+        public static CustomizationTaskInput CustomizationTaskInput(string description = null, CustomizationTaskInputType? inputType = null, bool? isRequired = null)
         {
-            return new CustomizationTaskInput(description, inputType, required, serializedAdditionalRawData: null);
+            return new CustomizationTaskInput(description, inputType, isRequired, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevBoxDefinitionData"/>. </summary>
@@ -855,9 +855,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="scopes"> Resources that have access to the shared resources that are a part of this project policy. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.ProjectPolicyData"/> instance for mocking. </returns>
-        public static ProjectPolicyData ProjectPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ResourcePolicy> resourcePolicies = null, IEnumerable<string> scopes = null, DevCenterProvisioningState? provisioningState = null)
+        public static ProjectPolicyData ProjectPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ProjectPolicyUpdateResourcePolicy> resourcePolicies = null, IEnumerable<string> scopes = null, DevCenterProvisioningState? provisioningState = null)
         {
-            resourcePolicies ??= new List<ResourcePolicy>();
+            resourcePolicies ??= new List<ProjectPolicyUpdateResourcePolicy>();
             scopes ??= new List<string>();
 
             return new ProjectPolicyData(
@@ -1052,7 +1052,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="devBoxCount"> Indicates the number of provisioned Dev Boxes in this pool. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterPoolData"/> instance for mocking. </returns>
-        public static DevCenterPoolData DevCenterPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PoolDevBoxDefinitionType? devBoxDefinitionType = null, string devBoxDefinitionName = null, PoolDevBox devBoxDefinition = null, string networkConnectionName = null, DevCenterLicenseType? licenseType = null, LocalAdminStatus? localAdministrator = null, StopOnDisconnectConfiguration stopOnDisconnect = null, StopOnNoConnectConfiguration stopOnNoConnect = null, SingleSignOnStatus? singleSignOnStatus = null, string displayName = null, VirtualNetworkType? virtualNetworkType = null, IEnumerable<string> managedVirtualNetworkRegions = null, ActiveHoursConfiguration activeHoursConfiguration = null, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = null, DevCenterHealthStatus? healthStatus = null, IEnumerable<DevCenterHealthStatusDetail> healthStatusDetails = null, int? devBoxCount = null, DevCenterProvisioningState? provisioningState = null)
+        public static DevCenterPoolData DevCenterPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PoolDevBoxDefinitionType? devBoxDefinitionType = null, string devBoxDefinitionName = null, PoolDevBox devBoxDefinition = null, string networkConnectionName = null, DevCenterLicenseType? licenseType = null, LocalAdminStatus? localAdministrator = null, StopOnDisconnectConfiguration stopOnDisconnect = null, StopOnNoConnectConfiguration stopOnNoConnect = null, PoolUpdateSingleSignOnStatus? singleSignOnStatus = null, string displayName = null, VirtualNetworkType? virtualNetworkType = null, IEnumerable<string> managedVirtualNetworkRegions = null, ActiveHoursConfiguration activeHoursConfiguration = null, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = null, DevCenterHealthStatus? healthStatus = null, IEnumerable<DevCenterHealthStatusDetail> healthStatusDetails = null, int? devBoxCount = null, DevCenterProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             managedVirtualNetworkRegions ??= new List<string>();

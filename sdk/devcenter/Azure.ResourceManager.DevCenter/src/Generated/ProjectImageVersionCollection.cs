@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProjectImageVersionResource"/> and their operations.
-    /// Each <see cref="ProjectImageVersionResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectImageResource"/>.
-    /// To get a <see cref="ProjectImageVersionCollection"/> instance call the GetProjectImageVersions method from an instance of <see cref="DevCenterProjectImageResource"/>.
+    /// Each <see cref="ProjectImageVersionResource"/> in the collection will belong to the same instance of <see cref="ProjectImageResource"/>.
+    /// To get a <see cref="ProjectImageVersionCollection"/> instance call the GetProjectImageVersions method from an instance of <see cref="ProjectImageResource"/>.
     /// </summary>
     public partial class ProjectImageVersionCollection : ArmCollection, IEnumerable<ProjectImageVersionResource>, IAsyncEnumerable<ProjectImageVersionResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DevCenterProjectImageResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterProjectImageResource.ResourceType), nameof(id));
+            if (id.ResourceType != ProjectImageResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProjectImageResource.ResourceType), nameof(id));
         }
 
         /// <summary>
