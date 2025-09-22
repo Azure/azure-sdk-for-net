@@ -13,7 +13,7 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
     public string PropertyName { get; } = propertyName;
     public IReadOnlyList<string>? BicepPath { get; } = path;
 
-    internal BicepExpression GetReference(bool throwIfNoRoot = true)
+    internal virtual BicepExpression GetReference(bool throwIfNoRoot = true)
     {
         // Get the root
         BicepExpression? target = ((IBicepValue)Construct).Self?.GetReference();
@@ -25,7 +25,7 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
             }
             else if (throwIfNoRoot)
             {
-                throw new NotImplementedException("Cannot reference a construct without a name.");
+                throw new InvalidOperationException("Cannot reference a construct without a name.");
             }
             else
             {
@@ -47,4 +47,14 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
     }
 
     public override string ToString() => GetReference(throwIfNoRoot: false).ToString();
+}
+
+internal class BicepListValueReference(ProvisionableConstruct construct, string propertyName, string[]? path, int index) : BicepValueReference(construct, propertyName, path)
+{
+    public int Index { get; } = index;
+
+    internal override BicepExpression GetReference(bool throwIfNoRoot = true)
+    {
+        return base.GetReference(throwIfNoRoot).Index(new IntLiteralExpression(Index));
+    }
 }

@@ -363,4 +363,20 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         string? format = null)
         where T : ProvisionableConstruct, new()
         => DefineModelProperty(propertyName, bicepPath, new T(), isOutput, isRequired, isSecure, format);
+
+    public BicepExpression ToBicepExpression()
+    {
+        if (_kind == BicepValueKind.Expression)
+        {
+            return _expression ?? BicepSyntax.Null();
+        }
+        else if (_self is not null)
+        {
+            return _self.GetReference();
+        }
+        else
+        {
+            return ((IBicepValue)this).Compile();
+        }
+    }
 }

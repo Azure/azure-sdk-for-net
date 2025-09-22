@@ -5,8 +5,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning;
 
@@ -105,7 +107,18 @@ public class BicepList<T> :
     }
 
     public void Insert(int index, BicepValue<T> item) => _values.Insert(index, item);
-    public void Add(BicepValue<T> item) => _values.Add(item);
+    public void Add(BicepValue<T> item)
+    {
+        _values.Add(item);
+        // update the _self pointing the new item
+        if (_self is not null)
+        {
+            int index = _values.Count - 1;
+            var itemSelf = new BicepListValueReference(_self.Construct, _self.PropertyName, _self.BicepPath?.ToArray(), index);
+            // assign this into the item - and recurse if its value is also a IBicepValue
+            item.SetSelf(itemSelf);
+        }
+    }
 
     // TODO: Decide whether it's important to "unlink" resources on removal
     public void RemoveAt(int index) => _values.RemoveAt(index);
