@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.DataMovement.JobPlan;
-using static Azure.Storage.DataMovement.TransferInternalState;
 
 namespace Azure.Storage.DataMovement;
 

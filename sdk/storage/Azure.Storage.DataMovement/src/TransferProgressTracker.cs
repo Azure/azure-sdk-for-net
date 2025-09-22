@@ -116,7 +116,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async ValueTask QueueProgressEvent(ProgressEventArgs args, CancellationToken cancellationToken = default)
+        private async ValueTask QueueProgressEvent(ProgressEventArgs args, CancellationToken cancellationToken)
         {
             try
             {

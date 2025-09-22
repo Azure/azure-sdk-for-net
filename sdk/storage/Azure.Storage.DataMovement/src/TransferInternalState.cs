@@ -143,9 +143,6 @@ namespace Azure.Storage.DataMovement
             if (CancellationTokenSource?.IsCancellationRequested == false)
             {
                 CancellationTokenSource.Cancel();
-                // Dispose the CancellationTokenSource after cancellation to release resources.
-                // CancellationTokens created from this CancellationTokenSource are still valid.
-                DisposeCancellationTokenSource();
                 return true;
             }
             return false;
