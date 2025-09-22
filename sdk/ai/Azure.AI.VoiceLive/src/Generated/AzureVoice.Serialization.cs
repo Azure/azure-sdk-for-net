@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCustomVoice"/>, <see cref="AzureStandardVoice"/>, <see cref="AzurePlatformVoice"/>, and <see cref="AzurePersonalVoice"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAzureVoice))]
-    public abstract partial class AzureVoice : IJsonModel<AzureVoice>
+    public abstract partial class AzureVoice : VoiceProvider, IJsonModel<AzureVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzureVoice"/> for deserialization. </summary>
         internal AzureVoice()
@@ -62,11 +62,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureVoice IJsonModel<AzureVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureVoice IJsonModel<AzureVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureVoice)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual object JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -120,11 +120,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureVoice IPersistableModel<AzureVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureVoice IPersistableModel<AzureVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureVoice)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual object PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

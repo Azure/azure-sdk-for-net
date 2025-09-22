@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
     /// This provides a unified interface for OpenAI voices, complementing the
     /// existing string-based OAIVoice for backward compatibility.
     /// </summary>
-    public partial class OpenAIVoice : IJsonModel<OpenAIVoice>
+    public partial class OpenAIVoice : VoiceProvider, IJsonModel<OpenAIVoice>
     {
         /// <summary> Initializes a new instance of <see cref="OpenAIVoice"/> for deserialization. </summary>
         internal OpenAIVoice()
@@ -66,11 +66,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenAIVoice IJsonModel<OpenAIVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OpenAIVoice IJsonModel<OpenAIVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OpenAIVoice)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenAIVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual object JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OpenAIVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -130,11 +130,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenAIVoice IPersistableModel<OpenAIVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OpenAIVoice IPersistableModel<OpenAIVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenAIVoice)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenAIVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual object PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OpenAIVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

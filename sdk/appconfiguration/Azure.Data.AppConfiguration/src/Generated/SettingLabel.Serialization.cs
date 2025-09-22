@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Labels are used to group key-values. </summary>
-    public partial class SettingLabel : IJsonModel<SettingLabel>
+    public partial class SettingLabel : global::.IUtf8JsonSerializable, IJsonModel<SettingLabel>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -57,11 +57,11 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingLabel IJsonModel<SettingLabel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SettingLabel IJsonModel<SettingLabel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SettingLabel)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingLabel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual global::.IUtf8JsonSerializable JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -115,11 +115,11 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingLabel IPersistableModel<SettingLabel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SettingLabel IPersistableModel<SettingLabel>.Create(BinaryData data, ModelReaderWriterOptions options) => (SettingLabel)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingLabel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual global::.IUtf8JsonSerializable PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// This provides a unified interface for OpenAI voices, complementing the
     /// existing string-based OAIVoice for backward compatibility.
     /// </summary>
-    public partial class OpenAIVoice
+    public partial class OpenAIVoice : VoiceProvider
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

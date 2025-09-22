@@ -16,7 +16,7 @@ namespace Azure.Data.AppConfiguration
     /// Enables filtering of key-values. Syntax reference:
     /// https://aka.ms/azconfig/docs/restapisnapshots
     /// </summary>
-    public partial class ConfigurationSettingsFilter : IJsonModel<ConfigurationSettingsFilter>
+    public partial class ConfigurationSettingsFilter : global::.IUtf8JsonSerializable, IJsonModel<ConfigurationSettingsFilter>
     {
         /// <summary> Initializes a new instance of <see cref="ConfigurationSettingsFilter"/> for deserialization. </summary>
         internal ConfigurationSettingsFilter()
@@ -82,11 +82,11 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSettingsFilter IJsonModel<ConfigurationSettingsFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfigurationSettingsFilter IJsonModel<ConfigurationSettingsFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConfigurationSettingsFilter)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationSettingsFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual global::.IUtf8JsonSerializable JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSettingsFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -168,11 +168,11 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSettingsFilter IPersistableModel<ConfigurationSettingsFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfigurationSettingsFilter IPersistableModel<ConfigurationSettingsFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConfigurationSettingsFilter)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationSettingsFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual global::.IUtf8JsonSerializable PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSettingsFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

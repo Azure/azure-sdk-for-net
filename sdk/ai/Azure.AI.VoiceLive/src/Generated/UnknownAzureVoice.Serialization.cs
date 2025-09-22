@@ -42,11 +42,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureVoice IJsonModel<AzureVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureVoice IJsonModel<AzureVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownAzureVoice)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AzureVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override object JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -100,11 +100,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureVoice IPersistableModel<AzureVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureVoice IPersistableModel<AzureVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownAzureVoice)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AzureVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override object PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
