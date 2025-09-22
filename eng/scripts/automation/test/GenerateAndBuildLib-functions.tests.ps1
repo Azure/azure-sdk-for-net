@@ -200,4 +200,78 @@ options:
         
         {GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFile2 -sdkRepoRoot "/test"} | Should -Throw "*namespace*"
     }
+    
+    it("should work with new @azure-typespec/http-client-csharp emitter") {
+        $testTspConfigFileNew = Join-Path $testTspConfigDir "tspconfig-new-emitter.yaml"
+        $testConfigNewEmitter = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp":
+    namespace: Azure.TestService.NewEmitter
+    service-dir: testservice
+"@
+        $testConfigNewEmitter | Out-File -FilePath $testTspConfigFileNew -Encoding UTF8
+        
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileNew -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.NewEmitter"
+        $result | Should -Be $expected
+    }
+    
+    it("should prioritize package-dir over namespace with new emitter") {
+        $testTspConfigFileNewPackageDir = Join-Path $testTspConfigDir "tspconfig-new-emitter-package-dir.yaml"
+        $testConfigNewEmitterPackageDir = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp":
+    package-dir: Azure.TestService.NewEmitter.PackageDir
+    namespace: Azure.TestService.NewEmitter
+    service-dir: testservice
+"@
+        $testConfigNewEmitterPackageDir | Out-File -FilePath $testTspConfigFileNewPackageDir -Encoding UTF8
+        
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileNewPackageDir -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.NewEmitter.PackageDir"
+        $result | Should -Be $expected
+    }
+    
+    it("should prefer old emitter when both are present") {
+        $testTspConfigFileBoth = Join-Path $testTspConfigDir "tspconfig-both-emitters.yaml"
+        $testConfigBothEmitters = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-tools/typespec-csharp":
+    namespace: Azure.TestService.OldEmitter
+    service-dir: testservice
+  "@azure-typespec/http-client-csharp":
+    namespace: Azure.TestService.NewEmitter
+    service-dir: testservice
+"@
+        $testConfigBothEmitters | Out-File -FilePath $testTspConfigFileBoth -Encoding UTF8
+        
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileBoth -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.OldEmitter"
+        $result | Should -Be $expected
+    }
+    
+    it("should throw error when neither emitter has namespace") {
+        $testTspConfigFileNoEmitter = Join-Path $testTspConfigDir "tspconfig-no-emitter.yaml"
+        $testConfigNoEmitter = @"
+parameters:
+  service-dir:
+    default: testservice
+options: {}
+"@
+        $testConfigNoEmitter | Out-File -FilePath $testTspConfigFileNoEmitter -Encoding UTF8
+        
+        {GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileNoEmitter -sdkRepoRoot "/test"} | Should -Throw "*namespace*"
+    }
 }

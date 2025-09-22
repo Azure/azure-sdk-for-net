@@ -11,7 +11,7 @@ using System.Threading;
 namespace Azure.AI.Projects
 {
     /// <summary> The AIProjectClient. </summary>
-    public partial class AIProjectClient
+    public partial class AIProjectClient : ClientConnectionProvider
     {
         private readonly Uri _endpoint;
         /// <summary> A credential provider used to authenticate to the service. </summary>

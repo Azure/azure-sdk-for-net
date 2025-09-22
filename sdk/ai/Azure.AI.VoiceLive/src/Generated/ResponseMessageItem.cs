@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(ResponseMessageRole role, IEnumerable<VoiceLiveContentPart> content, ResponseItemStatus status) : base(ItemType.Message)
+        internal ResponseMessageItem(ResponseMessageRole role, IEnumerable<VoiceLiveContentPart> content, VoiceLiveResponseItemStatus status) : base(ItemType.Message)
         {
             Role = role;
             Content = content.ToList();
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<VoiceLiveContentPart> content, ResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal ResponseMessageItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<VoiceLiveContentPart> content, VoiceLiveResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -47,6 +47,6 @@ namespace Azure.AI.VoiceLive
         public IList<VoiceLiveContentPart> Content { get; }
 
         /// <summary> Gets the Status. </summary>
-        public ResponseItemStatus Status { get; }
+        public VoiceLiveResponseItemStatus Status { get; }
     }
 }
