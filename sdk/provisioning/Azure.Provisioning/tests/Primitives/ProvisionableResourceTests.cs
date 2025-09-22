@@ -261,12 +261,16 @@ namespace Azure.Provisioning.Tests.Primitives
                     // we would like to assign an expression to `storageAccount.StorageConfiguration`.
                     // but now we cannot do it in the normal way until this issue was fixed: https://github.com/Azure/azure-sdk-for-net/issues/52300
                     var config = (IBicepValue)storageAccount.StorageConfiguration;
-                    config.Expression = new ConditionalExpression(new IdentifierExpression(useConfig.BicepIdentifier), ((IBicepValue)new StorageConfiguration
+                    IBicepValue configValue = new StorageConfiguration
                     {
                         BackupRetentionDays = 30,
                         MaxRetryAttempts = 3,
                         EnableEncryption = true
-                    }).Compile(), new NullLiteralExpression());
+                    };
+                    config.Expression = new ConditionalExpression(
+                        new IdentifierExpression(useConfig.BicepIdentifier),
+                        configValue.Compile(),
+                        new NullLiteralExpression());
                     infra.Add(storageAccount);
                     return infra;
                 })
