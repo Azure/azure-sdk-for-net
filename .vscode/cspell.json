@@ -295,6 +295,7 @@
         "drtm",
         "hvci",
         "imds",
+        "sevsnp",
         "wdac"
       ]
     },
@@ -1798,6 +1799,12 @@
       "words": [
         "akri",
         "bucketized"
+      ]
+    },
+    {
+      "filename": "/sdk/virtualenclaves/**/*.cs",
+      "words": [
+        "mobo"
       ]
     },
     {
