@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class AIProjectDatasetsOperationsGetDatasetsCollectionResultOfT : CollectionResult<DatasetVersion>
+    internal partial class AIProjectDatasetsOperationsGetDatasetsCollectionResultOfT : CollectionResult<AIProjectDatasetVersion>
     {
         private readonly AIProjectDatasetsOperations _client;
         private readonly RequestOptions _options;
@@ -63,7 +63,7 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<DatasetVersion> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<AIProjectDatasetVersion> GetValuesFromPage(ClientResult page)
         {
             return ((PagedDatasetVersion)page).Value;
         }

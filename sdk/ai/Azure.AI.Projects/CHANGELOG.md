@@ -7,14 +7,17 @@
 
 ### Breaking Changes
 * Name changes:
-  * `BlobReference` has been renamed to `AIProjectBlobReference`
-  * `SasCredential` has been renamed to `BlobReferenceSasCredential`
-  * `ConnectionProperties` has been renamed to `AIProjectConnection`
   * `AssetDeployment` has been renamed to `AIProjectDeployment`
+  * `BlobReference` has been renamed to `AIProjectBlobReference`
+  * `ConnectionProperties` has been renamed to `AIProjectConnection`
+  * `FileDatasetVersion` has been renamed to `FileDataset`
+  * `FolderDatasetVersion` has been renamed to `FolderDataset`
+  * `SasCredential` has been renamed to `BlobReferenceSasCredential`
   * `SearchIndex` has been renamed to `AIProjectIndex`
 * Removed `GetOpenAIClient` method. Look at Inference samples for how to get the client now.
 
 ### Bugs Fixed
+* Properly handle secret key population for `AIProjectConnectionCustomCredential` [see GitHub issue 52355](https://github.com/Azure/azure-sdk-for-net/issues/52355)
 
 ### Other Changes
 

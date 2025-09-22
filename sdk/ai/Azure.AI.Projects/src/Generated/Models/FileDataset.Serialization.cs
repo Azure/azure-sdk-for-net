@@ -10,16 +10,16 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> FileDatasetVersion Definition. </summary>
-    public partial class FileDatasetVersion : IJsonModel<FileDatasetVersion>
+    public partial class FileDataset : IJsonModel<FileDataset>
     {
-        /// <summary> Initializes a new instance of <see cref="FileDatasetVersion"/> for deserialization. </summary>
-        internal FileDatasetVersion()
+        /// <summary> Initializes a new instance of <see cref="FileDataset"/> for deserialization. </summary>
+        internal FileDataset()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FileDatasetVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,40 +30,40 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileDatasetVersion)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileDataset)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FileDatasetVersion IJsonModel<FileDatasetVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FileDatasetVersion)JsonModelCreateCore(ref reader, options);
+        FileDataset IJsonModel<FileDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FileDataset)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DatasetVersion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AIProjectDatasetVersion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileDatasetVersion)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileDataset)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFileDatasetVersion(document.RootElement, options);
+            return DeserializeFileDataset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FileDatasetVersion DeserializeFileDatasetVersion(JsonElement element, ModelReaderWriterOptions options)
+        internal static FileDataset DeserializeFileDataset(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri dataUri = default;
+            string dataUri = default;
             DatasetType @type = default;
             bool? isReference = default;
             string connectionName = default;
@@ -77,7 +77,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("dataUri"u8))
                 {
-                    dataUri = new Uri(prop.Value.GetString());
+                    dataUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileDatasetVersion(
+            return new FileDataset(
                 dataUri,
                 @type,
                 isReference,
@@ -159,43 +159,43 @@ namespace Azure.AI.Projects
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FileDatasetVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FileDataset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileDataset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FileDatasetVersion)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FileDatasetVersion IPersistableModel<FileDatasetVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => (FileDatasetVersion)PersistableModelCreateCore(data, options);
+        FileDataset IPersistableModel<FileDataset>.Create(BinaryData data, ModelReaderWriterOptions options) => (FileDataset)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DatasetVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AIProjectDatasetVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileDataset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeFileDatasetVersion(document.RootElement, options);
+                        return DeserializeFileDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileDatasetVersion)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileDataset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FileDatasetVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

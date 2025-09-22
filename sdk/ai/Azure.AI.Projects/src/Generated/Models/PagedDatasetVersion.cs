@@ -17,7 +17,7 @@ namespace Azure.Core
 
         /// <summary> Initializes a new instance of <see cref="PagedDatasetVersion"/>. </summary>
         /// <param name="value"> The DatasetVersion items on this page. </param>
-        internal PagedDatasetVersion(IEnumerable<DatasetVersion> value)
+        internal PagedDatasetVersion(IEnumerable<AIProjectDatasetVersion> value)
         {
             Value = value.ToList();
         }
@@ -26,7 +26,7 @@ namespace Azure.Core
         /// <param name="value"> The DatasetVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedDatasetVersion(IList<DatasetVersion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedDatasetVersion(IList<AIProjectDatasetVersion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -34,7 +34,7 @@ namespace Azure.Core
         }
 
         /// <summary> The DatasetVersion items on this page. </summary>
-        public IList<DatasetVersion> Value { get; }
+        public IList<AIProjectDatasetVersion> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

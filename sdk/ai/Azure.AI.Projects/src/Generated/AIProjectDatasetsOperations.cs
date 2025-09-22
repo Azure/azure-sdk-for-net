@@ -83,7 +83,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<DatasetVersion> GetDatasetVersions(string name, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<AIProjectDatasetVersion> GetDatasetVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<DatasetVersion> GetDatasetVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<AIProjectDatasetVersion> GetDatasetVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -138,7 +138,7 @@ namespace Azure.AI.Projects
         /// <summary> List the latest version of each DatasetVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<DatasetVersion> GetDatasets(CancellationToken cancellationToken = default)
+        public virtual CollectionResult<AIProjectDatasetVersion> GetDatasets(CancellationToken cancellationToken = default)
         {
             return new AIProjectDatasetsOperationsGetDatasetsCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -146,7 +146,7 @@ namespace Azure.AI.Projects
         /// <summary> List the latest version of each DatasetVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<DatasetVersion> GetDatasetsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<AIProjectDatasetVersion> GetDatasetsAsync(CancellationToken cancellationToken = default)
         {
             return new AIProjectDatasetsOperationsGetDatasetsAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -206,13 +206,13 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DatasetVersion> GetDataset(string name, string version, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AIProjectDatasetVersion> GetDataset(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             ClientResult result = GetDataset(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((DatasetVersion)result, result.GetRawResponse());
+            return ClientResult.FromValue((AIProjectDatasetVersion)result, result.GetRawResponse());
         }
 
         /// <summary> Get the specific version of the DatasetVersion. The service returns 404 Not Found error if the DatasetVersion does not exist. </summary>
@@ -222,13 +222,13 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DatasetVersion>> GetDatasetAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AIProjectDatasetVersion>> GetDatasetAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             ClientResult result = await GetDatasetAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((DatasetVersion)result, result.GetRawResponse());
+            return ClientResult.FromValue((AIProjectDatasetVersion)result, result.GetRawResponse());
         }
 
         /// <summary>
