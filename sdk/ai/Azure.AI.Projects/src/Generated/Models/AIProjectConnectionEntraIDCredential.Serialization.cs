@@ -10,11 +10,11 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Entra ID credential definition. </summary>
-    public partial class EntraIDCredentials : IJsonModel<EntraIDCredentials>
+    public partial class AIProjectConnectionEntraIDCredential : IJsonModel<AIProjectConnectionEntraIDCredential>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AIProjectConnectionEntraIDCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AIProjectConnectionEntraIdCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -25,34 +25,34 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionEntraIDCredential>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionEntraIdCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AIProjectConnectionEntraIDCredential)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AIProjectConnectionEntraIdCredential)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AIProjectConnectionEntraIDCredential IJsonModel<AIProjectConnectionEntraIDCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AIProjectConnectionEntraIDCredential)JsonModelCreateCore(ref reader, options);
+        AIProjectConnectionEntraIdCredential IJsonModel<AIProjectConnectionEntraIdCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AIProjectConnectionEntraIdCredential)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AIProjectConnectionBaseCredential JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionEntraIDCredential>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionEntraIdCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AIProjectConnectionEntraIDCredential)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AIProjectConnectionEntraIdCredential)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAIProjectConnectionEntraIDCredential(document.RootElement, options);
+            return DeserializeAIProjectConnectionEntraIdCredential(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AIProjectConnectionEntraIDCredential DeserializeAIProjectConnectionEntraIDCredential(JsonElement element, ModelReaderWriterOptions options)
+        internal static AIProjectConnectionEntraIdCredential DeserializeAIProjectConnectionEntraIdCredential(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,47 +72,47 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AIProjectConnectionEntraIDCredential(@type, additionalBinaryDataProperties);
+            return new AIProjectConnectionEntraIdCredential(@type, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AIProjectConnectionEntraIDCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AIProjectConnectionEntraIdCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionEntraIDCredential>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionEntraIdCredential>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AIProjectConnectionEntraIDCredential)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIProjectConnectionEntraIdCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AIProjectConnectionEntraIDCredential IPersistableModel<AIProjectConnectionEntraIDCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => (AIProjectConnectionEntraIDCredential)PersistableModelCreateCore(data, options);
+        AIProjectConnectionEntraIdCredential IPersistableModel<AIProjectConnectionEntraIdCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => (AIProjectConnectionEntraIdCredential)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AIProjectConnectionBaseCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionEntraIDCredential>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionEntraIdCredential>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeAIProjectConnectionEntraIDCredential(document.RootElement, options);
+                        return DeserializeAIProjectConnectionEntraIdCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AIProjectConnectionEntraIDCredential)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIProjectConnectionEntraIdCredential)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AIProjectConnectionEntraIDCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AIProjectConnectionEntraIdCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

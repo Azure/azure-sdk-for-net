@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// A base class for connection credentials
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIDCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, and <see cref="NoAuthenticationCredentials"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, and <see cref="NoAuthenticationCredentials"/>.
         /// </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <returns> A new <see cref="Projects.AIProjectConnectionBaseCredential"/> instance for mocking. </returns>
@@ -57,10 +57,10 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Entra ID credential definition. </summary>
-        /// <returns> A new <see cref="Projects.AIProjectConnectionEntraIDCredential"/> instance for mocking. </returns>
-        public static AIProjectConnectionEntraIDCredential AIProjectConnectionEntraIDCredential()
+        /// <returns> A new <see cref="Projects.AIProjectConnectionEntraIdCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionEntraIdCredential AIProjectConnectionEntraIdCredential()
         {
-            return new AIProjectConnectionEntraIDCredential(CredentialType.EntraId, additionalBinaryDataProperties: null);
+            return new AIProjectConnectionEntraIdCredential(CredentialType.EntraId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Custom credential definition. </summary>
@@ -90,9 +90,9 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// DatasetVersion Definition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDatasetVersion"/> and <see cref="FolderDatasetVersion"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDataset"/> and <see cref="FolderDataset"/>.
         /// </summary>
-        /// <param name="dataUri"></param>
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
@@ -101,12 +101,12 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.DatasetVersion"/> instance for mocking. </returns>
-        public static DatasetVersion DatasetVersion(Uri dataUri = default, string @type = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.AIProjectDatasetVersion"/> instance for mocking. </returns>
+        public static AIProjectDatasetVersion AIProjectDatasetVersion(string dataUri = default, string @type = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownDatasetVersion(
+            return new UnknownAIProjectDatasetVersion(
                 dataUri,
                 new DatasetType(@type),
                 isReference,
@@ -120,7 +120,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> FileDatasetVersion Definition. </summary>
-        /// <param name="dataUri"></param>
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -128,12 +128,12 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.FileDatasetVersion"/> instance for mocking. </returns>
-        public static FileDatasetVersion FileDatasetVersion(Uri dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.FileDataset"/> instance for mocking. </returns>
+        public static FileDataset FileDataset(string dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FileDatasetVersion(
+            return new FileDataset(
                 dataUri,
                 DatasetType.UriFile,
                 isReference,
@@ -147,7 +147,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> FileDatasetVersion Definition. </summary>
-        /// <param name="dataUri"></param>
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -155,12 +155,12 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.FolderDatasetVersion"/> instance for mocking. </returns>
-        public static FolderDatasetVersion FolderDatasetVersion(Uri dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.FolderDataset"/> instance for mocking. </returns>
+        public static FolderDataset FolderDataset(string dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FolderDatasetVersion(
+            return new FolderDataset(
                 dataUri,
                 DatasetType.UriFolder,
                 isReference,
