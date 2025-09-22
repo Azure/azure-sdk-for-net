@@ -1175,7 +1175,6 @@ namespace Azure.AI.VoiceLive
     {
         internal SessionUpdateInputAudioBufferSpeechStopped() { }
         public System.TimeSpan AudioEnd { get { throw null; } }
-        public int AudioEndMs { get { throw null; } }
         public string ItemId { get { throw null; } }
         protected override Azure.AI.VoiceLive.SessionUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

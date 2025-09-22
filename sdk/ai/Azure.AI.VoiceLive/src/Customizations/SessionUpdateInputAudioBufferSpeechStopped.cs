@@ -19,6 +19,6 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         public TimeSpan AudioEnd { get => TimeSpan.FromMilliseconds(AudioEndMs); }
 
-        internal int AudioEndMsAs { get; }
+        internal int AudioEndMs { get; }
     }
 }

@@ -1112,11 +1112,7 @@ namespace Azure.AI.VoiceLive
         /// event with the user message item that is created from the audio buffer.
         /// </summary>
         /// <param name="eventId"></param>
-        /// <param name="audioEndMs">
-        /// Milliseconds since the session started when speech stopped. This will
-        /// correspond to the end of audio sent to the model, and thus includes the
-        /// `min_silence_duration_ms` configured in the Session.
-        /// </param>
+        /// <param name="audioEndMs"></param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/> instance for mocking. </returns>
         public static SessionUpdateInputAudioBufferSpeechStopped SessionUpdateInputAudioBufferSpeechStopped(string eventId = default, int audioEndMs = default, string itemId = default)
