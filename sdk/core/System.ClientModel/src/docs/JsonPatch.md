@@ -89,7 +89,7 @@ Remove deletes a path from the payload which is distinct from setting something 
 ```c#
 JsonPatch jp = new("{\"x\":{\"y\":[null,null,{\"z\":5}]}}"u8.ToArray());
 jp.Remove("$.x.y[1]"u8);
-Console.WriteLine(jp); // [{"op":"remove","path","/x/y/1"}]
+Console.WriteLine(jp); // [{"op":"remove","path":"/x/y/1"}]
 Console.WriteLine(jp.ToString("J")); // {"x":{"y":[null,{"z":5}]}}
 ```
 
