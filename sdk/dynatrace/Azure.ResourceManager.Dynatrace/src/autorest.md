@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Dynatrace
 namespace: Azure.ResourceManager.Dynatrace
-require: https://github.com/Azure/azure-rest-api-specs/blob/df6a22e29f0eca5b4a89372eb66db94cb1659c0c/specification/dynatrace/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/3b2afb5c94cfb3dd5345f1bdbd029bfbb265d218/specification/dynatrace/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -46,6 +46,10 @@ acronym-mapping:
   Etag: ETag|etag
   URL: Uri
   PRE: Pre
+
+override-operation-name:
+  CreationSupported_List: GetAllCreationSupported
+  CreationSupported_Get: GetCreationSupported
 
 rename-mapping:
   DynatraceSingleSignOnResource: DynatraceSingleSignOn
@@ -93,5 +97,14 @@ rename-mapping:
   SendActivityLogsStatus: ActivityLogsSendingStatus
   SendingLogsStatus: LogsSendingStatus
   SendingMetricsStatus: MetricsSendingStatus
+  ManagedServiceIdentity:
 
+directive:
+  - from: dynatrace.json
+    where: $.definitions.ManagedIdentityType
+    transform: >
+      $["x-ms-enum"] =  {
+        "name": "ManagedIdentityType",
+        "modelAsString": true
+      };
 ```

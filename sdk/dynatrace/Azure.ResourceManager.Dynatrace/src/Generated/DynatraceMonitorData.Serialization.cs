@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.Dynatrace
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
+            if (Optional.IsDefined(MarketplaceSaasAutoRenew))
+            {
+                writer.WritePropertyName("marketplaceSaasAutoRenew"u8);
+                writer.WriteStringValue(MarketplaceSaasAutoRenew.Value.ToString());
+            }
             if (Optional.IsDefined(DynatraceEnvironmentProperties))
             {
                 writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
@@ -108,7 +113,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
+            ResourceManager.Models.ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -117,6 +122,7 @@ namespace Azure.ResourceManager.Dynatrace
             SystemData systemData = default;
             DynatraceMonitoringStatus? monitoringStatus = default;
             DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew = default;
             DynatraceEnvironmentProperties dynatraceEnvironmentProperties = default;
             DynatraceMonitorUserInfo userInfo = default;
             DynatraceBillingPlanInfo planData = default;
@@ -202,6 +208,15 @@ namespace Azure.ResourceManager.Dynatrace
                             marketplaceSubscriptionStatus = new DynatraceMonitorMarketplaceSubscriptionStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("marketplaceSaasAutoRenew"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            marketplaceSaasAutoRenew = new MarketplaceSaasAutoRenew(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("dynatraceEnvironmentProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -275,6 +290,7 @@ namespace Azure.ResourceManager.Dynatrace
                 identity,
                 monitoringStatus,
                 marketplaceSubscriptionStatus,
+                marketplaceSaasAutoRenew,
                 dynatraceEnvironmentProperties,
                 userInfo,
                 planData,

@@ -76,18 +76,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
         public DynatraceMonitorResourceLogRules LogRules { get; set; }
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
-        internal DynatraceMonitorResourceMetricRules MetricRules { get; set; }
-        /// <summary> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>
-        public IList<DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags
-        {
-            get
-            {
-                if (MetricRules is null)
-                    MetricRules = new DynatraceMonitorResourceMetricRules();
-                return MetricRules.FilteringTags;
-            }
-        }
-
+        public DynatraceMonitorResourceMetricRules MetricRules { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         public DynatraceProvisioningState? ProvisioningState { get; }
     }

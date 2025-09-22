@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="monitoringStatus"> Status of the monitor. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="marketplaceSaasAutoRenew"> Marketplace resource autorenew flag. </param>
         /// <param name="dynatraceEnvironmentProperties"> Properties of the Dynatrace environment. </param>
         /// <param name="userInfo"> User info. </param>
         /// <param name="planData"> Billing plan information. </param>
@@ -74,11 +75,12 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DynatraceMonitoringStatus? monitoringStatus, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, DynatraceMonitorUserInfo userInfo, DynatraceBillingPlanInfo planData, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DynatraceMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceManager.Models.ManagedServiceIdentity identity, DynatraceMonitoringStatus? monitoringStatus, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, DynatraceMonitorUserInfo userInfo, DynatraceBillingPlanInfo planData, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             MonitoringStatus = monitoringStatus;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
+            MarketplaceSaasAutoRenew = marketplaceSaasAutoRenew;
             DynatraceEnvironmentProperties = dynatraceEnvironmentProperties;
             UserInfo = userInfo;
             PlanData = planData;
@@ -96,6 +98,8 @@ namespace Azure.ResourceManager.Dynatrace
         public DynatraceMonitoringStatus? MonitoringStatus { get; set; }
         /// <summary> Marketplace subscription status. </summary>
         public DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; set; }
+        /// <summary> Marketplace resource autorenew flag. </summary>
+        public MarketplaceSaasAutoRenew? MarketplaceSaasAutoRenew { get; set; }
         /// <summary> Properties of the Dynatrace environment. </summary>
         public DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get; set; }
         /// <summary> User info. </summary>

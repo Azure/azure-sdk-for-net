@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of <see cref="DynatraceAccountInfo"/>. </summary>
         /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
         /// <param name="regionId"> Region in which the account is created. </param>
+        /// <param name="companyName"> Name of the customer account / company. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceAccountInfo(string accountId, string regionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynatraceAccountInfo(string accountId, string regionId, string companyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountId = accountId;
             RegionId = regionId;
+            CompanyName = companyName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public string AccountId { get; set; }
         /// <summary> Region in which the account is created. </summary>
         public string RegionId { get; set; }
+        /// <summary> Name of the customer account / company. </summary>
+        public string CompanyName { get; set; }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> The updatable properties of the TagRule. </summary>
-    public partial class DynatraceTagRulePatch
+    /// <summary> Paged collection of MonitoredSubscriptionProperties items. </summary>
+    internal partial class MonitoredSubscriptionPropertiesList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +46,35 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
-        public DynatraceTagRulePatch()
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
+        /// <param name="value"> The MonitoredSubscriptionProperties items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal MonitoredSubscriptionPropertiesList(IEnumerable<MonitoredSubscriptionPropertyData> value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
-        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
+        /// <param name="value"> The MonitoredSubscriptionProperties items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceTagRulePatch(DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredSubscriptionPropertiesList(IReadOnlyList<MonitoredSubscriptionPropertyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LogRules = logRules;
-            MetricRules = metricRules;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
-        public DynatraceMonitorResourceLogRules LogRules { get; set; }
-        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
-        internal DynatraceMonitorResourceMetricRules MetricRules { get; set; }
-        /// <summary> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>
-        public IList<DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/> for deserialization. </summary>
+        internal MonitoredSubscriptionPropertiesList()
         {
-            get
-            {
-                if (MetricRules is null)
-                    MetricRules = new DynatraceMonitorResourceMetricRules();
-                return MetricRules.FilteringTags;
-            }
         }
+
+        /// <summary> The MonitoredSubscriptionProperties items on this page. </summary>
+        public IReadOnlyList<MonitoredSubscriptionPropertyData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
