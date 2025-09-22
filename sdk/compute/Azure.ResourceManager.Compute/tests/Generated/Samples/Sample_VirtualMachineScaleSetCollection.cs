@@ -1004,7 +1004,7 @@ EnableIPForwarding = true,
                         AutomaticallyApprove = true,
                         ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = new EventGridAndResourceGraph
                         {
-                            IsEventGridAndResourceGraphEnabled = true,
+                            IsEnabled = true,
                             ScheduledEventsApiVersion = "2020-07-01",
                         },
                         AllInstancesDown = new AllInstancesDown
@@ -2807,7 +2807,7 @@ EnableIPForwarding = true,
                         AutomaticallyApprove = true,
                         ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = new EventGridAndResourceGraph
                         {
-                            IsEventGridAndResourceGraphEnabled = true,
+                            IsEnabled = true,
                             ScheduledEventsApiVersion = "2020-07-01",
                         },
                         AllInstancesDown = new AllInstancesDown
@@ -4886,7 +4886,7 @@ EnableIPForwarding = true,
                         AutomaticallyApprove = true,
                         ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = new EventGridAndResourceGraph
                         {
-                            IsEventGridAndResourceGraphEnabled = true,
+                            IsEnabled = true,
                         },
                     },
                     VirtualMachineProfile = new VirtualMachineScaleSetVmProfile

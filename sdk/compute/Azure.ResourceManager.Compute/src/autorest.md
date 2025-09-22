@@ -306,7 +306,7 @@ rename-mapping:
   Expand: GetVirtualMachineImagesWithPropertiesExpand
   RebalanceBehavior: VmssRebalanceBehavior
   RebalanceStrategy: VmssRebalanceStrategy
-  EventGridAndResourceGraph.enable: IsEventGridAndResourceGraphEnabled
+  EventGridAndResourceGraph.enable: IsEnabled
   ReservationType : CapacityReservationType
 
 directive:
