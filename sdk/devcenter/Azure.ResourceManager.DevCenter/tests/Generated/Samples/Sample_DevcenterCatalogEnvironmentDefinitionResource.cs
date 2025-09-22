@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
-    public partial class Sample_DevcenterCatalogEnvironmentDefinitionResource
+    public partial class Sample_DevCenterCatalogEnvironmentDefinitionResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevcenterCatalogEnvironmentDefinitionResource created on azure
-            // for more information of creating DevcenterCatalogEnvironmentDefinitionResource, please refer to the document of DevcenterCatalogEnvironmentDefinitionResource
+            // this example assumes you already have this DevCenterCatalogEnvironmentDefinitionResource created on azure
+            // for more information of creating DevCenterCatalogEnvironmentDefinitionResource, please refer to the document of DevCenterCatalogEnvironmentDefinitionResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string catalogName = "myCatalog";
             string environmentDefinitionName = "myEnvironmentDefinition";
-            ResourceIdentifier devcenterCatalogEnvironmentDefinitionResourceId = DevcenterCatalogEnvironmentDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, environmentDefinitionName);
-            DevcenterCatalogEnvironmentDefinitionResource devcenterCatalogEnvironmentDefinition = client.GetDevcenterCatalogEnvironmentDefinitionResource(devcenterCatalogEnvironmentDefinitionResourceId);
+            ResourceIdentifier devCenterCatalogEnvironmentDefinitionResourceId = DevCenterCatalogEnvironmentDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, environmentDefinitionName);
+            DevCenterCatalogEnvironmentDefinitionResource devCenterCatalogEnvironmentDefinition = client.GetDevCenterCatalogEnvironmentDefinitionResource(devCenterCatalogEnvironmentDefinitionResourceId);
 
             // invoke the operation
-            DevcenterCatalogEnvironmentDefinitionResource result = await devcenterCatalogEnvironmentDefinition.GetAsync();
+            DevCenterCatalogEnvironmentDefinitionResource result = await devCenterCatalogEnvironmentDefinition.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -60,18 +60,18 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevcenterCatalogEnvironmentDefinitionResource created on azure
-            // for more information of creating DevcenterCatalogEnvironmentDefinitionResource, please refer to the document of DevcenterCatalogEnvironmentDefinitionResource
+            // this example assumes you already have this DevCenterCatalogEnvironmentDefinitionResource created on azure
+            // for more information of creating DevCenterCatalogEnvironmentDefinitionResource, please refer to the document of DevCenterCatalogEnvironmentDefinitionResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string catalogName = "myCatalog";
             string environmentDefinitionName = "myEnvironmentDefinition";
-            ResourceIdentifier devcenterCatalogEnvironmentDefinitionResourceId = DevcenterCatalogEnvironmentDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, environmentDefinitionName);
-            DevcenterCatalogEnvironmentDefinitionResource devcenterCatalogEnvironmentDefinition = client.GetDevcenterCatalogEnvironmentDefinitionResource(devcenterCatalogEnvironmentDefinitionResourceId);
+            ResourceIdentifier devCenterCatalogEnvironmentDefinitionResourceId = DevCenterCatalogEnvironmentDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, environmentDefinitionName);
+            DevCenterCatalogEnvironmentDefinitionResource devCenterCatalogEnvironmentDefinition = client.GetDevCenterCatalogEnvironmentDefinitionResource(devCenterCatalogEnvironmentDefinitionResourceId);
 
             // invoke the operation
-            CatalogResourceValidationErrorDetails result = await devcenterCatalogEnvironmentDefinition.GetErrorDetailsAsync();
+            CatalogResourceValidationErrorDetails result = await devCenterCatalogEnvironmentDefinition.GetErrorDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

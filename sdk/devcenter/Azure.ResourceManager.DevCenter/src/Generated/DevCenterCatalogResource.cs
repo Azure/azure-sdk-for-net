@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DevCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DevcenterCatalogEnvironmentDefinitionResources in the DevCenterCatalog. </summary>
-        /// <returns> An object representing collection of DevcenterCatalogEnvironmentDefinitionResources and their operations over a DevcenterCatalogEnvironmentDefinitionResource. </returns>
-        public virtual DevcenterCatalogEnvironmentDefinitionCollection GetDevcenterCatalogEnvironmentDefinitions()
+        /// <summary> Gets a collection of DevCenterCatalogEnvironmentDefinitionResources in the DevCenterCatalog. </summary>
+        /// <returns> An object representing collection of DevCenterCatalogEnvironmentDefinitionResources and their operations over a DevCenterCatalogEnvironmentDefinitionResource. </returns>
+        public virtual DevCenterCatalogEnvironmentDefinitionCollection GetDevCenterCatalogEnvironmentDefinitions()
         {
-            return GetCachedClient(client => new DevcenterCatalogEnvironmentDefinitionCollection(client, Id));
+            return GetCachedClient(client => new DevCenterCatalogEnvironmentDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogEnvironmentDefinitionResource"/></description>
+        /// <description><see cref="DevCenterCatalogEnvironmentDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevcenterCatalogEnvironmentDefinitionResource>> GetDevcenterCatalogEnvironmentDefinitionAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogEnvironmentDefinitionResource>> GetDevCenterCatalogEnvironmentDefinitionAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await GetDevcenterCatalogEnvironmentDefinitions().GetAsync(environmentDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterCatalogEnvironmentDefinitions().GetAsync(environmentDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogEnvironmentDefinitionResource"/></description>
+        /// <description><see cref="DevCenterCatalogEnvironmentDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,47 +154,16 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevcenterCatalogEnvironmentDefinitionResource> GetDevcenterCatalogEnvironmentDefinition(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCatalogEnvironmentDefinitionResource> GetDevCenterCatalogEnvironmentDefinition(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetDevcenterCatalogEnvironmentDefinitions().Get(environmentDefinitionName, cancellationToken);
+            return GetDevCenterCatalogEnvironmentDefinitions().Get(environmentDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevcenterCatalogImageDefinitionResources in the DevCenterCatalog. </summary>
-        /// <returns> An object representing collection of DevcenterCatalogImageDefinitionResources and their operations over a DevcenterCatalogImageDefinitionResource. </returns>
-        public virtual DevcenterCatalogImageDefinitionCollection GetDevcenterCatalogImageDefinitions()
+        /// <summary> Gets a collection of DevCenterCatalogImageDefinitionResources in the DevCenterCatalog. </summary>
+        /// <returns> An object representing collection of DevCenterCatalogImageDefinitionResources and their operations over a DevCenterCatalogImageDefinitionResource. </returns>
+        public virtual DevCenterCatalogImageDefinitionCollection GetDevCenterCatalogImageDefinitions()
         {
-            return GetCachedClient(client => new DevcenterCatalogImageDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an Image Definition from the catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/imageDefinitions/{imageDefinitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevCenterCatalogImageDefinitions_GetByDevCenterCatalog</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="imageDefinitionName"> The name of the Image Definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DevcenterCatalogImageDefinitionResource>> GetDevcenterCatalogImageDefinitionAsync(string imageDefinitionName, CancellationToken cancellationToken = default)
-        {
-            return await GetDevcenterCatalogImageDefinitions().GetAsync(imageDefinitionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new DevCenterCatalogImageDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -214,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionResource"/></description>
+        /// <description><see cref="DevCenterCatalogImageDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,9 +192,40 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="imageDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevcenterCatalogImageDefinitionResource> GetDevcenterCatalogImageDefinition(string imageDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogImageDefinitionResource>> GetDevCenterCatalogImageDefinitionAsync(string imageDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetDevcenterCatalogImageDefinitions().Get(imageDefinitionName, cancellationToken);
+            return await GetDevCenterCatalogImageDefinitions().GetAsync(imageDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an Image Definition from the catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/imageDefinitions/{imageDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DevCenterCatalogImageDefinitions_GetByDevCenterCatalog</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterCatalogImageDefinitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="imageDefinitionName"> The name of the Image Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevCenterCatalogImageDefinitionResource> GetDevCenterCatalogImageDefinition(string imageDefinitionName, CancellationToken cancellationToken = default)
+        {
+            return GetDevCenterCatalogImageDefinitions().Get(imageDefinitionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevCenterCustomizationTaskResources in the DevCenterCatalog. </summary>

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevcenterCatalogImageDefinitionResource : IJsonModel<DevCenterImageDefinitionData>
+    public partial class DevCenterCatalogImageDefinitionResource : IJsonModel<DevCenterImageDefinitionData>
     {
         private static DevCenterImageDefinitionData s_dataDeserializationInstance;
         private static DevCenterImageDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();

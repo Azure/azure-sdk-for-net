@@ -16,14 +16,14 @@ using Azure.ResourceManager.DevCenter.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing a DevcenterCatalogEnvironmentDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevcenterCatalogEnvironmentDefinitionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDevcenterCatalogEnvironmentDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterCatalogResource"/> using the GetDevcenterCatalogEnvironmentDefinition method.
+    /// A Class representing a DevCenterCatalogEnvironmentDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterCatalogEnvironmentDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterCatalogEnvironmentDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterCatalogResource"/> using the GetDevCenterCatalogEnvironmentDefinition method.
     /// </summary>
-    public partial class DevcenterCatalogEnvironmentDefinitionResource : ArmResource
+    public partial class DevCenterCatalogEnvironmentDefinitionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DevcenterCatalogEnvironmentDefinitionResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="devCenterName"> The devCenterName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.DevCenter
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics;
-        private readonly EnvironmentDefinitionsRestOperations _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient;
+        private readonly ClientDiagnostics _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics;
+        private readonly EnvironmentDefinitionsRestOperations _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient;
         private readonly DevCenterEnvironmentDefinitionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/catalogs/environmentDefinitions";
 
-        /// <summary> Initializes a new instance of the <see cref="DevcenterCatalogEnvironmentDefinitionResource"/> class for mocking. </summary>
-        protected DevcenterCatalogEnvironmentDefinitionResource()
+        /// <summary> Initializes a new instance of the <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> class for mocking. </summary>
+        protected DevCenterCatalogEnvironmentDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevcenterCatalogEnvironmentDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevcenterCatalogEnvironmentDefinitionResource(ArmClient client, DevCenterEnvironmentDefinitionData data) : this(client, data.Id)
+        internal DevCenterCatalogEnvironmentDefinitionResource(ArmClient client, DevCenterEnvironmentDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevcenterCatalogEnvironmentDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DevcenterCatalogEnvironmentDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterCatalogEnvironmentDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsApiVersion);
-            _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient = new EnvironmentDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsApiVersion);
+            _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsApiVersion);
+            _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient = new EnvironmentDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogEnvironmentDefinitionResource"/></description>
+        /// <description><see cref="DevCenterCatalogEnvironmentDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DevcenterCatalogEnvironmentDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogEnvironmentDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics.CreateScope("DevcenterCatalogEnvironmentDefinitionResource.Get");
+            using var scope = _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = await _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevcenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogEnvironmentDefinitionResource"/></description>
+        /// <description><see cref="DevCenterCatalogEnvironmentDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DevcenterCatalogEnvironmentDefinitionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCatalogEnvironmentDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics.CreateScope("DevcenterCatalogEnvironmentDefinitionResource.Get");
+            using var scope = _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevcenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,18 +187,18 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogEnvironmentDefinitionResource"/></description>
+        /// <description><see cref="DevCenterCatalogEnvironmentDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics.CreateScope("DevcenterCatalogEnvironmentDefinitionResource.GetErrorDetails");
+            using var scope = _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionResource.GetErrorDetails");
             scope.Start();
             try
             {
-                var response = await _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.GetErrorDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.GetErrorDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogEnvironmentDefinitionResource"/></description>
+        /// <description><see cref="DevCenterCatalogEnvironmentDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CatalogResourceValidationErrorDetails> GetErrorDetails(CancellationToken cancellationToken = default)
         {
-            using var scope = _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics.CreateScope("DevcenterCatalogEnvironmentDefinitionResource.GetErrorDetails");
+            using var scope = _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionResource.GetErrorDetails");
             scope.Start();
             try
             {
-                var response = _devcenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.GetErrorDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _devCenterCatalogEnvironmentDefinitionEnvironmentDefinitionsRestClient.GetErrorDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

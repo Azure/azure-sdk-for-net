@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
-    public partial class Sample_DevcenterCatalogImageDefinitionBuildResource
+    public partial class Sample_DevCenterCatalogImageDefinitionBuildResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevcenterCatalogImageDefinitionBuildResource created on azure
-            // for more information of creating DevcenterCatalogImageDefinitionBuildResource, please refer to the document of DevcenterCatalogImageDefinitionBuildResource
+            // this example assumes you already have this DevCenterCatalogImageDefinitionBuildResource created on azure
+            // for more information of creating DevCenterCatalogImageDefinitionBuildResource, please refer to the document of DevCenterCatalogImageDefinitionBuildResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "DevDevCenter";
             string catalogName = "CentralCatalog";
             string imageDefinitionName = "DefaultDevImage";
             string buildName = "0a28fc61-6f87-4611-8fe2-32df44ab93b7";
-            ResourceIdentifier devcenterCatalogImageDefinitionBuildResourceId = DevcenterCatalogImageDefinitionBuildResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, imageDefinitionName, buildName);
-            DevcenterCatalogImageDefinitionBuildResource devcenterCatalogImageDefinitionBuild = client.GetDevcenterCatalogImageDefinitionBuildResource(devcenterCatalogImageDefinitionBuildResourceId);
+            ResourceIdentifier devCenterCatalogImageDefinitionBuildResourceId = DevCenterCatalogImageDefinitionBuildResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, imageDefinitionName, buildName);
+            DevCenterCatalogImageDefinitionBuildResource devCenterCatalogImageDefinitionBuild = client.GetDevCenterCatalogImageDefinitionBuildResource(devCenterCatalogImageDefinitionBuildResourceId);
 
             // invoke the operation
-            DevcenterCatalogImageDefinitionBuildResource result = await devcenterCatalogImageDefinitionBuild.GetAsync();
+            DevCenterCatalogImageDefinitionBuildResource result = await devCenterCatalogImageDefinitionBuild.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevcenterCatalogImageDefinitionBuildResource created on azure
-            // for more information of creating DevcenterCatalogImageDefinitionBuildResource, please refer to the document of DevcenterCatalogImageDefinitionBuildResource
+            // this example assumes you already have this DevCenterCatalogImageDefinitionBuildResource created on azure
+            // for more information of creating DevCenterCatalogImageDefinitionBuildResource, please refer to the document of DevCenterCatalogImageDefinitionBuildResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "DevDevCenter";
             string catalogName = "CentralCatalog";
             string imageDefinitionName = "DefaultDevImage";
             string buildName = "0a28fc61-6f87-4611-8fe2-32df44ab93b7";
-            ResourceIdentifier devcenterCatalogImageDefinitionBuildResourceId = DevcenterCatalogImageDefinitionBuildResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, imageDefinitionName, buildName);
-            DevcenterCatalogImageDefinitionBuildResource devcenterCatalogImageDefinitionBuild = client.GetDevcenterCatalogImageDefinitionBuildResource(devcenterCatalogImageDefinitionBuildResourceId);
+            ResourceIdentifier devCenterCatalogImageDefinitionBuildResourceId = DevCenterCatalogImageDefinitionBuildResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, imageDefinitionName, buildName);
+            DevCenterCatalogImageDefinitionBuildResource devCenterCatalogImageDefinitionBuild = client.GetDevCenterCatalogImageDefinitionBuildResource(devCenterCatalogImageDefinitionBuildResourceId);
 
             // invoke the operation
-            await devcenterCatalogImageDefinitionBuild.CancelAsync(WaitUntil.Completed);
+            await devCenterCatalogImageDefinitionBuild.CancelAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -90,19 +90,19 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevcenterCatalogImageDefinitionBuildResource created on azure
-            // for more information of creating DevcenterCatalogImageDefinitionBuildResource, please refer to the document of DevcenterCatalogImageDefinitionBuildResource
+            // this example assumes you already have this DevCenterCatalogImageDefinitionBuildResource created on azure
+            // for more information of creating DevCenterCatalogImageDefinitionBuildResource, please refer to the document of DevCenterCatalogImageDefinitionBuildResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "DevDevCenter";
             string catalogName = "CentralCatalog";
             string imageDefinitionName = "DefaultDevImage";
             string buildName = "0a28fc61-6f87-4611-8fe2-32df44ab93b7";
-            ResourceIdentifier devcenterCatalogImageDefinitionBuildResourceId = DevcenterCatalogImageDefinitionBuildResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, imageDefinitionName, buildName);
-            DevcenterCatalogImageDefinitionBuildResource devcenterCatalogImageDefinitionBuild = client.GetDevcenterCatalogImageDefinitionBuildResource(devcenterCatalogImageDefinitionBuildResourceId);
+            ResourceIdentifier devCenterCatalogImageDefinitionBuildResourceId = DevCenterCatalogImageDefinitionBuildResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName, imageDefinitionName, buildName);
+            DevCenterCatalogImageDefinitionBuildResource devCenterCatalogImageDefinitionBuild = client.GetDevCenterCatalogImageDefinitionBuildResource(devCenterCatalogImageDefinitionBuildResourceId);
 
             // invoke the operation
-            ImageDefinitionBuildDetails result = await devcenterCatalogImageDefinitionBuild.GetBuildDetailsAsync();
+            ImageDefinitionBuildDetails result = await devCenterCatalogImageDefinitionBuild.GetBuildDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

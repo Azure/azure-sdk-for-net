@@ -18,33 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevcenterCatalogImageDefinitionBuildResource"/> and their operations.
-    /// Each <see cref="DevcenterCatalogImageDefinitionBuildResource"/> in the collection will belong to the same instance of <see cref="DevcenterCatalogImageDefinitionResource"/>.
-    /// To get a <see cref="DevcenterCatalogImageDefinitionBuildCollection"/> instance call the GetDevcenterCatalogImageDefinitionBuilds method from an instance of <see cref="DevcenterCatalogImageDefinitionResource"/>.
+    /// A class representing a collection of <see cref="DevCenterCatalogImageDefinitionBuildResource"/> and their operations.
+    /// Each <see cref="DevCenterCatalogImageDefinitionBuildResource"/> in the collection will belong to the same instance of <see cref="DevCenterCatalogImageDefinitionResource"/>.
+    /// To get a <see cref="DevCenterCatalogImageDefinitionBuildCollection"/> instance call the GetDevCenterCatalogImageDefinitionBuilds method from an instance of <see cref="DevCenterCatalogImageDefinitionResource"/>.
     /// </summary>
-    public partial class DevcenterCatalogImageDefinitionBuildCollection : ArmCollection, IEnumerable<DevcenterCatalogImageDefinitionBuildResource>, IAsyncEnumerable<DevcenterCatalogImageDefinitionBuildResource>
+    public partial class DevCenterCatalogImageDefinitionBuildCollection : ArmCollection, IEnumerable<DevCenterCatalogImageDefinitionBuildResource>, IAsyncEnumerable<DevCenterCatalogImageDefinitionBuildResource>
     {
-        private readonly ClientDiagnostics _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildClientDiagnostics;
-        private readonly DevCenterCatalogImageDefinitionBuildRestOperations _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildRestClient;
-        private readonly ClientDiagnostics _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsClientDiagnostics;
-        private readonly DevCenterCatalogImageDefinitionBuildsRestOperations _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient;
+        private readonly ClientDiagnostics _devCenterCatalogImageDefinitionBuildClientDiagnostics;
+        private readonly DevCenterCatalogImageDefinitionBuildRestOperations _devCenterCatalogImageDefinitionBuildRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DevcenterCatalogImageDefinitionBuildCollection"/> class for mocking. </summary>
-        protected DevcenterCatalogImageDefinitionBuildCollection()
+        /// <summary> Initializes a new instance of the <see cref="DevCenterCatalogImageDefinitionBuildCollection"/> class for mocking. </summary>
+        protected DevCenterCatalogImageDefinitionBuildCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevcenterCatalogImageDefinitionBuildCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterCatalogImageDefinitionBuildCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DevcenterCatalogImageDefinitionBuildCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterCatalogImageDefinitionBuildCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevcenterCatalogImageDefinitionBuildResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DevcenterCatalogImageDefinitionBuildResource.ResourceType, out string devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildApiVersion);
-            _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildRestClient = new DevCenterCatalogImageDefinitionBuildRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildApiVersion);
-            _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevcenterCatalogImageDefinitionBuildResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DevcenterCatalogImageDefinitionBuildResource.ResourceType, out string devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsApiVersion);
-            _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient = new DevCenterCatalogImageDefinitionBuildsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsApiVersion);
+            _devCenterCatalogImageDefinitionBuildClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterCatalogImageDefinitionBuildResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DevCenterCatalogImageDefinitionBuildResource.ResourceType, out string devCenterCatalogImageDefinitionBuildApiVersion);
+            _devCenterCatalogImageDefinitionBuildRestClient = new DevCenterCatalogImageDefinitionBuildRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterCatalogImageDefinitionBuildApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,8 +47,8 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DevcenterCatalogImageDefinitionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevcenterCatalogImageDefinitionResource.ResourceType), nameof(id));
+            if (id.ResourceType != DevCenterCatalogImageDefinitionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterCatalogImageDefinitionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -73,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionBuildResource"/></description>
+        /// <description><see cref="DevCenterCatalogImageDefinitionBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,18 +76,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
-        public virtual async Task<Response<DevcenterCatalogImageDefinitionBuildResource>> GetAsync(string buildName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogImageDefinitionBuildResource>> GetAsync(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using var scope = _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevcenterCatalogImageDefinitionBuildCollection.Get");
+            using var scope = _devCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevCenterCatalogImageDefinitionBuildCollection.Get");
             scope.Start();
             try
             {
-                var response = await _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterCatalogImageDefinitionBuildRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevcenterCatalogImageDefinitionBuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogImageDefinitionBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +113,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionBuildResource"/></description>
+        /// <description><see cref="DevCenterCatalogImageDefinitionBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,18 +121,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
-        public virtual Response<DevcenterCatalogImageDefinitionBuildResource> Get(string buildName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCatalogImageDefinitionBuildResource> Get(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using var scope = _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevcenterCatalogImageDefinitionBuildCollection.Get");
+            using var scope = _devCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevCenterCatalogImageDefinitionBuildCollection.Get");
             scope.Start();
             try
             {
-                var response = _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken);
+                var response = _devCenterCatalogImageDefinitionBuildRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevcenterCatalogImageDefinitionBuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogImageDefinitionBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +150,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DevCenterCatalogImageDefinitionBuilds_ListByImageDefinition</description>
+        /// <description>DevCenterCatalogImageDefinitionBuild_ListByImageDefinition</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -163,17 +158,17 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionBuildResource"/></description>
+        /// <description><see cref="DevCenterCatalogImageDefinitionBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevcenterCatalogImageDefinitionBuildResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevcenterCatalogImageDefinitionBuildResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevCenterCatalogImageDefinitionBuildResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterCatalogImageDefinitionBuildResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient.CreateListByImageDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient.CreateListByImageDefinitionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogImageDefinitionBuildResource(Client, DevCenterImageDefinitionBuildData.DeserializeDevCenterImageDefinitionBuildData(e)), _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsClientDiagnostics, Pipeline, "DevcenterCatalogImageDefinitionBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterCatalogImageDefinitionBuildRestClient.CreateListByImageDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterCatalogImageDefinitionBuildRestClient.CreateListByImageDefinitionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterCatalogImageDefinitionBuildResource(Client, DevCenterImageDefinitionBuildData.DeserializeDevCenterImageDefinitionBuildData(e)), _devCenterCatalogImageDefinitionBuildClientDiagnostics, Pipeline, "DevCenterCatalogImageDefinitionBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DevCenterCatalogImageDefinitionBuilds_ListByImageDefinition</description>
+        /// <description>DevCenterCatalogImageDefinitionBuild_ListByImageDefinition</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -193,17 +188,17 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionBuildResource"/></description>
+        /// <description><see cref="DevCenterCatalogImageDefinitionBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevcenterCatalogImageDefinitionBuildResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevcenterCatalogImageDefinitionBuildResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterCatalogImageDefinitionBuildResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterCatalogImageDefinitionBuildResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient.CreateListByImageDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsRestClient.CreateListByImageDefinitionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevcenterCatalogImageDefinitionBuildResource(Client, DevCenterImageDefinitionBuildData.DeserializeDevCenterImageDefinitionBuildData(e)), _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildsClientDiagnostics, Pipeline, "DevcenterCatalogImageDefinitionBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterCatalogImageDefinitionBuildRestClient.CreateListByImageDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterCatalogImageDefinitionBuildRestClient.CreateListByImageDefinitionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterCatalogImageDefinitionBuildResource(Client, DevCenterImageDefinitionBuildData.DeserializeDevCenterImageDefinitionBuildData(e)), _devCenterCatalogImageDefinitionBuildClientDiagnostics, Pipeline, "DevCenterCatalogImageDefinitionBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -223,7 +218,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionBuildResource"/></description>
+        /// <description><see cref="DevCenterCatalogImageDefinitionBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,11 +230,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using var scope = _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevcenterCatalogImageDefinitionBuildCollection.Exists");
+            using var scope = _devCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevCenterCatalogImageDefinitionBuildCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterCatalogImageDefinitionBuildRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,7 +261,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionBuildResource"/></description>
+        /// <description><see cref="DevCenterCatalogImageDefinitionBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,11 +273,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using var scope = _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevcenterCatalogImageDefinitionBuildCollection.Exists");
+            using var scope = _devCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevCenterCatalogImageDefinitionBuildCollection.Exists");
             scope.Start();
             try
             {
-                var response = _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken);
+                var response = _devCenterCatalogImageDefinitionBuildRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,7 +304,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionBuildResource"/></description>
+        /// <description><see cref="DevCenterCatalogImageDefinitionBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,18 +312,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
-        public virtual async Task<NullableResponse<DevcenterCatalogImageDefinitionBuildResource>> GetIfExistsAsync(string buildName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DevCenterCatalogImageDefinitionBuildResource>> GetIfExistsAsync(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using var scope = _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevcenterCatalogImageDefinitionBuildCollection.GetIfExists");
+            using var scope = _devCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevCenterCatalogImageDefinitionBuildCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterCatalogImageDefinitionBuildRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<DevcenterCatalogImageDefinitionBuildResource>(response.GetRawResponse());
-                return Response.FromValue(new DevcenterCatalogImageDefinitionBuildResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<DevCenterCatalogImageDefinitionBuildResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogImageDefinitionBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -354,7 +349,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevcenterCatalogImageDefinitionBuildResource"/></description>
+        /// <description><see cref="DevCenterCatalogImageDefinitionBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,18 +357,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
-        public virtual NullableResponse<DevcenterCatalogImageDefinitionBuildResource> GetIfExists(string buildName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DevCenterCatalogImageDefinitionBuildResource> GetIfExists(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using var scope = _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevcenterCatalogImageDefinitionBuildCollection.GetIfExists");
+            using var scope = _devCenterCatalogImageDefinitionBuildClientDiagnostics.CreateScope("DevCenterCatalogImageDefinitionBuildCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _devcenterCatalogImageDefinitionBuildDevCenterCatalogImageDefinitionBuildRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken);
+                var response = _devCenterCatalogImageDefinitionBuildRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<DevcenterCatalogImageDefinitionBuildResource>(response.GetRawResponse());
-                return Response.FromValue(new DevcenterCatalogImageDefinitionBuildResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<DevCenterCatalogImageDefinitionBuildResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogImageDefinitionBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -382,7 +377,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        IEnumerator<DevcenterCatalogImageDefinitionBuildResource> IEnumerable<DevcenterCatalogImageDefinitionBuildResource>.GetEnumerator()
+        IEnumerator<DevCenterCatalogImageDefinitionBuildResource> IEnumerable<DevCenterCatalogImageDefinitionBuildResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -392,7 +387,7 @@ namespace Azure.ResourceManager.DevCenter
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DevcenterCatalogImageDefinitionBuildResource> IAsyncEnumerable<DevcenterCatalogImageDefinitionBuildResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DevCenterCatalogImageDefinitionBuildResource> IAsyncEnumerable<DevCenterCatalogImageDefinitionBuildResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

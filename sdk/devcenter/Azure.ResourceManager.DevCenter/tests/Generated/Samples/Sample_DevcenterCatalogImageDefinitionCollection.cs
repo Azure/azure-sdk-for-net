@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
-    public partial class Sample_DevcenterCatalogImageDefinitionCollection
+    public partial class Sample_DevCenterCatalogImageDefinitionCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
             DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
 
-            // get the collection of this DevcenterCatalogImageDefinitionResource
-            DevcenterCatalogImageDefinitionCollection collection = devCenterCatalog.GetDevcenterCatalogImageDefinitions();
+            // get the collection of this DevCenterCatalogImageDefinitionResource
+            DevCenterCatalogImageDefinitionCollection collection = devCenterCatalog.GetDevCenterCatalogImageDefinitions();
 
             // invoke the operation
             string imageDefinitionName = "WebDevBox";
-            DevcenterCatalogImageDefinitionResource result = await collection.GetAsync(imageDefinitionName);
+            DevCenterCatalogImageDefinitionResource result = await collection.GetAsync(imageDefinitionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
             DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
 
-            // get the collection of this DevcenterCatalogImageDefinitionResource
-            DevcenterCatalogImageDefinitionCollection collection = devCenterCatalog.GetDevcenterCatalogImageDefinitions();
+            // get the collection of this DevCenterCatalogImageDefinitionResource
+            DevCenterCatalogImageDefinitionCollection collection = devCenterCatalog.GetDevCenterCatalogImageDefinitions();
 
             // invoke the operation and iterate over the result
-            await foreach (DevcenterCatalogImageDefinitionResource item in collection.GetAllAsync())
+            await foreach (DevCenterCatalogImageDefinitionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
             DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
 
-            // get the collection of this DevcenterCatalogImageDefinitionResource
-            DevcenterCatalogImageDefinitionCollection collection = devCenterCatalog.GetDevcenterCatalogImageDefinitions();
+            // get the collection of this DevCenterCatalogImageDefinitionResource
+            DevCenterCatalogImageDefinitionCollection collection = devCenterCatalog.GetDevCenterCatalogImageDefinitions();
 
             // invoke the operation
             string imageDefinitionName = "WebDevBox";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterCatalogResourceId = DevCenterCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, catalogName);
             DevCenterCatalogResource devCenterCatalog = client.GetDevCenterCatalogResource(devCenterCatalogResourceId);
 
-            // get the collection of this DevcenterCatalogImageDefinitionResource
-            DevcenterCatalogImageDefinitionCollection collection = devCenterCatalog.GetDevcenterCatalogImageDefinitions();
+            // get the collection of this DevCenterCatalogImageDefinitionResource
+            DevCenterCatalogImageDefinitionCollection collection = devCenterCatalog.GetDevCenterCatalogImageDefinitions();
 
             // invoke the operation
             string imageDefinitionName = "WebDevBox";
-            NullableResponse<DevcenterCatalogImageDefinitionResource> response = await collection.GetIfExistsAsync(imageDefinitionName);
-            DevcenterCatalogImageDefinitionResource result = response.HasValue ? response.Value : null;
+            NullableResponse<DevCenterCatalogImageDefinitionResource> response = await collection.GetIfExistsAsync(imageDefinitionName);
+            DevCenterCatalogImageDefinitionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
