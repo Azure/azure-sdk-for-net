@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -223,23 +221,15 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TranslateAsync(IEnumerable{TranslateBody},string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(IEnumerable<TranslateBody> body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TranslateAsync(TranslateBody,string,CancellationToken)']/*" />
+        public virtual async Task<Response<TranslationResult>> TranslateAsync(TranslateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await TranslateAsync(content, clientTraceId, context).ConfigureAwait(false);
-            IReadOnlyList<TranslatedTextItem> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<TranslatedTextItem> array = new List<TranslatedTextItem>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(TranslatedTextItem.DeserializeTranslatedTextItem(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue(TranslationResult.FromResponse(response), response);
         }
 
         /// <summary> Translate Text. </summary>
@@ -247,23 +237,15 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Translate(IEnumerable{TranslateBody},string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(IEnumerable<TranslateBody> body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Translate(TranslateBody,string,CancellationToken)']/*" />
+        public virtual Response<TranslationResult> Translate(TranslateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Translate(content, clientTraceId, context);
-            IReadOnlyList<TranslatedTextItem> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<TranslatedTextItem> array = new List<TranslatedTextItem>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(TranslatedTextItem.DeserializeTranslatedTextItem(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue(TranslationResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -276,7 +258,7 @@ namespace Azure.AI.Translation.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TranslateAsync(IEnumerable{TranslateBody},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TranslateAsync(TranslateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -316,7 +298,7 @@ namespace Azure.AI.Translation.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Translate(IEnumerable{TranslateBody},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Translate(TranslateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -344,6 +326,68 @@ namespace Azure.AI.Translation.Text
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="language">
+        /// Specifies the language of the text to convert from one script to another.
+        /// Possible languages are listed in the transliteration scope obtained by querying the service
+        /// for its supported languages.
+        /// </param>
+        /// <param name="fromScript">
+        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+        /// to find input scripts available for the selected language.
+        /// </param>
+        /// <param name="toScript">
+        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
+        /// scripts available for the selected combination of input language and input script.
+        /// </param>
+        /// <param name="body"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, TransliterateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(fromScript, nameof(fromScript));
+            Argument.AssertNotNull(toScript, nameof(toScript));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await TransliterateAsync(language, fromScript, toScript, content, clientTraceId, context).ConfigureAwait(false);
+            return Response.FromValue(TransliterateResult.FromResponse(response), response);
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="language">
+        /// Specifies the language of the text to convert from one script to another.
+        /// Possible languages are listed in the transliteration scope obtained by querying the service
+        /// for its supported languages.
+        /// </param>
+        /// <param name="fromScript">
+        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+        /// to find input scripts available for the selected language.
+        /// </param>
+        /// <param name="toScript">
+        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
+        /// scripts available for the selected combination of input language and input script.
+        /// </param>
+        /// <param name="body"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="body"/> is null. </exception>
+        public virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, TransliterateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(fromScript, nameof(fromScript));
+            Argument.AssertNotNull(toScript, nameof(toScript));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Transliterate(language, fromScript, toScript, content, clientTraceId, context);
+            return Response.FromValue(TransliterateResult.FromResponse(response), response);
         }
 
         internal HttpMessage CreateGetSupportedLanguagesRequest(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)

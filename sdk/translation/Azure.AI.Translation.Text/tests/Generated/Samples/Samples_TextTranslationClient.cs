@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -116,7 +115,9 @@ namespace Azure.AI.Translation.Text.Samples
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            using RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
             {
 new
 {
@@ -149,12 +150,13 @@ target = "Vyzkoušejte si to.",
 }
 },
 }
+            },
             });
             Response response = client.Translate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
-            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
         }
 
         [Test]
@@ -164,7 +166,9 @@ target = "Vyzkoušejte si to.",
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            using RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
             {
 new
 {
@@ -197,12 +201,13 @@ target = "Vyzkoušejte si to.",
 }
 },
 }
+            },
             });
             Response response = await client.TranslateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
-            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
         }
 
         [Test]
@@ -212,9 +217,9 @@ target = "Vyzkoušejte si to.",
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(new TranslateBody[]
+            TranslateBody body = new TranslateBody(new TranslateInputItem[]
             {
-new TranslateBody("This is a test.", new TranslateTarget[]
+new TranslateInputItem("This is a test.", new TranslateTarget[]
 {
 new TranslateTarget("cs")
 {
@@ -236,6 +241,7 @@ Language = "en",
 TextType = TextType.Plain,
 }
             });
+            Response<TranslationResult> response = client.Translate(body);
         }
 
         [Test]
@@ -245,9 +251,9 @@ TextType = TextType.Plain,
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(new TranslateBody[]
+            TranslateBody body = new TranslateBody(new TranslateInputItem[]
             {
-new TranslateBody("This is a test.", new TranslateTarget[]
+new TranslateInputItem("This is a test.", new TranslateTarget[]
 {
 new TranslateTarget("cs")
 {
@@ -269,6 +275,7 @@ Language = "en",
 TextType = TextType.Plain,
 }
             });
+            Response<TranslationResult> response = await client.TranslateAsync(body);
         }
 
         [Test]
@@ -278,7 +285,9 @@ TextType = TextType.Plain,
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            using RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
             {
 new
 {
@@ -291,12 +300,13 @@ language = "cs",
 }
 },
 }
+            },
             });
             Response response = client.Translate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
-            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
         }
 
         [Test]
@@ -306,7 +316,9 @@ language = "cs",
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            using RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
             {
 new
 {
@@ -319,12 +331,13 @@ language = "cs",
 }
 },
 }
+            },
             });
             Response response = await client.TranslateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
-            Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
         }
 
         [Test]
@@ -334,13 +347,14 @@ language = "cs",
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(new TranslateBody[]
+            TranslateBody body = new TranslateBody(new TranslateInputItem[]
             {
-new TranslateBody("This is a test.", new TranslateTarget[]
+new TranslateInputItem("This is a test.", new TranslateTarget[]
 {
 new TranslateTarget("cs")
 })
             });
+            Response<TranslationResult> response = client.Translate(body);
         }
 
         [Test]
@@ -350,13 +364,14 @@ new TranslateTarget("cs")
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(new TranslateBody[]
+            TranslateBody body = new TranslateBody(new TranslateInputItem[]
             {
-new TranslateBody("This is a test.", new TranslateTarget[]
+new TranslateInputItem("This is a test.", new TranslateTarget[]
 {
 new TranslateTarget("cs")
 })
             });
+            Response<TranslationResult> response = await client.TranslateAsync(body);
         }
     }
 }

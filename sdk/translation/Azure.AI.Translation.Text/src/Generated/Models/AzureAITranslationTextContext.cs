@@ -22,11 +22,15 @@ namespace Azure.AI.Translation.Text
     [ModelReaderWriterBuildable(typeof(TargetDictionaryLanguage))]
     [ModelReaderWriterBuildable(typeof(TranslateBody))]
     [ModelReaderWriterBuildable(typeof(TranslatedTextItem))]
+    [ModelReaderWriterBuildable(typeof(TranslateInputItem))]
     [ModelReaderWriterBuildable(typeof(TranslateTarget))]
     [ModelReaderWriterBuildable(typeof(TranslationLanguage))]
+    [ModelReaderWriterBuildable(typeof(TranslationResult))]
     [ModelReaderWriterBuildable(typeof(TranslationText))]
     [ModelReaderWriterBuildable(typeof(TransliterableScript))]
+    [ModelReaderWriterBuildable(typeof(TransliterateBody))]
     [ModelReaderWriterBuildable(typeof(TransliteratedText))]
+    [ModelReaderWriterBuildable(typeof(TransliterateResult))]
     [ModelReaderWriterBuildable(typeof(TransliterationLanguage))]
     public partial class AzureAITranslationTextContext : ModelReaderWriterContext
     {
