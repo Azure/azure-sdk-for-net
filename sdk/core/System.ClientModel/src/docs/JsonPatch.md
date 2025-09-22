@@ -74,7 +74,7 @@ original json used to construct the JsonPatch.
 Get allows you to pull primitive values as well as raw json.  For the primitive values it has an overload GetNullableValue to allow for things like int?.
 
 ```c#
-JsonPatch jp = new("{\"x\":{\"y\":[null,null,{\"z\":5}]}}"u8.ToArray();
+JsonPatch jp = new("{\"x\":{\"y\":[null,null,{\"z\":5}]}}"u8.ToArray());
 int value = jp.GetInt32("$.x.y[2].z"u8);
 Console.WriteLine(value); // 5
 
