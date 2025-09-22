@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.TypeSpec.Generator.Snippets;
 
 namespace Azure.Generator.Management.Models
 {
@@ -35,6 +36,7 @@ namespace Azure.Generator.Management.Models
         /// Returns true if this segment is a constant segment (i.e., it is not enclosed in curly braces).
         /// </summary>
         public bool IsConstant => _isConstant;
+        public bool IsVariable => !_isConstant;
 
         /// <summary>
         /// Returns the variable name if this segment is a variable segment (i.e., it is enclosed in curly braces).

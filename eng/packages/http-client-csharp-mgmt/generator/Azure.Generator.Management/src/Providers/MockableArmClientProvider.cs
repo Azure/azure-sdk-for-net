@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -33,7 +34,14 @@ namespace Azure.Generator.Management.Providers
                 methods.Add(BuildGetResourceIdMethodForResource(resource));
                 if (resource.IsExtensionResource)
                 {
-                    methods.AddRange(BuildMethodsForExtensionResource(resource));
+                    if (!resource.IsSingleton)
+                    {
+                        methods.AddRange(BuildMethodsForExtensionNoneSingletonResource(resource));
+                    }
+                    else
+                    {
+                        methods.AddRange(BuildMethodsForExtensionSingletonResource(resource));
+                    }
                 }
             }
 
@@ -66,8 +74,7 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, body, this);
         }
 
-        //TODO: handle singleton extension resource case when we actually see it
-        private IList<MethodProvider> BuildMethodsForExtensionResource(ResourceClientProvider resource)
+        private IList<MethodProvider> BuildMethodsForExtensionNoneSingletonResource(ResourceClientProvider resource)
         {
             var result = new List<MethodProvider>();
             var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));
@@ -129,6 +136,41 @@ namespace Azure.Generator.Management.Providers
                     Return(This.Invoke(collectionGetSignature).Invoke(resourceGetMethod.Signature)),
                     enclosingType);
             }
+        }
+
+        private IList<MethodProvider> BuildMethodsForExtensionSingletonResource(ResourceClientProvider resource)
+        {
+            var result = new List<MethodProvider>();
+
+            var RequestPathPattern = resource.ContextualPath;
+
+            // if code reaches here, assert RequestPathPattern's first segment is a variable, and no remaining segments are variables
+            Debug.Assert(RequestPathPattern.Count > 0 && RequestPathPattern[0].IsVariable && !RequestPathPattern.Skip(1).Any(s => s.IsVariable),
+                $"Cannot build Get method for singleton extension resource {resource.Type} with path {RequestPathPattern}");
+
+            var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+            var signature = new MethodSignature(
+                $"{resource.FactoryMethodSignature.Name}",
+                $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the ArmClient",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                resource.Type,
+                $"Returns a {resource.Type:C} object.",
+                [scopeParameter]);
+
+            var body = new MethodBodyStatement[]
+            {
+                Return(New.Instance(resource.Type,
+                    [
+                        This.As<ArmResource>().Client(),
+                        BuildSingletonResourceIdentifier(scopeParameter.As<ResourceIdentifier>(), resource.ResourceTypeValue, resource.SingletonResourceName!)
+                    ]))
+            };
+
+            var getByScopeMethod = new MethodProvider(signature, body, this);
+            result.Add(getByScopeMethod);
+
+            // Build methods for singleton extension resources
+            return result;
         }
     }
 }
