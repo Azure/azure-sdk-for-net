@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        /// <param name="audioOffsetMs"></param>
+        /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
         /// <param name="visemeId"></param>
         internal SessionUpdateResponseAnimationVisemeDelta(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(ServerEventType.ResponseAnimationVisemeDelta)
         {
@@ -38,7 +38,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        /// <param name="audioOffsetMs"></param>
+        /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
         /// <param name="visemeId"></param>
         internal SessionUpdateResponseAnimationVisemeDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(@type, eventId, additionalBinaryDataProperties)
         {
@@ -61,9 +61,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the ContentIndex. </summary>
         public int ContentIndex { get; }
-
-        /// <summary> Gets the AudioOffsetMs. </summary>
-        public int AudioOffsetMs { get; }
 
         /// <summary> Gets the VisemeId. </summary>
         public int VisemeId { get; }
