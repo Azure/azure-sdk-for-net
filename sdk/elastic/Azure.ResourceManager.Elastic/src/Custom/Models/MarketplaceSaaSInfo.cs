@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    // Added this custom code due to the change of MarketplaceSaaSInfoMarketplaceSubscription model in api version 2025-06-01 to have more properties
+    // Added this custom code because the MarketplaceSaaSInfoMarketplaceSubscription model gained additional properties in API version 2025-06-01.
     public partial class MarketplaceSaaSInfo
     {
         /// <summary> Gets Id. </summary>
