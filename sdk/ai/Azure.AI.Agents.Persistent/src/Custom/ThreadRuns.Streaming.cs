@@ -426,7 +426,7 @@ namespace Azure.AI.Agents.Persistent
                 serializedAdditionalRawData: null);
             async Task<Response> sendRequestAsync() => await SubmitToolOutputsInternalAsync(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
             AsyncCollectionResult<StreamingUpdate> submitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currRetry) =>
-                this.SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, currRetry, CancellationToken.None.ToRequestContext(), null);
+                this.SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, currRetry, CancellationToken.None.ToRequestContext());
             async Task<Response<ThreadRun>> cancelRunAsync(string runId) => await this.CancelRunAsync(run.ThreadId, runId).ConfigureAwait(false);
 
             return new AsyncStreamingUpdateCollection(
