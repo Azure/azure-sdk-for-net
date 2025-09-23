@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_QueueServicesGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/QueueServicesGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/QueueServicesGet.json
             // this example is just showing the usage of "QueueServices_GetServiceProperties" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this QueueServiceResource created on azure
             // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4410";
             string accountName = "sto8607";
             ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_QueueServicesPut()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/QueueServicesPut.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/QueueServicesPut.json
             // this example is just showing the usage of "QueueServices_SetServiceProperties" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this QueueServiceResource created on azure
             // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4410";
             string accountName = "sto8607";
             ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

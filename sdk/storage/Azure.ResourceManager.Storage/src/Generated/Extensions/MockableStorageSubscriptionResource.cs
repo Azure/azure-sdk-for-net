@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Storage.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableStorageSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _skusClientDiagnostics;
-        private SkusRestOperations _skusRestClient;
         private ClientDiagnostics _storageAccountClientDiagnostics;
         private StorageAccountsRestOperations _storageAccountRestClient;
         private ClientDiagnostics _deletedAccountClientDiagnostics;
         private DeletedAccountsRestOperations _deletedAccountRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
         private UsagesRestOperations _usagesRestClient;
+        private ClientDiagnostics _skusClientDiagnostics;
+        private SkusRestOperations _skusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableStorageSubscriptionResource"/> class for mocking. </summary>
         protected MockableStorageSubscriptionResource()
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Storage.Mocking
         {
         }
 
-        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics StorageAccountClientDiagnostics => _storageAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, Diagnostics);
         private StorageAccountsRestOperations StorageAccountRestClient => _storageAccountRestClient ??= new StorageAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageAccountResource.ResourceType));
         private ClientDiagnostics DeletedAccountClientDiagnostics => _deletedAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage", DeletedAccountResource.ResourceType.Namespace, Diagnostics);
         private DeletedAccountsRestOperations DeletedAccountRestClient => _deletedAccountRestClient ??= new DeletedAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeletedAccountResource.ResourceType));
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted storage account. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted storage account. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
@@ -123,56 +123,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         public virtual Response<DeletedAccountResource> GetDeletedAccount(AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             return GetDeletedAccounts().Get(location, deletedAccountName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the available SKUs supported by Microsoft.Storage for given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageSkuInformation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageSkuInformation> GetSkusAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StorageSkuInformation.DeserializeStorageSkuInformation(e), SkusClientDiagnostics, Pipeline, "MockableStorageSubscriptionResource.GetSkus", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the available SKUs supported by Microsoft.Storage for given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageSkuInformation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageSkuInformation> GetSkus(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StorageSkuInformation.DeserializeStorageSkuInformation(e), SkusClientDiagnostics, Pipeline, "MockableStorageSubscriptionResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -188,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,7 +146,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -230,7 +180,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -238,7 +188,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -272,7 +222,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,7 +252,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,7 +282,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,7 +312,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -392,17 +342,18 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the Azure Storage resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StorageUsage.DeserializeStorageUsage(e), UsagesClientDiagnostics, Pipeline, "MockableStorageSubscriptionResource.GetUsagesByLocation", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StorageUsage.DeserializeStorageUsage(e), UsagesClientDiagnostics, Pipeline, "MockableStorageSubscriptionResource.GetUsagesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -418,17 +369,70 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the Azure Storage resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StorageUsage.DeserializeStorageUsage(e), UsagesClientDiagnostics, Pipeline, "MockableStorageSubscriptionResource.GetUsagesByLocation", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StorageUsage.DeserializeStorageUsage(e), UsagesClientDiagnostics, Pipeline, "MockableStorageSubscriptionResource.GetUsagesByLocation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the available SKUs supported by Microsoft.Storage for given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="StorageSkuInformation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageSkuInformation> GetSkusAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StorageSkuInformation.DeserializeStorageSkuInformation(e), SkusClientDiagnostics, Pipeline, "MockableStorageSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the available SKUs supported by Microsoft.Storage for given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageSkuInformation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageSkuInformation> GetSkus(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StorageSkuInformation.DeserializeStorageSkuInformation(e), SkusClientDiagnostics, Pipeline, "MockableStorageSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
         }
     }
 }
