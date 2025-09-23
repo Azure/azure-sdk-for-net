@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning;
 
@@ -58,7 +59,15 @@ public class BicepDictionary<T> :
         {
             _values = typed._values;
         }
+
+        // Everything else is handled by the base Assign
         base.Assign(source);
+
+        // handle self in all the items
+        foreach (var kv in _values)
+        {
+            SetSelfForItem(kv.Value, kv.Key);
+        }
     }
 
     /// <summary>
@@ -68,6 +77,22 @@ public class BicepDictionary<T> :
     public static implicit operator BicepDictionary<T>(ProvisioningVariable reference) =>
         new(new BicepValueReference(reference, "{}"), BicepSyntax.Var(reference.BicepIdentifier)) { _isSecure = reference is ProvisioningParameter p && p.IsSecure };
 
+    private BicepValueReference? GetItemSelf(string key) =>
+        _self is not null
+            ? new BicepDictionaryValueReference(_self.Construct, _self.PropertyName, _self.BicepPath?.ToArray(), key)
+            : null;
+
+    private void SetSelfForItem(BicepValue<T> item, string key)
+    {
+        var itemSelf = GetItemSelf(key);
+        item.SetSelf(itemSelf);
+    }
+
+    private void RemoveSelfForItem(BicepValue<T> item)
+    {
+        item.SetSelf(null);
+    }
+
     /// <summary>
     /// Gets or sets a value in a BicepDictionary.
     /// </summary>
@@ -75,16 +100,55 @@ public class BicepDictionary<T> :
     /// <returns>The value.</returns>
     public BicepValue<T> this[string key]
     {
-        get => _values[key];
-        set => _values[key] = value;
+        get
+        {
+            if (_values.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+            // the key does not exist, we put a value factory as the literal value of this bicep value
+            // this would blow up when we try to compile it later, but it would be fine if we convert it to an expression
+            return new BicepValue<T>(GetItemSelf(key), () => _values[key].Value);
+        }
+
+        set
+        {
+            _values[key] = value;
+            // update the _self pointing the new item
+            SetSelfForItem(value, key);
+        }
     }
 
-    public void Add(string key, BicepValue<T> value) => _values.Add(key, value);
-    public void Add(KeyValuePair<string, BicepValue<T>> item) => _values.Add(item.Key, item.Value);
+    public void Add(string key, BicepValue<T> value)
+    {
+        _values.Add(key, value);
+        // update the _self pointing the new item
+        SetSelfForItem(value, key);
+    }
 
-    // TODO: Decide whether it's important to "unlink" resources on removal
-    public bool Remove(string key) => _values.Remove(key);
-    public void Clear() => _values.Clear();
+    public void Add(KeyValuePair<string, BicepValue<T>> item)
+    {
+        _values.Add(item.Key, item.Value);
+        // update the _self pointing the new item
+        SetSelfForItem(item.Value, item.Key);
+    }
+
+    public bool Remove(string key)
+    {
+        var removedItem = _values[key];
+        // maintain the self reference for the removed item
+        RemoveSelfForItem(removedItem);
+        return _values.Remove(key);
+    }
+
+    public void Clear()
+    {
+        foreach (var kv in _values)
+        {
+            RemoveSelfForItem(kv.Value);
+        }
+        _values.Clear();
+    }
 
     public ICollection<string> Keys => _values.Keys;
     public ICollection<BicepValue<T>> Values => _values.Values;

@@ -49,12 +49,23 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
     public override string ToString() => GetReference(throwIfNoRoot: false).ToString();
 }
 
-internal class BicepListValueReference(ProvisionableConstruct construct, string propertyName, string[]? path, int index) : BicepValueReference(construct, propertyName, path)
+internal class BicepListValueReference(ProvisionableConstruct construct, string propertyName, string[]? path, int index)
+    : BicepValueReference(construct, propertyName, path)
 {
     public int Index { get; } = index;
 
     internal override BicepExpression GetReference(bool throwIfNoRoot = true)
     {
         return base.GetReference(throwIfNoRoot).Index(new IntLiteralExpression(Index));
+    }
+}
+
+internal class BicepDictionaryValueReference(ProvisionableConstruct construct, string propertyName, string[]? path, string key)
+    : BicepValueReference(construct, propertyName, path)
+{
+    public string Key { get; } = key;
+    internal override BicepExpression GetReference(bool throwIfNoRoot = true)
+    {
+        return base.GetReference(throwIfNoRoot).Index(Key);
     }
 }

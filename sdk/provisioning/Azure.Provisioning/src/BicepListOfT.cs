@@ -110,8 +110,7 @@ public class BicepList<T> :
                 }
                 // the index is out of range, we put a value factory as the literal value of this bicep value
                 // this would blow up when we try to compile it later, but it would be fine if we convert it to an expression
-                var value = new BicepValue<T>(GetItemSelf(index), () => _values[index].Value);
-                return value;
+                return new BicepValue<T>(GetItemSelf(index), () => _values[index].Value);
             }
         }
         set
@@ -133,11 +132,8 @@ public class BicepList<T> :
 
     private void SetSelfForItem(BicepValue<T> item, int index)
     {
-        if (_self is not null)
-        {
-            var itemSelf = GetItemSelf(index);
-            item.SetSelf(itemSelf);
-        }
+        var itemSelf = GetItemSelf(index);
+        item.SetSelf(itemSelf);
     }
 
     private void RemoveSelfForItem(BicepValue<T> item)
@@ -188,12 +184,7 @@ public class BicepList<T> :
         int index = _values.IndexOf(item);
         if (index >= 0)
         {
-            RemoveSelfForItem(item);
             RemoveAt(index);
-            for (int i = index; i < _values.Count; i++)
-            {
-                SetSelfForItem(_values[i], i);
-            }
             return true;
         }
         return false;
