@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.TypeSpec.Generator.Snippets;
 
 namespace Azure.Generator.Management.Models
 {
