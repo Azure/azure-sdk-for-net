@@ -637,6 +637,11 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Retrieves an existing agent. </summary>
+        /// <param name="assistantId"> Identifier of the agent. </param>
+        /// <param name="requestContext"> The request context to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         internal Response<PersistentAgent> InternalGetAgent(string assistantId, RequestContext requestContext)
         {
             Response response = GetAgent(assistantId, requestContext);
