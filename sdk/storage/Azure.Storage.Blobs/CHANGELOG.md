@@ -8,6 +8,17 @@
 - Added support for Principal-Bound Identity User Delegation SAS
 - Added support for conditional headers on BlobBaseClient.GetTags(), .GetTagsAsync(), .SetTags(), and .SetTagsAsync().
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.25.1 (2025-09-24)
+
+### Bugs Fixed
+- Fixed bug for processing partitioned downloads for empty blobs with content validation enabled.
+
 ## 12.25.0 (2025-07-14)
 
 ### Features Added
