@@ -19,12 +19,15 @@ namespace MgmtTypeSpec.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
+        /// <param name="something"> something. </param>
         /// <param name="prop1"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prop1"/> is null. </exception>
-        public FooProperties(IEnumerable<string> prop1)
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/> or <paramref name="prop1"/> is null. </exception>
+        public FooProperties(string something, IEnumerable<string> prop1)
         {
+            Argument.AssertNotNull(something, nameof(something));
             Argument.AssertNotNull(prop1, nameof(prop1));
 
+            Something = something;
             Prop1 = prop1.ToList();
             Prop2 = new ChangeTrackingList<int>();
         }
@@ -66,9 +69,9 @@ namespace MgmtTypeSpec.Models
         public double? DoubleValue { get; set; }
 
         /// <summary> Gets the Prop1. </summary>
-        public IList<string> Prop1 { get; }
+        public IList<string> Prop1 { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets the Prop2. </summary>
-        public IList<int> Prop2 { get; }
+        public IList<int> Prop2 { get; } = new ChangeTrackingList<int>();
     }
 }

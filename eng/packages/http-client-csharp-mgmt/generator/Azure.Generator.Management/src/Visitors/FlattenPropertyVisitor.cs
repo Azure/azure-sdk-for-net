@@ -39,57 +39,7 @@ namespace Azure.Generator.Management.Visitors
                 UpdateModelFactory(modelFactory);
             }
 
-            if (type is ModelProvider model && _collectionTypeProperties.TryGetValue(model, out var value))
-            {
-                foreach (var internalProperty in value)
-                {
-                    var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-                    if (publicConstructor is null)
-                    {
-                        continue;
-                    }
-
-                    var internalPropertyTypeConstructor = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-                    var initializationParameters = PopulateInitializationParameters(publicConstructor, internalPropertyTypeConstructor);
-                    var initialization = internalProperty.Assign(New.Instance(internalProperty.Type, initializationParameters)).Terminate();
-                    // If the property is a collection type, we need to ensure that it is initialized
-                    if (publicConstructor.BodyStatements is null)
-                    {
-                        publicConstructor.Update(bodyStatements: new List<MethodBodyStatement> { initialization });
-                    }
-                    else
-                    {
-                        var body = publicConstructor.BodyStatements.ToList();
-                        body.Add(initialization);
-                        publicConstructor.Update(bodyStatements: body);
-                    }
-                }
-            }
-
             return base.PostVisitType(type);
-        }
-
-        private ValueExpression[] PopulateInitializationParameters(ConstructorProvider publicConstructor, ConstructorProvider internalPropertyTypeConstructor)
-        {
-            var parameters = new List<ValueExpression>();
-            foreach (var parameter in internalPropertyTypeConstructor.Signature.Parameters)
-            {
-                if (parameter.Type.IsList)
-                {
-                    parameters.Add(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments)));
-                }
-                else if (parameter.Type.IsDictionary)
-                {
-                    parameters.Add(New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(parameter.Type.Arguments)));
-                }
-                else
-                {
-                    var constructorParameter = publicConstructor.Signature.Parameters.Single(p => p.Name.Equals(parameter.Name, System.StringComparison.OrdinalIgnoreCase));
-
-                    parameters.Add(constructorParameter);
-                }
-            }
-            return parameters.ToArray();
         }
 
         private void UpdateModelFactory(ModelFactoryProvider modelFactory)
@@ -301,7 +251,6 @@ namespace Azure.Generator.Management.Visitors
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, (Dictionary<string, List<FlattenPropertyInfo>>, Dictionary<CSharpType, List<FlattenPropertyInfo>>)> _flattenedModelTypes = new(new CSharpTypeNameComparer());
-        private readonly Dictionary<ModelProvider, HashSet<PropertyProvider>> _collectionTypeProperties = new();
 
         private void FlattenModel(ModelProvider model)
         {
@@ -376,7 +325,7 @@ namespace Azure.Generator.Management.Visitors
                     {
                         continue;
                     }
-                    CollectFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
+                    UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
                     // flatten the property to public and associate it with the internal property
                     var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
                     var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
@@ -456,20 +405,18 @@ namespace Azure.Generator.Management.Visitors
             return isFlattened;
         }
 
-        // TODO: workaround to add internal setter, we should remove this once we add lazy initialization for collection type properties
-        private void CollectFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, ModelProvider modelProvider)
+        private void UpdateFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, ModelProvider modelProvider)
         {
             if (innerProperty.Type.IsCollection)
             {
-                if (_collectionTypeProperties.TryGetValue(modelProvider, out var value))
+                // add initialization for collection type property
+                if (innerProperty.Type.IsList)
                 {
-                    value.Add(internalProperty);
+                    innerProperty.Update(body: new AutoPropertyBody(false, InitializationExpression: New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(innerProperty.Type.Arguments))));
                 }
-                else
+                else if (innerProperty.Type.IsDictionary)
                 {
-                    var set = new HashSet<PropertyProvider>();
-                    set.Add(internalProperty);
-                    _collectionTypeProperties.Add(modelProvider, set);
+                    innerProperty.Update(body: new AutoPropertyBody(false, InitializationExpression: New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(innerProperty.Type.Arguments))));
                 }
             }
         }

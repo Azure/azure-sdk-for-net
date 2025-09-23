@@ -46,11 +46,8 @@ namespace MgmtTypeSpec.Models
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Something))
-            {
-                writer.WritePropertyName("something"u8);
-                writer.WriteStringValue(Something);
-            }
+            writer.WritePropertyName("something"u8);
+            writer.WriteStringValue(Something);
             if (Optional.IsDefined(BoolValue))
             {
                 writer.WritePropertyName("boolValue"u8);

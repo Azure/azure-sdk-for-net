@@ -24,7 +24,6 @@ namespace MgmtTypeSpec
         /// <param name="location"> The geo-location where the resource lives. </param>
         public FooData(AzureLocation location) : base(location)
         {
-            Properties = new FooProperties(new ChangeTrackingList<string>());
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
@@ -55,7 +54,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceUri;
+                return Properties.ServiceUri;
             }
             set
             {
@@ -72,7 +71,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.Something;
+                return Properties.Something;
             }
             set
             {
@@ -89,7 +88,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.BoolValue;
+                return Properties.BoolValue;
             }
             set
             {
@@ -106,7 +105,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.FloatValue;
+                return Properties.FloatValue;
             }
             set
             {
@@ -123,7 +122,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.DoubleValue;
+                return Properties.DoubleValue;
             }
             set
             {
@@ -140,7 +139,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.Prop1;
+                return Properties.Prop1;
             }
         }
 
@@ -149,7 +148,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.Prop2;
+                return Properties.Prop2;
             }
         }
     }

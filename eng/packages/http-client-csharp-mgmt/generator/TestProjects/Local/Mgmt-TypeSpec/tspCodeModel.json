@@ -4033,7 +4033,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "optional": true,
+                "optional": false,
                 "readOnly": false,
                 "discriminator": false,
                 "flatten": false,

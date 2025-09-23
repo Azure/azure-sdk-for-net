@@ -45,7 +45,7 @@ namespace MgmtTypeSpec.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Something;
+                return Properties.Something;
             }
             set
             {

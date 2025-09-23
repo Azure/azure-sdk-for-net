@@ -20,7 +20,7 @@ model FooProperties {
   serviceUrl?: url;
 
   /** something */
-  something?: string;
+  something: string;
 
   /** boolean value */
   boolValue?: boolean;

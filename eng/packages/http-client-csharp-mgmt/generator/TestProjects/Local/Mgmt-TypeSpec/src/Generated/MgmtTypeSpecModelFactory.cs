@@ -41,7 +41,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets the Prop2. </param>
         /// <param name="extendedLocation"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prop1"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/> or <paramref name="prop1"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
         public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, ExtendedLocation extendedLocation = default)
         {

@@ -45,7 +45,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.Left;
+                return Properties.Left;
             }
             set
             {
