@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Provisioning.Resources;
 using NUnit.Framework;
 
@@ -50,25 +51,27 @@ public class BicepValueTests
     }
 
     [Test]
-    public void ValidateTimeSpanPropertyWithFormat()
+    public async Task ValidateTimeSpanPropertyWithFormat()
     {
-        var infra = new Infrastructure();
-        var powershell = new AzurePowerShellScript("script", "2023-08-01")
-        {
-            RetentionInterval = new TimeSpan(11, 22, 33),
-            AzPowerShellVersion = "10.0",
-            ScriptContent = "echo 'Hello, world!'",
-        };
-
-        infra.Add(powershell);
-        var plan = infra.Build();
-
-        var result = plan.Compile();
-        Assert.AreEqual(
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var powershell = new AzurePowerShellScript("script", "2023-08-01")
+                {
+                    RetentionInterval = TimeSpan.FromHours(1) + TimeSpan.FromMinutes(2) + TimeSpan.FromSeconds(3),
+                    AzPowerShellVersion = "10.0",
+                    ScriptContent = "echo 'Hello, world!'",
+                };
+                infra.Add(powershell);
+                return infra;
+            })
+            .Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
-
+            
             resource script 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
               name: take('script${uniqueString(resourceGroup().id)}', 24)
               location: location
@@ -79,6 +82,6 @@ public class BicepValueTests
                 scriptContent: 'echo \'Hello, world!\''
               }
             }
-            """.NormalizeLineEndings(), result.Values.First().NormalizeLineEndings());
+            """);
     }
 }
