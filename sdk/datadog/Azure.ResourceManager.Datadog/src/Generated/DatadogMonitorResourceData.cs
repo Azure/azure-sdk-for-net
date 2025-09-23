@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties specific to the monitor resource. </param>
-        /// <param name="sku"> Represents the SKU of a resource. </param>
+        /// <param name="sku"></param>
         /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned, UserAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DatadogMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MonitorProperties properties, ResourceSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary> Properties specific to the monitor resource. </summary>
         public MonitorProperties Properties { get; set; }
-        /// <summary> Represents the SKU of a resource. </summary>
+        /// <summary> Gets or sets the sku. </summary>
         internal ResourceSku Sku { get; set; }
-        /// <summary> The name of the SKU. </summary>
+        /// <summary> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;

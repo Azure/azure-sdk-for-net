@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of <see cref="MonitorUpdateProperties"/>. </summary>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="isCspm"> The new cloud security posture management value of the monitor resource. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </param>
+        /// <param name="isResourceCollection"> The new resource collection value of the monitor resource. This collects configuration information for all resources in a subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorUpdateProperties(MonitoringStatus? monitoringStatus, bool? isCspm, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorUpdateProperties(MonitoringStatus? monitoringStatus, bool? isCspm, bool? isResourceCollection, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MonitoringStatus = monitoringStatus;
             IsCspm = isCspm;
+            IsResourceCollection = isResourceCollection;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public MonitoringStatus? MonitoringStatus { get; set; }
         /// <summary> The new cloud security posture management value of the monitor resource. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </summary>
         public bool? IsCspm { get; set; }
+        /// <summary> The new resource collection value of the monitor resource. This collects configuration information for all resources in a subscription. </summary>
+        public bool? IsResourceCollection { get; set; }
     }
 }

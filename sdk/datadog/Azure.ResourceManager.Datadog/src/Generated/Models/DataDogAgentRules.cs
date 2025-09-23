@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> The ResourceSku. </summary>
-    internal partial class ResourceSku
+    /// <summary> Set of rules for managing agents for the Monitor resource. </summary>
+    public partial class DataDogAgentRules
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,26 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
-        /// <param name="name"> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResourceSku(string name)
+        /// <summary> Initializes a new instance of <see cref="DataDogAgentRules"/>. </summary>
+        public DataDogAgentRules()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
+            FilteringTags = new ChangeTrackingList<FilteringTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
-        /// <param name="name"> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </param>
+        /// <summary> Initializes a new instance of <see cref="DataDogAgentRules"/>. </summary>
+        /// <param name="isAgentMonitoringEnabled"> Flag specifying if agent monitoring should be enabled for the Monitor resource. </param>
+        /// <param name="filteringTags"> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSku(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataDogAgentRules(bool? isAgentMonitoringEnabled, IList<FilteringTag> filteringTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
+            IsAgentMonitoringEnabled = isAgentMonitoringEnabled;
+            FilteringTags = filteringTags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/> for deserialization. </summary>
-        internal ResourceSku()
-        {
-        }
-
-        /// <summary> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </summary>
-        public string Name { get; set; }
+        /// <summary> Flag specifying if agent monitoring should be enabled for the Monitor resource. </summary>
+        public bool? IsAgentMonitoringEnabled { get; set; }
+        /// <summary> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>
+        public IList<FilteringTag> FilteringTags { get; }
     }
 }

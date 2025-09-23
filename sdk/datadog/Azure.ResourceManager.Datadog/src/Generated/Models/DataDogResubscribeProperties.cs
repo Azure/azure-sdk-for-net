@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> The ResourceSku. </summary>
-    internal partial class ResourceSku
+    /// <summary> Resubscribe Properties. </summary>
+    public partial class DataDogResubscribeProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +46,36 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
-        /// <param name="name"> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResourceSku(string name)
+        /// <summary> Initializes a new instance of <see cref="DataDogResubscribeProperties"/>. </summary>
+        public DataDogResubscribeProperties()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
-        /// <param name="name"> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </param>
+        /// <summary> Initializes a new instance of <see cref="DataDogResubscribeProperties"/>. </summary>
+        /// <param name="sku"></param>
+        /// <param name="azureSubscriptionId"> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </param>
+        /// <param name="resourceGroup"> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSku(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataDogResubscribeProperties(ResourceSku sku, ResourceIdentifier azureSubscriptionId, string resourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
+            Sku = sku;
+            AzureSubscriptionId = azureSubscriptionId;
+            ResourceGroup = resourceGroup;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/> for deserialization. </summary>
-        internal ResourceSku()
+        /// <summary> Gets or sets the sku. </summary>
+        internal ResourceSku Sku { get; set; }
+        /// <summary> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </summary>
+        public string SkuName
         {
+            get => Sku is null ? default : Sku.Name;
+            set => Sku = new ResourceSku(value);
         }
 
-        /// <summary> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </summary>
-        public string Name { get; set; }
+        /// <summary> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </summary>
+        public ResourceIdentifier AzureSubscriptionId { get; set; }
+        /// <summary> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </summary>
+        public string ResourceGroup { get; set; }
     }
 }

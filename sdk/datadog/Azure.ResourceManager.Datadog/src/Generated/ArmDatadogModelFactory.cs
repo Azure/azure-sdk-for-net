@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties specific to the monitor resource. </param>
-        /// <param name="skuName"> Represents the SKU of a resource. </param>
+        /// <param name="skuName"></param>
         /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned, UserAssigned. </param>
         /// <returns> A new <see cref="Datadog.DatadogMonitorResourceData"/> instance for mocking. </returns>
         public static DatadogMonitorResourceData DatadogMonitorResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MonitorProperties properties = null, string skuName = null, ManagedServiceIdentity identity = null)
@@ -221,10 +221,11 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="provisioningState"></param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRulesFilteringTags"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="agentRules"> Set of rules for managing agents for the Monitor resource. </param>
         /// <param name="isAutomuting"> Configuration to enable/disable auto-muting flag. </param>
         /// <param name="isCustomMetrics"> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </param>
         /// <returns> A new <see cref="Models.MonitoringTagRulesProperties"/> instance for mocking. </returns>
-        public static MonitoringTagRulesProperties MonitoringTagRulesProperties(ProvisioningState? provisioningState = null, LogRules logRules = null, IEnumerable<FilteringTag> metricRulesFilteringTags = null, bool? isAutomuting = null, bool? isCustomMetrics = null)
+        public static MonitoringTagRulesProperties MonitoringTagRulesProperties(ProvisioningState? provisioningState = null, LogRules logRules = null, IEnumerable<FilteringTag> metricRulesFilteringTags = null, DataDogAgentRules agentRules = null, bool? isAutomuting = null, bool? isCustomMetrics = null)
         {
             metricRulesFilteringTags ??= new List<FilteringTag>();
 
@@ -232,6 +233,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 provisioningState,
                 logRules,
                 metricRulesFilteringTags != null ? new MetricRules(metricRulesFilteringTags?.ToList(), serializedAdditionalRawData: null) : null,
+                agentRules,
                 isAutomuting,
                 isCustomMetrics,
                 serializedAdditionalRawData: null);

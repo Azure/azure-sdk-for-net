@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_MonitorsAddMonitoredSubscriptions()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/MonitoredSubscriptions_CreateorUpdate.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/MonitoredSubscriptions_CreateorUpdate.json
             // this example is just showing the usage of "MonitoredSubscriptions_CreateorUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +115,7 @@ IsAutomuting = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGetMonitoredSubscriptions()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/MonitoredSubscriptions_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/MonitoredSubscriptions_Get.json
             // this example is just showing the usage of "MonitoredSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ IsAutomuting = true,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_MonitorsGetMonitoredSubscriptions()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/MonitoredSubscriptions_List.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/MonitoredSubscriptions_List.json
             // this example is just showing the usage of "MonitoredSubscriptions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +185,7 @@ IsAutomuting = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_MonitorsGetMonitoredSubscriptions()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/MonitoredSubscriptions_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/MonitoredSubscriptions_Get.json
             // this example is just showing the usage of "MonitoredSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -215,7 +215,7 @@ IsAutomuting = true,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_MonitorsGetMonitoredSubscriptions()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2023-10-20/examples/MonitoredSubscriptions_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/MonitoredSubscriptions_Get.json
             // this example is just showing the usage of "MonitoredSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

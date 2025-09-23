@@ -54,14 +54,16 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="provisioningState"></param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="agentRules"> Set of rules for managing agents for the Monitor resource. </param>
         /// <param name="isAutomuting"> Configuration to enable/disable auto-muting flag. </param>
         /// <param name="isCustomMetrics"> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringTagRulesProperties(ProvisioningState? provisioningState, LogRules logRules, MetricRules metricRules, bool? isAutomuting, bool? isCustomMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoringTagRulesProperties(ProvisioningState? provisioningState, LogRules logRules, MetricRules metricRules, DataDogAgentRules agentRules, bool? isAutomuting, bool? isCustomMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             LogRules = logRules;
             MetricRules = metricRules;
+            AgentRules = agentRules;
             IsAutomuting = isAutomuting;
             IsCustomMetrics = isCustomMetrics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -84,6 +86,8 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
+        /// <summary> Set of rules for managing agents for the Monitor resource. </summary>
+        public DataDogAgentRules AgentRules { get; set; }
         /// <summary> Configuration to enable/disable auto-muting flag. </summary>
         public bool? IsAutomuting { get; set; }
         /// <summary> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </summary>

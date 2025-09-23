@@ -8,8 +8,9 @@ azure-arm: true
 csharp: true
 library-name: Datadog
 namespace: Azure.ResourceManager.Datadog
-require: https://github.com/Azure/azure-rest-api-specs/blob/c37407dc4b8c49dd01fe73d9278e5c21beea169c/specification/datadog/resource-manager/readme.md
-# tag: package-2023-10
+require: https://github.com/Azure/azure-rest-api-specs-pr/blob/30f23d89b
+  692f80b495fb7f45c3e695872460bd1/specification/datadog/resource-manager/readme.md
+# tag: package-2025-06   rpaas
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -73,13 +74,19 @@ rename-mapping:
   MarketplaceSaaSInfo.subscribed: IsSubscribed
   DatadogAgreementProperties.accepted: IsAccepted
   DatadogOrganizationProperties.cspm: IsCspm
+  DatadogOrganizationProperties.resourceCollection: IsResourceCollection
   LogRules.sendAadLogs: IsSendAadLogs
   LogRules.sendSubscriptionLogs: IsSendSubscriptionLogs
   LogRules.sendResourceLogs: IsSendResourceLogs
   MonitorUpdateProperties.cspm: IsCspm
+  MonitorUpdateProperties.resourceCollection: IsResourceCollection
   MonitoredResource.sendingMetrics: IsSendingMetrics
   MonitoredResource.sendingLogs: IsSendingLogs
   MonitoringTagRulesProperties.automuting: IsAutomuting
   MonitoringTagRulesProperties.customMetrics: IsCustomMetrics
+  AgentRules: DataDogAgentRules
+  AgentRules.enableAgentMonitoring: IsAgentMonitoringEnabled
+  ResubscribeProperties: DataDogResubscribeProperties
+  ResubscribeProperties.azureSubscriptionId: -|arm-id
 
 ```

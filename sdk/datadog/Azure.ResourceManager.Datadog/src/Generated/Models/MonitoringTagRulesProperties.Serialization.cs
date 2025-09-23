@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules, options);
             }
+            if (Optional.IsDefined(AgentRules))
+            {
+                writer.WritePropertyName("agentRules"u8);
+                writer.WriteObjectValue(AgentRules, options);
+            }
             if (Optional.IsDefined(IsAutomuting))
             {
                 writer.WritePropertyName("automuting"u8);
@@ -99,6 +104,7 @@ namespace Azure.ResourceManager.Datadog.Models
             ProvisioningState? provisioningState = default;
             LogRules logRules = default;
             MetricRules metricRules = default;
+            DataDogAgentRules agentRules = default;
             bool? automuting = default;
             bool? customMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -132,6 +138,15 @@ namespace Azure.ResourceManager.Datadog.Models
                     metricRules = MetricRules.DeserializeMetricRules(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("agentRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentRules = DataDogAgentRules.DeserializeDataDogAgentRules(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("automuting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -160,6 +175,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 provisioningState,
                 logRules,
                 metricRules,
+                agentRules,
                 automuting,
                 customMetrics,
                 serializedAdditionalRawData);
