@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a viseme ID delta update for animation based on audio. </summary>
-    public partial class SessionUpdateResponseAnimationVisemeDelta : IJsonModel<SessionUpdateResponseAnimationVisemeDelta>
+    public partial class SessionUpdateResponseAnimationVisemeDelta : global::.SessionUpdate, IJsonModel<SessionUpdateResponseAnimationVisemeDelta>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationVisemeDelta"/> for deserialization. </summary>
         internal SessionUpdateResponseAnimationVisemeDelta()
@@ -31,14 +31,13 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAnimationVisemeDelta>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SessionUpdateResponseAnimationVisemeDelta)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("response_id"u8);
             writer.WriteStringValue(ResponseId);
             writer.WritePropertyName("item_id"u8);
@@ -59,7 +58,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAnimationVisemeDelta>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -150,7 +149,7 @@ namespace Azure.AI.VoiceLive
         BinaryData IPersistableModel<SessionUpdateResponseAnimationVisemeDelta>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAnimationVisemeDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -168,7 +167,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAnimationVisemeDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
