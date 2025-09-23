@@ -105,7 +105,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private void UpdateModelFactoryMethod(MethodProvider method, CSharpType returnType, Dictionary<string, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>> propertyNameMap)
+        private void UpdateModelFactoryMethod(MethodProvider method, CSharpType returnType, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
         {
             var parameterMap = new Dictionary<ParameterProvider, ParameterProvider>();
             var updatedParameters = new List<ParameterProvider>(method.Signature.Parameters.Count);
@@ -197,7 +197,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private ValueExpression BuildConditionExpression(List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider> parameterMap)
+        private ValueExpression BuildConditionExpression(List<FlattenPropertyInfo> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider> parameterMap)
         {
             ScopedApi<bool>? result = null;
             foreach (var (_, flattenProperty) in flattenedProperties)
@@ -230,7 +230,7 @@ namespace Azure.Generator.Management.Visitors
         }
 
         // Use the flattened property as the parameter, if it is an overridden value type, we need to use the Value property.
-        private ValueExpression[] BuildConstructorParameters(CSharpType propertyType, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider> parameterMap)
+        private ValueExpression[] BuildConstructorParameters(CSharpType propertyType, List<FlattenPropertyInfo> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider> parameterMap)
         {
             var propertyModelType = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[propertyType] as ModelProvider;
             var fullConstructorParameters = propertyModelType!.FullConstructor.Signature.Parameters;
@@ -300,14 +300,14 @@ namespace Azure.Generator.Management.Visitors
 
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
-        private readonly Dictionary<CSharpType, (Dictionary<string, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>>, Dictionary<CSharpType, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>>)> _flattenedModelTypes = new(new CSharpTypeNameComparer());
+        private readonly Dictionary<CSharpType, (Dictionary<string, List<FlattenPropertyInfo>>, Dictionary<CSharpType, List<FlattenPropertyInfo>>)> _flattenedModelTypes = new(new CSharpTypeNameComparer());
         private readonly Dictionary<ModelProvider, HashSet<PropertyProvider>> _collectionTypeProperties = new();
 
         private void FlattenModel(ModelProvider model)
         {
             var isFlattenProperty = false;
             var isSafeFlatten = false;
-            var propertyMap = new Dictionary<PropertyProvider, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>>();
+            var propertyMap = new Dictionary<PropertyProvider, List<FlattenPropertyInfo>>();
             foreach (var internalProperty in model.Properties)
             {
                 // we need to flatten the inner property type first
@@ -361,7 +361,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private bool PropertyFlatten(ModelProvider model, Dictionary<PropertyProvider, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>> propertyMap, PropertyProvider internalProperty)
+        private bool PropertyFlatten(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
         {
             var isFlattened = false;
             var flattenedProperties = new List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>();
@@ -401,11 +401,11 @@ namespace Azure.Generator.Management.Visitors
 
                     if (propertyMap.TryGetValue(internalProperty, out var value))
                     {
-                        value.Add((isOverriddenValueType, flattenedProperty));
+                        value.Add(new(isOverriddenValueType, flattenedProperty));
                     }
                     else
                     {
-                        propertyMap.Add(internalProperty, new List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)> { (isOverriddenValueType, flattenedProperty) });
+                        propertyMap.Add(internalProperty, new List<FlattenPropertyInfo> { new(isOverriddenValueType, flattenedProperty) });
                     }
                 }
                 // make the internalized properties internal
@@ -415,7 +415,7 @@ namespace Azure.Generator.Management.Visitors
             return isFlattened;
         }
 
-        private bool SafeFlatten(ModelProvider model, Dictionary<PropertyProvider, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
+        private bool SafeFlatten(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
             var innerProperty = modelProvider.Properties.Single();
@@ -447,11 +447,11 @@ namespace Azure.Generator.Management.Visitors
             internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
             if (propertyMap.TryGetValue(internalProperty, out var value))
             {
-                value.Add((isOverriddenValueType, flattenedProperty));
+                value.Add(new(isOverriddenValueType, flattenedProperty));
             }
             else
             {
-                propertyMap.Add(internalProperty, new List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)> { (isOverriddenValueType, flattenedProperty) });
+                propertyMap.Add(internalProperty, new List<FlattenPropertyInfo> { new(isOverriddenValueType, flattenedProperty) });
             }
             return isFlattened;
         }
@@ -474,7 +474,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private static void UpdatePublicConstructor(ModelProvider model, Dictionary<string, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>> map)
+        private static void UpdatePublicConstructor(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> map)
         {
             var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             if (publicConstructor is null)
@@ -526,7 +526,7 @@ namespace Azure.Generator.Management.Visitors
         private static bool ShouldIncludeFlattenedPropertyInPublicConstructor(PropertyProvider flattenedProperty)
             => (flattenedProperty.WireInfo?.IsRequired == true) && !flattenedProperty.Type.IsCollection;
 
-        private static void UpdatePublicConstructorBody(ModelProvider model, Dictionary<string, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>> map, ConstructorProvider publicConstructor)
+        private static void UpdatePublicConstructorBody(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> map, ConstructorProvider publicConstructor)
         {
             var body = publicConstructor.BodyStatements;
             if (body is not null)
@@ -608,5 +608,7 @@ namespace Azure.Generator.Management.Visitors
                 return hashCode.ToHashCode();
             }
         }
+
+        private record FlattenPropertyInfo(bool IsOverriddenValueType, PropertyProvider FlattenedProperty);
     }
 }
