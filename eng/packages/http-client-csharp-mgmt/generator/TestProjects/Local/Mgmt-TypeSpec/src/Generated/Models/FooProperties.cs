@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -17,8 +19,14 @@ namespace MgmtTypeSpec.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
-        public FooProperties()
+        /// <param name="prop1"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prop1"/> is null. </exception>
+        public FooProperties(IEnumerable<string> prop1)
         {
+            Argument.AssertNotNull(prop1, nameof(prop1));
+
+            Prop1 = prop1.ToList();
+            Prop2 = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
@@ -27,14 +35,18 @@ namespace MgmtTypeSpec.Models
         /// <param name="boolValue"> boolean value. </param>
         /// <param name="floatValue"> float value. </param>
         /// <param name="doubleValue"> double value. </param>
+        /// <param name="prop1"></param>
+        /// <param name="prop2"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, string something, bool? boolValue, float? floatValue, double? doubleValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, string something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
             BoolValue = boolValue;
             FloatValue = floatValue;
             DoubleValue = doubleValue;
+            Prop1 = prop1;
+            Prop2 = prop2;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,5 +64,11 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> double value. </summary>
         public double? DoubleValue { get; set; }
+
+        /// <summary> Gets the Prop1. </summary>
+        public IList<string> Prop1 { get; }
+
+        /// <summary> Gets the Prop2. </summary>
+        public IList<int> Prop2 { get; }
     }
 }

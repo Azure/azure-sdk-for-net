@@ -30,6 +30,9 @@ model FooProperties {
 
   /** double value */
   doubleValue?: float64;
+
+  prop1: string[];
+  prop2?: int32[];
 }
 
 @armResourceOperations

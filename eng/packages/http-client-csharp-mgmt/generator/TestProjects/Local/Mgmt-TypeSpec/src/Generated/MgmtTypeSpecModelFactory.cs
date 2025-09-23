@@ -53,6 +53,31 @@ namespace MgmtTypeSpec.Models
                 extendedLocation);
         }
 
+        /// <summary> The FooProperties. </summary>
+        /// <param name="serviceUri"> the service url. </param>
+        /// <param name="something"> something. </param>
+        /// <param name="boolValue"> boolean value. </param>
+        /// <param name="floatValue"> float value. </param>
+        /// <param name="doubleValue"> double value. </param>
+        /// <param name="prop1"></param>
+        /// <param name="prop2"></param>
+        /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
+        public static FooProperties FooProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default)
+        {
+            prop1 ??= new ChangeTrackingList<string>();
+            prop2 ??= new ChangeTrackingList<int>();
+
+            return new FooProperties(
+                serviceUri,
+                something,
+                boolValue,
+                floatValue,
+                doubleValue,
+                prop1.ToList(),
+                prop2.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

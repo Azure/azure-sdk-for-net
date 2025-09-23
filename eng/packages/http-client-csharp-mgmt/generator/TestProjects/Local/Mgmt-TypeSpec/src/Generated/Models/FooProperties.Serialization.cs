@@ -18,6 +18,11 @@ namespace MgmtTypeSpec.Models
     [JsonConverter(typeof(FooPropertiesConverter))]
     public partial class FooProperties : IJsonModel<FooProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="FooProperties"/> for deserialization. </summary>
+        internal FooProperties()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FooProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -60,6 +65,28 @@ namespace MgmtTypeSpec.Models
             {
                 writer.WritePropertyName("doubleValue"u8);
                 writer.WriteNumberValue(DoubleValue.Value);
+            }
+            writer.WritePropertyName("prop1"u8);
+            writer.WriteStartArray();
+            foreach (string item in Prop1)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Prop2))
+            {
+                writer.WritePropertyName("prop2"u8);
+                writer.WriteStartArray();
+                foreach (int item in Prop2)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,6 +135,8 @@ namespace MgmtTypeSpec.Models
             bool? boolValue = default;
             float? floatValue = default;
             double? doubleValue = default;
+            IList<string> prop1 = default;
+            IList<int> prop2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,6 +181,37 @@ namespace MgmtTypeSpec.Models
                     doubleValue = prop.Value.GetDouble();
                     continue;
                 }
+                if (prop.NameEquals("prop1"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    prop1 = array;
+                    continue;
+                }
+                if (prop.NameEquals("prop2"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<int> array = new List<int>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    prop2 = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -163,6 +223,8 @@ namespace MgmtTypeSpec.Models
                 boolValue,
                 floatValue,
                 doubleValue,
+                prop1,
+                prop2 ?? new ChangeTrackingList<int>(),
                 additionalBinaryDataProperties);
         }
 
