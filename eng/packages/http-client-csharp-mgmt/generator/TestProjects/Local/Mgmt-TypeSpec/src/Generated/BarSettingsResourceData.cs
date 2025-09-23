@@ -80,7 +80,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties.IsEnabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
         }
 
@@ -89,7 +89,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Property.Left;
+                return Property is null ? default : Property.Left;
             }
             set
             {
@@ -102,7 +102,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return AnotherProperty.Left;
+                return AnotherProperty is null ? default : AnotherProperty.Left;
             }
             set
             {
@@ -115,7 +115,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty.InnerProp1;
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.InnerProp1;
             }
             set
             {
@@ -132,7 +132,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty.InnerProp2;
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.InnerProp2;
             }
             set
             {
@@ -149,7 +149,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty.MiddleProp1;
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.MiddleProp1;
             }
             set
             {
@@ -192,7 +192,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty.Prop2;
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop2;
             }
             set
             {
@@ -209,7 +209,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return OptionalFlattenProperty.RandomCollectionProp;
+                return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
             }
             set
             {

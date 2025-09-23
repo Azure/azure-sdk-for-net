@@ -38,7 +38,7 @@ namespace MgmtTypeSpec.Models
         {
             get
             {
-                return Properties.AccessControlEnabled;
+                return Properties is null ? default : Properties.AccessControlEnabled;
             }
             set
             {

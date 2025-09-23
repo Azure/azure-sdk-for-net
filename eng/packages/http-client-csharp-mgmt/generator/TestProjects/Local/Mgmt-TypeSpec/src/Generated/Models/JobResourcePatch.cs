@@ -45,7 +45,7 @@ namespace MgmtTypeSpec.Models
         {
             get
             {
-                return Properties.JobName;
+                return Properties is null ? default : Properties.JobName;
             }
             set
             {

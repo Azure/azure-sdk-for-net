@@ -54,7 +54,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties.ServiceUri;
+                return Properties is null ? default : Properties.ServiceUri;
             }
             set
             {
@@ -71,7 +71,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties.Something;
+                return Properties is null ? default : Properties.Something;
             }
             set
             {
@@ -88,7 +88,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties.BoolValue;
+                return Properties is null ? default : Properties.BoolValue;
             }
             set
             {
@@ -105,7 +105,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties.FloatValue;
+                return Properties is null ? default : Properties.FloatValue;
             }
             set
             {
@@ -122,7 +122,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties.DoubleValue;
+                return Properties is null ? default : Properties.DoubleValue;
             }
             set
             {
@@ -139,7 +139,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties.Prop1;
+                return Properties is null ? default : Properties.Prop1;
             }
         }
 
@@ -148,7 +148,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return Properties.Prop2;
+                return Properties is null ? default : Properties.Prop2;
             }
         }
     }

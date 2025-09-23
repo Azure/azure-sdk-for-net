@@ -105,6 +105,10 @@ namespace Azure.Generator.Management.Utilities
                     Return(new MemberExpression(internalProperty, innerProperty.Name))
                 };
             }
+            else if (includeGetterNullCheck == false)
+            {
+                return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
+            }
             else
             {
                 if (innerModel.Type.IsNullable)
