@@ -5,14 +5,10 @@ using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.ResourceManager;
-using Humanizer;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
