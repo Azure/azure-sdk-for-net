@@ -51,14 +51,14 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  DatadogAgreementResource:  DataDogAgreementResourceContent
-  MonitoredResource: MonitoredResourceContent
+  DatadogAgreementResource: DataDogAgreementContent
+  MonitoredResource: DataDogMonitoredResourceContent
   BillingInfoResponse:  DataDogBillingInfoResult
   CreateResourceSupportedResponse:  DataDogCreateResourceSupportedResult
   DatadogMonitorResourceUpdateParameters:  DataDogMonitorResourceUpdateContent
   DatadogApiKey: DataDogApiKeyContent
   LinkedResource: DataDogLinkedInfo
-  Status: MonitoredStatus
+  Status: DataDogMonitoredStatus
   DatadogAgreementResourceListResponse:  DataDogAgreementResourceListResult
   DatadogApiKeyListResponse:  DataDogApiKeyListResult
   DatadogHostListResponse:  DataDogHostListResult
@@ -74,13 +74,8 @@ rename-mapping:
   DatadogAgreementProperties.accepted: IsAccepted
   DatadogOrganizationProperties.cspm: IsCspm
   DatadogOrganizationProperties.resourceCollection: IsResourceCollection
-  LogRules.sendAadLogs: IsSendAadLogs
-  LogRules.sendSubscriptionLogs: IsSendSubscriptionLogs
-  LogRules.sendResourceLogs: IsSendResourceLogs
   MonitorUpdateProperties.cspm: IsCspm
   MonitorUpdateProperties.resourceCollection: IsResourceCollection
-  MonitoredResource.sendingMetrics: IsSendingMetrics
-  MonitoredResource.sendingLogs: IsSendingLogs
   MonitoringTagRulesProperties.automuting: IsAutomuting
   MonitoringTagRulesProperties.customMetrics: IsCustomMetrics
   AgentRules: DataDogAgentRules

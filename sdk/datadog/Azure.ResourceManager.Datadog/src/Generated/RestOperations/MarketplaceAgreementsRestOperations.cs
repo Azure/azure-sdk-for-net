@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Datadog
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, DataDogAgreementResourceContent content)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, DataDogAgreementContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Datadog
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, DataDogAgreementResourceContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, DataDogAgreementContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataDogAgreementResourceContent>> CreateOrUpdateAsync(string subscriptionId, DataDogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataDogAgreementContent>> CreateOrUpdateAsync(string subscriptionId, DataDogAgreementContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DataDogAgreementResourceContent value = default;
+                        DataDogAgreementContent value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataDogAgreementResourceContent.DeserializeDataDogAgreementResourceContent(document.RootElement);
+                        value = DataDogAgreementContent.DeserializeDataDogAgreementContent(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataDogAgreementResourceContent> CreateOrUpdate(string subscriptionId, DataDogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
+        public Response<DataDogAgreementContent> CreateOrUpdate(string subscriptionId, DataDogAgreementContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DataDogAgreementResourceContent value = default;
+                        DataDogAgreementContent value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataDogAgreementResourceContent.DeserializeDataDogAgreementResourceContent(document.RootElement);
+                        value = DataDogAgreementContent.DeserializeDataDogAgreementContent(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

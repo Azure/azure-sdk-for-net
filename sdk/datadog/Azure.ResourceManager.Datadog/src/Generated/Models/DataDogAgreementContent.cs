@@ -12,8 +12,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> The DataDogAgreementResourceContent. </summary>
-    public partial class DataDogAgreementResourceContent : ResourceData
+    /// <summary> The DataDogAgreementContent. </summary>
+    public partial class DataDogAgreementContent : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataDogAgreementResourceContent"/>. </summary>
-        public DataDogAgreementResourceContent()
+        /// <summary> Initializes a new instance of <see cref="DataDogAgreementContent"/>. </summary>
+        public DataDogAgreementContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataDogAgreementResourceContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDogAgreementContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Represents the properties of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataDogAgreementResourceContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatadogAgreementProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataDogAgreementContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatadogAgreementProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

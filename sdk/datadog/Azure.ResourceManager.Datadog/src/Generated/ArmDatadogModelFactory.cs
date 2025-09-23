@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDatadogModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.DataDogAgreementResourceContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataDogAgreementContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Represents the properties of the resource. </param>
-        /// <returns> A new <see cref="Models.DataDogAgreementResourceContent"/> instance for mocking. </returns>
-        public static DataDogAgreementResourceContent DataDogAgreementResourceContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogAgreementProperties properties = null)
+        /// <returns> A new <see cref="Models.DataDogAgreementContent"/> instance for mocking. </returns>
+        public static DataDogAgreementContent DataDogAgreementContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogAgreementProperties properties = null)
         {
-            return new DataDogAgreementResourceContent(
+            return new DataDogAgreementContent(
                 id,
                 name,
                 resourceType,
@@ -181,20 +181,20 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DataDogLinkedInfo(id, location, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MonitoredResourceContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataDogMonitoredResourceContent"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
-        /// <param name="isSendingMetrics"> Flag indicating if resource is sending metrics to Datadog. </param>
+        /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to Datadog. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
-        /// <param name="isSendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
+        /// <param name="sendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        /// <returns> A new <see cref="Models.MonitoredResourceContent"/> instance for mocking. </returns>
-        public static MonitoredResourceContent MonitoredResourceContent(ResourceIdentifier id = null, bool? isSendingMetrics = null, string reasonForMetricsStatus = null, bool? isSendingLogs = null, string reasonForLogsStatus = null)
+        /// <returns> A new <see cref="Models.DataDogMonitoredResourceContent"/> instance for mocking. </returns>
+        public static DataDogMonitoredResourceContent DataDogMonitoredResourceContent(ResourceIdentifier id = null, bool? sendingMetrics = null, string reasonForMetricsStatus = null, bool? sendingLogs = null, string reasonForLogsStatus = null)
         {
-            return new MonitoredResourceContent(
+            return new DataDogMonitoredResourceContent(
                 id,
-                isSendingMetrics,
+                sendingMetrics,
                 reasonForMetricsStatus,
-                isSendingLogs,
+                sendingLogs,
                 reasonForLogsStatus,
                 serializedAdditionalRawData: null);
         }

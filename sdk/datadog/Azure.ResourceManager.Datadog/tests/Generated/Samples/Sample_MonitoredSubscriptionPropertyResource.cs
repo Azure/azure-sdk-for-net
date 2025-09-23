@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Datadog.Samples
                     MonitoredSubscriptionList = {new MonitoredSubscription
 {
 SubscriptionId = Guid.Parse("/subscriptions/00000000-0000-0000-0000-000000000000"),
-Status = MonitoredStatus.Active,
+Status = DataDogMonitoredStatus.Active,
 TagRules = new MonitoringTagRulesProperties
 {
 LogRules = new LogRules
 {
-IsSendAadLogs = false,
-IsSendSubscriptionLogs = true,
-IsSendResourceLogs = true,
+SendAadLogs = false,
+SendSubscriptionLogs = true,
+SendResourceLogs = true,
 FilteringTags = {new FilteringTag
 {
 Name = "Environment",
@@ -130,14 +130,14 @@ IsAutomuting = true,
 }, new MonitoredSubscription
 {
 SubscriptionId = Guid.Parse("/subscriptions/00000000-0000-0000-0000-000000000001"),
-Status = MonitoredStatus.Failed,
+Status = DataDogMonitoredStatus.Failed,
 TagRules = new MonitoringTagRulesProperties
 {
 LogRules = new LogRules
 {
-IsSendAadLogs = false,
-IsSendSubscriptionLogs = true,
-IsSendResourceLogs = true,
+SendAadLogs = false,
+SendSubscriptionLogs = true,
+SendResourceLogs = true,
 FilteringTags = {new FilteringTag
 {
 Name = "Environment",

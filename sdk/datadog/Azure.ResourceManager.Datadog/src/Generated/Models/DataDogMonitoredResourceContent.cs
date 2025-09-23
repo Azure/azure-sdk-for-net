@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The properties of a resource currently being monitored by the Datadog monitor resource. </summary>
-    public partial class MonitoredResourceContent
+    public partial class DataDogMonitoredResourceContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,24 +46,24 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredResourceContent"/>. </summary>
-        internal MonitoredResourceContent()
+        /// <summary> Initializes a new instance of <see cref="DataDogMonitoredResourceContent"/>. </summary>
+        internal DataDogMonitoredResourceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredResourceContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDogMonitoredResourceContent"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
-        /// <param name="isSendingMetrics"> Flag indicating if resource is sending metrics to Datadog. </param>
+        /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to Datadog. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
-        /// <param name="isSendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
+        /// <param name="sendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredResourceContent(ResourceIdentifier id, bool? isSendingMetrics, string reasonForMetricsStatus, bool? isSendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataDogMonitoredResourceContent(ResourceIdentifier id, bool? sendingMetrics, string reasonForMetricsStatus, bool? sendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
-            IsSendingMetrics = isSendingMetrics;
+            SendingMetrics = sendingMetrics;
             ReasonForMetricsStatus = reasonForMetricsStatus;
-            IsSendingLogs = isSendingLogs;
+            SendingLogs = sendingLogs;
             ReasonForLogsStatus = reasonForLogsStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> The ARM id of the resource. </summary>
         public ResourceIdentifier Id { get; }
         /// <summary> Flag indicating if resource is sending metrics to Datadog. </summary>
-        public bool? IsSendingMetrics { get; }
+        public bool? SendingMetrics { get; }
         /// <summary> Reason for why the resource is sending metrics (or why it is not sending). </summary>
         public string ReasonForMetricsStatus { get; }
         /// <summary> Flag indicating if resource is sending logs to Datadog. </summary>
-        public bool? IsSendingLogs { get; }
+        public bool? SendingLogs { get; }
         /// <summary> Reason for why the resource is sending logs (or why it is not sending). </summary>
         public string ReasonForLogsStatus { get; }
     }

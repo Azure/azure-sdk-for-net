@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DataDogAgreementResourceContent item in subscriptionResource.GetMarketplaceAgreementsAsync())
+            await foreach (DataDogAgreementContent item in subscriptionResource.GetMarketplaceAgreementsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Datadog.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            DataDogAgreementResourceContent content = new DataDogAgreementResourceContent
+            DataDogAgreementContent content = new DataDogAgreementContent
             {
                 Properties = new DatadogAgreementProperties
                 {
                     IsAccepted = true,
                 },
             };
-            DataDogAgreementResourceContent result = await subscriptionResource.CreateOrUpdateMarketplaceAgreementAsync(content: content);
+            DataDogAgreementContent result = await subscriptionResource.CreateOrUpdateMarketplaceAgreementAsync(content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

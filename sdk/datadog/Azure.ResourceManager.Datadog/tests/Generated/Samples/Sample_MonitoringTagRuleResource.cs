@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Datadog.Samples
                 {
                     LogRules = new LogRules
                     {
-                        IsSendAadLogs = false,
-                        IsSendSubscriptionLogs = true,
-                        IsSendResourceLogs = true,
+                        SendAadLogs = false,
+                        SendSubscriptionLogs = true,
+                        SendResourceLogs = true,
                         FilteringTags = {new FilteringTag
 {
 Name = "Environment",
