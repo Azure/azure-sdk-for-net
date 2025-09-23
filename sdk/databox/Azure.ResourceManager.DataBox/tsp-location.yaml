@@ -1,3 +1,4 @@
 directory: specification/databox/resource-manager/Microsoft.DataBox/DataBox
 commit: c07353d57c4fbbf71dbca35ca187dd9951a99631
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

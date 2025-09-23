@@ -1,3 +1,4 @@
 directory: specification/servicenetworking/ServiceNetworking.Management
 commit: 3a72ccf75a2f60ab84a36d169b74777f7d508cb2
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

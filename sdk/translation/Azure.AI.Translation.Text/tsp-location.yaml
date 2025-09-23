@@ -1,3 +1,4 @@
 directory: specification/translation/Azure.AI.TextTranslation
 commit: 97dbe646b54b7cbcf44b06c45bd43738b677f2b8
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

@@ -1,3 +1,4 @@
 directory: specification/ai/DocumentIntelligence
 commit: 1454325dc8e8d8ba5414ae6a5a5b354320190193
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

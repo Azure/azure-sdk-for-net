@@ -1,5 +1,5 @@
 commit: ed92d9e671a47733d07fb1c9d6d804b3432dd8c1
 additionalDirectories: []
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
 directory: specification/cognitiveservices/ContentSafety
-

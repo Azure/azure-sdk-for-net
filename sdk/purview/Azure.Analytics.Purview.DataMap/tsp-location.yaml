@@ -1,3 +1,4 @@
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
 commit: b0a48bcbffead733affe03944ef09f5e8d12f8c8
 directory: specification/purview/Azure.Analytics.Purview.DataMap

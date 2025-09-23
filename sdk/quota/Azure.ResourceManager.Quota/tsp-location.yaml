@@ -1,3 +1,4 @@
 directory: specification\quota\Quota.Management
 commit: 520e1f6bc250b4ce51a22eaa7583cc0b24564b71
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
