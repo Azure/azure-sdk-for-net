@@ -458,5 +458,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(45, Message = "The {0} method received an AzureMonitorExporterOptions with EnableLiveMetrics set to true, which isn't supported. Note that LiveMetrics is only available via the UseAzureMonitorExporter API.", Level = EventLevel.Warning)]
         public void LiveMetricsNotSupported(string methodName) => WriteEvent(45, methodName);
+
+        [Event(46, Message = "Invalid sampler type '{0}'. Supported values: microsoft.rate_limited, microsoft.fixed_percentage", Level = EventLevel.Warning)]
+        public void InvalidSamplerType(string samplerType) => WriteEvent(46, samplerType);
+
+        [Event(47, Message = "Invalid sampler argument '{1}' for sampler '{0}'. Ignoring.", Level = EventLevel.Warning)]
+        public void InvalidSamplerArgument(string samplerType, string samplerArg) => WriteEvent(47, samplerType, samplerArg);
     }
 }
