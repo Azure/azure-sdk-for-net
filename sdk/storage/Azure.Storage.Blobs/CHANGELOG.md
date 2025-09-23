@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug for processing partitioned downloads for empty blobs with content validation enabled.
 
 ### Other Changes
 - Changed BlobServiceClient.AccountName to be virtual so that it can be overridden and mocked.
