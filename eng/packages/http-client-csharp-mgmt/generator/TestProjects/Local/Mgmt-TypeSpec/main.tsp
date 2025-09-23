@@ -10,6 +10,7 @@ import "./endpoint.tsp";
 import "./selfhelp.tsp";
 import "./playwright.tsp";
 import "./databox.tsp";
+import "./hcivm.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
