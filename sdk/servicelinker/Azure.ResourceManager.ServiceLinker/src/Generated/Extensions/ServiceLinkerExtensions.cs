@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static AsyncPageable<DaprConfigurationResource> GetDaprConfigurationsLinkersAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DaprConfigurationResourceItem> GetDaprConfigurationsLinkersAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Pageable<DaprConfigurationResource> GetDaprConfigurationsLinkers(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static Pageable<DaprConfigurationResourceItem> GetDaprConfigurationsLinkers(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 

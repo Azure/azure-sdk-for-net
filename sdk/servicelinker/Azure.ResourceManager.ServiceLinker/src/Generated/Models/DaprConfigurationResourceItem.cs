@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> Represent one resource of the dapr configuration list. </summary>
-    public partial class DaprConfigurationResource
+    public partial class DaprConfigurationResourceItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DaprConfigurationResource"/>. </summary>
-        internal DaprConfigurationResource()
+        /// <summary> Initializes a new instance of <see cref="DaprConfigurationResourceItem"/>. </summary>
+        internal DaprConfigurationResourceItem()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DaprConfigurationResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprConfigurationResourceItem"/>. </summary>
         /// <param name="targetType"> Supported target resource type, extract from resource id, uppercase. </param>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="daprProperties"> Indicates some additional properties for dapr client type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DaprConfigurationResource(string targetType, LinkerAuthType? authType, DaprProperties daprProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DaprConfigurationResourceItem(string targetType, LinkerAuthType? authType, DaprProperties daprProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetType = targetType;
             AuthType = authType;

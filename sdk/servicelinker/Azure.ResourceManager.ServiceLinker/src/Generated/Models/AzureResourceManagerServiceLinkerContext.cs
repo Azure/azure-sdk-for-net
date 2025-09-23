@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceLinker
     [ModelReaderWriterBuildable(typeof(ConfluentBootstrapServerInfo))]
     [ModelReaderWriterBuildable(typeof(ConfluentSchemaRegistryInfo))]
     [ModelReaderWriterBuildable(typeof(DaprConfigurationList))]
-    [ModelReaderWriterBuildable(typeof(DaprConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(DaprConfigurationResourceItem))]
     [ModelReaderWriterBuildable(typeof(DaprMetadata))]
     [ModelReaderWriterBuildable(typeof(DaprProperties))]
     [ModelReaderWriterBuildable(typeof(DryrunList))]

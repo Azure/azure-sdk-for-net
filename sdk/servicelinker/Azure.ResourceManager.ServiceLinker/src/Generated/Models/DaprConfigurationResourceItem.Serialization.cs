@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class DaprConfigurationResource : IUtf8JsonSerializable, IJsonModel<DaprConfigurationResource>
+    public partial class DaprConfigurationResourceItem : IUtf8JsonSerializable, IJsonModel<DaprConfigurationResourceItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DaprConfigurationResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DaprConfigurationResourceItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DaprConfigurationResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DaprConfigurationResourceItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationResourceItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DaprConfigurationResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DaprConfigurationResourceItem)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        DaprConfigurationResource IJsonModel<DaprConfigurationResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DaprConfigurationResourceItem IJsonModel<DaprConfigurationResourceItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationResourceItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DaprConfigurationResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DaprConfigurationResourceItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDaprConfigurationResource(document.RootElement, options);
+            return DeserializeDaprConfigurationResourceItem(document.RootElement, options);
         }
 
-        internal static DaprConfigurationResource DeserializeDaprConfigurationResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DaprConfigurationResourceItem DeserializeDaprConfigurationResourceItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -137,38 +137,38 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DaprConfigurationResource(targetType, authType, daprProperties, serializedAdditionalRawData);
+            return new DaprConfigurationResourceItem(targetType, authType, daprProperties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DaprConfigurationResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DaprConfigurationResourceItem>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationResourceItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DaprConfigurationResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DaprConfigurationResourceItem)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DaprConfigurationResource IPersistableModel<DaprConfigurationResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DaprConfigurationResourceItem IPersistableModel<DaprConfigurationResourceItem>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationResourceItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDaprConfigurationResource(document.RootElement, options);
+                        return DeserializeDaprConfigurationResourceItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DaprConfigurationResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DaprConfigurationResourceItem)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DaprConfigurationResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DaprConfigurationResourceItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DaprConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DaprConfigurationResource> GetDaprConfigurationsLinkersAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DaprConfigurationResourceItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DaprConfigurationResourceItem> GetDaprConfigurationsLinkersAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceLinkerDryrunLinkersRestClient.CreateListDaprConfigurationsRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceLinkerDryrunLinkersRestClient.CreateListDaprConfigurationsNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResource.DeserializeDaprConfigurationResource(e), ServiceLinkerDryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetDaprConfigurationsLinkers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResourceItem.DeserializeDaprConfigurationResourceItem(e), ServiceLinkerDryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetDaprConfigurationsLinkers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="DaprConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DaprConfigurationResource> GetDaprConfigurationsLinkers(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DaprConfigurationResourceItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DaprConfigurationResourceItem> GetDaprConfigurationsLinkers(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceLinkerDryrunLinkersRestClient.CreateListDaprConfigurationsRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceLinkerDryrunLinkersRestClient.CreateListDaprConfigurationsNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResource.DeserializeDaprConfigurationResource(e), ServiceLinkerDryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetDaprConfigurationsLinkers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResourceItem.DeserializeDaprConfigurationResourceItem(e), ServiceLinkerDryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetDaprConfigurationsLinkers", "value", "nextLink", cancellationToken);
         }
         /// <summary>
         /// Gets an object representing a <see cref="ServiceLinkerDryrunResource"/> along with the instance operations that can be performed on it but with no data.

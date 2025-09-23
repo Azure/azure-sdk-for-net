@@ -53,6 +53,7 @@ rename-mapping:
   ConfigurationName: LinkerConfigurationName
   ConfigurationName.required : IsRequired
   FirewallRules: LinkerFirewallRules
+  DaprConfigurationResource: DaprConfigurationResourceItem
 
 format-by-name-rules:
   'tenantId': 'uuid'

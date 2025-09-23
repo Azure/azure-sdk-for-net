@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
 
             // invoke the operation and iterate over the result
             ResourceIdentifier scope = null;
-            await foreach (DaprConfigurationResource item in client.GetDaprConfigurationsLinkersAsync(scope))
+            await foreach (DaprConfigurationResourceItem item in client.GetDaprConfigurationsLinkersAsync(scope))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

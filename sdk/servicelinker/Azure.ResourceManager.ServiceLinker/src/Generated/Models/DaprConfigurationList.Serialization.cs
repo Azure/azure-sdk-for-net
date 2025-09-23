@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            IReadOnlyList<DaprConfigurationResource> value = default;
+            IReadOnlyList<DaprConfigurationResourceItem> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DaprConfigurationResource> array = new List<DaprConfigurationResource>();
+                    List<DaprConfigurationResourceItem> array = new List<DaprConfigurationResourceItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DaprConfigurationResource.DeserializeDaprConfigurationResource(item, options));
+                        array.Add(DaprConfigurationResourceItem.DeserializeDaprConfigurationResourceItem(item, options));
                     }
                     value = array;
                     continue;

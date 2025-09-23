@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmServiceLinkerModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.DaprConfigurationResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DaprConfigurationResourceItem"/>. </summary>
         /// <param name="targetType"> Supported target resource type, extract from resource id, uppercase. </param>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="daprProperties"> Indicates some additional properties for dapr client type. </param>
-        /// <returns> A new <see cref="Models.DaprConfigurationResource"/> instance for mocking. </returns>
-        public static DaprConfigurationResource DaprConfigurationResource(string targetType = null, LinkerAuthType? authType = null, DaprProperties daprProperties = null)
+        /// <returns> A new <see cref="Models.DaprConfigurationResourceItem"/> instance for mocking. </returns>
+        public static DaprConfigurationResourceItem DaprConfigurationResourceItem(string targetType = null, LinkerAuthType? authType = null, DaprProperties daprProperties = null)
         {
-            return new DaprConfigurationResource(targetType, authType, daprProperties, serializedAdditionalRawData: null);
+            return new DaprConfigurationResourceItem(targetType, authType, daprProperties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DaprProperties"/>. </summary>
