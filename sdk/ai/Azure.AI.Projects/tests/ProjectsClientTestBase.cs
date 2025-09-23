@@ -221,7 +221,7 @@ namespace Azure.AI.Projects.Tests
         /// <param name="expectedDatasetVersion">Expected dataset version (optional).</param>
         /// <param name="expectedConnectionName">Expected connection name (optional).</param>
         public static void ValidateDataset(
-            DatasetVersion dataset,
+            AIProjectDataset dataset,
             string expectedDatasetType = null,
             string expectedDatasetName = null,
             string expectedDatasetVersion = null,

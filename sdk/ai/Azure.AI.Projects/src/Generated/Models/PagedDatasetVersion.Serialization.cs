@@ -39,7 +39,7 @@ namespace Azure.Core
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AIProjectDatasetVersion item in Value)
+            foreach (AIProjectDataset item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -91,17 +91,17 @@ namespace Azure.Core
             {
                 return null;
             }
-            IList<AIProjectDatasetVersion> value = default;
+            IList<AIProjectDataset> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AIProjectDatasetVersion> array = new List<AIProjectDatasetVersion>();
+                    List<AIProjectDataset> array = new List<AIProjectDataset>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AIProjectDatasetVersion.DeserializeAIProjectDatasetVersion(item, options));
+                        array.Add(AIProjectDataset.DeserializeAIProjectDataset(item, options));
                     }
                     value = array;
                     continue;

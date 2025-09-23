@@ -29,7 +29,7 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
 
 //        // TODO: Uncomment once datasets are supported, will need to replace UploadFileAndCreate with new function name
 //        //Console.WriteLine("Upload a single file and create a new Dataset to reference the file. Here we explicitly specify the dataset version.");
-//        //DatasetVersion dataset = projectClient.GetDatasetsClient().UploadFileAndCreate(
+//        //AIProjectDataset dataset = projectClient.GetDatasetsClient().UploadFileAndCreate(
 //        //        name: datasetName,
 //        //        version: "1",
 //        //        filePath: "./sample_folder/sample_data_evaluation.jsonl"
@@ -82,7 +82,7 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
 
 //        // TODO: Uncomment once datasets are supported, will need to replace UploadFileAndCreate with new function name
 //        //Console.WriteLine("Upload a single file and create a new Dataset to reference the file. Here we explicitly specify the dataset version.");
-//        //DatasetVersion dataset = projectClient.GetDatasetsClient().UploadFileAndCreate(
+//        //AIProjectDataset dataset = projectClient.GetDatasetsClient().UploadFileAndCreate(
 //        //        name: datasetName,
 //        //        version: "1",
 //        //        filePath: "./sample_folder/sample_data_evaluation.jsonl"

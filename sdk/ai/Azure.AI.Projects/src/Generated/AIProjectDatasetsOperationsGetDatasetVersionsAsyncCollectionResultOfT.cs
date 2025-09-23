@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class AIProjectDatasetsOperationsGetDatasetVersionsAsyncCollectionResultOfT : AsyncCollectionResult<AIProjectDatasetVersion>
+    internal partial class AIProjectDatasetsOperationsGetDatasetVersionsAsyncCollectionResultOfT : AsyncCollectionResult<AIProjectDataset>
     {
         private readonly AIProjectDatasetsOperations _client;
         private readonly string _name;
@@ -71,9 +71,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<AIProjectDatasetVersion> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<AIProjectDataset> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (AIProjectDatasetVersion item in ((PagedDatasetVersion)page).Value)
+            foreach (AIProjectDataset item in ((PagedDatasetVersion)page).Value)
             {
                 yield return item;
                 await Task.Yield();
