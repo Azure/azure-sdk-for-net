@@ -170,14 +170,34 @@ namespace Azure.Storage.Blobs
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
+                    // We expect the blob to be empty if we got this exception
+                    Response<BlobProperties> properties = await _client.GetPropertiesInternal(
+                            conditions: conditions,
+                            async: async,
+                            context: new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                    bool isEmpty = properties.Value.ContentLength == 0;
+
+                    if (!isEmpty)
+                    {
+                        throw new RequestFailedException("InvalidRange error, despite non-empty blob.", ex);
+                    }
+
+                    DownloadTransferValidationOptions validationOptionsForEmptyBlob = new()
+                    {
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.None
+                    };
+
                     initialResponse = await _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
-                        ValidationOptions,
+                        validationOptionsForEmptyBlob,
                         _progress,
                         _innerOperationName,
                         async,
                         cancellationToken).ConfigureAwait(false);
+
+                    // Return early as the blob is empty and no further processing needed
+                    return initialResponse.GetRawResponse();
                 }
 
                 // If the initial request returned no content (i.e., a 304),

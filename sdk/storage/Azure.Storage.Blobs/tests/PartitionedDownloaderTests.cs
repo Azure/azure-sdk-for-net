@@ -43,11 +43,17 @@ namespace Azure.Storage.Blobs.Test
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
-            SetupDownload(blockClient, dataSource);
+            SetupDownloadEmptyBlob(blockClient, dataSource);
+
+            DownloadTransferValidationOptions validationOptions = new DownloadTransferValidationOptions()
+            {
+                AutoValidateChecksum = true,
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+            };
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
-                transferValidation: s_validationOptions);
+                transferValidation: validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -227,6 +233,49 @@ namespace Azure.Storage.Blobs.Test
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }
 
+        private void SetupDownloadEmptyBlob(Mock<BlobBaseClient> blockClient, MockDataSource dataSource)
+        {
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            // empty blob with a range header, expect error
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.Is<HttpRange>(r => !r.Equals(default(HttpRange))),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && options.ChecksumAlgorithm != StorageChecksumAlgorithm.None && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).ThrowsAsync(new RequestFailedException(
+                status: 416,
+                errorCode: BlobErrorCode.InvalidRange.ToString(),
+                message: "The specified range is invalid.",
+                innerException: null));
+
+            BlobProperties blobProperties = new BlobProperties(); // ContentLength is 0 by default
+            blockClient.Setup(c => c.GetPropertiesInternal(
+                    It.IsAny<BlobRequestConditions>(),
+                    _async,
+                    It.IsAny<RequestContext>(),
+                    It.IsAny<string>()))
+                .ReturnsAsync(Response.FromValue(blobProperties, Mock.Of<Response>()));
+
+            // empty blob with no range header, expect complete
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.Is<HttpRange>(r => r.Equals(default(HttpRange))),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && options.ChecksumAlgorithm == StorageChecksumAlgorithm.None),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) => async
+                    ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                    : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
+        }
+
         private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
         {
             return await downloader.DownloadToInternal(stream, s_conditions, _async, s_cancellationToken);
@@ -279,7 +328,7 @@ namespace Azure.Storage.Blobs.Test
                     Requests.Add((range, conditions));
                 }
 
-                var contentLength = Math.Min(range.Length.Value, _length);
+                var contentLength = Math.Min(range.Length ?? 0, _length);
 
                 var memoryStream = new MemoryStream();
                 for (int i = 0; i < contentLength; i++)
