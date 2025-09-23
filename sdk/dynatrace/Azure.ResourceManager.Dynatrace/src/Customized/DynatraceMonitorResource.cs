@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        // Add this custom code due to previous veresion didn't have request body parameter.
+        // Add this custom code due to previous version didn't have request body parameter.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
