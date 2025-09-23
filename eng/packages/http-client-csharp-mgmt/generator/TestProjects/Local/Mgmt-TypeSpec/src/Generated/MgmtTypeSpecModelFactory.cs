@@ -102,7 +102,7 @@ namespace MgmtTypeSpec.Models
         /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
         public static FooSettingsProperties FooSettingsProperties(bool? accessControlEnabled = default, ResourceProvisioningState? provisioningState = default, IList<string> metaDatas = default)
         {
-            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, null), additionalBinaryDataProperties: null);
+            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -156,19 +156,19 @@ namespace MgmtTypeSpec.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                isEnabled is null ? default : new BarSettingsProperties(isEnabled, null),
+                isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
                 stringArray.ToList(),
-                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, null),
-                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, null),
+                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
                 innerProp1 is null || innerProp2 is null || middleProp1 is null || middleProp2 is null || prop1 is null || prop2 is null ? default : new BarNestedQuotaProperties(
                     innerProp1,
                     innerProp2,
-                    null,
+                    new Dictionary<string, BinaryData>(),
                     middleProp1.Value,
                     middleProp2,
                     prop1,
                     prop2.Value),
-                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, null));
+                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, new Dictionary<string, BinaryData>()));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -185,7 +185,7 @@ namespace MgmtTypeSpec.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, null));
+                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, new Dictionary<string, BinaryData>()));
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -233,7 +233,7 @@ namespace MgmtTypeSpec.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                zooSomething is null ? default : new ZooProperties(zooSomething, null),
+                zooSomething is null ? default : new ZooProperties(zooSomething, new Dictionary<string, BinaryData>()),
                 extendedLocation);
         }
 
@@ -244,7 +244,7 @@ namespace MgmtTypeSpec.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, null), additionalBinaryDataProperties: null);
+            return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Paged collection of ZooAddress items. </summary>
@@ -272,7 +272,7 @@ namespace MgmtTypeSpec.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                endpointProp is null ? default : new EndpointProperties(endpointProp, null));
+                endpointProp is null ? default : new EndpointProperties(endpointProp, new Dictionary<string, BinaryData>()));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -289,7 +289,7 @@ namespace MgmtTypeSpec.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, null));
+                selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, new Dictionary<string, BinaryData>()));
         }
 
         /// <summary> Subscription-level location-based Playwright quota resource. </summary>
@@ -339,7 +339,7 @@ namespace MgmtTypeSpec.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                jobName is null ? default : new JobProperties(jobName, null));
+                jobName is null ? default : new JobProperties(jobName, new Dictionary<string, BinaryData>()));
         }
 
         /// <param name="jobName"> Gets or sets the JobName. </param>
@@ -349,7 +349,7 @@ namespace MgmtTypeSpec.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new JobResourcePatch(jobName is null ? default : new JobProperties(jobName, null), tags, additionalBinaryDataProperties: null);
+            return new JobResourcePatch(jobName is null ? default : new JobProperties(jobName, new Dictionary<string, BinaryData>()), tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>

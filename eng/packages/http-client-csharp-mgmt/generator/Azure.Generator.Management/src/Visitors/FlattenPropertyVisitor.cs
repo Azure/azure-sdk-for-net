@@ -241,8 +241,8 @@ namespace Azure.Generator.Management.Visitors
             {
                 if (i == additionalPropertyIndex)
                 {
-                    // If the additionalProperties parameter exists, we need to pass null for it.
-                    parameters.Add(Null);
+                    // If the additionalProperties parameter exists, we need to pass a new instance for it.
+                    parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
                     fullConstructorParameterIndex++;
                 }
                 var (isOverriddenValueType, flattenedProperty) = flattenedProperties[i];
@@ -275,10 +275,10 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            // If the additionalProperties parameter exists at the end, we need to pass null for it.
+            // If the additionalProperties parameter exists at the end, we need to pass a new instance for it.
             if (additionalPropertyIndex == propertyModelType!.FullConstructor.Signature.Parameters.Count - 1)
             {
-                parameters.Add(Null);
+                parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
             }
             return parameters.ToArray();
 
