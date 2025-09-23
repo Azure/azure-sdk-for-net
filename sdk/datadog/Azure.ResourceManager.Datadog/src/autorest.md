@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Datadog
 namespace: Azure.ResourceManager.Datadog
-require: D:\Workspace\Repo\azure-rest-api-specs-pr\specification\datadog\resource-manager\readme.md
-#require: https://github.com/Azure/azure-rest-api-specs-pr/blob/30f23d89b692f80b495fb7f45c3e695872460bd1/specification/datadog/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs-pr/blob/30f23d89b692f80b495fb7f45c3e695872460bd1/specification/datadog/resource-manager/readme.md
 # tag: package-2025-06   rpaas
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
