@@ -1085,7 +1085,10 @@ function Update-PullRequestInReleasePlan($releasePlanWorkItemId, $pullRequestUrl
     }
 
     $fields = @()
-    $fields += "`"SDKPullRequestFor$($devopsFieldLanguage)=$pullRequestUrl`""
+    if ($pullRequestUrl)
+    {
+        $fields += "`"SDKPullRequestFor$($devopsFieldLanguage)=$pullRequestUrl`""
+    }
     $fields += "`"SDKPullRequestStatusFor$($devopsFieldLanguage)=$status`""
 
     Write-Host "Updating Release Plan [$releasePlanWorkItemId] with Pull Request URL for language [$languageName]."
