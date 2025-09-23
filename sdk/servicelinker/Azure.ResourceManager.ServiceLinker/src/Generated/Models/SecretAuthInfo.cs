@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
         /// </param>
-        internal SecretAuthInfo(LinkerAuthType authType, AuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, SecretBaseInfo secretInfo) : base(authType, authMode, serializedAdditionalRawData)
+        internal SecretAuthInfo(LinkerAuthType authType, ConfigurationAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, SecretBaseInfo secretInfo) : base(authType, authMode, serializedAdditionalRawData)
         {
             Name = name;
             SecretInfo = secretInfo;

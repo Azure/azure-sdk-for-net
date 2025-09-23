@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </summary>
         /// <param name="info"> Connection Info, including format, secret store, etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(ConfigurationInfo info = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
             using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.GenerateConfigurations");
             scope.Start();
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </summary>
         /// <param name="info"> Connection Info, including format, secret store, etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SourceConfigurationResult> GenerateConfigurations(ConfigurationInfo info = null, CancellationToken cancellationToken = default)
+        public virtual Response<SourceConfigurationResult> GenerateConfigurations(LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
             using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.GenerateConfigurations");
             scope.Start();

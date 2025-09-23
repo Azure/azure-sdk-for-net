@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="action"> Optional. Indicates public network solution. If enable, enable public network access of target service with best try. Default is enable. If optOut, opt out public network access configuration. </param>
         /// <param name="firewallRules"> Describe firewall rules of target service to make sure source application could connect to the target. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicNetworkSolution(DeleteOrUpdateBehavior? deleteOrUpdateBehavior, ActionType? action, FirewallRules firewallRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PublicNetworkSolution(DeleteOrUpdateBehavior? deleteOrUpdateBehavior, ConfigurationActionType? action, LinkerFirewallRules firewallRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
             Action = action;
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Indicates whether to clean up previous operation(such as firewall rules) when Linker is updating or deleting. </summary>
         public DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
         /// <summary> Optional. Indicates public network solution. If enable, enable public network access of target service with best try. Default is enable. If optOut, opt out public network access configuration. </summary>
-        public ActionType? Action { get; set; }
+        public ConfigurationActionType? Action { get; set; }
         /// <summary> Describe firewall rules of target service to make sure source application could connect to the target. </summary>
-        public FirewallRules FirewallRules { get; set; }
+        public LinkerFirewallRules FirewallRules { get; set; }
     }
 }

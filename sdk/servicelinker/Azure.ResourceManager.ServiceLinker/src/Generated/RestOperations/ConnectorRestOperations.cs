@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
-        internal RequestUriBuilder CreateGenerateConfigurationsRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, string connectorName, ConfigurationInfo info)
+        internal RequestUriBuilder CreateGenerateConfigurationsRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, string connectorName, LinkerConfigurationInfo info)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.ServiceLinker
             return uri;
         }
 
-        internal HttpMessage CreateGenerateConfigurationsRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string connectorName, ConfigurationInfo info)
+        internal HttpMessage CreateGenerateConfigurationsRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string connectorName, LinkerConfigurationInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string connectorName, ConfigurationInfo info = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string connectorName, LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceConfigurationResult> GenerateConfigurations(string subscriptionId, string resourceGroupName, AzureLocation location, string connectorName, ConfigurationInfo info = null, CancellationToken cancellationToken = default)
+        public Response<SourceConfigurationResult> GenerateConfigurations(string subscriptionId, string resourceGroupName, AzureLocation location, string connectorName, LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

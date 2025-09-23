@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Gets a collection of DryrunResources in the ArmClient.
+        /// Gets a collection of ServiceLinkerDryrunResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetDryruns(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetServiceLinkerDryruns(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of DryrunResources and their operations over a DryrunResource. </returns>
-        public static DryrunCollection GetDryruns(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ServiceLinkerDryrunResources and their operations over a ServiceLinkerDryrunResource. </returns>
+        public static ServiceLinkerDryrunCollection GetServiceLinkerDryruns(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceLinkerArmClient(client).GetDryruns(scope);
+            return GetMockableServiceLinkerArmClient(client).GetServiceLinkerDryruns(scope);
         }
 
         /// <summary>
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerDryrunResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetDryrunAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetServiceLinkerDryrunAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="dryrunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DryrunResource>> GetDryrunAsync(this ArmClient client, ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceLinkerDryrunResource>> GetServiceLinkerDryrunAsync(this ArmClient client, ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableServiceLinkerArmClient(client).GetDryrunAsync(scope, dryrunName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableServiceLinkerArmClient(client).GetServiceLinkerDryrunAsync(scope, dryrunName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerDryrunResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetDryrun(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetServiceLinkerDryrun(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="dryrunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<DryrunResource> GetDryrun(this ArmClient client, ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
+        public static Response<ServiceLinkerDryrunResource> GetServiceLinkerDryrun(this ArmClient client, ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceLinkerArmClient(client).GetDryrun(scope, dryrunName, cancellationToken);
+            return GetMockableServiceLinkerArmClient(client).GetServiceLinkerDryrun(scope, dryrunName, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerDryrunResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerDryrunResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -303,22 +303,22 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DryrunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DryrunResource.CreateResourceIdentifier" /> to create a <see cref="DryrunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceLinkerDryrunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceLinkerDryrunResource.CreateResourceIdentifier" /> to create a <see cref="ServiceLinkerDryrunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetDryrunResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetServiceLinkerDryrunResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DryrunResource"/> object. </returns>
-        public static DryrunResource GetDryrunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceLinkerDryrunResource"/> object. </returns>
+        public static ServiceLinkerDryrunResource GetServiceLinkerDryrunResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceLinkerArmClient(client).GetDryrunResource(id);
+            return GetMockableServiceLinkerArmClient(client).GetServiceLinkerDryrunResource(id);
         }
 
         /// <summary>

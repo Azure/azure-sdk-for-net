@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            ConfigurationInfo info = new ConfigurationInfo
+            LinkerConfigurationInfo info = new LinkerConfigurationInfo
             {
                 CustomizedKeys =
 {

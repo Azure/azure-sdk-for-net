@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, PublicNetworkSolution publicNetworkSolution, ConfigurationInfo configurationInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, PublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;
@@ -118,6 +118,6 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <summary> The network solution. </summary>
         public PublicNetworkSolution PublicNetworkSolution { get; set; }
         /// <summary> The connection information consumed by applications, including secrets, connection strings. </summary>
-        public ConfigurationInfo ConfigurationInfo { get; set; }
+        public LinkerConfigurationInfo ConfigurationInfo { get; set; }
     }
 }

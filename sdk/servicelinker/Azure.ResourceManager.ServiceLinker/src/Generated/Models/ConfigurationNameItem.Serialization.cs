@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             LinkerAuthType? authType = default;
             SecretSourceType? secretType = default;
             DaprProperties daprProperties = default;
-            IReadOnlyList<ConfigurationName> names = default;
+            IReadOnlyList<LinkerConfigurationName> names = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 names = null;
                                 continue;
                             }
-                            List<ConfigurationName> array = new List<ConfigurationName>();
+                            List<LinkerConfigurationName> array = new List<LinkerConfigurationName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConfigurationName.DeserializeConfigurationName(item, options));
+                                array.Add(LinkerConfigurationName.DeserializeLinkerConfigurationName(item, options));
                             }
                             names = array;
                             continue;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 authType,
                 secretType,
                 daprProperties,
-                names ?? new ChangeTrackingList<ConfigurationName>(),
+                names ?? new ChangeTrackingList<LinkerConfigurationName>(),
                 serializedAdditionalRawData);
         }
 

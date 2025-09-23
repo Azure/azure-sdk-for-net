@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
-        internal RequestUriBuilder CreateGenerateConfigurationsRequestUri(string resourceUri, string linkerName, ConfigurationInfo info)
+        internal RequestUriBuilder CreateGenerateConfigurationsRequestUri(string resourceUri, string linkerName, LinkerConfigurationInfo info)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ServiceLinker
             return uri;
         }
 
-        internal HttpMessage CreateGenerateConfigurationsRequest(string resourceUri, string linkerName, ConfigurationInfo info)
+        internal HttpMessage CreateGenerateConfigurationsRequest(string resourceUri, string linkerName, LinkerConfigurationInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(string resourceUri, string linkerName, ConfigurationInfo info = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(string resourceUri, string linkerName, LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceConfigurationResult> GenerateConfigurations(string resourceUri, string linkerName, ConfigurationInfo info = null, CancellationToken cancellationToken = default)
+        public Response<SourceConfigurationResult> GenerateConfigurations(string resourceUri, string linkerName, LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));

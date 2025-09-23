@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             LinkerSecretStore secretStore = default;
             string scope = default;
             PublicNetworkSolution publicNetworkSolution = default;
-            ConfigurationInfo configurationInfo = default;
+            LinkerConfigurationInfo configurationInfo = default;
             DryrunActionName actionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         configurationInfo = null;
                         continue;
                     }
-                    configurationInfo = ConfigurationInfo.DeserializeConfigurationInfo(property.Value, options);
+                    configurationInfo = LinkerConfigurationInfo.DeserializeLinkerConfigurationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actionName"u8))

@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ServiceLinker
 
         private readonly ClientDiagnostics _linkerResourceLinkerClientDiagnostics;
         private readonly LinkerRestOperations _linkerResourceLinkerRestClient;
-        private readonly ClientDiagnostics _dryrunLinkersClientDiagnostics;
-        private readonly LinkersRestOperations _dryrunLinkersRestClient;
+        private readonly ClientDiagnostics _serviceLinkerDryrunLinkersClientDiagnostics;
+        private readonly LinkersRestOperations _serviceLinkerDryrunLinkersRestClient;
         private readonly LinkerResourceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.ServiceLinker
             _linkerResourceLinkerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string linkerResourceLinkerApiVersion);
             _linkerResourceLinkerRestClient = new LinkerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, linkerResourceLinkerApiVersion);
-            _dryrunLinkersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", DryrunResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DryrunResource.ResourceType, out string dryrunLinkersApiVersion);
-            _dryrunLinkersRestClient = new LinkersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dryrunLinkersApiVersion);
+            _serviceLinkerDryrunLinkersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ServiceLinkerDryrunResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceLinkerDryrunResource.ResourceType, out string serviceLinkerDryrunLinkersApiVersion);
+            _serviceLinkerDryrunLinkersRestClient = new LinkersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceLinkerDryrunLinkersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -365,19 +365,19 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="info"> Connection Info, including format, secret store, etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(ConfigurationInfo info = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dryrunLinkersClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
+            using var scope = _serviceLinkerDryrunLinkersClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
             scope.Start();
             try
             {
-                var response = await _dryrunLinkersRestClient.GenerateConfigurationsAsync(Id.Parent, Id.Name, info, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerDryrunLinkersRestClient.GenerateConfigurationsAsync(Id.Parent, Id.Name, info, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -404,19 +404,19 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="info"> Connection Info, including format, secret store, etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SourceConfigurationResult> GenerateConfigurations(ConfigurationInfo info = null, CancellationToken cancellationToken = default)
+        public virtual Response<SourceConfigurationResult> GenerateConfigurations(LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dryrunLinkersClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
+            using var scope = _serviceLinkerDryrunLinkersClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
             scope.Start();
             try
             {
-                var response = _dryrunLinkersRestClient.GenerateConfigurations(Id.Parent, Id.Name, info, cancellationToken);
+                var response = _serviceLinkerDryrunLinkersRestClient.GenerateConfigurations(Id.Parent, Id.Name, info, cancellationToken);
                 return response;
             }
             catch (Exception e)

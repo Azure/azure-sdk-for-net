@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="secret"> Secret for servicePrincipal auth. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
         /// <param name="roles"> Optional, this value specifies the Azure roles to be assigned. Automatically. </param>
-        internal ServicePrincipalSecretAuthInfo(LinkerAuthType authType, AuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, string clientId, Guid principalId, string secret, DeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
+        internal ServicePrincipalSecretAuthInfo(LinkerAuthType authType, ConfigurationAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, string clientId, Guid principalId, string secret, DeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
         {
             UserName = userName;
             ClientId = clientId;

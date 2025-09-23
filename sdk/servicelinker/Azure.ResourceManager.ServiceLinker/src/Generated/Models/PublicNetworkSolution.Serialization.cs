@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             DeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
-            ActionType? action = default;
-            FirewallRules firewallRules = default;
+            ConfigurationActionType? action = default;
+            LinkerFirewallRules firewallRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    action = new ActionType(property.Value.GetString());
+                    action = new ConfigurationActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("firewallRules"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    firewallRules = FirewallRules.DeserializeFirewallRules(property.Value, options);
+                    firewallRules = LinkerFirewallRules.DeserializeLinkerFirewallRules(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

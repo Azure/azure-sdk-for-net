@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class ConfigurationInfo : IUtf8JsonSerializable, IJsonModel<ConfigurationInfo>
+    public partial class LinkerConfigurationInfo : IUtf8JsonSerializable, IJsonModel<LinkerConfigurationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerConfigurationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConfigurationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkerConfigurationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerConfigurationInfo)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DeleteOrUpdateBehavior))
@@ -111,19 +111,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        ConfigurationInfo IJsonModel<ConfigurationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LinkerConfigurationInfo IJsonModel<LinkerConfigurationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerConfigurationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfigurationInfo(document.RootElement, options);
+            return DeserializeLinkerConfigurationInfo(document.RootElement, options);
         }
 
-        internal static ConfigurationInfo DeserializeConfigurationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LinkerConfigurationInfo DeserializeLinkerConfigurationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             DeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
-            ActionType? action = default;
+            ConfigurationActionType? action = default;
             IDictionary<string, string> customizedKeys = default;
             DaprProperties daprProperties = default;
             IDictionary<string, string> additionalConfigurations = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    action = new ActionType(property.Value.GetString());
+                    action = new ConfigurationActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customizedKeys"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConfigurationInfo(
+            return new LinkerConfigurationInfo(
                 deleteOrUpdateBehavior,
                 action,
                 customizedKeys ?? new ChangeTrackingDictionary<string, string>(),
@@ -238,35 +238,35 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConfigurationInfo>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LinkerConfigurationInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerConfigurationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConfigurationInfo IPersistableModel<ConfigurationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LinkerConfigurationInfo IPersistableModel<LinkerConfigurationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConfigurationInfo(document.RootElement, options);
+                        return DeserializeLinkerConfigurationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerConfigurationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConfigurationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkerConfigurationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

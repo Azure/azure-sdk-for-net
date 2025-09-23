@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The configuration names. </summary>
-    public partial class ConfigurationName
+    public partial class LinkerConfigurationName
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationName"/>. </summary>
-        internal ConfigurationName()
+        /// <summary> Initializes a new instance of <see cref="LinkerConfigurationName"/>. </summary>
+        internal LinkerConfigurationName()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerConfigurationName"/>. </summary>
         /// <param name="value"></param>
         /// <param name="description"> Description for the configuration name. </param>
-        /// <param name="required"> Represent the configuration is required or not. </param>
+        /// <param name="isRequired"> Represent the configuration is required or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationName(string value, string description, bool? required, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LinkerConfigurationName(string value, string description, bool? isRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Description = description;
-            Required = required;
+            IsRequired = isRequired;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Description for the configuration name. </summary>
         public string Description { get; }
         /// <summary> Represent the configuration is required or not. </summary>
-        public bool? Required { get; }
+        public bool? IsRequired { get; }
     }
 }

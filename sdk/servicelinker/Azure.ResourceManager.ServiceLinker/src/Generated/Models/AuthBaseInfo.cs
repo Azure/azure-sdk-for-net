@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="authType"> The authentication type. </param>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthBaseInfo(LinkerAuthType authType, AuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthBaseInfo(LinkerAuthType authType, ConfigurationAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthType = authType;
             AuthMode = authMode;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> The authentication type. </summary>
         internal LinkerAuthType AuthType { get; set; }
         /// <summary> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </summary>
-        public AuthMode? AuthMode { get; set; }
+        public ConfigurationAuthMode? AuthMode { get; set; }
     }
 }

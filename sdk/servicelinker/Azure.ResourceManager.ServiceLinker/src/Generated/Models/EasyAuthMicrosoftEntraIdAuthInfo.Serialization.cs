@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             string secret = default;
             DeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
             LinkerAuthType authType = default;
-            AuthMode? authMode = default;
+            ConfigurationAuthMode? authMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    authMode = new AuthMode(property.Value.GetString());
+                    authMode = new ConfigurationAuthMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

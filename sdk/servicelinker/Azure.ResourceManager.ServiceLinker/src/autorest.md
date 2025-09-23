@@ -46,6 +46,13 @@ rename-mapping:
   CreateOrUpdateDryrunParameters: ServiceLinkerCreateOrUpdateDryrunParametersContent
   ConfigurationResult: SourceConfigurationResult
   LinkerPatch: LinkerResourcePatch
+  ActionType: ConfigurationActionType
+  AllowType: FirewallRulesAllowType
+  AuthMode: ConfigurationAuthMode
+  ConfigurationInfo: LinkerConfigurationInfo
+  ConfigurationName: LinkerConfigurationName
+  ConfigurationName.required : IsRequired
+  FirewallRules: LinkerFirewallRules
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -88,5 +95,6 @@ generate-arm-resource-extensions:
 
 request-path-to-resource-name:
   /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}: LinkerResource
+  /{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}: ServiceLinkerDryrun
 
 ```

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="scope"> connection scope in source service. </param>
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
-        internal ServiceLinkerCreateOrUpdateDryrunParametersContent(DryrunActionName actionName, IDictionary<string, BinaryData> serializedAdditionalRawData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, PublicNetworkSolution publicNetworkSolution, ConfigurationInfo configurationInfo) : base(actionName, serializedAdditionalRawData)
+        internal ServiceLinkerCreateOrUpdateDryrunParametersContent(DryrunActionName actionName, IDictionary<string, BinaryData> serializedAdditionalRawData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, PublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo) : base(actionName, serializedAdditionalRawData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> The network solution. </summary>
         public PublicNetworkSolution PublicNetworkSolution { get; set; }
         /// <summary> The connection information consumed by applications, including secrets, connection strings. </summary>
-        public ConfigurationInfo ConfigurationInfo { get; set; }
+        public LinkerConfigurationInfo ConfigurationInfo { get; set; }
     }
 }

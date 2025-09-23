@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of <see cref="ConfigurationNameItem"/>. </summary>
         internal ConfigurationNameItem()
         {
-            Names = new ChangeTrackingList<ConfigurationName>();
+            Names = new ChangeTrackingList<LinkerConfigurationName>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationNameItem"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="daprProperties"> Deprecated, please use #/definitions/DaprConfigurationList instead. </param>
         /// <param name="names"> The configuration names to be set in compute service environment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationNameItem(string targetService, LinkerClientType? clientType, LinkerAuthType? authType, SecretSourceType? secretType, DaprProperties daprProperties, IReadOnlyList<ConfigurationName> names, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigurationNameItem(string targetService, LinkerClientType? clientType, LinkerAuthType? authType, SecretSourceType? secretType, DaprProperties daprProperties, IReadOnlyList<LinkerConfigurationName> names, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetService = targetService;
             ClientType = clientType;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Deprecated, please use #/definitions/DaprConfigurationList instead. </summary>
         public DaprProperties DaprProperties { get; }
         /// <summary> The configuration names to be set in compute service environment. </summary>
-        public IReadOnlyList<ConfigurationName> Names { get; }
+        public IReadOnlyList<LinkerConfigurationName> Names { get; }
     }
 }

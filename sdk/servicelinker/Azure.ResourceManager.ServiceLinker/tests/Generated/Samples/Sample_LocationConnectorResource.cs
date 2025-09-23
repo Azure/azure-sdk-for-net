@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             LocationConnectorResource locationConnector = client.GetLocationConnectorResource(locationConnectorResourceId);
 
             // invoke the operation
-            ConfigurationInfo info = new ConfigurationInfo
+            LinkerConfigurationInfo info = new LinkerConfigurationInfo
             {
                 CustomizedKeys =
 {

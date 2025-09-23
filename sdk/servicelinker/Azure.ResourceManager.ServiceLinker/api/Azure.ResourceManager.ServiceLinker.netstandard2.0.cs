@@ -6,42 +6,6 @@ namespace Azure.ResourceManager.ServiceLinker
         public static Azure.ResourceManager.ServiceLinker.AzureResourceManagerServiceLinkerContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class DryrunCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceLinker.DryrunResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.DryrunResource>, System.Collections.IEnumerable
-    {
-        protected DryrunCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.DryrunResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string dryrunName, Azure.ResourceManager.ServiceLinker.DryrunResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.DryrunResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string dryrunName, Azure.ResourceManager.ServiceLinker.DryrunResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.DryrunResource> Get(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ServiceLinker.DryrunResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceLinker.DryrunResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.DryrunResource>> GetAsync(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.ServiceLinker.DryrunResource> GetIfExists(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ServiceLinker.DryrunResource>> GetIfExistsAsync(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceLinker.DryrunResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceLinker.DryrunResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceLinker.DryrunResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.DryrunResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class DryrunResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DryrunResource() { }
-        public virtual Azure.ResourceManager.ServiceLinker.DryrunResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string dryrunName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.DryrunResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.DryrunResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.ServiceLinker.DryrunResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceLinker.DryrunResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.DryrunResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.DryrunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.DryrunResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.DryrunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class DryrunResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>
     {
         public DryrunResourceData() { }
@@ -65,8 +29,8 @@ namespace Azure.ResourceManager.ServiceLinker
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string linkerName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult> GenerateConfigurations(Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult>> GenerateConfigurationsAsync(Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult> GenerateConfigurations(Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult>> GenerateConfigurationsAsync(Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult> GetConfigurations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -103,7 +67,7 @@ namespace Azure.ResourceManager.ServiceLinker
         public LinkerResourceData() { }
         public Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo AuthInfo { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? ClientType { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo ConfigurationInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo ConfigurationInfo { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution PublicNetworkSolution { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
@@ -147,8 +111,8 @@ namespace Azure.ResourceManager.ServiceLinker
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, Azure.Core.AzureLocation location, string connectorName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult> GenerateConfigurations(Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult>> GenerateConfigurationsAsync(Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult> GenerateConfigurations(Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult>> GenerateConfigurationsAsync(Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.LocationConnectorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.LocationConnectorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ServiceLinker.LinkerResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.LinkerResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -197,16 +161,48 @@ namespace Azure.ResourceManager.ServiceLinker
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.LocationDryrunResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.DryrunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.LocationDryrunResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.DryrunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ServiceLinkerDryrunCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>, System.Collections.IEnumerable
+    {
+        protected ServiceLinkerDryrunCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string dryrunName, Azure.ResourceManager.ServiceLinker.DryrunResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string dryrunName, Azure.ResourceManager.ServiceLinker.DryrunResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> Get(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>> GetAsync(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> GetIfExists(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>> GetIfExistsAsync(string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ServiceLinkerDryrunResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ServiceLinkerDryrunResource() { }
+        public virtual Azure.ResourceManager.ServiceLinker.DryrunResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string dryrunName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceLinker.DryrunResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceLinker.DryrunResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.DryrunResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.DryrunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.DryrunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class ServiceLinkerExtensions
     {
         public static Azure.Pageable<Azure.ResourceManager.ServiceLinker.Models.ConfigurationNameItem> GetConfigurationNames(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ServiceLinker.Models.ConfigurationNameItem> GetConfigurationNamesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ServiceLinker.Models.DaprConfigurationResource> GetDaprConfigurationsLinkers(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ServiceLinker.Models.DaprConfigurationResource> GetDaprConfigurationsLinkersAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.ServiceLinker.DryrunResource> GetDryrun(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.DryrunResource>> GetDryrunAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.DryrunResource GetDryrunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.DryrunCollection GetDryruns(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.LinkerResource GetLinkerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource> GetLinkerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource> GetLinkerResource(this Azure.ResourceManager.ArmResource armResource, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -222,6 +218,10 @@ namespace Azure.ResourceManager.ServiceLinker
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.LocationDryrunResource>> GetLocationDryrunAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.LocationDryrunResource GetLocationDryrunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.LocationDryrunCollection GetLocationDryruns(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> GetServiceLinkerDryrun(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>> GetServiceLinkerDryrunAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource GetServiceLinkerDryrunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunCollection GetServiceLinkerDryruns(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ServiceLinker.Mocking
@@ -231,16 +231,16 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         protected MockableServiceLinkerArmClient() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceLinker.Models.DaprConfigurationResource> GetDaprConfigurationsLinkers(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceLinker.Models.DaprConfigurationResource> GetDaprConfigurationsLinkersAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.DryrunResource> GetDryrun(Azure.Core.ResourceIdentifier scope, string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.DryrunResource>> GetDryrunAsync(Azure.Core.ResourceIdentifier scope, string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ServiceLinker.DryrunResource GetDryrunResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.ServiceLinker.DryrunCollection GetDryruns(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.ServiceLinker.LinkerResource GetLinkerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource> GetLinkerResource(Azure.Core.ResourceIdentifier scope, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource>> GetLinkerResourceAsync(Azure.Core.ResourceIdentifier scope, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceLinker.LinkerResourceCollection GetLinkerResources(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.ServiceLinker.LocationConnectorResource GetLocationConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceLinker.LocationDryrunResource GetLocationDryrunResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource> GetServiceLinkerDryrun(Azure.Core.ResourceIdentifier scope, string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource>> GetServiceLinkerDryrunAsync(Azure.Core.ResourceIdentifier scope, string dryrunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunResource GetServiceLinkerDryrunResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceLinker.ServiceLinkerDryrunCollection GetServiceLinkerDryruns(Azure.Core.ResourceIdentifier scope) { throw null; }
     }
     public partial class MockableServiceLinkerArmResource : Azure.ResourceManager.ArmResource
     {
@@ -300,63 +300,26 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.AccessKeyPermission left, Azure.ResourceManager.ServiceLinker.Models.AccessKeyPermission right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.ActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionType(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.ActionType Enable { get { throw null; } }
-        public static Azure.ResourceManager.ServiceLinker.Models.ActionType Internal { get { throw null; } }
-        public static Azure.ResourceManager.ServiceLinker.Models.ActionType OptOut { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.ActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.ActionType left, Azure.ResourceManager.ServiceLinker.Models.ActionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.ActionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.ActionType left, Azure.ResourceManager.ServiceLinker.Models.ActionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AllowType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.AllowType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AllowType(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.AllowType False { get { throw null; } }
-        public static Azure.ResourceManager.ServiceLinker.Models.AllowType True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.AllowType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.AllowType left, Azure.ResourceManager.ServiceLinker.Models.AllowType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.AllowType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.AllowType left, Azure.ResourceManager.ServiceLinker.Models.AllowType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class ArmServiceLinkerModelFactory
     {
         public static Azure.ResourceManager.ServiceLinker.Models.BasicErrorDryrunPrerequisiteResult BasicErrorDryrunPrerequisiteResult(string code = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.ConfigurationName ConfigurationName(string value = null, string description = null, bool? required = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.ConfigurationNameItem ConfigurationNameItem(string targetService = null, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType?), Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType? authType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType?), Azure.ResourceManager.ServiceLinker.Models.SecretSourceType? secretType = default(Azure.ResourceManager.ServiceLinker.Models.SecretSourceType?), Azure.ResourceManager.ServiceLinker.Models.DaprProperties daprProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.Models.ConfigurationName> names = null) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.ConfigurationNameItem ConfigurationNameItem(string targetService = null, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType?), Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType? authType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType?), Azure.ResourceManager.ServiceLinker.Models.SecretSourceType? secretType = default(Azure.ResourceManager.ServiceLinker.Models.SecretSourceType?), Azure.ResourceManager.ServiceLinker.Models.DaprProperties daprProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName> names = null) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.Models.DaprConfigurationResource DaprConfigurationResource(string targetType = null, Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType? authType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType?), Azure.ResourceManager.ServiceLinker.Models.DaprProperties daprProperties = null) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.Models.DaprProperties DaprProperties(string version = null, string componentType = null, string secretStoreComponent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.Models.DaprMetadata> metadata = null, System.Collections.Generic.IEnumerable<string> scopes = null, string runtimeVersion = null, Azure.ResourceManager.ServiceLinker.Models.DaprBindingComponentDirection? bindingComponentDirection = default(Azure.ResourceManager.ServiceLinker.Models.DaprBindingComponentDirection?)) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.Models.DryrunOperationPreview DryrunOperationPreview(string name = null, Azure.ResourceManager.ServiceLinker.Models.DryrunPreviewOperationType? operationType = default(Azure.ResourceManager.ServiceLinker.Models.DryrunPreviewOperationType?), string description = null, string action = null, string scope = null) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.Models.DryrunPatch DryrunPatch(Azure.ResourceManager.ServiceLinker.Models.ServiceLinkerDryrunParametersContent parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.Models.DryrunPrerequisiteResult> prerequisiteResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.Models.DryrunOperationPreview> operationPreviews = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.DryrunResourceData DryrunResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ServiceLinker.Models.ServiceLinkerDryrunParametersContent parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.Models.DryrunPrerequisiteResult> prerequisiteResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.Models.DryrunOperationPreview> operationPreviews = null, string provisioningState = null) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.LinkerResourceData LinkerResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo targetService = null, Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo authInfo = null, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType?), string provisioningState = null, Azure.ResourceManager.ServiceLinker.Models.VnetSolution vnetSolution = null, Azure.ResourceManager.ServiceLinker.Models.LinkerSecretStore secretStore = null, string scope = null, Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution publicNetworkSolution = null, Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo configurationInfo = null) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName LinkerConfigurationName(string value = null, string description = null, bool? isRequired = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.LinkerResourceData LinkerResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo targetService = null, Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo authInfo = null, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType?), string provisioningState = null, Azure.ResourceManager.ServiceLinker.Models.VnetSolution vnetSolution = null, Azure.ResourceManager.ServiceLinker.Models.LinkerSecretStore secretStore = null, string scope = null, Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution publicNetworkSolution = null, Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo configurationInfo = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceLinker.LinkerResourceData LinkerResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo targetService = null, Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo authInfo = null, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType?), string provisioningState = null, Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType? solutionType = default(Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType?), Azure.Core.ResourceIdentifier secretStoreKeyVaultId = null, string scope = null) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch LinkerResourcePatch(Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo targetService = null, Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo authInfo = null, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType?), string provisioningState = null, Azure.ResourceManager.ServiceLinker.Models.VnetSolution vnetSolution = null, Azure.ResourceManager.ServiceLinker.Models.LinkerSecretStore secretStore = null, string scope = null, Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution publicNetworkSolution = null, Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo configurationInfo = null) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch LinkerResourcePatch(Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo targetService = null, Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo authInfo = null, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType?), string provisioningState = null, Azure.ResourceManager.ServiceLinker.Models.VnetSolution vnetSolution = null, Azure.ResourceManager.ServiceLinker.Models.LinkerSecretStore secretStore = null, string scope = null, Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution publicNetworkSolution = null, Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo configurationInfo = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch LinkerResourcePatch(Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo targetService, Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo authInfo, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType, string provisioningState, Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType? solutionType = default(Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType?), Azure.Core.ResourceIdentifier secretStoreKeyVaultId = null, string scope = null) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.Models.LinkerValidateOperationResult LinkerValidateOperationResult(Azure.Core.ResourceIdentifier resourceId = null, string status = null, string linkerName = null, bool? isConnectionAvailable = default(bool?), System.DateTimeOffset? reportStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? reportEndOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType? authType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultItemInfo> validationDetail = null) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultItemInfo LinkerValidationResultItemInfo(string name = null, string description = null, Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus? result = default(Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus?), string errorMessage = null, string errorCode = null) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.Models.PermissionsMissingDryrunPrerequisiteResult PermissionsMissingDryrunPrerequisiteResult(string scope = null, System.Collections.Generic.IEnumerable<string> permissions = null, string recommendedRole = null) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.ServiceLinkerCreateOrUpdateDryrunParametersContent ServiceLinkerCreateOrUpdateDryrunParametersContent(Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo targetService = null, Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo authInfo = null, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType?), string provisioningState = null, Azure.ResourceManager.ServiceLinker.Models.VnetSolution vnetSolution = null, Azure.ResourceManager.ServiceLinker.Models.LinkerSecretStore secretStore = null, string scope = null, Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution publicNetworkSolution = null, Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo configurationInfo = null) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.ServiceLinkerCreateOrUpdateDryrunParametersContent ServiceLinkerCreateOrUpdateDryrunParametersContent(Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo targetService = null, Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo authInfo = null, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? clientType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType?), string provisioningState = null, Azure.ResourceManager.ServiceLinker.Models.VnetSolution vnetSolution = null, Azure.ResourceManager.ServiceLinker.Models.LinkerSecretStore secretStore = null, string scope = null, Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution publicNetworkSolution = null, Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo configurationInfo = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceLinker.Models.SourceConfiguration SourceConfiguration(string name, string value) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.Models.SourceConfiguration SourceConfiguration(string name = null, string value = null, Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationType? configType = default(Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationType?), string keyVaultReferenceIdentity = null, string description = null) { throw null; }
@@ -365,31 +328,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public abstract partial class AuthBaseInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo>
     {
         protected AuthBaseInfo() { }
-        public Azure.ResourceManager.ServiceLinker.Models.AuthMode? AuthMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode? AuthMode { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AuthMode : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.AuthMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AuthMode(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.AuthMode OptInAllAuth { get { throw null; } }
-        public static Azure.ResourceManager.ServiceLinker.Models.AuthMode OptOutAllAuth { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.AuthMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.AuthMode left, Azure.ResourceManager.ServiceLinker.Models.AuthMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.AuthMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.AuthMode left, Azure.ResourceManager.ServiceLinker.Models.AuthMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class AzureAppConfigProperties : Azure.ResourceManager.ServiceLinker.Models.AzureResourceBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.AzureAppConfigProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.AzureAppConfigProperties>
     {
@@ -447,35 +392,42 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.BasicErrorDryrunPrerequisiteResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.BasicErrorDryrunPrerequisiteResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConfigurationActionType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType>
     {
-        public ConfigurationInfo() { }
-        public Azure.ResourceManager.ServiceLinker.Models.ActionType? Action { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> AdditionalConfigurations { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> AdditionalConnectionStringProperties { get { throw null; } }
-        public string AppConfigurationId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> CustomizedKeys { get { throw null; } }
-        public Azure.ResourceManager.ServiceLinker.Models.DaprProperties DaprProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConfigurationActionType(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType Enable { get { throw null; } }
+        public static Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType Internal { get { throw null; } }
+        public static Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType OptOut { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType left, Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType left, Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class ConfigurationName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationName>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConfigurationAuthMode : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode>
     {
-        internal ConfigurationName() { }
-        public string Description { get { throw null; } }
-        public bool? Required { get { throw null; } }
-        public string Value { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceLinker.Models.ConfigurationName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceLinker.Models.ConfigurationName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConfigurationAuthMode(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode OptInAllAuth { get { throw null; } }
+        public static Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode OptOutAllAuth { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode left, Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode left, Azure.ResourceManager.ServiceLinker.Models.ConfigurationAuthMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ConfigurationNameItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationNameItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.ConfigurationNameItem>
     {
@@ -483,7 +435,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType? AuthType { get { throw null; } }
         public Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? ClientType { get { throw null; } }
         public Azure.ResourceManager.ServiceLinker.Models.DaprProperties DaprProperties { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceLinker.Models.ConfigurationName> Names { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName> Names { get { throw null; } }
         public Azure.ResourceManager.ServiceLinker.Models.SecretSourceType? SecretType { get { throw null; } }
         public string TargetService { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -696,18 +648,23 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.FabricPlatform>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.FabricPlatform>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FirewallRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.FirewallRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.FirewallRules>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FirewallRulesAllowType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType>
     {
-        public FirewallRules() { }
-        public Azure.ResourceManager.ServiceLinker.Models.AllowType? AzureServices { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.AllowType? CallerClientIP { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> IPRanges { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceLinker.Models.FirewallRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.FirewallRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.FirewallRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceLinker.Models.FirewallRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.FirewallRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.FirewallRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.FirewallRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FirewallRulesAllowType(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType False { get { throw null; } }
+        public static Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType left, Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType left, Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KeyVaultSecretReferenceSecretInfo : Azure.ResourceManager.ServiceLinker.Models.SecretBaseInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.KeyVaultSecretReferenceSecretInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.KeyVaultSecretReferenceSecretInfo>
     {
@@ -785,6 +742,36 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.LinkerClientType left, Azure.ResourceManager.ServiceLinker.Models.LinkerClientType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class LinkerConfigurationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo>
+    {
+        public LinkerConfigurationInfo() { }
+        public Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType? Action { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> AdditionalConfigurations { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> AdditionalConnectionStringProperties { get { throw null; } }
+        public string AppConfigurationId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> CustomizedKeys { get { throw null; } }
+        public Azure.ResourceManager.ServiceLinker.Models.DaprProperties DaprProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LinkerConfigurationName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName>
+    {
+        internal LinkerConfigurationName() { }
+        public string Description { get { throw null; } }
+        public bool? IsRequired { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LinkerConfigurationType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationType>
     {
@@ -803,12 +790,25 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationType left, Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class LinkerFirewallRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules>
+    {
+        public LinkerFirewallRules() { }
+        public Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType? AzureServices { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.FirewallRulesAllowType? CallerClientIP { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> IPRanges { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class LinkerResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch>
     {
         public LinkerResourcePatch() { }
         public Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo AuthInfo { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? ClientType { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo ConfigurationInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo ConfigurationInfo { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution PublicNetworkSolution { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
@@ -908,9 +908,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class PublicNetworkSolution : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution>
     {
         public PublicNetworkSolution() { }
-        public Azure.ResourceManager.ServiceLinker.Models.ActionType? Action { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.ConfigurationActionType? Action { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.FirewallRules FirewallRules { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules FirewallRules { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public ServiceLinkerCreateOrUpdateDryrunParametersContent() { }
         public Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo AuthInfo { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.LinkerClientType? ClientType { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.ConfigurationInfo ConfigurationInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.LinkerConfigurationInfo ConfigurationInfo { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ServiceLinker.Models.PublicNetworkSolution PublicNetworkSolution { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class FirewallRules : IUtf8JsonSerializable, IJsonModel<FirewallRules>
+    public partial class LinkerFirewallRules : IUtf8JsonSerializable, IJsonModel<LinkerFirewallRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerFirewallRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FirewallRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkerFirewallRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerFirewallRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRules)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerFirewallRules)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(IPRanges))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        FirewallRules IJsonModel<FirewallRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LinkerFirewallRules IJsonModel<LinkerFirewallRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerFirewallRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRules)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerFirewallRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFirewallRules(document.RootElement, options);
+            return DeserializeLinkerFirewallRules(document.RootElement, options);
         }
 
-        internal static FirewallRules DeserializeFirewallRules(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LinkerFirewallRules DeserializeLinkerFirewallRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             IList<string> ipRanges = default;
-            AllowType? azureServices = default;
-            AllowType? callerClientIP = default;
+            FirewallRulesAllowType? azureServices = default;
+            FirewallRulesAllowType? callerClientIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    azureServices = new AllowType(property.Value.GetString());
+                    azureServices = new FirewallRulesAllowType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("callerClientIP"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    callerClientIP = new AllowType(property.Value.GetString());
+                    callerClientIP = new FirewallRulesAllowType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,38 +136,38 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FirewallRules(ipRanges ?? new ChangeTrackingList<string>(), azureServices, callerClientIP, serializedAdditionalRawData);
+            return new LinkerFirewallRules(ipRanges ?? new ChangeTrackingList<string>(), azureServices, callerClientIP, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FirewallRules>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LinkerFirewallRules>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerFirewallRules>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRules)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerFirewallRules)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FirewallRules IPersistableModel<FirewallRules>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LinkerFirewallRules IPersistableModel<LinkerFirewallRules>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerFirewallRules>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFirewallRules(document.RootElement, options);
+                        return DeserializeLinkerFirewallRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRules)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerFirewallRules)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FirewallRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkerFirewallRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

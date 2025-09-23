@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
         /// <returns> A new <see cref="ServiceLinker.LinkerResourceData"/> instance for mocking. </returns>
-        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, ConfigurationInfo configurationInfo = null)
+        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
         {
             return new LinkerResourceData(
                 id,
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
         /// <returns> A new <see cref="Models.LinkerResourcePatch"/> instance for mocking. </returns>
-        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, ConfigurationInfo configurationInfo = null)
+        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
         {
             return new LinkerResourcePatch(
                 targetService,
@@ -287,9 +287,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="daprProperties"> Deprecated, please use #/definitions/DaprConfigurationList instead. </param>
         /// <param name="names"> The configuration names to be set in compute service environment. </param>
         /// <returns> A new <see cref="Models.ConfigurationNameItem"/> instance for mocking. </returns>
-        public static ConfigurationNameItem ConfigurationNameItem(string targetService = null, LinkerClientType? clientType = null, LinkerAuthType? authType = null, SecretSourceType? secretType = null, DaprProperties daprProperties = null, IEnumerable<ConfigurationName> names = null)
+        public static ConfigurationNameItem ConfigurationNameItem(string targetService = null, LinkerClientType? clientType = null, LinkerAuthType? authType = null, SecretSourceType? secretType = null, DaprProperties daprProperties = null, IEnumerable<LinkerConfigurationName> names = null)
         {
-            names ??= new List<ConfigurationName>();
+            names ??= new List<LinkerConfigurationName>();
 
             return new ConfigurationNameItem(
                 targetService,
@@ -301,14 +301,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LinkerConfigurationName"/>. </summary>
         /// <param name="value"></param>
         /// <param name="description"> Description for the configuration name. </param>
-        /// <param name="required"> Represent the configuration is required or not. </param>
-        /// <returns> A new <see cref="Models.ConfigurationName"/> instance for mocking. </returns>
-        public static ConfigurationName ConfigurationName(string value = null, string description = null, bool? required = null)
+        /// <param name="isRequired"> Represent the configuration is required or not. </param>
+        /// <returns> A new <see cref="Models.LinkerConfigurationName"/> instance for mocking. </returns>
+        public static LinkerConfigurationName LinkerConfigurationName(string value = null, string description = null, bool? isRequired = null)
         {
-            return new ConfigurationName(value, description, required, serializedAdditionalRawData: null);
+            return new LinkerConfigurationName(value, description, isRequired, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BasicErrorDryrunPrerequisiteResult"/>. </summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
         /// <returns> A new <see cref="Models.ServiceLinkerCreateOrUpdateDryrunParametersContent"/> instance for mocking. </returns>
-        public static ServiceLinkerCreateOrUpdateDryrunParametersContent ServiceLinkerCreateOrUpdateDryrunParametersContent(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, ConfigurationInfo configurationInfo = null)
+        public static ServiceLinkerCreateOrUpdateDryrunParametersContent ServiceLinkerCreateOrUpdateDryrunParametersContent(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
         {
             return new ServiceLinkerCreateOrUpdateDryrunParametersContent(
                 DryrunActionName.CreateOrUpdate,

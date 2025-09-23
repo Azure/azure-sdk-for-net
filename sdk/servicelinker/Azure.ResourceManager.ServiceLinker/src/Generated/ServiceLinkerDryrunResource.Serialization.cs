@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    public partial class DryrunResource : IJsonModel<DryrunResourceData>
+    public partial class ServiceLinkerDryrunResource : IJsonModel<DryrunResourceData>
     {
         private static DryrunResourceData s_dataDeserializationInstance;
         private static DryrunResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();

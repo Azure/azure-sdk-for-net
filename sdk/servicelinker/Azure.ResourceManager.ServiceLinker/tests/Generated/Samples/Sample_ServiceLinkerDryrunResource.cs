@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceLinker.Samples
 {
-    public partial class Sample_DryrunResource
+    public partial class Sample_ServiceLinkerDryrunResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DryrunResource created on azure
-            // for more information of creating DryrunResource, please refer to the document of DryrunResource
+            // this example assumes you already have this ServiceLinkerDryrunResource created on azure
+            // for more information of creating ServiceLinkerDryrunResource, please refer to the document of ServiceLinkerDryrunResource
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string dryrunName = "dryrunName";
-            ResourceIdentifier dryrunResourceId = DryrunResource.CreateResourceIdentifier(resourceUri, dryrunName);
-            DryrunResource dryrun = client.GetDryrunResource(dryrunResourceId);
+            ResourceIdentifier serviceLinkerDryrunResourceId = ServiceLinkerDryrunResource.CreateResourceIdentifier(resourceUri, dryrunName);
+            ServiceLinkerDryrunResource serviceLinkerDryrun = client.GetServiceLinkerDryrunResource(serviceLinkerDryrunResourceId);
 
             // invoke the operation
-            DryrunResource result = await dryrun.GetAsync();
+            ServiceLinkerDryrunResource result = await serviceLinkerDryrun.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DryrunResource created on azure
-            // for more information of creating DryrunResource, please refer to the document of DryrunResource
+            // this example assumes you already have this ServiceLinkerDryrunResource created on azure
+            // for more information of creating ServiceLinkerDryrunResource, please refer to the document of ServiceLinkerDryrunResource
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string dryrunName = "dryrunName";
-            ResourceIdentifier dryrunResourceId = DryrunResource.CreateResourceIdentifier(resourceUri, dryrunName);
-            DryrunResource dryrun = client.GetDryrunResource(dryrunResourceId);
+            ResourceIdentifier serviceLinkerDryrunResourceId = ServiceLinkerDryrunResource.CreateResourceIdentifier(resourceUri, dryrunName);
+            ServiceLinkerDryrunResource serviceLinkerDryrun = client.GetServiceLinkerDryrunResource(serviceLinkerDryrunResourceId);
 
             // invoke the operation
-            await dryrun.DeleteAsync(WaitUntil.Completed);
+            await serviceLinkerDryrun.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DryrunResource created on azure
-            // for more information of creating DryrunResource, please refer to the document of DryrunResource
+            // this example assumes you already have this ServiceLinkerDryrunResource created on azure
+            // for more information of creating ServiceLinkerDryrunResource, please refer to the document of ServiceLinkerDryrunResource
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string dryrunName = "dryrunName";
-            ResourceIdentifier dryrunResourceId = DryrunResource.CreateResourceIdentifier(resourceUri, dryrunName);
-            DryrunResource dryrun = client.GetDryrunResource(dryrunResourceId);
+            ResourceIdentifier serviceLinkerDryrunResourceId = ServiceLinkerDryrunResource.CreateResourceIdentifier(resourceUri, dryrunName);
+            ServiceLinkerDryrunResource serviceLinkerDryrun = client.GetServiceLinkerDryrunResource(serviceLinkerDryrunResourceId);
 
             // invoke the operation
             DryrunPatch patch = new DryrunPatch
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
                     },
                 },
             };
-            ArmOperation<DryrunResource> lro = await dryrun.UpdateAsync(WaitUntil.Completed, patch);
-            DryrunResource result = lro.Value;
+            ArmOperation<ServiceLinkerDryrunResource> lro = await serviceLinkerDryrun.UpdateAsync(WaitUntil.Completed, patch);
+            ServiceLinkerDryrunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

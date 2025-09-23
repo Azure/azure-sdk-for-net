@@ -12,25 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal class DryrunOperationSource : IOperationSource<DryrunResource>
+    internal class ServiceLinkerDryrunOperationSource : IOperationSource<ServiceLinkerDryrunResource>
     {
         private readonly ArmClient _client;
 
-        internal DryrunOperationSource(ArmClient client)
+        internal ServiceLinkerDryrunOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        DryrunResource IOperationSource<DryrunResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceLinkerDryrunResource IOperationSource<ServiceLinkerDryrunResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<DryrunResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
-            return new DryrunResource(_client, data);
+            return new ServiceLinkerDryrunResource(_client, data);
         }
 
-        async ValueTask<DryrunResource> IOperationSource<DryrunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceLinkerDryrunResource> IOperationSource<ServiceLinkerDryrunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<DryrunResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
-            return await Task.FromResult(new DryrunResource(_client, data)).ConfigureAwait(false);
+            return await Task.FromResult(new ServiceLinkerDryrunResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
