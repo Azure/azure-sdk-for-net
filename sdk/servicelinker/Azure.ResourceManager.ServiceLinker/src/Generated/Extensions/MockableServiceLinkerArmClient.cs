@@ -8,13 +8,19 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker.Mocking
 {
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public partial class MockableServiceLinkerArmClient : ArmResource
     {
+        private ClientDiagnostics _dryrunLinkersClientDiagnostics;
+        private LinkersRestOperations _dryrunLinkersRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableServiceLinkerArmClient"/> class for mocking. </summary>
         protected MockableServiceLinkerArmClient()
         {
@@ -31,18 +37,93 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         {
         }
 
+        private ClientDiagnostics DryrunLinkersClientDiagnostics => _dryrunLinkersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", DryrunResource.ResourceType.Namespace, Diagnostics);
+        private LinkersRestOperations DryrunLinkersRestClient => _dryrunLinkersRestClient ??= new LinkersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DryrunResource.ResourceType));
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of DryrunResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of DryrunResources and their operations over a DryrunResource. </returns>
+        public virtual DryrunCollection GetDryruns(ResourceIdentifier scope)
+        {
+            return new DryrunCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// get a dryrun job
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linkers_GetDryrun</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DryrunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="dryrunName"> The name of dryrun. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DryrunResource>> GetDryrunAsync(ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
+        {
+            return await GetDryruns(scope).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// get a dryrun job
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linkers_GetDryrun</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DryrunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="dryrunName"> The name of dryrun. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DryrunResource> GetDryrun(ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
+        {
+            return GetDryruns(scope).Get(dryrunName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of LinkerResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
-        public virtual LinkerResourceCollection GetLinkerResources(ResourceIdentifier scope)
+        public virtual LinkerCollection GetLinkers(ResourceIdentifier scope)
         {
-            return new LinkerResourceCollection(Client, scope);
+            return new LinkerCollection(Client, scope);
         }
 
         /// <summary>
@@ -58,7 +139,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -72,9 +153,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LinkerResource>> GetLinkerResourceAsync(ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkerResource>> GetLinkerAsync(ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
         {
-            return await GetLinkerResources(scope).GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
+            return await GetLinkers(scope).GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,7 +171,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -104,9 +185,100 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LinkerResource> GetLinkerResource(ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
+        public virtual Response<LinkerResource> GetLinker(ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
         {
-            return GetLinkerResources(scope).Get(linkerName, cancellationToken);
+            return GetLinkers(scope).Get(linkerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the dapr configuration supported by Service Connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/daprConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linkers_ListDaprConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DryrunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DaprConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DaprConfigurationResource> GetDaprConfigurationsLinkersAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DryrunLinkersRestClient.CreateListDaprConfigurationsRequest(scope);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DryrunLinkersRestClient.CreateListDaprConfigurationsNextPageRequest(nextLink, scope);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResource.DeserializeDaprConfigurationResource(e), DryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetDaprConfigurationsLinkers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List the dapr configuration supported by Service Connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/daprConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linkers_ListDaprConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DryrunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="DaprConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DaprConfigurationResource> GetDaprConfigurationsLinkers(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DryrunLinkersRestClient.CreateListDaprConfigurationsRequest(scope);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DryrunLinkersRestClient.CreateListDaprConfigurationsNextPageRequest(nextLink, scope);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResource.DeserializeDaprConfigurationResource(e), DryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetDaprConfigurationsLinkers", "value", "nextLink", cancellationToken);
+        }
+        /// <summary>
+        /// Gets an object representing a <see cref="DryrunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DryrunResource.CreateResourceIdentifier" /> to create a <see cref="DryrunResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DryrunResource"/> object. </returns>
+        public virtual DryrunResource GetDryrunResource(ResourceIdentifier id)
+        {
+            DryrunResource.ValidateResourceId(id);
+            return new DryrunResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LocationDryrunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocationDryrunResource.CreateResourceIdentifier" /> to create a <see cref="LocationDryrunResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LocationDryrunResource"/> object. </returns>
+        public virtual LocationDryrunResource GetLocationDryrunResource(ResourceIdentifier id)
+        {
+            LocationDryrunResource.ValidateResourceId(id);
+            return new LocationDryrunResource(Client, id);
         }
 
         /// <summary>
@@ -119,6 +291,18 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         {
             LinkerResource.ValidateResourceId(id);
             return new LinkerResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LocationConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocationConnectorResource.CreateResourceIdentifier" /> to create a <see cref="LocationConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LocationConnectorResource"/> object. </returns>
+        public virtual LocationConnectorResource GetLocationConnectorResource(ResourceIdentifier id)
+        {
+            LocationConnectorResource.ValidateResourceId(id);
+            return new LocationConnectorResource(Client, id);
         }
     }
 }

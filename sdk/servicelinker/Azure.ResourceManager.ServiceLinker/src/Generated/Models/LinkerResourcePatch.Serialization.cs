@@ -92,6 +92,30 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("scope");
                 }
             }
+            if (Optional.IsDefined(PublicNetworkSolution))
+            {
+                if (PublicNetworkSolution != null)
+                {
+                    writer.WritePropertyName("publicNetworkSolution"u8);
+                    writer.WriteObjectValue(PublicNetworkSolution, options);
+                }
+                else
+                {
+                    writer.WriteNull("publicNetworkSolution");
+                }
+            }
+            if (Optional.IsDefined(ConfigurationInfo))
+            {
+                if (ConfigurationInfo != null)
+                {
+                    writer.WritePropertyName("configurationInfo"u8);
+                    writer.WriteObjectValue(ConfigurationInfo, options);
+                }
+                else
+                {
+                    writer.WriteNull("configurationInfo");
+                }
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,6 +161,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             VnetSolution vnetSolution = default;
             LinkerSecretStore secretStore = default;
             string scope = default;
+            PublicNetworkSolution publicNetworkSolution = default;
+            ConfigurationInfo configurationInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,6 +238,26 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             scope = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkSolution"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                publicNetworkSolution = null;
+                                continue;
+                            }
+                            publicNetworkSolution = PublicNetworkSolution.DeserializePublicNetworkSolution(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                configurationInfo = null;
+                                continue;
+                            }
+                            configurationInfo = ConfigurationInfo.DeserializeConfigurationInfo(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -229,6 +275,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 vnetSolution,
                 secretStore,
                 scope,
+                publicNetworkSolution,
+                configurationInfo,
                 serializedAdditionalRawData);
         }
 

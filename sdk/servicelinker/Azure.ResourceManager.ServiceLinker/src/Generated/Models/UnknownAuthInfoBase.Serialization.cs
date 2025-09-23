@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             LinkerAuthType authType = "Unknown";
+            AuthMode? authMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -67,13 +68,22 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     authType = new LinkerAuthType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("authMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authMode = new AuthMode(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownAuthInfoBase(authType, serializedAdditionalRawData);
+            return new UnknownAuthInfoBase(authType, authMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthBaseInfo>.Write(ModelReaderWriterOptions options)

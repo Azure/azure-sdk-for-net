@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: ServiceLinker
 namespace: Azure.ResourceManager.ServiceLinker
-require: https://github.com/Azure/azure-rest-api-specs/blob/42ca0236ef14093f5aff0694efa34d5594e814a0/specification/servicelinker/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0e3900b050a2b449ab87d65ccb5413a362489eec/specification/servicelinker/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -22,10 +22,13 @@ use-model-reader-writer: true
 
 rename-mapping:
   TargetServiceBase: TargetServiceBaseInfo
+  TargetServiceBase.type: TargetServiceType
   AzureResource: AzureResourceInfo
+  AzureResource.id: -|arm-id
   ConfluentBootstrapServer: ConfluentBootstrapServerInfo
   ConfluentSchemaRegistry: ConfluentSchemaRegistryInfo
   AzureResourcePropertiesBase: AzureResourceBaseProperties
+  AzureResourcePropertiesBase.type: AzureResourceType
   SecretInfoBase: SecretBaseInfo
   ValueSecretInfo: RawValueSecretInfo
   AuthInfoBase: AuthBaseInfo
@@ -39,6 +42,10 @@ rename-mapping:
   ValidationResultItem: LinkerValidationResultItemInfo
   ValidationResultStatus: LinkerValidationResultStatus
   AzureKeyVaultProperties.connectAsKubernetesCsiDriver: DoesConnectAsKubernetesCsiDriver
+  DryrunParameters: ServiceLinkerDryrunParametersContent
+  CreateOrUpdateDryrunParameters: ServiceLinkerCreateOrUpdateDryrunParametersContent
+  ConfigurationResult: SourceConfigurationResult
+  LinkerPatch: LinkerResourcePatch
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -79,12 +86,7 @@ acronym-mapping:
 generate-arm-resource-extensions:
   - /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
 
-directive:
-  - from: servicelinker.json
-    where: $.definitions
-    transform: >
-      $.AzureResource.properties.id['x-ms-format'] = 'arm-id';
-      $.TargetServiceBase.properties.type['x-ms-client-name'] = 'TargetServiceType';
-      $.AzureResourcePropertiesBase.properties.type['x-ms-client-name'] = 'AzureResourceType';
+request-path-to-resource-name:
+  /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}: LinkerResource
 
 ```

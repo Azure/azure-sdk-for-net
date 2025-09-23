@@ -64,20 +64,22 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="targetService">
         /// The target service properties
         /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="FabricPlatform"/> and <see cref="SelfHostedServer"/>.
         /// </param>
         /// <param name="authInfo">
         /// The authentication type.
         /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="vnetSolution"> The VNet solution. </param>
         /// <param name="secretStore"> An option to store secret value in secure place. </param>
         /// <param name="scope"> connection scope in source service. </param>
+        /// <param name="publicNetworkSolution"> The network solution. </param>
+        /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, PublicNetworkSolution publicNetworkSolution, ConfigurationInfo configurationInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;
@@ -86,19 +88,21 @@ namespace Azure.ResourceManager.ServiceLinker
             VnetSolution = vnetSolution;
             SecretStore = secretStore;
             Scope = scope;
+            PublicNetworkSolution = publicNetworkSolution;
+            ConfigurationInfo = configurationInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
         /// The target service properties
         /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="FabricPlatform"/> and <see cref="SelfHostedServer"/>.
         /// </summary>
         public TargetServiceBaseInfo TargetService { get; set; }
         /// <summary>
         /// The authentication type.
         /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </summary>
         public AuthBaseInfo AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
@@ -106,34 +110,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The VNet solution. </summary>
-        internal VnetSolution VnetSolution { get; set; }
-        /// <summary> Type of VNet solution. </summary>
-        public VnetSolutionType? SolutionType
-        {
-            get => VnetSolution is null ? default : VnetSolution.SolutionType;
-            set
-            {
-                if (VnetSolution is null)
-                    VnetSolution = new VnetSolution();
-                VnetSolution.SolutionType = value;
-            }
-        }
-
+        public VnetSolution VnetSolution { get; set; }
         /// <summary> An option to store secret value in secure place. </summary>
-        internal LinkerSecretStore SecretStore { get; set; }
-        /// <summary> The key vault id to store secret. </summary>
-        public ResourceIdentifier SecretStoreKeyVaultId
-        {
-            get => SecretStore is null ? default : SecretStore.KeyVaultId;
-            set
-            {
-                if (SecretStore is null)
-                    SecretStore = new LinkerSecretStore();
-                SecretStore.KeyVaultId = value;
-            }
-        }
-
+        public LinkerSecretStore SecretStore { get; set; }
         /// <summary> connection scope in source service. </summary>
         public string Scope { get; set; }
+        /// <summary> The network solution. </summary>
+        public PublicNetworkSolution PublicNetworkSolution { get; set; }
+        /// <summary> The connection information consumed by applications, including secrets, connection strings. </summary>
+        public ConfigurationInfo ConfigurationInfo { get; set; }
     }
 }

@@ -41,6 +41,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("certificate"u8);
             writer.WriteStringValue(Certificate);
+            if (Optional.IsDefined(DeleteOrUpdateBehavior))
+            {
+                writer.WritePropertyName("deleteOrUpdateBehavior"u8);
+                writer.WriteStringValue(DeleteOrUpdateBehavior.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Roles))
+            {
+                writer.WritePropertyName("roles"u8);
+                writer.WriteStartArray();
+                foreach (var item in Roles)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         ServicePrincipalCertificateAuthInfo IJsonModel<ServicePrincipalCertificateAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -66,7 +81,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             string clientId = default;
             Guid principalId = default;
             string certificate = default;
+            DeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
+            IList<string> roles = default;
             LinkerAuthType authType = default;
+            AuthMode? authMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,9 +104,41 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     certificate = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("deleteOrUpdateBehavior"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deleteOrUpdateBehavior = new DeleteOrUpdateBehavior(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("roles"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    roles = array;
+                    continue;
+                }
                 if (property.NameEquals("authType"u8))
                 {
                     authType = new LinkerAuthType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("authMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authMode = new AuthMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +147,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServicePrincipalCertificateAuthInfo(authType, serializedAdditionalRawData, clientId, principalId, certificate);
+            return new ServicePrincipalCertificateAuthInfo(
+                authType,
+                authMode,
+                serializedAdditionalRawData,
+                clientId,
+                principalId,
+                certificate,
+                deleteOrUpdateBehavior,
+                roles ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ServicePrincipalCertificateAuthInfo>.Write(ModelReaderWriterOptions options)

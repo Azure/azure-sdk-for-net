@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class LinkerSecretStore : IUtf8JsonSerializable, IJsonModel<LinkerSecretStore>
+    public partial class LinkerSecretStore : IUtf8JsonSerializable, IJsonModel<LinkerSecretStore>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerSecretStore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -44,6 +44,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 else
                 {
                     writer.WriteNull("keyVaultId");
+                }
+            }
+            if (Optional.IsDefined(KeyVaultSecretName))
+            {
+                if (KeyVaultSecretName != null)
+                {
+                    writer.WritePropertyName("keyVaultSecretName"u8);
+                    writer.WriteStringValue(KeyVaultSecretName);
+                }
+                else
+                {
+                    writer.WriteNull("keyVaultSecretName");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -84,6 +96,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             ResourceIdentifier keyVaultId = default;
+            string keyVaultSecretName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,13 +111,23 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     keyVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("keyVaultSecretName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyVaultSecretName = null;
+                        continue;
+                    }
+                    keyVaultSecretName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LinkerSecretStore(keyVaultId, serializedAdditionalRawData);
+            return new LinkerSecretStore(keyVaultId, keyVaultSecretName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerSecretStore>.Write(ModelReaderWriterOptions options)

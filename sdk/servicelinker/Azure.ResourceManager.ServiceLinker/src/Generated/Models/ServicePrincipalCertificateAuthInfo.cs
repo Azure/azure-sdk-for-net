@@ -26,20 +26,26 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             ClientId = clientId;
             PrincipalId = principalId;
             Certificate = certificate;
+            Roles = new ChangeTrackingList<string>();
             AuthType = LinkerAuthType.ServicePrincipalCertificate;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalCertificateAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
+        /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
-        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, Guid principalId, string certificate) : base(authType, serializedAdditionalRawData)
+        /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
+        /// <param name="roles"> Optional, this value specifies the Azure roles to be assigned. Automatically. </param>
+        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, AuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, Guid principalId, string certificate, DeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
         {
             ClientId = clientId;
             PrincipalId = principalId;
             Certificate = certificate;
+            DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
+            Roles = roles;
             AuthType = authType;
         }
 
@@ -54,5 +60,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public Guid PrincipalId { get; set; }
         /// <summary> ServicePrincipal certificate for servicePrincipal auth. </summary>
         public string Certificate { get; set; }
+        /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
+        public DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
+        /// <summary> Optional, this value specifies the Azure roles to be assigned. Automatically. </summary>
+        public IList<string> Roles { get; }
     }
 }

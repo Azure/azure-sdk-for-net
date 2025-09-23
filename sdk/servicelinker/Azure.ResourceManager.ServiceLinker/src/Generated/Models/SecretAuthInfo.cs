@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Initializes a new instance of <see cref="SecretAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
+        /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Username or account name for secret auth. </param>
         /// <param name="secretInfo">
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
         /// </param>
-        internal SecretAuthInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, SecretBaseInfo secretInfo) : base(authType, serializedAdditionalRawData)
+        internal SecretAuthInfo(LinkerAuthType authType, AuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, SecretBaseInfo secretInfo) : base(authType, authMode, serializedAdditionalRawData)
         {
             Name = name;
             SecretInfo = secretInfo;

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class LinkerList : IUtf8JsonSerializable, IJsonModel<LinkerList>
+    internal partial class ResourceList : IUtf8JsonSerializable, IJsonModel<ResourceList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LinkerList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,24 +28,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkerList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceList)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NextLink))
-            {
-                if (NextLink != null)
-                {
-                    writer.WritePropertyName("nextLink"u8);
-                    writer.WriteStringValue(NextLink);
-                }
-                else
-                {
-                    writer.WriteNull("nextLink");
-                }
-            }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -55,6 +43,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                if (NextLink != null)
+                {
+                    writer.WritePropertyName("nextLink"u8);
+                    writer.WriteStringValue(NextLink.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("nextLink");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        LinkerList IJsonModel<LinkerList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceList IJsonModel<ResourceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkerList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLinkerList(document.RootElement, options);
+            return DeserializeResourceList(document.RootElement, options);
         }
 
-        internal static LinkerList DeserializeLinkerList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ResourceList DeserializeResourceList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,22 +93,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            string nextLink = default;
             IReadOnlyList<LinkerResourceData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        nextLink = null;
-                        continue;
-                    }
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -123,44 +113,54 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        nextLink = null;
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LinkerList(nextLink, value ?? new ChangeTrackingList<LinkerResourceData>(), serializedAdditionalRawData);
+            return new ResourceList(value ?? new ChangeTrackingList<LinkerResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LinkerList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ResourceList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkerList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LinkerList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LinkerList IPersistableModel<LinkerList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ResourceList IPersistableModel<ResourceList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkerList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLinkerList(document.RootElement, options);
+                        return DeserializeResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkerList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LinkerList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

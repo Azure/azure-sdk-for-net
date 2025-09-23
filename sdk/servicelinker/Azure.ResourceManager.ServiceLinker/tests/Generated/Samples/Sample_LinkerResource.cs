@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_Link()
+        public async Task Get_Linker()
         {
-            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/Link.json
+            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2024-07-01-preview/examples/Linker.json
             // this example is just showing the usage of "Linker_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            LinkerResource result = await linkerResource.GetAsync();
+            LinkerResource result = await linker.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteLink()
+        public async Task Delete_DeleteLinker()
         {
-            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/DeleteLink.json
+            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2024-07-01-preview/examples/DeleteLinker.json
             // this example is just showing the usage of "Linker_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            await linkerResource.DeleteAsync(WaitUntil.Completed);
+            await linker.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_PatchLink()
+        public async Task Update_PatchLinker()
         {
-            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/PatchLink.json
+            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2024-07-01-preview/examples/PatchLinker.json
             // this example is just showing the usage of "Linker_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
             LinkerResourcePatch patch = new LinkerResourcePatch
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
                 },
                 AuthInfo = new ServicePrincipalSecretAuthInfo("name", Guid.Parse("id"), "secret"),
             };
-            ArmOperation<LinkerResource> lro = await linkerResource.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<LinkerResource> lro = await linker.UpdateAsync(WaitUntil.Completed, patch);
             LinkerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -110,9 +110,66 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Validate_ValidateLinkSuccess()
+        public async Task GenerateConfigurations_GenerateConfiguration()
         {
-            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/ValidateLinkSuccess.json
+            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2024-07-01-preview/examples/LinkerGenerateConfigurations.json
+            // this example is just showing the usage of "Linkers_GenerateConfigurations" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LinkerResource created on azure
+            // for more information of creating LinkerResource, please refer to the document of LinkerResource
+            string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
+            string linkerName = "linkName";
+            ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
+            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
+
+            // invoke the operation
+            ConfigurationInfo info = new ConfigurationInfo
+            {
+                CustomizedKeys =
+{
+["ASL_DocumentDb_ConnectionString"] = "MyConnectionstring"
+},
+            };
+            SourceConfigurationResult result = await linker.GenerateConfigurationsAsync(info: info);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetConfigurations_GetConfiguration()
+        {
+            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2024-07-01-preview/examples/GetConfigurations.json
+            // this example is just showing the usage of "Linker_ListConfigurations" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LinkerResource created on azure
+            // for more information of creating LinkerResource, please refer to the document of LinkerResource
+            string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.App/containerApps/test-app";
+            string linkerName = "linkName";
+            ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
+            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
+
+            // invoke the operation
+            SourceConfigurationResult result = await linker.GetConfigurationsAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Validate_ValidateLinkerSuccess()
+        {
+            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2024-07-01-preview/examples/ValidateLinkerSuccess.json
             // this example is just showing the usage of "Linker_Validate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,36 +182,11 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            ArmOperation<LinkerValidateOperationResult> lro = await linkerResource.ValidateAsync(WaitUntil.Completed);
+            ArmOperation<LinkerValidateOperationResult> lro = await linker.ValidateAsync(WaitUntil.Completed);
             LinkerValidateOperationResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetConfigurations_GetConfiguration()
-        {
-            // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/GetConfigurations.json
-            // this example is just showing the usage of "Linker_ListConfigurations" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this LinkerResource created on azure
-            // for more information of creating LinkerResource, please refer to the document of LinkerResource
-            string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
-            string linkerName = "linkName";
-            ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
-
-            // invoke the operation
-            SourceConfigurationResult result = await linkerResource.GetConfigurationsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

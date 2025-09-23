@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="resourceProperties">
         /// The azure resource connection related properties.
         /// Please note <see cref="AzureResourceBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
+        /// The available derived classes include <see cref="AzureAppConfigProperties"/> and <see cref="AzureKeyVaultProperties"/>.
         /// </param>
         internal AzureResourceInfo(TargetServiceType targetServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier id, AzureResourceBaseProperties resourceProperties) : base(targetServiceType, serializedAdditionalRawData)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary>
         /// The azure resource connection related properties.
         /// Please note <see cref="AzureResourceBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
+        /// The available derived classes include <see cref="AzureAppConfigProperties"/> and <see cref="AzureKeyVaultProperties"/>.
         /// </summary>
         public AzureResourceBaseProperties ResourceProperties { get; set; }
     }

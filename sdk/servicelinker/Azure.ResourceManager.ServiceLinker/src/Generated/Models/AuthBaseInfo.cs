@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary>
     /// The authentication info
     /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+    /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
     /// </summary>
     public abstract partial class AuthBaseInfo
     {
@@ -56,14 +56,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Initializes a new instance of <see cref="AuthBaseInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
+        /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthBaseInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthBaseInfo(LinkerAuthType authType, AuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthType = authType;
+            AuthMode = authMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The authentication type. </summary>
         internal LinkerAuthType AuthType { get; set; }
+        /// <summary> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </summary>
+        public AuthMode? AuthMode { get; set; }
     }
 }

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
 
         /// <summary> Gets a collection of LinkerResources in the ArmResource. </summary>
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
-        public virtual LinkerResourceCollection GetLinkerResources()
+        public virtual LinkerCollection GetLinkers()
         {
-            return GetCachedClient(client => new LinkerResourceCollection(client, Id));
+            return GetCachedClient(client => new LinkerCollection(client, Id));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LinkerResource>> GetLinkerResourceAsync(string linkerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkerResource>> GetLinkerAsync(string linkerName, CancellationToken cancellationToken = default)
         {
-            return await GetLinkerResources().GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
+            return await GetLinkers().GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LinkerResource> GetLinkerResource(string linkerName, CancellationToken cancellationToken = default)
+        public virtual Response<LinkerResource> GetLinker(string linkerName, CancellationToken cancellationToken = default)
         {
-            return GetLinkerResources().Get(linkerName, cancellationToken);
+            return GetLinkers().Get(linkerName, cancellationToken);
         }
     }
 }
