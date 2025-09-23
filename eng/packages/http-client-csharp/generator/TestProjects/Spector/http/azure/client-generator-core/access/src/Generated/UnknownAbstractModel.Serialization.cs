@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
-    internal partial class UnknownAbstractModel : IJsonModel<AbstractModel>
+    internal partial class UnknownAbstractModel : AbstractModel, IJsonModel<AbstractModel>
     {
         internal UnknownAbstractModel() => throw null;
 
