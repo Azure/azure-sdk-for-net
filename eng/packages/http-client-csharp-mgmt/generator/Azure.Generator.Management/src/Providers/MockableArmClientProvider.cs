@@ -30,13 +30,13 @@ namespace Azure.Generator.Management.Providers
                 methods.Add(BuildGetResourceIdMethodForResource(resource));
                 if (resource.IsExtensionResource)
                 {
-                    if (!resource.IsSingleton)
+                    if (resource.IsSingleton)
                     {
-                        methods.AddRange(BuildMethodsForExtensionNoneSingletonResource(resource));
+                        methods.AddRange(BuildMethodsForExtensionSingletonResource(resource));
                     }
                     else
                     {
-                        methods.AddRange(BuildMethodsForExtensionSingletonResource(resource));
+                        methods.AddRange(BuildMethodsForExtensionNonSingletonResource(resource));
                     }
                 }
             }
@@ -70,7 +70,7 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, body, this);
         }
 
-        private IList<MethodProvider> BuildMethodsForExtensionNoneSingletonResource(ResourceClientProvider resource)
+        private IList<MethodProvider> BuildMethodsForExtensionNonSingletonResource(ResourceClientProvider resource)
         {
             var result = new List<MethodProvider>();
             var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));

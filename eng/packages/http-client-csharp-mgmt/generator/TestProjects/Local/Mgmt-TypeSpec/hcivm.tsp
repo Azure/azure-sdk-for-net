@@ -10,20 +10,11 @@ using TypeSpec.OpenAPI;
 
 namespace MgmtTypeSpec;
 
-#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-invalid-envelope-property" "For backward compatibility"
-#suppress "@azure-tools/typespec-azure-core/no-openapi" "x-ms-azure-resource legacy"
 @doc("The virtual machine instance resource definition.")
-@extension("x-ms-azure-resource", true)
 @singleton("default")
 model HciVmInstance
   is ExtensionResource<HciVmInstanceProperties> {
-  @doc("name of virtual machine")
-  @pattern("^[a-zA-Z0-9]$|^[a-zA-Z0-9][-._a-zA-Z0-9]{0,62}[a-zA-Z0-9]$")
-  @key("virtualMachineInstance")
-  @segment("virtualMachineInstances")
-  @visibility(Lifecycle.Read)
-  @path
-  name: string;
+    ...ResourceNameParameter<HciVmInstance, SegmentName = "virtualMachineInstances">;
 }
 
 model HciVmInstanceProperties {

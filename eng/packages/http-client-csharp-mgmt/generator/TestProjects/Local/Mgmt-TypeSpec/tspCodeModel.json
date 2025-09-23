@@ -7355,7 +7355,7 @@
           "kind": "property",
           "name": "name",
           "serializedName": "name",
-          "doc": "name of virtual machine",
+          "doc": "The name of the HciVmInstance",
           "type": {
             "$id": "586",
             "kind": "string",
