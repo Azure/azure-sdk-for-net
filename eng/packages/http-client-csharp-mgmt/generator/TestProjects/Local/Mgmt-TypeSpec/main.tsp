@@ -37,3 +37,4 @@ enum Versions {
 
 #suppress "deprecated"
 @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
