@@ -20,7 +20,7 @@ internal partial class AzureAssistantClient : AssistantClient
             options,
             continuation => CreateGetAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
             page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             options?.CancellationToken ?? default);
     }
 
@@ -31,7 +31,7 @@ internal partial class AzureAssistantClient : AssistantClient
             options,
             continuation => CreateGetAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
             page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data);
+            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data);
     }
 
     /// <inheritdoc cref="InternalAssistantMessageClient.CreateMessageAsync"/>
@@ -61,7 +61,7 @@ internal partial class AzureAssistantClient : AssistantClient
             options,
             continuation => CreateGetMessagesRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
             page => MessageCollectionPageToken.FromResponse(page, threadId, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             options?.CancellationToken ?? default);
     }
 
@@ -73,7 +73,7 @@ internal partial class AzureAssistantClient : AssistantClient
            options,
            continuation => CreateGetMessagesRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
            page => MessageCollectionPageToken.FromResponse(page, threadId, limit, order, before),
-           page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data);
+           page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data);
     }
 
     /// <inheritdoc cref="InternalAssistantMessageClient.GetMessageAsync"/>
@@ -218,7 +218,7 @@ internal partial class AzureAssistantClient : AssistantClient
             options,
             continuation => CreateGetRunsRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
             page => RunCollectionPageToken.FromResponse(page, threadId, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             options?.CancellationToken ?? default);
     }
 
@@ -230,7 +230,7 @@ internal partial class AzureAssistantClient : AssistantClient
             options,
             continuation => CreateGetRunsRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
             page => RunCollectionPageToken.FromResponse(page, threadId, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data);
+            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data);
     }
 
     /// <inheritdoc cref="InternalAssistantRunClient.GetRunAsync"/>
@@ -345,7 +345,7 @@ internal partial class AzureAssistantClient : AssistantClient
             options,
             continuation => CreateGetRunStepsRequest(threadId, runId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
             page => RunStepCollectionPageToken.FromResponse(page, threadId, runId, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             options?.CancellationToken ?? default);
     }
 
@@ -359,7 +359,7 @@ internal partial class AzureAssistantClient : AssistantClient
             options,
             continuation => CreateGetRunStepsRequest(threadId, runId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
             page => RunStepCollectionPageToken.FromResponse(page, threadId, runId, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data);
+            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data);
     }
 
     /// <inheritdoc cref="InternalAssistantRunClient.GetRunStepAsync"/>

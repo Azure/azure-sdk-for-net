@@ -63,7 +63,7 @@ internal partial class AzureFineTuningClient : FineTuningClient
 
     private IEnumerable<FineTuningJob> GetJobsFromResponse(PipelineResponse response)
     {
-        InternalListPaginatedFineTuningJobsResponse jobs = ModelReaderWriter.Read<InternalListPaginatedFineTuningJobsResponse>(response.Content)!;
+        InternalListPaginatedFineTuningJobsResponse jobs = ModelReaderWriter.Read<InternalListPaginatedFineTuningJobsResponse>(response.Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default)!;
         return jobs.Data.Select(job => new AzureFineTuningJob(Pipeline, _endpoint, response, _apiVersion, job));
     }
     internal override PipelineMessage PostJobPipelineMessage(BinaryContent content, RequestOptions options)
