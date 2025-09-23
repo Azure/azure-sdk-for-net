@@ -49,7 +49,7 @@ namespace Azure.AI.Projects.Tests
         private void DatasetsFileTestSync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
         {
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
-            FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
+            FileDataset fileDataset = projectClient.Datasets.UploadFile(
                 name: datasetName,
                 version: datasetVersion,
                 filePath: filePath,
@@ -57,7 +57,7 @@ namespace Azure.AI.Projects.Tests
                 );
             ValidateDataset(
                 fileDataset,
-                expectedDatasetType: "FileDatasetVersion",
+                expectedDatasetType: "FileDataset",
                 expectedDatasetName: datasetName,
                 expectedDatasetVersion: datasetVersion,
                 expectedConnectionName: connectionName
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects.Tests
         private async Task DatasetsFileTestAsync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
         {
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
-            FileDatasetVersion fileDataset = await projectClient.Datasets.UploadFileAsync(
+            FileDataset fileDataset = await projectClient.Datasets.UploadFileAsync(
                 name: datasetName,
                 version: datasetVersion,
                 filePath: filePath,
@@ -136,7 +136,7 @@ namespace Azure.AI.Projects.Tests
                 );
             ValidateDataset(
                 fileDataset,
-                expectedDatasetType: "FileDatasetVersion",
+                expectedDatasetType: "FileDataset",
                 expectedDatasetName: datasetName,
                 expectedDatasetVersion: datasetVersion,
                 expectedConnectionName: connectionName

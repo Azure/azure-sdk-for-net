@@ -102,7 +102,7 @@ namespace Azure.AI.Projects.Tests
 #endif
 
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
-            FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
+            FileDataset fileDataset = projectClient.Datasets.UploadFile(
                 name: datasetName,
                 version: datasetVersion1,
                 filePath: filePath,
@@ -111,7 +111,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(fileDataset);
 
             Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
-            FolderDatasetVersion folderDataset = projectClient.Datasets.UploadFolder(
+            FolderDataset folderDataset = projectClient.Datasets.UploadFolder(
                 name: datasetName,
                 version: datasetVersion2,
                 folderPath: folderPath,
@@ -211,7 +211,7 @@ namespace Azure.AI.Projects.Tests
 #endif
 
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
-            FileDatasetVersion fileDataset = await projectClient.Datasets.UploadFileAsync(
+            FileDataset fileDataset = await projectClient.Datasets.UploadFileAsync(
                 name: datasetName,
                 version: datasetVersion1,
                 filePath: filePath,
@@ -220,7 +220,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(fileDataset);
 
             Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
-            FolderDatasetVersion folderDataset = await projectClient.Datasets.UploadFolderAsync(
+            FolderDataset folderDataset = await projectClient.Datasets.UploadFolderAsync(
                 name: datasetName,
                 version: datasetVersion2,
                 folderPath: folderPath,
