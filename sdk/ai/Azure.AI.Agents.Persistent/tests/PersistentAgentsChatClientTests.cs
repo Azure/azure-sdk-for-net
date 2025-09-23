@@ -5,11 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.AI;
@@ -377,7 +375,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }));
         }
 
-        private PersistentAgentsClient GetClient(HttpClientHandler handler = null)
+        private PersistentAgentsClient GetClient()
         {
             var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions());
@@ -401,33 +399,6 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             return new PersistentAgentsClient(admClient);
         }
-
-        private (PersistentAgentsClient PersistentClient, HttpClient HttpClient) GetClientFromHandler(HttpMessageHandler handler)
-        {
-            var httpClient = new HttpClient(handler);
-            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-            PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions() { Transport = new HttpClientTransport(httpClient) });
-            PersistentAgentsAdministrationClient admClient;
-
-            if (Mode == RecordedTestMode.Playback)
-            {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new MockCredential(), opts));
-                return (new PersistentAgentsClient(admClient), httpClient);
-            }
-
-            var cli = Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
-            if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
-            {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new AzureCliCredential(), opts));
-            }
-            else
-            {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new DefaultAzureCredential(), opts));
-            }
-
-            return (new PersistentAgentsClient(admClient), httpClient);
-        }
-
         #endregion
 
         #region Cleanup
