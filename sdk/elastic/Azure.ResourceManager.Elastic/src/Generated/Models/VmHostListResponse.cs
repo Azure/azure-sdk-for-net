@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Elastic.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VmHostListResponse"/>. </summary>
-        internal VmHostListResponse()
+        /// <param name="value"> The VMResources items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VmHostListResponse(IEnumerable<ElasticVmResourceInfo> value)
         {
-            Value = new ChangeTrackingList<ElasticVmResourceInfo>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VmHostListResponse"/>. </summary>
-        /// <param name="value"> Results of a list operation. </param>
-        /// <param name="nextLink"> Link to the next Vm resource Id, if any. </param>
+        /// <param name="value"> The VMResources items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmHostListResponse(IReadOnlyList<ElasticVmResourceInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VmHostListResponse(IReadOnlyList<ElasticVmResourceInfo> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Results of a list operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostListResponse"/> for deserialization. </summary>
+        internal VmHostListResponse()
+        {
+        }
+
+        /// <summary> The VMResources items on this page. </summary>
         public IReadOnlyList<ElasticVmResourceInfo> Value { get; }
-        /// <summary> Link to the next Vm resource Id, if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

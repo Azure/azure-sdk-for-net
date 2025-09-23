@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Elastic.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_OpenAIGet()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/OpenAI_Get.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/OpenAI_Get.json
             // this example is just showing the usage of "OpenAI_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Elastic.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_OpenAIDelete()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/OpenAI_Delete.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/OpenAI_Delete.json
             // this example is just showing the usage of "OpenAI_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Elastic.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_OpenAICreateOrUpdate()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/OpenAI_CreateOrUpdate.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/OpenAI_CreateOrUpdate.json
             // this example is just showing the usage of "OpenAI_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Elastic.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetStatus_OpenAIGetStatus()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/OpenAI_GetStatus.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/OpenAI_GetStatus.json
             // this example is just showing the usage of "OpenAI_GetStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
