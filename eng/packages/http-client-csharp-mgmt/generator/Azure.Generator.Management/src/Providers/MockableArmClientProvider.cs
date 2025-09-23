@@ -142,12 +142,6 @@ namespace Azure.Generator.Management.Providers
         {
             var result = new List<MethodProvider>();
 
-            var RequestPathPattern = resource.ContextualPath;
-
-            // if code reaches here, assert RequestPathPattern's first segment is a variable, and no remaining segments are variables
-            Debug.Assert(RequestPathPattern.Count > 0 && RequestPathPattern[0].IsVariable && !RequestPathPattern.Skip(1).Any(s => s.IsVariable),
-                $"Cannot build Get method for singleton extension resource {resource.Type} with path {RequestPathPattern}");
-
             var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
             var signature = new MethodSignature(
                 $"{resource.FactoryMethodSignature.Name}",
