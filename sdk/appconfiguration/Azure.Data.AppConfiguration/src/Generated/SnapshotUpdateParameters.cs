@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class SnapshotUpdateParameters : global::.IUtf8JsonSerializable
+    internal partial class SnapshotUpdateParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
