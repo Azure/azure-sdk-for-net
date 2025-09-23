@@ -369,7 +369,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, null, Int32.MaxValue, cancellationToken.ToRequestContext(), null);
+            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, null, Int32.MaxValue, cancellationToken.ToRequestContext());
         }
 
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -395,7 +395,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, Int32.MaxValue, cancellationToken.ToRequestContext(), null);
+            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, Int32.MaxValue, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
