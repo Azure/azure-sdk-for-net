@@ -154,7 +154,8 @@ namespace BasicTypeSpec
         public static explicit operator PageThingModel(Response result)
         {
             using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializePageThingModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
