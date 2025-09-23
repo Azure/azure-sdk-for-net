@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -388,6 +389,52 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Creates a new agent. </summary>
+        /// <param name="model"> The ID of the model to use. </param>
+        /// <param name="name"> The name of the new agent. </param>
+        /// <param name="description"> The description of the new agent. </param>
+        /// <param name="instructions"> The system instructions for the new agent to use. </param>
+        /// <param name="tools"> The collection of tools to enable for the new agent. </param>
+        /// <param name="toolResources">
+        /// A set of resources that are used by the agent's tools. The resources are specific to the type of tool. For example, the `code_interpreter`
+        /// tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+        /// </param>
+        /// <param name="temperature">
+        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random,
+        /// while lower values like 0.2 will make it more focused and deterministic.
+        /// </param>
+        /// <param name="topP">
+        /// An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass.
+        /// So 0.1 means only the tokens comprising the top 10% probability mass are considered.
+        ///
+        /// We generally recommend altering this or temperature but not both.
+        /// </param>
+        /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="requestContext"> The request context to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        internal async Task<Response<PersistentAgent>> CreateAgentAsync(string model, string name, string description, string instructions, IEnumerable<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, RequestContext requestContext)
+        {
+            Argument.AssertNotNull(model, nameof(model));
+
+            CreateAgentRequest createAgentRequest = new CreateAgentRequest(
+                model,
+                name,
+                description,
+                instructions,
+                tools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
+                temperature,
+                topP,
+                responseFormat,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
+
+            Response response = await CreateAgentAsync(createAgentRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
+            return Response.FromValue(PersistentAgent.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates a new agent.
         /// <list type="bullet">
@@ -568,6 +615,12 @@ namespace Azure.AI.Agents.Persistent
                 otelScope?.RecordError(e);
                 throw;
             }
+        }
+
+        internal Response<PersistentAgent> InternalGetAgent(string assistantId, RequestContext requestContext)
+        {
+            Response response = GetAgent(assistantId, requestContext);
+            return Response.FromValue(PersistentAgent.FromResponse(response), response);
         }
     }
 }

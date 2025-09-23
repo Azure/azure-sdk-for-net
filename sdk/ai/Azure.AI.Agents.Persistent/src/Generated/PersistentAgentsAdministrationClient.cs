@@ -84,14 +84,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-        public virtual Task<Response<PersistentAgent>> CreateAgentAsync(string model, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(model, nameof(model));
-
-            return CreateAgentAsync(model, name, description, instructions, tools, toolResources, temperature, topP, responseFormat, metadata, cancellationToken.ToRequestContext());
-        }
-
-        internal async Task<Response<PersistentAgent>> CreateAgentAsync(string model, string name, string description, string instructions, IEnumerable<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, RequestContext requestContext)
+        public virtual async Task<Response<PersistentAgent>> CreateAgentAsync(string model, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(model, nameof(model));
 
@@ -107,8 +100,8 @@ namespace Azure.AI.Agents.Persistent
                 responseFormat,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-
-            Response response = await CreateAgentAsync(createAgentRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateAgentAsync(createAgentRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgent.FromResponse(response), response);
         }
 
@@ -140,11 +133,6 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(model, nameof(model));
 
-            return CreateAgent(model, name, description, instructions, tools, toolResources, temperature, topP, responseFormat, metadata, cancellationToken.ToRequestContext());
-        }
-
-        internal Response<PersistentAgent> CreateAgent(string model, string name, string description, string instructions, IEnumerable<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, RequestContext requestContext)
-        {
             CreateAgentRequest createAgentRequest = new CreateAgentRequest(
                 model,
                 name,
@@ -157,7 +145,8 @@ namespace Azure.AI.Agents.Persistent
                 responseFormat,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-            Response response = CreateAgent(createAgentRequest.ToRequestContent(), requestContext);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateAgent(createAgentRequest.ToRequestContent(), context);
             return Response.FromValue(PersistentAgent.FromResponse(response), response);
         }
 
@@ -166,16 +155,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Task<Response<PersistentAgent>> GetAgentAsync(string assistantId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentAgent>> GetAgentAsync(string assistantId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            return InternalGetAgentAsync(assistantId, cancellationToken.ToRequestContext());
-        }
-
-        internal async Task<Response<PersistentAgent>> InternalGetAgentAsync(string assistantId, RequestContext requestContext)
-        {
-            Response response = await GetAgentAsync(assistantId, requestContext).ConfigureAwait(false);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAgentAsync(assistantId, context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgent.FromResponse(response), response);
         }
 
@@ -188,12 +173,8 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            return InternalGetAgent(assistantId, cancellationToken.ToRequestContext());
-        }
-
-        internal Response<PersistentAgent> InternalGetAgent(string assistantId, RequestContext requestContext)
-        {
-            Response response = GetAgent(assistantId, requestContext);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAgent(assistantId, context);
             return Response.FromValue(PersistentAgent.FromResponse(response), response);
         }
 
@@ -239,7 +220,7 @@ namespace Azure.AI.Agents.Persistent
                 responseFormat,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateAgentAsync(assistantId, updateAgentRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgent.FromResponse(response), response);
         }
@@ -286,7 +267,7 @@ namespace Azure.AI.Agents.Persistent
                 responseFormat,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateAgent(assistantId, updateAgentRequest.ToRequestContent(), context);
             return Response.FromValue(PersistentAgent.FromResponse(response), response);
         }
@@ -300,7 +281,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalDeleteAgentAsync(assistantId, context).ConfigureAwait(false);
             return Response.FromValue(InternalAgentDeletionStatus.FromResponse(response), response);
         }
@@ -314,7 +295,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalDeleteAgent(assistantId, context);
             return Response.FromValue(InternalAgentDeletionStatus.FromResponse(response), response);
         }
@@ -458,7 +439,7 @@ namespace Azure.AI.Agents.Persistent
                 parallelToolCalls,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateThreadAndRunAsync(createThreadAndRunRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -524,7 +505,7 @@ namespace Azure.AI.Agents.Persistent
                 parallelToolCalls,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateThreadAndRun(createThreadAndRunRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -645,6 +626,17 @@ namespace Azure.AI.Agents.Persistent
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

@@ -68,7 +68,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             CreateVectorStoreFileBatchRequest createVectorStoreFileBatchRequest = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IReadOnlyList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateVectorStoreFileBatchAsync(vectorStoreId, createVectorStoreFileBatchRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
         }
@@ -86,7 +86,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             CreateVectorStoreFileBatchRequest createVectorStoreFileBatchRequest = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IReadOnlyList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateVectorStoreFileBatch(vectorStoreId, createVectorStoreFileBatchRequest.ToRequestContent(), context);
             return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
         }
@@ -184,7 +184,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetVectorStoreFileBatchAsync(vectorStoreId, batchId, context).ConfigureAwait(false);
             return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
         }
@@ -200,7 +200,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetVectorStoreFileBatch(vectorStoreId, batchId, context);
             return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
         }
@@ -298,7 +298,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CancelVectorStoreFileBatchAsync(vectorStoreId, batchId, context).ConfigureAwait(false);
             return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
         }
@@ -314,7 +314,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CancelVectorStoreFileBatch(vectorStoreId, batchId, context);
             return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
         }
@@ -490,6 +490,17 @@ namespace Azure.AI.Agents.Persistent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

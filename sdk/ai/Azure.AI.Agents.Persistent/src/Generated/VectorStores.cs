@@ -70,7 +70,7 @@ namespace Azure.AI.Agents.Persistent
                 chunkingStrategy,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateVectorStoreAsync(createVectorStoreRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents.Persistent
                 chunkingStrategy,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateVectorStore(createVectorStoreRequest.ToRequestContent(), context);
             return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
@@ -183,7 +183,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetVectorStoreAsync(vectorStoreId, context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
@@ -197,7 +197,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetVectorStore(vectorStoreId, context);
             return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
@@ -293,7 +293,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             ModifyVectorStoreRequest modifyVectorStoreRequest = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ModifyVectorStoreAsync(vectorStoreId, modifyVectorStoreRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
@@ -311,7 +311,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             ModifyVectorStoreRequest modifyVectorStoreRequest = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ModifyVectorStore(vectorStoreId, modifyVectorStoreRequest.ToRequestContent(), context);
             return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
@@ -407,7 +407,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalDeleteVectorStoreAsync(vectorStoreId, context).ConfigureAwait(false);
             return Response.FromValue(InternalVectorStoreDeletionStatus.FromResponse(response), response);
         }
@@ -421,7 +421,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalDeleteVectorStore(vectorStoreId, context);
             return Response.FromValue(InternalVectorStoreDeletionStatus.FromResponse(response), response);
         }
@@ -595,6 +595,17 @@ namespace Azure.AI.Agents.Persistent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

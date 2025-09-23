@@ -126,7 +126,7 @@ namespace Azure.AI.Agents.Persistent
                 parallelToolCalls,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalCreateRunAsync(threadId, createRunRequest.ToRequestContent(), include, context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -205,7 +205,7 @@ namespace Azure.AI.Agents.Persistent
                 parallelToolCalls,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalCreateRun(threadId, createRunRequest.ToRequestContent(), include, context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -221,7 +221,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRunAsync(threadId, runId, context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -237,7 +237,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRun(threadId, runId, context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -255,7 +255,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             UpdateRunRequest updateRunRequest = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateRunAsync(threadId, runId, updateRunRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -273,7 +273,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             UpdateRunRequest updateRunRequest = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateRun(threadId, runId, updateRunRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -379,7 +379,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IReadOnlyList<ToolOutput> ?? new ChangeTrackingList<ToolOutput>(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SubmitToolOutputsToRunAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -399,7 +399,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IReadOnlyList<ToolOutput> ?? new ChangeTrackingList<ToolOutput>(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = SubmitToolOutputsToRun(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -415,7 +415,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CancelRunAsync(threadId, runId, context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -431,7 +431,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CancelRun(threadId, runId, context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
@@ -644,6 +644,17 @@ namespace Azure.AI.Agents.Persistent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

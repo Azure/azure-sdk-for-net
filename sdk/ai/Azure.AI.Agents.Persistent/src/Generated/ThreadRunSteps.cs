@@ -71,7 +71,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRunStepAsync(threadId, runId, stepId, include, context).ConfigureAwait(false);
             return Response.FromValue(RunStep.FromResponse(response), response);
         }
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRunStep(threadId, runId, stepId, include, context);
             return Response.FromValue(RunStep.FromResponse(response), response);
         }
@@ -251,6 +251,17 @@ namespace Azure.AI.Agents.Persistent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;
