@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            LinkerResource result = await linker.GetAsync();
+            LinkerResource result = await linkerResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            await linker.DeleteAsync(WaitUntil.Completed);
+            await linkerResource.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
             LinkerResourcePatch patch = new LinkerResourcePatch
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
                 },
                 AuthInfo = new ServicePrincipalSecretAuthInfo("name", Guid.Parse("id"), "secret"),
             };
-            ArmOperation<LinkerResource> lro = await linker.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<LinkerResource> lro = await linkerResource.UpdateAsync(WaitUntil.Completed, patch);
             LinkerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
             ConfigurationInfo info = new ConfigurationInfo
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
 ["ASL_DocumentDb_ConnectionString"] = "MyConnectionstring"
 },
             };
-            SourceConfigurationResult result = await linker.GenerateConfigurationsAsync(info: info);
+            SourceConfigurationResult result = await linkerResource.GenerateConfigurationsAsync(info: info);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.App/containerApps/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            SourceConfigurationResult result = await linker.GetConfigurationsAsync();
+            SourceConfigurationResult result = await linkerResource.GetConfigurationsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string resourceUri = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app";
             string linkerName = "linkName";
             ResourceIdentifier linkerResourceId = LinkerResource.CreateResourceIdentifier(resourceUri, linkerName);
-            LinkerResource linker = client.GetLinkerResource(linkerResourceId);
+            LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            ArmOperation<LinkerValidateOperationResult> lro = await linker.ValidateAsync(WaitUntil.Completed);
+            ArmOperation<LinkerValidateOperationResult> lro = await linkerResource.ValidateAsync(WaitUntil.Completed);
             LinkerValidateOperationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

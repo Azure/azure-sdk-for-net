@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <summary> Gets a collection of LinkerResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
-        public virtual LinkerCollection GetLinkers(ResourceIdentifier scope)
+        public virtual LinkerResourceCollection GetLinkerResources(ResourceIdentifier scope)
         {
-            return new LinkerCollection(Client, scope);
+            return new LinkerResourceCollection(Client, scope);
         }
 
         /// <summary>
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LinkerResource>> GetLinkerAsync(ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkerResource>> GetLinkerResourceAsync(ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
         {
-            return await GetLinkers(scope).GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
+            return await GetLinkerResources(scope).GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LinkerResource> GetLinker(ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
+        public virtual Response<LinkerResource> GetLinkerResource(ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
         {
-            return GetLinkers(scope).Get(linkerName, cancellationToken);
+            return GetLinkerResources(scope).Get(linkerName, cancellationToken);
         }
 
         /// <summary>

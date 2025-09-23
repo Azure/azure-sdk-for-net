@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
 
         /// <summary> Gets a collection of LinkerResources in the ArmResource. </summary>
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
-        public virtual LinkerCollection GetLinkers()
+        public virtual LinkerResourceCollection GetLinkerResources()
         {
-            return GetCachedClient(client => new LinkerCollection(client, Id));
+            return GetCachedClient(client => new LinkerResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LinkerResource>> GetLinkerAsync(string linkerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkerResource>> GetLinkerResourceAsync(string linkerName, CancellationToken cancellationToken = default)
         {
-            return await GetLinkers().GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
+            return await GetLinkerResources().GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LinkerResource> GetLinker(string linkerName, CancellationToken cancellationToken = default)
+        public virtual Response<LinkerResource> GetLinkerResource(string linkerName, CancellationToken cancellationToken = default)
         {
-            return GetLinkers().Get(linkerName, cancellationToken);
+            return GetLinkerResources().Get(linkerName, cancellationToken);
         }
     }
 }
