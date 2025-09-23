@@ -147,7 +147,7 @@ namespace Azure.AI.Agents.Persistent
                 await CreateRunStreamingAsync(threadId, createRunRequest.ToRequestContent(), requestContext, include: options?.Include).ConfigureAwait(false);
 
             AsyncCollectionResult<StreamingUpdate> submitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currRetry) =>
-            this.SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, currRetry, default);
+            this.SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, toolApprovals, currRetry, requestContext);
             async Task<Response<ThreadRun>> cancelRunAsync(string runId) => await this.CancelRunAsync(threadId, runId).ConfigureAwait(false);
             return new AsyncStreamingUpdateCollection(
                 requestContext.CancellationToken,
