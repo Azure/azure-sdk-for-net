@@ -10,14 +10,8 @@
       NU5104;
     </NoWarn>
     <IsSamplesProject>true</IsSamplesProject>
-
-    </PropertyGroup>
-
+  </PropertyGroup>
   <Import Project="..\Directory.Build.props" />
-  <Target BeforeTargets="Build" Name="Taco">
-
-    <Message Text="$(AssemblyName): $(RequiredTargetFrameworks)" Importance="High"/>
-  </Target>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);STRONGNAME_SIGNED</DefineConstants>
     <InheritDocEnabled>false</InheritDocEnabled>
