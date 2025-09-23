@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class SnapshotUpdateParameters : IJsonModel<SnapshotUpdateParameters>
+    internal partial class SnapshotUpdateParameters : global::.IUtf8JsonSerializable, IJsonModel<SnapshotUpdateParameters>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

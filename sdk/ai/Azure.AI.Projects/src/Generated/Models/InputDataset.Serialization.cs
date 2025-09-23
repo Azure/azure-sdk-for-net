@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Dataset as source for evaluation. </summary>
-    public partial class InputDataset : IJsonModel<InputDataset>
+    public partial class InputDataset : InputData, IJsonModel<InputDataset>
     {
         /// <summary> Initializes a new instance of <see cref="InputDataset"/> for deserialization. </summary>
         internal InputDataset()

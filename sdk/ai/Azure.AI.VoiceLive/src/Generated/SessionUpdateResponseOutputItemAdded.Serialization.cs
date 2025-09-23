@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a new Item is created during Response generation. </summary>
-    public partial class SessionUpdateResponseOutputItemAdded : IJsonModel<SessionUpdateResponseOutputItemAdded>
+    public partial class SessionUpdateResponseOutputItemAdded : SessionUpdate, IJsonModel<SessionUpdateResponseOutputItemAdded>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseOutputItemAdded"/> for deserialization. </summary>
         internal SessionUpdateResponseOutputItemAdded()

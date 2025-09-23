@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Labels are used to group key-values. </summary>
-    public partial class SettingLabel : IJsonModel<SettingLabel>
+    public partial class SettingLabel : global::.IUtf8JsonSerializable, IJsonModel<SettingLabel>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownTurnDetection : IJsonModel<TurnDetection>
+    internal partial class UnknownTurnDetection : TurnDetection, IJsonModel<TurnDetection>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTurnDetection"/> for deserialization. </summary>
         internal UnknownTurnDetection()

@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when an Item is done streaming. Also emitted when a Response is
     /// interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseOutputItemDone : IJsonModel<SessionUpdateResponseOutputItemDone>
+    public partial class SessionUpdateResponseOutputItemDone : SessionUpdate, IJsonModel<SessionUpdateResponseOutputItemDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseOutputItemDone"/> for deserialization. </summary>
         internal SessionUpdateResponseOutputItemDone()
