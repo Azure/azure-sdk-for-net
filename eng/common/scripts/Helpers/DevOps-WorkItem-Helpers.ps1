@@ -1091,9 +1091,9 @@ function Update-PullRequestInReleasePlan($releasePlanWorkItemId, $pullRequestUrl
     }
     $fields += "`"SDKPullRequestStatusFor$($devopsFieldLanguage)=$status`""
 
-    Write-Host "Updating Release Plan [$releasePlanWorkItemId] with Pull Request URL for language [$languageName]."
+    Write-Host "Updating release plan [$releasePlanWorkItemId] with pull request details for language [$languageName]."
     $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
-    Write-Host "Updated Pull Request URL [$pullRequestUrl] for [$languageName] in Release Plan [$releasePlanWorkItemId]"
+    Write-Host "Updated pull request details for [$languageName] in release plan [$releasePlanWorkItemId]"
 }
 
 function Get-ReleasePlan-Link($releasePlanWorkItemId)
