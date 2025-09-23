@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/3214c8b906eafa31063e3180d88b8f201d205409/specification/dataprotection/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/34499b0aa7b61a0e96a37d28aa282c9d2c345122/specification/dataprotection/resource-manager/Microsoft.DataProtection/DataProtection/readme.md
 #tag: package-2025-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -85,99 +85,85 @@ override-operation-name:
   FetchSecondaryRecoveryPoints_List: GetSecondaryRecoveryPoints
 
 rename-mapping:
-  AzureBackupJobResource: DataProtectionBackupJob
+  AbsoluteDeleteOption: DataProtectionBackupAbsoluteDeleteSetting
+  AbsoluteMarker: BackupAbsoluteMarker
+  AdHocBackupRuleOptions: AdhocBackupRules
+  AdHocBackupRuleOptions.triggerOption: BackupTrigger
+  AdhocBackupTriggerOption: AdhocBackupTriggerSetting
+  AdhocBasedTaggingCriteria: AdhocBasedBackupTaggingCriteria
+  AdhocBasedTriggerContext: AdhocBasedBackupTriggerContext
+  AdhocBasedTriggerContext.taggingCriteria: AdhocBackupRetention
+  AdlsBlobBackupDatasourceParameters: AdlsBlobBackupDataSourceSettings
+  AKSVolumeTypes: DataProtectionAksVolumeType
+  AlertsState: AzureMonitorAlertsState
+  AuthCredentials: DataProtectionBackupAuthCredentials
+  AzureBackupDiscreteRecoveryPoint: DataProtectionBackupDiscreteRecoveryPointProperties
+  AzureBackupDiscreteRecoveryPoint.expiryTime: ExpireOn
+  AzureBackupDiscreteRecoveryPoint.recoveryPointTime: RecoverOn
+  AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
+  AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time
+  AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
+  AzureBackupFindRestorableTimeRangesResponse: BackupFindRestorableTimeRangeResultProperties
+  AzureBackupFindRestorableTimeRangesResponseResource: BackupFindRestorableTimeRangeResult
   AzureBackupJob: DataProtectionBackupJobProperties
-  AzureBackupJob.duration: -|duration-constant
   AzureBackupJob.backupInstanceId: -|arm-id
   AzureBackupJob.dataSourceId: -|arm-id
   AzureBackupJob.dataSourceLocation: -|azure-location
+  AzureBackupJob.duration: -|duration-constant
   AzureBackupJob.policyId: -|arm-id
   AzureBackupJob.progressEnabled: IsProgressEnabled
-  JobExtendedInfo: BackupJobExtendedInfo
-  JobSubTask: BackupJobSubTask
-  AzureBackupRecoveryPointResource: DataProtectionBackupRecoveryPoint
+  AzureBackupJobResource: DataProtectionBackupJob
+  AzureBackupParams: DataProtectionBackupSettings
   AzureBackupRecoveryPoint: DataProtectionBackupRecoveryPointProperties
-  AzureBackupDiscreteRecoveryPoint: DataProtectionBackupDiscreteRecoveryPointProperties
-  AzureBackupDiscreteRecoveryPoint.recoveryPointTime: RecoverOn
-  AzureBackupDiscreteRecoveryPoint.expiryTime: ExpireOn
-  BackupInstanceResource: DataProtectionBackupInstance
-  BackupInstance: DataProtectionBackupInstanceProperties
-  BackupInstance.datasourceAuthCredentials: DataSourceAuthCredentials
-  TriggerBackupRequest: AdhocBackupTriggerContent
-  TriggerBackupRequest.backupRuleOptions: BackupRules
-  OperationExtendedInfo: DataProtectionOperationExtendedInfo
-  OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
-  OperationJobExtendedInfo.jobId: JobIdentifier
-  AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
-  AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
-  AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time
-  AzureBackupFindRestorableTimeRangesResponseResource: BackupFindRestorableTimeRangeResult
-  AzureBackupFindRestorableTimeRangesResponse: BackupFindRestorableTimeRangeResultProperties
-  RestorableTimeRange.startTime: StartOn|date-time
-  RestorableTimeRange.endTime: EndOn|date-time
-  SyncBackupInstanceRequest: BackupInstanceSyncContent
-  AzureBackupRehydrationRequest.rehydrationRetentionDuration: -|duration
-  AzureBackupRehydrationRequest: BackupRehydrationContent
-  AzureBackupRestoreRequest: BackupRestoreContent
-  AzureBackupRestoreRequest.sourceResourceId: -|arm-id
   AzureBackupRecoveryPointBasedRestoreRequest: BackupRecoveryPointBasedRestoreContent
-  AzureBackupRestoreWithRehydrationRequest.rehydrationRetentionDuration: -|duration
-  AzureBackupRestoreWithRehydrationRequest: BackupRestoreWithRehydrationContent
+  AzureBackupRecoveryPointResource: DataProtectionBackupRecoveryPoint
   AzureBackupRecoveryTimeBasedRestoreRequest: BackupRecoveryTimeBasedRestoreContent
   AzureBackupRecoveryTimeBasedRestoreRequest.recoveryPointTime: RecoverOn|date-time
-  ValidateRestoreRequestObject: BackupValidateRestoreContent
-  BackupVaultResource: DataProtectionBackupVault
+  AzureBackupRehydrationRequest: BackupRehydrationContent
+  AzureBackupRehydrationRequest.rehydrationRetentionDuration: -|duration
+  AzureBackupRestoreRequest: BackupRestoreContent
+  AzureBackupRestoreRequest.sourceResourceId: -|arm-id
+  AzureBackupRestoreWithRehydrationRequest: BackupRestoreWithRehydrationContent
+  AzureBackupRestoreWithRehydrationRequest.rehydrationRetentionDuration: -|duration
+  AzureBackupRule: DataProtectionBackupRule
+  AzureMonitorAlertSettings.alertsForAllJobFailures: AlertSettingsForAllJobFailures
+  AzureOperationalStoreParameters: OperationalDataStoreSettings
+  AzureOperationalStoreParameters.resourceGroupId: -|arm-id
+  AzureRetentionRule: DataProtectionRetentionRule
+  BackupCriteria: DataProtectionBackupCriteria
+  BackupDatasourceParameters: BackupDataSourceSettings
+  BackupInstance: DataProtectionBackupInstanceProperties
+  BackupInstance.datasourceAuthCredentials: DataSourceAuthCredentials
+  BackupInstanceResource: DataProtectionBackupInstance
+  BackupParameters: DataProtectionBackupSettingsBase
+  BackupPolicy: RuleBasedBackupPolicy
+  BackupSchedule: DataProtectionBackupSchedule
   BackupVault: DataProtectionBackupVaultProperties
-  ValidateForBackupRequest: AdhocBackupValidateContent
-  BaseBackupPolicyResource: DataProtectionBackupPolicy
+  BackupVault.replicatedRegions : -|azure-location
+  BackupVaultResource: DataProtectionBackupVault
   BaseBackupPolicy: DataProtectionBackupPolicyPropertiesBase
   BaseBackupPolicy.datasourceTypes: DataSourceTypes
-  BackupPolicy: RuleBasedBackupPolicy
-  ResourceGuardResource: ResourceGuard
-  ResourceGuard: ResourceGuardProperties
-  ResourceGuard.allowAutoApprovals: IsAutoApprovalsAllowed
-  FeatureValidationRequestBase: BackupFeatureValidationContentBase
-  FeatureValidationRequest: BackupFeatureValidationContent
-  FeatureValidationResponseBase: BackupFeatureValidationResultBase
-  FeatureValidationResponse: BackupFeatureValidationResult
+  BaseBackupPolicyResource: DataProtectionBackupPolicy
+  BasePolicyRule: DataProtectionBasePolicyRule
+  BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
   CheckNameAvailabilityRequest: DataProtectionBackupNameAvailabilityContent
   CheckNameAvailabilityRequest.type: -|resource-type
   CheckNameAvailabilityResult: DataProtectionBackupNameAvailabilityResult
   CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
-  AdHocBackupRuleOptions: AdhocBackupRules
-  AdHocBackupRuleOptions.triggerOption: BackupTrigger
-  AdhocBackupTriggerOption: AdhocBackupTriggerSetting
-  DeleteOption.duration: -|duration
-  DeleteOption: DataProtectionBackupDeleteSetting
-  AbsoluteDeleteOption: DataProtectionBackupAbsoluteDeleteSetting
-  AbsoluteMarker: BackupAbsoluteMarker
-  AdhocBasedTaggingCriteria: AdhocBasedBackupTaggingCriteria
-  RetentionTag: DataProtectionBackupRetentionTag
-  TaggingCriteria: DataProtectionBackupTaggingCriteria
-  TriggerContext: DataProtectionBackupTriggerContext
-  AdhocBasedTriggerContext: AdhocBasedBackupTriggerContext
-  AdhocBasedTriggerContext.taggingCriteria: AdhocBackupRetention
-  ScheduleBasedTriggerContext: ScheduleBasedBackupTriggerContext
-  ScheduleBasedTriggerContext.taggingCriteria: TaggingCriteriaList
-  AlertsState: AzureMonitorAlertsState
-  AuthCredentials: DataProtectionBackupAuthCredentials
-  RecoveryPointDataStoreDetails: RecoveryPointDataStoreDetail
-  RecoveryPointDataStoreDetails.expiryTime: ExpireOn
-  RecoveryPointDataStoreDetails.rehydrationExpiryTime: RehydrationExpireOn
-  RecoveryPointDataStoreDetails.metaData: Metadata
-  RecoveryPointDataStoreDetails.id: RecoveryPointDataStoreId|uuid
-  RecoveryPointDataStoreDetails.type: RecoveryPointDataStoreType
-  RecoveryPointDataStoreDetails.visible: IsVisible
-  BackupParameters: DataProtectionBackupSettingsBase
-  AzureBackupParams: DataProtectionBackupSettings
-  RehydrationPriority: BackupRehydrationPriority
-  BasePolicyRule: DataProtectionBasePolicyRule
-  AzureBackupRule: DataProtectionBackupRule
-  AzureRetentionRule: DataProtectionRetentionRule
-  DataStoreParameters: DataStoreSettings
-  AzureOperationalStoreParameters: OperationalDataStoreSettings
-  AzureOperationalStoreParameters.resourceGroupId: -|arm-id
-  BackupCriteria: DataProtectionBackupCriteria
+  ClientDiscoveryForLogSpecification.blobDuration: -|duration
+  CmkKekIdentity: BackupVaultCmkKekIdentity
+  CopyOnExpiryOption: CopyOnExpirySetting
+  CopyOption: DataProtectionBackupCopySetting
+  CrossRegionRestoreDetails.sourceBackupInstanceId : -|arm-id
+  CrossRegionRestoreDetails.sourceRegion  : -|azure-location
+  CrossRegionRestoreJobRequest.jobId : -|uuid
+  CrossRegionRestoreJobRequest.sourceBackupVaultId : -|arm-id
+  CrossRegionRestoreJobRequest.sourceRegion  : -|azure-location
+  CrossRegionRestoreJobsRequest.sourceBackupVaultId : -|arm-id
+  CrossRegionRestoreJobsRequest.sourceRegion  : -|azure-location
+  CrossSubscriptionRestoreState: DataProtectionBackupCrossSubscriptionRestoreState
+  CustomCopyOption: CustomCopySetting
+  CustomCopyOption.duration: -|duration
   Datasource: DataSourceInfo
   Datasource.datasourceType: DataSourceType
   Datasource.resourceID: -|arm-id
@@ -190,97 +176,112 @@ rename-mapping:
   DatasourceSet.resourceLocation: -|azure-location
   DatasourceSet.resourceType: -|resource-type
   DatasourceSet.resourceUri: ResourceUriString
-  PolicyInfo: BackupInstancePolicyInfo
-  PolicyInfo.policyId: -|arm-id
-  ValidationType: BackupValidationType
-  BackupSchedule: DataProtectionBackupSchedule
-  AzureMonitorAlertSettings.alertsForAllJobFailures: AlertSettingsForAllJobFailures
-  ProvisioningState: DataProtectionBackupProvisioningState
-  ResourceMoveDetails: BackupVaultResourceMoveDetails
-  ResourceMoveDetails.startTimeUtc: StartOn|date-time
-  ResourceMoveDetails.completionTimeUtc: CompleteOn|date-time
-  ResourceMoveState: BackupVaultResourceMoveState
-  ResourceMoveState.PrepareTimedout: PrepareTimedOut
-  ResourceMoveState.CommitTimedout: CommitTimedOut
-  StorageSetting: DataProtectionBackupStorageSetting
-  StorageSetting.datastoreType: DataStoreType
-  CopyOption: DataProtectionBackupCopySetting
-  CopyOnExpiryOption: CopyOnExpirySetting
-  CustomCopyOption.duration: -|duration
-  CustomCopyOption: CustomCopySetting
-  ImmediateCopyOption: ImmediateCopySetting
+  DataStoreParameters: DataStoreSettings
   Day: DataProtectionBackupDay
   DayOfWeek: DataProtectionBackupDayOfWeek
-  Month: DataProtectionBackupMonth
-  WeekNumber: DataProtectionBackupWeekNumber
+  DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
+  DeletedBackupInstanceResource: DeletedDataProtectionBackupInstance
+  DeleteOption: DataProtectionBackupDeleteSetting
+  DeleteOption.duration: -|duration
+  DeletionInfo: BackupInstanceDeletionInfo
+  DeletionInfo.billingEndDate: BillingEndOn|date-time
+  DeletionInfo.deletionTime: DeleteOn|date-time
+  DeletionInfo.scheduledPurgeTime: ScheduledPurgeOn|date-time
+  EncryptionSettings: BackupVaultEncryptionSettings
+  EncryptionState: BackupVaultEncryptionState
+  ExistingResourcePolicy: KubernetesClusterRestoreExistingResourcePolicy
+  FeatureSettings: BackupVaultFeatureSettings
   FeatureType: BackupSupportedFeatureType
-  SupportedFeature: BackupSupportedFeature
+  FeatureValidationRequest: BackupFeatureValidationContent
+  FeatureValidationRequestBase: BackupFeatureValidationContentBase
+  FeatureValidationResponse: BackupFeatureValidationResult
+  FeatureValidationResponseBase: BackupFeatureValidationResultBase
+  FetchSecondaryRPsRequestParameters.sourceBackupInstanceId : -|arm-id
+  FetchSecondaryRPsRequestParameters.sourceRegion  : -|azure-location
+  IdentityDetails: DataProtectionIdentityDetails
+  IdentityDetails.userAssignedIdentityArmUrl: UserAssignedIdentityId|arm-id
+  IdentityType: BackupVaultCmkKekIdentityType
+  ImmediateCopyOption: ImmediateCopySetting
+  ImmutabilityState: BackupVaultImmutabilityState
+  InfrastructureEncryptionState: BackupVaultInfrastructureEncryptionState
+  JobExtendedInfo: BackupJobExtendedInfo
+  JobSubTask: BackupJobSubTask
+  KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
+  KubernetesClusterBackupDatasourceParameters.includeClusterScopeResources: IsClusterScopeResourcesIncluded
+  KubernetesClusterBackupDatasourceParameters.snapshotVolumes: IsSnapshotVolumesEnabled
+  KubernetesClusterRestoreCriteria.includeClusterScopeResources: IsClusterScopeResourcesIncluded
+  Month: DataProtectionBackupMonth
+  NamespacedNameResource: NamespacedName
+  OperationExtendedInfo: DataProtectionOperationExtendedInfo
+  OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
+  OperationJobExtendedInfo.jobId: JobIdentifier
+  PatchBackupVaultInput: DataProtectionBackupVaultPatchProperties
+  PolicyInfo: BackupInstancePolicyInfo
+  PolicyInfo.policyId: -|arm-id
+  PolicyParameters: BackupInstancePolicySettings
+  PolicyParameters.backupDatasourceParametersList: BackupDataSourceParametersList
   ProtectionStatusDetails: BackupInstanceProtectionStatusDetails
-  Status: BackupInstanceProtectionStatus
+  ProvisioningState: DataProtectionBackupProvisioningState
   RecoveryOption: RecoverySetting
+  RecoveryPointCompletionState: DataProtectionBackupRecoveryPointCompletionState
+  RecoveryPointDataStoreDetails: RecoveryPointDataStoreDetail
+  RecoveryPointDataStoreDetails.expiryTime: ExpireOn
+  RecoveryPointDataStoreDetails.id: RecoveryPointDataStoreId|uuid
+  RecoveryPointDataStoreDetails.metaData: Metadata
+  RecoveryPointDataStoreDetails.rehydrationExpiryTime: RehydrationExpireOn
+  RecoveryPointDataStoreDetails.type: RecoveryPointDataStoreType
+  RecoveryPointDataStoreDetails.visible: IsVisible
+  RehydrationPriority: BackupRehydrationPriority
   RehydrationStatus: RecoveryPointDataStoreRehydrationStatus
   RehydrationStatus.CREATE_IN_PROGRESS: CreateInProgress
   RehydrationStatus.DELETE_IN_PROGRESS: DeleteInProgress
+  ResourceGuard: ResourceGuardProperties
+  ResourceGuard.allowAutoApprovals: IsAutoApprovalsAllowed
   ResourceGuardOperation: ResourceGuardOperationDetails
   ResourceGuardOperation.requestResourceType: -|resource-type
-  TargetDetails: RestoreFilesTargetDetails
-  TargetDetails.targetResourceArmId: -|arm-id
+  ResourceGuardResource: ResourceGuard
+  ResourceMoveDetails: BackupVaultResourceMoveDetails
+  ResourceMoveDetails.completionTimeUtc: CompleteOn|date-time
+  ResourceMoveDetails.startTimeUtc: StartOn|date-time
+  ResourceMoveState: BackupVaultResourceMoveState
+  ResourceMoveState.CommitTimedout: CommitTimedOut
+  ResourceMoveState.PrepareTimedout: PrepareTimedOut
+  RestorableTimeRange.endTime: EndOn|date-time
+  RestorableTimeRange.startTime: StartOn|date-time
   RestoreJobRecoveryPointDetails.recoveryPointTime: RecoverOn
+  RestoreTargetInfo.datasourceAuthCredentials: DataSourceAuthCredentials
   RestoreTargetInfo.datasourceInfo: DataSourceInfo
   RestoreTargetInfo.datasourceSetInfo: DataSourceSetInfo
-  RestoreTargetInfo.datasourceAuthCredentials: DataSourceAuthCredentials
-  RestoreTargetInfoBase.restoreLocation: -|azure-location
   RestoreTargetInfoBase.recoveryOption: RecoverySetting
-  SecretStoreResource: SecretStoreResourceInfo
-  SyncType: BackupInstanceSyncType
+  RestoreTargetInfoBase.restoreLocation: -|azure-location
+  RetentionTag: DataProtectionBackupRetentionTag
   ScheduleBasedBackupCriteria.daysOfTheWeek: DaysOfWeek
   ScheduleBasedBackupCriteria.weeksOfTheMonth: WeeksOfMonth
-  DeletedBackupInstanceResource: DeletedDataProtectionBackupInstance
-  DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
-  BackupDatasourceParameters: BackupDataSourceSettings
-  BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
-  AdlsBlobBackupDatasourceParameters: AdlsBlobBackupDataSourceSettings
-  KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
-  KubernetesClusterBackupDatasourceParameters.snapshotVolumes: IsSnapshotVolumesEnabled
-  KubernetesClusterBackupDatasourceParameters.includeClusterScopeResources: IsClusterScopeResourcesIncluded
-  KubernetesClusterRestoreCriteria.includeClusterScopeResources: IsClusterScopeResourcesIncluded
-  CrossSubscriptionRestoreState: DataProtectionBackupCrossSubscriptionRestoreState
-  DeletionInfo: BackupInstanceDeletionInfo
-  DeletionInfo.deletionTime: DeleteOn|date-time
-  DeletionInfo.billingEndDate: BillingEndOn|date-time
-  DeletionInfo.scheduledPurgeTime: ScheduledPurgeOn|date-time
-  ExistingResourcePolicy: KubernetesClusterRestoreExistingResourcePolicy
-  ImmutabilityState: BackupVaultImmutabilityState
-  PatchBackupVaultInput: DataProtectionBackupVaultPatchProperties
-  PolicyParameters: BackupInstancePolicySettings
-  PolicyParameters.backupDatasourceParametersList: BackupDataSourceParametersList
+  ScheduleBasedTriggerContext: ScheduleBasedBackupTriggerContext
+  ScheduleBasedTriggerContext.taggingCriteria: TaggingCriteriaList
+  SecretStoreResource: SecretStoreResourceInfo
+  SecureScoreLevel: BackupVaultSecureScoreLevel
   SecuritySettings: BackupVaultSecuritySettings
   SoftDeleteSettings: BackupVaultSoftDeleteSettings
   SoftDeleteState: BackupVaultSoftDeleteState
+  Status: BackupInstanceProtectionStatus
+  StorageSetting: DataProtectionBackupStorageSetting
+  StorageSetting.datastoreType: DataStoreType
+  SupportedFeature: BackupSupportedFeature
+  SyncBackupInstanceRequest: BackupInstanceSyncContent
+  SyncType: BackupInstanceSyncType
+  TaggingCriteria: DataProtectionBackupTaggingCriteria
+  TargetDetails: RestoreFilesTargetDetails
+  TargetDetails.targetResourceArmId: -|arm-id
+  TriggerBackupRequest: AdhocBackupTriggerContent
+  TriggerBackupRequest.backupRuleOptions: BackupRules
+  TriggerContext: DataProtectionBackupTriggerContext
   UnlockDeleteRequest: DataProtectionUnlockDeleteContent
   UnlockDeleteResponse: DataProtectionUnlockDeleteResult
-  SecureScoreLevel: BackupVaultSecureScoreLevel
-  FeatureSettings: BackupVaultFeatureSettings
-  IdentityDetails: DataProtectionIdentityDetails
-  IdentityDetails.userAssignedIdentityArmUrl: UserAssignedIdentityId|arm-id
-  NamespacedNameResource: NamespacedName
-  CrossRegionRestoreDetails.sourceBackupInstanceId : -|arm-id
-  CrossRegionRestoreDetails.sourceRegion  : -|azure-location
-  CrossRegionRestoreJobRequest.jobId : -|uuid
-  CrossRegionRestoreJobRequest.sourceBackupVaultId : -|arm-id
-  CrossRegionRestoreJobRequest.sourceRegion  : -|azure-location
-  CrossRegionRestoreJobsRequest.sourceBackupVaultId : -|arm-id
-  CrossRegionRestoreJobsRequest.sourceRegion  : -|azure-location
-  FetchSecondaryRPsRequestParameters.sourceBackupInstanceId : -|arm-id
-  FetchSecondaryRPsRequestParameters.sourceRegion  : -|azure-location
-  BackupVault.replicatedRegions : -|azure-location
-  RecoveryPointCompletionState: DataProtectionBackupRecoveryPointCompletionState
-  CmkKekIdentity: BackupVaultCmkKekIdentity
-  EncryptionSettings: BackupVaultEncryptionSettings
-  EncryptionState: BackupVaultEncryptionState
-  IdentityType: BackupVaultCmkKekIdentityType
-  InfrastructureEncryptionState: BackupVaultInfrastructureEncryptionState
-  ClientDiscoveryForLogSpecification.blobDuration: -|duration
+  ValidateForBackupRequest: AdhocBackupValidateContent
+  ValidateRestoreRequestObject: BackupValidateRestoreContent
+  ValidationType: BackupValidationType
+  WeekNumber: DataProtectionBackupWeekNumber
 
 directive:
 # Remove all the operation related methods
