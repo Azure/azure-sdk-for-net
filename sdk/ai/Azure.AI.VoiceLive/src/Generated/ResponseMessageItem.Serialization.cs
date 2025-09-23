@@ -83,7 +83,7 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResponseMessageRole role = default;
             IList<VoiceLiveContentPart> content = default;
-            ResponseItemStatus status = default;
+            VoiceLiveResponseItemStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new ResponseItemStatus(prop.Value.GetString());
+                    status = new VoiceLiveResponseItemStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

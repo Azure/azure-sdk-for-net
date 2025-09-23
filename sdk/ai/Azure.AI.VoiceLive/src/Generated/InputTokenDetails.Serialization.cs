@@ -44,6 +44,8 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(TextTokens);
             writer.WritePropertyName("audio_tokens"u8);
             writer.WriteNumberValue(AudioTokens);
+            writer.WritePropertyName("cached_tokens_details"u8);
+            writer.WriteObjectValue(CachedTokensDetails, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -89,6 +91,7 @@ namespace Azure.AI.VoiceLive
             int cachedTokens = default;
             int textTokens = default;
             int audioTokens = default;
+            CachedTokenDetails cachedTokensDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -107,12 +110,17 @@ namespace Azure.AI.VoiceLive
                     audioTokens = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("cached_tokens_details"u8))
+                {
+                    cachedTokensDetails = CachedTokenDetails.DeserializeCachedTokenDetails(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InputTokenDetails(cachedTokens, textTokens, audioTokens, additionalBinaryDataProperties);
+            return new InputTokenDetails(cachedTokens, textTokens, audioTokens, cachedTokensDetails, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.5 (2025-09-18)
+
+### Bugs Fixed
+- Fix issue with image block serialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/52571)
 
 ## 1.2.0-beta.4 (2025-09-05)
 

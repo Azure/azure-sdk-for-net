@@ -314,7 +314,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BazData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BazData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BazData patch = new BazData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -362,7 +362,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BazData current = Get(cancellationToken).Value.Data;
+                    BazData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BazData patch = new BazData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -409,7 +409,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BazData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BazData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BazData patch = new BazData();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<BazResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
@@ -452,7 +452,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BazData current = Get(cancellationToken).Value.Data;
+                    BazData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BazData patch = new BazData();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<BazResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
@@ -494,7 +494,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BazData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BazData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BazData patch = new BazData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -540,7 +540,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BazData current = Get(cancellationToken).Value.Data;
+                    BazData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BazData patch = new BazData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

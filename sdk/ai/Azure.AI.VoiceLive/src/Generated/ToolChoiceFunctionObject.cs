@@ -10,29 +10,28 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The representation of a voicelive tool_choice selecting a named function tool. </summary>
-    public partial class ToolChoiceFunctionObject : ToolChoiceObject
+    internal partial class ToolChoiceFunctionObject : ToolChoiceObject
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/>. </summary>
-        /// <param name="function"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="function"/> is null. </exception>
-        public ToolChoiceFunctionObject(ToolChoiceFunctionObjectFunction function) : base(ToolType.Function)
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ToolChoiceFunctionObject(string name) : base(ToolType.Function)
         {
-            Argument.AssertNotNull(function, nameof(function));
+            Argument.AssertNotNull(name, nameof(name));
 
-            Function = function;
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="function"></param>
-        internal ToolChoiceFunctionObject(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolChoiceFunctionObjectFunction function) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"></param>
+        internal ToolChoiceFunctionObject(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name) : base(@type, additionalBinaryDataProperties)
         {
-            Function = function;
+            Name = name;
         }
 
-        /// <summary> Gets or sets the Function. </summary>
-        public ToolChoiceFunctionObjectFunction Function { get; set; }
+        /// <summary> Gets or sets the Name. </summary>
+        public string Name { get; set; }
     }
 }
