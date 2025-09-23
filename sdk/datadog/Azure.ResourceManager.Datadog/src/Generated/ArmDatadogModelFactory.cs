@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDatadogModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogAgreementResourceContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataDogAgreementResourceContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Represents the properties of the resource. </param>
-        /// <returns> A new <see cref="Models.DatadogAgreementResourceContent"/> instance for mocking. </returns>
-        public static DatadogAgreementResourceContent DatadogAgreementResourceContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogAgreementProperties properties = null)
+        /// <returns> A new <see cref="Models.DataDogAgreementResourceContent"/> instance for mocking. </returns>
+        public static DataDogAgreementResourceContent DataDogAgreementResourceContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogAgreementProperties properties = null)
         {
-            return new DatadogAgreementResourceContent(
+            return new DataDogAgreementResourceContent(
                 id,
                 name,
                 resourceType,
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Datadog.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogCreateResourceSupportedResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataDogCreateResourceSupportedResult"/>. </summary>
         /// <param name="properties"> Represents the properties of the resource. </param>
-        /// <returns> A new <see cref="Models.DatadogCreateResourceSupportedResult"/> instance for mocking. </returns>
-        public static DatadogCreateResourceSupportedResult DatadogCreateResourceSupportedResult(CreateResourceSupportedProperties properties = null)
+        /// <returns> A new <see cref="Models.DataDogCreateResourceSupportedResult"/> instance for mocking. </returns>
+        public static DataDogCreateResourceSupportedResult DataDogCreateResourceSupportedResult(CreateResourceSupportedProperties properties = null)
         {
-            return new DatadogCreateResourceSupportedResult(properties, serializedAdditionalRawData: null);
+            return new DataDogCreateResourceSupportedResult(properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateResourceSupportedProperties"/>. </summary>
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.Datadog.Models
             return new CreateResourceSupportedProperties(name, isCreationSupported, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogBillingInfoResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataDogBillingInfoResult"/>. </summary>
         /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
         /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
-        /// <returns> A new <see cref="Models.DatadogBillingInfoResult"/> instance for mocking. </returns>
-        public static DatadogBillingInfoResult DatadogBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo = null, PartnerBillingEntity partnerBillingEntity = null)
+        /// <returns> A new <see cref="Models.DataDogBillingInfoResult"/> instance for mocking. </returns>
+        public static DataDogBillingInfoResult DataDogBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo = null, PartnerBillingEntity partnerBillingEntity = null)
         {
-            return new DatadogBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, serializedAdditionalRawData: null);
+            return new DataDogBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
         /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
-        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = null, string marketplaceName = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? isSubscribed = null)
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(Guid? marketplaceSubscriptionId = null, string marketplaceName = null, string marketplaceStatus = null, Guid? billedAzureSubscriptionId = null, bool? isSubscribed = null)
         {
             return new MarketplaceSaaSInfo(
                 marketplaceSubscriptionId,
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogInstallMethod(tool, toolVersion, installerVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LinkedInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataDogLinkedInfo"/>. </summary>
         /// <param name="id"> The ARM id of the linked resource. </param>
         /// <param name="location"> The location of the linked resource. </param>
-        /// <returns> A new <see cref="Models.LinkedInfo"/> instance for mocking. </returns>
-        public static LinkedInfo LinkedInfo(string id = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="Models.DataDogLinkedInfo"/> instance for mocking. </returns>
+        public static DataDogLinkedInfo DataDogLinkedInfo(ResourceIdentifier id = null, AzureLocation? location = null)
         {
-            return new LinkedInfo(id, location, serializedAdditionalRawData: null);
+            return new DataDogLinkedInfo(id, location, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitoredResourceContent"/>. </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="isSendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
         /// <returns> A new <see cref="Models.MonitoredResourceContent"/> instance for mocking. </returns>
-        public static MonitoredResourceContent MonitoredResourceContent(string id = null, bool? isSendingMetrics = null, string reasonForMetricsStatus = null, bool? isSendingLogs = null, string reasonForLogsStatus = null)
+        public static MonitoredResourceContent MonitoredResourceContent(ResourceIdentifier id = null, bool? isSendingMetrics = null, string reasonForMetricsStatus = null, bool? isSendingLogs = null, string reasonForLogsStatus = null)
         {
             return new MonitoredResourceContent(
                 id,
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </param>
         /// <returns> A new <see cref="Datadog.MonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
-        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionList properties = null)
+        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataDogSubscriptionList properties = null)
         {
             return new MonitoredSubscriptionPropertyData(
                 id,

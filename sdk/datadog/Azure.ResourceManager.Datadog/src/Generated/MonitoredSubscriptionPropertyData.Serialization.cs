@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 return null;
             }
-            SubscriptionList properties = default;
+            DataDogSubscriptionList properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Datadog
                     {
                         continue;
                     }
-                    properties = SubscriptionList.DeserializeSubscriptionList(property.Value, options);
+                    properties = DataDogSubscriptionList.DeserializeDataDogSubscriptionList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

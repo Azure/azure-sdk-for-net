@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </summary>
-    public partial class SubscriptionList
+    public partial class DataDogSubscriptionList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
-        public SubscriptionList()
+        /// <summary> Initializes a new instance of <see cref="DataDogSubscriptionList"/>. </summary>
+        public DataDogSubscriptionList()
         {
             MonitoredSubscriptionList = new ChangeTrackingList<MonitoredSubscription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDogSubscriptionList"/>. </summary>
         /// <param name="operation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionList(OperationData? operation, IList<MonitoredSubscription> monitoredSubscriptionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataDogSubscriptionList(DataDogOperationData? operation, IList<MonitoredSubscription> monitoredSubscriptionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Operation = operation;
             MonitoredSubscriptionList = monitoredSubscriptionList;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> The operation for the patch on the resource. </summary>
-        public OperationData? Operation { get; set; }
+        public DataDogOperationData? Operation { get; set; }
         /// <summary> List of subscriptions and the state of the monitoring. </summary>
         public IList<MonitoredSubscription> MonitoredSubscriptionList { get; }
     }

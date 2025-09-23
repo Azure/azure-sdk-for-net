@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Response of a list operation. </summary>
-    internal partial class DatadogAgreementResourceListResult
+    internal partial class DataDogAgreementResourceListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDogAgreementResourceListResult"/>. </summary>
         /// <param name="value"> The DatadogAgreementResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DatadogAgreementResourceListResult(IEnumerable<DatadogAgreementResourceContent> value)
+        internal DataDogAgreementResourceListResult(IEnumerable<DataDogAgreementResourceContent> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDogAgreementResourceListResult"/>. </summary>
         /// <param name="value"> The DatadogAgreementResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogAgreementResourceListResult(IReadOnlyList<DatadogAgreementResourceContent> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataDogAgreementResourceListResult(IReadOnlyList<DataDogAgreementResourceContent> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResult"/> for deserialization. </summary>
-        internal DatadogAgreementResourceListResult()
+        /// <summary> Initializes a new instance of <see cref="DataDogAgreementResourceListResult"/> for deserialization. </summary>
+        internal DataDogAgreementResourceListResult()
         {
         }
 
         /// <summary> The DatadogAgreementResource items on this page. </summary>
-        public IReadOnlyList<DatadogAgreementResourceContent> Value { get; }
+        public IReadOnlyList<DataDogAgreementResourceContent> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

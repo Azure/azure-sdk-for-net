@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
         /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceSaaSInfo(Guid? marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, Guid? billedAzureSubscriptionId, bool? isSubscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             MarketplaceName = marketplaceName;
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> Marketplace Subscription Id. This is a GUID-formatted string. </summary>
-        public string MarketplaceSubscriptionId { get; }
+        public Guid? MarketplaceSubscriptionId { get; }
         /// <summary> Marketplace Subscription Details: SAAS Name. </summary>
         public string MarketplaceName { get; }
         /// <summary> Marketplace Subscription Details: SaaS Subscription Status. </summary>
         public string MarketplaceStatus { get; }
         /// <summary> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </summary>
-        public string BilledAzureSubscriptionId { get; }
+        public Guid? BilledAzureSubscriptionId { get; }
         /// <summary> Flag specifying if the Marketplace status is subscribed or not. </summary>
         public bool? IsSubscribed { get; }
     }

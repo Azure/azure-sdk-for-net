@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Datadog
 namespace: Azure.ResourceManager.Datadog
-require: https://github.com/Azure/azure-rest-api-specs-pr/blob/30f23d89b
-  692f80b495fb7f45c3e695872460bd1/specification/datadog/resource-manager/readme.md
+require: D:\Workspace\Repo\azure-rest-api-specs-pr\specification\datadog\resource-manager\readme.md
+#require: https://github.com/Azure/azure-rest-api-specs-pr/blob/30f23d89b692f80b495fb7f45c3e695872460bd1/specification/datadog/resource-manager/readme.md
 # tag: package-2025-06   rpaas
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -52,24 +52,24 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  DatadogAgreementResource: DatadogAgreementResourceContent
+  DatadogAgreementResource:  DataDogAgreementResourceContent
   MonitoredResource: MonitoredResourceContent
-  BillingInfoResponse: DatadogBillingInfoResult
-  CreateResourceSupportedResponse: DatadogCreateResourceSupportedResult
-  DatadogMonitorResourceUpdateParameters: DatadogMonitorResourceUpdateContent
-  DatadogApiKey: DatadogApiKeyContent
-  LinkedResource: LinkedInfo
+  BillingInfoResponse:  DataDogBillingInfoResult
+  CreateResourceSupportedResponse:  DataDogCreateResourceSupportedResult
+  DatadogMonitorResourceUpdateParameters:  DataDogMonitorResourceUpdateContent
+  DatadogApiKey: DataDogApiKeyContent
+  LinkedResource: DataDogLinkedInfo
   Status: MonitoredStatus
-  DatadogAgreementResourceListResponse: DatadogAgreementResourceListResult
-  DatadogApiKeyListResponse: DatadogApiKeyListResult
-  DatadogHostListResponse: DatadogHostListResult
-  DatadogMonitorResourceListResponse: DatadogMonitorResourceListResult
-  DatadogSingleSignOnResourceListResponse: DatadogSingleSignOnResourceListResult
+  DatadogAgreementResourceListResponse:  DataDogAgreementResourceListResult
+  DatadogApiKeyListResponse:  DataDogApiKeyListResult
+  DatadogHostListResponse:  DataDogHostListResult
+  DatadogMonitorResourceListResponse:  DataDogMonitorResourceListResult
+  DatadogSingleSignOnResourceListResponse:  DataDogSingleSignOnResourceListResult
   LinkedResourceListResponse: LinkedResourceListResult
   MonitoredResourceListResponse: MonitoredResourceListResult
   MonitoringTagRulesListResponse: MonitoringTagRulesListResult
   CreateResourceSupportedResponseList: CreateResourceSupportedResultList
-  Operation: OperationData
+  Operation: DataDogOperationData
   CreateResourceSupportedProperties.creationSupported: IsCreationSupported
   MarketplaceSaaSInfo.subscribed: IsSubscribed
   DatadogAgreementProperties.accepted: IsAccepted
@@ -88,5 +88,11 @@ rename-mapping:
   AgentRules.enableAgentMonitoring: IsAgentMonitoringEnabled
   ResubscribeProperties: DataDogResubscribeProperties
   ResubscribeProperties.azureSubscriptionId: -|arm-id
+  LinkedResource.id: -|arm-id
+  MarketplaceSaaSInfo.billedAzureSubscriptionId: -|uuid
+  MarketplaceSaaSInfo.marketplaceSubscriptionId: -|uuid
+  MonitoredResource.id: -|arm-id
+  MonitoredSubscription.subscriptionId: -|uuid
+  SubscriptionList: DataDogSubscriptionList
 
 ```

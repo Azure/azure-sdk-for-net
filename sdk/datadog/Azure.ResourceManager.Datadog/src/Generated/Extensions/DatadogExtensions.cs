@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DatadogAgreementResourceContent"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DatadogAgreementResourceContent> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataDogAgreementResourceContent"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataDogAgreementResourceContent> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -258,8 +258,8 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DatadogAgreementResourceContent"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DatadogAgreementResourceContent> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataDogAgreementResourceContent"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataDogAgreementResourceContent> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DatadogAgreementResourceContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DataDogAgreementResourceContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DatadogAgreementResourceContent>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DatadogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataDogAgreementResourceContent>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DataDogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -316,14 +316,14 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DatadogAgreementResourceContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DataDogAgreementResourceContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DatadogAgreementResourceContent> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DatadogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
+        public static Response<DataDogAgreementResourceContent> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DataDogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -427,8 +427,8 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="datadogOrganizationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DatadogCreateResourceSupportedResult"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DatadogCreateResourceSupportedResult> GetCreationSupportedsAsync(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataDogCreateResourceSupportedResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataDogCreateResourceSupportedResult> GetCreationSupportedsAsync(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -460,8 +460,8 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="datadogOrganizationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="DatadogCreateResourceSupportedResult"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DatadogCreateResourceSupportedResult> GetCreationSupporteds(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataDogCreateResourceSupportedResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataDogCreateResourceSupportedResult> GetCreationSupporteds(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="datadogOrganizationId"/> is null. </exception>
-        public static async Task<Response<DatadogCreateResourceSupportedResult>> GetCreationSupportedAsync(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataDogCreateResourceSupportedResult>> GetCreationSupportedAsync(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="datadogOrganizationId"/> is null. </exception>
-        public static Response<DatadogCreateResourceSupportedResult> GetCreationSupported(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
+        public static Response<DataDogCreateResourceSupportedResult> GetCreationSupported(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

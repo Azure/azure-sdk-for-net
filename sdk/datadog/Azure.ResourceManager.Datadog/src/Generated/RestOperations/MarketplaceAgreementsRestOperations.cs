@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatadogAgreementResourceListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<DataDogAgreementResourceListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogAgreementResourceListResult value = default;
+                        DataDogAgreementResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DatadogAgreementResourceListResult.DeserializeDatadogAgreementResourceListResult(document.RootElement);
+                        value = DataDogAgreementResourceListResult.DeserializeDataDogAgreementResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatadogAgreementResourceListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<DataDogAgreementResourceListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogAgreementResourceListResult value = default;
+                        DataDogAgreementResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DatadogAgreementResourceListResult.DeserializeDatadogAgreementResourceListResult(document.RootElement);
+                        value = DataDogAgreementResourceListResult.DeserializeDataDogAgreementResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Datadog
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, DatadogAgreementResourceContent content)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, DataDogAgreementResourceContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Datadog
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, DatadogAgreementResourceContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, DataDogAgreementResourceContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatadogAgreementResourceContent>> CreateOrUpdateAsync(string subscriptionId, DatadogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataDogAgreementResourceContent>> CreateOrUpdateAsync(string subscriptionId, DataDogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogAgreementResourceContent value = default;
+                        DataDogAgreementResourceContent value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DatadogAgreementResourceContent.DeserializeDatadogAgreementResourceContent(document.RootElement);
+                        value = DataDogAgreementResourceContent.DeserializeDataDogAgreementResourceContent(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatadogAgreementResourceContent> CreateOrUpdate(string subscriptionId, DatadogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
+        public Response<DataDogAgreementResourceContent> CreateOrUpdate(string subscriptionId, DataDogAgreementResourceContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogAgreementResourceContent value = default;
+                        DataDogAgreementResourceContent value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DatadogAgreementResourceContent.DeserializeDatadogAgreementResourceContent(document.RootElement);
+                        value = DataDogAgreementResourceContent.DeserializeDataDogAgreementResourceContent(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatadogAgreementResourceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<DataDogAgreementResourceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogAgreementResourceListResult value = default;
+                        DataDogAgreementResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DatadogAgreementResourceListResult.DeserializeDatadogAgreementResourceListResult(document.RootElement);
+                        value = DataDogAgreementResourceListResult.DeserializeDataDogAgreementResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatadogAgreementResourceListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<DataDogAgreementResourceListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -267,9 +267,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogAgreementResourceListResult value = default;
+                        DataDogAgreementResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DatadogAgreementResourceListResult.DeserializeDatadogAgreementResourceListResult(document.RootElement);
+                        value = DataDogAgreementResourceListResult.DeserializeDataDogAgreementResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

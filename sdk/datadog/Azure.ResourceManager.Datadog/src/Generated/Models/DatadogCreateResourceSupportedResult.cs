@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Datadog resource can be created or not. </summary>
-    public partial class DatadogCreateResourceSupportedResult
+    public partial class DataDogCreateResourceSupportedResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DatadogCreateResourceSupportedResult"/>. </summary>
-        internal DatadogCreateResourceSupportedResult()
+        /// <summary> Initializes a new instance of <see cref="DataDogCreateResourceSupportedResult"/>. </summary>
+        internal DataDogCreateResourceSupportedResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatadogCreateResourceSupportedResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDogCreateResourceSupportedResult"/>. </summary>
         /// <param name="properties"> Represents the properties of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogCreateResourceSupportedResult(CreateResourceSupportedProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataDogCreateResourceSupportedResult(CreateResourceSupportedProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

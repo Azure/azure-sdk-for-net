@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             bool? sendingMetrics = default;
             string reasonForMetricsStatus = default;
             bool? sendingLogs = default;
@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sendingMetrics"u8))

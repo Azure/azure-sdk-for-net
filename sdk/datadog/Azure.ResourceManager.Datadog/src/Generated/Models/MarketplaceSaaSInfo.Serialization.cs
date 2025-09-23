@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
-                writer.WriteStringValue(MarketplaceSubscriptionId);
+                writer.WriteStringValue(MarketplaceSubscriptionId.Value);
             }
             if (Optional.IsDefined(MarketplaceName))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(BilledAzureSubscriptionId))
             {
                 writer.WritePropertyName("billedAzureSubscriptionId"u8);
-                writer.WriteStringValue(BilledAzureSubscriptionId);
+                writer.WriteStringValue(BilledAzureSubscriptionId.Value);
             }
             if (Optional.IsDefined(IsSubscribed))
             {
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            string marketplaceSubscriptionId = default;
+            Guid? marketplaceSubscriptionId = default;
             string marketplaceName = default;
             string marketplaceStatus = default;
-            string billedAzureSubscriptionId = default;
+            Guid? billedAzureSubscriptionId = default;
             bool? subscribed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 if (property.NameEquals("marketplaceSubscriptionId"u8))
                 {
-                    marketplaceSubscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    marketplaceSubscriptionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("marketplaceName"u8))
@@ -122,7 +126,11 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 if (property.NameEquals("billedAzureSubscriptionId"u8))
                 {
-                    billedAzureSubscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billedAzureSubscriptionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("subscribed"u8))

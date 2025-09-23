@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Datadog.Samples
             // invoke the operation
             MonitoredSubscriptionPropertyData data = new MonitoredSubscriptionPropertyData
             {
-                Properties = new SubscriptionList
+                Properties = new DataDogSubscriptionList
                 {
-                    Operation = OperationData.AddComplete,
+                    Operation = DataDogOperationData.AddComplete,
                     MonitoredSubscriptionList = {new MonitoredSubscription
 {
-SubscriptionId = "/subscriptions/00000000-0000-0000-0000-000000000000",
+SubscriptionId = Guid.Parse("/subscriptions/00000000-0000-0000-0000-000000000000"),
 Status = MonitoredStatus.Active,
 TagRules = new MonitoringTagRulesProperties
 {
@@ -129,7 +129,7 @@ IsAutomuting = true,
 },
 }, new MonitoredSubscription
 {
-SubscriptionId = "/subscriptions/00000000-0000-0000-0000-000000000001",
+SubscriptionId = Guid.Parse("/subscriptions/00000000-0000-0000-0000-000000000001"),
 Status = MonitoredStatus.Failed,
 TagRules = new MonitoringTagRulesProperties
 {

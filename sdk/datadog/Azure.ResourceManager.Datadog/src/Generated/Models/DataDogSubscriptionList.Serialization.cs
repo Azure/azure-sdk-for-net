@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class SubscriptionList : IUtf8JsonSerializable, IJsonModel<SubscriptionList>
+    public partial class DataDogSubscriptionList : IUtf8JsonSerializable, IJsonModel<DataDogSubscriptionList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataDogSubscriptionList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SubscriptionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataDogSubscriptionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogSubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDogSubscriptionList)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Operation))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        SubscriptionList IJsonModel<SubscriptionList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataDogSubscriptionList IJsonModel<DataDogSubscriptionList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogSubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDogSubscriptionList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionList(document.RootElement, options);
+            return DeserializeDataDogSubscriptionList(document.RootElement, options);
         }
 
-        internal static SubscriptionList DeserializeSubscriptionList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataDogSubscriptionList DeserializeDataDogSubscriptionList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            OperationData? operation = default;
+            DataDogOperationData? operation = default;
             IList<MonitoredSubscription> monitoredSubscriptionList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    operation = new OperationData(property.Value.GetString());
+                    operation = new DataDogOperationData(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("monitoredSubscriptionList"u8))
@@ -121,38 +121,38 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubscriptionList(operation, monitoredSubscriptionList ?? new ChangeTrackingList<MonitoredSubscription>(), serializedAdditionalRawData);
+            return new DataDogSubscriptionList(operation, monitoredSubscriptionList ?? new ChangeTrackingList<MonitoredSubscription>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SubscriptionList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataDogSubscriptionList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogSubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDogSubscriptionList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SubscriptionList IPersistableModel<SubscriptionList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataDogSubscriptionList IPersistableModel<DataDogSubscriptionList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogSubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSubscriptionList(document.RootElement, options);
+                        return DeserializeDataDogSubscriptionList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDogSubscriptionList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SubscriptionList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataDogSubscriptionList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

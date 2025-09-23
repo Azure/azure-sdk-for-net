@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Marketplace Subscription and Organization details to which resource gets billed into. </summary>
-    public partial class DatadogBillingInfoResult
+    public partial class DataDogBillingInfoResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DatadogBillingInfoResult"/>. </summary>
-        internal DatadogBillingInfoResult()
+        /// <summary> Initializes a new instance of <see cref="DataDogBillingInfoResult"/>. </summary>
+        internal DataDogBillingInfoResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatadogBillingInfoResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDogBillingInfoResult"/>. </summary>
         /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
         /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo, PartnerBillingEntity partnerBillingEntity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataDogBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo, PartnerBillingEntity partnerBillingEntity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSaasInfo = marketplaceSaasInfo;
             PartnerBillingEntity = partnerBillingEntity;

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class LinkedInfo : IUtf8JsonSerializable, IJsonModel<LinkedInfo>
+    public partial class DataDogLinkedInfo : IUtf8JsonSerializable, IJsonModel<DataDogLinkedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataDogLinkedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LinkedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataDogLinkedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogLinkedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDogLinkedInfo)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Id))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        LinkedInfo IJsonModel<LinkedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataDogLinkedInfo IJsonModel<DataDogLinkedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogLinkedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDogLinkedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLinkedInfo(document.RootElement, options);
+            return DeserializeDataDogLinkedInfo(document.RootElement, options);
         }
 
-        internal static LinkedInfo DeserializeLinkedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataDogLinkedInfo DeserializeDataDogLinkedInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -107,38 +111,38 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LinkedInfo(id, location, serializedAdditionalRawData);
+            return new DataDogLinkedInfo(id, location, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LinkedInfo>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataDogLinkedInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogLinkedInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LinkedInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDogLinkedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LinkedInfo IPersistableModel<LinkedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataDogLinkedInfo IPersistableModel<DataDogLinkedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogLinkedInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLinkedInfo(document.RootElement, options);
+                        return DeserializeDataDogLinkedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkedInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDogLinkedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LinkedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataDogLinkedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

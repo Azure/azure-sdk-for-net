@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="isSendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredResourceContent(string id, bool? isSendingMetrics, string reasonForMetricsStatus, bool? isSendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredResourceContent(ResourceIdentifier id, bool? isSendingMetrics, string reasonForMetricsStatus, bool? isSendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             IsSendingMetrics = isSendingMetrics;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> The ARM id of the resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Flag indicating if resource is sending metrics to Datadog. </summary>
         public bool? IsSendingMetrics { get; }
         /// <summary> Reason for why the resource is sending metrics (or why it is not sending). </summary>

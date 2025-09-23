@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The definition of a linked resource. </summary>
-    public partial class LinkedInfo
+    public partial class DataDogLinkedInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LinkedInfo"/>. </summary>
-        internal LinkedInfo()
+        /// <summary> Initializes a new instance of <see cref="DataDogLinkedInfo"/>. </summary>
+        internal DataDogLinkedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkedInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDogLinkedInfo"/>. </summary>
         /// <param name="id"> The ARM id of the linked resource. </param>
         /// <param name="location"> The location of the linked resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkedInfo(string id, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataDogLinkedInfo(ResourceIdentifier id, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Location = location;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> The ARM id of the linked resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> The location of the linked resource. </summary>
         public AzureLocation? Location { get; }
     }

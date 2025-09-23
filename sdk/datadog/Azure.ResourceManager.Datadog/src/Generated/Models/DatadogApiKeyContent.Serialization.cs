@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogApiKeyContent : IUtf8JsonSerializable, IJsonModel<DatadogApiKeyContent>
+    public partial class DataDogApiKeyContent : IUtf8JsonSerializable, IJsonModel<DataDogApiKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogApiKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataDogApiKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DatadogApiKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataDogApiKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogApiKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogApiKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogApiKeyContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDogApiKeyContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(CreatedBy))
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        DatadogApiKeyContent IJsonModel<DatadogApiKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataDogApiKeyContent IJsonModel<DataDogApiKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogApiKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogApiKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogApiKeyContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDogApiKeyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatadogApiKeyContent(document.RootElement, options);
+            return DeserializeDataDogApiKeyContent(document.RootElement, options);
         }
 
-        internal static DatadogApiKeyContent DeserializeDatadogApiKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataDogApiKeyContent DeserializeDataDogApiKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,38 +122,38 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DatadogApiKeyContent(createdBy, name, key, created, serializedAdditionalRawData);
+            return new DataDogApiKeyContent(createdBy, name, key, created, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DatadogApiKeyContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataDogApiKeyContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogApiKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogApiKeyContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogApiKeyContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDogApiKeyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DatadogApiKeyContent IPersistableModel<DatadogApiKeyContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataDogApiKeyContent IPersistableModel<DataDogApiKeyContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogApiKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataDogApiKeyContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDatadogApiKeyContent(document.RootElement, options);
+                        return DeserializeDataDogApiKeyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogApiKeyContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDogApiKeyContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DatadogApiKeyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataDogApiKeyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

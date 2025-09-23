@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogApiKeyContent result = await datadogMonitorResource.GetDefaultKeyAsync();
+            DataDogApiKeyContent result = await datadogMonitorResource.GetDefaultKeyAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DatadogApiKeyContent item in datadogMonitorResource.GetApiKeysAsync())
+            await foreach (DataDogApiKeyContent item in datadogMonitorResource.GetApiKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (LinkedInfo item in datadogMonitorResource.GetLinkedResourcesAsync())
+            await foreach (DataDogLinkedInfo item in datadogMonitorResource.GetLinkedResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogBillingInfoResult result = await datadogMonitorResource.GetBillingInfoAsync();
+            DataDogBillingInfoResult result = await datadogMonitorResource.GetBillingInfoAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
+                writer.WriteStringValue(SubscriptionId.Value);
             }
             if (Optional.IsDefined(Status))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            string subscriptionId = default;
+            Guid? subscriptionId = default;
             MonitoredStatus? status = default;
             string error = default;
             MonitoringTagRulesProperties tagRules = default;
@@ -101,7 +101,11 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("status"u8))
