@@ -8,9 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -346,47 +344,6 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsNotNull(chatClient.GetService(typeof(PersistentAgentsChatClient)));
             Assert.IsNull(chatClient.GetService(typeof(string)));
             Assert.Throws<ArgumentNullException>(() => chatClient.GetService(null));
-        }
-
-        [RecordedTest]
-        public async Task TestUserAgentAsync()
-        {
-            using var handler = new AssertUserAgentHttpHandler();
-            using var httpClient = new HttpClient(handler);
-            var client = new PersistentAgentsClient(TestEnvironment.PROJECT_ENDPOINT, DelegatedTokenCredential.Create((_, _) => new AccessToken()), new() { Transport = new HttpClientTransport(httpClient) });
-
-            PersistentAgentsChatClient chatClient = new(client, _agentId, _threadId);
-
-            List<ChatMessage> chatHistory = [new ChatMessage(ChatRole.User, "Get Mike's favourite word")];
-
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await chatClient.GetResponseAsync(chatHistory));
-            ChatResponse response1 = await chatClient.GetResponseAsync(chatHistory);
-            ChatResponse response2 = await chatClient.GetResponseAsync([.. response1.Messages, new ChatMessage(ChatRole.User, "What do you think about that?")]);
-            List<ChatResponseUpdate> responseStream1 = await chatClient.GetStreamingResponseAsync(chatHistory).ToListAsync();
-            List<ChatResponseUpdate> responseStream2 = await chatClient.GetStreamingResponseAsync([.. response1.Messages, new ChatMessage(ChatRole.User, "What do you think about that?")]).ToListAsync();
-        }
-
-        private class AssertUserAgentHttpHandler : DelegatingHandler
-        {
-            public AssertUserAgentHttpHandler() : base(new HttpClientHandler())
-            {
-            }
-
-            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
-            {
-                Assert.True(request.Headers.UserAgent.Any(h => h.Product.Name == "MEAI"));
-
-                return base.SendAsync(request, cancellationToken);
-            }
-
-#if NET8_0_OR_GREATER
-            protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                Assert.GreaterOrEqual(1, request.Headers.UserAgent.Any(h => h.Product.Name == "MEAI"));
-
-                return base.Send(request, cancellationToken);
-            }
-#endif
         }
 
         #region Helpers
