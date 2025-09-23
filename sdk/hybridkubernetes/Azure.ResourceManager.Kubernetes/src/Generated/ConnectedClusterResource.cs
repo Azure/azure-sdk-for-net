@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 else
                 {
-                    ConnectedClusterData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ConnectedClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 else
                 {
-                    ConnectedClusterData current = Get(cancellationToken).Value.Data;
+                    ConnectedClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 else
                 {
-                    ConnectedClusterData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ConnectedClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 else
                 {
-                    ConnectedClusterData current = Get(cancellationToken).Value.Data;
+                    ConnectedClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 else
                 {
-                    ConnectedClusterData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ConnectedClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 else
                 {
-                    ConnectedClusterData current = Get(cancellationToken).Value.Data;
+                    ConnectedClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
