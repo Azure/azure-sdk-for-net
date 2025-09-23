@@ -10,7 +10,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> The updatable properties of the TagRule. </summary>
-    // This model is no longer existing in the swagger, but we keep it for compatibility reason.
+    // This model no longer exists in the swagger, but we keep it for compatibility reasons.
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DynatraceTagRulePatch
     {

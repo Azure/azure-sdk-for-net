@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    // Add this model due to the api compatibility for operation: Monitors_GetAccountCredentials.
+    // Add this model due to the API compatibility for operation: Monitors_GetAccountCredentials.
     public partial class DynatraceAccountCredentialsInfo : IUtf8JsonSerializable, IJsonModel<DynatraceAccountCredentialsInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceAccountCredentialsInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
