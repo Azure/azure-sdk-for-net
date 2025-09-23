@@ -252,14 +252,6 @@ namespace Azure.Storage.Blobs.Test
                 message: "The specified range is invalid.",
                 innerException: null));
 
-            BlobProperties blobProperties = new BlobProperties(); // ContentLength is 0 by default
-            blockClient.Setup(c => c.GetPropertiesInternal(
-                    It.IsAny<BlobRequestConditions>(),
-                    _async,
-                    It.IsAny<RequestContext>(),
-                    It.IsAny<string>()))
-                .ReturnsAsync(Response.FromValue(blobProperties, Mock.Of<Response>()));
-
             // empty blob with no range header, expect complete
             blockClient.Setup(c => c.DownloadStreamingInternal(
                 It.Is<HttpRange>(r => r.Equals(default(HttpRange))),

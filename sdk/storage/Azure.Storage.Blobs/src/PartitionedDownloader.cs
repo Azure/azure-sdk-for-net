@@ -170,19 +170,9 @@ namespace Azure.Storage.Blobs
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
-                    // We expect the blob to be empty if we got this exception
-                    Response<BlobProperties> properties = await _client.GetPropertiesInternal(
-                            conditions: conditions,
-                            async: async,
-                            context: new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
-                    bool isEmpty = properties.Value.ContentLength == 0;
+                    // We expect the blob to be empty if we got InvalidRange exception
 
-                    if (!isEmpty)
-                    {
-                        throw new RequestFailedException("InvalidRange error, despite non-empty blob.", ex);
-                    }
-
-                    DownloadTransferValidationOptions validationOptionsForEmptyBlob = new()
+                    DownloadTransferValidationOptions validationOptionsNone = new()
                     {
                         ChecksumAlgorithm = StorageChecksumAlgorithm.None
                     };
@@ -190,14 +180,22 @@ namespace Azure.Storage.Blobs
                     initialResponse = await _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
-                        validationOptionsForEmptyBlob,
+                        validationOptionsNone,
                         _progress,
                         _innerOperationName,
                         async,
                         cancellationToken).ConfigureAwait(false);
 
-                    // Return early as the blob is empty and no further processing needed
-                    return initialResponse.GetRawResponse();
+                    if (ValidationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && initialResponse.Value.Details.ContentLength != 0)
+                    {
+                        throw BlobErrors.InvalidRangeWithNonEmptyBlob(ex);
+                    }
+
+                    if (initialResponse.Value.Details.ContentLength == 0)
+                    {
+                        // Return early as the blob is empty and no further processing needed
+                        return initialResponse.GetRawResponse();
+                    }
                 }
 
                 // If the initial request returned no content (i.e., a 304),
