@@ -156,14 +156,13 @@ namespace Azure.Generator.Management.Providers
                 Return(New.Instance(resource.Type,
                     [
                         This.As<ArmResource>().Client(),
-                        BuildSingletonResourceIdentifier(scopeParameter.As<ResourceIdentifier>(), resource.ResourceTypeValue, resource.SingletonResourceName!)
+                        MockableResourceProvider.BuildSingletonResourceIdentifier(scopeParameter.As<ResourceIdentifier>(), resource.ResourceTypeValue, resource.SingletonResourceName!)
                     ]))
             };
 
             var getByScopeMethod = new MethodProvider(signature, body, this);
             result.Add(getByScopeMethod);
 
-            // Build methods for singleton extension resources
             return result;
         }
     }
