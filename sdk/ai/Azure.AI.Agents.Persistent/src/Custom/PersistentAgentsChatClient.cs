@@ -4,7 +4,6 @@
 #nullable enable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -584,7 +583,7 @@ namespace Azure.AI.Agents.Persistent
             return runId;
         }
 
-        /// <summary>Creates a <see cref="RequestOptions"/> configured for use with OpenAI.</summary>
+        /// <summary>Creates a <see cref="RequestContext"/> configured for use.</summary>
         private static RequestContext ToUserAgentRequestContext(CancellationToken cancellationToken)
         {
             RequestContext requestContext = new()

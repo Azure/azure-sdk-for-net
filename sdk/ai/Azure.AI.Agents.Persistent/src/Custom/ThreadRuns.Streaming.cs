@@ -372,6 +372,11 @@ namespace Azure.AI.Agents.Persistent
             return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, null, Int32.MaxValue, cancellationToken.ToRequestContext());
         }
 
+        /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
+        /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="requestContext"> The request context to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         internal AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, RequestContext requestContext)
 #pragma warning restore AZC0015 // Unexpected client method return type.
