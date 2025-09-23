@@ -10,7 +10,7 @@ namespace System.ClientModel.Primitives;
 
 [RequiresDynamicCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
 [RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
-internal class ReflectionContext : ModelReaderWriterContext
+internal class ModelReaderWriterReflectionContext : ModelReaderWriterContext
 {
     private ConcurrentDictionary<Type, ModelReaderWriterTypeBuilder>? _typeBuilders;
     private ConcurrentDictionary<Type, ModelReaderWriterTypeBuilder> TypeBuilders =>
@@ -20,10 +20,10 @@ internal class ReflectionContext : ModelReaderWriterContext
     private ConcurrentDictionary<Type, Func<Type, ModelReaderWriterTypeBuilder>> TypeBuilderFactories =>
         LazyInitializer.EnsureInitialized(ref _typeBuilderFactories, static () => [])!;
 
-    private static ReflectionContext? _instance;
-    public static ReflectionContext Default => _instance ??= new ReflectionContext();
+    private static ModelReaderWriterReflectionContext? _instance;
+    public static ModelReaderWriterReflectionContext Default => _instance ??= new ModelReaderWriterReflectionContext();
 
-    private ReflectionContext()
+    private ModelReaderWriterReflectionContext()
     {
         TypeBuilderFactories.TryAdd(typeof(Collection<>), (type) => new ReflectionCollectionBuilder(type));
         TypeBuilderFactories.TryAdd(typeof(List<>), (type) => new ReflectionCollectionBuilder(type));

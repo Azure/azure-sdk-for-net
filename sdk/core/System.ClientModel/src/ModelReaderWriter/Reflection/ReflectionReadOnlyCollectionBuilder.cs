@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
@@ -26,5 +25,5 @@ internal class ReflectionReadOnlyCollectionBuilder : ModelReaderWriterTypeBuilde
     protected override void AddItem(object collection, object? item)
         => BuilderType.GetMethod("Add", [ ItemType! ])!.Invoke(collection, [ item ]);
 
-    protected override object ToCollection(object builder) => BuilderType.GetMethod("AsReadOnly")!.Invoke(builder, null)!;
+    protected override object ConvertCollectionBuilder(object builder) => BuilderType.GetMethod("AsReadOnly")!.Invoke(builder, null)!;
 }
