@@ -13,27 +13,29 @@ namespace System.ClientModel.Primitives;
 internal class ModelReaderWriterReflectionContext : ModelReaderWriterContext
 {
     private ConcurrentDictionary<Type, ModelReaderWriterTypeBuilder>? _typeBuilders;
-    private ConcurrentDictionary<Type, ModelReaderWriterTypeBuilder> TypeBuilders => _typeBuilders ??= [];
+    private ConcurrentDictionary<Type, ModelReaderWriterTypeBuilder> TypeBuilders =>
+        LazyInitializer.EnsureInitialized(ref _typeBuilders, static () => [])!;
 
     private static ModelReaderWriterReflectionContext? _instance;
     public static ModelReaderWriterReflectionContext Default => _instance ??= new ModelReaderWriterReflectionContext();
 
-    private Dictionary<Type, Func<Type, ModelReaderWriterTypeBuilder>>? _typeBuilderFactories;
-    private Dictionary<Type, Func<Type, ModelReaderWriterTypeBuilder>> TypeBuilderFactories => _typeBuilderFactories ??= [];
+    private ConcurrentDictionary<Type, Func<Type, ModelReaderWriterTypeBuilder>>? _typeBuilderFactories;
+    private ConcurrentDictionary<Type, Func<Type, ModelReaderWriterTypeBuilder>> TypeBuilderFactories =>
+        LazyInitializer.EnsureInitialized(ref _typeBuilderFactories, static () => [])!;
 
     private ModelReaderWriterReflectionContext()
     {
-        TypeBuilderFactories.Add(typeof(Collection<>), (type) => new ReflectionCollectionBuilder(type));
-        TypeBuilderFactories.Add(typeof(List<>), (type) => new ReflectionCollectionBuilder(type));
-        TypeBuilderFactories.Add(typeof(HashSet<>), (type) => new ReflectionCollectionBuilder(type));
-        TypeBuilderFactories.Add(typeof(ObservableCollection<>), (type) => new ReflectionCollectionBuilder(type));
-        TypeBuilderFactories.Add(typeof(LinkedList<>), (type) => new ReflectionCollectionBuilder(type, "AddLast"));
-        TypeBuilderFactories.Add(typeof(Queue<>), (type) => new ReflectionCollectionBuilder(type, "Enqueue"));
-        TypeBuilderFactories.Add(typeof(Stack<>), (type) => new ReflectionCollectionBuilder(type, "Push"));
-        TypeBuilderFactories.Add(typeof(Dictionary<,>), (type) => new ReflectionDictionaryBuilder(type));
-        TypeBuilderFactories.Add(typeof(ReadOnlyCollection<>), (type) => new ReflectionReadOnlyCollectionBuilder(type));
-        TypeBuilderFactories.Add(typeof(ReadOnlyDictionary<,>), (type) => new ReflectionReadOnlyDictionaryBuilder(type));
-        TypeBuilderFactories.Add(typeof(ReadOnlyMemory<>), (type) => (ModelReaderWriterTypeBuilder)Activator.CreateInstance(typeof(ReflectionReadOnlyMemoryBuilder<>).MakeGenericType(type.GenericTypeArguments), type)!);
+        TypeBuilderFactories.TryAdd(typeof(Collection<>), (type) => new ReflectionCollectionBuilder(type));
+        TypeBuilderFactories.TryAdd(typeof(List<>), (type) => new ReflectionCollectionBuilder(type));
+        TypeBuilderFactories.TryAdd(typeof(HashSet<>), (type) => new ReflectionCollectionBuilder(type));
+        TypeBuilderFactories.TryAdd(typeof(ObservableCollection<>), (type) => new ReflectionCollectionBuilder(type));
+        TypeBuilderFactories.TryAdd(typeof(LinkedList<>), (type) => new ReflectionCollectionBuilder(type, "AddLast"));
+        TypeBuilderFactories.TryAdd(typeof(Queue<>), (type) => new ReflectionCollectionBuilder(type, "Enqueue"));
+        TypeBuilderFactories.TryAdd(typeof(Stack<>), (type) => new ReflectionCollectionBuilder(type, "Push"));
+        TypeBuilderFactories.TryAdd(typeof(Dictionary<,>), (type) => new ReflectionDictionaryBuilder(type));
+        TypeBuilderFactories.TryAdd(typeof(ReadOnlyCollection<>), (type) => new ReflectionReadOnlyCollectionBuilder(type));
+        TypeBuilderFactories.TryAdd(typeof(ReadOnlyDictionary<,>), (type) => new ReflectionReadOnlyDictionaryBuilder(type));
+        TypeBuilderFactories.TryAdd(typeof(ReadOnlyMemory<>), (type) => (ModelReaderWriterTypeBuilder)Activator.CreateInstance(typeof(ReflectionReadOnlyMemoryBuilder<>).MakeGenericType(type.GenericTypeArguments), type)!);
     }
 
     protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
