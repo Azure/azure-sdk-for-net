@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Utilities
@@ -18,6 +13,10 @@ namespace Azure.Provisioning.Utilities
             while (bicepValue is IBicepValue)
             {
                 bicepValue.Self = self;
+                if (bicepValue is ProvisionableConstruct)
+                {
+                    break; // we cannot go into LiteralValue now because it would be the same instance
+                }
                 bicepValue = bicepValue.LiteralValue as IBicepValue;
             }
         }

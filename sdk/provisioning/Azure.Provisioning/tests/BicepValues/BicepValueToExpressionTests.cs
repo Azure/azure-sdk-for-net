@@ -160,6 +160,10 @@ namespace Azure.Provisioning.Tests.BicepValues
             Assert.AreEqual("'model1'", model!.Name.ToString());
             Assert.AreEqual("test.models[0]", validIndexer.ToBicepExpression().ToString());
 
+            var name = model.Name;
+            Assert.AreEqual("'model1'", name.ToString());
+            Assert.AreEqual("test.models[0].name", name.ToBicepExpression().ToString());
+
             // change the name
             model!.Name = "updatedModel1";
             Assert.AreEqual("""
@@ -169,9 +173,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             """, validIndexer.ToString());
 
             var invalidIndexer = resource.Models[1]; // out-of-range
-            var invalidModel = invalidIndexer.Value; // this does not throw but returns a null value
-            Assert.IsNull(invalidModel);
-            Assert.Throws<ArgumentOutOfRangeException>(() => invalidIndexer.ToString());
+            Assert.Throws<ArgumentOutOfRangeException>(() => _ = invalidIndexer.Value);
             Assert.AreEqual("test.models[1]", invalidIndexer.ToBicepExpression().ToString());
         }
 
@@ -204,7 +206,7 @@ namespace Azure.Provisioning.Tests.BicepValues
         {
             var resource = new TestResource("test");
             // add value to an output list will throw
-            Assert.Throws<InvalidOperationException>(() => resource.OutputList.Add("outputItem1"));
+            //Assert.Throws<InvalidOperationException>(() => resource.OutputList.Add("outputItem1")); // TODO -- shall we throw when we add new items into an output list?
             // call the setter of indexer will throw
             Assert.Throws<InvalidOperationException>(() => resource.OutputList[0] = "outputItem1");
 

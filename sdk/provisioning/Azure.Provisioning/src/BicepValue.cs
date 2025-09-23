@@ -90,7 +90,10 @@ public abstract class BicepValue : IBicepValue
     public override string ToString() => Compile().ToString();
 
     /// <inheritdoc />
-    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this, Format);
+    public BicepExpression Compile() => CompileCore();
+
+    private protected virtual BicepExpression CompileCore()
+        => BicepTypeMapping.ToBicep(this, Format);
 
     /// <inheritdoc />
     void IBicepValue.Assign(IBicepValue source) => Assign(source);
@@ -132,14 +135,17 @@ public abstract class BicepValue : IBicepValue
 
     public BicepExpression ToBicepExpression()
     {
-        if (_kind == BicepValueKind.Expression)
-        {
-            return _expression ?? BicepSyntax.Null();
-        }
-        else if (_self is not null)
+        // if self is set, we could build an expression as a reference of this member
+        if (_self is not null)
         {
             return _self.GetReference();
         }
+        // if self is not set, but the value of this is an expression, we return that expression
+        else if (_kind == BicepValueKind.Expression)
+        {
+            return _expression ?? BicepSyntax.Null();
+        }
+        // otherwise, we return whatever this compiles into
         else
         {
             return Compile();

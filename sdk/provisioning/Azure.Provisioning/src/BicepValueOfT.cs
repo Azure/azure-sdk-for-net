@@ -17,11 +17,13 @@ namespace Azure.Provisioning;
 /// <typeparam name="T">The type of the value.</typeparam>
 public class BicepValue<T> : BicepValue
 {
+    private T? _value;
+    private Func<T?>? _valueFactory;
     /// <summary>
     /// Gets or sets the literal value.  You can also rely on implicit
     /// conversions most of the time.
     /// </summary>
-    public T? Value { get; private protected set; }
+    public T? Value => _valueFactory != null ? _valueFactory() : _value;
     private protected override object? GetLiteralValue() => Value;
 
     // Get the closest primitive to T
@@ -40,9 +42,42 @@ public class BicepValue<T> : BicepValue
     /// <param name="expression">An expression that evaluates to the value.</param>
     public BicepValue(BicepExpression expression) : this(self: null, expression) { }
 
-    internal BicepValue(BicepValueReference? self) : base(self) { }
-    private protected BicepValue(BicepValueReference? self, T literal) : base(self, (object)literal!) { Value = literal; }
-    private protected BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression) { }
+    /// <summary>
+    /// Initialize a new instance without a literal value or expression (unset state).
+    /// </summary>
+    /// <param name="self"></param>
+    internal BicepValue(BicepValueReference? self) : base(self)
+    {
+    }
+
+    /// <summary>
+    /// Initialize a new instance of a literal value, but the literal value will be lazily evaluated by the value factory.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="valueFactory"></param>
+    internal BicepValue(BicepValueReference? self, Func<T?> valueFactory) : base(self)
+    {
+        _kind = BicepValueKind.Literal;
+        _valueFactory = valueFactory;
+    }
+
+    /// <summary>
+    /// Initialize a new instance from a literal value.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="literal"></param>
+    private BicepValue(BicepValueReference? self, T literal) : base(self, literal!)
+    {
+        _value = literal;
+    }
+
+    /// <summary>
+    /// Initialize a new instance from a bicep expression.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="expression"></param>
+    private BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression)
+    { }
 
     /// <summary>
     /// Clears a previously assigned literal or expression value.
@@ -50,7 +85,7 @@ public class BicepValue<T> : BicepValue
     public void ClearValue()
     {
         _kind = BicepValueKind.Unset;
-        Value = default;
+        _value = default;
         _expression = null;
         _source = null;
     }
@@ -62,7 +97,7 @@ public class BicepValue<T> : BicepValue
     {
         if (source is BicepValue<T> typed)
         {
-            Value = typed.Value;
+            _value = typed.Value;
         }
 
         // Everything else is handled by the base Assign

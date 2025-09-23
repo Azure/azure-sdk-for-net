@@ -61,6 +61,12 @@ public class BicepList<T> :
 
         // Everything else is handled by the base Assign
         base.Assign(source);
+
+        // handle self in all the items
+        for (int i = 0; i < _values.Count; i++)
+        {
+            SetSelfForItem(_values[i], i);
+        }
     }
 
     /// <summary>
@@ -93,7 +99,19 @@ public class BicepList<T> :
             }
             else
             {
-                return _values[index];
+                if (index < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), "Index must be non-negative.");
+                }
+                // if we are referencing an actual value
+                if (index < _values.Count)
+                {
+                    return _values[index];
+                }
+                // the index is out of range, we put a value factory as the literal value of this bicep value
+                // this would blow up when we try to compile it later, but it would be fine if we convert it to an expression
+                var value = new BicepValue<T>(GetItemSelf(index), () => _values[index].Value);
+                return value;
             }
         }
         set
@@ -103,27 +121,83 @@ public class BicepList<T> :
                 throw new InvalidOperationException($"Cannot assign to {_self?.PropertyName}");
             }
             _values[index] = value;
+            // update the _self pointing the new item
+            SetSelfForItem(value, index);
         }
     }
 
-    public void Insert(int index, BicepValue<T> item) => _values.Insert(index, item);
-    public void Add(BicepValue<T> item)
+    private BicepValueReference? GetItemSelf(int index) =>
+        _self is not null
+            ? new BicepListValueReference(_self.Construct, _self.PropertyName, _self.BicepPath?.ToArray(), index)
+            : null;
+
+    private void SetSelfForItem(BicepValue<T> item, int index)
     {
-        _values.Add(item);
-        // update the _self pointing the new item
         if (_self is not null)
         {
-            int index = _values.Count - 1;
-            var itemSelf = new BicepListValueReference(_self.Construct, _self.PropertyName, _self.BicepPath?.ToArray(), index);
-            // assign this into the item - and recurse if its value is also a IBicepValue
+            var itemSelf = GetItemSelf(index);
             item.SetSelf(itemSelf);
         }
     }
 
-    // TODO: Decide whether it's important to "unlink" resources on removal
-    public void RemoveAt(int index) => _values.RemoveAt(index);
-    public void Clear() => _values.Clear();
-    public bool Remove(BicepValue<T> item) => _values.Remove(item);
+    private void RemoveSelfForItem(BicepValue<T> item)
+    {
+        item.SetSelf(null);
+    }
+
+    public void Insert(int index, BicepValue<T> item)
+    {
+        _values.Insert(index, item);
+        // update the _self for the inserted item and all items after it
+        for (int i = index; i < _values.Count; i++)
+        {
+            SetSelfForItem(_values[i], i);
+        }
+    }
+
+    public void Add(BicepValue<T> item)
+    {
+        _values.Add(item);
+        // update the _self pointing the new item
+        SetSelfForItem(item, _values.Count - 1);
+    }
+
+    public void RemoveAt(int index)
+    {
+        var removed = _values[index];
+        _values.RemoveAt(index);
+        // maintain the self reference for the removed item and remaining items
+        RemoveSelfForItem(removed);
+        for (int i = index; i < _values.Count; i++)
+        {
+            SetSelfForItem(_values[i], i);
+        }
+    }
+
+    public void Clear()
+    {
+        for (int i = 0; i < _values.Count; i++)
+        {
+            RemoveSelfForItem(_values[i]);
+        }
+        _values.Clear();
+    }
+
+    public bool Remove(BicepValue<T> item)
+    {
+        int index = _values.IndexOf(item);
+        if (index >= 0)
+        {
+            RemoveSelfForItem(item);
+            RemoveAt(index);
+            for (int i = index; i < _values.Count; i++)
+            {
+                SetSelfForItem(_values[i], i);
+            }
+            return true;
+        }
+        return false;
+    }
 
     public int Count => _values.Count;
     public bool IsReadOnly => _values.IsReadOnly;
