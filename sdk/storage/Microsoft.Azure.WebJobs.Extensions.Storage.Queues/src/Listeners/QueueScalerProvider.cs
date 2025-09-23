@@ -81,12 +81,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             [JsonProperty]
             public string QueueName { get; set; }
 
+            public void NormalizeQueueName()
+            {
+                QueueName = QueueName.ToLowerInvariant();
+            }
+
             public void ResolveProperties(INameResolver resolver)
             {
                 if (resolver != null)
                 {
                     QueueName = resolver.ResolveWholeString(QueueName);
                 }
+
+                NormalizeQueueName();
             }
         }
     }
