@@ -428,6 +428,7 @@ namespace Azure.Search.Documents
             destination.Skip = source.Skip;
             destination.QueryLanguage = source.QueryLanguage;
             destination.QuerySpeller = source.QuerySpeller;
+            destination.Debug = source.Debug;
             destination.SemanticSearch = source.SemanticSearch;
             destination.VectorSearch = source.VectorSearch;
             destination.HybridSearch  = source.HybridSearch;

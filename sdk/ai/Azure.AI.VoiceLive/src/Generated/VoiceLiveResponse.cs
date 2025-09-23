@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -52,19 +51,16 @@ namespace Azure.AI.VoiceLive
         /// supported voice identifiers and configurations.
         ///      To assign an object to this property use .  To assign an already formatted json string to this property use . 
         ///     Supported types:
-        ///     . . . . . 
+        ///     . . . 
         ///     Examples:
         ///      BinaryData.FromObjectAsJson("foo").  Creates a payload of "foo".  BinaryData.FromString("\"foo\"").  Creates a payload of "foo".  BinaryData.FromObjectAsJson(new { key = "value" }).  Creates a payload of { "key": "value" }.  BinaryData.FromString("{\"key\": \"value\"}").  Creates a payload of { "key": "value" }.
         /// </param>
         /// <param name="modalitiesInternal"></param>
         /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
         /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
-        /// <param name="maxOutputTokens">
-        /// Maximum number of output tokens for a single assistant response,
-        /// inclusive of tool calls, that was used in this response.
-        /// </param>
+        /// <param name="maxOutputTokens"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveResponse(string id, string @object, VoiceLiveResponseStatus? status, ResponseStatusDetails statusDetails, IList<ResponseItem> output, ResponseTokenStatistics usage, string conversationId, BinaryData voiceInternal, IList<ResponseModality> modalitiesInternal, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveResponse(string id, string @object, VoiceLiveResponseStatus? status, ResponseStatusDetails statusDetails, IList<ResponseItem> output, ResponseTokenStatistics usage, string conversationId, BinaryData voiceInternal, IList<ResponseModality> modalitiesInternal, OutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -77,7 +73,7 @@ namespace Azure.AI.VoiceLive
             ModalitiesInternal = modalitiesInternal;
             OutputAudioFormat = outputAudioFormat;
             Temperature = temperature;
-            MaxOutputTokens = maxOutputTokens;
+            _MaxOutputTokens = maxOutputTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -119,51 +115,9 @@ namespace Azure.AI.VoiceLive
         public string ConversationId { get; }
 
         /// <summary> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </summary>
-        public ResponseOutputAudioFormat? OutputAudioFormat { get; }
+        public OutputAudioFormat? OutputAudioFormat { get; }
 
         /// <summary> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </summary>
         public float? Temperature { get; }
-
-        /// <summary>
-        /// Maximum number of output tokens for a single assistant response,
-        /// inclusive of tool calls, that was used in this response.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="int"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> "inf". </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData MaxOutputTokens { get; }
     }
 }

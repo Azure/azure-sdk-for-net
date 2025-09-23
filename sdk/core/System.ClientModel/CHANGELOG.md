@@ -1,10 +1,8 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added `ClientConnection` constructor, accepting credentials and metadata.
 
 ### Breaking Changes
 
@@ -12,6 +10,13 @@
 
 ### Other Changes
 
+## 1.7.0 (2025-09-22)
+
+### Features Added
+
+- Added `ClientConnection` constructor, accepting credentials and metadata.
+
+- Added `JsonPatch` which allows for applying JSON Patch operations to JSON documents.
 ## 1.6.1 (2025-08-20)
 
 ### Features Added

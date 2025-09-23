@@ -8,8 +8,8 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using ClientNameSpaceClient;
-using ClientNameSpaceClient._ClientNamespaceSecondClient;
+using client.clientnamespace;
+using client.clientnamespace.second;
 
 namespace Microsoft.Extensions.Azure
 {

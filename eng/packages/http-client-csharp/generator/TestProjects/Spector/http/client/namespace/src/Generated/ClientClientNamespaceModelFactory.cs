@@ -5,8 +5,9 @@
 
 #nullable disable
 
-using Client.ClientNamespace.FirstModel;
-using Client.ClientNamespace.Second.Model;
+using client.clientnamespace.first;
+using client.clientnamespace.second;
+using client.clientnamespace.second.sub;
 
 namespace Client.ClientNamespace
 {

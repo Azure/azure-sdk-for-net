@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(StatusDetails))
             {
@@ -98,20 +98,20 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(OutputAudioFormat))
             {
                 writer.WritePropertyName("output_audio_format"u8);
-                writer.WriteStringValue(OutputAudioFormat.Value.ToSerialString());
+                writer.WriteStringValue(OutputAudioFormat.Value.ToString());
             }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(MaxOutputTokens))
+            if (Optional.IsDefined(_MaxOutputTokens))
             {
                 writer.WritePropertyName("max_output_tokens"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(MaxOutputTokens);
+                writer.WriteRawValue(_MaxOutputTokens);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MaxOutputTokens))
+                using (JsonDocument document = JsonDocument.Parse(_MaxOutputTokens))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -168,7 +168,7 @@ namespace Azure.AI.VoiceLive
             string conversationId = default;
             BinaryData voiceInternal = default;
             IList<ResponseModality> modalitiesInternal = default;
-            ResponseOutputAudioFormat? outputAudioFormat = default;
+            OutputAudioFormat? outputAudioFormat = default;
             float? temperature = default;
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -190,7 +190,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToVoiceLiveResponseStatus();
+                    status = new VoiceLiveResponseStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -259,7 +259,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    outputAudioFormat = prop.Value.GetString().ToResponseOutputAudioFormat();
+                    outputAudioFormat = new OutputAudioFormat(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))

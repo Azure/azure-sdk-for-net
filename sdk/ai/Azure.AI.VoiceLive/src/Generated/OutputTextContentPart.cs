@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets the Type. </summary>
         public string Type { get; } = "text";
 
-        /// <summary> Gets the Text. </summary>
-        public string Text { get; }
+        /// <summary> Gets or sets the Text. </summary>
+        public string Text { get; set; }
     }
 }

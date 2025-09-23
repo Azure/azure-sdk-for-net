@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -36,32 +37,55 @@ namespace Azure.Generator.Management.Visitors
 
             if (type is ModelProvider model && _collectionTypeProperties.TryGetValue(model, out var value))
             {
-                foreach (var (internalProperty, collectionProperties) in value)
+                foreach (var internalProperty in value)
                 {
-                    var innerCollectionProperties = collectionProperties.Select(x => x.InnerProperty);
-                    var initializationMethod = BuildInitializationMethod(innerCollectionProperties, internalProperty, model);
-                    model.Update(methods: [.. model.Methods, initializationMethod]);
+                    var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    if (publicConstructor is null)
+                    {
+                        continue;
+                    }
+
+                    var internalPropertyTypeConstructor = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    var initializationParameters = PopulateInitializationParameters(publicConstructor, internalPropertyTypeConstructor);
+                    var initialization = internalProperty.Assign(New.Instance(internalProperty.Type, initializationParameters)).Terminate();
                     // If the property is a collection type, we need to ensure that it is initialized
-                    foreach (var (flattenedProperty, innerProperty) in collectionProperties)
-                        flattenedProperty.Update(body: new MethodPropertyBody(
-                                PropertyHelpers.BuildGetterForCollectionProperty(innerCollectionProperties, true, initializationMethod.Signature.Name, internalProperty, ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!, innerProperty),
-                                PropertyHelpers.BuildSetterForCollectionProperty(innerCollectionProperties, initializationMethod.Signature.Name, internalProperty, innerProperty)));
+                    if (publicConstructor.BodyStatements is null)
+                    {
+                        publicConstructor.Update(bodyStatements: new List<MethodBodyStatement> { initialization });
+                    }
+                    else
+                    {
+                        var body = publicConstructor.BodyStatements.ToList();
+                        body.Add(initialization);
+                        publicConstructor.Update(bodyStatements: body);
+                    }
                 }
             }
 
             return base.PostVisitType(type);
         }
 
-        internal const string s_initializationMethodName = "Initialize";
-        private MethodProvider BuildInitializationMethod(IEnumerable<PropertyProvider> collectionTypeProperties, PropertyProvider internalProperty, ModelProvider model)
+        private ValueExpression[] PopulateInitializationParameters(ConstructorProvider publicConstructor, ConstructorProvider internalPropertyTypeConstructor)
         {
-            var signature = new MethodSignature($"{s_initializationMethodName}{internalProperty.Type.Name}", null, MethodSignatureModifiers.Private, null, null, []);
-            MethodBodyStatement[] body = [
-                    new IfStatement(This.Property(internalProperty.Name).Is(Null))
-                    {
-                        internalProperty.Assign(New.Instance(internalProperty.Type, PropertyHelpers.PopulateCollectionProperties(collectionTypeProperties))).Terminate()
-                    },];
-            return new MethodProvider(signature, body, model);
+            var parameters = new List<ValueExpression>();
+            foreach (var parameter in internalPropertyTypeConstructor.Signature.Parameters)
+            {
+                if (parameter.Type.IsList)
+                {
+                    parameters.Add(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments)));
+                }
+                else if (parameter.Type.IsDictionary)
+                {
+                    parameters.Add(New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(parameter.Type.Arguments)));
+                }
+                else
+                {
+                    var constructorParameter = publicConstructor.Signature.Parameters.Single(p => p.Name.Equals(parameter.Name, System.StringComparison.OrdinalIgnoreCase));
+
+                    parameters.Add(constructorParameter);
+                }
+            }
+            return parameters.ToArray();
         }
 
         private void UpdateModelFactory(ModelFactoryProvider modelFactory)
@@ -247,7 +271,7 @@ namespace Azure.Generator.Management.Visitors
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, Dictionary<string, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>>> _flattenedModelTypes = new();
         // TODO: Workadound to initialize all collection-type properties in all collection-type setters, remove this once we have lazy initializtion for collection-type properties
-        private readonly Dictionary<ModelProvider, Dictionary<PropertyProvider, List<(PropertyProvider FlattenedProperty, PropertyProvider InnerProperty)>>> _collectionTypeProperties = new();
+        private readonly Dictionary<ModelProvider, HashSet<PropertyProvider>> _collectionTypeProperties = new();
         private void FlattenProperties(ModelProvider model)
         {
             var isFlattened = false;
@@ -272,6 +296,7 @@ namespace Azure.Generator.Management.Visitors
 
                         foreach (var innerProperty in innerProperties)
                         {
+                            CollectFlattenTypeCollectionProperty(property, innerProperty, model);
                             // flatten the property to public and associate it with the internal property
                             var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(property, innerProperty);
                             var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
@@ -295,7 +320,6 @@ namespace Azure.Generator.Management.Visitors
                                     innerProperty.Attributes);
 
                             flattenedProperties.Add((isOverriddenValueType, flattenedProperty));
-                            AddInternalSetterForFlattenTypeCollectionProperty(property, innerProperty, flattenedProperty, model);
                         }
                         // make the internalized properties internal
                         property.Update(modifiers: property.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
@@ -313,28 +337,20 @@ namespace Azure.Generator.Management.Visitors
         }
 
         // TODO: workaround to add internal setter, we should remove this once we add lazy initialization for collection type properties
-        private void AddInternalSetterForFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, PropertyProvider flattenedProperty, ModelProvider modelProvider)
+        private void CollectFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, ModelProvider modelProvider)
         {
             if (innerProperty.Type.IsCollection)
             {
                 if (_collectionTypeProperties.TryGetValue(modelProvider, out var value))
                 {
-                    if (value.TryGetValue(internalProperty, out var properties))
-                    {
-                        properties.Add((flattenedProperty, innerProperty));
-                    }
-                    else
-                    {
-                        value.Add(internalProperty, [(flattenedProperty, innerProperty)]);
-                    }
+                    value.Add(internalProperty);
                 }
                 else
                 {
-                    var dict = new Dictionary<PropertyProvider, List<(PropertyProvider FlattenedProperty, PropertyProvider InnerProperty)>>();
-                    dict.Add(internalProperty, [(flattenedProperty, innerProperty)]);
-                    _collectionTypeProperties.Add(modelProvider, dict);
+                    var set = new HashSet<PropertyProvider>();
+                    set.Add(internalProperty);
+                    _collectionTypeProperties.Add(modelProvider, set);
                 }
-                innerProperty.Update(body: new AutoPropertyBody(true, MethodSignatureModifiers.Internal));
             }
         }
 

@@ -386,7 +386,6 @@ namespace Azure.ResourceManager.ContainerInstance
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -412,7 +411,6 @@ namespace Azure.ResourceManager.ContainerInstance
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
                 case 204:
                     return message.Response;
                 default:

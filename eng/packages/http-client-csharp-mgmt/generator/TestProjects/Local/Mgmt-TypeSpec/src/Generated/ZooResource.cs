@@ -433,7 +433,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -481,7 +481,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = Get(cancellationToken).Value.Data;
+                    ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -528,7 +528,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ZooResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
@@ -571,7 +571,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = Get(cancellationToken).Value.Data;
+                    ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ZooResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
@@ -613,7 +613,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -659,7 +659,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = Get(cancellationToken).Value.Data;
+                    ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

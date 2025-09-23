@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -69,7 +70,8 @@ internal class UseSyncMethodsInterceptor : IInterceptor
         }
 
         Type returnType = methodInfo.ReturnType;
-        bool returnsSyncCollection = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(CollectionResult<>);
+        bool returnsSyncCollection = (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(CollectionResult<>)) ||
+                                   returnType == typeof(CollectionResult);
 
         try
         {
@@ -93,10 +95,25 @@ internal class UseSyncMethodsInterceptor : IInterceptor
             // Map IEnumerable to IAsyncEnumerable
             if (returnsSyncCollection)
             {
-                Type[] modelType = returnType.GenericTypeArguments;
-                Type wrapperType = typeof(SyncPageableWrapper<>).MakeGenericType(modelType);
+                if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(CollectionResult<>))
+                {
+                    // Handle generic CollectionResult<T>
+                    Type[] modelType = returnType.GenericTypeArguments;
+                    Type wrapperType = typeof(SyncPageableWrapper<>).MakeGenericType(modelType);
+                    invocation.ReturnValue = Activator.CreateInstance(wrapperType, new[] { result });
+                }
+                else if (returnType == typeof(CollectionResult))
+                {
+                    var collectionResult = result as CollectionResult;
 
-                invocation.ReturnValue = Activator.CreateInstance(wrapperType, new[] { result });
+                    if (collectionResult == null)
+                    {
+                        throw new InvalidOperationException("Expected CollectionResult from sync protocol method");
+                    }
+
+                    // Handle non-generic CollectionResult
+                    invocation.ReturnValue = new SyncPageableWrapper(collectionResult);
+                }
             }
             else
             {
@@ -134,6 +151,19 @@ internal class UseSyncMethodsInterceptor : IInterceptor
             }
         }
 
+        // Handle non-generic AsyncCollectionResult case
+        if (methodReturnType == typeof(Task<AsyncCollectionResult>) && result is AsyncCollectionResult)
+        {
+            invocation.ReturnValue = _taskFromResultMethod?.MakeGenericMethod(typeof(AsyncCollectionResult)).Invoke(null, new[] { result });
+            return;
+        }
+
+        if (methodReturnType == typeof(ValueTask<AsyncCollectionResult>) && result is AsyncCollectionResult)
+        {
+            invocation.ReturnValue = new ValueTask<AsyncCollectionResult>((AsyncCollectionResult)result);
+            return;
+        }
+
         throw new NotSupportedException();
     }
 
@@ -156,7 +186,6 @@ internal class UseSyncMethodsInterceptor : IInterceptor
                 return;
             }
         }
-
         throw new NotSupportedException();
     }
 
@@ -287,6 +316,52 @@ internal class UseSyncMethodsInterceptor : IInterceptor
             {
                 yield return item;
             }
+        }
+
+        /// <inheritdoc/>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            foreach (ClientResult page in _enumerable.GetRawPages())
+            {
+                yield return page;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override ContinuationToken? GetContinuationToken(ClientResult page)
+        {
+            // Delegate directly to the wrapped sync collection
+            return _enumerable.GetContinuationToken(page);
+        }
+    }
+
+    /// <summary>
+    /// Wraps a synchronous CollectionResult to provide an asynchronous
+    /// AsyncCollectionResult interface for testing scenarios where
+    /// sync methods need to be called from async method signatures.
+    /// </summary>
+    public class SyncPageableWrapper : AsyncCollectionResult
+    {
+        private readonly CollectionResult _enumerable;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SyncPageableWrapper"/> for mocking scenarios.
+        /// </summary>
+        protected SyncPageableWrapper()
+        {
+            _enumerable = default!;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SyncPageableWrapper"/> that wraps
+        /// the specified synchronous collection result.
+        /// </summary>
+        /// <param name="enumerable">The synchronous collection result to wrap.</param>
+        public SyncPageableWrapper(CollectionResult enumerable)
+        {
+            _enumerable = enumerable ?? throw new ArgumentNullException(nameof(enumerable));
         }
 
         /// <inheritdoc/>

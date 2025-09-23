@@ -17,41 +17,51 @@ namespace Azure.AI.VoiceLive
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionSettings"/>. </summary>
-        /// <param name="model"> The model used for transcription. E.g., 'whisper-1', 'azure-fast-transcription', 's2s-ingraph'. </param>
-        /// <param name="enabled"> Whether transcription is enabled. </param>
-        /// <param name="customModel"> Whether a custom model is being used. </param>
-        public AudioInputTranscriptionSettings(AudioInputTranscriptionSettingsModel model, bool enabled, bool customModel)
+        /// <param name="model">
+        /// The transcription model to use. Supported values:
+        /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
+        /// 'azure-speech'.
+        /// </param>
+        public AudioInputTranscriptionSettings(AudioInputTranscriptionSettingsModel model)
         {
             Model = model;
-            Enabled = enabled;
-            CustomModel = customModel;
+            CustomSpeech = new ChangeTrackingDictionary<string, string>();
+            PhraseList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionSettings"/>. </summary>
-        /// <param name="model"> The model used for transcription. E.g., 'whisper-1', 'azure-fast-transcription', 's2s-ingraph'. </param>
-        /// <param name="language"> The language code to use for transcription, if specified. </param>
-        /// <param name="enabled"> Whether transcription is enabled. </param>
-        /// <param name="customModel"> Whether a custom model is being used. </param>
+        /// <param name="model">
+        /// The transcription model to use. Supported values:
+        /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
+        /// 'azure-speech'.
+        /// </param>
+        /// <param name="language"> Optional language code in BCP-47 (e.g., 'en-US'), or ISO-639-1 (e.g., 'en'), or multi languages with auto detection, (e.g., 'en,zh'). </param>
+        /// <param name="customSpeech"> Optional configuration for custom speech models. </param>
+        /// <param name="phraseList"> Optional list of phrase hints to bias recognition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AudioInputTranscriptionSettings(AudioInputTranscriptionSettingsModel model, string language, bool enabled, bool customModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AudioInputTranscriptionSettings(AudioInputTranscriptionSettingsModel model, string language, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Language = language;
-            Enabled = enabled;
-            CustomModel = customModel;
+            CustomSpeech = customSpeech;
+            PhraseList = phraseList;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The model used for transcription. E.g., 'whisper-1', 'azure-fast-transcription', 's2s-ingraph'. </summary>
+        /// <summary>
+        /// The transcription model to use. Supported values:
+        /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
+        /// 'azure-speech'.
+        /// </summary>
         public AudioInputTranscriptionSettingsModel Model { get; set; }
 
-        /// <summary> The language code to use for transcription, if specified. </summary>
+        /// <summary> Optional language code in BCP-47 (e.g., 'en-US'), or ISO-639-1 (e.g., 'en'), or multi languages with auto detection, (e.g., 'en,zh'). </summary>
         public string Language { get; set; }
 
-        /// <summary> Whether transcription is enabled. </summary>
-        public bool Enabled { get; set; }
+        /// <summary> Optional configuration for custom speech models. </summary>
+        public IDictionary<string, string> CustomSpeech { get; }
 
-        /// <summary> Whether a custom model is being used. </summary>
-        public bool CustomModel { get; set; }
+        /// <summary> Optional list of phrase hints to bias recognition. </summary>
+        public IList<string> PhraseList { get; }
     }
 }
