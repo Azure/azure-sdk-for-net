@@ -94,29 +94,19 @@ Wait for the user to respond with a confirmation before proceeding to Step 1. Us
 **Actions**:
 1. Run `azsdk_get_sdk_pull_request_link` to fetch generated SDK PR info.
 
-## Step 9: Validate Label and Codeowners
-**Goal**: Validate the label and all codeowners for a service. Create new label and codeowner entry if none exist.
-**Actions**:
-1. To validate a service label refer to #file:./validate-service-label.instructions.md
-2. After service label is validated or created refer to #file:./validate-codeowners.instructions.md
-3. Handle post-validation actions based on results:
-   - **If both label and codeowners were already valid**: Prompt user "Your service label and codeowners are already properly configured. Would you like to modify the existing codeowners entry for your service?"
-   - **If new label or codeowner entries were created**: Display details of the label and codeowners PR if they were created, then prompt user "The following PRs have been created for your service configuration: [list PRs]. Would you like to make any additional modifications to these entries?"
-**Success Criteria**: Service label exists and codeowners are properly configured with at least 2 valid owners. For created entries, showcase all PR's.
-
-## Step 10: Create release plan
+## Step 9: Create release plan
 **Goal**: Create a release plan for the generated SDKs
 **Actions**:
 1. Refer to #file:create-release-plan.instructions.md to create a release plan using the spec pull request.
 2. If the release plan already exists, display the existing plan details.
 
-## Step 11: Mark Spec PR as Ready for Review
+## Step 10: Mark Spec PR as Ready for Review
 **Goal**: Update spec PR to ready for review status
 **Actions**:
 1. Prompt user to change spec PR to ready for review: "Please change the spec pull request to ready for review status"
 2. Get approval and merge the spec PR
 
-## Step 12: Release SDK Package
+## Step 11: Release SDK Package
 **Goal**: Release the SDK package using the release plan
 **Actions**:
 1. Run `ReleaseSdkPackage` to release the SDK package.

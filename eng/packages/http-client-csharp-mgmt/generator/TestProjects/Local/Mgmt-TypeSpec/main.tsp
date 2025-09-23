@@ -10,6 +10,7 @@ import "./endpoint.tsp";
 import "./selfhelp.tsp";
 import "./playwright.tsp";
 import "./databox.tsp";
+import "./hcivm.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -37,3 +38,4 @@ enum Versions {
 
 #suppress "deprecated"
 @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
