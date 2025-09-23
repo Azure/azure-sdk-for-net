@@ -1,5 +1,16 @@
 # Release History
 
+## 12.26.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed bug for processing partitioned downloads for empty blobs with content validation enabled.
+
+### Other Changes
+
 ## 12.25.0 (2025-07-14)
 
 ### Features Added
