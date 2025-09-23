@@ -233,7 +233,7 @@ namespace Azure.Generator.Management.Visitors
         private ValueExpression[] BuildConstructorParameters(CSharpType propertyType, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider> parameterMap)
         {
             var propertyModelType = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[propertyType] as ModelProvider;
-            var fullConstructorParmeters = propertyModelType!.FullConstructor.Signature.Parameters;
+            var fullConstructorParameters = propertyModelType!.FullConstructor.Signature.Parameters;
 
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
@@ -248,7 +248,7 @@ namespace Azure.Generator.Management.Visitors
                 var (isOverriddenValueType, flattenedProperty) = flattenedProperties[i];
                 var propertyParameter = flattenedProperty.AsParameter;
                 var flattenedPropertyType = flattenedProperty.Type;
-                var constructorParameterType = fullConstructorParmeters[fullConstructorParameterIndex].Type;
+                var constructorParameterType = fullConstructorParameters[fullConstructorParameterIndex].Type;
                 // If the internal property type is the same as the property type, we can use the flattened property directly.
                 if (constructorParameterType.AreNamesEqual(flattenedPropertyType))
                 {
@@ -321,7 +321,7 @@ namespace Azure.Generator.Management.Visitors
                 // handle `@flattenProperty`
                 if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var propertiesToFlatten) && propertiesToFlatten.Contains(internalProperty))
                 {
-                    isFlattenProperty =  PropertyFlatten(model, propertyMap, internalProperty);
+                    isFlattenProperty = PropertyFlatten(model, propertyMap, internalProperty);
                     continue;
                 }
                 // safe flatten single property
@@ -515,8 +515,11 @@ namespace Azure.Generator.Management.Visitors
                     updatedConstructors.Remove(publicConstructor);
                     model.Update(constructors: updatedConstructors);
                 }
-                publicConstructor.Signature.Update(parameters: updateParameters);
-                publicConstructor.Update(signature: publicConstructor.Signature); // workaround to update the xml docs
+                else
+                {
+                    publicConstructor.Signature.Update(parameters: updateParameters);
+                    publicConstructor.Update(signature: publicConstructor.Signature); // workaround to update the xml docs
+                }
             }
         }
 
