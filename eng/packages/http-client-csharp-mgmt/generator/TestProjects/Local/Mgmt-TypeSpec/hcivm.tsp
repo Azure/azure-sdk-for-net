@@ -34,18 +34,4 @@ model HciVmInstanceProperties {
 interface HciVmInstances {
   @doc("Gets a virtual machine instance")
   get is ArmResourceRead<HciVmInstance>;
-
-//   #suppress "@azure-tools/typespec-azure-core/invalid-final-state" "MUST CHANGE ON NEXT UPDATE"
-//   @doc("The operation to create or update a virtual machine instance. Please note some properties can be set only during virtual machine instance creation.")
-//   @Azure.Core.useFinalStateVia("azure-async-operation")
-//   createOrUpdate is ArmResourceCreateOrReplaceAsync<
-//     VirtualMachineInstance,
-//     LroHeaders = Azure.Core.Foundations.RetryAfterHeader
-//   >;
-
-//   @doc("The operation to delete a virtual machine instance.")
-//   delete is ArmResourceDeleteWithoutOkAsync<VirtualMachineInstance>;
-
-//   @doc("Lists all of the virtual machine instances within the specified parent resource.")
-//   list is ArmResourceListByParent<VirtualMachineInstance>;
 }
