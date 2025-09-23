@@ -79,8 +79,26 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
 
+        /// <summary> Initializes a new instance of AIProjectConnectionsOperations. </summary>
+        internal AIProjectConnectionsOperations GetAIProjectConnectionsOperationsClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectConnectionsOperations, new AIProjectConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectConnectionsOperations;
+        }
+
+        /// <summary> Initializes a new instance of AIProjectIndexesOperations. </summary>
+        internal AIProjectIndexesOperations GetAIProjectIndexesOperationsClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectIndexesOperations, new AIProjectIndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectIndexesOperations;
+        }
+
+        /// <summary> Initializes a new instance of AIProjectDeploymentsOperations. </summary>
+        internal AIProjectDeploymentsOperations GetAIProjectDeploymentsOperationsClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDeploymentsOperations, new AIProjectDeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectDeploymentsOperations;
+        }
+
         /// <summary> Initializes a new instance of AIProjectDatasetsOperations. </summary>
-        public virtual AIProjectDatasetsOperations GetAIProjectDatasetsOperationsClient()
+        internal AIProjectDatasetsOperations GetAIProjectDatasetsOperationsClient()
         {
             // Custom method to allow for passing of credential used when SAS is not provided.
             return Volatile.Read(ref _cachedAIProjectDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDatasetsOperations, new AIProjectDatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedAIProjectDatasetsOperations;
