@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -140,7 +141,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            var jsonString = JsonSerializer.Serialize(content, StringSerializerContext.Default.String);
+            BinaryData contentJson = BinaryData.FromString(jsonString);
 
             return await CreateMessageAsync(
                 threadId,
@@ -181,7 +183,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            var jsonString = JsonSerializer.Serialize(content, StringSerializerContext.Default.String);
+            BinaryData contentJson = BinaryData.FromString(jsonString);
 
             // Reuse the existing generated method internally by converting the string to BinaryData.
             return CreateMessage(
@@ -246,7 +249,8 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
+            var jsonString = JsonSerializer.Serialize(contentBlocks, JsonElementSerializer.Default.ListJsonElement);
+            BinaryData serializedBlocks = BinaryData.FromString(jsonString);
 
             return await CreateMessageAsync(
                 threadId,
@@ -310,7 +314,8 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
+            var jsonString = JsonSerializer.Serialize(jsonElements, JsonElementSerializer.Default.ListJsonElement);
+            BinaryData serializedBlocks = BinaryData.FromString(jsonString);
 
             return CreateMessage(
                 threadId,

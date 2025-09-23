@@ -27,7 +27,7 @@ namespace Azure.AI.Projects
         /// <param name="connectionName"></param>
         /// <param name="apiVersion"></param>
         /// <returns></returns>
-        public OpenAIClient GetOpenAIClient(string? connectionName = null, string? apiVersion = null)
+        public virtual OpenAIClient GetOpenAIClient(string? connectionName = null, string? apiVersion = null)
         {
             AzureOpenAIClientKey openAIClientKey = new();
 

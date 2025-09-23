@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Identity;
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
@@ -81,9 +83,112 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         // Act
         var message = await SendMessageAsync(pipeline, messageContexts);
 
-        // Assert - should use message property, not service-level contexts
         AssertHasAuthorization(message);
         AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
+    }
+
+    [Test]
+    public async Task BearerTokenPolicyWithPopulatedContextsTokenCredential()
+    {
+        // Arrange
+        var tokenProvider = new MockTokenCredential();
+        var serviceContexts = new Dictionary<string, object>[]
+        {
+            new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { "parentRequestId", "parentRequestIdValue" },
+                { "claims", "claimsValue"},
+                { "tenantId", "tenantIdValue" },
+                { "isCaeEnabled", true },
+                { "isProofOfPossessionEnabled", true },
+                { "proofOfPossessionNonce", "proofOfPossessionNonceValue" },
+                { "requestUri", new Uri("https://example.com") },
+                { "requestMethod", "requestMethodValue" }
+            }
+        };
+        var policy = new BearerTokenPolicy(tokenProvider, serviceContexts);
+        var pipeline = CreatePipelineWithPolicy(policy);
+
+        // Act
+        var message = await SendMessageAsync(pipeline);
+
+        AssertHasAuthorization(message);
+        AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
+        Assert.AreEqual("parentRequestIdValue", tokenProvider.ReceivedRequestContext.ParentRequestId);
+        Assert.AreEqual("claimsValue", tokenProvider.ReceivedRequestContext.Claims);
+        Assert.AreEqual("tenantIdValue", tokenProvider.ReceivedRequestContext.TenantId);
+        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsCaeEnabled);
+        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsProofOfPossessionEnabled);
+        Assert.AreEqual("proofOfPossessionNonceValue", tokenProvider.ReceivedRequestContext.ProofOfPossessionNonce);
+        Assert.AreEqual(new Uri("https://example.com"), tokenProvider.ReceivedRequestContext.ResourceRequestUri);
+        Assert.AreEqual("requestMethodValue", tokenProvider.ReceivedRequestContext.ResourceRequestMethod);
+    }
+
+    [Test]
+    public async Task BearerTokenPolicyWithPopulatedContextsTokenCredentialRomScopes()
+    {
+        // Arrange
+        var tokenProvider = new MockTokenCredential();
+        var serviceContexts = new Dictionary<string, object>[]
+        {
+            new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, new ReadOnlyMemory<string>( ["https://ai.azure.com/.default"]) },
+                { "parentRequestId", "parentRequestIdValue" },
+                { "claims", "claimsValue"},
+                { "tenantId", "tenantIdValue" },
+                { "isCaeEnabled", true },
+                { "isProofOfPossessionEnabled", true },
+                { "proofOfPossessionNonce", "proofOfPossessionNonceValue" },
+                { "requestUri", new Uri("https://example.com") },
+                { "requestMethod", "requestMethodValue" }
+            }
+        };
+        var policy = new BearerTokenPolicy(tokenProvider, serviceContexts);
+        var pipeline = CreatePipelineWithPolicy(policy);
+
+        // Act
+        var message = await SendMessageAsync(pipeline);
+
+        AssertHasAuthorization(message);
+        AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
+        Assert.AreEqual("parentRequestIdValue", tokenProvider.ReceivedRequestContext.ParentRequestId);
+        Assert.AreEqual("claimsValue", tokenProvider.ReceivedRequestContext.Claims);
+        Assert.AreEqual("tenantIdValue", tokenProvider.ReceivedRequestContext.TenantId);
+        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsCaeEnabled);
+        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsProofOfPossessionEnabled);
+        Assert.AreEqual("proofOfPossessionNonceValue", tokenProvider.ReceivedRequestContext.ProofOfPossessionNonce);
+        Assert.AreEqual(new Uri("https://example.com"), tokenProvider.ReceivedRequestContext.ResourceRequestUri);
+        Assert.AreEqual("requestMethodValue", tokenProvider.ReceivedRequestContext.ResourceRequestMethod);
+    }
+
+    [Test]
+    public async Task BearerTokenPolicyWithNoScopesTokenCredential()
+    {
+        // Arrange
+        var tokenProvider = new MockTokenCredential();
+        var serviceContexts = new Dictionary<string, object>[]
+        {
+            new Dictionary<string, object>
+            {
+                { "parentRequestId", "parentRequestIdValue" },
+                { "claims", "claimsValue"},
+                { "tenantId", "tenantIdValue" },
+                { "isCaeEnabled", true },
+                { "isProofOfPossessionEnabled", true },
+                { "proofOfPossessionNonce", "proofOfPossessionNonceValue" },
+                { "requestUri", new Uri("https://example.com") },
+                { "requestMethod", "requestMethodValue" }
+            }
+        };
+        var policy = new BearerTokenPolicy(tokenProvider, serviceContexts);
+        var pipeline = CreatePipelineWithPolicy(policy);
+
+        // Act
+        var message = await SendMessageAsync(pipeline);
+
+         Assert.IsFalse(message.Request.Headers.TryGetValue("Authorization", out var authHeader));
     }
 
     [Test]
@@ -170,6 +275,34 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         }
     }
 
+    private class MockTokenCredential : TokenCredential
+    {
+        private readonly bool _returnNull;
+        public bool GetTokenCalled { get; private set; }
+        public bool GetTokenAsyncCalled { get; private set; }
+        public bool CreateTokenOptionsCalled { get; private set; }
+        public TokenRequestContext ReceivedRequestContext { get; private set; }
+
+        public MockTokenCredential(bool returnNull = false)
+        {
+            _returnNull = returnNull;
+        }
+
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            GetTokenAsyncCalled = true;
+            ReceivedRequestContext = requestContext;
+            return new ValueTask<AccessToken>(new AccessToken("mock_token_value", DateTimeOffset.UtcNow.AddHours(1)));
+        }
+
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            GetTokenCalled = true;
+            ReceivedRequestContext = requestContext;
+            return new AccessToken("mock_token_value", DateTimeOffset.UtcNow.AddHours(1));
+        }
+    }
+
     private static IReadOnlyDictionary<string, object> CreateContext(string scope)
     {
         return new Dictionary<string, object>
@@ -224,6 +357,18 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
     }
 
     private void AssertTokenProviderCalled(MockAuthenticationTokenProvider tokenProvider, bool shouldCallAsync)
+    {
+        if (shouldCallAsync && IsAsync)
+        {
+            Assert.IsTrue(tokenProvider.GetTokenAsyncCalled);
+        }
+        else
+        {
+            Assert.IsTrue(tokenProvider.GetTokenCalled);
+        }
+    }
+
+    private void AssertTokenProviderCalled(MockTokenCredential tokenProvider, bool shouldCallAsync)
     {
         if (shouldCallAsync && IsAsync)
         {

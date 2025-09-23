@@ -9,22 +9,22 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Property.Optional
 {
-    [ModelReaderWriterBuildable(typeof(StringProperty))]
+    [ModelReaderWriterBuildable(typeof(BooleanLiteralProperty))]
     [ModelReaderWriterBuildable(typeof(BytesProperty))]
-    [ModelReaderWriterBuildable(typeof(DatetimeProperty))]
-    [ModelReaderWriterBuildable(typeof(DurationProperty))]
-    [ModelReaderWriterBuildable(typeof(PlainDateProperty))]
-    [ModelReaderWriterBuildable(typeof(PlainTimeProperty))]
     [ModelReaderWriterBuildable(typeof(CollectionsByteProperty))]
     [ModelReaderWriterBuildable(typeof(CollectionsModelProperty))]
-    [ModelReaderWriterBuildable(typeof(StringLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(IntLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(DatetimeProperty))]
+    [ModelReaderWriterBuildable(typeof(DurationProperty))]
     [ModelReaderWriterBuildable(typeof(FloatLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(BooleanLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionStringLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionIntLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionFloatLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(IntLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(PlainDateProperty))]
+    [ModelReaderWriterBuildable(typeof(PlainTimeProperty))]
     [ModelReaderWriterBuildable(typeof(RequiredAndOptionalProperty))]
+    [ModelReaderWriterBuildable(typeof(StringLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(StringProperty))]
+    [ModelReaderWriterBuildable(typeof(UnionFloatLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(UnionIntLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(UnionStringLiteralProperty))]
     public partial class _TypePropertyOptionalContext : ModelReaderWriterContext
     {
     }

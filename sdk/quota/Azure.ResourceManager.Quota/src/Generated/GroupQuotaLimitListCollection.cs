@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class GroupQuotaLimitListCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics;
-        private readonly GroupQuotaLimitsRestOperations _groupQuotaLimitListGroupQuotaLimitsRestClient;
+        private readonly ClientDiagnostics _groupQuotaLimitListClientDiagnostics;
+        private readonly GroupQuotaLimitListsRestOperations _groupQuotaLimitListRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="GroupQuotaLimitListCollection"/> class for mocking. </summary>
         protected GroupQuotaLimitListCollection()
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GroupQuotaLimitListCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaLimitListResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GroupQuotaLimitListResource.ResourceType, out string groupQuotaLimitListGroupQuotaLimitsApiVersion);
-            _groupQuotaLimitListGroupQuotaLimitsRestClient = new GroupQuotaLimitsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaLimitListGroupQuotaLimitsApiVersion);
+            _groupQuotaLimitListClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaLimitListResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(GroupQuotaLimitListResource.ResourceType, out string groupQuotaLimitListApiVersion);
+            _groupQuotaLimitListRestClient = new GroupQuotaLimitListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaLimitListApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_List</description>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
             scope.Start();
             try
             {
-                var response = await _groupQuotaLimitListGroupQuotaLimitsRestClient.ListAsync(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+                var response = await _groupQuotaLimitListRestClient.ListAsync(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_List</description>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
             scope.Start();
             try
             {
-                var response = _groupQuotaLimitListGroupQuotaLimitsRestClient.List(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken);
+                var response = _groupQuotaLimitListRestClient.List(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_List</description>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Exists");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _groupQuotaLimitListGroupQuotaLimitsRestClient.ListAsync(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _groupQuotaLimitListRestClient.ListAsync(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_List</description>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Exists");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Exists");
             scope.Start();
             try
             {
-                var response = _groupQuotaLimitListGroupQuotaLimitsRestClient.List(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken);
+                var response = _groupQuotaLimitListRestClient.List(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_List</description>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,11 +258,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetIfExists");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _groupQuotaLimitListGroupQuotaLimitsRestClient.ListAsync(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _groupQuotaLimitListRestClient.ListAsync(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<GroupQuotaLimitListResource>(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_List</description>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -304,11 +304,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetIfExists");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _groupQuotaLimitListGroupQuotaLimitsRestClient.List(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken);
+                var response = _groupQuotaLimitListRestClient.List(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<GroupQuotaLimitListResource>(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());

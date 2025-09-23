@@ -155,6 +155,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceContainerProperties();
             }
+            ResourceProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ShareProtocol, ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb);
             _isResourcePropertiesFullySet = true;
             return ResourceProperties;
         }
@@ -219,10 +220,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ShareProtocol sourceProtocol = sourceShareDirectoryResource.ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb;
                 ShareProtocol destinationProtocol = ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb;
-                // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if (destinationProtocol != sourceProtocol)
+                bool destinationFilePermissions = ResourceOptions?.FilePermissions ?? false;
+                // if NFS <-> SMB and attempting to preserve permissions
+                if (destinationProtocol != sourceProtocol && destinationFilePermissions)
                 {
-                    throw Errors.ShareTransferNotSupported();
+                    throw Errors.HeterogenousTransferPermissionPreservationNotSupported();
                 }
 
                 // Validate the source protocol

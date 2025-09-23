@@ -32,7 +32,7 @@ This example demonstrates how to create a Container Registry with standard SKU a
 Infrastructure infra = new();
 
 ContainerRegistryService registry =
-    new(nameof(registry))
+    new(nameof(registry), ContainerRegistryService.ResourceVersions.V2023_07_01)
     {
         Sku = new ContainerRegistrySku { Name = ContainerRegistrySkuName.Standard },
         IsAdminUserEnabled = false,
