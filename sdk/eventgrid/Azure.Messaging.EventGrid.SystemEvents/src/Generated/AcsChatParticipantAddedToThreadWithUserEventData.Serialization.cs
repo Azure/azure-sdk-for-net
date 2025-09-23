@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatParticipantAddedToThreadWithUser event. </summary>
     [JsonConverter(typeof(AcsChatParticipantAddedToThreadWithUserEventDataConverter))]
-    public partial class AcsChatParticipantAddedToThreadWithUserEventData : IJsonModel<AcsChatParticipantAddedToThreadWithUserEventData>
+    public partial class AcsChatParticipantAddedToThreadWithUserEventData : AcsChatThreadEventBaseProperties, IJsonModel<AcsChatParticipantAddedToThreadWithUserEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/> for deserialization. </summary>
         internal AcsChatParticipantAddedToThreadWithUserEventData()
