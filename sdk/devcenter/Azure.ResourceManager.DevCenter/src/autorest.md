@@ -171,110 +171,110 @@ request-path-to-resource-name:
 
 directive:
   # Add missing parameters
-  - from: swagger-document
-    where: $.parameters
-    transform: >
-      $.TopParameter = {
-        "name": "$top",
-        "in": "query",
-        "description": "The maximum number of resources to return from the operation. Example: '$top=10'.",
-        "type": "integer",
-        "format": "int32",
-        "required": false,
-        "x-ms-parameter-location": "method"
-      }
+  #- from: swagger-document
+  #  where: $.parameters
+  #  transform: >
+  #    $.TopParameter = {
+  #      "name": "$top",
+  #      "in": "query",
+  #      "description": "The maximum number of resources to return from the operation. Example: '$top=10'.",
+  #      "type": "integer",
+  #      "format": "int32",
+  #      "required": false,
+  #      "x-ms-parameter-location": "method"
+  #    }
   # Add missing definitions
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $.Tags = {
-        "type": "object",
-        "additionalProperties": {
-          "type": "string"
-        },
-        "x-ms-mutability": [
-          "read",
-          "create",
-          "update"
-        ],
-        "description": "Resource tags."
-      };
-      $.TrackedResourceUpdate = {
-        "description": "Base tracked resource type for PATCH updates",
-        "type": "object",
-        "properties": {
-          "tags": {
-            "$ref": "#/definitions/Tags",
-            "description": "Resource tags."
-          },
-          "location": {
-            "type": "string",
-            "x-ms-mutability": [
-              "read",
-              "create"
-            ],
-            "description": "The geo-location where the resource lives"
-          }
-        }
-      };
-      $.TrackedResourceUpdate['x-ms-client-name'] = "DevCenterTrackedResourceUpdate";
+  #- from: swagger-document
+  #  where: $.definitions
+  #  transform: >
+  #    $.Tags = {
+  #      "type": "object",
+  #      "additionalProperties": {
+  #        "type": "string"
+  #      },
+  #      "x-ms-mutability": [
+  #        "read",
+  #        "create",
+  #        "update"
+  #      ],
+  #      "description": "Resource tags."
+  #    };
+  #    $.TrackedResourceUpdate = {
+  #      "description": "Base tracked resource type for PATCH updates",
+  #      "type": "object",
+  #      "properties": {
+  #        "tags": {
+  #          "$ref": "#/definitions/Tags",
+  #          "description": "Resource tags."
+  #        },
+  #        "location": {
+  #          "type": "string",
+  #          "x-ms-mutability": [
+  #            "read",
+  #            "create"
+  #          ],
+  #          "description": "The geo-location where the resource lives"
+  #        }
+  #      }
+  #    };
+  #    $.TrackedResourceUpdate['x-ms-client-name'] = "DevCenterTrackedResourceUpdate";
   # The following adds the newly added TrackedResourceUpdate to the allof of the corresponding model
   # Solved the issue of no inheritance class
   # Unwanted properties need to be deleted.
-  - from: swagger-document
-    where: $.definitions.DevBoxDefinitionUpdate
-    transform: >
-      delete $.properties.location;
-      delete $.properties.tags;
-      $.allOf = $.allOf || [];
-      $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
-  - from: swagger-document
-    where: $.definitions.NetworkConnectionUpdate
-    transform: >
-      delete $.properties.location;
-      delete $.properties.tags;
-      $.allOf = $.allOf || [];
-      $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
-  - from: swagger-document
-    where: $.definitions.DevCenterUpdate
-    transform: >
-      delete $.properties.location;
-      delete $.properties.tags;
-      delete $.properties.properties;
-      $.allOf = $.allOf || [];
-      $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
-  - from: swagger-document
-    where: $.definitions.PoolUpdate
-    transform: >
-      delete $.properties.location;
-      delete $.properties.tags;
-      $.allOf = $.allOf || [];
-      $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
-  - from: swagger-document
-    where: $.definitions.ProjectUpdate
-    transform: >
-      delete $.properties.location;
-      delete $.properties.tags;
-      delete $.properties.identity;
-      $.allOf = $.allOf || [];
-      $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
-  - from: swagger-document
-    where: $.definitions.ScheduleUpdate
-    transform: >
-      $.allOf = $.allOf || [];
-      $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
-  - from: swagger-document
-    where: $.definitions.ScheduleUpdateProperties
-    transform: >
-      delete $.properties.location;
-      delete $.properties.tags;
+  #- from: swagger-document
+  #  where: $.definitions.DevBoxDefinitionUpdate
+  #  transform: >
+  #    delete $.properties.location;
+  #    delete $.properties.tags;
+  #    $.allOf = $.allOf || [];
+  #    $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
+  #- from: swagger-document
+  #  where: $.definitions.NetworkConnectionUpdate
+  #  transform: >
+  #    delete $.properties.location;
+  #    delete $.properties.tags;
+  #    $.allOf = $.allOf || [];
+  #    $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
+  #- from: swagger-document
+  #  where: $.definitions.DevCenterUpdate
+  #  transform: >
+  #    delete $.properties.location;
+  #    delete $.properties.tags;
+  #    delete $.properties.properties;
+  #    $.allOf = $.allOf || [];
+  #    $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
+  #- from: swagger-document
+  #  where: $.definitions.PoolUpdate
+  #  transform: >
+  #    delete $.properties.location;
+  #    delete $.properties.tags;
+  #    $.allOf = $.allOf || [];
+  #    $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
+  #- from: swagger-document
+  #  where: $.definitions.ProjectUpdate
+  #  transform: >
+  #    delete $.properties.location;
+  #    delete $.properties.tags;
+  #    delete $.properties.identity;
+  #    $.allOf = $.allOf || [];
+  #    $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
+  #- from: swagger-document
+  #  where: $.definitions.ScheduleUpdate
+  #  transform: >
+  #    $.allOf = $.allOf || [];
+  #    $.allOf.push({"$ref": "#/definitions/TrackedResourceUpdate"});
+  #- from: swagger-document
+  #  where: $.definitions.ScheduleUpdateProperties
+  #  transform: >
+  #    delete $.properties.location;
+  #    delete $.properties.tags;
   # Add missing parameters to specific operations
-  - from: swagger-document
-    where: "$.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/pools/{poolName}/schedules/{scheduleName}'].get.parameters"
-    transform: >
-      $.push({
-        "$ref": "#/parameters/TopParameter"
-      });
+  #- from: swagger-document
+  #  where: "$.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/pools/{poolName}/schedules/{scheduleName}'].get.parameters"
+  #  transform: >
+  #    $.push({
+  #      "$ref": "#/parameters/TopParameter"
+  #    });
   # Directive renaming "type" property of ScheduleUpdateProperties to "ScheduledType" (to avoid it being generated as TypePropertiesType)
   - from: swagger-document
     where: "$.definitions.ScheduleUpdateProperties.properties.type"

@@ -1110,6 +1110,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
@@ -1117,13 +1119,17 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterScheduleData"/> instance for mocking. </returns>
-        public static DevCenterScheduleData DevCenterScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterScheduledType? scheduledType = null, DevCenterScheduledFrequency? frequency = null, string time = null, string timeZone = null, DevCenterScheduleEnableStatus? state = null, DevCenterProvisioningState? provisioningState = null)
+        public static DevCenterScheduleData DevCenterScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DevCenterScheduledType? scheduledType = null, DevCenterScheduledFrequency? frequency = null, string time = null, string timeZone = null, DevCenterScheduleEnableStatus? state = null, DevCenterProvisioningState? provisioningState = null)
         {
+            tags ??= new Dictionary<string, string>();
+
             return new DevCenterScheduleData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                tags,
+                location,
                 scheduledType,
                 frequency,
                 time,

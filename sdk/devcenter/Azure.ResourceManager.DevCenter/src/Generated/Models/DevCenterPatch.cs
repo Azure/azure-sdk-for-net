@@ -13,24 +13,131 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The devcenter resource for partial updates. Properties not provided in the update request will not be changed. </summary>
-    public partial class DevCenterPatch : DevCenterTrackedResourceUpdate
+    public partial class DevCenterPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DevCenterPatch"/>. </summary>
         public DevCenterPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Managed identity properties. </param>
-        internal DevCenterPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity) : base(tags, location, serializedAdditionalRawData)
+        /// <param name="encryption"> Encryption settings to be used for server-side encryption for proprietary content (such as catalogs, logs, customizations). </param>
+        /// <param name="displayName"> The display name of the devcenter. </param>
+        /// <param name="projectCatalogSettings"> Dev Center settings to be used when associating a project with a catalog. </param>
+        /// <param name="networkSettings"> Network settings that will be enforced on network resources associated with the Dev Center. </param>
+        /// <param name="devBoxProvisioningSettings"> Settings to be used in the provisioning of all Dev Boxes that belong to this dev center. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterPatch(IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity, Encryption encryption, string displayName, DevCenterProjectCatalogSettings projectCatalogSettings, DevCenterNetworkSettings networkSettings, DevBoxProvisioningSettings devBoxProvisioningSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Tags = tags;
+            Location = location;
             Identity = identity;
+            Encryption = encryption;
+            DisplayName = displayName;
+            ProjectCatalogSettings = projectCatalogSettings;
+            NetworkSettings = networkSettings;
+            DevBoxProvisioningSettings = devBoxProvisioningSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; set; }
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Encryption settings to be used for server-side encryption for proprietary content (such as catalogs, logs, customizations). </summary>
+        internal Encryption Encryption { get; set; }
+        /// <summary> All Customer-managed key encryption properties for the resource. </summary>
+        public CustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
+            set
+            {
+                if (Encryption is null)
+                    Encryption = new Encryption();
+                Encryption.CustomerManagedKeyEncryption = value;
+            }
+        }
+
+        /// <summary> The display name of the devcenter. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> Dev Center settings to be used when associating a project with a catalog. </summary>
+        internal DevCenterProjectCatalogSettings ProjectCatalogSettings { get; set; }
+        /// <summary> Whether project catalogs associated with projects in this dev center can be configured to sync catalog items. </summary>
+        public CatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus
+        {
+            get => ProjectCatalogSettings is null ? default : ProjectCatalogSettings.CatalogItemSyncEnableStatus;
+            set
+            {
+                if (ProjectCatalogSettings is null)
+                    ProjectCatalogSettings = new DevCenterProjectCatalogSettings();
+                ProjectCatalogSettings.CatalogItemSyncEnableStatus = value;
+            }
+        }
+
+        /// <summary> Network settings that will be enforced on network resources associated with the Dev Center. </summary>
+        internal DevCenterNetworkSettings NetworkSettings { get; set; }
+        /// <summary> Indicates whether pools in this Dev Center can use Microsoft Hosted Networks. Defaults to Enabled if not set. </summary>
+        public MicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus
+        {
+            get => NetworkSettings is null ? default : NetworkSettings.MicrosoftHostedNetworkEnableStatus;
+            set
+            {
+                if (NetworkSettings is null)
+                    NetworkSettings = new DevCenterNetworkSettings();
+                NetworkSettings.MicrosoftHostedNetworkEnableStatus = value;
+            }
+        }
+
+        /// <summary> Settings to be used in the provisioning of all Dev Boxes that belong to this dev center. </summary>
+        internal DevBoxProvisioningSettings DevBoxProvisioningSettings { get; set; }
+        /// <summary> Indicates whether to install the Azure Monitor Agent service on Dev Boxes that belong to this dev center. </summary>
+        public InstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus
+        {
+            get => DevBoxProvisioningSettings is null ? default : DevBoxProvisioningSettings.InstallAzureMonitorAgentEnableStatus;
+            set
+            {
+                if (DevBoxProvisioningSettings is null)
+                    DevBoxProvisioningSettings = new DevBoxProvisioningSettings();
+                DevBoxProvisioningSettings.InstallAzureMonitorAgentEnableStatus = value;
+            }
+        }
     }
 }

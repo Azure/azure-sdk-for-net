@@ -12,18 +12,50 @@ using Azure.Core;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The pool properties for partial update. Properties not provided in the update request will not be changed. </summary>
-    public partial class DevCenterPoolPatch : DevCenterTrackedResourceUpdate
+    public partial class DevCenterPoolPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DevCenterPoolPatch"/>. </summary>
         public DevCenterPoolPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
             ManagedVirtualNetworkRegions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterPoolPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="devBoxDefinitionType"> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </param>
         /// <param name="devBoxDefinitionName"> Name of a Dev Box definition in parent Project of this Pool. Will be ignored if devBoxDefinitionType is Value. </param>
         /// <param name="devBoxDefinition"> A definition of the machines that are created from this Pool. Will be ignored if devBoxDefinitionType is Reference or not provided. </param>
@@ -38,8 +70,11 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="managedVirtualNetworkRegions"> The regions of the managed virtual network (required when managedNetworkType is Managed). </param>
         /// <param name="activeHoursConfiguration"> Active hours configuration settings for Dev Boxes created in this pool. </param>
         /// <param name="devBoxTunnelEnableStatus"> Indicates whether Dev Box Tunnel is enabled for a the pool. </param>
-        internal DevCenterPoolPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, PoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, PoolDevBox devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, StopOnNoConnectConfiguration stopOnNoConnect, PoolUpdateSingleSignOnStatus? singleSignOnStatus, string displayName, VirtualNetworkType? virtualNetworkType, IList<string> managedVirtualNetworkRegions, ActiveHoursConfiguration activeHoursConfiguration, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus) : base(tags, location, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterPoolPatch(IDictionary<string, string> tags, AzureLocation? location, PoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, PoolDevBox devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, StopOnNoConnectConfiguration stopOnNoConnect, PoolUpdateSingleSignOnStatus? singleSignOnStatus, string displayName, VirtualNetworkType? virtualNetworkType, IList<string> managedVirtualNetworkRegions, ActiveHoursConfiguration activeHoursConfiguration, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Tags = tags;
+            Location = location;
             DevBoxDefinitionType = devBoxDefinitionType;
             DevBoxDefinitionName = devBoxDefinitionName;
             DevBoxDefinition = devBoxDefinition;
@@ -54,8 +89,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             ManagedVirtualNetworkRegions = managedVirtualNetworkRegions;
             ActiveHoursConfiguration = activeHoursConfiguration;
             DevBoxTunnelEnableStatus = devBoxTunnelEnableStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; set; }
         /// <summary> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </summary>
         public PoolDevBoxDefinitionType? DevBoxDefinitionType { get; set; }
         /// <summary> Name of a Dev Box definition in parent Project of this Pool. Will be ignored if devBoxDefinitionType is Value. </summary>

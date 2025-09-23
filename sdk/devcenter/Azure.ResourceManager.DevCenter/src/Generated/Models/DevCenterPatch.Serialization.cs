@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -36,11 +36,69 @@ namespace Azure.ResourceManager.DevCenter.Models
                 throw new FormatException($"The model {nameof(DevCenterPatch)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(ProjectCatalogSettings))
+            {
+                writer.WritePropertyName("projectCatalogSettings"u8);
+                writer.WriteObjectValue(ProjectCatalogSettings, options);
+            }
+            if (Optional.IsDefined(NetworkSettings))
+            {
+                writer.WritePropertyName("networkSettings"u8);
+                writer.WriteObjectValue(NetworkSettings, options);
+            }
+            if (Optional.IsDefined(DevBoxProvisioningSettings))
+            {
+                writer.WritePropertyName("devBoxProvisioningSettings"u8);
+                writer.WriteObjectValue(DevBoxProvisioningSettings, options);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -64,22 +122,18 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
+            Encryption encryption = default;
+            string displayName = default;
+            DevCenterProjectCatalogSettings projectCatalogSettings = default;
+            DevCenterNetworkSettings networkSettings = default;
+            DevBoxProvisioningSettings devBoxProvisioningSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDevCenterContext.Default);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -103,13 +157,84 @@ namespace Azure.ResourceManager.DevCenter.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDevCenterContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = Encryption.DeserializeEncryption(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("projectCatalogSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            projectCatalogSettings = DevCenterProjectCatalogSettings.DeserializeDevCenterProjectCatalogSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("networkSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkSettings = DevCenterNetworkSettings.DeserializeDevCenterNetworkSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("devBoxProvisioningSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxProvisioningSettings = DevBoxProvisioningSettings.DeserializeDevBoxProvisioningSettings(property0.Value, options);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevCenterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), location, serializedAdditionalRawData, identity);
+            return new DevCenterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                encryption,
+                displayName,
+                projectCatalogSettings,
+                networkSettings,
+                devBoxProvisioningSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterPatch>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,7 +34,22 @@ namespace Azure.ResourceManager.DevCenter.Models
                 throw new FormatException($"The model {nameof(DevCenterPoolPatch)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DevBoxDefinitionType))
@@ -113,6 +128,21 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStringValue(DevBoxTunnelEnableStatus.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         DevCenterPoolPatch IJsonModel<DevCenterPoolPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -318,7 +348,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterPoolPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                serializedAdditionalRawData,
                 devBoxDefinitionType,
                 devBoxDefinitionName,
                 devBoxDefinition,
@@ -332,7 +361,8 @@ namespace Azure.ResourceManager.DevCenter.Models
                 virtualNetworkType,
                 managedVirtualNetworkRegions ?? new ChangeTrackingList<string>(),
                 activeHoursConfiguration,
-                devBoxTunnelEnableStatus);
+                devBoxTunnelEnableStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterPoolPatch>.Write(ModelReaderWriterOptions options)
