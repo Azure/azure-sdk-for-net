@@ -17,6 +17,10 @@ using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Threading.Tasks;
+using Azure.Core;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Extensions.Hosting
 {
@@ -89,6 +93,17 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Single(x => x == queueScalerProvider));
 
             return builder;
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        internal static Task<bool> ValidateTriggerCredentialsAsync(
+            TriggerMetadata triggerMetadata,
+            string connectionName,
+            TokenCredential tokenCredential,
+            IDictionary<string, string> env,
+            ILogger logger)
+        {
+            return StorageQueueTriggerValidator.ValidateAsync(triggerMetadata, connectionName, tokenCredential, env, logger);
         }
     }
 }
