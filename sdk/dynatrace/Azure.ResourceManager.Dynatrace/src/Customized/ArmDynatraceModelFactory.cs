@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="metricRulesFilteringTags"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Dynatrace.DynatraceTagRuleData"/> instance for mocking. </returns>
-        // Add this custom ode due to the previous swagger definition for MetricRules only had FilteringTags as a direct child property.
+        // Add this custom code due to the previous swagger definition for MetricRules only had FilteringTags as a direct child property.
         public static DynatraceTagRuleData DynatraceTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynatraceMonitorResourceLogRules logRules = null, IEnumerable<DynatraceMonitorResourceFilteringTag> metricRulesFilteringTags = null, DynatraceProvisioningState? provisioningState = null)
         {
             DynatraceMonitorResourceMetricRules metricRules = null;
