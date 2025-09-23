@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    internal partial class StorageProperties : IUtf8JsonSerializable, IJsonModel<StorageProperties>
+    public partial class StorageProperties : IUtf8JsonSerializable, IJsonModel<StorageProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 writer.WritePropertyName("sizeGb"u8);
                 writer.WriteNumberValue(SizeGb.Value);
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 return null;
             }
             long? sizeGb = default;
+            StorageType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +96,22 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     sizeGb = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new StorageType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageProperties(sizeGb, serializedAdditionalRawData);
+            return new StorageProperties(sizeGb, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageProperties>.Write(ModelReaderWriterOptions options)
