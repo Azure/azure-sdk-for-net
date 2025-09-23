@@ -44,7 +44,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AIProjectDatasetVersion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AIProjectDataset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FileDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -63,7 +63,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string dataUri = default;
+            Uri dataUri = default;
             DatasetType @type = default;
             bool? isReference = default;
             string connectionName = default;
@@ -77,7 +77,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("dataUri"u8))
                 {
-                    dataUri = prop.Value.GetString();
+                    dataUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -180,7 +180,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AIProjectDatasetVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AIProjectDataset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FileDataset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

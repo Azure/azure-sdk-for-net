@@ -20,7 +20,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(AIProjectConnectionEntraIdCredential))]
     [ModelReaderWriterBuildable(typeof(AIProjectConnectionSasCredential))]
     [ModelReaderWriterBuildable(typeof(AIProjectCosmosDBIndex))]
-    [ModelReaderWriterBuildable(typeof(AIProjectDatasetVersion))]
+    [ModelReaderWriterBuildable(typeof(AIProjectDataset))]
     [ModelReaderWriterBuildable(typeof(AIProjectDeployment))]
     [ModelReaderWriterBuildable(typeof(AIProjectIndex))]
     [ModelReaderWriterBuildable(typeof(AIProjectIndexFieldMapping))]
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(PendingUploadConfiguration))]
     [ModelReaderWriterBuildable(typeof(PendingUploadResult))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectConnectionBaseCredential))]
-    [ModelReaderWriterBuildable(typeof(UnknownAIProjectDatasetVersion))]
+    [ModelReaderWriterBuildable(typeof(UnknownAIProjectDataset))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDeployment))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectIndex))]
     public partial class AzureAIProjectsContext : ModelReaderWriterContext

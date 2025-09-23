@@ -13,17 +13,17 @@ namespace Azure.AI.Projects
     /// DatasetVersion Definition
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDataset"/> and <see cref="FolderDataset"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownAIProjectDatasetVersion))]
-    public abstract partial class AIProjectDatasetVersion : IJsonModel<AIProjectDatasetVersion>
+    [PersistableModelProxy(typeof(UnknownAIProjectDataset))]
+    public abstract partial class AIProjectDataset : IJsonModel<AIProjectDataset>
     {
-        /// <summary> Initializes a new instance of <see cref="AIProjectDatasetVersion"/> for deserialization. </summary>
-        internal AIProjectDatasetVersion()
+        /// <summary> Initializes a new instance of <see cref="AIProjectDataset"/> for deserialization. </summary>
+        internal AIProjectDataset()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AIProjectDatasetVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AIProjectDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,13 +34,13 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIProjectDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AIProjectDatasetVersion)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AIProjectDataset)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("dataUri"u8);
-            writer.WriteStringValue(DataUri);
+            writer.WriteStringValue(DataUri.AbsoluteUri);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && Optional.IsDefined(IsReference))
@@ -108,24 +108,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AIProjectDatasetVersion IJsonModel<AIProjectDatasetVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AIProjectDataset IJsonModel<AIProjectDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AIProjectDatasetVersion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AIProjectDataset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIProjectDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AIProjectDatasetVersion)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AIProjectDataset)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAIProjectDatasetVersion(document.RootElement, options);
+            return DeserializeAIProjectDataset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AIProjectDatasetVersion DeserializeAIProjectDatasetVersion(JsonElement element, ModelReaderWriterOptions options)
+        internal static AIProjectDataset DeserializeAIProjectDataset(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,55 +141,55 @@ namespace Azure.AI.Projects
                         return FolderDataset.DeserializeFolderDataset(element, options);
                 }
             }
-            return UnknownAIProjectDatasetVersion.DeserializeUnknownAIProjectDatasetVersion(element, options);
+            return UnknownAIProjectDataset.DeserializeUnknownAIProjectDataset(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AIProjectDatasetVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AIProjectDataset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIProjectDataset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AIProjectDatasetVersion)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIProjectDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AIProjectDatasetVersion IPersistableModel<AIProjectDatasetVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AIProjectDataset IPersistableModel<AIProjectDataset>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AIProjectDatasetVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AIProjectDataset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIProjectDataset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeAIProjectDatasetVersion(document.RootElement, options);
+                        return DeserializeAIProjectDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AIProjectDatasetVersion)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIProjectDataset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AIProjectDatasetVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AIProjectDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AIProjectDatasetVersion"/> from. </param>
-        public static explicit operator AIProjectDatasetVersion(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AIProjectDataset"/> from. </param>
+        public static explicit operator AIProjectDataset(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeAIProjectDatasetVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAIProjectDataset(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

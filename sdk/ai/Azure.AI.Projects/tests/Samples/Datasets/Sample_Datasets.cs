@@ -121,7 +121,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(folderDataset);
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-            DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
+            AIProjectDataset dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
             Console.WriteLine(dataset.Id);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -129,14 +129,14 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-            foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
+            foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersions(datasetName))
             {
                 Console.WriteLine(ds);
                 Console.WriteLine(ds.Version);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
-            foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
+            foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasets())
             {
                 Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
             }
@@ -230,7 +230,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(folderDataset);
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-            DatasetVersion dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion1);
+            AIProjectDataset dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion1);
             Console.WriteLine(dataset.Id);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -238,14 +238,14 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-            await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
+            await foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
             {
                 Console.WriteLine(ds);
                 Console.WriteLine(ds.Version);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
-            await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetsAsync())
+            await foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetsAsync())
             {
                 Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
             }

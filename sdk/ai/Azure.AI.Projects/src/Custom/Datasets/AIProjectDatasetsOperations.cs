@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public ClientResult<FileDatasetVersion> UploadFile(string name, string version, string filePath, string? connectionName = null)
+        public ClientResult<FileDataset> UploadFile(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -51,19 +51,19 @@ namespace Azure.AI.Projects
                 var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
                 Uri dataUri = uriBuilder.Uri;
 
-                FileDatasetVersion fileDatasetVersion = new FileDatasetVersion(dataUri: dataUri);
-                BinaryContent content = BinaryContent.Create(fileDatasetVersion);
+                FileDataset fileDataset = new FileDataset(dataUri: dataUri);
+                BinaryContent content = BinaryContent.Create(fileDataset);
 
                 ClientResult result = CreateOrUpdate(name, outputVersion, content);
 
-                return ClientResult.FromValue((FileDatasetVersion)result, result.GetRawResponse());
+                return ClientResult.FromValue((FileDataset)result, result.GetRawResponse());
             }
         }
 
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public ClientResult<FolderDatasetVersion> UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public ClientResult<FolderDataset> UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -98,17 +98,17 @@ namespace Azure.AI.Projects
             var uriBuilder = new UriBuilder(blobClient!.Uri) { Query = "" };
             Uri dataUri = uriBuilder.Uri;
 
-            FolderDatasetVersion folderDatasetVersion = new FolderDatasetVersion(dataUri: dataUri);
-            BinaryContent content = BinaryContent.Create(folderDatasetVersion);
+            FolderDataset folderDataset = new FolderDataset(dataUri: dataUri);
+            BinaryContent content = BinaryContent.Create(folderDataset);
 
             ClientResult result = CreateOrUpdate(name, outputVersion, content);
-            return ClientResult.FromValue((FolderDatasetVersion)result, result.GetRawResponse());
+            return ClientResult.FromValue((FolderDataset)result, result.GetRawResponse());
         }
 
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public async Task<ClientResult<FileDatasetVersion>> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
+        public async Task<ClientResult<FileDataset>> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -126,19 +126,19 @@ namespace Azure.AI.Projects
                 var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
                 Uri dataUri = uriBuilder.Uri;
 
-                FileDatasetVersion fileDatasetVersion = new FileDatasetVersion(dataUri: dataUri);
-                BinaryContent content = BinaryContent.Create(fileDatasetVersion);
+                FileDataset fileDataset = new FileDataset(dataUri: dataUri);
+                BinaryContent content = BinaryContent.Create(fileDataset);
 
                 ClientResult result = await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-                return ClientResult.FromValue((FileDatasetVersion)result, result.GetRawResponse());
+                return ClientResult.FromValue((FileDataset)result, result.GetRawResponse());
             }
         }
 
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public async Task<ClientResult<FolderDatasetVersion>> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public async Task<ClientResult<FolderDataset>> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -173,11 +173,11 @@ namespace Azure.AI.Projects
             var uriBuilder = new UriBuilder(blobClient!.Uri) { Query = "" };
             Uri dataUri = uriBuilder.Uri;
 
-            FolderDatasetVersion folderDatasetVersion = new FolderDatasetVersion(dataUri: dataUri);
-            BinaryContent content = BinaryContent.Create(folderDatasetVersion);
+            FolderDataset folderDataset = new FolderDataset(dataUri: dataUri);
+            BinaryContent content = BinaryContent.Create(folderDataset);
             ClientResult result = await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-            return ClientResult.FromValue((FolderDatasetVersion)result, result.GetRawResponse());
+            return ClientResult.FromValue((FolderDataset)result, result.GetRawResponse());
         }
 
         /// <summary>

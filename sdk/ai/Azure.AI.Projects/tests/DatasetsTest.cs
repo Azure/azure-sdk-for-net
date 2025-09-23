@@ -64,7 +64,7 @@ namespace Azure.AI.Projects.Tests
             );
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion}:");
-            DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion);
+            AIProjectDataset dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion);
             ValidateDataset(
                 dataset,
                 expectedDatasetType: "FileDatasetVersion",
@@ -93,13 +93,13 @@ namespace Azure.AI.Projects.Tests
             ValidateAssetCredential(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-            foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
+            foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersions(datasetName))
             {
                 ValidateDataset(ds, expectedDatasetName: datasetName);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
-            foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
+            foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasets())
             {
                 ValidateDataset(ds);
             }
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Tests
             );
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion}:");
-            DatasetVersion dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion);
+            AIProjectDataset dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion);
             ValidateDataset(
                 dataset,
                 expectedDatasetType: "FileDatasetVersion",
@@ -172,13 +172,13 @@ namespace Azure.AI.Projects.Tests
             ValidateAssetCredential(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-            await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
+            await foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
             {
                 ValidateDataset(ds, expectedDatasetName: datasetName);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
-            await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetsAsync())
+            await foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetsAsync())
             {
                 ValidateDataset(ds);
             }
