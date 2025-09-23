@@ -5,8 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
 
-[RequiresDynamicCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
-[RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+[RequiresDynamicCode("This class uses reflection.  Pass in a generated ModelReaderWriterContext to be AOT compatible.")]
+[RequiresUnreferencedCode("This class uses reflection.  Pass in a generated ModelReaderWriterContext to be AOT compatible.")]
 internal class ReflectionReadOnlyDictionaryBuilder : ModelReaderWriterTypeBuilder
 {
     private Type _dictionaryType;
@@ -24,7 +24,7 @@ internal class ReflectionReadOnlyDictionaryBuilder : ModelReaderWriterTypeBuilde
 
     protected override void AddItemWithKey(object dictionary, string key, object? item)
     {
-        var addMethod = BuilderType.GetMethod("Add", [typeof(string), ItemType!])!.Invoke(dictionary, [key, item]);
+        BuilderType.GetMethod("Add", [typeof(string), ItemType!])!.Invoke(dictionary, [key, item]);
     }
 
     protected override object ConvertCollectionBuilder(object builder) => Activator.CreateInstance(_dictionaryType, [builder])!;

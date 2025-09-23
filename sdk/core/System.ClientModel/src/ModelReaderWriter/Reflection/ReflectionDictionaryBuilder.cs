@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
 
-[RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+[RequiresUnreferencedCode("This class uses reflection.  Pass in a generated ModelReaderWriterContext to be AOT compatible.")]
 internal class ReflectionDictionaryBuilder : ModelReaderWriterTypeBuilder
 {
     private Type _dictionaryType;
@@ -23,6 +23,6 @@ internal class ReflectionDictionaryBuilder : ModelReaderWriterTypeBuilder
 
     protected override void AddItemWithKey(object dictionary, string key,  object? item)
     {
-        var addMethod = _dictionaryType.GetMethod("Add")!.Invoke(dictionary, [ key, item ]);
+        _dictionaryType.GetMethod("Add")!.Invoke(dictionary, [ key, item ]);
     }
 }

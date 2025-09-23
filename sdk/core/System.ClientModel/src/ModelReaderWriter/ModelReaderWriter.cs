@@ -22,8 +22,8 @@ public static class ModelReaderWriter
     /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-    [RequiresDynamicCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
-    [RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresDynamicCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default)
     {
         if (model is null)
@@ -45,8 +45,8 @@ public static class ModelReaderWriter
     /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-    [RequiresDynamicCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
-    [RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresDynamicCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static BinaryData Write(object model, ModelReaderWriterOptions? options = default)
     {
         if (model is null)
@@ -160,8 +160,8 @@ public static class ModelReaderWriter
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
     /// <exception cref="MissingMethodException">If <typeparamref name="T"/> does not have a public or non public empty constructor.</exception>
-    [RequiresDynamicCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
-    [RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresDynamicCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static T? Read<T>(BinaryData data, ModelReaderWriterOptions? options = default)
     {
         return ReadInternal<T>(data, options ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
@@ -205,8 +205,8 @@ public static class ModelReaderWriter
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
     /// <exception cref="MissingMethodException">If <paramref name="returnType"/> does not have a public or non public empty constructor.</exception>
-    [RequiresDynamicCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
-    [RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresDynamicCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static object? Read(BinaryData data, Type returnType, ModelReaderWriterOptions? options = default)
     {
         return ReadInternal(data, returnType, options ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
