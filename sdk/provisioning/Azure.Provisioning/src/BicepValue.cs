@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning;
 
@@ -132,23 +133,4 @@ public abstract class BicepValue : IBicepValue
         value._kind == BicepValueKind.Expression ?
             value._expression :
             value._self?.GetReference();
-
-    public BicepExpression ToBicepExpression()
-    {
-        // if self is set, we could build an expression as a reference of this member
-        if (_self is not null)
-        {
-            return _self.GetReference();
-        }
-        // if self is not set, but the value of this is an expression, we return that expression
-        else if (_kind == BicepValueKind.Expression)
-        {
-            return _expression ?? BicepSyntax.Null();
-        }
-        // otherwise, we return whatever this compiles into
-        else
-        {
-            return Compile();
-        }
-    }
 }
