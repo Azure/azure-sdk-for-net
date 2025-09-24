@@ -157,7 +157,8 @@ namespace BasicTypeSpec
         public static explicit operator FriendModel(Response result)
         {
             using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeFriendModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
