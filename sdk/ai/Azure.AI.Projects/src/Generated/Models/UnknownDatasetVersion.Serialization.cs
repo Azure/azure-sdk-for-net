@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownDatasetVersion : IJsonModel<DatasetVersion>
+    internal partial class UnknownDatasetVersion : DatasetVersion, IJsonModel<DatasetVersion>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatasetVersion"/> for deserialization. </summary>
         internal UnknownDatasetVersion()

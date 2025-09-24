@@ -252,31 +252,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Initializes new instance of <see cref="BlobClientOptions"/>
-        /// with the same values.
-        /// </summary>
-        /// <param name="options"></param>
-        internal BlobClientOptions(BlobClientOptions options)
-            : base(options.Diagnostics)
-        {
-            Transport = options.Transport;
-            RetryPolicy = options.RetryPolicy;
-            Version = options.Version;
-            CustomerProvidedKey = options.CustomerProvidedKey;
-            EncryptionScope = options.EncryptionScope;
-            GeoRedundantSecondaryUri = options.GeoRedundantSecondaryUri;
-            TransferValidation = options.TransferValidation;
-            TrimBlobNameSlashes = options.TrimBlobNameSlashes;
-            Request100ContinueOptions = options.Request100ContinueOptions;
-            _clientSideEncryptionOptions = options._clientSideEncryptionOptions;
-            Retry.Mode = options.Retry.Mode;
-            Retry.MaxRetries = options.Retry.MaxRetries;
-            Retry.MaxDelay = options.Retry.MaxDelay;
-            Retry.NetworkTimeout = options.Retry.NetworkTimeout;
-            Retry.Delay = options.Retry.Delay;
-        }
-
-        /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>
         /// </summary>
         private void AddHeadersAndQueryParameters()

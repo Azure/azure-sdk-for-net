@@ -65,19 +65,17 @@ namespace Azure.Generator.Management
             return transformedClient is null ? null : base.CreateClientCore(transformedClient);
         }
 
-        // TODO: right now, we are missing the connection between CsharpType and TypeProvider, that's why we need both CreateCSharpTypeCore and CreateModelCore
-        // Once we have the mapping between CsharpType and TypeProvider, we should only keep CreateModelCore
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
-            if (inputType is InputModelType model && (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType) || KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out replacedType)))
+            if (inputType is InputModelType model && KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
                 return replacedType;
             }
 
-            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var csharpType))
+            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out replacedType))
             {
-                return csharpType;
+                return replacedType;
             }
             return base.CreateCSharpTypeCore(inputType);
         }
@@ -89,10 +87,9 @@ namespace Azure.Generator.Management
             {
                 return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
             }
-
-            if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out replacedType))
+            if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
             {
-                return new SystemObjectModelProvider(replacedType.FrameworkType, model);
+                return null;
             }
             return base.CreateModelCore(model);
         }

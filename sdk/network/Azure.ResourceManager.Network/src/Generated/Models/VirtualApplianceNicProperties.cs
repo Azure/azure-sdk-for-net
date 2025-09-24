@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceNicProperties"/>. </summary>
-        /// <param name="nicType"> NIC type - PublicNic, PrivateNic, or AdditionalNic. </param>
+        /// <param name="nicType"> NIC type - PublicNic, PrivateNic, or AdditionalNic; AdditionalPrivateNic and AdditionalPublicNic are only supported for NVAs deployed in VNets. </param>
         /// <param name="name"> NIC name. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> NIC type - PublicNic, PrivateNic, or AdditionalNic. </summary>
+        /// <summary> NIC type - PublicNic, PrivateNic, or AdditionalNic; AdditionalPrivateNic and AdditionalPublicNic are only supported for NVAs deployed in VNets. </summary>
         [WirePath("nicType")]
         public NicTypeInResponse? NicType { get; }
         /// <summary> NIC name. </summary>

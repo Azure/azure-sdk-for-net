@@ -16,16 +16,13 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateGetConnectionRequest(string name, string clientRequestId, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             if (clientRequestId != null)
             {
                 request.Headers.Set("x-ms-client-request-id", clientRequestId);
@@ -37,17 +34,14 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateGetConnectionWithCredentialsRequest(string name, string clientRequestId, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/getConnectionWithCredentials", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             if (clientRequestId != null)
             {
                 request.Headers.Set("x-ms-client-request-id", clientRequestId);
@@ -59,10 +53,6 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateGetConnectionsRequest(string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/connections", false);
@@ -75,7 +65,8 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("defaultConnection", TypeFormatters.ConvertToString(defaultConnection, null), true);
             }
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             if (clientRequestId != null)
             {
                 request.Headers.Set("x-ms-client-request-id", clientRequestId);
@@ -87,13 +78,10 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateNextGetConnectionsRequest(Uri nextPage, string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(nextPage);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;

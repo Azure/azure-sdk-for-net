@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 throw new FormatException($"The model {nameof(AvailableSkusResult)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -94,10 +94,6 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DataBoxSkuInformation> array = new List<DataBoxSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -117,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AvailableSkusResult(value ?? new ChangeTrackingList<DataBoxSkuInformation>(), nextLink, serializedAdditionalRawData);
+            return new AvailableSkusResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableSkusResult>.Write(ModelReaderWriterOptions options)

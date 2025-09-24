@@ -5,7 +5,7 @@
     <_TypeSpecProjectGenerateCommand>npx --no-install --package=@azure-tools/typespec-client-generator-cli --yes tsp-client generate --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectGenerateCommand>
     <_TypeSpecProjectSyncAndGenerateCommand>npx --no-install --package=@azure-tools/typespec-client-generator-cli --yes tsp-client update --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectSyncAndGenerateCommand>
     <_SaveInputs Condition="'$(SaveInputs)' == 'true'">--save-inputs</_SaveInputs>
-    <_Trace Condition="'$(Trace)' == 'true'">--trace @typespec/http-client-csharp @azure-typespec/http-client-csharp @azure-typespec/http-client-csharp-mgmt</_Trace>
+    <_Trace Condition="'$(Trace)' == 'true'">--trace @typespec/http-client-csharp @azure-typespec/http-client-csharp @azure-typespec/http-client-csharp-mgmt --debug</_Trace>
     <!-- Here we append the generate-test-project configuration to TypespecAdditionalOptions if it is specified -->
     <TypespecAdditionalOptions Condition="'$(GenerateTestProject)' != '' AND '$(TypespecAdditionalOptions)' != ''">$(TypespecAdditionalOptions)%3Bgenerate-test-project=true</TypespecAdditionalOptions>
     <TypespecAdditionalOptions Condition="'$(GenerateTestProject)' != '' AND '$(TypespecAdditionalOptions)' == ''">generate-test-project=true</TypespecAdditionalOptions>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetEdgeSites_SitesByServiceGroupListByServiceGroupGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesByServiceGroup_ListByServiceGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_ListByServiceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "SitesByServiceGroup_ListByServiceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSitesByServiceGroup_SitesByServiceGroupGetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesByServiceGroup_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "SitesByServiceGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateSitesByServiceGroup_SitesByServiceGroupCreateOrUpdateGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesByServiceGroup_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "SitesByServiceGroup_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateSitesByServiceGroup_SitesByServiceGroupUpdateGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesByServiceGroup_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "SitesByServiceGroup_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteSitesByServiceGroup_SitesByServiceGroupDeleteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesByServiceGroup_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "SitesByServiceGroup_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

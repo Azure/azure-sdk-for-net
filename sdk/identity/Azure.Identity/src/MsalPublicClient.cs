@@ -126,8 +126,7 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
 
             if (context.IsProofOfPossessionEnabled)
@@ -182,8 +181,7 @@ namespace Azure.Identity
 
             if (tenantId != null || record.TenantId != null)
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId ?? record.TenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId ?? record.TenantId);
             }
 
             if (!string.IsNullOrEmpty(claims))
@@ -284,8 +282,7 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (browserOptions != null)
             {
@@ -317,8 +314,10 @@ namespace Azure.Identity
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(string[] scopes, string claims, string username, string password, string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
+#pragma warning disable CS0618 // Type or member is obsolete
             var builder = client
                 .AcquireTokenByUsernamePassword(scopes, username, password);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             if (!string.IsNullOrEmpty(claims))
             {
@@ -326,8 +325,7 @@ namespace Azure.Identity
             }
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -351,8 +349,7 @@ namespace Azure.Identity
             }
             if (!string.IsNullOrEmpty(TenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(TenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(TenantId);
             }
 
             return await builder.ExecuteAsync(async, cancellationToken)
@@ -378,8 +375,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(TenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(TenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(TenantId);
             }
 
             return await builder.ExecuteAsync(async, cancellationToken)

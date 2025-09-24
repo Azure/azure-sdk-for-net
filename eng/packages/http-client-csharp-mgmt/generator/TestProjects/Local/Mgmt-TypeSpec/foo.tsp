@@ -20,7 +20,7 @@ model FooProperties {
   serviceUrl?: url;
 
   /** something */
-  something?: string;
+  something: string;
 
   /** boolean value */
   boolValue?: boolean;
@@ -30,6 +30,9 @@ model FooProperties {
 
   /** double value */
   doubleValue?: float64;
+
+  prop1: string[];
+  prop2?: int32[];
 }
 
 @armResourceOperations
@@ -43,6 +46,8 @@ interface Foos {
   update is ArmCustomPatchAsync<Foo, Foo>;
 
   list is ArmResourceListByParent<Foo>;
+
+  listBySubscription is ArmListBySubscription<Foo>;
 }
 
 @singleton

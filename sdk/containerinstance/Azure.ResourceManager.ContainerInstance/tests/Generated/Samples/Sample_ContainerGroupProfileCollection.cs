@@ -44,11 +44,13 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             ContainerGroupProfileData data = new ContainerGroupProfileData(new AzureLocation("westeurope"))
             {
                 Sku = ContainerGroupSku.Confidential,
-                Containers = {new ContainerInstanceContainer("accdemo", "confiimage", new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5, 1)))
+                Containers = {new ContainerInstanceContainer("accdemo")
 {
+Image = "confiimage",
 Command = {},
 Ports = {new ContainerPort(8000)},
 EnvironmentVariables = {},
+Resources = new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5, 1)),
 SecurityContext = new ContainerSecurityContextDefinition
 {
 IsPrivileged = false,
@@ -106,11 +108,13 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
             string containerGroupProfileName = "demo1";
             ContainerGroupProfileData data = new ContainerGroupProfileData(new AzureLocation("eastus2"))
             {
-                Containers = {new ContainerInstanceContainer("demo1", "nginx", new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5, 1)))
+                Containers = {new ContainerInstanceContainer("demo1")
 {
+Image = "nginx",
 Command = {},
 Ports = {new ContainerPort(80)},
 EnvironmentVariables = {},
+Resources = new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5, 1)),
 }},
                 Extensions = {new DeploymentExtensionSpec("kube-proxy")
 {
@@ -181,11 +185,13 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
                 {
                     Identity = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/container-group-identity",
                 },
-                Containers = {new ContainerInstanceContainer("demo1", "nginx", new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5, 1)))
+                Containers = {new ContainerInstanceContainer("demo1")
 {
+Image = "nginx",
 Command = {},
 Ports = {new ContainerPort(80)},
 EnvironmentVariables = {},
+Resources = new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5, 1)),
 }},
                 ImageRegistryCredentials = { },
                 IPAddress = new ContainerGroupIPAddress(new ContainerGroupPort[]
@@ -234,14 +240,16 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
             string containerGroupProfileName = "demo1";
             ContainerGroupProfileData data = new ContainerGroupProfileData(new AzureLocation("west us"))
             {
-                Containers = {new ContainerInstanceContainer("demo1", "nginx", new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5, 1)
+                Containers = {new ContainerInstanceContainer("demo1")
 {
-Gpu = new ContainerGpuResourceInfo(1, ContainerGpuSku.K80),
-}))
-{
+Image = "nginx",
 Command = {},
 Ports = {new ContainerPort(80)},
 EnvironmentVariables = {},
+Resources = new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5, 1)
+{
+Gpu = new ContainerGpuResourceInfo(1, ContainerGpuSku.K80),
+}),
 VolumeMounts = {new ContainerVolumeMount("volume1", "/mnt/volume1")
 {
 IsReadOnly = false,

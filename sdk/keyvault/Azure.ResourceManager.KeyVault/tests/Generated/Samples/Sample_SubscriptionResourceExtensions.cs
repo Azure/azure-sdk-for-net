@@ -164,6 +164,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetKeyVaults_ListVaultsInTheSpecifiedSubscription()
         {
+
             // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/listVaultBySubscription.json
             // this example is just showing the usage of "Vaults_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
@@ -190,6 +191,31 @@ namespace Azure.ResourceManager.KeyVault.Samples
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckManagedHsmNameAvailability_ValidateAManagedHsmName()
+        {
+            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/ManagedHsm_checkMhsmNameAvailability.json
+            // this example is just showing the usage of "ManagedHsms_CheckManagedHsmNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            ManagedHsmNameAvailabilityContent content = new ManagedHsmNameAvailabilityContent("sample-mhsm");
+            ManagedHsmNameAvailabilityResult result = await subscriptionResource.CheckManagedHsmNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

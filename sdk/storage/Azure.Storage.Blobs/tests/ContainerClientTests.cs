@@ -519,8 +519,7 @@ namespace Azure.Storage.Blobs.Test
                     customerProvidedKey: default,
                     transferValidation: null,
                     encryptionScope: null,
-                    trimBlobNameSlashes: default,
-                    clientOptions: options),
+                    trimBlobNameSlashes: default),
                 null);
 
             Assert.That(container.ClientConfiguration.SharedKeyCredential,
