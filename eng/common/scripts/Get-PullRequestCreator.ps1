@@ -18,7 +18,15 @@ try
 {
     $pullRequest = Get-GithubPullRequest -RepoOwner $RepoOwner -RepoName $RepoName `
     -PullRequestNumber $PullRequestNumber -AuthToken $AuthToken
-    Write-Host "##vso[task.setvariable variable=System.PullRequest.Creator;]$($pullRequest.user.login)"
+
+    $prCreator = $pullRequest.user.login
+
+    # Set the prCreator variable to empty if the PR creator is dependabot or copilot
+    if ($prCreator -ilike "dependabot*" -or $prCreator -ilike "copilot*")
+    {
+        $prCreator = ""
+    }
+    Write-Host "##vso[task.setvariable variable=System.PullRequest.Creator;]$($prCreator)"
 }
 catch
 {
