@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataBox.Models
         private const string BL24Value = "BL24";
         private const string IdC5Value = "IDC5";
         private const string TYO23Value = "TYO23";
-        private const string CPQ21Value = "CPQ21";
         private const string NTG20Value = "NTG20";
         private const string DXB23Value = "DXB23";
         private const string DSM11Value = "DSM11";
-        private const string OSA23Value = "OSA23";
         private const string AMS25Value = "AMS25";
+        private const string CPQ21Value = "CPQ21";
+        private const string OSA23Value = "OSA23";
 
         /// <summary> Invalid. </summary>
         public static DataCenterCode Invalid { get; } = new DataCenterCode(InvalidValue);
@@ -215,18 +215,18 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DataCenterCode IdC5 { get; } = new DataCenterCode(IdC5Value);
         /// <summary> TYO23. </summary>
         public static DataCenterCode TYO23 { get; } = new DataCenterCode(TYO23Value);
-        /// <summary> CPQ21. </summary>
-        public static DataCenterCode CPQ21 { get; } = new DataCenterCode(CPQ21Value);
         /// <summary> NTG20. </summary>
         public static DataCenterCode NTG20 { get; } = new DataCenterCode(NTG20Value);
         /// <summary> DXB23. </summary>
         public static DataCenterCode DXB23 { get; } = new DataCenterCode(DXB23Value);
         /// <summary> DSM11. </summary>
         public static DataCenterCode DSM11 { get; } = new DataCenterCode(DSM11Value);
-        /// <summary> OSA23. </summary>
-        public static DataCenterCode OSA23 { get; } = new DataCenterCode(OSA23Value);
         /// <summary> AMS25. </summary>
         public static DataCenterCode AMS25 { get; } = new DataCenterCode(AMS25Value);
+        /// <summary> CPQ21. </summary>
+        public static DataCenterCode CPQ21 { get; } = new DataCenterCode(CPQ21Value);
+        /// <summary> OSA23. </summary>
+        public static DataCenterCode OSA23 { get; } = new DataCenterCode(OSA23Value);
         /// <summary> Determines if two <see cref="DataCenterCode"/> values are the same. </summary>
         public static bool operator ==(DataCenterCode left, DataCenterCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCenterCode"/> values are not the same. </summary>

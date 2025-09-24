@@ -12,7 +12,8 @@
 - Fixed an issue when comparing `TableErrorCode` with null strings using equality operators.
 
 ### Other Changes
-
+- Use precedence rules to reduce the parenthesis nesting in OData filters generated from LINQ expressions.
+ 
 ## 12.11.0 (2025-05-06)
 
 ### Features Added

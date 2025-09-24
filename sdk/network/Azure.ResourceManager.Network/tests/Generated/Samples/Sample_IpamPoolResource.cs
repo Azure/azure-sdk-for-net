@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_IpamPoolsGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/IpamPools_Get.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/IpamPools_Get.json
             // this example is just showing the usage of "IpamPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_IpamPoolsDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/IpamPools_Delete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/IpamPools_Delete.json
             // this example is just showing the usage of "IpamPools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_IpamPoolsUpdate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/IpamPools_Update.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/IpamPools_Update.json
             // this example is just showing the usage of "IpamPools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPoolUsage_IpamPoolsGetPoolUsage()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/IpamPools_GetPoolUsage.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/IpamPools_GetPoolUsage.json
             // this example is just showing the usage of "IpamPools_GetPoolUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAssociatedResources_IpamPoolsListAssociatedResources()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/IpamPools_ListAssociatedResources.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/IpamPools_ListAssociatedResources.json
             // this example is just showing the usage of "IpamPools_ListAssociatedResources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -88,6 +88,72 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void AzureDeveloperCliCredential_ClaimsChallenge_NoTenant_ThrowsWithGuidance()
+        {
+            var claims = "test-claims-challenge";
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Error = "AADSTS50076: MFA required" }; // Force InvalidOperationException path
+            var credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+
+            Assert.That(ex.Message, Does.Contain("Azure Developer CLI authentication requires multi-factor authentication or additional claims."));
+            Assert.That(ex.Message, Does.Contain("azd auth login"));
+            Assert.That(ex.Message, Does.Not.Contain("--tenant-id"));
+        }
+
+        [Test]
+        public void AzureDeveloperCliCredential_ClaimsChallenge_WithTenant_ThrowsWithGuidance()
+        {
+            var claims = "test-claims-challenge";
+            var tenant = TenantId;
+            var testProcess = new TestProcess { Error = "AADSTS50076: MFA required" };
+            var credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), new AzureDeveloperCliCredentialOptions { TenantId = tenant }));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+
+            Assert.That(ex.Message, Does.Contain($"azd auth login --tenant-id {tenant}"));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("   ")]
+        public async Task AzureDeveloperCliCredential_EmptyOrWhitespaceClaims_DoesNotIncludeClaimsArgument(string claims)
+        {
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims));
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
+            Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--claims"));
+        }
+
+        [Test]
+        public async Task AzureDeveloperCliCredential_ClaimsChallenge_Base64Encoded()
+        {
+            // Arrange
+            var claimsJson = "{\"access_token\":{\"nbf\":1234567890}}"; // sample JSON claims challenge
+            var base64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(claimsJson));
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            // Act
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claimsJson));
+
+            // Assert
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
+            Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"--claims {base64}"));
+            Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain(claimsJson)); // ensure raw claims not present
+        }
+
+        [Test]
         public void AuthenticateWithCliCredential_InvalidJsonOutput(
             [Values("", "{}", "{\"Some\": false}", "{\"token\": \"token\"}", "{\"expiresOn\" : \"1900-01-01T00:00:00Z\"}")]
             string jsonContent)

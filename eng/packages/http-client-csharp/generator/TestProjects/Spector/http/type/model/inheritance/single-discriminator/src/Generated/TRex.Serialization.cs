@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    public partial class TRex : IJsonModel<TRex>
+    public partial class TRex : Dinosaur, IJsonModel<TRex>
     {
         internal TRex() => throw null;
 

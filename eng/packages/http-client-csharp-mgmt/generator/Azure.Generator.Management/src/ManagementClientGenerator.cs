@@ -53,10 +53,10 @@ namespace Azure.Generator.Management
             // renaming should come first
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());
-            AddVisitor(new SafeFlattenVisitor());
+            AddVisitor(new FlattenPropertyVisitor());
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
-            AddVisitor(new SystemObjectModelVisitor());
+            AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());

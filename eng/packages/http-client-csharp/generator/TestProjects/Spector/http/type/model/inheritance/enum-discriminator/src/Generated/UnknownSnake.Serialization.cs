@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    internal partial class UnknownSnake : IJsonModel<Snake>
+    internal partial class UnknownSnake : Snake, IJsonModel<Snake>
     {
         internal UnknownSnake() => throw null;
 

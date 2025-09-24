@@ -2070,7 +2070,12 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
-        public async Task TestMcpTool()
+        [TestCase(null, false, true)]
+        [TestCase("always", false, true)]
+        [TestCase("never", false, false)]
+        [TestCase("always", true, true)]
+        [TestCase("never", true, false)]
+        public async Task TestMcpTool(string trust, bool isPerTool, bool shouldApprove)
         {
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
@@ -2090,6 +2095,26 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             MCPToolResource mcpToolResource = new("github");
             mcpToolResource.UpdateHeader("SuperSecret", "123456");
+            if (trust is not null)
+            {
+                MCPApproval trustMode;
+                if (isPerTool)
+                {
+                    MCPApprovalPerTool perTool = new()
+                    {
+                        Never = new MCPToolList(
+                            string.Equals(trust, "never") ? ["search_azure_rest_api_code"] : []),
+                        Always = new MCPToolList(
+                            string.Equals(trust, "always") ? ["search_azure_rest_api_code"] : []),
+                    };
+                    trustMode = new(perToolApproval: perTool);
+                }
+                else
+                {
+                    trustMode = new(trust);
+                }
+                mcpToolResource.RequireApproval = trustMode;
+            }
             ToolResources toolResources = mcpToolResource.ToToolResources();
 
             // Run the agent with MCP tool resources
@@ -2126,7 +2151,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
             Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
-            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
+            Assert.AreEqual(shouldApprove, isApprovalRequested,
+                isApprovalRequested ? $"The approval was requested, but it was not expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}." : $"The approval was not requested, but it was expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}."
+            );
             Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
             AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(thread.Id, run.Id);
             bool isRunStepMCPPresent = false;
@@ -2277,6 +2304,58 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileAnnotation: fileAnnotation,
                 agentMessagePattern: searchPattern
                 );
+        }
+
+        [RecordedTest]
+        [TestCase(true, "adani")]
+        //TODO: The Image URI is not supported, uncomment this text when the ICM 686545924 will be resolved.
+        //[TestCase(false, "trail")]
+        public async Task TestImageAsInput(bool useUploaded, string expectedWord)
+        {
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent agent = await GetAgent(
+                client: client,
+                model: "gpt-4o",
+                instruction: "Analyze images from internally uploaded files."
+            );
+            PersistentAgentThread thread = client.Threads.CreateThread();
+            var contentBlocks = new List<MessageInputContentBlock>
+            {
+                new MessageInputTextBlock("Here is an uploaded file. Please describe it:"),
+            };
+            if (useUploaded)
+            {
+                // Note: To get the Image ID, please upload it using sample "Sample_PersistentAgents_ImageFileInputs."
+                contentBlocks.Add(new MessageInputImageFileBlock(new MessageImageFileParam(TestEnvironment.UPLOADED_IMAGE_ID)));
+            }
+            else
+            {
+                string uri = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg";
+                contentBlocks.Add(new MessageInputImageUriBlock(new MessageImageUriParam(uri)));
+            }
+
+            PersistentThreadMessage imageMessage = client.Messages.CreateMessage(
+                threadId: thread.Id,
+                role: MessageRole.User,
+                contentBlocks: contentBlocks
+            );
+            ThreadRun run = client.Runs.CreateRun(
+                threadId: thread.Id,
+                assistantId: agent.Id
+            );
+            run = await WaitForRun(client, run);
+            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(threadId: run.ThreadId).ToListAsync();
+            Assert.Greater(messages.Count, 0);
+            StringBuilder sbResponse = new();
+            foreach (PersistentThreadMessage msg in messages)
+            {
+                if (msg.Role == MessageRole.Agent)
+                {
+                    msg.ContentItems.Where(x => x is MessageTextContent).Select(x => ((MessageTextContent)x).Text).Aggregate(sbResponse, (sbResponse, next) => sbResponse.Append(next));
+                }
+            }
+            string response = sbResponse.ToString().ToLower();
+            Assert.That(response.Contains(expectedWord), $"The word {expectedWord} was not found in the response: {response}");
         }
 
         #region Helpers
