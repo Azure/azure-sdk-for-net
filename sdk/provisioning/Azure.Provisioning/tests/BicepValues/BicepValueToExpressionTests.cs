@@ -114,6 +114,23 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
+        public void ValidateListProperty_IndexerWithAssign()
+        {
+            var resource = new TestResource("test");
+            resource.List.Add("item1");
+            var validIndexer = resource.List[0];
+            // call Assign to change the value of this
+            validIndexer.Assign("updatedItem1");
+            TestHelpers.AssertExpression("'updatedItem1'", validIndexer);
+            TestHelpers.AssertExpression("test.list[0]", validIndexer.ToBicepExpression());
+
+            var invalidIndexer = resource.List[1]; // this is an out-of-range index
+            Assert.Throws<ArgumentOutOfRangeException>(() => invalidIndexer.ToString());
+            Assert.Throws<InvalidOperationException>(() => invalidIndexer.Assign("newItem")); // since this out of range, we can't assign a value to it
+            TestHelpers.AssertExpression("test.list[1]", invalidIndexer.ToBicepExpression());
+        }
+
+        [Test]
         public void ValidateModelListProperty_Empty()
         {
             var resource = new TestResource("test");

@@ -23,7 +23,19 @@ public class BicepValue<T> : BicepValue
     /// Gets or sets the literal value.  You can also rely on implicit
     /// conversions most of the time.
     /// </summary>
-    public T? Value => _valueFactory != null ? _valueFactory() : _value;
+    public T? Value
+    {
+        get => _valueFactory is not null ? _valueFactory() : _value;
+        private set
+        {
+            if (_valueFactory is not null)
+            {
+                throw new InvalidOperationException($"Cannot assign value for {_self?.GetReference(false)} because its value may not be valid");
+            }
+            _value = value;
+        }
+    }
+
     private protected override object? GetLiteralValue() => Value;
 
     // Get the closest primitive to T
@@ -98,7 +110,7 @@ public class BicepValue<T> : BicepValue
     {
         if (source is BicepValue<T> typed)
         {
-            _value = typed.Value;
+            Value = typed.Value;
         }
 
         // Everything else is handled by the base Assign
