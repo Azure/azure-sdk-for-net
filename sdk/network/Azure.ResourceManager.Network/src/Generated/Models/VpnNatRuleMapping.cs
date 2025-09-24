@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Address space for Vpn NatRule mapping. </summary>
+        [WirePath("addressSpace")]
         public string AddressSpace { get; set; }
         /// <summary> Port range for Vpn NatRule mapping. </summary>
+        [WirePath("portRange")]
         public string PortRange { get; set; }
     }
 }

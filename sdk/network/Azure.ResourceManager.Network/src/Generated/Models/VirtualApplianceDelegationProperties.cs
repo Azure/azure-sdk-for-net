@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The service name to which the NVA is delegated. </summary>
+        [WirePath("serviceName")]
         public string ServiceName { get; set; }
         /// <summary> Provisioning states of a resource. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

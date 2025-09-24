@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="encryptionKey"> Encryption key. </param>
         /// <param name="encryptionKeyThumbprint"> Encryption key thumbprint. </param>
         /// <param name="algorithm"> Algorithm for Vault ExtendedInfo. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="etag"> etag for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string integrityKey, string encryptionKey, string encryptionKeyThumbprint, string algorithm, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServices
         public string EncryptionKeyThumbprint { get; set; }
         /// <summary> Algorithm for Vault ExtendedInfo. </summary>
         public string Algorithm { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary> etag for the resource. </summary>
         public ETag? ETag { get; set; }
     }
 }

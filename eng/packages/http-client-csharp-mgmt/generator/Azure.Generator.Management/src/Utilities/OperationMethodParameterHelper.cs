@@ -3,9 +3,11 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Generator.Management.Utilities
@@ -16,6 +18,7 @@ namespace Azure.Generator.Management.Utilities
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             RequestPathPattern contextualPath,
+            TypeProvider? enclosingTypeProvider,
             bool forceLro = false)
         {
             var requiredParameters = new List<ParameterProvider>();
@@ -29,27 +32,36 @@ namespace Azure.Generator.Management.Utilities
 
             foreach (var parameter in serviceMethod.Operation.Parameters)
             {
-                if (parameter.Kind != InputParameterKind.Method)
+                if (parameter.Scope != InputParameterScope.Method)
                 {
                     continue;
                 }
 
                 var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
-                if (!contextualPath.TryGetContextualParameter(outputParameter, out _))
-                {
-                    if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
-                    {
-                        outputParameter.Update(name: "data");
-                    }
 
-                    if (parameter.IsRequired)
-                    {
-                        requiredParameters.Add(outputParameter);
-                    }
-                    else
-                    {
-                        optionalParameters.Add(outputParameter);
-                    }
+                if (contextualPath.TryGetContextualParameter(outputParameter, out _))
+                {
+                    continue;
+                }
+
+                if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
+                    collectionProvider.TryGetPrivateFieldParameter(outputParameter, out _))
+                {
+                    continue;
+                }
+
+                if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                {
+                    outputParameter.Update(name: "data");
+                }
+
+                if (parameter.IsRequired)
+                {
+                    requiredParameters.Add(outputParameter);
+                }
+                else
+                {
+                    optionalParameters.Add(outputParameter);
                 }
             }
 

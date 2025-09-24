@@ -2,40 +2,54 @@
 
 ## Summary
 
-- Total libraries: 407
-- Management Plane (Swagger): 170
-- Management Plane (TSP-Old): 48
+- Total libraries: 414
+- Management Plane (Swagger): 165
+- Management Plane (TSP-Old): 55
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
+- Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 4
+- Management Plane (TypeSpec - @typespec/http-client-csharp): 0
 - Data Plane (Swagger): 115
-- Data Plane (TSP-Old): 28
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 7
-- No generator: 39
+- Data Plane (TSP-Old): 27
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 8
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 0
+- Data Plane (TypeSpec - @typespec/http-client-csharp): 2
+- No generator: 38
 
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 7
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 8
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
+| ai | Azure.AI.VoiceLive | sdk/ai/Azure.AI.VoiceLive |
 | appconfiguration | Azure.Data.AppConfiguration | sdk/appconfiguration/Azure.Data.AppConfiguration |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces |
 | eventgrid | Azure.Messaging.EventGrid.SystemEvents | sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents |
 | healthdataaiservices | Azure.Health.Deidentification | sdk/healthdataaiservices/Azure.Health.Deidentification |
 | keyvault | Azure.Security.KeyVault.Administration | sdk/keyvault/Azure.Security.KeyVault.Administration |
-| openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
+| monitor | Azure.Monitor.Ingestion | sdk/monitor/Azure.Monitor.Ingestion |
 | schemaregistry | Azure.Data.SchemaRegistry | sdk/schemaregistry/Azure.Data.SchemaRegistry |
+
+
+## Data Plane Libraries using TypeSpec (@typespec/http-client-csharp)
+
+TypeSpec with @typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @typespec/http-client-csharp, or through special handling for specific libraries. Total: 2
+
+| Service | Library | Path |
+| ------- | ------- | ---- |
+| ai | Azure.AI.Projects | sdk/ai/Azure.AI.Projects |
+| openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
 
 
 ## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 28
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 27
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | ai | Azure.AI.Agents.Persistent | sdk/ai/Azure.AI.Agents.Persistent |
 | ai | Azure.AI.Inference | sdk/ai/Azure.AI.Inference |
-| ai | Azure.AI.Projects | sdk/ai/Azure.AI.Projects |
 | anomalydetector | Azure.AI.AnomalyDetector | sdk/anomalydetector/Azure.AI.AnomalyDetector |
 | batch | Azure.Compute.Batch | sdk/batch/Azure.Compute.Batch |
 | cognitivelanguage | Azure.AI.Language.Conversations | sdk/cognitivelanguage/Azure.AI.Language.Conversations |
@@ -124,13 +138,11 @@ Total: 115
 | maps | Azure.Maps.Weather | sdk/maps/Azure.Maps.Weather |
 | metricsadvisor | Azure.AI.MetricsAdvisor | sdk/metricsadvisor/Azure.AI.MetricsAdvisor |
 | mixedreality | Azure.MixedReality.Authentication | sdk/mixedreality/Azure.MixedReality.Authentication |
-| monitor | Azure.Monitor.Ingestion | sdk/monitor/Azure.Monitor.Ingestion |
 | monitor | Azure.Monitor.OpenTelemetry.Exporter | sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter |
 | monitor | Azure.Monitor.OpenTelemetry.LiveMetrics | sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics |
 | monitor | Azure.Monitor.Query | sdk/monitor/Azure.Monitor.Query |
 | objectanchors | Azure.MixedReality.ObjectAnchors.Conversion | sdk/objectanchors/Azure.MixedReality.ObjectAnchors.Conversion |
 | personalizer | Azure.AI.Personalizer | sdk/personalizer/Azure.AI.Personalizer |
-| playwrighttesting | Azure.Developer.MicrosoftPlaywrightTesting.TestLogger | sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.TestLogger |
 | provisioning | Azure.Provisioning | sdk/provisioning/Azure.Provisioning |
 | provisioning | Azure.Provisioning.AppConfiguration | sdk/provisioning/Azure.Provisioning.AppConfiguration |
 | provisioning | Azure.Provisioning.AppContainers | sdk/provisioning/Azure.Provisioning.AppContainers |
@@ -146,6 +158,8 @@ Total: 115
 | provisioning | Azure.Provisioning.KeyVault | sdk/provisioning/Azure.Provisioning.KeyVault |
 | provisioning | Azure.Provisioning.Kubernetes | sdk/provisioning/Azure.Provisioning.Kubernetes |
 | provisioning | Azure.Provisioning.KubernetesConfiguration | sdk/provisioning/Azure.Provisioning.KubernetesConfiguration |
+| provisioning | Azure.Provisioning.Kusto | sdk/provisioning/Azure.Provisioning.Kusto |
+| provisioning | Azure.Provisioning.Network | sdk/provisioning/Azure.Provisioning.Network |
 | provisioning | Azure.Provisioning.OperationalInsights | sdk/provisioning/Azure.Provisioning.OperationalInsights |
 | provisioning | Azure.Provisioning.PostgreSql | sdk/provisioning/Azure.Provisioning.PostgreSql |
 | provisioning | Azure.Provisioning.Redis | sdk/provisioning/Azure.Provisioning.Redis |
@@ -186,15 +200,28 @@ Total: 115
 | webpubsub | Azure.Messaging.WebPubSub | sdk/webpubsub/Azure.Messaging.WebPubSub |
 
 
+## Management Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp-mgmt)
+
+TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp-mgmt, or through special handling for specific libraries. Total: 4
+
+| Service | Library | Path |
+| ------- | ------- | ---- |
+| computerecommender | Azure.ResourceManager.Compute.Recommender | sdk/computerecommender/Azure.ResourceManager.Compute.Recommender |
+| hybridkubernetes | Azure.ResourceManager.Kubernetes | sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes |
+| portalservices | Azure.ResourceManager.PortalServicesCopilot | sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot |
+| storageactions | Azure.ResourceManager.StorageActions | sdk/storageactions/Azure.ResourceManager.StorageActions |
+
+
 ## Management Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 48
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 55
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | sdk/agricultureplatform/Azure.ResourceManager.AgriculturePlatform |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval |
 | avs | Azure.ResourceManager.Avs | sdk/avs/Azure.ResourceManager.Avs |
+| azurestackhci | Azure.ResourceManager.Hci.Vm | sdk/azurestackhci/Azure.ResourceManager.Hci.Vm |
 | carbon | Azure.ResourceManager.CarbonOptimization | sdk/carbon/Azure.ResourceManager.CarbonOptimization |
 | chaos | Azure.ResourceManager.Chaos | sdk/chaos/Azure.ResourceManager.Chaos |
 | cloudhealth | Azure.ResourceManager.CloudHealth | sdk/cloudhealth/Azure.ResourceManager.CloudHealth |
@@ -203,11 +230,13 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | connectedcache | Azure.ResourceManager.ConnectedCache | sdk/connectedcache/Azure.ResourceManager.ConnectedCache |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | sdk/databasewatcher/Azure.ResourceManager.DatabaseWatcher |
+| databox | Azure.ResourceManager.DataBox | sdk/databox/Azure.ResourceManager.DataBox |
 | dellstorage | Azure.ResourceManager.Dell.Storage | sdk/dellstorage/Azure.ResourceManager.Dell.Storage |
 | dependencymap | Azure.ResourceManager.DependencyMap | sdk/dependencymap/Azure.ResourceManager.DependencyMap |
 | deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices |
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry |
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | sdk/devopsinfrastructure/Azure.ResourceManager.DevOpsInfrastructure |
+| disconnectedoperations | Azure.ResourceManager.DisconnectedOperations | sdk/disconnectedoperations/Azure.ResourceManager.DisconnectedOperations |
 | durabletask | Azure.ResourceManager.DurableTask | sdk/durabletask/Azure.ResourceManager.DurableTask |
 | elasticsan | Azure.ResourceManager.ElasticSan | sdk/elasticsan/Azure.ResourceManager.ElasticSan |
 | fabric | Azure.ResourceManager.Fabric | sdk/fabric/Azure.ResourceManager.Fabric |
@@ -226,25 +255,29 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | pineconevectordb | Azure.ResourceManager.PineconeVectorDB | sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | sdk/planetarycomputer/Azure.ResourceManager.PlanetaryComputer |
 | playwright | Azure.ResourceManager.Playwright | sdk/playwright/Azure.ResourceManager.Playwright |
-| playwrighttesting | Azure.ResourceManager.PlaywrightTesting | sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting |
-| portalservices | Azure.ResourceManager.PortalServicesCopilot | sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock |
+| quota | Azure.ResourceManager.Quota | sdk/quota/Azure.ResourceManager.Quota |
+| recoveryservices | Azure.ResourceManager.RecoveryServices | sdk/recoveryservices/Azure.ResourceManager.RecoveryServices |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication |
+| resources | Azure.ResourceManager.Resources.Bicep | sdk/resources/Azure.ResourceManager.Resources.Bicep |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension |
+| selfhelp | Azure.ResourceManager.SelfHelp | sdk/selfhelp/Azure.ResourceManager.SelfHelp |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking |
 | sitemanager | Azure.ResourceManager.SiteManager | sdk/sitemanager/Azure.ResourceManager.SiteManager |
 | standbypool | Azure.ResourceManager.StandbyPool | sdk/standbypool/Azure.ResourceManager.StandbyPool |
-| storageactions | Azure.ResourceManager.StorageActions | sdk/storageactions/Azure.ResourceManager.StorageActions |
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | sdk/storagediscovery/Azure.ResourceManager.StorageDiscovery |
+| storagemover | Azure.ResourceManager.StorageMover | sdk/storagemover/Azure.ResourceManager.StorageMover |
 | terraform | Azure.ResourceManager.Terraform | sdk/terraform/Azure.ResourceManager.Terraform |
+| virtualenclaves | Azure.ResourceManager.VirtualEnclaves | sdk/virtualenclaves/Azure.ResourceManager.VirtualEnclaves |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases |
+| workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | sdk/workloadorchestration/Azure.ResourceManager.WorkloadOrchestration |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance |
 
 
 ## Management Plane Libraries using Swagger
 
-Total: 170
+Total: 165
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -288,7 +321,6 @@ Total: 170
 | cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql | sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql |
 | costmanagement | Azure.ResourceManager.CostManagement | sdk/costmanagement/Azure.ResourceManager.CostManagement |
 | customer-insights | Azure.ResourceManager.CustomerInsights | sdk/customer-insights/Azure.ResourceManager.CustomerInsights |
-| databox | Azure.ResourceManager.DataBox | sdk/databox/Azure.ResourceManager.DataBox |
 | databoxedge | Azure.ResourceManager.DataBoxEdge | sdk/databoxedge/Azure.ResourceManager.DataBoxEdge |
 | datadog | Azure.ResourceManager.Datadog | sdk/datadog/Azure.ResourceManager.Datadog |
 | datafactory | Azure.ResourceManager.DataFactory | sdk/datafactory/Azure.ResourceManager.DataFactory |
@@ -324,7 +356,6 @@ Total: 170
 | healthcareapis | Azure.ResourceManager.HealthcareApis | sdk/healthcareapis/Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService | sdk/hybridaks/Azure.ResourceManager.HybridContainerService |
 | hybridcompute | Azure.ResourceManager.HybridCompute | sdk/hybridcompute/Azure.ResourceManager.HybridCompute |
-| hybridkubernetes | Azure.ResourceManager.Kubernetes | sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes |
 | hybridnetwork | Azure.ResourceManager.HybridNetwork | sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork |
 | iot | Azure.ResourceManager.IotFirmwareDefense | sdk/iot/Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral | sdk/iotcentral/Azure.ResourceManager.IotCentral |
@@ -374,8 +405,6 @@ Total: 170
 | purview | Azure.ResourceManager.Purview | sdk/purview/Azure.ResourceManager.Purview |
 | quantum | Azure.ResourceManager.Quantum | sdk/quantum/Azure.ResourceManager.Quantum |
 | qumulo | Azure.ResourceManager.Qumulo | sdk/qumulo/Azure.ResourceManager.Qumulo |
-| quota | Azure.ResourceManager.Quota | sdk/quota/Azure.ResourceManager.Quota |
-| recoveryservices | Azure.ResourceManager.RecoveryServices | sdk/recoveryservices/Azure.ResourceManager.RecoveryServices |
 | recoveryservices-backup | Azure.ResourceManager.RecoveryServicesBackup | sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup |
 | recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery | sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery |
 | redis | Azure.ResourceManager.Redis | sdk/redis/Azure.ResourceManager.Redis |
@@ -388,12 +417,12 @@ Total: 170
 | resourcemanager | Azure.ResourceManager | sdk/resourcemanager/Azure.ResourceManager |
 | resourcemover | Azure.ResourceManager.ResourceMover | sdk/resourcemover/Azure.ResourceManager.ResourceMover |
 | resources | Azure.ResourceManager.Resources | sdk/resources/Azure.ResourceManager.Resources |
+| resources | Azure.ResourceManager.Resources.Deployments | sdk/resources/Azure.ResourceManager.Resources.Deployments |
 | resources | Azure.ResourceManager.Resources.DeploymentStacks | sdk/resources/Azure.ResourceManager.Resources.DeploymentStacks |
 | search | Azure.ResourceManager.Search | sdk/search/Azure.ResourceManager.Search |
 | securitycenter | Azure.ResourceManager.SecurityCenter | sdk/securitycenter/Azure.ResourceManager.SecurityCenter |
 | securitydevops | Azure.ResourceManager.SecurityDevOps | sdk/securitydevops/Azure.ResourceManager.SecurityDevOps |
 | securityinsights | Azure.ResourceManager.SecurityInsights | sdk/securityinsights/Azure.ResourceManager.SecurityInsights |
-| selfhelp | Azure.ResourceManager.SelfHelp | sdk/selfhelp/Azure.ResourceManager.SelfHelp |
 | servicebus | Azure.ResourceManager.ServiceBus | sdk/servicebus/Azure.ResourceManager.ServiceBus |
 | servicefabric | Azure.ResourceManager.ServiceFabric | sdk/servicefabric/Azure.ResourceManager.ServiceFabric |
 | servicelinker | Azure.ResourceManager.ServiceLinker | sdk/servicelinker/Azure.ResourceManager.ServiceLinker |
@@ -404,7 +433,6 @@ Total: 170
 | sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine | sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine |
 | storage | Azure.ResourceManager.Storage | sdk/storage/Azure.ResourceManager.Storage |
 | storagecache | Azure.ResourceManager.StorageCache | sdk/storagecache/Azure.ResourceManager.StorageCache |
-| storagemover | Azure.ResourceManager.StorageMover | sdk/storagemover/Azure.ResourceManager.StorageMover |
 | storagepool | Azure.ResourceManager.StoragePool | sdk/storagepool/Azure.ResourceManager.StoragePool |
 | storagesync | Azure.ResourceManager.StorageSync | sdk/storagesync/Azure.ResourceManager.StorageSync |
 | streamanalytics | Azure.ResourceManager.StreamAnalytics | sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics |
@@ -422,7 +450,7 @@ Total: 170
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 39
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 38
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -454,7 +482,6 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 | loadtestservice | Azure.Developer.Playwright.NUnit | sdk/loadtestservice/Azure.Developer.Playwright.NUnit |
 | modelsrepository | Azure.IoT.ModelsRepository | sdk/modelsrepository/Azure.IoT.ModelsRepository |
 | monitor | Azure.Monitor.OpenTelemetry.AspNetCore | sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore |
-| playwrighttesting | Azure.Developer.MicrosoftPlaywrightTesting.NUnit | sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit |
 | provisioning | Azure.Provisioning.Deployment | sdk/provisioning/Azure.Provisioning.Deployment |
 | provisioning | Generator | sdk/provisioning/Generator |
 | servicebus | Azure.Messaging.ServiceBus | sdk/servicebus/Azure.Messaging.ServiceBus |

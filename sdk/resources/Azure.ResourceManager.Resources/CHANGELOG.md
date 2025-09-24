@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.11.1 (2025-08-20)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Resources` AOT-compatible
+
 ## 1.11.0 (2025-06-23)
 
 ### Features Added

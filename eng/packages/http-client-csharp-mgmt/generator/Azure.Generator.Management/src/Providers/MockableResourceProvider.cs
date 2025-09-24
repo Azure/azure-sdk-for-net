@@ -8,11 +8,11 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
@@ -205,19 +205,12 @@ namespace Azure.Generator.Management.Providers
         {
             if (resource.IsSingleton)
             {
-                var resourceMethodSignature = new MethodSignature(
-                    $"Get{resource.ResourceName}",
-                    $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the {ArmCoreType:C}.",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    resource.Type,
-                    $"Returns a {resource.Type:C} object.",
-                    []
-                    );
+                var resourceMethodSignature = resource.FactoryMethodSignature;
                 var bodyStatement = Return(
                     New.Instance(
                         resource.Type,
                         This.As<ArmResource>().Client(),
-                        BuildSingletonResourceIdentifier(resource.ResourceTypeValue, resource.SingletonResourceName!)));
+                        BuildSingletonResourceIdentifier(This.As<ArmResource>().Id(), resource.ResourceTypeValue, resource.SingletonResourceName!)));
                 yield return new MethodProvider(
                     resourceMethodSignature,
                     bodyStatement,
@@ -225,19 +218,13 @@ namespace Azure.Generator.Management.Providers
             }
             else
             {
-                var collection = resource.ResourceCollection!;
                 // the first method is returning the collection
-                var pluralOfResourceName = resource.ResourceName.Pluralize();
-                var collectionMethodSignature = new MethodSignature(
-                    $"Get{pluralOfResourceName}",
-                    $"Gets a collection of {pluralOfResourceName} in the {ArmCoreType:C}",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    collection.Type,
-                    $"An object representing collection of {pluralOfResourceName} and their operations over a {resource.Name}.",
-                    []
-                    );
+                var collection = resource.ResourceCollection!;
+                var collectionMethodSignature = resource.FactoryMethodSignature;
+                var pathParameters = collection.PathParameters;
+                collectionMethodSignature.Update(parameters: [.. collectionMethodSignature.Parameters, .. pathParameters]);
 
-                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, client, This.As<ArmResource>().Id())));
+                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, [client, This.As<ArmResource>().Id(), .. pathParameters])));
                 yield return new MethodProvider(
                     collectionMethodSignature,
                     bodyStatement,
@@ -249,16 +236,16 @@ namespace Azure.Generator.Management.Providers
                 if (getAsyncMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, $"Get{resource.ResourceName}Async");
+                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, pathParameters, $"Get{resource.ResourceName}Async");
                 }
 
                 if (getMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, $"Get{resource.ResourceName}");
+                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, pathParameters, $"Get{resource.ResourceName}");
                 }
 
-                static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, string methodName)
+                static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, IReadOnlyList<ParameterProvider> pathParameters, string methodName)
                 {
                     var signature = new MethodSignature(
                         methodName,
@@ -266,7 +253,7 @@ namespace Azure.Generator.Management.Providers
                         resourceGetMethod.Signature.Modifiers,
                         resourceGetMethod.Signature.ReturnType,
                         resourceGetMethod.Signature.ReturnDescription,
-                        resourceGetMethod.Signature.Parameters,
+                        [.. pathParameters, .. resourceGetMethod.Signature.Parameters],
                         Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
                     return new MethodProvider(
@@ -281,7 +268,6 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
-
             return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
         }
 
@@ -290,12 +276,12 @@ namespace Azure.Generator.Management.Providers
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName: methodName),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName: methodName)
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName),
+                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName)
             };
         }
 
-        private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
+        public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)
         {
             var segments = resourceType.Split('/');
             if (segments.Length < 2)
@@ -314,7 +300,7 @@ namespace Azure.Generator.Management.Providers
                     $"Tuple singleton resource type is not implemented yet.");
                 return Null.CastTo(typeof(ResourceIdentifier));
             }
-            return This.As<ArmResource>().Id().AppendProviderResource(Literal(segments[0]), Literal(segments[1]), Literal(resourceName));
+            return resourceId.AppendProviderResource(Literal(segments[0]), Literal(segments[1]), Literal(resourceName));
         }
     }
 }

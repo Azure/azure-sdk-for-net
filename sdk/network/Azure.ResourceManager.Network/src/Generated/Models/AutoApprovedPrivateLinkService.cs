@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The id of the private link service resource. </summary>
+        [WirePath("privateLinkService")]
         public string PrivateLinkService { get; }
     }
 }

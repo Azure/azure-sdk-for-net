@@ -1,6 +1,6 @@
 # Azure Identity client library for .NET
 
-The Azure Identity library provides [Microsoft Entra ID](https://learn.microsoft.com/entra/fundamentals/whatis) ([formerly Azure Active Directory](https://learn.microsoft.com/entra/fundamentals/new-name)) token authentication support across the Azure SDK. It provides a set of [`TokenCredential`](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementations that can be used to construct Azure SDK clients that support Microsoft Entra token authentication.
+The Azure Identity library provides [Microsoft Entra ID](https://learn.microsoft.com/entra/fundamentals/whatis) token-based authentication support across the Azure SDK. It provides a set of [`TokenCredential`](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementations that can be used to construct Azure SDK clients that support Microsoft Entra token authentication.
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][identity_api_docs] | [Microsoft Entra ID documentation][entraid_doc]
 
@@ -202,6 +202,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |[`AzureDeveloperCliCredential`][ref_AzureDeveloperCliCredential]|Authenticates in a development environment with the Azure Developer CLI. | [Azure Developer CLI Reference](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference)|
 |[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|Authenticates in a development environment with the Azure PowerShell. | [Azure PowerShell authentication](https://learn.microsoft.com/powershell/azure/authenticate-azureps)|
 |[`VisualStudioCredential`][ref_VisualStudioCredential]|Authenticates in a development environment with Visual Studio. | [Visual Studio configuration](https://learn.microsoft.com/dotnet/azure/configure-visual-studio)|
+|[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]|Authenticates in a development environment with Visual Studio Code. | [Visual Studio Code configuration](https://learn.microsoft.com/dotnet/azure/configure-vs-code)|
 
 > __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used by multiple service clients.
 
@@ -255,7 +256,7 @@ The Azure Identity library offers both in-memory and persistent disk caching. Fo
 
 ## Brokered authentication
 
-An authentication broker is an app that runs on a user's machine and manages the authentication handshakes and token maintenance for connected accounts. Currently, only Windows is supported via Web Account Manager (WAM). To enable support, use the [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.Broker) package.
+An authentication broker is an app that runs on a user's machine and manages the authentication handshakes and token maintenance for connected accounts. To enable support, use the [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.Broker) package.
 
 ## Troubleshooting
 
@@ -355,6 +356,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_ManagedIdentityCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.managedidentitycredential?view=azure-dotnet
 [ref_OnBehalfOfCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.onbehalfofcredential?view=azure-dotnet
 [ref_VisualStudioCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet
+[ref_VisualStudioCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocodecredential?view=azure-dotnet
 [ref_WorkloadIdentityCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.workloadidentitycredential?view=azure-dotnet
 [cae]: https://learn.microsoft.com/entra/identity/conditional-access/concept-continuous-access-evaluation
 [sami_doc]: https://learn.microsoft.com/dotnet/azure/sdk/authentication/system-assigned-managed-identity

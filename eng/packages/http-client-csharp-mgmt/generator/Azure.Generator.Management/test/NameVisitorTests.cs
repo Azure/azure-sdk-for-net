@@ -21,7 +21,7 @@ namespace Azure.Generator.Mgmt.Tests
             var modelProperty = InputFactory.Property(TestProtyName, InputPrimitiveType.String, serializedName: "testName", isRequired: true);
             var model = InputFactory.Model(TestModelName, properties: [modelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
-            var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
 
             var client = InputFactory.Client(
@@ -45,7 +45,7 @@ namespace Azure.Generator.Mgmt.Tests
             var modelProperty = InputFactory.Property("TestName", InputPrimitiveType.String, serializedName: "testName", isRequired: true);
             var model = InputFactory.Model(skuModelName, properties: [modelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
-            var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
 
             var client = InputFactory.Client(
@@ -75,7 +75,7 @@ namespace Azure.Generator.Mgmt.Tests
             var enumName = "PrivateEndpointServiceConnectionStatus";
             var stringEnum = InputFactory.StringEnum(enumName, [("a", "a"), ("b", "b")]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: stringEnum);
-            var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
 
             var client = InputFactory.Client(

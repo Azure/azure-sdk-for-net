@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The port to connect to. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
         /// <summary> Value indicating whether path evaluation with trace route should be disabled. </summary>
+        [WirePath("disableTraceRoute")]
         public bool? DisableTraceRoute { get; set; }
         /// <summary> Destination port behavior. </summary>
+        [WirePath("destinationPortBehavior")]
         public DestinationPortBehavior? DestinationPortBehavior { get; set; }
     }
 }

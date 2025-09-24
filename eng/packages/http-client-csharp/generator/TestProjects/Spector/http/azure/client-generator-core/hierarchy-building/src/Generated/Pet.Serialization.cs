@@ -8,10 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 
 namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
 {
-    public partial class Pet : IJsonModel<Pet>
+    public partial class Pet : Animal, IJsonModel<Pet>
     {
         internal Pet() => throw null;
 
@@ -32,5 +34,10 @@ namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
         protected override Animal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="pet"> The <see cref="Pet"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Pet pet) => throw null;
+
+        public static explicit operator Pet(Response result) => throw null;
     }
 }

@@ -22,5 +22,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public string BING_CUSTOM_CONNECTION_ID => GetRecordedVariable("AZURE_BING_CUSTOM_CONNECTION_ID");
         public string DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME => GetRecordedOptionalVariable("DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME");
         public string BING_CONFIGURATION_NAME => GetRecordedOptionalVariable("BING_CONFIGURATION_NAME");
+        public string PLAYWRIGHT_CONNECTION_ID => GetRecordedOptionalVariable("AZURE_PLAYWRIGHT_CONNECTION_ID");
+        public string UPLOADED_IMAGE_ID => GetRecordedOptionalVariable("UPLOADED_IMAGE_ID");
     }
 }

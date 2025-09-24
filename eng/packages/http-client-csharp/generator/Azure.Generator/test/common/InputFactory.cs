@@ -667,7 +667,8 @@ namespace Azure.Generator.Tests.Common
                 methods is null ? [] : [.. methods],
                 parameters is null ? [] : [.. parameters],
                 parent,
-                clientChildren
+                clientChildren,
+                []
                 );
             _childClientsCache[client] = clientChildren;
             // when we have a parent, we need to find the children list of this parent client and update accordingly.

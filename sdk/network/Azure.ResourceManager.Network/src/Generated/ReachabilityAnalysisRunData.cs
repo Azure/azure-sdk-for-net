@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Represents the Reachability Analysis Run properties. </summary>
+        [WirePath("properties")]
         public ReachabilityAnalysisRunProperties Properties { get; set; }
     }
 }

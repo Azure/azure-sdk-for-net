@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.4 (Unreleased)
+## 1.3.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.4 (2025-09-16)
+
+### Bugs Fixed
+
+- Added missing ContainerGroup properties: ConfigMap, ContainerGroupProfile, StandbyPoolProfile, and IsCreatedFromStandbyPool.
+- Corrected required flag on properties in Container and ContainerGroup models.
+- Fixed the response handling for ContainerGroupProfile DELETE operation.
+- Aligned requiredness of ContainerGroupProfile properties and normalized the Revision property format with the existing codebase.
 
 ## 1.3.0-beta.3 (2025-08-11)
 

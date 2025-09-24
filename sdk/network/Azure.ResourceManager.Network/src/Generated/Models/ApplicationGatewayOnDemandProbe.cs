@@ -76,20 +76,27 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The protocol used for the probe. </summary>
+        [WirePath("protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> Host name to send the probe to. </summary>
+        [WirePath("host")]
         public string Host { get; set; }
         /// <summary> Relative path of probe. Valid path starts from '/'. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </summary>
+        [WirePath("timeout")]
         public int? Timeout { get; set; }
         /// <summary> Whether the host header should be picked from the backend http settings. Default value is false. </summary>
+        [WirePath("pickHostNameFromBackendHttpSettings")]
         public bool? PickHostNameFromBackendHttpSettings { get; set; }
         /// <summary> Criterion for classifying a healthy probe response. </summary>
+        [WirePath("match")]
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
         /// <summary> Reference to backend pool of application gateway to which probe request will be sent. </summary>
         internal WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("backendAddressPool.id")]
         public ResourceIdentifier BackendAddressPoolId
         {
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
@@ -104,6 +111,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Reference to backend http setting of application gateway to be used for test probe. </summary>
         internal WritableSubResource BackendHttpSettings { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("backendHttpSettings.id")]
         public ResourceIdentifier BackendHttpSettingsId
         {
             get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;

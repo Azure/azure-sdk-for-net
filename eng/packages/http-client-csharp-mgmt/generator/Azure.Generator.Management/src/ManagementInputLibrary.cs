@@ -15,12 +15,42 @@ namespace Azure.Generator.Management
     {
         private const string ResourceMetadataDecoratorName = "Azure.ClientGenerator.Core.@resourceSchema";
         private const string NonResourceMethodMetadata = "Azure.ClientGenerator.Core.@nonResourceMethodSchema";
+        private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
 
         private IReadOnlyDictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
+
+        private IReadOnlyDictionary<InputModelType, IList<InputModelProperty>>? _flattenPropertyMap;
+        internal IReadOnlyDictionary<InputModelType, IList<InputModelProperty>> FlattenPropertyMap => _flattenPropertyMap ??= BuildFlattenPropertyMap();
+        private IReadOnlyDictionary<InputModelType, IList<InputModelProperty>> BuildFlattenPropertyMap()
+        {
+            var result = new Dictionary<InputModelType, IList<InputModelProperty>>();
+            foreach (var model in InputNamespace.Models)
+            {
+                foreach (var property in model.Properties)
+                {
+                    if (property.Decorators.Any(d => d.Name == FlattenPropertyDecoratorName))
+                    {
+                        // skip discriminator property
+                        if (property.IsDiscriminator)
+                        {
+                            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning", "Discriminator property should not be flattened.", targetCrossLanguageDefinitionId: model.CrossLanguageDefinitionId);
+                            continue;
+                        }
+                        if (!result.TryGetValue(model, out var properties))
+                        {
+                            properties = new List<InputModelProperty>();
+                            result[model] = properties;
+                        }
+                        properties.Add(property);
+                    }
+                }
+            }
+            return result;
+        }
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
@@ -116,13 +146,27 @@ namespace Azure.Generator.Management
         private IReadOnlyList<ResourceMetadata> DeserializeResourceMetadata()
         {
             var resourceMetadata = new List<ResourceMetadata>();
+            var resourceChildren = new Dictionary<string, List<string>>();
+            // we build the resource metadata instances first to ensure that we already have everything before we figure out the children
             foreach (var model in InputNamespace.Models)
             {
                 var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
                 if (decorator?.Arguments != null)
                 {
-                    var metadata = ResourceMetadata.DeserializeResourceMetadata(decorator.Arguments, model);
+                    var children = new List<string>();
+                    var metadata = ResourceMetadata.DeserializeResourceMetadata(decorator.Arguments, model, children);
                     resourceMetadata.Add(metadata);
+                    resourceChildren.Add(metadata.ResourceIdPattern, children);
+                }
+            }
+            // we go a second pass to fulfill the children list
+            foreach (var resource in resourceMetadata)
+            {
+                // finds my parent
+                if (resource.ParentResourceId is not null)
+                {
+                    // add the resource id to the parent's children list
+                    resourceChildren[resource.ParentResourceId].Add(resource.ResourceIdPattern);
                 }
             }
             return resourceMetadata;

@@ -164,8 +164,9 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 
 Console.WriteLine("Complete a chat");
 ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
@@ -212,22 +213,23 @@ The code below shows some Deployments operations, which allow you to enumerate t
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List all deployments:");
-foreach (AIDeployment deployment in projectClient.Deployments.GetDeployments())
+foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-foreach (AIDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
-ModelDeployment deploymentDetails = projectClient.Deployments.GetModelDeployment(modelDeploymentName);
+ModelDeployment deploymentDetails = (ModelDeployment)projectClient.Deployments.GetDeployment(modelDeploymentName);
 Console.WriteLine(deploymentDetails);
 ```
 
@@ -254,19 +256,19 @@ foreach (ConnectionProperties connection in projectClient.Connections.GetConnect
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-ConnectionProperties specificConnection = projectClient.Connections.Get(connectionName, includeCredentials: false);
+ConnectionProperties specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-ConnectionProperties specificConnectionCredentials = projectClient.Connections.Get(connectionName, includeCredentials: true);
+ConnectionProperties specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
-ConnectionProperties defaultConnection = projectClient.Connections.GetDefault(includeCredentials: false);
+ConnectionProperties defaultConnection = projectClient.Connections.GetDefaultConnection(includeCredentials: false);
 Console.WriteLine(defaultConnection);
 
 Console.WriteLine($"Get the properties of the default connection with credentials:");
-ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefault(includeCredentials: true);
+ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefaultConnection(includeCredentials: true);
 Console.WriteLine(defaultConnectionCredentials);
 ```
 
@@ -282,9 +284,10 @@ var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION
 var datasetVersion2 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_2") ?? "2.0";
 var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
 var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH") ?? "sample_folder";
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
-Console.WriteLine($"Uploading a single file to create Dataset version {datasetVersion1}:");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+
+Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
 FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
     name: datasetName,
     version: datasetVersion1,
@@ -305,27 +308,28 @@ Console.WriteLine(folderDataset);
 
 Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
 DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
-Console.WriteLine(dataset);
+Console.WriteLine(dataset.Id);
 
 Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
-AssetCredentialResponse credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
+DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
 Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-foreach (DatasetVersion ds in projectClient.Datasets.GetVersions(datasetName))
+foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
 {
     Console.WriteLine(ds);
     Console.WriteLine(ds.Version);
 }
 
 Console.WriteLine($"Listing latest versions for all datasets:");
-foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions())
+foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
 {
-    Console.WriteLine(ds);
+    Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
 }
 
 Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}:");
 projectClient.Datasets.Delete(datasetName, datasetVersion1);
+
 projectClient.Datasets.Delete(datasetName, datasetVersion2);
 ```
 
@@ -339,19 +343,20 @@ var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
 var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
+
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
-RequestContent content = RequestContent.Create(new
+BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
 {
     connectionName = aiSearchConnectionName,
     indexName = aiSearchIndexName,
     type = "AzureSearch",
     description = "Sample Index for testing",
     displayName = "Sample Index"
-});
+}));
 
 Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-var index = projectClient.Indexes.CreateOrUpdate(
+SearchIndex index = (SearchIndex)projectClient.Indexes.CreateOrUpdate(
     name: indexName,
     version: indexVersion,
     content: content
@@ -359,17 +364,17 @@ var index = projectClient.Indexes.CreateOrUpdate(
 Console.WriteLine(index);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-DatasetIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
+SearchIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
 Console.WriteLine(retrievedIndex);
 
 Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-foreach (DatasetIndex version in projectClient.Indexes.GetVersions(name: indexName))
+foreach (SearchIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine($"Listing all Indices:");
-foreach (DatasetIndex version in projectClient.Indexes.GetIndices())
+foreach (SearchIndex version in projectClient.Indexes.GetIndexes())
 {
     Console.WriteLine(version);
 }
@@ -387,7 +392,7 @@ try
 {
     projectClient.Datasets.GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
 }
-catch (RequestFailedException ex) when (ex.Status == 404)
+catch (ClientResultException ex) when (ex.Status == 404)
 {
     Console.WriteLine($"Exception status code: {ex.Status}");
     Console.WriteLine($"Exception message: {ex.Message}");

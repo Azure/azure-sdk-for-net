@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> Represents the Custom Bing Grounding tool call in a streaming run step. </summary>
+    /// <summary> Represents the Bing Custom Search tool call in a streaming run step. </summary>
     public partial class RunStepDeltaCustomBingGroundingToolCall : RunStepDeltaToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaCustomBingGroundingToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="bingCustomSearch"> The dictionary with request and response from Custom Bing Grounding search tool. </param>
+        /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="bingCustomSearch"/> is null. </exception>
         internal RunStepDeltaCustomBingGroundingToolCall(int index, string id, IReadOnlyDictionary<string, string> bingCustomSearch) : base(index, id)
         {
@@ -32,7 +32,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="bingCustomSearch"> The dictionary with request and response from Custom Bing Grounding search tool. </param>
+        /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
         internal RunStepDeltaCustomBingGroundingToolCall(int index, string id, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> bingCustomSearch) : base(index, id, type, serializedAdditionalRawData)
         {
             BingCustomSearch = bingCustomSearch;
@@ -43,7 +43,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> The dictionary with request and response from Custom Bing Grounding search tool. </summary>
+        /// <summary> The dictionary with request and response from Bing Custom Search tool. </summary>
         public IReadOnlyDictionary<string, string> BingCustomSearch { get; }
     }
 }

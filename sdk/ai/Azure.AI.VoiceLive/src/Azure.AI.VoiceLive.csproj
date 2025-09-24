@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>
+      This is the Azure.AI.VoiceLive client library for working with the Azure VoiceLive service.
+
+      Azure VoiceLive is a managed service that enables low-latency, high-quality speech-to-speech interactions for voice agents. The API consolidates speech recognition, generative AI, and text-to-speech functionalities into a single, unified interface, providing an end-to-end solution for creating seamless voice-driven experiences.
+
+      Use the client library to:
+
+      * Create real-time voice assistants and conversational agents
+      * Build speech-to-speech applications with minimal latency
+      * Integrate advanced conversational features like noise suppression and echo cancellation
+      * Leverage multiple AI models (GPT-4o, GPT-4o-mini, Phi) for different use cases
+      * Implement function calling and tool integration for dynamic responses
+      * Create avatar-enabled voice interactions with visual components
+
+      See https://aka.ms/voicelivesdk-net for more information.
+    </Description>
+    <AssemblyTitle>Microsoft Azure.AI.VoiceLive client library</AssemblyTitle>
+    <Version>1.0.0-beta.3</Version>
+    <PackageTags>Azure.AI.VoiceLive</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="VoiceLiveClient.Overrides.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+</Project>

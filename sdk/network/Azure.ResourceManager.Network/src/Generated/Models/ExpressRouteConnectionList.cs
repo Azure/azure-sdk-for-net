@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of ExpressRoute connections. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ExpressRouteConnectionData> Value { get; }
     }
 }
