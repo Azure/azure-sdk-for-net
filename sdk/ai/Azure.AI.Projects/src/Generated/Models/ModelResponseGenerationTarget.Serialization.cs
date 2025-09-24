@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Evaluation target for generating responses using a given model and dataset. </summary>
-    public partial class ModelResponseGenerationTarget : IJsonModel<ModelResponseGenerationTarget>
+    public partial class ModelResponseGenerationTarget : EvaluationTarget, IJsonModel<ModelResponseGenerationTarget>
     {
         /// <summary> Initializes a new instance of <see cref="ModelResponseGenerationTarget"/> for deserialization. </summary>
         internal ModelResponseGenerationTarget()
