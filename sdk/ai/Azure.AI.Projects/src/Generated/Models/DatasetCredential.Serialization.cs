@@ -141,7 +141,8 @@ namespace Azure.AI.Projects
         public static explicit operator DatasetCredential(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeDatasetCredential(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
