@@ -97,7 +97,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
       else {
         # respect the ci file first, but if it is not specified, then we should check the project file
-        Write-Host "using is aot compatible from csproj = $isAotCompatible "
+        Write-Host "using is aot compatible from $csprojPath = $isAotCompatible "
         $pkgProp.CIParameters["CheckAOTCompat"] = $isAotCompatible
       }
 
