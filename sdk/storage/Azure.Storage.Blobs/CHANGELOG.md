@@ -1,6 +1,6 @@
 # Release History
 
-## 12.25.1 (2025-09-23)
+## 12.25.1 (2025-09-24)
 
 ### Bugs Fixed
 - Fixed bug for processing partitioned downloads for empty blobs with content validation enabled.
