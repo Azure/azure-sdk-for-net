@@ -58,8 +58,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             _logger.LogInformation($"Querying partition information for {partitions.Length} partitions.");
 
             // Limit number of concurrent requests to eventhub client
-            const int ConcurrencyLimit = 50;
-            const int WaitTimeoutMs = 5000;
+            int ConcurrencyLimit = Environment.ProcessorCount * 2;
+            const int WaitTimeoutMs = 25000;
             using var semaphore = new SemaphoreSlim(ConcurrencyLimit, ConcurrencyLimit);
             using var cts = new CancellationTokenSource();
 
