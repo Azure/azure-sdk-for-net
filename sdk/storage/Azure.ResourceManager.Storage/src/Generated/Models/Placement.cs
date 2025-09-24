@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Protocol settings for file service. </summary>
-    internal partial class ProtocolSettings
+    /// <summary> The complex type of the zonal placement details. </summary>
+    internal partial class Placement
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProtocolSettings"/>. </summary>
-        public ProtocolSettings()
+        /// <summary> Initializes a new instance of <see cref="Placement"/>. </summary>
+        public Placement()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtocolSettings"/>. </summary>
-        /// <param name="smbSetting"> Setting for SMB protocol. </param>
+        /// <summary> Initializes a new instance of <see cref="Placement"/>. </summary>
+        /// <param name="zonePlacementPolicy"> The availability zone pinning policy for the storage account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProtocolSettings(SmbSetting smbSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Placement(StorageAccountZonePlacementPolicy? zonePlacementPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SmbSetting = smbSetting;
+            ZonePlacementPolicy = zonePlacementPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Setting for SMB protocol. </summary>
-        [WirePath("smb")]
-        public SmbSetting SmbSetting { get; set; }
+        /// <summary> The availability zone pinning policy for the storage account. </summary>
+        [WirePath("zonePlacementPolicy")]
+        public StorageAccountZonePlacementPolicy? ZonePlacementPolicy { get; set; }
     }
 }

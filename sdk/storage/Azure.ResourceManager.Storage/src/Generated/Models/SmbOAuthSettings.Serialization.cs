@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class ProtocolSettings : IUtf8JsonSerializable, IJsonModel<ProtocolSettings>
+    internal partial class SmbOAuthSettings : IUtf8JsonSerializable, IJsonModel<SmbOAuthSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtocolSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmbOAuthSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SmbOAuthSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SmbOAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtocolSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbOAuthSettings)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(SmbSetting))
+            if (Optional.IsDefined(IsSmbOAuthEnabled))
             {
-                writer.WritePropertyName("smb"u8);
-                writer.WriteObjectValue(SmbSetting, options);
+                writer.WritePropertyName("isSmbOAuthEnabled"u8);
+                writer.WriteBooleanValue(IsSmbOAuthEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        ProtocolSettings IJsonModel<ProtocolSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SmbOAuthSettings IJsonModel<SmbOAuthSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SmbOAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtocolSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbOAuthSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProtocolSettings(document.RootElement, options);
+            return DeserializeSmbOAuthSettings(document.RootElement, options);
         }
 
-        internal static ProtocolSettings DeserializeProtocolSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SmbOAuthSettings DeserializeSmbOAuthSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,18 +77,18 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            SmbSetting smb = default;
+            bool? isSmbOAuthEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("smb"u8))
+                if (property.NameEquals("isSmbOAuthEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    smb = SmbSetting.DeserializeSmbSetting(property.Value, options);
+                    isSmbOAuthEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProtocolSettings(smb, serializedAdditionalRawData);
+            return new SmbOAuthSettings(isSmbOAuthEnabled, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -111,18 +111,19 @@ namespace Azure.ResourceManager.Storage.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SmbSetting), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSmbOAuthEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  smb: ");
+                builder.Append("  isSmbOAuthEnabled: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(SmbSetting))
+                if (Optional.IsDefined(IsSmbOAuthEnabled))
                 {
-                    builder.Append("  smb: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SmbSetting, options, 2, false, "  smb: ");
+                    builder.Append("  isSmbOAuthEnabled: ");
+                    var boolValue = IsSmbOAuthEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -130,9 +131,9 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ProtocolSettings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SmbOAuthSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SmbOAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -141,26 +142,26 @@ namespace Azure.ResourceManager.Storage.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtocolSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbOAuthSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProtocolSettings IPersistableModel<ProtocolSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SmbOAuthSettings IPersistableModel<SmbOAuthSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SmbOAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeProtocolSettings(document.RootElement, options);
+                        return DeserializeSmbOAuthSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtocolSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbOAuthSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProtocolSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SmbOAuthSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
