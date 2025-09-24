@@ -1245,6 +1245,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule> IPRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule> ServiceTags { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1436,6 +1437,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedHsmServiceTagRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule>
+    {
+        public ManagedHsmServiceTagRule(string tag) { }
+        public string Tag { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedHsmSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmSku>
     {
