@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Security Profile specifies attributes for cluster security features. </summary>
-    internal partial class SecurityProfile
+    public partial class SecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

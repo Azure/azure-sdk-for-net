@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
         /// <param name="aadProfile"> AAD profile for the connected cluster. </param>
         /// <param name="arcAgentProfile"> Arc agentry configuration for the provisioned cluster. </param>
-        /// <param name="securityWorkloadIdentity"> The workload identity feature webhook. </param>
+        /// <param name="securityProfile"> Security profile for the connected cluster. </param>
         /// <param name="oidcIssuerProfile"> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </param>
         /// <param name="gatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterProperties"/> instance for mocking. </returns>
-        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationTime = default, DateTimeOffset? lastConnectivityTime = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, SecurityProfileWorkloadIdentity securityWorkloadIdentity = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
+        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationTime = default, DateTimeOffset? lastConnectivityTime = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, SecurityProfile securityProfile = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
         {
             arcAgentryConfigurations ??= new ChangeTrackingList<ArcAgentryConfigurations>();
             miscellaneousProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 azureHybridBenefit,
                 aadProfile,
                 arcAgentProfile,
-                securityWorkloadIdentity is null ? default : new SecurityProfile(securityWorkloadIdentity, new Dictionary<string, BinaryData>()),
+                securityProfile,
                 oidcIssuerProfile,
                 gatewayEnabled is null ? default : new Gateway(gatewayEnabled, new Dictionary<string, BinaryData>()),
                 arcAgentryConfigurations.ToList(),
