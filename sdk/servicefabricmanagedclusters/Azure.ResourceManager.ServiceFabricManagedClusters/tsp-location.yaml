@@ -1,4 +1,5 @@
 directory: specification/servicefabricmanagedclusters/ServiceFabricManagedClusters.Management
 commit: b6b995fbf027ad880fc0440494155e99bea5f6c3
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
 additionalDirectories:

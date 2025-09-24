@@ -1,3 +1,4 @@
 directory: specification/dell/Dell.Storage.Management
 commit: cf926eeca91738d1f1f9204a40aaef77e7ba4561
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

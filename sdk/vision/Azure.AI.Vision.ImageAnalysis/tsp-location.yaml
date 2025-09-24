@@ -1,4 +1,5 @@
 directory: specification/ai/ImageAnalysis/
 additionalDirectories: []
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
 commit: 462574dbd02088c209bb1da3eef0d93f699e8de2

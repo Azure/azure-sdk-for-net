@@ -1,3 +1,4 @@
 directory: specification/vmware/resource-manager/Microsoft.AVS/AVS
 commit: e89374a1f5e2c4ddcf34ed01495a98dfedac0f8b
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

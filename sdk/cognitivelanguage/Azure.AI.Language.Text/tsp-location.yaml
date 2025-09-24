@@ -1,4 +1,4 @@
 repo: azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
 commit: 52dae3e072fa71d0e6df8e29e36811571df79d5d
 directory: specification/cognitiveservices/Language.AnalyzeText
-

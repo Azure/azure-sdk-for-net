@@ -1,5 +1,6 @@
 directory: specification/edge/Microsoft.Edge.DisconnectedOperations.Management
 commit: f19bec6b8f2d2ca2ea4911f85e5228ba0af8c323
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
 additionalDirectories: 
 - specification/edge/Microsoft.Edge.Shared

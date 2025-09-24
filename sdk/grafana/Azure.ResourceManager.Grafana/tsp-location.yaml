@@ -1,3 +1,4 @@
 directory: specification/dashboard/Dashboard.Management
 commit: d6a665593101ff3ee1e2f1987dc6c6809720831c
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

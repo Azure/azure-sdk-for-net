@@ -1,3 +1,4 @@
 directory: specification/connectedcache/ConnectedCache.Management
 commit: 81d63d8b9228427fdf8b7613bf405085c7079eb7
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

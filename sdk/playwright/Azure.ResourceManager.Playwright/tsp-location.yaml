@@ -1,3 +1,4 @@
 directory: specification/loadtestservice/resource-manager/Microsoft.LoadTestService/playwright
 commit: 14849ffc5bc0c78ba942bcafa05e19e6162bb089
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

@@ -1,3 +1,4 @@
 directory: specification/informatica/Informatica.DataManagement.Management
 commit: 462574dbd02088c209bb1da3eef0d93f699e8de2
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

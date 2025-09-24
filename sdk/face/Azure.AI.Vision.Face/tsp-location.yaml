@@ -1,4 +1,4 @@
 directory: specification/ai/Face
 commit: 4436f0b7bb0ed03342eb26eab3db396acf69850e
 repo: Azure/azure-rest-api-specs
-
+emitterPackageJsonPath: eng/emitter-package.json

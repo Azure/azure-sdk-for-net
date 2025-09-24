@@ -1,3 +1,4 @@
 commit: 72a8e363d667f0681fc3c63f3b6422d1063a2f19
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
 directory: specification/confidentialledger/Microsoft.CodeTransparency

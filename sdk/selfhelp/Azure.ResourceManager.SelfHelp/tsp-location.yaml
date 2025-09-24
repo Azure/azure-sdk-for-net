@@ -1,4 +1,5 @@
 directory: specification/help/Help.Management
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
 commit: a391ac9724f3aaa4b0e237de247b28a099cbe4e3
 additionalDirectories: []

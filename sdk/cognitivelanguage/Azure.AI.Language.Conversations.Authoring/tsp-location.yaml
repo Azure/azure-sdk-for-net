@@ -1,3 +1,4 @@
 directory: specification/cognitiveservices/Language.AnalyzeConversations-authoring
 commit: df0a8bf7d27c634671572b2adb7835cf54975a56
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json

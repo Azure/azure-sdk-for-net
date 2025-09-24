@@ -1,3 +1,4 @@
 directory: specification\deviceregistry\DeviceRegistry.Management
 commit: 2894eabcf76384a944455ddba52c5d852b1fbd89
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
