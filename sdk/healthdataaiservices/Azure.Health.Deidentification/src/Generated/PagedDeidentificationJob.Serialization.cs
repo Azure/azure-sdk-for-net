@@ -170,7 +170,8 @@ namespace Azure.Health.Deidentification
         public static explicit operator PagedDeidentificationJob(Response result)
         {
             using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializePagedDeidentificationJob(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

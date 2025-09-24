@@ -156,7 +156,8 @@ namespace Azure.Security.KeyVault.Administration
         public static explicit operator GetSettingsResult(Response result)
         {
             using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeGetSettingsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

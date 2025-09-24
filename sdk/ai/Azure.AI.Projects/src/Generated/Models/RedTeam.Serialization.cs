@@ -363,7 +363,8 @@ namespace Azure.AI.Projects
         public static explicit operator RedTeam(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeRedTeam(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
