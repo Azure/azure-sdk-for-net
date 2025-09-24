@@ -167,7 +167,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         public static explicit operator RoleAssignmentListResult(Response result)
         {
             using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeRoleAssignmentListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
