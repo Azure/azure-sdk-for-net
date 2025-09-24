@@ -1,10 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (Unreleased)
 
 ### Other Changes
 
-- Genearte SDK from typespec
+- Upgraded to API version 2025-07-01.
 
 ## 1.2.1 (2025-03-11)
 
@@ -21,7 +21,7 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
 
@@ -32,7 +32,7 @@
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -42,20 +42,20 @@
 
 ### Features Added
 
-- Upgrade to API version 2023-10-01
+- Upgraded to API version 2023-10-01.
 
 ## 1.1.0-beta.2 (2023-08-08)
 
 ### Features Added
 
-- Upgrade to API version 2023-07-01-preview
+- Upgraded to API version 2023-07-01-preview
 - Added support for SMB endpoint and SMB file share endpoint.
 
 ## 1.1.0-beta.1 (2023-05-31)
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

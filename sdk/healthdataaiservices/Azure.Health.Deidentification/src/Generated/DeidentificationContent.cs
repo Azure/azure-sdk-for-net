@@ -29,12 +29,14 @@ namespace Azure.Health.Deidentification
         /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
         /// <param name="operationType"> Operation to perform on the input documents. </param>
+        /// <param name="taggedEntities"> Grouped PHI entities with single encoding specification for SurrogateOnly operation. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidentificationContent(string inputText, DeidentificationOperationType? operationType, TaggedPhiEntities taggedEntities, DeidentificationCustomizationOptions customizations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InputText = inputText;
             OperationType = operationType;
+            TaggedEntities = taggedEntities;
             Customizations = customizations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,6 +46,9 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Operation to perform on the input documents. </summary>
         public DeidentificationOperationType? OperationType { get; set; }
+
+        /// <summary> Grouped PHI entities with single encoding specification for SurrogateOnly operation. </summary>
+        public TaggedPhiEntities TaggedEntities { get; set; }
 
         /// <summary> Customization parameters to override default service behaviors. </summary>
         public DeidentificationCustomizationOptions Customizations { get; set; }

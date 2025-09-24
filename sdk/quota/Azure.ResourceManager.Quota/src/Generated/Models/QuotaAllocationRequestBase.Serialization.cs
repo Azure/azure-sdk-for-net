@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QuotaAllocationRequestBase(limit, region, value, localizedValue, serializedAdditionalRawData);
+            return new QuotaAllocationRequestBase(limit, value, localizedValue, region, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -85,6 +85,8 @@ export const nonResourceMethodMetadata =
 const nonResourceMethodMetadataRegex =
   "Azure\\.ClientGenerator\\.Core\\.@nonResourceMethodSchema";
 
+export const flattenPropertyDecorator = "Azure.ResourceManager.@flattenProperty";
+
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
     previewStringRegex: /-preview$/

@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> Properties of the vault. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
         /// <param name="etag"> etag for the resource. </param>
         /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultData"/> instance for mocking. </returns>
-        public static RecoveryServicesVaultData RecoveryServicesVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, RecoveryServicesVaultProperties properties = null, RecoveryServicesSku sku = null, ETag? etag = null)
+        public static RecoveryServicesVaultData RecoveryServicesVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RecoveryServicesVaultProperties properties = null, ManagedServiceIdentity identity = null, RecoveryServicesSku sku = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 systemData,
                 tags,
                 location,
-                identity,
                 properties,
+                identity,
                 sku,
                 etag,
                 serializedAdditionalRawData: null);
