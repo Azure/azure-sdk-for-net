@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.2.0-beta.2</Version>
+    <Version>1.2.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Quota</PackageId>
