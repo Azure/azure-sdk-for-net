@@ -221,13 +221,13 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @ctstone @vkurpad
+/sdk/documentintelligence/                                         @vkurpad
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @ctstone @vkurpad
+/sdk/formrecognizer/                                               @vkurpad
 
 # ServiceLabel: %Cognitive - Form Recognizer
-# ServiceOwners:                                                   @ctstone @vkurpad
+# ServiceOwners:                                                   @vkurpad
 
 # PRLabel: %Cognitive - Health Insights
 /sdk/healthinsights/                                               @asaflevi-ms @tomsft @koen-mertens
@@ -1158,6 +1158,9 @@
 
 # ServiceLabel: %SiteManager %Mgmt
 # ServiceOwners:                                                   @bsomeshekar
+
+# ServiceLabel: %Virtual Enclaves %Mgmt
+# ServiceOwners:                                                   @jchavaherrera
 
 # PRLabel: %Weights & Biases
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw

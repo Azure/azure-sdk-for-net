@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticDetection"/>, <see cref="AzureSemanticDetectionEn"/>, and <see cref="AzureSemanticDetectionMultilingual"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEnEouDetection"/>, and <see cref="AzureSemanticMultilingualEouDetection"/>.
     /// </summary>
     public abstract partial class EouDetection
     {

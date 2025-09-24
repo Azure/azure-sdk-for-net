@@ -38,10 +38,11 @@
     "dist/generator/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20250917.1"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20250923.2"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.28",
+    "@azure-tools/typespec-autorest": "0.60.0",
     "@azure-tools/typespec-azure-core": "0.60.0",
     "@azure-tools/typespec-azure-resource-manager": "0.60.0",
     "@azure-tools/typespec-azure-rulesets": "0.60.0",
@@ -76,6 +77,7 @@
     "@azure-tools/typespec-azure-resource-manager",
     "@azure-tools/typespec-azure-rulesets",
     "@azure-tools/typespec-client-generator-core",
+    "@azure-tools/typespec-autorest",
     "@typespec/compiler",
     "@typespec/http",
     "@typespec/openapi",

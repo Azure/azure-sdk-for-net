@@ -47,7 +47,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets the Prop1. </summary>
-        public IList<string> Prop1 { get; }
+        public IList<string> Prop1 { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets or sets the Prop2. </summary>
         public int Prop2 { get; set; }

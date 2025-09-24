@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VerifierWorkspaceCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VerifierWorkspacePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VerifierWorkspacePut.json
             // this example is just showing the usage of "VerifierWorkspaces_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VerifierWorkspaceGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VerifierWorkspaceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VerifierWorkspaceGet.json
             // this example is just showing the usage of "VerifierWorkspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VerifierWorkspaceList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VerifierWorkspaceList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VerifierWorkspaceList.json
             // this example is just showing the usage of "VerifierWorkspaces_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VerifierWorkspaceGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VerifierWorkspaceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VerifierWorkspaceGet.json
             // this example is just showing the usage of "VerifierWorkspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VerifierWorkspaceGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VerifierWorkspaceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VerifierWorkspaceGet.json
             // this example is just showing the usage of "VerifierWorkspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

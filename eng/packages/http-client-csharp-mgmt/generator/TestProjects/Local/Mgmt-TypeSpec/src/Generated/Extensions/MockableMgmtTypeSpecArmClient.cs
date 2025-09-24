@@ -200,5 +200,22 @@ namespace MgmtTypeSpec.Mocking
             JobResource.ValidateResourceId(id);
             return new JobResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
+        public virtual HciVmInstanceResource GetHciVmInstanceResource(ResourceIdentifier id)
+        {
+            HciVmInstanceResource.ValidateResourceId(id);
+            return new HciVmInstanceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
+        public virtual HciVmInstanceResource GetHciVmInstance(ResourceIdentifier scope)
+        {
+            return new HciVmInstanceResource(Client, scope.AppendProviderResource("MgmtTypeSpec", "virtualMachineInstances", "default"));
+        }
     }
 }

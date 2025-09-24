@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class DifferentSpreadStringDerived : IJsonModel<DifferentSpreadStringDerived>
+    public partial class DifferentSpreadStringDerived : DifferentSpreadStringRecord, IJsonModel<DifferentSpreadStringDerived>
     {
         internal DifferentSpreadStringDerived() => throw null;
 
