@@ -137,13 +137,28 @@ extends:
             $sourceBranch = '$(Build.SourceBranch)'
             $buildReason = '$(Build.Reason)'
             $buildNumber = '$(Build.BuildNumber)'
+            $emitterPackagePath = '${{ parameters.EmitterPackagePath }}'
+
+            # Create emitter identifier from package path for disambiguation
+            $emitterIdentifier = ""
+            if (-not [string]::IsNullOrWhiteSpace($emitterPackagePath)) {
+              # Extract filename without extension and make it safe for branch names
+              $emitterIdentifier = [System.IO.Path]::GetFileNameWithoutExtension($emitterPackagePath)
+              # Replace any characters that aren't alphanumeric, hyphens, or underscores
+              $emitterIdentifier = $emitterIdentifier -replace '[^a-zA-Z0-9\-_]', '-'
+              # Remove any leading/trailing hyphens and convert to lowercase
+              $emitterIdentifier = $emitterIdentifier.Trim('-').ToLower()
+              if (-not [string]::IsNullOrWhiteSpace($emitterIdentifier)) {
+                $emitterIdentifier = "-$emitterIdentifier"
+              }
+            }
 
             if ($buildReason -eq 'Schedule') {
-              $branchName = 'validate-typespec-scheduled'
+              $branchName = "validate-typespec-scheduled$emitterIdentifier"
             } elseif ($sourceBranch -match "^refs/pull/(\d+)/(head|merge)$") {
-              $branchName = "validate-typespec-pr-$($Matches[1])"
+              $branchName = "validate-typespec-pr-$($Matches[1])$emitterIdentifier"
             } else {
-              $branchName = "validate-typespec-$buildNumber"
+              $branchName = "validate-typespec-$buildNumber$emitterIdentifier"
             }
 
             Write-Host "Setting variable 'branchName' to '$branchName'"
