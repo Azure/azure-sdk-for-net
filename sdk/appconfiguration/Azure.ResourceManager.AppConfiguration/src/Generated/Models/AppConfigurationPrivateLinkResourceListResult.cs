@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary> The response of a PrivateLinkResource list operation. </summary>
     internal partial class AppConfigurationPrivateLinkResourceListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkResourceListResult"/>. </summary>
-        internal AppConfigurationPrivateLinkResourceListResult()
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AppConfigurationPrivateLinkResourceListResult(IEnumerable<AppConfigurationPrivateLinkResourceData> value)
         {
-            Value = new ChangeTrackingList<AppConfigurationPrivateLinkResourceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> The collection value. </param>
-        /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationPrivateLinkResourceListResult(IReadOnlyList<AppConfigurationPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppConfigurationPrivateLinkResourceListResult(IReadOnlyList<AppConfigurationPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The collection value. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal AppConfigurationPrivateLinkResourceListResult()
+        {
+        }
+
+        /// <summary> The PrivateLinkResource items on this page. </summary>
         public IReadOnlyList<AppConfigurationPrivateLinkResourceData> Value { get; }
-        /// <summary> The URI that can be used to request the next set of paged results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

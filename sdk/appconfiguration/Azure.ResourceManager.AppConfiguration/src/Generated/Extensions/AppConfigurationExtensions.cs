@@ -34,6 +34,25 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DeletedAppConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedAppConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAppConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationArmClient.GetDeletedAppConfigurationStoreResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource"/> object. </returns>
+        public static DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppConfigurationArmClient(client).GetDeletedAppConfigurationStoreResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="AppConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppConfigurationStoreResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -53,22 +72,22 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedAppConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedAppConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAppConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationKeyValueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationKeyValueResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationKeyValueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationArmClient.GetDeletedAppConfigurationStoreResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationArmClient.GetAppConfigurationKeyValueResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource"/> object. </returns>
-        public static DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppConfigurationKeyValueResource"/> object. </returns>
+        public static AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppConfigurationArmClient(client).GetDeletedAppConfigurationStoreResource(id);
+            return GetMockableAppConfigurationArmClient(client).GetAppConfigurationKeyValueResource(id);
         }
 
         /// <summary>
@@ -107,25 +126,6 @@ namespace Azure.ResourceManager.AppConfiguration
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationPrivateLinkResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AppConfigurationKeyValueResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppConfigurationKeyValueResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationKeyValueResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationArmClient.GetAppConfigurationKeyValueResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppConfigurationKeyValueResource"/> object. </returns>
-        public static AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppConfigurationArmClient(client).GetAppConfigurationKeyValueResource(id);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="configStoreName"/> is null. </exception>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="configStoreName"/> is null. </exception>
@@ -352,6 +352,70 @@ namespace Azure.ResourceManager.AppConfiguration
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStore(location, configStoreName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks whether the configuration store name is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckAppConfigurationNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks whether the configuration store name is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckAppConfigurationNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -367,7 +431,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -404,7 +468,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -426,70 +490,6 @@ namespace Azure.ResourceManager.AppConfiguration
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetAppConfigurationStores(skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks whether the configuration store name is available for use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckAppConfigurationNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The object containing information for the availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks whether the configuration store name is available for use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckAppConfigurationNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The object containing information for the availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
         }
     }
 }

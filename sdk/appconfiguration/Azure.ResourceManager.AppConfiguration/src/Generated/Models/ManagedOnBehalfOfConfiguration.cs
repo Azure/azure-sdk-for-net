@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The response of a ConfigurationStore list operation. </summary>
-    internal partial class AppConfigurationStoreListResult
+    /// <summary> Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner. </summary>
+    internal partial class ManagedOnBehalfOfConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreListResult"/>. </summary>
-        /// <param name="value"> The ConfigurationStore items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AppConfigurationStoreListResult(IEnumerable<AppConfigurationStoreData> value)
+        /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
+        internal ManagedOnBehalfOfConfiguration()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            MoboBrokerResources = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreListResult"/>. </summary>
-        /// <param name="value"> The ConfigurationStore items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
+        /// <param name="moboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationStoreListResult(IReadOnlyList<AppConfigurationStoreData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<SubResource> moboBrokerResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            MoboBrokerResources = moboBrokerResources;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreListResult"/> for deserialization. </summary>
-        internal AppConfigurationStoreListResult()
-        {
-        }
-
-        /// <summary> The ConfigurationStore items on this page. </summary>
-        public IReadOnlyList<AppConfigurationStoreData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Managed-On-Behalf-Of broker resources. </summary>
+        [WirePath("moboBrokerResources")]
+        public IReadOnlyList<SubResource> MoboBrokerResources { get; }
     }
 }

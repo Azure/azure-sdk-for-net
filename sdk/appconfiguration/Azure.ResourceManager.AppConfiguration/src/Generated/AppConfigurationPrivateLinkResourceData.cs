@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppConfiguration
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkResourceData"/>. </summary>
-        internal AppConfigurationPrivateLinkResourceData()
+        public AppConfigurationPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();

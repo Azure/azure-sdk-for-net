@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> The local authentication mode. Users are not required to have data plane permissions if local authentication is not disabled. </summary>
         public static DataPlaneProxyAuthenticationMode Local { get; } = new DataPlaneProxyAuthenticationMode(LocalValue);
-        /// <summary> The pass-through authentication mode. User identity will be passed through from Azure Resource Manager (ARM), requiring user to have data plane action permissions (Available via App Configuration Data Owner/ App Configuration Data Reader). </summary>
+        /// <summary> The pass-through authentication mode. User identity will be passed through from ARM, requiring user to have data plane action permissions (Available via App Configuration Data Owner/ App Configuration Data Reader). </summary>
         public static DataPlaneProxyAuthenticationMode PassThrough { get; } = new DataPlaneProxyAuthenticationMode(PassThroughValue);
         /// <summary> Determines if two <see cref="DataPlaneProxyAuthenticationMode"/> values are the same. </summary>
         public static bool operator ==(DataPlaneProxyAuthenticationMode left, DataPlaneProxyAuthenticationMode right) => left.Equals(right);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
@@ -61,8 +62,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
         /// <param name="dataPlaneProxy"> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </param>
+        /// <param name="defaultKeyValueRevisionRetentionPeriodInSeconds"> The duration in seconds to retain new key value revisions. Defaults to 604800 (7 days) for Free SKU stores and 2592000 (30 days) for Standard SKU stores and Premium SKU stores. </param>
+        /// <param name="telemetry"> Property specifying the configuration of telemetry to update for this configuration store. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationStorePatch(ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, string> tags, AppConfigurationStoreEncryptionProperties encryption, bool? disableLocalAuth, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppConfigurationStorePatch(ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, string> tags, AppConfigurationStoreEncryptionProperties encryption, bool? disableLocalAuth, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, long? defaultKeyValueRevisionRetentionPeriodInSeconds, TelemetryProperties telemetry, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Sku = sku;
@@ -72,6 +75,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             PublicNetworkAccess = publicNetworkAccess;
             EnablePurgeProtection = enablePurgeProtection;
             DataPlaneProxy = dataPlaneProxy;
+            DefaultKeyValueRevisionRetentionPeriodInSeconds = defaultKeyValueRevisionRetentionPeriodInSeconds;
+            Telemetry = telemetry;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -118,5 +123,22 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
         [WirePath("properties.dataPlaneProxy")]
         public AppConfigurationDataPlaneProxyProperties DataPlaneProxy { get; set; }
+        /// <summary> The duration in seconds to retain new key value revisions. Defaults to 604800 (7 days) for Free SKU stores and 2592000 (30 days) for Standard SKU stores and Premium SKU stores. </summary>
+        [WirePath("properties.defaultKeyValueRevisionRetentionPeriodInSeconds")]
+        public long? DefaultKeyValueRevisionRetentionPeriodInSeconds { get; set; }
+        /// <summary> Property specifying the configuration of telemetry to update for this configuration store. </summary>
+        internal TelemetryProperties Telemetry { get; set; }
+        /// <summary> Resource ID of a resource enabling telemetry collection. </summary>
+        [WirePath("properties.telemetry.resourceId")]
+        public ResourceIdentifier TelemetryResourceId
+        {
+            get => Telemetry is null ? default : Telemetry.ResourceId;
+            set
+            {
+                if (Telemetry is null)
+                    Telemetry = new TelemetryProperties();
+                Telemetry.ResourceId = value;
+            }
+        }
     }
 }

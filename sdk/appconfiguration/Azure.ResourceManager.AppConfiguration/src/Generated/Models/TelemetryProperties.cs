@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The response of a ConfigurationStore list operation. </summary>
-    internal partial class AppConfigurationStoreListResult
+    /// <summary> Telemetry settings. </summary>
+    internal partial class TelemetryProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,22 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreListResult"/>. </summary>
-        /// <param name="value"> The ConfigurationStore items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AppConfigurationStoreListResult(IEnumerable<AppConfigurationStoreData> value)
+        /// <summary> Initializes a new instance of <see cref="TelemetryProperties"/>. </summary>
+        public TelemetryProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreListResult"/>. </summary>
-        /// <param name="value"> The ConfigurationStore items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="TelemetryProperties"/>. </summary>
+        /// <param name="resourceId"> Resource ID of a resource enabling telemetry collection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationStoreListResult(IReadOnlyList<AppConfigurationStoreData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TelemetryProperties(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreListResult"/> for deserialization. </summary>
-        internal AppConfigurationStoreListResult()
-        {
-        }
-
-        /// <summary> The ConfigurationStore items on this page. </summary>
-        public IReadOnlyList<AppConfigurationStoreData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Resource ID of a resource enabling telemetry collection. </summary>
+        [WirePath("resourceId")]
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

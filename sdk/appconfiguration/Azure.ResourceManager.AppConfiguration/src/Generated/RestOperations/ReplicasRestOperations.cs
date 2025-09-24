@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-02-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Lists the replicas for a given configuration store. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Lists the replicas for a given configuration store. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Gets the properties of the specified replica. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="replicaName"> The name of the replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Gets the properties of the specified replica. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="replicaName"> The name of the replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -287,8 +287,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Creates a replica with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="replicaName"> The name of the replica. </param>
         /// <param name="data"> The parameters for creating a replica. </param>
@@ -316,8 +316,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Creates a replica with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="replicaName"> The name of the replica. </param>
         /// <param name="data"> The parameters for creating a replica. </param>
@@ -383,8 +383,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Deletes a replica. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="replicaName"> The name of the replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -411,8 +411,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Deletes a replica. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="replicaName"> The name of the replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -462,8 +462,8 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Lists the replicas for a given configuration store. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -494,8 +494,8 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Lists the replicas for a given configuration store. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
