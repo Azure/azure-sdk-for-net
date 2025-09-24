@@ -165,8 +165,7 @@ namespace BasicTypeSpec
         public static explicit operator ListWithStringNextLinkResponse(Response result)
         {
             using Response response = result;
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeListWithStringNextLinkResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
