@@ -85,6 +85,7 @@ public class BicepValue<T> : BicepValue
     public void ClearValue()
     {
         _kind = BicepValueKind.Unset;
+        _valueFactory = null;
         _value = default;
         _expression = null;
         _source = null;

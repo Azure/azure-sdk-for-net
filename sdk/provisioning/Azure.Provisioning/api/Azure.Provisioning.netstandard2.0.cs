@@ -36,10 +36,6 @@ namespace Azure.Provisioning
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out Azure.Provisioning.BicepValue<T> value) { throw null; }
     }
-    public static partial class BicepExpressionExtensions
-    {
-        public static Azure.Provisioning.Expressions.BicepExpression ToBicepExpression(this Azure.Provisioning.IBicepValue bicepValue) { throw null; }
-    }
     public partial class BicepList<T> : Azure.Provisioning.BicepValue, System.Collections.Generic.ICollection<Azure.Provisioning.BicepValue<T>>, System.Collections.Generic.IEnumerable<Azure.Provisioning.BicepValue<T>>, System.Collections.Generic.IList<Azure.Provisioning.BicepValue<T>>, System.Collections.Generic.IReadOnlyCollection<Azure.Provisioning.BicepValue<T>>, System.Collections.Generic.IReadOnlyList<Azure.Provisioning.BicepValue<T>>, System.Collections.IEnumerable
     {
         public BicepList() { }
@@ -85,6 +81,7 @@ namespace Azure.Provisioning
     }
     public static partial class BicepValueExtensions
     {
+        public static Azure.Provisioning.Expressions.BicepExpression ToBicepExpression(this Azure.Provisioning.IBicepValue bicepValue) { throw null; }
         public static T Unwrap<T>(this Azure.Provisioning.BicepValue<T> value) where T : Azure.Provisioning.Primitives.ProvisionableConstruct, new() { throw null; }
     }
     public enum BicepValueKind

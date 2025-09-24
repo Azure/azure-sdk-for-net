@@ -576,7 +576,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             public BicepValue<string> WithoutValue
             {
                 get { Initialize(); return _withoutValue!; }
-                set { Initialize(); _withoutValue = value; }
+                set { Initialize(); _withoutValue!.Assign(value); }
             }
 
             private BicepList<string>? _list;

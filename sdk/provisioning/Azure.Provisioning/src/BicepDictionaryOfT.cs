@@ -110,7 +110,6 @@ public class BicepDictionary<T> :
             // this would blow up when we try to compile it later, but it would be fine if we convert it to an expression
             return new BicepValue<T>(GetItemSelf(key), () => _values[key].Value);
         }
-
         set
         {
             _values[key] = value;
