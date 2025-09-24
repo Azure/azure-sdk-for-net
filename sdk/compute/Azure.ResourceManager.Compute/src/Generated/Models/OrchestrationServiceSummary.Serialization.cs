@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("latestOperationStatus"u8);
                 writer.WriteStringValue(LatestOperationStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusChangeOn))
+            if (options.Format != "W" && Optional.IsDefined(LastStatusChangedOn))
             {
                 writer.WritePropertyName("lastStatusChangeTime"u8);
-                writer.WriteStringValue(LastStatusChangeOn.Value, "O");
+                writer.WriteStringValue(LastStatusChangedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

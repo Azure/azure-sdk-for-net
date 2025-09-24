@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="serviceState"> The current state of the service. </param>
         /// <param name="latestOperationStatus"> The latest operation status of the service. Minimum API version for this property is 2025-04-01. </param>
-        /// <param name="lastStatusChangeOn"> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
+        /// <param name="lastStatusChangedOn"> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrchestrationServiceSummary(OrchestrationServiceName? serviceName, OrchestrationServiceState? serviceState, OrchestrationServiceOperationStatus? latestOperationStatus, DateTimeOffset? lastStatusChangeOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OrchestrationServiceSummary(OrchestrationServiceName? serviceName, OrchestrationServiceState? serviceState, OrchestrationServiceOperationStatus? latestOperationStatus, DateTimeOffset? lastStatusChangedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceName = serviceName;
             ServiceState = serviceState;
             LatestOperationStatus = latestOperationStatus;
-            LastStatusChangeOn = lastStatusChangeOn;
+            LastStatusChangedOn = lastStatusChangedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The latest operation status of the service. Minimum API version for this property is 2025-04-01. </summary>
         public OrchestrationServiceOperationStatus? LatestOperationStatus { get; }
         /// <summary> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </summary>
-        public DateTimeOffset? LastStatusChangeOn { get; }
+        public DateTimeOffset? LastStatusChangedOn { get; }
     }
 }

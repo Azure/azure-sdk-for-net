@@ -1763,11 +1763,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="serviceState"> The current state of the service. </param>
         /// <param name="latestOperationStatus"> The latest operation status of the service. Minimum API version for this property is 2025-04-01. </param>
-        /// <param name="lastStatusChangeOn"> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
+        /// <param name="lastStatusChangedOn"> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
         /// <returns> A new <see cref="Models.OrchestrationServiceSummary"/> instance for mocking. </returns>
-        public static OrchestrationServiceSummary OrchestrationServiceSummary(OrchestrationServiceName? serviceName = null, OrchestrationServiceState? serviceState = null, OrchestrationServiceOperationStatus? latestOperationStatus = null, DateTimeOffset? lastStatusChangeOn = null)
+        public static OrchestrationServiceSummary OrchestrationServiceSummary(OrchestrationServiceName? serviceName = null, OrchestrationServiceState? serviceState = null, OrchestrationServiceOperationStatus? latestOperationStatus = null, DateTimeOffset? lastStatusChangedOn = null)
         {
-            return new OrchestrationServiceSummary(serviceName, serviceState, latestOperationStatus, lastStatusChangeOn, serializedAdditionalRawData: null);
+            return new OrchestrationServiceSummary(serviceName, serviceState, latestOperationStatus, lastStatusChangedOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UpgradeOperationHistoricalStatusInfo"/>. </summary>
@@ -4697,7 +4697,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OrchestrationServiceSummary OrchestrationServiceSummary(OrchestrationServiceName? serviceName, OrchestrationServiceState? serviceState)
         {
-            return OrchestrationServiceSummary(serviceName: serviceName, serviceState: serviceState, latestOperationStatus: default, lastStatusChangeOn: default);
+            return OrchestrationServiceSummary(serviceName: serviceName, serviceState: serviceState, latestOperationStatus: default, lastStatusChangedOn: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.ManagedDiskData" />. </summary>
