@@ -258,8 +258,10 @@ extends:
           - download: current
             displayName: Download pipeline artifacts
 
-          - pwsh: |
-              npm install -g @azure-tools/typespec-client-generator-cli@latest
+          - task: Npm@1
+            inputs:
+              command: 'ci'
+              workingDir: 'eng/common/tsp-client'
             displayName: Install tsp-client
 
           - pwsh: |
