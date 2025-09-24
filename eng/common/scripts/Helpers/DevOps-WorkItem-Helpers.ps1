@@ -1114,7 +1114,7 @@ function Get-ReleasePlan-Link($releasePlanWorkItemId)
   return $workItem["fields"]
 }
 
-function Get-ReleasePlansForCPEXAttestation($releasePlanWorkItemId = $null)
+function Get-ReleasePlansForCPEXAttestation($releasePlanWorkItemId = $null, $targetServiceTreeId = $null)
 {
   $fields = @()
   $fields += "Custom.ProductServiceTreeID"
@@ -1143,11 +1143,15 @@ function Get-ReleasePlansForCPEXAttestation($releasePlanWorkItemId = $null)
     $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
   }
 
+  if ($targetServiceTreeId){
+    $query += " AND [Custom.ProductServiceTreeID] = '${targetServiceTreeId}'"
+  }
+
   $workItems = Invoke-Query $fields $query
   return $workItems
 }
 
-function Get-TriagesForCPEXAttestation($triageWorkItemId = $null)
+function Get-TriagesForCPEXAttestation($triageWorkItemId = $null, $targetServiceTreeId = $null)
 {
   $fields = @()
   $fields += "Custom.ProductServiceTreeID"
@@ -1165,7 +1169,6 @@ function Get-TriagesForCPEXAttestation($triageWorkItemId = $null)
   if ($triageWorkItemId){
     $query += " AND [System.Id] = '$triageWorkItemId'"
   } else {
-    $query += " AND [System.State] IN ('Completed', 'New', 'Triage updated')"
     $query += " AND ([Custom.DataplaneAttestationStatus] IN ('', 'Pending') OR [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending'))"
     $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
     $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
@@ -1176,6 +1179,10 @@ function Get-TriagesForCPEXAttestation($triageWorkItemId = $null)
     $query += " AND [Custom.ProductServiceTreeID] <> ''"
     $query += " AND [Custom.ProductLifecycle] <> ''"
     $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
+  }
+
+  if ($targetServiceTreeId){
+    $query += " AND [Custom.ProductServiceTreeID] = '$targetServiceTreeId'"
   }
 
   $workItems = Invoke-Query $fields $query
