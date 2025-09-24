@@ -81,9 +81,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             [JsonProperty]
             public string QueueName { get; set; }
 
+            /// <summary>
+            /// Coerces the resolved queue name to lowercase.
+            /// Azure Queue Storage requires lowercase names; normalization here also
+            /// ensures consistent hashing/identity when used by scaling components.
+            /// </summary>
             public void NormalizeQueueName()
             {
-                QueueName = QueueName.ToLowerInvariant();
+                if (!string.IsNullOrEmpty(QueueName))
+                {
+                    QueueName = QueueName.ToLowerInvariant(); // must be lowercase. coerce here to be nice.
+                }
             }
 
             public void ResolveProperties(INameResolver resolver)
@@ -92,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
                 {
                     QueueName = resolver.ResolveWholeString(QueueName);
                 }
-
+                // Always normalize after token resolution
                 NormalizeQueueName();
             }
         }
