@@ -13,7 +13,7 @@ using Azure;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
-    public partial class ConfigurationSnapshot
+    public partial class ConfigurationSnapshot : global::.IUtf8JsonSerializable
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

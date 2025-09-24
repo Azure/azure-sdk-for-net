@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration
     /// Enables filtering of key-values. Syntax reference:
     /// https://aka.ms/azconfig/docs/restapisnapshots
     /// </summary>
-    public partial class ConfigurationSettingsFilter
+    public partial class ConfigurationSettingsFilter : global::.IUtf8JsonSerializable
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

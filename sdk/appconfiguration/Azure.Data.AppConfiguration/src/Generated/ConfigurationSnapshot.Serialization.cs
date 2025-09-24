@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
-    public partial class ConfigurationSnapshot : IJsonModel<ConfigurationSnapshot>
+    public partial class ConfigurationSnapshot : global::.IUtf8JsonSerializable, IJsonModel<ConfigurationSnapshot>
     {
         /// <summary> Initializes a new instance of <see cref="ConfigurationSnapshot"/> for deserialization. </summary>
         internal ConfigurationSnapshot()

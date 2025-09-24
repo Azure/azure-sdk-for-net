@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Labels are used to group key-values. </summary>
-    public partial class SettingLabel
+    public partial class SettingLabel : global::.IUtf8JsonSerializable
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
