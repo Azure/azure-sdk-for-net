@@ -377,7 +377,7 @@
 # ServiceOwners:                                                   @TiagoCrewGitHubIssues
 
 # ServiceLabel: %Container Instances
-# ServiceOwners:                                                   @drishtipeshwani09
+# ServiceOwners:                                                   @drishtipeshwani09 @kaushik-ms
 
 # PRLabel: %Container Registry
 /sdk/containerregistry/                                            @Azure/azsdk-acr
