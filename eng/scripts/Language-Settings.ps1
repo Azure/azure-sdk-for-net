@@ -72,7 +72,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         [xml]$csprojXml = Get-Content -Path $csprojPath
         $aotCompatibleNodes = $csprojXml.SelectNodes("//IsAotCompatible")
         foreach ($node in $aotCompatibleNodes) {
-          # Check if the value is true (regardless of condition)
+          # Check if the value is true
           $value = $node.InnerText
           if ($value -eq "true") {
             $isAotCompatible = $true
@@ -97,6 +97,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
       else {
         # respect the ci file first, but if it is not specified, then we should check the project file
+        Write-Host "using is aot compatible from csproj = $isAotCompatible "
         $pkgProp.CIParameters["CheckAOTCompat"] = $isAotCompatible
       }
 
