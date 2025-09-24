@@ -12,71 +12,31 @@ using Azure.Core;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The network connection properties for partial update. Properties not provided in the update request will not be changed. </summary>
-    public partial class DevCenterNetworkConnectionPatch
+    public partial class DevCenterNetworkConnectionPatch : DevCenterTrackedResourceUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionPatch"/>. </summary>
         public DevCenterNetworkConnectionPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subnetId"> The subnet to attach Virtual Machines to. </param>
         /// <param name="domainName"> Active Directory domain name. </param>
         /// <param name="organizationUnit"> Active Directory domain Organization Unit (OU). </param>
         /// <param name="domainUsername"> The username of an Active Directory account (user or service account) that has permissions to create computer objects in Active Directory. Required format: admin@contoso.com. </param>
         /// <param name="domainPassword"> The password for the account used to join domain. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterNetworkConnectionPatch(IDictionary<string, string> tags, AzureLocation? location, ResourceIdentifier subnetId, string domainName, string organizationUnit, string domainUsername, string domainPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterNetworkConnectionPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier subnetId, string domainName, string organizationUnit, string domainUsername, string domainPassword) : base(tags, location, serializedAdditionalRawData)
         {
-            Tags = tags;
-            Location = location;
             SubnetId = subnetId;
             DomainName = domainName;
             OrganizationUnit = organizationUnit;
             DomainUsername = domainUsername;
             DomainPassword = domainPassword;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; set; }
         /// <summary> The subnet to attach Virtual Machines to. </summary>
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Active Directory domain name. </summary>

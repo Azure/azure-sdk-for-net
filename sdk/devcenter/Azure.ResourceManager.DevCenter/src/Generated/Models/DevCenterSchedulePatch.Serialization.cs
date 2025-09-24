@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,24 +34,9 @@ namespace Azure.ResourceManager.DevCenter.Models
                 throw new FormatException($"The model {nameof(DevCenterSchedulePatch)} does not support writing '{format}' format.");
             }
 
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             if (Optional.IsDefined(ScheduledType))
             {
                 writer.WritePropertyName("type"u8);
@@ -78,21 +63,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         DevCenterSchedulePatch IJsonModel<DevCenterSchedulePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -126,6 +96,29 @@ namespace Azure.ResourceManager.DevCenter.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -135,29 +128,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("tags"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            tags = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("location"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            location = new AzureLocation(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -207,12 +177,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterSchedulePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                serializedAdditionalRawData,
                 type,
                 frequency,
                 time,
                 timeZone,
-                state,
-                serializedAdditionalRawData);
+                state);
         }
 
         BinaryData IPersistableModel<DevCenterSchedulePatch>.Write(ModelReaderWriterOptions options)

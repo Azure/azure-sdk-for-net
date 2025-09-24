@@ -107,6 +107,7 @@ namespace Azure.ResourceManager.DevCenter
     [ModelReaderWriterBuildable(typeof(DevCenterScheduleResource))]
     [ModelReaderWriterBuildable(typeof(DevCenterSku))]
     [ModelReaderWriterBuildable(typeof(DevCenterSkuDetails))]
+    [ModelReaderWriterBuildable(typeof(DevCenterTrackedResourceUpdate))]
     [ModelReaderWriterBuildable(typeof(DevCenterUsage))]
     [ModelReaderWriterBuildable(typeof(DevCenterUsageName))]
     [ModelReaderWriterBuildable(typeof(DevCenterUserRoleAssignments))]

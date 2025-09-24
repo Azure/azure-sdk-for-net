@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -28,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -36,27 +34,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 throw new FormatException($"The model {nameof(DevCenterProjectPatch)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DevCenterId))
@@ -110,21 +88,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteObjectValue(WorkspaceStorageSettings, options);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         DevCenterProjectPatch IJsonModel<DevCenterProjectPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -149,7 +112,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             IDictionary<string, string> tags = default;
             AzureLocation? location = default;
-            ManagedServiceIdentity identity = default;
             ResourceIdentifier devCenterId = default;
             string description = default;
             int? maxDevBoxesPerUser = default;
@@ -185,15 +147,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDevCenterContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -299,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterProjectPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
+                serializedAdditionalRawData,
                 devCenterId,
                 description,
                 maxDevBoxesPerUser,
@@ -309,8 +262,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 devBoxAutoDeleteSettings,
                 azureAiServicesSettings,
                 serverlessGpuSessionsSettings,
-                workspaceStorageSettings,
-                serializedAdditionalRawData);
+                workspaceStorageSettings);
         }
 
         BinaryData IPersistableModel<DevCenterProjectPatch>.Write(ModelReaderWriterOptions options)

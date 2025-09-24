@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter
     /// A class representing the DevCenterSchedule data model.
     /// Represents a Schedule to execute a task.
     /// </summary>
-    public partial class DevCenterScheduleData : TrackedResourceData
+    public partial class DevCenterScheduleData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,8 +52,7 @@ namespace Azure.ResourceManager.DevCenter
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterScheduleData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public DevCenterScheduleData(AzureLocation location) : base(location)
+        public DevCenterScheduleData()
         {
         }
 
@@ -62,8 +61,6 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
@@ -71,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ScheduledType = scheduledType;
             Frequency = frequency;
@@ -80,11 +77,6 @@ namespace Azure.ResourceManager.DevCenter
             State = state;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevCenterScheduleData"/> for deserialization. </summary>
-        internal DevCenterScheduleData()
-        {
         }
 
         /// <summary> Supported type this scheduled task represents. </summary>

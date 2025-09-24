@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // invoke the operation
             DevCenterProjectPatch patch = new DevCenterProjectPatch
             {
+                Description = "This is my first project.",
+                DisplayName = "Dev",
+                CatalogItemSyncTypes = { CatalogItemType.EnvironmentDefinition },
                 Tags =
 {
 ["CostCenter"] = "R&D"
 },
-                Description = "This is my first project.",
-                DisplayName = "Dev",
-                CatalogItemSyncTypes = { CatalogItemType.EnvironmentDefinition },
             };
             ArmOperation<DevCenterProjectResource> lro = await devCenterProject.UpdateAsync(WaitUntil.Completed, patch);
             DevCenterProjectResource result = lro.Value;

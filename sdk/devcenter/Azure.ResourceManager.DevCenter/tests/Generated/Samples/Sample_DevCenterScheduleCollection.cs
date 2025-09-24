@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // invoke the operation
             string scheduleName = "autoShutdown";
-            DevCenterScheduleData data = new DevCenterScheduleData(default)
+            DevCenterScheduleData data = new DevCenterScheduleData
             {
                 ScheduledType = DevCenterScheduledType.StopDevBox,
                 Frequency = DevCenterScheduledFrequency.Daily,

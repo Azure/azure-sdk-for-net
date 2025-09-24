@@ -12,69 +12,29 @@ using Azure.Core;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Partial update of a Dev Box definition resource. </summary>
-    public partial class DevBoxDefinitionPatch
+    public partial class DevBoxDefinitionPatch : DevCenterTrackedResourceUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionPatch"/>. </summary>
         public DevBoxDefinitionPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageReference"> Image reference information. </param>
         /// <param name="sku"> The SKU for Dev Boxes created using this definition. </param>
         /// <param name="osStorageType"> The storage type used for the Operating System disk of Dev Boxes created using this definition. </param>
         /// <param name="hibernateSupport"> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxDefinitionPatch(IDictionary<string, string> tags, AzureLocation? location, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevBoxDefinitionPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport) : base(tags, location, serializedAdditionalRawData)
         {
-            Tags = tags;
-            Location = location;
             ImageReference = imageReference;
             Sku = sku;
             OSStorageType = osStorageType;
             HibernateSupport = hibernateSupport;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; set; }
         /// <summary> Image reference information. </summary>
         public DevCenterImageReference ImageReference { get; set; }
         /// <summary> The SKU for Dev Boxes created using this definition. </summary>

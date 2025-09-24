@@ -8,55 +8,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The project properties for partial update. Properties not provided in the update request will not be changed. </summary>
-    public partial class DevCenterProjectPatch
+    public partial class DevCenterProjectPatch : DevCenterTrackedResourceUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DevCenterProjectPatch"/>. </summary>
         public DevCenterProjectPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterProjectPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="identity"> Managed identity properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="devCenterId"> Resource Id of an associated DevCenter. </param>
         /// <param name="description"> Description of the project. </param>
         /// <param name="maxDevBoxesPerUser"> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </param>
@@ -67,12 +33,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="azureAiServicesSettings"> Indicates whether Azure AI services are enabled for a project. </param>
         /// <param name="serverlessGpuSessionsSettings"> Settings to be used for serverless GPU. </param>
         /// <param name="workspaceStorageSettings"> Settings to be used for workspace storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProjectPatch(IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, string displayName, ProjectCatalogSettings catalogSettings, ProjectCustomizationSettings customizationSettings, DevBoxAutoDeleteSettings devBoxAutoDeleteSettings, AzureAiServicesSettings azureAiServicesSettings, ServerlessGpuSessionsSettings serverlessGpuSessionsSettings, WorkspaceStorageSettings workspaceStorageSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterProjectPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, string displayName, ProjectCatalogSettings catalogSettings, ProjectCustomizationSettings customizationSettings, DevBoxAutoDeleteSettings devBoxAutoDeleteSettings, AzureAiServicesSettings azureAiServicesSettings, ServerlessGpuSessionsSettings serverlessGpuSessionsSettings, WorkspaceStorageSettings workspaceStorageSettings) : base(tags, location, serializedAdditionalRawData)
         {
-            Tags = tags;
-            Location = location;
-            Identity = identity;
             DevCenterId = devCenterId;
             Description = description;
             MaxDevBoxesPerUser = maxDevBoxesPerUser;
@@ -83,15 +45,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             AzureAiServicesSettings = azureAiServicesSettings;
             ServerlessGpuSessionsSettings = serverlessGpuSessionsSettings;
             WorkspaceStorageSettings = workspaceStorageSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; set; }
-        /// <summary> Managed identity properties. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource Id of an associated DevCenter. </summary>
         public ResourceIdentifier DevCenterId { get; set; }
         /// <summary> Description of the project. </summary>
