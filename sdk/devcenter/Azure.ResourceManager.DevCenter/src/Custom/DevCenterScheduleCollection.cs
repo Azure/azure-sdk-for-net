@@ -4,11 +4,13 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.DevCenter
 {
+    // Because the parameter 'int? top' is missing, the related methods are added back in this way.
     public partial class DevCenterScheduleCollection
     {
         /// <summary>
@@ -37,6 +39,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DevCenterScheduleResource>> GetAsync(string scheduleName, int? top, CancellationToken cancellationToken = default)
         {
             return await GetAsync(scheduleName, cancellationToken).ConfigureAwait(false);
@@ -68,6 +71,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DevCenterScheduleResource> Get(string scheduleName, int? top, CancellationToken cancellationToken = default)
         {
             return Get(scheduleName, cancellationToken);
@@ -99,6 +103,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> ExistsAsync(string scheduleName, int? top, CancellationToken cancellationToken = default)
         {
             return await ExistsAsync(scheduleName, cancellationToken).ConfigureAwait(false);
@@ -130,6 +135,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> Exists(string scheduleName, int? top, CancellationToken cancellationToken = default)
         {
             return Exists(scheduleName, cancellationToken);
@@ -161,6 +167,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<NullableResponse<DevCenterScheduleResource>> GetIfExistsAsync(string scheduleName, int? top, CancellationToken cancellationToken = default)
         {
             return await GetIfExistsAsync(scheduleName, cancellationToken).ConfigureAwait(false);
@@ -192,6 +199,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual NullableResponse<DevCenterScheduleResource> GetIfExists(string scheduleName, int? top, CancellationToken cancellationToken = default)
         {
             return GetIfExists(scheduleName, cancellationToken);

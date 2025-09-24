@@ -100,7 +100,6 @@ rename-mapping:
   ProjectEnvironmentType.properties.deploymentTargetId: -|arm-id
   ProjectEnvironmentTypeUpdate.properties.deploymentTargetId: -|arm-id
   ImageReference.id: -|arm-id
-  #OperationStatus.resourceId: -|arm-id
   DevCenterSku.resourceType: -|resource-type
   CheckNameAvailabilityRequest.type: -|resource-type
   EnvironmentTypeEnableStatus.Enabled: IsEnabled

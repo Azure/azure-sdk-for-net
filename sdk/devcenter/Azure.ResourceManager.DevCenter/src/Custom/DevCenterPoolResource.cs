@@ -4,12 +4,14 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter
 {
+    // Because the parameter 'int? top' is missing, the related methods are added back in this way.
     public partial class DevCenterPoolResource
     {
         /// <summary>
@@ -38,8 +40,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevCenterScheduleResource>> GetDevCenterScheduleAsync(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterScheduleResource>> GetDevCenterScheduleAsync(string scheduleName, int? top, CancellationToken cancellationToken = default)
         {
             return await GetDevCenterScheduleAsync(scheduleName, cancellationToken).ConfigureAwait(false);
         }
@@ -70,8 +73,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual Response<DevCenterScheduleResource> GetDevCenterSchedule(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterScheduleResource> GetDevCenterSchedule(string scheduleName, int? top, CancellationToken cancellationToken = default)
         {
             return GetDevCenterSchedule(scheduleName, cancellationToken);
         }
