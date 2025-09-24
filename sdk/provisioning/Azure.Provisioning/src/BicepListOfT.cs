@@ -143,6 +143,10 @@ public class BicepList<T> :
 
     public void Insert(int index, BicepValue<T> item)
     {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Insert to {_self?.PropertyName}, the list is an expression or output only");
+        }
         _values.Insert(index, item);
         // update the _self for the inserted item and all items after it
         for (int i = index; i < _values.Count; i++)
@@ -153,6 +157,10 @@ public class BicepList<T> :
 
     public void Add(BicepValue<T> item)
     {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Add to {_self?.PropertyName}, the list is an expression or output only");
+        }
         _values.Add(item);
         // update the _self pointing the new item
         SetSelfForItem(item, _values.Count - 1);
@@ -160,6 +168,10 @@ public class BicepList<T> :
 
     public void RemoveAt(int index)
     {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the list is an expression or output only");
+        }
         var removed = _values[index];
         _values.RemoveAt(index);
         // maintain the self reference for the removed item and remaining items
@@ -172,6 +184,10 @@ public class BicepList<T> :
 
     public void Clear()
     {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Clear {_self?.PropertyName}, the list is an expression or output only");
+        }
         for (int i = 0; i < _values.Count; i++)
         {
             RemoveSelfForItem(_values[i]);
@@ -181,6 +197,10 @@ public class BicepList<T> :
 
     public bool Remove(BicepValue<T> item)
     {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the list is an expression or output only");
+        }
         int index = _values.IndexOf(item);
         if (index >= 0)
         {

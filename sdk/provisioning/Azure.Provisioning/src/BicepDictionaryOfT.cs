@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -112,6 +113,10 @@ public class BicepDictionary<T> :
         }
         set
         {
+            if (_kind == BicepValueKind.Expression || _isOutput)
+            {
+                throw new InvalidOperationException($"Cannot assign to {_self?.PropertyName}, the dictionary is an expression or output only");
+            }
             _values[key] = value;
             // update the _self pointing the new item
             SetSelfForItem(value, key);
@@ -120,20 +125,23 @@ public class BicepDictionary<T> :
 
     public void Add(string key, BicepValue<T> value)
     {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Add to {_self?.PropertyName}, the dictionary is an expression or output only");
+        }
         _values.Add(key, value);
         // update the _self pointing the new item
         SetSelfForItem(value, key);
     }
 
-    public void Add(KeyValuePair<string, BicepValue<T>> item)
-    {
-        _values.Add(item.Key, item.Value);
-        // update the _self pointing the new item
-        SetSelfForItem(item.Value, item.Key);
-    }
+    public void Add(KeyValuePair<string, BicepValue<T>> item) => Add(item.Key, item.Value);
 
     public bool Remove(string key)
     {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the dictionary is an expression or output only");
+        }
         var removedItem = _values[key];
         // maintain the self reference for the removed item
         RemoveSelfForItem(removedItem);
@@ -142,6 +150,10 @@ public class BicepDictionary<T> :
 
     public void Clear()
     {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Clear {_self?.PropertyName}, the dictionary is an expression or output only");
+        }
         foreach (var kv in _values)
         {
             RemoveSelfForItem(kv.Value);

@@ -78,7 +78,7 @@ public class BicepValueTests
               kind: 'AzurePowerShell'
               properties: {
                 azPowerShellVersion: '10.0'
-                retentionInterval: 'PT11H22M33S'
+                retentionInterval: 'PT1H2M3S'
                 scriptContent: 'echo \'Hello, world!\''
               }
             }
