@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Azure custom voice configuration (preferred). </summary>
-    public partial class AzureCustomVoice : IJsonModel<AzureCustomVoice>
+    /// <summary> Azure custom voice configuration. </summary>
+    public partial class AzureCustomVoice : AzureVoice, IJsonModel<AzureCustomVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzureCustomVoice"/> for deserialization. </summary>
         internal AzureCustomVoice()

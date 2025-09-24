@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A message authored by the end user as input to the model. </summary>
-    public partial class UserMessage : IJsonModel<UserMessage>
+    public partial class UserMessage : Message, IJsonModel<UserMessage>
     {
         /// <summary> Initializes a new instance of <see cref="UserMessage"/> for deserialization. </summary>
         internal UserMessage()

@@ -12,9 +12,9 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for Azure voice configurations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCustomVoice"/>, <see cref="AzureStandardVoice"/>, <see cref="AzurePlatformVoice"/>, and <see cref="AzurePersonalVoice"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCustomVoice"/>, <see cref="AzureStandardVoice"/>, and <see cref="AzurePersonalVoice"/>.
     /// </summary>
-    public abstract partial class AzureVoice
+    public abstract partial class AzureVoice : VoiceProvider
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

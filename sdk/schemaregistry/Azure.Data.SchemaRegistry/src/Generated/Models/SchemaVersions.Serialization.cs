@@ -170,7 +170,8 @@ namespace Azure.Data.SchemaRegistry.Models
         public static explicit operator SchemaVersions(Response result)
         {
             using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeSchemaVersions(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

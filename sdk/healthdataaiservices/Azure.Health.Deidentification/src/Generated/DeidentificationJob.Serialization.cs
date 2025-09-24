@@ -297,7 +297,8 @@ namespace Azure.Health.Deidentification
         public static explicit operator DeidentificationJob(Response result)
         {
             using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeDeidentificationJob(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

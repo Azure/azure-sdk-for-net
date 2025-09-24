@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventInputAudioClear : IJsonModel<ClientEventInputAudioClear>
+    internal partial class ClientEventInputAudioClear : ClientEvent, IJsonModel<ClientEventInputAudioClear>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

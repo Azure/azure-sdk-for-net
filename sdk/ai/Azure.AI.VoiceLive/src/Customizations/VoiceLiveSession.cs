@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets the underlying WebSocket connection.
         /// </summary>
-        public WebSocket WebSocket { get; protected set; }
+        internal WebSocket WebSocket { get; set; }
 
         private readonly VoiceLiveClient _parentClient;
         private readonly Uri _endpoint;

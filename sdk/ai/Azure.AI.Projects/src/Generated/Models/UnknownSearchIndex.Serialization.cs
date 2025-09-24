@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownSearchIndex : IJsonModel<SearchIndex>
+    internal partial class UnknownSearchIndex : SearchIndex, IJsonModel<SearchIndex>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSearchIndex"/> for deserialization. </summary>
         internal UnknownSearchIndex()
