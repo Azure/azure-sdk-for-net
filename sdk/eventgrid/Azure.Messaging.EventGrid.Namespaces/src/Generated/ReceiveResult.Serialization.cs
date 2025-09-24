@@ -152,7 +152,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public static explicit operator ReceiveResult(Response result)
         {
             using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeReceiveResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

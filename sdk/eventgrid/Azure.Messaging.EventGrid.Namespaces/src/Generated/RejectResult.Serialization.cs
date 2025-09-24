@@ -185,7 +185,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public static explicit operator RejectResult(Response result)
         {
             using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeRejectResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
