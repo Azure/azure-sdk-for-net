@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(DualStackEndpointPreference)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PublishIPv6Endpoint))
+            if (Optional.IsDefined(IsIPv6EndpointToBePublished))
             {
                 writer.WritePropertyName("publishIpv6Endpoint"u8);
-                writer.WriteBooleanValue(PublishIPv6Endpoint.Value);
+                writer.WriteBooleanValue(IsIPv6EndpointToBePublished.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublishIPv6Endpoint), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsIPv6EndpointToBePublished), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  publishIpv6Endpoint: ");
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Storage.Models
             }
             else
             {
-                if (Optional.IsDefined(PublishIPv6Endpoint))
+                if (Optional.IsDefined(IsIPv6EndpointToBePublished))
                 {
                     builder.Append("  publishIpv6Endpoint: ");
-                    var boolValue = PublishIPv6Endpoint.Value == true ? "true" : "false";
+                    var boolValue = IsIPv6EndpointToBePublished.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

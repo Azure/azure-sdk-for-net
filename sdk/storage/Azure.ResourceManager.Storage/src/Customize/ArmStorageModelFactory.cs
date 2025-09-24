@@ -164,6 +164,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Storage.FileServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileServiceData FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, IEnumerable<StorageCorsRule> corsRules, DeleteRetentionPolicy shareDeleteRetentionPolicy, SmbSetting protocolSmbSetting)
-            => FileServiceData(id, name, resourceType, systemData, sku, corsRules, shareDeleteRetentionPolicy, new ProtocolSettings(protocolSmbSetting, null, null));
+            => FileServiceData(id, name, resourceType, systemData, sku, corsRules, shareDeleteRetentionPolicy, new FileServiceProtocolSettings(protocolSmbSetting, null, null));
     }
 }

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            ZonePlacementPolicy? zonePlacementPolicy = default;
+            StorageAccountZonePlacementPolicy? zonePlacementPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    zonePlacementPolicy = new ZonePlacementPolicy(property.Value.GetString());
+                    zonePlacementPolicy = new StorageAccountZonePlacementPolicy(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

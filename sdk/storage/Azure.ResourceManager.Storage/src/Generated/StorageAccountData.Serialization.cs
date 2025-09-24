@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PublishIPv6Endpoint", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsIPv6EndpointToBePublished", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    dualStackEndpointPreference: ");

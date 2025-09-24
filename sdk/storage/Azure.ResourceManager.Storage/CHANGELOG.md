@@ -1,18 +1,13 @@
 # Release History
 
-## 1.5.0 (2025-09-26) (Unreleased)
+## 1.5.0 (2025-09-26)
 
 ### Features Added
-- Upgraded api-version tag from 'package-2024-01' to 'package-2025-01'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/9e8f84cab64ffb562abbb0790f2b1e7a707b5ad6/specification/storage/resource-manager/readme.md
-    - Supported new property isSmbOauth on Storage accounts 
-    - Supported new properties Zone and ZonePlacementPolicy on Storage accounts
-    - Supported new property EncryptionInTransit in NFS and SMB settings 
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-2024-01' to 'package-2025-01'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/9e8f84cab64ffb562abbb0790f2b1e7a707b5ad6/specification/storage/resource-manager/readme.md.
+    - Supported new property isSmbOauth on Storage accounts.
+    - Supported new properties Zone and ZonePlacementPolicy on Storage accounts.
+    - Supported new property EncryptionInTransit in NFS and SMB settings.
 
 ## 1.4.4 (2025-07-28)
 

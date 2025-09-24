@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.Storage.Samples
                 {
                     Name = "losangeles001",
                 },
-                ZonePlacementPolicy = ZonePlacementPolicy.Any,
+                ZonePlacementPolicy = StorageAccountZonePlacementPolicy.Any,
                 Tags =
 {
 ["key1"] = "value1",

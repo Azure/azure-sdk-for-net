@@ -80,197 +80,202 @@ acronym-mapping:
     PUT: Put
 
 prepend-rp-prefix:
-    - CorsRules
     - CorsRule
+    - CorsRules
     - CustomDomain
     - DnsEndpointType
     - ListKeyExpand
     - MinimumTlsVersion
     - PermissionScope
-    - SshPublicKey
     - PublicNetworkAccess
-    - RoutingPreference
     - RoutingChoice
+    - RoutingPreference
+    - SshPublicKey
     - UsageName
     - UsageUnit
 
 rename-mapping:
-    BlobServiceProperties: BlobService
-    QueueServiceProperties: QueueService
-    FileServiceProperties: FileService
-    TableServiceProperties: TableService
-    StorageAccountCheckNameAvailabilityParameters: StorageAccountNameAvailabilityContent
-    Multichannel.enabled: IsMultiChannelEnabled
-    AccessPolicy.expiryTime: expireOn
-    AccountStatus: StorageAccountStatus
-    ResourceAccessRule: StorageAccountResourceAccessRule
-    NetworkRuleSet: StorageAccountNetworkRuleSet
-    VirtualNetworkRule: StorageAccountVirtualNetworkRule
-    IPRule: StorageAccountIPRule
-    Action: StorageAccountNetworkRuleAction
-    State: StorageAccountNetworkRuleState
-    Bypass: StorageNetworkBypass
-    DefaultAction: StorageNetworkDefaultAction
-    EnabledProtocols: FileShareEnabledProtocol
-    FileShare.properties.enabledProtocols: enabledProtocol
-    Encryption: StorageAccountEncryption
-    EncryptionIdentity: StorageAccountEncryptionIdentity
-    EncryptionServices: StorageAccountEncryptionServices
-    EncryptionService: StorageEncryptionService
-    EncryptionService.enabled: IsEnabled
-    Endpoints: StorageAccountEndpoints
-    KeySource: StorageAccountKeySource
-    KeyType: StorageEncryptionKeyType
-    KeyPolicy: StorageAccountKeyPolicy
-    KeyPermission: StorageAccountKeyPermission
-    KeyCreationTime: StorageAccountKeyCreationTime
-    KeyVaultProperties: StorageAccountKeyVaultProperties
-    Format: BlobInventoryPolicyFormat
-    Schedule: BlobInventoryPolicySchedule
-    ObjectType: BlobInventoryPolicyObjectType
-    LastAccessTimeTrackingPolicy.enable: IsEnabled
-    HttpProtocol: StorageAccountHttpProtocol
-    Name: LastAccessTimeTrackingPolicyName
-    LeaseDuration: StorageLeaseDurationType
-    BlobContainer.properties.leaseDuration: LeaseDuration
-    FileShare.properties.leaseDuration: LeaseDuration
-    ManagementPolicyRule.enabled: IsEnabled
-    RuleType: ManagementPolicyRuleType
-    Permissions: StorageAccountSasPermission
-    Services: StorageAccountSasSignedService
-    AccountSasParameters.signedExpiry: SharedAccessExpireOn
-    SignedResourceTypes: StorageAccountSasSignedResourceType
-    SignedResource: ServiceSasSignedResourceType
-    Reason: StorageAccountNameUnavailableReason
-    Restriction: StorageSkuRestriction
-    ReasonCode: StorageRestrictionReasonCode
-    SKUCapability: StorageSkuCapability
-    RestorePolicyProperties.enabled: IsEnabled
-    SasPolicy: StorageAccountSasPolicy
-    ShareAccessTier: FileShareAccessTier
-    TagFilter: ManagementPolicyTagFilter
-    TagFilter.op: Operator
-    TagProperty: LegalHoldTag
-    AccessTier: StorageAccountAccessTier
-    StorageAccountSkuConversionStatus.startTime: StartOn
-    StorageAccountSkuConversionStatus.endTime: EndOn
-    SkuConversionStatus: StorageAccountSkuConversionState
-    PrivateLinkResource: StoragePrivateLinkResourceData
-    MigrationState: ImmutableStorageWithVersioningMigrationState
     AccessPolicy: StorageServiceAccessPolicy
+    AccessPolicy.expiryTime: expireOn
+    AccessTier: StorageAccountAccessTier
+    AccountImmutabilityPolicyProperties: AccountImmutabilityPolicy
+    AccountLimits: FileServiceAccountLimits
+    AccountSasParameters.signedExpiry: SharedAccessExpireOn
+    AccountStatus: StorageAccountStatus
+    AccountType: ActiveDirectoryAccountType
+    AccountUsage: FileServiceAccountUsage
+    AccountUsageElements: FileServiceAccountUsageElements
+    Action: StorageAccountNetworkRuleAction
+    ActiveDirectoryProperties: StorageActiveDirectoryProperties
+    ActiveDirectoryProperties.domainGuid: ActiveDirectoryDomainGuid
+    AllowedMethods: CorsRuleAllowedMethod
+    AzureFilesIdentityBasedAuthentication: FilesIdentityBasedAuthentication
+    BlobContainer.properties.deleted: IsDeleted
+    BlobContainer.properties.denyEncryptionScopeOverride: PreventEncryptionScopeOverride
+    BlobContainer.properties.leaseDuration: LeaseDuration
+    BlobInventoryPolicy.properties.policy: PolicySchema
+    BlobInventoryPolicyFilter.prefixMatch: IncludePrefix
+    BlobInventoryPolicyRule.enabled: IsEnabled
+    BlobInventoryPolicySchema.enabled: IsEnabled
+    BlobServiceProperties: BlobService
+    BlobServiceProperties.properties.automaticSnapshotPolicyEnabled: IsAutomaticSnapshotPolicyEnabled
+    Bypass: StorageNetworkBypass
     ChangeFeed: BlobServiceChangeFeed
     ChangeFeed.enabled: IsEnabled
     CheckNameAvailabilityResult: StorageAccountNameAvailabilityResult
     CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
-    BlobContainer.properties.deleted: IsDeleted
-    BlobServiceProperties.properties.automaticSnapshotPolicyEnabled: IsAutomaticSnapshotPolicyEnabled
-    FileShare.properties.deleted: IsDeleted
-    DeleteRetentionPolicy.enabled: IsEnabled
-    ImmutableStorageAccount.enabled: IsEnabled
-    ImmutableStorageWithVersioning.enabled: IsEnabled
-    BlobInventoryPolicyRule.enabled: IsEnabled
-    BlobInventoryPolicySchema.enabled: IsEnabled
-    ActiveDirectoryProperties: StorageActiveDirectoryProperties
-    ActiveDirectoryProperties.domainGuid: ActiveDirectoryDomainGuid
-    AccountType: ActiveDirectoryAccountType
-    StorageAccount.properties.failoverInProgress: IsFailoverInProgress
-    StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
-    StorageAccountCreateParameters.properties.isNfsV3Enabled: IsNfsV3Enabled
-    StorageAccount.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
-    StorageAccountCreateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
-    StorageAccountUpdateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
     CustomDomain.useSubDomainName: IsUseSubDomainNameEnabled
-    RoutingPreference.publishMicrosoftEndpoints: IsMicrosoftEndpointsPublished
-    RoutingPreference.publishInternetEndpoints: IsInternetEndpointsPublished
-    BlobContainer.properties.denyEncryptionScopeOverride: PreventEncryptionScopeOverride
-    BlobInventoryPolicy.properties.policy: PolicySchema
-    ProtocolSettings.smb: SmbSetting
-    LocalUser: StorageAccountLocalUser
-    ManagementPolicy: StorageAccountManagementPolicy
-    AzureFilesIdentityBasedAuthentication: FilesIdentityBasedAuthentication
-    BlobInventoryPolicyFilter.prefixMatch: IncludePrefix
-    AllowedMethods: CorsRuleAllowedMethod
-    DefaultSharePermission.StorageFileDataSmbShareReader: Reader
+    DefaultAction: StorageNetworkDefaultAction
     DefaultSharePermission.StorageFileDataSmbShareContributor: Contributor
     DefaultSharePermission.StorageFileDataSmbShareElevatedContributor: ElevatedContributor
-    EncryptionScopeSource.Microsoft.Storage: Storage
+    DefaultSharePermission.StorageFileDataSmbShareReader: Reader
+    DeleteRetentionPolicy.enabled: IsEnabled
+    DualStackEndpointPreference.publishIpv6Endpoint: IsIPv6EndpointToBePublished
+    EnabledProtocols: FileShareEnabledProtocol
+    Encryption: StorageAccountEncryption
+    EncryptionIdentity: StorageAccountEncryptionIdentity
+    EncryptionInTransit.required: IsRequired
     EncryptionScopeSource.Microsoft.KeyVault: KeyVault
+    EncryptionScopeSource.Microsoft.Storage: Storage
+    EncryptionService: StorageEncryptionService
+    EncryptionService.enabled: IsEnabled
+    EncryptionServices: StorageAccountEncryptionServices
+    Endpoints: StorageAccountEndpoints
+    Endpoints.blob: BlobUri
+    Endpoints.dfs: DfsUri
+    Endpoints.file: FileUri
+    Endpoints.queue: QueueUri
+    Endpoints.table: TableUri
+    Endpoints.web: WebUri
+    ExecutionTrigger.type: TaskExecutionTriggerType
+    ExecutionTriggerUpdate.type: TaskExecutionTriggerType
+    FailoverType: StorageAccountFailoverType
+    FileServiceProperties: FileService
+    FileShare.properties.deleted: IsDeleted
+    FileShare.properties.enabledProtocols: enabledProtocol
+    FileShare.properties.leaseDuration: LeaseDuration
+    Format: BlobInventoryPolicyFormat
     GeoReplicationStats: GeoReplicationStatistics
+    HttpProtocol: StorageAccountHttpProtocol
+    ImmutabilityPolicyProperties: BlobContainerImmutabilityPolicy
+    ImmutableStorageAccount.enabled: IsEnabled
+    ImmutableStorageWithVersioning.enabled: IsEnabled
+    IntervalUnit: ExecutionIntervalUnit
     InventoryRuleType: BlobInventoryRuleType
+    IPRule: StorageAccountIPRule
+    IssueType: NetworkSecurityPerimeterProvisioningIssueType
+    KeyCreationTime: StorageAccountKeyCreationTime
+    KeyPermission: StorageAccountKeyPermission
+    KeyPolicy: StorageAccountKeyPolicy
+    KeySource: StorageAccountKeySource
+    KeySource.Microsoft.Keyvault: KeyVault
+    KeySource.Microsoft.Storage: Storage
+    KeyType: StorageEncryptionKeyType
+    KeyVaultProperties: StorageAccountKeyVaultProperties
+    LastAccessTimeTrackingPolicy.enable: IsEnabled
+    LeaseDuration: StorageLeaseDurationType
     LeaseContainerRequestAction: LeaseContainerAction
     LeaseState: StorageLeaseState
     LeaseStatus: StorageLeaseStatus
     ListAccountSasResponse: GetAccountSasResult
-    ListServiceSasResponse: GetServiceSasResult
     ListContainersInclude: BlobContainerState
+    ListEncryptionScopesInclude: EncryptionScopesIncludeType
+    ListServiceSasResponse: GetServiceSasResult
+    LocalUser: StorageAccountLocalUser
+    LocalUser.properties.allowAclAuthorization: IsAclAuthorizationAllowed
+    LocalUser.properties.isNFSv3Enabled: IsNfsV3Enabled
+    ManagementPolicy: StorageAccountManagementPolicy
+    ManagementPolicyRule.enabled: IsEnabled
+    MigrationName: StorageAccountMigrationName
+    MigrationState: ImmutableStorageWithVersioningMigrationState
+    MigrationStatus: StorageAccountMigrationStatus
+    Multichannel.enabled: IsMultiChannelEnabled
+    Name: LastAccessTimeTrackingPolicyName
+    NetworkRuleSet: StorageAccountNetworkRuleSet
+    ObjectReplicationPolicyPropertiesMetrics.enabled: IsMetricsEnabled
+    ObjectType: BlobInventoryPolicyObjectType
+    Permissions: StorageAccountSasPermission
+    PrivateLinkResource: StoragePrivateLinkResourceData
+    ProtocolSettings: FileServiceProtocolSettings
+    ProtocolSettings.smb: SmbSetting
+    ProvisioningIssue: NetworkSecurityPerimeterProvisioningIssue
+    ProvisioningIssueProperties: NetworkSecurityPerimeterProvisioningIssueProperties
+    PublicAccess: StoragePublicAccessType
+    QueueServiceProperties: QueueService
+    Reason: StorageAccountNameUnavailableReason
+    ReasonCode: StorageRestrictionReasonCode
+    ResourceAccessRule: StorageAccountResourceAccessRule
     RestorePolicyProperties: RestorePolicy
-    AccountImmutabilityPolicyProperties: AccountImmutabilityPolicy
-    ImmutabilityPolicyProperties: BlobContainerImmutabilityPolicy
+    RestorePolicyProperties.enabled: IsEnabled
+    RoutingPreference.publishInternetEndpoints: IsInternetEndpointsPublished
+    RoutingPreference.publishMicrosoftEndpoints: IsMicrosoftEndpointsPublished
+    RuleType: ManagementPolicyRuleType
+    RunResult: StorageTaskRunResult
+    RunStatusEnum: StorageTaskRunStatus
+    SasPolicy: StorageAccountSasPolicy
+    Schedule: BlobInventoryPolicySchedule
+    Services: StorageAccountSasSignedService
+    Severity: NetworkSecurityPerimeterProvisioningIssueSeverity
+    ShareAccessTier: FileShareAccessTier
+    SignedIdentifier: StorageSignedIdentifier
+    SignedResource: ServiceSasSignedResourceType
     SignedResource.b: Blob
     SignedResource.c: Container
     SignedResource.f: File
     SignedResource.s: Share
-    SignedIdentifier: StorageSignedIdentifier
-    KeySource.Microsoft.Storage: Storage
-    KeySource.Microsoft.Keyvault: KeyVault
-    StorageAccountListKeysResult: StorageAccountGetKeysResult
-    TableAccessPolicy: StorageTableAccessPolicy
-    TableAccessPolicy.expiryTime: ExpireOn
-    TableSignedIdentifier: StorageTableSignedIdentifier
-    UpdateHistoryProperty: UpdateHistoryEntry
-    UpdateHistoryProperty.update: UpdateType
-    PublicAccess: StoragePublicAccessType
-    Endpoints.blob: BlobUri
-    Endpoints.queue: QueueUri
-    Endpoints.table: TableUri
-    Endpoints.file: FileUri
-    Endpoints.web: WebUri
-    Endpoints.dfs: DfsUri
-    StorageAccountMicrosoftEndpoints.blob: BlobUri
-    StorageAccountMicrosoftEndpoints.queue: QueueUri
-    StorageAccountMicrosoftEndpoints.table: TableUri
-    StorageAccountMicrosoftEndpoints.file: FileUri
-    StorageAccountMicrosoftEndpoints.web: WebUri
-    StorageAccountMicrosoftEndpoints.dfs: DfsUri
+    SignedResourceTypes: StorageAccountSasSignedResourceType
+    SkuConversionStatus: StorageAccountSkuConversionState
+    SkuInformationLocationInfoItem: StorageSkuLocationInfo
+    SKUCapability: StorageSkuCapability
+    State: StorageAccountNetworkRuleState
+    StorageAccount.properties.accountMigrationInProgress: IsAccountMigrationInProgress
+    StorageAccount.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+    StorageAccount.properties.enableExtendedGroups: IsExtendedGroupEnabled
+    StorageAccount.properties.failoverInProgress: IsFailoverInProgress
+    StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
+    StorageAccount.properties.provisioningState: StorageAccountProvisioningState
+    StorageAccountCheckNameAvailabilityParameters: StorageAccountNameAvailabilityContent
+    StorageAccountCreateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+    StorageAccountCreateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
+    StorageAccountCreateParameters.properties.isNfsV3Enabled: IsNfsV3Enabled
     StorageAccountInternetEndpoints.blob: BlobUri
+    StorageAccountInternetEndpoints.dfs: DfsUri
     StorageAccountInternetEndpoints.file: FileUri
     StorageAccountInternetEndpoints.web: WebUri
-    StorageAccountInternetEndpoints.dfs: DfsUri
-    FailoverType: StorageAccountFailoverType
-    ListEncryptionScopesInclude: EncryptionScopesIncludeType
-    StorageAccount.properties.accountMigrationInProgress: IsAccountMigrationInProgress
-    StorageAccount.properties.enableExtendedGroups: IsExtendedGroupEnabled
-    StorageAccount.properties.provisioningState: StorageAccountProvisioningState
-    StorageAccountCreateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
-    StorageAccountUpdateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
-    LocalUser.properties.allowAclAuthorization: IsAclAuthorizationAllowed
-    LocalUser.properties.isNFSv3Enabled: IsNfsV3Enabled
+    StorageAccountListKeysResult: StorageAccountGetKeysResult
+    StorageAccountMicrosoftEndpoints.blob: BlobUri
+    StorageAccountMicrosoftEndpoints.dfs: DfsUri
+    StorageAccountMicrosoftEndpoints.file: FileUri
+    StorageAccountMicrosoftEndpoints.queue: QueueUri
+    StorageAccountMicrosoftEndpoints.table: TableUri
+    StorageAccountMicrosoftEndpoints.web: WebUri
     StorageAccountMigration.type: ResourceType|resource-type
-    IntervalUnit: ExecutionIntervalUnit
-    IssueType: NetworkSecurityPerimeterProvisioningIssueType
-    MigrationName: StorageAccountMigrationName
-    MigrationStatus: StorageAccountMigrationStatus
-    ProvisioningIssue: NetworkSecurityPerimeterProvisioningIssue
-    ProvisioningIssueProperties: NetworkSecurityPerimeterProvisioningIssueProperties
-    RunResult: StorageTaskRunResult
-    RunStatusEnum: StorageTaskRunStatus
-    Severity: NetworkSecurityPerimeterProvisioningIssueSeverity
+    StorageAccountSkuConversionStatus.endTime: EndOn
+    StorageAccountSkuConversionStatus.startTime: StartOn
+    StorageAccountUpdateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+    StorageAccountUpdateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
+    StorageTaskAssignmentProperties.enabled: IsEnabled
+    StorageTaskAssignmentProperties.provisioningState: StorageTaskAssignmentProvisioningState?
     StorageTaskAssignmentUpdateProperties: StorageTaskAssignmentPatchProperties
     StorageTaskAssignmentUpdateProperties.enabled: IsEnabled
     StorageTaskAssignmentUpdateProperties.provisioningState: StorageTaskAssignmentProvisioningState?
-    StorageTaskAssignmentProperties.enabled: IsEnabled
-    StorageTaskAssignmentProperties.provisioningState: StorageTaskAssignmentProvisioningState?
-    StorageTaskReportProperties.startTime: StartedOn|date-time
     StorageTaskReportProperties.finishTime: FinishedOn|date-time
+    StorageTaskReportProperties.startTime: StartedOn|date-time
+    Restriction: StorageSkuRestriction
+    TableAccessPolicy: StorageTableAccessPolicy
+    TableAccessPolicy.expiryTime: ExpireOn
+    TableServiceProperties: TableService
+    TableSignedIdentifier: StorageTableSignedIdentifier
+    TagFilter: ManagementPolicyTagFilter
+    TagFilter.op: Operator
+    TagProperty: LegalHoldTag
     TriggerParameters: ExecutionTriggerParameters
     TriggerParametersUpdate: ExecutionTriggerParametersUpdate
     TriggerType: TaskExecutionTriggerType
-    ExecutionTrigger.type: TaskExecutionTriggerType
-    ExecutionTriggerUpdate.type: TaskExecutionTriggerType
-    ObjectReplicationPolicyPropertiesMetrics.enabled: IsMetricsEnabled
-    AccountLimits: FileServiceAccountLimits
-    AccountUsage: FileServiceAccountUsage
-    AccountUsageElements: FileServiceAccountUsageElements
+    UpdateHistoryProperty: UpdateHistoryEntry
+    UpdateHistoryProperty.update: UpdateType
+    VirtualNetworkRule: StorageAccountVirtualNetworkRule
+    ZonePlacementPolicy: StorageAccountZonePlacementPolicy
 
 directive:
     - from: swagger-document

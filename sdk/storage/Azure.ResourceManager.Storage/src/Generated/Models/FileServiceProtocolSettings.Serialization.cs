@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ProtocolSettings : IUtf8JsonSerializable, IJsonModel<ProtocolSettings>
+    public partial class FileServiceProtocolSettings : IUtf8JsonSerializable, IJsonModel<FileServiceProtocolSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtocolSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileServiceProtocolSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileServiceProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtocolSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileServiceProtocolSettings)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(SmbSetting))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        ProtocolSettings IJsonModel<ProtocolSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FileServiceProtocolSettings IJsonModel<FileServiceProtocolSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtocolSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileServiceProtocolSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProtocolSettings(document.RootElement, options);
+            return DeserializeFileServiceProtocolSettings(document.RootElement, options);
         }
 
-        internal static ProtocolSettings DeserializeProtocolSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FileServiceProtocolSettings DeserializeFileServiceProtocolSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProtocolSettings(smb, nfs, serializedAdditionalRawData);
+            return new FileServiceProtocolSettings(smb, nfs, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Required", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsRequired", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  nfs: ");
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ProtocolSettings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FileServiceProtocolSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -176,26 +176,26 @@ namespace Azure.ResourceManager.Storage.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtocolSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileServiceProtocolSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProtocolSettings IPersistableModel<ProtocolSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FileServiceProtocolSettings IPersistableModel<FileServiceProtocolSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeProtocolSettings(document.RootElement, options);
+                        return DeserializeFileServiceProtocolSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtocolSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileServiceProtocolSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProtocolSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileServiceProtocolSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

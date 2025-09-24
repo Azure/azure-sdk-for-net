@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage
         internal Placement Placement { get; set; }
         /// <summary> The availability zone pinning policy for the storage account. </summary>
         [WirePath("placement.zonePlacementPolicy")]
-        public ZonePlacementPolicy? ZonePlacementPolicy
+        public StorageAccountZonePlacementPolicy? ZonePlacementPolicy
         {
             get => Placement is null ? default : Placement.ZonePlacementPolicy;
             set
@@ -295,14 +295,14 @@ namespace Azure.ResourceManager.Storage
         internal DualStackEndpointPreference DualStackEndpointPreference { get; set; }
         /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
         [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
-        public bool? PublishIPv6Endpoint
+        public bool? IsIPv6EndpointToBePublished
         {
-            get => DualStackEndpointPreference is null ? default : DualStackEndpointPreference.PublishIPv6Endpoint;
+            get => DualStackEndpointPreference is null ? default : DualStackEndpointPreference.IsIPv6EndpointToBePublished;
             set
             {
                 if (DualStackEndpointPreference is null)
                     DualStackEndpointPreference = new DualStackEndpointPreference();
-                DualStackEndpointPreference.PublishIPv6Endpoint = value;
+                DualStackEndpointPreference.IsIPv6EndpointToBePublished = value;
             }
         }
 

@@ -608,7 +608,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 Action = StorageAccountNetworkRuleAction.Allow,
 }},
                 },
-                PublishIPv6Endpoint = true,
+                IsIPv6EndpointToBePublished = true,
             };
             StorageAccountResource result = await storageAccount.UpdateAsync(patch);
 
@@ -824,7 +824,7 @@ Action = StorageAccountNetworkRuleAction.Allow,
             // invoke the operation
             StorageAccountPatch patch = new StorageAccountPatch
             {
-                ZonePlacementPolicy = ZonePlacementPolicy.Any,
+                ZonePlacementPolicy = StorageAccountZonePlacementPolicy.Any,
                 Encryption = new StorageAccountEncryption
                 {
                     Services = new StorageAccountEncryptionServices

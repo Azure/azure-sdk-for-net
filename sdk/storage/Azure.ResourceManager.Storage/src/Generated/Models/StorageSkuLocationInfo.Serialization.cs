@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class SkuInformationLocationInfoItem : IUtf8JsonSerializable, IJsonModel<SkuInformationLocationInfoItem>
+    public partial class StorageSkuLocationInfo : IUtf8JsonSerializable, IJsonModel<StorageSkuLocationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuInformationLocationInfoItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSkuLocationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SkuInformationLocationInfoItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageSkuLocationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuInformationLocationInfoItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuInformationLocationInfoItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSkuLocationInfo)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Location))
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        SkuInformationLocationInfoItem IJsonModel<SkuInformationLocationInfoItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageSkuLocationInfo IJsonModel<StorageSkuLocationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuInformationLocationInfoItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuInformationLocationInfoItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSkuLocationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuInformationLocationInfoItem(document.RootElement, options);
+            return DeserializeStorageSkuLocationInfo(document.RootElement, options);
         }
 
-        internal static SkuInformationLocationInfoItem DeserializeSkuInformationLocationInfoItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StorageSkuLocationInfo DeserializeStorageSkuLocationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SkuInformationLocationInfoItem(location, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new StorageSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SkuInformationLocationInfoItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StorageSkuLocationInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuInformationLocationInfoItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -203,26 +203,26 @@ namespace Azure.ResourceManager.Storage.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuInformationLocationInfoItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSkuLocationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SkuInformationLocationInfoItem IPersistableModel<SkuInformationLocationInfoItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StorageSkuLocationInfo IPersistableModel<StorageSkuLocationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuInformationLocationInfoItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSkuInformationLocationInfoItem(document.RootElement, options);
+                        return DeserializeStorageSkuLocationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuInformationLocationInfoItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSkuLocationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SkuInformationLocationInfoItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageSkuLocationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

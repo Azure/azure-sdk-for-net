@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage
             set
             {
                 if (ProtocolSettings is null)
-                    ProtocolSettings = new ProtocolSettings();
+                    ProtocolSettings = new FileServiceProtocolSettings();
                 ProtocolSettings.SmbSetting = value;
             }
         }

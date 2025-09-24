@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="Placement"/>. </summary>
         /// <param name="zonePlacementPolicy"> The availability zone pinning policy for the storage account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Placement(ZonePlacementPolicy? zonePlacementPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Placement(StorageAccountZonePlacementPolicy? zonePlacementPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ZonePlacementPolicy = zonePlacementPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The availability zone pinning policy for the storage account. </summary>
         [WirePath("zonePlacementPolicy")]
-        public ZonePlacementPolicy? ZonePlacementPolicy { get; set; }
+        public StorageAccountZonePlacementPolicy? ZonePlacementPolicy { get; set; }
     }
 }

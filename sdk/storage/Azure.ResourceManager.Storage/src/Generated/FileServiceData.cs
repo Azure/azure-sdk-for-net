@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
         /// <param name="protocolSettings"> Protocol settings for file service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, ProtocolSettings protocolSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, FileServiceProtocolSettings protocolSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Cors = cors;
@@ -97,6 +97,6 @@ namespace Azure.ResourceManager.Storage
         public DeleteRetentionPolicy ShareDeleteRetentionPolicy { get; set; }
         /// <summary> Protocol settings for file service. </summary>
         [WirePath("properties.protocolSettings")]
-        public ProtocolSettings ProtocolSettings { get; set; }
+        public FileServiceProtocolSettings ProtocolSettings { get; set; }
     }
 }

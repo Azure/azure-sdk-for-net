@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Protocol settings for file service. </summary>
-    public partial class ProtocolSettings
+    /// <summary> The StorageSkuLocationInfo. </summary>
+    public partial class StorageSkuLocationInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,38 +46,28 @@ namespace Azure.ResourceManager.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProtocolSettings"/>. </summary>
-        public ProtocolSettings()
+        /// <summary> Initializes a new instance of <see cref="StorageSkuLocationInfo"/>. </summary>
+        internal StorageSkuLocationInfo()
         {
+            Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtocolSettings"/>. </summary>
-        /// <param name="smbSetting"> Setting for SMB protocol. </param>
-        /// <param name="nfs"> Setting for NFS protocol. </param>
+        /// <summary> Initializes a new instance of <see cref="StorageSkuLocationInfo"/>. </summary>
+        /// <param name="location"> Describes the location for the product where storage account resource can be created. </param>
+        /// <param name="zones"> Describes the available zones for the product where storage account resource can be created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProtocolSettings(SmbSetting smbSetting, NfsSetting nfs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SmbSetting = smbSetting;
-            Nfs = nfs;
+            Location = location;
+            Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Setting for SMB protocol. </summary>
-        [WirePath("smb")]
-        public SmbSetting SmbSetting { get; set; }
-        /// <summary> Setting for NFS protocol. </summary>
-        internal NfsSetting Nfs { get; set; }
-        /// <summary> Indicates whether encryption in transit is required. </summary>
-        [WirePath("nfs.encryptionInTransit.required")]
-        public bool? Required
-        {
-            get => Nfs is null ? default : Nfs.Required;
-            set
-            {
-                if (Nfs is null)
-                    Nfs = new NfsSetting();
-                Nfs.Required = value;
-            }
-        }
+        /// <summary> Describes the location for the product where storage account resource can be created. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
+        /// <summary> Describes the available zones for the product where storage account resource can be created. </summary>
+        [WirePath("zones")]
+        public IReadOnlyList<string> Zones { get; }
     }
 }

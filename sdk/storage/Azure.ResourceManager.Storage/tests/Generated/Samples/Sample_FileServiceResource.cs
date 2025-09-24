@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage.Samples
             // invoke the operation
             FileServiceData data = new FileServiceData
             {
-                ProtocolSettings = new ProtocolSettings
+                ProtocolSettings = new FileServiceProtocolSettings
                 {
                     SmbSetting = new SmbSetting
                     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Storage.Samples
             // invoke the operation
             FileServiceData data = new FileServiceData
             {
-                ProtocolSettings = new ProtocolSettings
+                ProtocolSettings = new FileServiceProtocolSettings
                 {
                     SmbSetting = new SmbSetting
                     {
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.Storage.Samples
             // invoke the operation
             FileServiceData data = new FileServiceData
             {
-                ProtocolSettings = new ProtocolSettings
+                ProtocolSettings = new FileServiceProtocolSettings
                 {
                     SmbSetting = new SmbSetting
                     {
-                        Required = true,
+                        IsRequired = true,
                     },
-                    Required = true,
+                    IsRequired = true,
                 },
             };
             ArmOperation<FileServiceResource> lro = await fileService.CreateOrUpdateAsync(WaitUntil.Completed, data);

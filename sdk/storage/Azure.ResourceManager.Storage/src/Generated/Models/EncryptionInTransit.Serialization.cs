@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(EncryptionInTransit)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Required), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRequired), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  required: ");
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Storage.Models
             }
             else
             {
-                if (Optional.IsDefined(Required))
+                if (Optional.IsDefined(IsRequired))
                 {
                     builder.Append("  required: ");
-                    var boolValue = Required.Value == true ? "true" : "false";
+                    var boolValue = IsRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Name = name;
             Locations = new ChangeTrackingList<string>();
-            LocationInfo = new ChangeTrackingList<SkuInformationLocationInfoItem>();
+            LocationInfo = new ChangeTrackingList<StorageSkuLocationInfo>();
             Capabilities = new ChangeTrackingList<StorageSkuCapability>();
             Restrictions = new ChangeTrackingList<StorageSkuRestriction>();
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="capabilities"> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<SkuInformationLocationInfoItem> locationInfo, IReadOnlyList<StorageSkuCapability> capabilities, IReadOnlyList<StorageSkuRestriction> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<StorageSkuLocationInfo> locationInfo, IReadOnlyList<StorageSkuCapability> capabilities, IReadOnlyList<StorageSkuRestriction> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Storage.Models
         public IReadOnlyList<string> Locations { get; }
         /// <summary> Gets the location info. </summary>
         [WirePath("locationInfo")]
-        public IReadOnlyList<SkuInformationLocationInfoItem> LocationInfo { get; }
+        public IReadOnlyList<StorageSkuLocationInfo> LocationInfo { get; }
         /// <summary> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
         [WirePath("capabilities")]
         public IReadOnlyList<StorageSkuCapability> Capabilities { get; }

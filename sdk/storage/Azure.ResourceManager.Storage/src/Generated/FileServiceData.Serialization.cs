@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage
             SystemData systemData = default;
             StorageCorsRules cors = default;
             DeleteRetentionPolicy shareDeleteRetentionPolicy = default;
-            ProtocolSettings protocolSettings = default;
+            FileServiceProtocolSettings protocolSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            protocolSettings = ProtocolSettings.DeserializeProtocolSettings(property0.Value, options);
+                            protocolSettings = FileServiceProtocolSettings.DeserializeFileServiceProtocolSettings(property0.Value, options);
                             continue;
                         }
                     }

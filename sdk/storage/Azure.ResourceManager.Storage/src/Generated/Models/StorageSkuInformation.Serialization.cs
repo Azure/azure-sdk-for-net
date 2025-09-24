@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage.Models
             string resourceType = default;
             StorageKind? kind = default;
             IReadOnlyList<string> locations = default;
-            IReadOnlyList<SkuInformationLocationInfoItem> locationInfo = default;
+            IReadOnlyList<StorageSkuLocationInfo> locationInfo = default;
             IReadOnlyList<StorageSkuCapability> capabilities = default;
             IReadOnlyList<StorageSkuRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    List<SkuInformationLocationInfoItem> array = new List<SkuInformationLocationInfoItem>();
+                    List<StorageSkuLocationInfo> array = new List<StorageSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuInformationLocationInfoItem.DeserializeSkuInformationLocationInfoItem(item, options));
+                        array.Add(StorageSkuLocationInfo.DeserializeStorageSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceType,
                 kind,
                 locations ?? new ChangeTrackingList<string>(),
-                locationInfo ?? new ChangeTrackingList<SkuInformationLocationInfoItem>(),
+                locationInfo ?? new ChangeTrackingList<StorageSkuLocationInfo>(),
                 capabilities ?? new ChangeTrackingList<StorageSkuCapability>(),
                 restrictions ?? new ChangeTrackingList<StorageSkuRestriction>(),
                 serializedAdditionalRawData);

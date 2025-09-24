@@ -2606,19 +2606,19 @@ namespace Azure.ResourceManager.Storage.Tests
                 "centraluseuap"
                 )
             {
-                ZonePlacementPolicy = ZonePlacementPolicy.Any,
+                ZonePlacementPolicy = StorageAccountZonePlacementPolicy.Any,
             };
             StorageAccountResource account2 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName2, parameters2)).Value;
-            Assert.AreEqual(account2.Data.ZonePlacementPolicy, ZonePlacementPolicy.Any);
+            Assert.AreEqual(account2.Data.ZonePlacementPolicy, StorageAccountZonePlacementPolicy.Any);
 
             // Update storage account to None
             var updateParameters1 = new StorageAccountPatch
             {
-                ZonePlacementPolicy = ZonePlacementPolicy.None,
+                ZonePlacementPolicy = StorageAccountZonePlacementPolicy.None,
             };
 
             account2 = (await account2.UpdateAsync(updateParameters1)).Value;
-            Assert.AreEqual(account2.Data.ZonePlacementPolicy, ZonePlacementPolicy.None);
+            Assert.AreEqual(account2.Data.ZonePlacementPolicy, StorageAccountZonePlacementPolicy.None);
 
             string accountName3 = await CreateValidAccountNameAsync(namePrefix);
             var parameters3 = new StorageAccountCreateOrUpdateContent(
