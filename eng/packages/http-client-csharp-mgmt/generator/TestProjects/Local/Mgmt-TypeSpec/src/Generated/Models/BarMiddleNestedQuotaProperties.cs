@@ -44,6 +44,6 @@ namespace MgmtTypeSpec.Models
         public int MiddleProp1 { get; set; }
 
         /// <summary> Gets the MiddleProp2. </summary>
-        public IDictionary<string, string> MiddleProp2 { get; }
+        public IDictionary<string, string> MiddleProp2 { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

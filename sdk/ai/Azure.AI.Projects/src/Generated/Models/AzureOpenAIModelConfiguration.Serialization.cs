@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Azure OpenAI model configuration. The API version would be selected by the service for querying the model. </summary>
-    public partial class AzureOpenAIModelConfiguration : IJsonModel<AzureOpenAIModelConfiguration>
+    public partial class AzureOpenAIModelConfiguration : TargetConfig, IJsonModel<AzureOpenAIModelConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelConfiguration"/> for deserialization. </summary>
         internal AzureOpenAIModelConfiguration()

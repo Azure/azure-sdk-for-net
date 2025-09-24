@@ -35,7 +35,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "invalidModelName",
-                InputAudioFormat = AudioFormat.Pcm16,
+                InputAudioFormat = InputAudioFormat.Pcm16,
                 Voice = voice
             };
 
@@ -60,7 +60,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                InputAudioFormat = AudioFormat.Pcm16,
+                InputAudioFormat = InputAudioFormat.Pcm16,
                 Voice = voice
             };
 
@@ -82,7 +82,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                InputAudioFormat = AudioFormat.Pcm16,
+                InputAudioFormat = InputAudioFormat.Pcm16,
             };
             Assert.ThrowsAsync(typeof(WebSocketException), () => vlc.StartSessionAsync(options, TimeoutToken));
         }

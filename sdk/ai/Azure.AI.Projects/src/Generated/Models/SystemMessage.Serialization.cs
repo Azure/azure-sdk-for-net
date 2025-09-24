@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A message authored by the system to guide model behavior. </summary>
-    public partial class SystemMessage : IJsonModel<SystemMessage>
+    public partial class SystemMessage : Message, IJsonModel<SystemMessage>
     {
         /// <summary> Initializes a new instance of <see cref="SystemMessage"/> for deserialization. </summary>
         internal SystemMessage()

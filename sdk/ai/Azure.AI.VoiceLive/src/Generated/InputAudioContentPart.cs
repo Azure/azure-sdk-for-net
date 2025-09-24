@@ -34,8 +34,8 @@ namespace Azure.AI.VoiceLive
             Transcript = transcript;
         }
 
-        /// <summary> Gets the Audio. </summary>
-        public string Audio { get; }
+        /// <summary> Gets or sets the Audio. </summary>
+        public string Audio { get; set; }
 
         /// <summary> Gets or sets the Transcript. </summary>
         public string Transcript { get; set; }

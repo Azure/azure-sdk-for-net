@@ -1,14 +1,11 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2025-09-24)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Stable release for api-version '2025-06-01'. 
+- Make `Azure.ResourceManager.SiteManager` AOT-compatible.
 
 ## 1.0.0-beta.1 (2025-05-23)
 

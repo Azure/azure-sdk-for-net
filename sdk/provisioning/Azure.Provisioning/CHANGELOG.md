@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - Enabled the ability to assign expressions into a property with type of a `ProvisionableConstruct` via low level APIs.
+- Fixed exception when output variable has a type of array or object.
 
 ### Other Changes
 
