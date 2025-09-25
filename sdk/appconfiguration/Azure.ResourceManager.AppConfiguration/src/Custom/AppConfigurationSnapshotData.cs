@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -12,6 +13,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The type of the resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("type")]
+        [CodeGenMember("type")]
         public string SnapshotType { get; }
     }
 }
