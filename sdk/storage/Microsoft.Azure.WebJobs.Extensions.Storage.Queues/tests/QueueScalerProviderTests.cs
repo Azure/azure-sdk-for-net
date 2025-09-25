@@ -11,7 +11,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
     [TestFixture]
     public class QueueScalerProviderTests
     {
-        // Added full matrix of normalization scenarios.
         [TestCase("%MY_QUEUE%", "mixedcasequeuename", TestName = "TokenResolvedAndLowercased")]
         [TestCase("MixedCaseQueueName", "mixedcasequeuename", TestName = "DirectMixedCaseLowercased")]
         [TestCase("alreadylowercase", "alreadylowercase", TestName = "AlreadyLowercaseUnchanged")]
@@ -22,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             var metadata = new QueueScalerProvider.QueueMetadata
             {
                 Connection = "AnyConnection",
-                QueueName = queueName // token to resolve / normalize
+                QueueName = queueName
             };
             var resolver = new TestNameResolver();
 
