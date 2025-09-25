@@ -119,7 +119,7 @@
 /sdk/appconfiguration/                                             @zhiyuanliang-ms @avanigupta
 
 # ServiceLabel: %App Configuration
-# ServiceOwners:                                                   @shenmuxiaosen @avanigupta
+# ServiceOwners:                                                   @zhiyuanliang-ms @avanigupta
 
 # ServiceLabel: %App Services
 # ServiceOwners:                                                   @antcp @AzureAppServiceCLI
