@@ -14,8 +14,6 @@ namespace Azure.Storage.Files.Shares
     /// </summary>
     public static class ShareDirectoryClientExtensions
     {
-        private static Lazy<TransferManager> s_defaultTransferManager = new(() => new TransferManager(default));
-
         /// <summary>
         /// Uploads the entire contents of local directory to the share directory.
         /// </summary>
@@ -48,17 +46,20 @@ namespace Azure.Storage.Files.Shares
             StorageResource localDirectory = LocalFilesStorageResourceProvider.FromDirectory(localDirectoryPath);
             StorageResource shareDirectory = ShareFilesStorageResourceProvider.FromClient(client, options?.ShareDirectoryOptions);
 
-            TransferOperation trasnfer = await s_defaultTransferManager.Value.StartTransferAsync(
-                localDirectory,
-                shareDirectory,
-                options?.TransferOptions,
-                cancellationToken).ConfigureAwait(false);
-            if (waitUntil == WaitUntil.Completed)
+            await using (TransferManager transferManager = new TransferManager())
             {
-                await trasnfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
+                TransferOperation transfer = await transferManager.StartTransferAsync(
+                    localDirectory,
+                    shareDirectory,
+                    options?.TransferOptions,
+                    cancellationToken).ConfigureAwait(false);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await transfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
 
-            return trasnfer;
+                return transfer;
+            }
         }
 
         /// <summary>
@@ -93,17 +94,20 @@ namespace Azure.Storage.Files.Shares
             StorageResource localDirectory = LocalFilesStorageResourceProvider.FromDirectory(localDirectoryPath);
             StorageResource shareDirectory = ShareFilesStorageResourceProvider.FromClient(client, options?.ShareDirectoryOptions);
 
-            TransferOperation trasnfer = await s_defaultTransferManager.Value.StartTransferAsync(
-                shareDirectory,
-                localDirectory,
-                options?.TransferOptions,
-                cancellationToken).ConfigureAwait(false);
-            if (waitUntil == WaitUntil.Completed)
+            await using (TransferManager transferManager = new TransferManager())
             {
-                await trasnfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
+                TransferOperation transfer = await transferManager.StartTransferAsync(
+                    shareDirectory,
+                    localDirectory,
+                    options?.TransferOptions,
+                    cancellationToken).ConfigureAwait(false);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await transfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
 
-            return trasnfer;
+                return transfer;
+            }
         }
     }
 }

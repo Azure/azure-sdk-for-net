@@ -14,8 +14,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     public static class BlobContainerClientExtensions
     {
-        private static Lazy<TransferManager> s_defaultTransferManager = new Lazy<TransferManager>(() => new TransferManager(default));
-
         /// <summary>
         /// Uploads the entire contents of local directory to the blob container.
         /// </summary>
@@ -89,18 +87,20 @@ namespace Azure.Storage.Blobs
             StorageResource localDirectory = LocalFilesStorageResourceProvider.FromDirectory(localDirectoryPath);
             StorageResource blobDirectory = BlobsStorageResourceProvider.FromClient(client, options?.BlobContainerOptions);
 
-            TransferOperation transfer = await s_defaultTransferManager.Value.StartTransferAsync(
-                localDirectory,
-                blobDirectory,
-                options?.TransferOptions,
-                cancellationToken).ConfigureAwait(false);
-
-            if (waitUntil == WaitUntil.Completed)
+            await using (TransferManager transferManager = new TransferManager())
             {
-                await transfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
+                TransferOperation transfer = await transferManager.StartTransferAsync(
+                    localDirectory,
+                    blobDirectory,
+                    options?.TransferOptions,
+                    cancellationToken).ConfigureAwait(false);
 
-            return transfer;
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await transfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return transfer;
+            }
         }
 
         /// <summary>
@@ -176,18 +176,22 @@ namespace Azure.Storage.Blobs
             StorageResource localDirectory = LocalFilesStorageResourceProvider.FromDirectory(localDirectoryPath);
             StorageResource blobDirectory = BlobsStorageResourceProvider.FromClient(client, options?.BlobContainerOptions);
 
-            TransferOperation transfer = await s_defaultTransferManager.Value.StartTransferAsync(
+            // Create a new TransferManager for each operation
+            await using (TransferManager transferManager = new TransferManager())
+            {
+                TransferOperation transfer = await transferManager.StartTransferAsync(
                 blobDirectory,
                 localDirectory,
                 options?.TransferOptions,
                 cancellationToken).ConfigureAwait(false);
 
-            if (waitUntil == WaitUntil.Completed)
-            {
-                await transfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await transfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
 
-            return transfer;
+                return transfer;
+            }
         }
     }
 }
