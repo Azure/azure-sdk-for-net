@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="quotaLimitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QuotaItemData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string quotaLimitName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppSubscriptionQuotaItem>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,11 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        QuotaItemData value = default;
+                        NetAppSubscriptionQuotaItem value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = QuotaItemData.DeserializeQuotaItemData(document.RootElement);
+                        value = NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((QuotaItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +207,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="quotaLimitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QuotaItemData> Get(string subscriptionId, string resourceGroupName, string accountName, string quotaLimitName, CancellationToken cancellationToken = default)
+        public Response<NetAppSubscriptionQuotaItem> Get(string subscriptionId, string resourceGroupName, string accountName, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,13 +220,11 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        QuotaItemData value = default;
+                        NetAppSubscriptionQuotaItem value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = QuotaItemData.DeserializeQuotaItemData(document.RootElement);
+                        value = NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((QuotaItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

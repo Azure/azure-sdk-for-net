@@ -76,6 +76,7 @@ override-operation-name:
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/quotaLimits/{quotaLimitName}
 
 prepend-rp-prefix:
   - Backup
@@ -201,7 +202,7 @@ rename-mapping:
   QuotaAvailabilityRequest: NetAppQuotaAvailabilityContent
   InAvailabilityReasonType: NetAppNameUnavailableReason
   Snapshot: NetAppVolumeSnapshot
-  SubscriptionQuotaItem: NetAppSubscriptionQuotaItem
+  QuotaItem: NetAppSubscriptionQuotaItem
   SubvolumeInfo: NetAppSubvolumeInfo
   Replication: NetAppVolumeReplication
   BackupStatus: NetAppVolumeBackupStatus
@@ -258,6 +259,8 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
+  RelationshipStatus: NetAppRestoreRelationshipStatus
+  VolumeReplicationRelationshipStatus: NetAppRelationshipStatus
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

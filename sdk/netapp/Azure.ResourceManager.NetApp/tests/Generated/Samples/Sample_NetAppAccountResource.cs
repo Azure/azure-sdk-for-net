@@ -256,6 +256,62 @@ PrivateEndpointId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-00
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetNetAppResourceQuotaLimitsAccounts_QuotaLimitsAccountList()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2025-07-01-preview/examples/QuotaLimitsAccount_List.json
+            // this example is just showing the usage of "NetAppResourceQuotaLimitsAccount_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "myAccount";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (NetAppSubscriptionQuotaItem item in netAppAccount.GetNetAppResourceQuotaLimitsAccountsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetAppResourceQuotaLimitsAccount_VolumesRestoreStatus()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2025-07-01-preview/examples/QuotaLimitsAccount_Get.json
+            // this example is just showing the usage of "NetAppResourceQuotaLimitsAccount_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "myAccount";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
+
+            // invoke the operation
+            string quotaLimitName = "poolsPerAccount";
+            NetAppSubscriptionQuotaItem result = await netAppAccount.GetNetAppResourceQuotaLimitsAccountAsync(quotaLimitName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVolumeGroups_VolumeGroupsListOracle()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2025-07-01-preview/examples/VolumeGroups_List_Oracle.json

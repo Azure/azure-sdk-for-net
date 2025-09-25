@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
         /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, float? customThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, PoolPropertiesEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, float? customThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             PoolId = poolId;
@@ -122,6 +122,6 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
         public bool? IsCoolAccessEnabled { get; set; }
         /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
-        public PoolPropertiesEncryptionType? EncryptionType { get; set; }
+        public CapacityPoolEncryptionType? EncryptionType { get; set; }
     }
 }

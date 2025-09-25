@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NicInfo(ipAddress, volumeResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.QuotaItemData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppSubscriptionQuotaItem"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="current"> The current quota value. </param>
         /// <param name="default"> The default quota value. </param>
         /// <param name="usage"> The usage quota value. </param>
-        /// <returns> A new <see cref="NetApp.QuotaItemData"/> instance for mocking. </returns>
-        public static QuotaItemData QuotaItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? current = null, int? @default = null, int? usage = null)
+        /// <returns> A new <see cref="Models.NetAppSubscriptionQuotaItem"/> instance for mocking. </returns>
+        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? current = null, int? @default = null, int? usage = null)
         {
-            return new QuotaItemData(
+            return new NetAppSubscriptionQuotaItem(
                 id,
                 name,
                 resourceType,
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
         /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
         /// <returns> A new <see cref="NetApp.CapacityPoolData"/> instance for mocking. </returns>
-        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, float? customThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, PoolPropertiesEncryptionType? encryptionType = null)
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, float? customThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, CapacityPoolEncryptionType? encryptionType = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
         /// <param name="relationshipStatus"> The status of the Volume Replication. </param>
         /// <returns> A new <see cref="Models.NetAppReplicationObject"/> instance for mocking. </returns>
-        public static NetAppReplicationObject NetAppReplicationObject(string replicationId = null, NetAppEndpointType? endpointType = null, NetAppReplicationSchedule? replicationSchedule = null, ResourceIdentifier remoteVolumeResourceId = null, RemotePath remotePath = null, string remoteVolumeRegion = null, IEnumerable<NetAppDestinationReplication> destinationReplications = null, ExternalReplicationSetupStatus? externalReplicationSetupStatus = null, string externalReplicationSetupInfo = null, NetAppMirrorState? mirrorState = null, VolumeReplicationRelationshipStatus? relationshipStatus = null)
+        public static NetAppReplicationObject NetAppReplicationObject(string replicationId = null, NetAppEndpointType? endpointType = null, NetAppReplicationSchedule? replicationSchedule = null, ResourceIdentifier remoteVolumeResourceId = null, RemotePath remotePath = null, string remoteVolumeRegion = null, IEnumerable<NetAppDestinationReplication> destinationReplications = null, ExternalReplicationSetupStatus? externalReplicationSetupStatus = null, string externalReplicationSetupInfo = null, NetAppMirrorState? mirrorState = null, NetAppRelationshipStatus? relationshipStatus = null)
         {
             destinationReplications ??= new List<NetAppDestinationReplication>();
 
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
         /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeBackupStatus"/> instance for mocking. </returns>
-        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRestoreRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
         {
             return new NetAppVolumeBackupStatus(
                 isHealthy,
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
         /// <returns> A new <see cref="Models.NetAppRestoreStatus"/> instance for mocking. </returns>
-        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
+        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRestoreRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
         {
             return new NetAppRestoreStatus(
                 isHealthy,
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="totalProgress"> The progress of the replication. </param>
         /// <param name="errorMessage"> Displays error message if the replication is in an error state. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeReplicationStatus"/> instance for mocking. </returns>
-        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, VolumeReplicationRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
+        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
         {
             return new NetAppVolumeReplicationStatus(
                 isHealthy,
@@ -1522,6 +1522,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="current"> The current quota value. </param>
+        /// <param name="default"> The default quota value. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default)
+        {
+            return NetAppSubscriptionQuotaItem(id: id, name: name, resourceType: resourceType, systemData: systemData, current: current, default: @default, usage: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.NetAppAccountData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1733,6 +1747,30 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes)
         {
             return NetAppVolumeGroupVolume(id: id, name: name, resourceType: resourceType, tags: tags, zones: zones, fileSystemId: fileSystemId, creationToken: creationToken, serviceLevel: serviceLevel, usageThreshold: usageThreshold, exportRules: exportRules, protocolTypes: protocolTypes, provisioningState: provisioningState, snapshotId: snapshotId, deleteBaseSnapshot: deleteBaseSnapshot, backupId: backupId, baremetalTenantId: baremetalTenantId, subnetId: subnetId, networkFeatures: networkFeatures, effectiveNetworkFeatures: effectiveNetworkFeatures, networkSiblingSetId: networkSiblingSetId, storageToNetworkProximity: storageToNetworkProximity, mountTargets: mountTargets, volumeType: volumeType, dataProtection: dataProtection, acceptGrowCapacityPoolForShortTermCloneSplit: acceptGrowCapacityPoolForShortTermCloneSplit, isRestoring: isRestoring, isSnapshotDirectoryVisible: isSnapshotDirectoryVisible, isKerberosEnabled: isKerberosEnabled, securityStyle: securityStyle, isSmbEncryptionEnabled: isSmbEncryptionEnabled, smbAccessBasedEnumeration: smbAccessBasedEnumeration, smbNonBrowsable: smbNonBrowsable, isSmbContinuouslyAvailable: isSmbContinuouslyAvailable, throughputMibps: throughputMibps, actualThroughputMibps: actualThroughputMibps, encryptionKeySource: encryptionKeySource, keyVaultPrivateEndpointResourceId: keyVaultPrivateEndpointResourceId, isLdapEnabled: isLdapEnabled, ldapServerType: default, isCoolAccessEnabled: isCoolAccessEnabled, coolnessPeriod: coolnessPeriod, coolAccessRetrievalPolicy: coolAccessRetrievalPolicy, coolAccessTieringPolicy: coolAccessTieringPolicy, unixPermissions: unixPermissions, cloneProgress: cloneProgress, fileAccessLogs: fileAccessLogs, avsDataStore: avsDataStore, dataStoreResourceId: dataStoreResourceId, isDefaultQuotaEnabled: isDefaultQuotaEnabled, defaultUserQuotaInKiBs: defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs: defaultGroupQuotaInKiBs, maximumNumberOfFiles: maximumNumberOfFiles, volumeGroupName: volumeGroupName, capacityPoolResourceId: capacityPoolResourceId, proximityPlacementGroupId: proximityPlacementGroupId, t2Network: t2Network, volumeSpecName: volumeSpecName, isEncrypted: isEncrypted, placementRules: placementRules, enableSubvolumes: enableSubvolumes, provisionedAvailabilityZone: provisionedAvailabilityZone, isLargeVolume: isLargeVolume, originatingResourceId: originatingResourceId, inheritedSizeInBytes: inheritedSizeInBytes, language: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.CapacityPoolData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="poolId"> UUID v4 used to identify the Pool. </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
+        /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
+        /// <param name="qosType"> The qos type of the pool. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.CapacityPoolData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType)
+        {
+            return CapacityPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, poolId: poolId, size: size, serviceLevel: serviceLevel, provisioningState: provisioningState, totalThroughputMibps: totalThroughputMibps, utilizedThroughputMibps: utilizedThroughputMibps, customThroughputMibps: default, qosType: qosType, isCoolAccessEnabled: isCoolAccessEnabled, encryptionType: encryptionType);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.Models.CapacityPoolPatch" />. </summary>
@@ -1987,22 +2025,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId)
         {
             return NetAppBackupData(id: id, name: name, resourceType: resourceType, systemData: systemData, backupId: backupId, createdOn: createdOn, snapshotCreationOn: default, completionOn: default, provisioningState: provisioningState, size: size, label: label, backupType: backupType, failureReason: failureReason, volumeResourceId: volumeResourceId, useExistingSnapshot: useExistingSnapshot, snapshotName: snapshotName, backupPolicyArmResourceId: backupPolicyArmResourceId, isLargeVolume: default);
-        }
-
-        /// <summary> Initializes a new instance of NetAppVolumeBackupStatus. </summary>
-        /// <param name="isHealthy"> Backup health status. </param>
-        /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
-        /// <param name="mirrorState"> The status of the backup. </param>
-        /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
-        /// <param name="errorMessage"> Displays error message if the backup is in an error state. </param>
-        /// <param name="lastTransferSize"> Displays the last transfer size. </param>
-        /// <param name="lastTransferType"> Displays the last transfer type. </param>
-        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes)
-        {
-            return NetAppVolumeBackupStatus(isHealthy: isHealthy, relationshipStatus: relationshipStatus, mirrorState: mirrorState, unhealthyReason: unhealthyReason, errorMessage: errorMessage, lastTransferSize: lastTransferSize, lastTransferType: lastTransferType, totalTransferBytes: totalTransferBytes, transferProgressBytes: default);
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>

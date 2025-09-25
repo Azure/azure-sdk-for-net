@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="quotaLimitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QuotaItemData>> GetAsync(string subscriptionId, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppSubscriptionQuotaItem>> GetAsync(string subscriptionId, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        QuotaItemData value = default;
+                        NetAppSubscriptionQuotaItem value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = QuotaItemData.DeserializeQuotaItemData(document.RootElement);
+                        value = NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="quotaLimitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QuotaItemData> Get(string subscriptionId, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public Response<NetAppSubscriptionQuotaItem> Get(string subscriptionId, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        QuotaItemData value = default;
+                        NetAppSubscriptionQuotaItem value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = QuotaItemData.DeserializeQuotaItemData(document.RootElement);
+                        value = NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -243,25 +243,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="QuotaItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuotaItemResource.CreateResourceIdentifier" /> to create a <see cref="QuotaItemResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetQuotaItemResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="QuotaItemResource"/> object. </returns>
-        public static QuotaItemResource GetQuotaItemResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNetAppArmClient(client).GetQuotaItemResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SnapshotPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SnapshotPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -905,8 +886,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="QuotaItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<QuotaItemResource> GetNetAppQuotaLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppSubscriptionQuotaItem"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -938,8 +919,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuotaItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<QuotaItemResource> GetNetAppQuotaLimits(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppSubscriptionQuotaItem"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -973,7 +954,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="quotaLimitName"/> is null. </exception>
-        public static async Task<Response<QuotaItemResource>> GetNetAppQuotaLimitAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1007,7 +988,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="quotaLimitName"/> is null. </exception>
-        public static Response<QuotaItemResource> GetNetAppQuotaLimit(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public static Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

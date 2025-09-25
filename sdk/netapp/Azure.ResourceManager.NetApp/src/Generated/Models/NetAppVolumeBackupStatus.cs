@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
         /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeBackupStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes, long? transferProgressBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeBackupStatus(bool? isHealthy, NetAppRestoreRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes, long? transferProgressBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsHealthy = isHealthy;
             RelationshipStatus = relationshipStatus;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Backup health status. </summary>
         public bool? IsHealthy { get; }
         /// <summary> Status of the backup mirror relationship. </summary>
-        public NetAppRelationshipStatus? RelationshipStatus { get; }
+        public NetAppRestoreRelationshipStatus? RelationshipStatus { get; }
         /// <summary> The status of the backup. </summary>
         public NetAppMirrorState? MirrorState { get; }
         /// <summary> Reason for the unhealthy backup relationship. </summary>

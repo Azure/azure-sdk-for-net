@@ -167,18 +167,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="QuotaItemResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuotaItemResource.CreateResourceIdentifier" /> to create a <see cref="QuotaItemResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotaItemResource"/> object. </returns>
-        public virtual QuotaItemResource GetQuotaItemResource(ResourceIdentifier id)
-        {
-            QuotaItemResource.ValidateResourceId(id);
-            return new QuotaItemResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SnapshotPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SnapshotPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

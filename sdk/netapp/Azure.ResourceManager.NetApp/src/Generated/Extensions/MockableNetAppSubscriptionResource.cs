@@ -607,12 +607,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuotaItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaItemResource> GetNetAppQuotaLimitsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppSubscriptionQuotaItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceQuotaLimitsRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppResourceQuotaLimitsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaItemResource(Client, QuotaItemData.DeserializeQuotaItemData(e)), NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppQuotaLimits", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(e), NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppQuotaLimits", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -634,12 +634,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuotaItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaItemResource> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppSubscriptionQuotaItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceQuotaLimitsRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppResourceQuotaLimitsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaItemResource(Client, QuotaItemData.DeserializeQuotaItemData(e)), NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppQuotaLimits", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(e), NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppQuotaLimits", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
-        public virtual async Task<Response<QuotaItemResource>> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
 
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             try
             {
                 var response = await NetAppResourceQuotaLimitsRestClient.GetAsync(Id.SubscriptionId, location, quotaLimitName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new QuotaItemResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
-        public virtual Response<QuotaItemResource> GetNetAppQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
 
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             try
             {
                 var response = NetAppResourceQuotaLimitsRestClient.Get(Id.SubscriptionId, location, quotaLimitName, cancellationToken);
-                return Response.FromValue(new QuotaItemResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
