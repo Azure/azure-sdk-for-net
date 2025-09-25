@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.CosmosDB
       safeName: AzureResourceManagerCosmosDB
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.CosmosDB
-      ExpectedWarningsFilepath: None

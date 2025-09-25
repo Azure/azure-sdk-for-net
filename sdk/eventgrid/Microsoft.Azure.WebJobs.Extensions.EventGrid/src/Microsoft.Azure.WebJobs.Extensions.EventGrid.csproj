@@ -8,14 +8,13 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.EventGrid" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />

@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK EventHubs Extension</Description>
@@ -9,15 +8,14 @@
     <NoWarn>$(NoWarn);CS1591;SA1636</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="SharedSource" />
@@ -29,14 +27,12 @@
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/BlobCheckpointStore/*.cs" LinkBase="SharedSource" />
     <Compile Include="../../../extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared/WebJobsConfigurationExtensions.cs" LinkBase="SharedSource" />
     <Compile Include="../../../extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared/StorageClientProvider.cs" LinkBase="SharedSource" />
-
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -44,5 +40,4 @@
       <CustomToolNamespace>Azure.Messaging.EventHubs.Core</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
-
 </Project>

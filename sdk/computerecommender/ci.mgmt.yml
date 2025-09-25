@@ -20,7 +20,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Compute.Recommender
       safeName: AzureResourceManagerComputeRecommender
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Compute.Recommender
-      ExpectedWarningsFilepath: None

@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Search
       safeName: AzureResourceManagerSearch
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Search
-      ExpectedWarningsFilepath: None
