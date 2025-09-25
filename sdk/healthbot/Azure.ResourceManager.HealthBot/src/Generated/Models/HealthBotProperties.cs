@@ -54,12 +54,14 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <param name="provisioningState"> The provisioning state of the Azure Health Bot resource. </param>
         /// <param name="botManagementPortalLink"> The link. </param>
         /// <param name="keyVaultProperties"> KeyVault properties for the resource encryption. </param>
+        /// <param name="accessControlMethod"> The access control method for the Azure Health Bot resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthBotProperties(string provisioningState, Uri botManagementPortalLink, HealthBotKeyVaultProperties keyVaultProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HealthBotProperties(string provisioningState, Uri botManagementPortalLink, HealthBotKeyVaultProperties keyVaultProperties, string accessControlMethod, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             BotManagementPortalLink = botManagementPortalLink;
             KeyVaultProperties = keyVaultProperties;
+            AccessControlMethod = accessControlMethod;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,5 +71,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         public Uri BotManagementPortalLink { get; }
         /// <summary> KeyVault properties for the resource encryption. </summary>
         public HealthBotKeyVaultProperties KeyVaultProperties { get; set; }
+        /// <summary> The access control method for the Azure Health Bot resource. </summary>
+        public string AccessControlMethod { get; }
     }
 }
