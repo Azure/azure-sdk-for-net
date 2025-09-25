@@ -1,4 +1,4 @@
 directory: specification/liftrweightsandbiases/Liftr.WeightsAndBiases.Management
-commit: 7dac40ecc2005ac49ee3de959096aea8713edead
+commit: 64532bab58086c84b9dbe5e08766e8ffde8c4493
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
