@@ -168,8 +168,7 @@ namespace Azure.Core.Foundations
         public static explicit operator PagedRedTeam(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializePagedRedTeam(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
