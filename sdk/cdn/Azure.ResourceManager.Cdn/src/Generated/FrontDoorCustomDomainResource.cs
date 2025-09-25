@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _frontDoorCustomDomainClientDiagnostics;
-        private readonly FrontDoorCustomDomainsRestOperations _frontDoorCustomDomainRestClient;
+        private readonly ClientDiagnostics _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics;
+        private readonly AFDCustomDomainsRestOperations _frontDoorCustomDomainFrontDoorCustomDomainsRestClient;
         private readonly FrontDoorCustomDomainData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorCustomDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorCustomDomainApiVersion);
-            _frontDoorCustomDomainRestClient = new FrontDoorCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorCustomDomainApiVersion);
+            _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorCustomDomainFrontDoorCustomDomainsApiVersion);
+            _frontDoorCustomDomainFrontDoorCustomDomainsRestClient = new AFDCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorCustomDomainFrontDoorCustomDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
+        /// <description>AFDCustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorCustomDomainResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Get");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
+        /// <description>AFDCustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorCustomDomainResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Get");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Delete</description>
+        /// <description>AFDCustomDomains_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Delete");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorCustomDomainRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Delete</description>
+        /// <description>AFDCustomDomains_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Delete");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorCustomDomainRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Update</description>
+        /// <description>AFDCustomDomains_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Update");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorCustomDomainRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Update</description>
+        /// <description>AFDCustomDomains_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,12 +328,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Update");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorCustomDomainRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_RefreshValidationToken</description>
+        /// <description>AFDCustomDomains_RefreshValidationToken</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -370,12 +370,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RefreshValidationTokenAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.RefreshValidationToken");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.RefreshValidationToken");
             scope.Start();
             try
             {
-                var response = await _frontDoorCustomDomainRestClient.RefreshValidationTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.RefreshValidationTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_RefreshValidationToken</description>
+        /// <description>AFDCustomDomains_RefreshValidationToken</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -412,12 +412,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation RefreshValidationToken(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.RefreshValidationToken");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.RefreshValidationToken");
             scope.Start();
             try
             {
-                var response = _frontDoorCustomDomainRestClient.RefreshValidationToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.RefreshValidationToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

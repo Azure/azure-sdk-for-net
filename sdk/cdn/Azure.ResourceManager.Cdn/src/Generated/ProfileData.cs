@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn
         /// Serialized Name: Profile.kind
         /// </param>
         /// <param name="identity">
-        /// Managed service identity (system assigned and/or user assigned identities).
+        /// The managed service identities assigned to this resource.
         /// Serialized Name: Profile.identity
         /// </param>
         /// <param name="resourceState">
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         public string Kind { get; }
         /// <summary>
-        /// Managed service identity (system assigned and/or user assigned identities).
+        /// The managed service identities assigned to this resource.
         /// Serialized Name: Profile.identity
         /// </summary>
         public ManagedServiceIdentity Identity { get; set; }

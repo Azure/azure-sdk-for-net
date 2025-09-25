@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetProfiles_ProfilesList()
+        public async Task GetManagedRuleSets_ListPoliciesInAResourceGroup()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_List.json
-            // this example is just showing the usage of "Profiles_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/WafListManagedRuleSets.json
+            // this example is just showing the usage of "ManagedRuleSets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -86,13 +86,9 @@ namespace Azure.ResourceManager.Cdn.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ProfileResource item in subscriptionResource.GetProfilesAsync())
+            await foreach (ManagedRuleSetDefinition item in subscriptionResource.GetManagedRuleSetsAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ProfileData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
@@ -127,10 +123,10 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetManagedRuleSets_ListPoliciesInAResourceGroup()
+        public async Task GetProfiles_ProfilesList()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/WafListManagedRuleSets.json
-            // this example is just showing the usage of "ManagedRuleSets_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_List.json
+            // this example is just showing the usage of "Profiles_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -144,9 +140,13 @@ namespace Azure.ResourceManager.Cdn.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedRuleSetDefinition item in subscriptionResource.GetManagedRuleSetsAsync())
+            await foreach (ProfileResource item in subscriptionResource.GetProfilesAsync())
             {
-                Console.WriteLine($"Succeeded: {item}");
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ProfileData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
             Console.WriteLine("Succeeded");

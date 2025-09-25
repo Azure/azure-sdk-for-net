@@ -114,10 +114,201 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CheckCdnMigrationCompatibility_ProfilesCdnCanMigrate()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CdnProfiles_CanMigrate.json
+            // this example is just showing the usage of "Profiles_CdnCanMigrateToAfd" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            ArmOperation<CanMigrateResult> lro = await profile.CheckCdnMigrationCompatibilityAsync(WaitUntil.Completed);
+            CanMigrateResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task MigrateCdnToAfd_ProfilesCdnMigrate()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CdnProfiles_Migrate.json
+            // this example is just showing the usage of "Profiles_CdnMigrateToAfd" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            CdnMigrationToAfdContent content = new CdnMigrationToAfdContent(new CdnSku
+            {
+                Name = CdnSkuName.StandardAzureFrontDoor,
+            });
+            ArmOperation<MigrateResult> lro = await profile.MigrateCdnToAfdAsync(WaitUntil.Completed, content);
+            MigrateResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetResourceUsages_ProfilesListResourceUsage()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_ListResourceUsage.json
+            // this example is just showing the usage of "Profiles_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (CdnUsage item in profile.GetResourceUsagesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateSsoUri_ProfilesGenerateSsoUri()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_GenerateSsoUri.json
+            // this example is just showing the usage of "Profiles_GenerateSsoUri" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            SsoUri result = await profile.GenerateSsoUriAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSupportedOptimizationTypes_ProfilesListSupportedOptimizationTypes()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_ListSupportedOptimizationTypes.json
+            // this example is just showing the usage of "Profiles_ListSupportedOptimizationTypes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            SupportedOptimizationTypesListResult result = await profile.GetSupportedOptimizationTypesAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task AbortMigration_ProfilesCdnMigrationCommit()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_MigrationAbort.json
+            // this example is just showing the usage of "Profiles_MigrationAbort" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            await profile.AbortMigrationAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task MigrationCommit_ProfilesMigrationCommit()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_MigrationCommit.json
+            // this example is just showing the usage of "Profiles_MigrationCommit" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            await profile.MigrationCommitAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckEndpointNameAvailabilityFrontDoorProfile_CheckEndpointNameAvailability()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDProfiles_CheckEndpointNameAvailability.json
-            // this example is just showing the usage of "FrontDoorProfiles_CheckEndpointNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDProfiles_CheckEndpointNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -144,39 +335,10 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetFrontDoorProfileResourceUsages_AFDProfilesListResourceUsage()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDProfiles_ListResourceUsage.json
-            // this example is just showing the usage of "FrontDoorProfiles_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (FrontDoorUsage item in profile.GetFrontDoorProfileResourceUsagesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CheckFrontDoorProfileHostNameAvailability_AFDProfilesCheckHostNameAvailability()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDProfiles_CheckHostNameAvailability.json
-            // this example is just showing the usage of "FrontDoorProfiles_CheckHostNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDProfiles_CheckHostNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -200,40 +362,10 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ValidateSecretFrontDoorProfile_ValidateSecret()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDProfiles_ValidateSecret.json
-            // this example is just showing the usage of "FrontDoorProfiles_ValidateSecret" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation
-            ValidateSecretContent content = new ValidateSecretContent(SecretType.CustomerCertificate, new WritableSubResource
-            {
-                Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Microsoft.KeyVault/vault/kvName/certificate/certName"),
-            });
-            ValidateSecretResult result = await profile.ValidateSecretFrontDoorProfileAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task UpgradeFrontDoorProfile_AFDProfilesUpgrade()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDProfiles_Upgrade.json
-            // this example is just showing the usage of "FrontDoorProfiles_Upgrade" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDProfiles_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -268,10 +400,39 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetLogAnalyticsRankings_LogAnalyticsGetLogAnalyticsRankings()
+        public async Task GetFrontDoorProfileResourceUsages_AFDProfilesListResourceUsage()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/LogAnalytics_GetLogAnalyticsRankings.json
-            // this example is just showing the usage of "LogAnalytics_GetLogAnalyticsRankings" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDProfiles_ListResourceUsage.json
+            // this example is just showing the usage of "AFDProfiles_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (FrontDoorUsage item in profile.GetFrontDoorProfileResourceUsagesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ValidateSecretFrontDoorProfile_ValidateSecret()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDProfiles_ValidateSecret.json
+            // this example is just showing the usage of "AFDProfiles_ValidateSecret" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -287,13 +448,11 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
             // invoke the operation
-            IEnumerable<LogRanking> rankings = new LogRanking[] { LogRanking.Uri };
-            IEnumerable<LogRankingMetric> metrics = new LogRankingMetric[] { LogRankingMetric.ClientRequestCount };
-            int maxRanking = 5;
-            DateTimeOffset dateTimeBegin = DateTimeOffset.Parse("2020-11-04T06:49:27.554Z");
-            DateTimeOffset dateTimeEnd = DateTimeOffset.Parse("2020-11-04T09:49:27.554Z");
-            ProfileResourceGetLogAnalyticsRankingsOptions options = new ProfileResourceGetLogAnalyticsRankingsOptions(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
-            RankingsResponse result = await profile.GetLogAnalyticsRankingsAsync(options);
+            ValidateSecretContent content = new ValidateSecretContent(SecretType.CustomerCertificate, new WritableSubResource
+            {
+                Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Microsoft.KeyVault/vault/kvName/certificate/certName"),
+            });
+            ValidateSecretResult result = await profile.ValidateSecretFrontDoorProfileAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -320,6 +479,38 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
 
             // invoke the operation
             ContinentsResponse result = await profile.GetLogAnalyticsLocationsAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetLogAnalyticsRankings_LogAnalyticsGetLogAnalyticsRankings()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/LogAnalytics_GetLogAnalyticsRankings.json
+            // this example is just showing the usage of "LogAnalytics_GetLogAnalyticsRankings" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            IEnumerable<LogRanking> rankings = new LogRanking[] { LogRanking.Uri };
+            IEnumerable<LogRankingMetric> metrics = new LogRankingMetric[] { LogRankingMetric.ClientRequestCount };
+            int maxRanking = 5;
+            DateTimeOffset dateTimeBegin = DateTimeOffset.Parse("2020-11-04T06:49:27.554Z");
+            DateTimeOffset dateTimeEnd = DateTimeOffset.Parse("2020-11-04T09:49:27.554Z");
+            ProfileResourceGetLogAnalyticsRankingsOptions options = new ProfileResourceGetLogAnalyticsRankingsOptions(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
+            RankingsResponse result = await profile.GetLogAnalyticsRankingsAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -380,197 +571,6 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
             WafRankingsResponse result = await profile.GetWafLogAnalyticsRankingsAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task MigrationCommit_ProfilesMigrationCommit()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_MigrationCommit.json
-            // this example is just showing the usage of "Profiles_MigrationCommit" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation
-            await profile.MigrationCommitAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GenerateSsoUri_ProfilesGenerateSsoUri()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_GenerateSsoUri.json
-            // this example is just showing the usage of "Profiles_GenerateSsoUri" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation
-            SsoUri result = await profile.GenerateSsoUriAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetSupportedOptimizationTypes_ProfilesListSupportedOptimizationTypes()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_ListSupportedOptimizationTypes.json
-            // this example is just showing the usage of "Profiles_ListSupportedOptimizationTypes" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation
-            SupportedOptimizationTypesListResult result = await profile.GetSupportedOptimizationTypesAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceUsages_ProfilesListResourceUsage()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_ListResourceUsage.json
-            // this example is just showing the usage of "Profiles_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CdnUsage item in profile.GetResourceUsagesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckCdnMigrationCompatibility_ProfilesCdnCanMigrate()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CdnProfiles_CanMigrate.json
-            // this example is just showing the usage of "Profiles_CdnCanMigrateToAfd" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation
-            ArmOperation<CanMigrateResult> lro = await profile.CheckCdnMigrationCompatibilityAsync(WaitUntil.Completed);
-            CanMigrateResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task MigrateCdnToAfd_ProfilesCdnMigrate()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CdnProfiles_Migrate.json
-            // this example is just showing the usage of "Profiles_CdnMigrateToAfd" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation
-            CdnMigrationToAfdContent content = new CdnMigrationToAfdContent(new CdnSku
-            {
-                Name = CdnSkuName.StandardAzureFrontDoor,
-            });
-            ArmOperation<MigrateResult> lro = await profile.MigrateCdnToAfdAsync(WaitUntil.Completed, content);
-            MigrateResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task AbortMigration_ProfilesCdnMigrationCommit()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Profiles_MigrationAbort.json
-            // this example is just showing the usage of "Profiles_MigrationAbort" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation
-            await profile.AbortMigrationAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }
