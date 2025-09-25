@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
