@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.ServiceLinker
 
         private readonly ClientDiagnostics _linkerResourceLinkerClientDiagnostics;
         private readonly LinkerRestOperations _linkerResourceLinkerRestClient;
+        private readonly ClientDiagnostics _serviceLinkerDryrunLinkersClientDiagnostics;
+        private readonly LinkersRestOperations _serviceLinkerDryrunLinkersRestClient;
         private readonly LinkerResourceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,6 +63,9 @@ namespace Azure.ResourceManager.ServiceLinker
             _linkerResourceLinkerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string linkerResourceLinkerApiVersion);
             _linkerResourceLinkerRestClient = new LinkerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, linkerResourceLinkerApiVersion);
+            _serviceLinkerDryrunLinkersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ServiceLinkerDryrunResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceLinkerDryrunResource.ResourceType, out string serviceLinkerDryrunLinkersApiVersion);
+            _serviceLinkerDryrunLinkersRestClient = new LinkersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceLinkerDryrunLinkersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -100,7 +105,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -140,7 +145,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,7 +173,7 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Delete a link.
+        /// Delete a Linker.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -180,7 +185,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +215,7 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Delete a link.
+        /// Delete a Linker.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -222,7 +227,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +257,7 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Operation to update an existing link.
+        /// Operation to update an existing Linker.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -264,7 +269,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,7 +303,7 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Operation to update an existing link.
+        /// Operation to update an existing Linker.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -310,7 +315,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,39 +349,36 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Validate a link.
+        /// Generate configurations for a Linker.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}/validateLinker</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}/generateConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Linker_Validate</description>
+        /// <description>Linkers_GenerateConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LinkerResource"/></description>
+        /// <description><see cref="ServiceLinkerDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="info"> Connection Info, including format, secret store, etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<LinkerValidateOperationResult>> ValidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResource.Validate");
+            using var scope = _serviceLinkerDryrunLinkersClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
             scope.Start();
             try
             {
-                var response = await _linkerResourceLinkerRestClient.ValidateAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                var response = await _serviceLinkerDryrunLinkersRestClient.GenerateConfigurationsAsync(Id.Parent, Id.Name, info, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -386,39 +388,36 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Validate a link.
+        /// Generate configurations for a Linker.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}/validateLinker</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}/generateConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Linker_Validate</description>
+        /// <description>Linkers_GenerateConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LinkerResource"/></description>
+        /// <description><see cref="ServiceLinkerDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="info"> Connection Info, including format, secret store, etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<LinkerValidateOperationResult> Validate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual Response<SourceConfigurationResult> GenerateConfigurations(LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResource.Validate");
+            using var scope = _serviceLinkerDryrunLinkersClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
             scope.Start();
             try
             {
-                var response = _linkerResourceLinkerRestClient.Validate(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
+                var response = _serviceLinkerDryrunLinkersRestClient.GenerateConfigurations(Id.Parent, Id.Name, info, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -428,7 +427,7 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// list source configurations for a linker.
+        /// list source configurations for a Linker.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -440,7 +439,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,7 +465,7 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// list source configurations for a linker.
+        /// list source configurations for a Linker.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -478,7 +477,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -495,6 +494,90 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 var response = _linkerResourceLinkerRestClient.ListConfigurations(Id.Parent, Id.Name, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate a Linker.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}/validateLinker</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<LinkerValidateOperationResult>> ValidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResource.Validate");
+            scope.Start();
+            try
+            {
+                var response = await _linkerResourceLinkerRestClient.ValidateAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate a Linker.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}/validateLinker</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<LinkerValidateOperationResult> Validate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResource.Validate");
+            scope.Start();
+            try
+            {
+                var response = _linkerResourceLinkerRestClient.Validate(Id.Parent, Id.Name, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
