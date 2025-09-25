@@ -8,7 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Datadog
 namespace: Azure.ResourceManager.Datadog
-require: https://github.com/Azure/azure-rest-api-specs/blob/066eb8c81e14e0f3b22b6700c67693eef5f79ea9/specification/datadog/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs-pr/blob/30f23d89b692f80b495fb7f45c3e695872460bd1/specification/datadog/resource-manager/readme.md
+# tag: package-2025-06   rpaas
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -50,7 +51,42 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  DatadogAgreementResource: DatadogAgreementResourceProperties
-  MonitoredResource: MonitoredResourceContent
+  DatadogAgreementResource: DataDogAgreementContent
+  MonitoredResource: DataDogMonitoredResourceContent
+  BillingInfoResponse:  DataDogBillingInfoResult
+  CreateResourceSupportedResponse:  DataDogCreateResourceSupportedResult
+  DatadogMonitorResourceUpdateParameters:  DataDogMonitorResourceUpdateContent
+  DatadogApiKey: DataDogApiKeyContent
+  LinkedResource: DataDogLinkedInfo
+  Status: DataDogMonitoredStatus
+  DatadogAgreementResourceListResponse:  DataDogAgreementResourceListResult
+  DatadogApiKeyListResponse:  DataDogApiKeyListResult
+  DatadogHostListResponse:  DataDogHostListResult
+  DatadogMonitorResourceListResponse:  DataDogMonitorResourceListResult
+  DatadogSingleSignOnResourceListResponse:  DataDogSingleSignOnResourceListResult
+  LinkedResourceListResponse: LinkedResourceListResult
+  MonitoredResourceListResponse: MonitoredResourceListResult
+  MonitoringTagRulesListResponse: MonitoringTagRulesListResult
+  CreateResourceSupportedResponseList: CreateResourceSupportedResultList
+  Operation: DataDogOperationData
+  CreateResourceSupportedProperties.creationSupported: IsCreationSupported
+  MarketplaceSaaSInfo.subscribed: IsSubscribed
+  DatadogAgreementProperties.accepted: IsAccepted
+  DatadogOrganizationProperties.cspm: IsCspm
+  DatadogOrganizationProperties.resourceCollection: IsResourceCollection
+  MonitorUpdateProperties.cspm: IsCspm
+  MonitorUpdateProperties.resourceCollection: IsResourceCollection
+  MonitoringTagRulesProperties.automuting: IsAutomuting
+  MonitoringTagRulesProperties.customMetrics: IsCustomMetrics
+  AgentRules: DataDogAgentRules
+  AgentRules.enableAgentMonitoring: IsAgentMonitoringEnabled
+  ResubscribeProperties: DataDogResubscribeProperties
+  ResubscribeProperties.azureSubscriptionId: -|arm-id
+  LinkedResource.id: -|arm-id
+  MarketplaceSaaSInfo.billedAzureSubscriptionId: -|uuid
+  MarketplaceSaaSInfo.marketplaceSubscriptionId: -|uuid
+  MonitoredResource.id: -|arm-id
+  MonitoredSubscription.subscriptionId: -|uuid
+  SubscriptionList: DataDogSubscriptionList
 
 ```

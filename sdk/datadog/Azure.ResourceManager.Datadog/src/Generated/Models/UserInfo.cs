@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> User info. </summary>
+    /// <summary> Includes name, email and optionally, phone number. User Information can't be null. </summary>
     public partial class UserInfo
     {
         /// <summary>

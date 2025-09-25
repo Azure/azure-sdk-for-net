@@ -537,7 +537,8 @@
     {
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
-        "liftr"
+        "liftr",
+        "Cspm"
       ]
     },
     {
