@@ -234,8 +234,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         public static explicit operator FullBackupDetailsInternal(Response result)
         {
             using Response response = result;
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeFullBackupDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
