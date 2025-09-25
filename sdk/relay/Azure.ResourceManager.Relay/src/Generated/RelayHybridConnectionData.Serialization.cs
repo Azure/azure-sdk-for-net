@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.Relay
                 name,
                 type,
                 systemData,
+                location,
                 createdAt,
                 updatedAt,
                 listenerCount,
                 requiresClientAuthorization,
                 userMetadata,
-                location,
                 serializedAdditionalRawData);
         }
 
