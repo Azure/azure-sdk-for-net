@@ -69,14 +69,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="source"> Source for the system topic. </param>
         /// <param name="topicType"> TopicType for the system topic. </param>
         /// <param name="metricResourceId"> Metric resource id for the system topic. </param>
+        /// <param name="encryption"> Key encryption configuration properties of the system topic resource. This is an optional property. When not specified, no key encryption is used. </param>
+        /// <param name="platformCapabilities"> Represents the platform capabilities of the resource, including Azure Confidential Compute related properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SystemTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, EventGridResourceProvisioningState? provisioningState, ResourceIdentifier source, string topicType, Guid? metricResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SystemTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, EventGridResourceProvisioningState? provisioningState, ResourceIdentifier source, string topicType, Guid? metricResourceId, KeyEncryption encryption, PlatformCapabilities platformCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
             Source = source;
             TopicType = topicType;
             MetricResourceId = metricResourceId;
+            Encryption = encryption;
+            PlatformCapabilities = platformCapabilities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,5 +104,41 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Metric resource id for the system topic. </summary>
         [WirePath("properties.metricResourceId")]
         public Guid? MetricResourceId { get; }
+        /// <summary> Key encryption configuration properties of the system topic resource. This is an optional property. When not specified, no key encryption is used. </summary>
+        internal KeyEncryption Encryption { get; set; }
+        /// <summary> List of all customer-managed key encryption properties for the resource. However only one key is supported at a time. </summary>
+        [WirePath("properties.encryption.customerManagedKeyEncryption")]
+        public IList<CustomerManagedKeyEncryption> CustomerManagedKeyEncryption
+        {
+            get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
+            set => Encryption = new KeyEncryption(value);
+        }
+
+        /// <summary> Represents the platform capabilities of the resource, including Azure Confidential Compute related properties. </summary>
+        internal PlatformCapabilities PlatformCapabilities { get; set; }
+        /// <summary>
+        /// This property specifies the mode of the Azure Confidential Compute configuration.
+        /// Possible values are 'Disabled' or 'Enabled'.
+        /// This is an immutable property set at the time of resource creation and cannot be modified later.
+        /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
+        /// </summary>
+        [WirePath("properties.platformCapabilities.confidentialCompute.mode")]
+        public ConfidentialComputeMode? ConfidentialComputeMode
+        {
+            get => PlatformCapabilities is null ? default : PlatformCapabilities.ConfidentialComputeMode;
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (PlatformCapabilities is null)
+                        PlatformCapabilities = new PlatformCapabilities();
+                    PlatformCapabilities.ConfidentialComputeMode = value.Value;
+                }
+                else
+                {
+                    PlatformCapabilities = null;
+                }
+            }
+        }
     }
 }
