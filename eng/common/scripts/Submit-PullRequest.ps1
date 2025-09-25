@@ -130,8 +130,8 @@ else {
 
     # ensure that the user that was used to create the PR is not attempted to add as a reviewer
     # we cast to an array to ensure that length-1 arrays actually stay as array values
-    # we also filter out dependabot and copilot users who don't have write permission to avoid errors
-    $cleanedUsers = @(SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ -and $_ -inotlike "dependabot*" -and $_ -inotlike "copilot*" }
+    # we also filter out dependabot user who doesn't have write permission to avoid errors
+    $cleanedUsers = @(SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ -and $_ -inotlike "dependabot*" }
     $cleanedTeamReviewers = @(SplitParameterArray -members $TeamReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ }
 
     if ($cleanedUsers -or $cleanedTeamReviewers) {
