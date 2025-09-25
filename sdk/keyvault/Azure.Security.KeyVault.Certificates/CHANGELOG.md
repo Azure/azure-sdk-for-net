@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 - Added `UniformResourceIdentifiers` and `IpAddresses` collection properties in `SubjectAlternativeNames`.
+- Added the `OutContentType` option to `DownloadCertificateOptions` and as a parameter for `CertificateClient.DownloadCertificate` and `CertificateClient.DownloadCertificateAsync` methods to specify the format in which the certificate will be returned.
 
 ### Bugs Fixed
 

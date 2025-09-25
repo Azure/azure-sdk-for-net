@@ -76,8 +76,12 @@ namespace Azure.Security.KeyVault.Secrets
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Secrets.SecretProperties> GetPropertiesOfSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Secrets.SecretProperties> GetPropertiesOfSecretVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Secrets.SecretProperties> GetPropertiesOfSecretVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret> GetSecret(string name, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret>> GetSecretAsync(string name, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret> GetSecret(string name, string version = null, Azure.Security.KeyVault.Secrets.SecretContentType? outContentType = default(Azure.Security.KeyVault.Secrets.SecretContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret> GetSecret(string name, string version, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret>> GetSecretAsync(string name, string version = null, Azure.Security.KeyVault.Secrets.SecretContentType? outContentType = default(Azure.Security.KeyVault.Secrets.SecretContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret>> GetSecretAsync(string name, string version, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response PurgeDeletedSecret(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PurgeDeletedSecretAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Secrets.SecretProperties> RestoreSecretBackup(byte[] backup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -109,6 +113,24 @@ namespace Azure.Security.KeyVault.Secrets
             V7_6 = 6,
             V2025_07_01 = 7,
         }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecretContentType : System.IEquatable<Azure.Security.KeyVault.Secrets.SecretContentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecretContentType(string value) { throw null; }
+        public static Azure.Security.KeyVault.Secrets.SecretContentType Pem { get { throw null; } }
+        public static Azure.Security.KeyVault.Secrets.SecretContentType Pkcs12 { get { throw null; } }
+        public bool Equals(Azure.Security.KeyVault.Secrets.SecretContentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Security.KeyVault.Secrets.SecretContentType left, Azure.Security.KeyVault.Secrets.SecretContentType right) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Secrets.SecretContentType (string value) { throw null; }
+        public static bool operator !=(Azure.Security.KeyVault.Secrets.SecretContentType left, Azure.Security.KeyVault.Secrets.SecretContentType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public static partial class SecretModelFactory
     {

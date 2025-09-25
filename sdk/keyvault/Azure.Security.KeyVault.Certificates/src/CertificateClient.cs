@@ -210,6 +210,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
 #pragma warning disable AZC0015 // Unexpected client method return type.
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken.
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
         /// </summary>
@@ -232,8 +233,39 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
-        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version, CancellationToken cancellationToken) =>
             DownloadCertificate(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken);
+#pragma warning restore AZC0002
+
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// This operation requires the certificates/get and secrets/get permissions.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">(Optional) The version of a certificate to download.</param>
+        /// <param name="outContentType"> The certificate content type in which the certificate will be downloaded. If a supported format is specified,
+        /// the certificate content is converted to the requested format. Currently, only PFX to PEM conversion is supported.
+        /// If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original
+        /// format without conversion.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
+        /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CertificateContentType? outContentType = null, CancellationToken cancellationToken = default) =>
+            DownloadCertificate(new DownloadCertificateOptions(certificateName) { Version = version, OutContentType = outContentType }, cancellationToken);
 
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
@@ -267,7 +299,16 @@ namespace Azure.Security.KeyVault.Certificates
             try
             {
                 KeyVaultCertificateWithPolicy certificate = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version);
-                Response<KeyVaultSecret> secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken);
+                Response<KeyVaultSecret> secretResponse;
+                if (options.OutContentType != null)
+                {
+                    var requestUri = _pipeline.CreateUriWithQueryParams(certificate.SecretId, ("outContentType", options.OutContentType.ToString()));
+                    secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), requestUri, appendApiVersion: false, cancellationToken);
+                }
+                else
+                {
+                    secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, appendApiVersion: true, cancellationToken);
+                }
 
                 KeyVaultSecret secret = secretResponse.Value;
                 string value = secret.Value;
@@ -299,6 +340,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken.
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
         /// </summary>
@@ -321,8 +363,39 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
-        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version, CancellationToken cancellationToken) =>
             await DownloadCertificateAsync(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0002
+
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// This operation requires the certificates/get and secrets/get permissions.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">Optional version of a certificate to download.</param>
+        /// <param name="outContentType"> The certificate content type in which the certificate will be downloaded. If a supported format is specified,
+        /// the certificate content is converted to the requested format. Currently, only PFX to PEM conversion is supported.
+        /// If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original
+        /// format without conversion.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
+        /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CertificateContentType? outContentType = null, CancellationToken cancellationToken = default) =>
+            await DownloadCertificateAsync(new DownloadCertificateOptions(certificateName) { Version = version, OutContentType = outContentType }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
@@ -356,7 +429,17 @@ namespace Azure.Security.KeyVault.Certificates
             try
             {
                 KeyVaultCertificateWithPolicy certificate = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version).ConfigureAwait(false);
-                Response<KeyVaultSecret> secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken).ConfigureAwait(false);
+                Response<KeyVaultSecret> secretResponse;
+                if (options.OutContentType != null)
+                {
+                    var requestUri = _pipeline.CreateUriWithQueryParams(certificate.SecretId, ("outContentType", options.OutContentType.ToString()));
+                    secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), requestUri, appendApiVersion: false, cancellationToken).ConfigureAwait(false);
+                    ;
+                }
+                else
+                {
+                    secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, appendApiVersion: true, cancellationToken).ConfigureAwait(false);;
+                }
 
                 KeyVaultSecret secret = secretResponse.Value;
                 string value = secret.Value;

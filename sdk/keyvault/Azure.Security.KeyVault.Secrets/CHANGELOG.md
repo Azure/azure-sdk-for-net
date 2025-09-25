@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Added the `outContentType` query parameter to the `SecretClient.GetSecret` and `SecretClient.GetSecretAsync` to specify the format in which the certificate will be returned.
+
 ### Bugs Fixed
 
 ### Other Changes
