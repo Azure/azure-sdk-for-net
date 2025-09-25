@@ -263,7 +263,7 @@ var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH")
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
-FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
+FileDataset fileDataset = projectClient.Datasets.UploadFile(
     name: datasetName,
     version: datasetVersion1,
     filePath: filePath,
@@ -272,7 +272,7 @@ FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
 Console.WriteLine(fileDataset);
 
 Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
-FolderDatasetVersion folderDataset = projectClient.Datasets.UploadFolder(
+FolderDataset folderDataset = projectClient.Datasets.UploadFolder(
     name: datasetName,
     version: datasetVersion2,
     folderPath: folderPath,
@@ -282,7 +282,7 @@ FolderDatasetVersion folderDataset = projectClient.Datasets.UploadFolder(
 Console.WriteLine(folderDataset);
 
 Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
+AIProjectDataset dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
 Console.WriteLine(dataset.Id);
 
 Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -290,14 +290,14 @@ DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetNam
 Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
+foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersions(datasetName))
 {
     Console.WriteLine(ds);
     Console.WriteLine(ds.Version);
 }
 
 Console.WriteLine($"Listing latest versions for all datasets:");
-foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
+foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasets())
 {
     Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
 }
