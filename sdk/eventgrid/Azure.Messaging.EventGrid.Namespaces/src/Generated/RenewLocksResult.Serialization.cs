@@ -185,8 +185,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public static explicit operator RenewLocksResult(Response result)
         {
             using Response response = result;
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeRenewLocksResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
