@@ -59,7 +59,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
 
             // Limit number of concurrent requests to eventhub client
             int ConcurrencyLimit = Environment.ProcessorCount * 2;
-            const int WaitTimeoutMs = 25000;
+            const int CheckpointWaitTimeoutMs = 10000;
+            const int PartitionPropertiesWaitTimeoutMs = 30000;
             using var semaphore = new SemaphoreSlim(ConcurrencyLimit, ConcurrencyLimit);
             using var cts = new CancellationTokenSource();
 
@@ -72,11 +73,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                     bool acquired = false;
                     try
                     {
-                        acquired = await semaphore.WaitAsync(WaitTimeoutMs, cts.Token).ConfigureAwait(false);
+                        acquired = await semaphore.WaitAsync(PartitionPropertiesWaitTimeoutMs, cts.Token).ConfigureAwait(false);
                         if (!acquired)
                         {
                             throw new TimeoutException(
-                                $"Failed to acquire EH client concurrency slot within {WaitTimeoutMs}ms for Event Hub '{_client.EventHubName}', partition '{partition}'.");
+                                $"Failed to acquire EH client concurrency slot within {PartitionPropertiesWaitTimeoutMs}ms for Event Hub '{_client.EventHubName}', partition '{partition}'.");
                         }
                         return await _client.GetPartitionPropertiesAsync(partition).ConfigureAwait(false);
                     }
@@ -113,11 +114,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                     bool acquired = false;
                     try
                     {
-                        acquired = await semaphore.WaitAsync(WaitTimeoutMs, cts.Token).ConfigureAwait(false);
+                        acquired = await semaphore.WaitAsync(CheckpointWaitTimeoutMs, cts.Token).ConfigureAwait(false);
                         if (!acquired)
                         {
                             throw new TimeoutException(
-                                $"Failed to acquire checkpoint concurrency slot within {WaitTimeoutMs}ms for Event Hub '{_client.EventHubName}', partition '{partition}'.");
+                                $"Failed to acquire checkpoint concurrency slot within {CheckpointWaitTimeoutMs}ms for Event Hub '{_client.EventHubName}', partition '{partition}'.");
                         }
 
                         return await _checkpointStore.GetCheckpointAsync(
