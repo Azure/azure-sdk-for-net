@@ -9,9 +9,9 @@ using Azure.Core;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Client options for <see cref="VoiceLiveClient"/>. </summary>
-    public partial class VoiceLiveClientOptions : ClientOptions
+    public partial class VoiceLiveClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_10_01;
 
         /// <summary> Initializes a new instance of VoiceLiveClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -19,10 +19,19 @@ namespace Azure.AI.VoiceLive
         {
             Version = version switch
             {
-                ServiceVersion.V2025_05_01_Preview => "2025-05-01-preview",
+                ServiceVersion.V2025_10_01 => "2025-10-01",
                 _ => throw new NotSupportedException()
             };
+
+            InternalOptions = new VoiceLiveClientOptionsInternal();
         }
+
+        internal VoiceLiveClientOptionsInternal InternalOptions { get; }
+
+        /// <summary>
+        /// Gets the client diagnostic options.
+        /// </summary>
+        public DiagnosticsOptions Diagnostics { get => InternalOptions.Diagnostics; }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
@@ -30,8 +39,8 @@ namespace Azure.AI.VoiceLive
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> V2025_05_01_Preview. </summary>
-            V2025_05_01_Preview = 1
+            /// <summary> V2025_10_01. </summary>
+            V2025_10_01 = 1
         }
     }
 }

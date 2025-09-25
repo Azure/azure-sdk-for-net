@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
-    public partial class SessionUpdateConversationItemRetrieved : SessionUpdate, IJsonModel<SessionUpdateConversationItemRetrieved>
+    public partial class SessionUpdateConversationItemRetrieved : IJsonModel<SessionUpdateConversationItemRetrieved>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

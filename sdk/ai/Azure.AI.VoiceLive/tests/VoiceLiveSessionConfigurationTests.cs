@@ -87,8 +87,8 @@ namespace Azure.AI.VoiceLive.Tests
             };
             // Ensure we control modalities explicitly (clear defaults then add back only text & audio)
             options.Modalities.Clear();
-            options.Modalities.Add(InputModality.Text);
-            options.Modalities.Add(InputModality.Audio);
+            options.Modalities.Add(InteractionModality.Text);
+            options.Modalities.Add(InteractionModality.Audio);
 
             await session.ConfigureSessionAsync(options);
 
@@ -156,11 +156,11 @@ namespace Azure.AI.VoiceLive.Tests
 
             var options1 = new VoiceLiveSessionOptions { Model = TestConstants.ModelName };
             options1.Modalities.Clear();
-            options1.Modalities.Add(InputModality.Text);
+            options1.Modalities.Add(InteractionModality.Text);
 
             var options2 = new VoiceLiveSessionOptions { Model = TestConstants.ModelName };
             options2.Modalities.Clear();
-            options2.Modalities.Add(InputModality.Audio);
+            options2.Modalities.Add(InteractionModality.Audio);
 
             await session.ConfigureSessionAsync(options1);
             await session.ConfigureSessionAsync(options2);

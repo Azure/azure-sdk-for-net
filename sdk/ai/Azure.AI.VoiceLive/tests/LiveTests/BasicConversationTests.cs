@@ -118,7 +118,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                Modalities = { InputModality.Text }
+                Modalities = { InteractionModality.Text }
             };
 
             options.Tools.Add(FunctionCalls.AdditionDefinition);
@@ -187,7 +187,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                Modalities = { InputModality.Text }
+                Modalities = { InteractionModality.Text }
             };
 
             options.Tools.Add(FunctionCalls.AdditionDefinition);
@@ -260,7 +260,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                Modalities = { InputModality.Text }
+                Modalities = { InteractionModality.Text }
             };
 
             var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
@@ -359,7 +359,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                Modalities = { InputModality.Text },
+                Modalities = { InteractionModality.Text },
                 Instructions = "Your name is Frank. Never forget that!"
             };
 
@@ -573,16 +573,17 @@ namespace Azure.AI.VoiceLive.Tests
                 await session.SendInputAudioAsync(BinaryData.FromBytes(new byte[3200]), TimeoutToken).ConfigureAwait(false);
             }
 
-            // error
-            await session.CommitInputAudioAsync(TimeoutToken).ConfigureAwait(false);
-            await GetNextUpdate<SessionUpdateInputAudioBufferCommitted>(updatesEnum).ConfigureAwait(false);
-
             await session.ClearInputAudioAsync(TimeoutToken).ConfigureAwait(false);
 
             // Now send audio:
             await SendAudioAsync(session, "Weather.wav").ConfigureAwait(false);
 
-            var speechDetected = await GetNextUpdate<SessionUpdateInputAudioBufferSpeechStarted>(updatesEnum).ConfigureAwait(false);
+            await session.CommitInputAudioAsync(TimeoutToken).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateInputAudioBufferCommitted>(updatesEnum).ConfigureAwait(false);
+
+            var speechTranscribed = await GetNextUpdate<SessionUpdateConversationItemInputAudioTranscriptionCompleted>(updatesEnum).ConfigureAwait(false);
+
+            Assert.IsTrue(speechTranscribed.Transcript.Length > 0);
         }
 
         private void ValidateResponseUpdates(List<SessionUpdate> responseItems, string previousItemId)

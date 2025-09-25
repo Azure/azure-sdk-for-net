@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when the text value of a "text" content part is done streaming. Also
     /// emitted when a Response is interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseTextDone : SessionUpdate, IJsonModel<SessionUpdateResponseTextDone>
+    public partial class SessionUpdateResponseTextDone : IJsonModel<SessionUpdateResponseTextDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseTextDone"/> for deserialization. </summary>
         internal SessionUpdateResponseTextDone()

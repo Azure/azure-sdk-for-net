@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates the completion of blendshape animation processing for a specific output of a response. </summary>
-    public partial class SessionUpdateResponseAnimationBlendshapeDone : SessionUpdate, IJsonModel<SessionUpdateResponseAnimationBlendshapeDone>
+    public partial class SessionUpdateResponseAnimationBlendshapeDone : IJsonModel<SessionUpdateResponseAnimationBlendshapeDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationBlendshapeDone"/> for deserialization. </summary>
         internal SessionUpdateResponseAnimationBlendshapeDone()

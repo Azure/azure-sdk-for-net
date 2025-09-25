@@ -163,8 +163,8 @@ VoiceLiveSessionOptions sessionOptions = new()
 
 // Ensure modalities include audio
 sessionOptions.Modalities.Clear();
-sessionOptions.Modalities.Add(InputModality.Text);
-sessionOptions.Modalities.Add(InputModality.Audio);
+sessionOptions.Modalities.Add(InteractionModality.Text);
+sessionOptions.Modalities.Add(InteractionModality.Audio);
 
 await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 
@@ -206,8 +206,8 @@ VoiceLiveSessionOptions sessionOptions = new()
 
 // Ensure modalities include audio
 sessionOptions.Modalities.Clear();
-sessionOptions.Modalities.Add(InputModality.Text);
-sessionOptions.Modalities.Add(InputModality.Audio);
+sessionOptions.Modalities.Add(InteractionModality.Text);
+sessionOptions.Modalities.Add(InteractionModality.Audio);
 
 await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 ```
@@ -247,8 +247,8 @@ sessionOptions.Tools.Add(getCurrentWeatherFunction);
 
 // Ensure modalities include audio
 sessionOptions.Modalities.Clear();
-sessionOptions.Modalities.Add(InputModality.Text);
-sessionOptions.Modalities.Add(InputModality.Audio);
+sessionOptions.Modalities.Add(InteractionModality.Text);
+sessionOptions.Modalities.Add(InteractionModality.Audio);
 
 await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 ```

@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// final state. The Response object included in the `response.done` event will
     /// include all output Items in the Response but will omit the raw audio data.
     /// </summary>
-    public partial class SessionUpdateResponseDone : SessionUpdate, IJsonModel<SessionUpdateResponseDone>
+    public partial class SessionUpdateResponseDone : IJsonModel<SessionUpdateResponseDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseDone"/> for deserialization. </summary>
         internal SessionUpdateResponseDone()

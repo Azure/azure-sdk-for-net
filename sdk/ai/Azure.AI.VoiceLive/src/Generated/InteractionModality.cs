@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    public readonly partial struct InputModality : IEquatable<InputModality>
+    public readonly partial struct InteractionModality : IEquatable<InteractionModality>
     {
         private readonly string _value;
         private const string TextValue = "text";
@@ -19,10 +19,10 @@ namespace Azure.AI.VoiceLive
         private const string AnimationValue = "animation";
         private const string AvatarValue = "avatar";
 
-        /// <summary> Initializes a new instance of <see cref="InputModality"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InteractionModality"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InputModality(string value)
+        public InteractionModality(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,41 +30,41 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Gets the Text. </summary>
-        public static InputModality Text { get; } = new InputModality(TextValue);
+        public static InteractionModality Text { get; } = new InteractionModality(TextValue);
 
         /// <summary> Gets the Audio. </summary>
-        public static InputModality Audio { get; } = new InputModality(AudioValue);
+        public static InteractionModality Audio { get; } = new InteractionModality(AudioValue);
 
         /// <summary> Gets the Animation. </summary>
-        public static InputModality Animation { get; } = new InputModality(AnimationValue);
+        public static InteractionModality Animation { get; } = new InteractionModality(AnimationValue);
 
         /// <summary> Gets the Avatar. </summary>
-        public static InputModality Avatar { get; } = new InputModality(AvatarValue);
+        public static InteractionModality Avatar { get; } = new InteractionModality(AvatarValue);
 
-        /// <summary> Determines if two <see cref="InputModality"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="InteractionModality"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(InputModality left, InputModality right) => left.Equals(right);
+        public static bool operator ==(InteractionModality left, InteractionModality right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InputModality"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="InteractionModality"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(InputModality left, InputModality right) => !left.Equals(right);
+        public static bool operator !=(InteractionModality left, InteractionModality right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InputModality"/>. </summary>
+        /// <summary> Converts a string to a <see cref="InteractionModality"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InputModality(string value) => new InputModality(value);
+        public static implicit operator InteractionModality(string value) => new InteractionModality(value);
 
-        /// <summary> Converts a string to a <see cref="InputModality"/>. </summary>
+        /// <summary> Converts a string to a <see cref="InteractionModality"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InputModality?(string value) => value == null ? null : new InputModality(value);
+        public static implicit operator InteractionModality?(string value) => value == null ? null : new InteractionModality(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InputModality other && Equals(other);
+        public override bool Equals(object obj) => obj is InteractionModality other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(InputModality other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(InteractionModality other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

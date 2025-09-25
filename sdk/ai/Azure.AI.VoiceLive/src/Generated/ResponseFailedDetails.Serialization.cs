@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details for a failed response. </summary>
-    public partial class ResponseFailedDetails : ResponseStatusDetails, IJsonModel<ResponseFailedDetails>
+    public partial class ResponseFailedDetails : IJsonModel<ResponseFailedDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFailedDetails"/> for deserialization. </summary>
         internal ResponseFailedDetails()

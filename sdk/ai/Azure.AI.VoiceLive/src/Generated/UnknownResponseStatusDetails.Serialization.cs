@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownResponseStatusDetails : ResponseStatusDetails, IJsonModel<ResponseStatusDetails>
+    internal partial class UnknownResponseStatusDetails : IJsonModel<ResponseStatusDetails>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownResponseStatusDetails"/> for deserialization. </summary>
         internal UnknownResponseStatusDetails()

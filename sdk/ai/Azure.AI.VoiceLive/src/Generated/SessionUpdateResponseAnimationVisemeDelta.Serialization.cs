@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a viseme ID delta update for animation based on audio. </summary>
-    public partial class SessionUpdateResponseAnimationVisemeDelta : SessionUpdate, IJsonModel<SessionUpdateResponseAnimationVisemeDelta>
+    public partial class SessionUpdateResponseAnimationVisemeDelta : IJsonModel<SessionUpdateResponseAnimationVisemeDelta>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationVisemeDelta"/> for deserialization. </summary>
         internal SessionUpdateResponseAnimationVisemeDelta()

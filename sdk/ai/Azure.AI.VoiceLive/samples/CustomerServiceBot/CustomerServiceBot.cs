@@ -146,8 +146,8 @@ public class CustomerServiceBot : IDisposable
 
         // Ensure modalities include audio
         sessionOptions.Modalities.Clear();
-        sessionOptions.Modalities.Add(InputModality.Text);
-        sessionOptions.Modalities.Add(InputModality.Audio);
+        sessionOptions.Modalities.Add(InteractionModality.Text);
+        sessionOptions.Modalities.Add(InteractionModality.Audio);
 
         // Add function tools for customer service operations
         sessionOptions.Tools.Add(CreateCheckOrderStatusTool());

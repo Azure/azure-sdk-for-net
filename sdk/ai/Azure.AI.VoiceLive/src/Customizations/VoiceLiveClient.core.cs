@@ -28,6 +28,8 @@ namespace Azure.AI.VoiceLive
         {
         }
 
+#pragma warning disable AZC0007 // A websocket based client cannot use the pipeline provided by the typical options class, and showing it will cause confusion.
+
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
@@ -43,9 +45,7 @@ namespace Azure.AI.VoiceLive
         public VoiceLiveClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new VoiceLiveClientOptions())
         {
         }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+#pragma warning restore AZC0007 // A websocket based client cannot use the pipeline provided by the typical options class, and showing it will cause confusion.
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }

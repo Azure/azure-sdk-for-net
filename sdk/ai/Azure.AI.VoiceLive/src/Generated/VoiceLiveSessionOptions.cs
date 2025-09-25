@@ -19,7 +19,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionOptions"/>. </summary>
         public VoiceLiveSessionOptions()
         {
-            Modalities = new ChangeTrackingList<InputModality>();
+            Modalities = new ChangeTrackingList<InteractionModality>();
             OutputAudioTimestampTypes = new ChangeTrackingList<AudioTimestampType>();
             Tools = new ChangeTrackingList<VoiceLiveToolDefinition>();
         }
@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="toolChoice"></param>
         /// <param name="turnDetection"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveSessionOptions(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionOptions(string model, IList<InteractionModality> modalities, AnimationOptions animation, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, float? temperature, BinaryData voiceInternal, BinaryData maxResponseOutputTokens, BinaryData toolChoice, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -75,7 +75,7 @@ namespace Azure.AI.VoiceLive
         public string Model { get; set; }
 
         /// <summary> Gets the Modalities. </summary>
-        public IList<InputModality> Modalities { get; }
+        public IList<InteractionModality> Modalities { get; }
 
         /// <summary> Gets or sets the Animation. </summary>
         public AnimationOptions Animation { get; set; }

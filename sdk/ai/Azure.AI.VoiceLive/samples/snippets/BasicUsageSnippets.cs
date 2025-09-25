@@ -47,8 +47,8 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
 
             // Ensure modalities include audio
             sessionOptions.Modalities.Clear();
-            sessionOptions.Modalities.Add(InputModality.Text);
-            sessionOptions.Modalities.Add(InputModality.Audio);
+            sessionOptions.Modalities.Add(InteractionModality.Text);
+            sessionOptions.Modalities.Add(InteractionModality.Audio);
 
             await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 
@@ -102,8 +102,8 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
 
             // Ensure modalities include audio
             sessionOptions.Modalities.Clear();
-            sessionOptions.Modalities.Add(InputModality.Text);
-            sessionOptions.Modalities.Add(InputModality.Audio);
+            sessionOptions.Modalities.Add(InteractionModality.Text);
+            sessionOptions.Modalities.Add(InteractionModality.Audio);
 
             await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
             #endregion
@@ -155,8 +155,8 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
 
             // Ensure modalities include audio
             sessionOptions.Modalities.Clear();
-            sessionOptions.Modalities.Add(InputModality.Text);
-            sessionOptions.Modalities.Add(InputModality.Audio);
+            sessionOptions.Modalities.Add(InteractionModality.Text);
+            sessionOptions.Modalities.Add(InteractionModality.Audio);
 
             await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
             #endregion

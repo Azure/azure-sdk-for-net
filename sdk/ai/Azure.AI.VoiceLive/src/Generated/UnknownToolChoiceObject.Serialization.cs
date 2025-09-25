@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownToolChoiceObject : ToolChoiceObject, IJsonModel<ToolChoiceObject>
+    internal partial class UnknownToolChoiceObject : IJsonModel<ToolChoiceObject>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownToolChoiceObject"/> for deserialization. </summary>
         internal UnknownToolChoiceObject()

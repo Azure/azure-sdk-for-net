@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// connection is established as the first server event. This event will contain
     /// the default Session configuration.
     /// </summary>
-    public partial class SessionUpdateSessionCreated : SessionUpdate, IJsonModel<SessionUpdateSessionCreated>
+    public partial class SessionUpdateSessionCreated : IJsonModel<SessionUpdateSessionCreated>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionCreated"/> for deserialization. </summary>
         internal SessionUpdateSessionCreated()

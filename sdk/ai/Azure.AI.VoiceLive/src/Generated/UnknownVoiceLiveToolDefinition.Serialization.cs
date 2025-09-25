@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownVoiceLiveToolDefinition : VoiceLiveToolDefinition, IJsonModel<VoiceLiveToolDefinition>
+    internal partial class UnknownVoiceLiveToolDefinition : IJsonModel<VoiceLiveToolDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVoiceLiveToolDefinition"/> for deserialization. </summary>
         internal UnknownVoiceLiveToolDefinition()

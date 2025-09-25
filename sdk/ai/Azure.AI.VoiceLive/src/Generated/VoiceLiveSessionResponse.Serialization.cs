@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The VoiceLiveSessionResponse. </summary>
-    public partial class VoiceLiveSessionResponse : VoiceLiveSessionOptions, IJsonModel<VoiceLiveSessionResponse>
+    public partial class VoiceLiveSessionResponse : IJsonModel<VoiceLiveSessionResponse>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -72,7 +72,7 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             string model = default;
-            IList<InputModality> modalities = default;
+            IList<InteractionModality> modalities = default;
             AnimationOptions animation = default;
             string instructions = default;
             int? inputAudioSamplingRate = default;
@@ -105,10 +105,10 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    List<InputModality> array = new List<InputModality>();
+                    List<InteractionModality> array = new List<InteractionModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new InputModality(item.GetString()));
+                        array.Add(new InteractionModality(item.GetString()));
                     }
                     modalities = array;
                     continue;
@@ -284,7 +284,7 @@ namespace Azure.AI.VoiceLive
             }
             return new VoiceLiveSessionResponse(
                 model,
-                modalities ?? new ChangeTrackingList<InputModality>(),
+                modalities ?? new ChangeTrackingList<InteractionModality>(),
                 animation,
                 instructions,
                 inputAudioSamplingRate,
