@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         private const string StopDevBoxValue = "StopDevBox";
 
-        /// <summary> StopDevBox. </summary>
+        /// <summary> Stop Dev Box task type. </summary>
         public static DevCenterScheduledType StopDevBox { get; } = new DevCenterScheduledType(StopDevBoxValue);
         /// <summary> Determines if two <see cref="DevCenterScheduledType"/> values are the same. </summary>
         public static bool operator ==(DevCenterScheduledType left, DevCenterScheduledType right) => left.Equals(right);

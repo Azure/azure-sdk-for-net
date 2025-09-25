@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> Results of the catalog list operation. </summary>
+    /// <summary> Paged collection of Catalog items. </summary>
     internal partial class DevCenterCatalogListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalogListResult"/>. </summary>
-        internal DevCenterCatalogListResult()
+        /// <param name="value"> The Catalog items on this page. </param>
+        internal DevCenterCatalogListResult(IEnumerable<DevCenterCatalogData> value)
         {
-            Value = new ChangeTrackingList<DevCenterCatalogData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalogListResult"/>. </summary>
-        /// <param name="value"> Current page of results. </param>
-        /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
+        /// <param name="value"> The Catalog items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterCatalogListResult(IReadOnlyList<DevCenterCatalogData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterCatalogListResult(IReadOnlyList<DevCenterCatalogData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Current page of results. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogListResult"/> for deserialization. </summary>
+        internal DevCenterCatalogListResult()
+        {
+        }
+
+        /// <summary> The Catalog items on this page. </summary>
         public IReadOnlyList<DevCenterCatalogData> Value { get; }
-        /// <summary> URL to get the next set of results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -67,19 +67,23 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Managed identity properties. </param>
         /// <param name="deploymentTargetId"> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </param>
+        /// <param name="displayName"> The display name of the project environment type. </param>
         /// <param name="status"> Defines whether this Environment Type can be used in this Project. </param>
         /// <param name="creatorRoleAssignment"> The role definition assigned to the environment creator on backing resources. </param>
         /// <param name="userRoleAssignments"> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="environmentCount"> The number of environments of this type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProjectEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier deploymentTargetId, EnvironmentTypeEnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevCenterProjectEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier deploymentTargetId, string displayName, EnvironmentTypeEnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments, DevCenterProvisioningState? provisioningState, int? environmentCount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             DeploymentTargetId = deploymentTargetId;
+            DisplayName = displayName;
             Status = status;
             CreatorRoleAssignment = creatorRoleAssignment;
             UserRoleAssignments = userRoleAssignments;
             ProvisioningState = provisioningState;
+            EnvironmentCount = environmentCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -92,6 +96,8 @@ namespace Azure.ResourceManager.DevCenter
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </summary>
         public ResourceIdentifier DeploymentTargetId { get; set; }
+        /// <summary> The display name of the project environment type. </summary>
+        public string DisplayName { get; set; }
         /// <summary> Defines whether this Environment Type can be used in this Project. </summary>
         public EnvironmentTypeEnableStatus? Status { get; set; }
         /// <summary> The role definition assigned to the environment creator on backing resources. </summary>
@@ -111,5 +117,7 @@ namespace Azure.ResourceManager.DevCenter
         public IDictionary<string, DevCenterUserRoleAssignments> UserRoleAssignments { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public DevCenterProvisioningState? ProvisioningState { get; }
+        /// <summary> The number of environments of this type. </summary>
+        public int? EnvironmentCount { get; }
     }
 }
