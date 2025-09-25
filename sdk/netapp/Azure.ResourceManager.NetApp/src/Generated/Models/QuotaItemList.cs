@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Subscription Quota Items. </summary>
-    internal partial class SubscriptionQuotaItemList
+    /// <summary> List of Quota Items. </summary>
+    internal partial class QuotaItemList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,35 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        internal SubscriptionQuotaItemList()
+        /// <summary> Initializes a new instance of <see cref="QuotaItemList"/>. </summary>
+        /// <param name="value"> The QuotaItem items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal QuotaItemList(IEnumerable<QuotaItemData> value)
         {
-            Value = new ChangeTrackingList<NetAppSubscriptionQuotaItem>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        /// <param name="value"> A list of SubscriptionQuotaItems. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <summary> Initializes a new instance of <see cref="QuotaItemList"/>. </summary>
+        /// <param name="value"> The QuotaItem items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaItemList(IReadOnlyList<QuotaItemData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of SubscriptionQuotaItems. </summary>
-        public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="QuotaItemList"/> for deserialization. </summary>
+        internal QuotaItemList()
+        {
+        }
+
+        /// <summary> The QuotaItem items on this page. </summary>
+        public IReadOnlyList<QuotaItemData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

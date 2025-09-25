@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/4d3d0a372b8680b55640240fa14690f360f4e954/specification/netapp/resource-manager/readme.md
-tag: package-2025-06-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/901fc7865ebfbfd4cd21c5e88707ddab153773de/specification/netapp/resource-manager/readme.md
+#tag: package-preview-2025-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -211,7 +211,7 @@ rename-mapping:
   BreakReplicationRequest: NetAppVolumeBreakReplicationContent
   DailySchedule: SnapshotPolicyDailySchedule
   EnableSubvolumes: EnableNetAppSubvolume
-  EncryptionType: CapacityPoolEncryptionType
+  PoolPropertiesEncryptionType: CapacityPoolEncryptionType
   ExportPolicyRule: NetAppVolumeExportPolicyRule
   HourlySchedule: SnapshotPolicyHourlySchedule
   MonthlySchedule: SnapshotPolicyMonthlySchedule

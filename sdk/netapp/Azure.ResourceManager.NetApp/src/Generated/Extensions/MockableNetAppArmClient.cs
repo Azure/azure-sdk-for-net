@@ -59,6 +59,42 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NetAppBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetAppBackupPolicyResource"/> object. </returns>
+        public virtual NetAppBackupPolicyResource GetNetAppBackupPolicyResource(ResourceIdentifier id)
+        {
+            NetAppBackupPolicyResource.ValidateResourceId(id);
+            return new NetAppBackupPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetAppBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetAppBackupVaultResource"/> object. </returns>
+        public virtual NetAppBackupVaultResource GetNetAppBackupVaultResource(ResourceIdentifier id)
+        {
+            NetAppBackupVaultResource.ValidateResourceId(id);
+            return new NetAppBackupVaultResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetAppBackupVaultBackupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBackupVaultBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupVaultBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetAppBackupVaultBackupResource"/> object. </returns>
+        public virtual NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(ResourceIdentifier id)
+        {
+            NetAppBackupVaultBackupResource.ValidateResourceId(id);
+            return new NetAppBackupVaultBackupResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CapacityPoolResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CapacityPoolResource.CreateResourceIdentifier" /> to create a <see cref="CapacityPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -83,6 +119,18 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="BucketResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BucketResource.CreateResourceIdentifier" /> to create a <see cref="BucketResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BucketResource"/> object. </returns>
+        public virtual BucketResource GetBucketResource(ResourceIdentifier id)
+        {
+            BucketResource.ValidateResourceId(id);
+            return new BucketResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NetAppVolumeSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppVolumeSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeSnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -92,54 +140,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         {
             NetAppVolumeSnapshotResource.ValidateResourceId(id);
             return new NetAppVolumeSnapshotResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SnapshotPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SnapshotPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotPolicyResource"/> object. </returns>
-        public virtual SnapshotPolicyResource GetSnapshotPolicyResource(ResourceIdentifier id)
-        {
-            SnapshotPolicyResource.ValidateResourceId(id);
-            return new SnapshotPolicyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppBackupPolicyResource"/> object. </returns>
-        public virtual NetAppBackupPolicyResource GetNetAppBackupPolicyResource(ResourceIdentifier id)
-        {
-            NetAppBackupPolicyResource.ValidateResourceId(id);
-            return new NetAppBackupPolicyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppVolumeQuotaRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppVolumeQuotaRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeQuotaRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppVolumeQuotaRuleResource"/> object. </returns>
-        public virtual NetAppVolumeQuotaRuleResource GetNetAppVolumeQuotaRuleResource(ResourceIdentifier id)
-        {
-            NetAppVolumeQuotaRuleResource.ValidateResourceId(id);
-            return new NetAppVolumeQuotaRuleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppVolumeGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppVolumeGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppVolumeGroupResource"/> object. </returns>
-        public virtual NetAppVolumeGroupResource GetNetAppVolumeGroupResource(ResourceIdentifier id)
-        {
-            NetAppVolumeGroupResource.ValidateResourceId(id);
-            return new NetAppVolumeGroupResource(Client, id);
         }
 
         /// <summary>
@@ -155,27 +155,51 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetAppBackupVaultBackupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppBackupVaultBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupVaultBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetAppVolumeQuotaRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppVolumeQuotaRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeQuotaRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppBackupVaultBackupResource"/> object. </returns>
-        public virtual NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppVolumeQuotaRuleResource"/> object. </returns>
+        public virtual NetAppVolumeQuotaRuleResource GetNetAppVolumeQuotaRuleResource(ResourceIdentifier id)
         {
-            NetAppBackupVaultBackupResource.ValidateResourceId(id);
-            return new NetAppBackupVaultBackupResource(Client, id);
+            NetAppVolumeQuotaRuleResource.ValidateResourceId(id);
+            return new NetAppVolumeQuotaRuleResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetAppBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppBackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="QuotaItemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QuotaItemResource.CreateResourceIdentifier" /> to create a <see cref="QuotaItemResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppBackupVaultResource"/> object. </returns>
-        public virtual NetAppBackupVaultResource GetNetAppBackupVaultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QuotaItemResource"/> object. </returns>
+        public virtual QuotaItemResource GetQuotaItemResource(ResourceIdentifier id)
         {
-            NetAppBackupVaultResource.ValidateResourceId(id);
-            return new NetAppBackupVaultResource(Client, id);
+            QuotaItemResource.ValidateResourceId(id);
+            return new QuotaItemResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SnapshotPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SnapshotPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SnapshotPolicyResource"/> object. </returns>
+        public virtual SnapshotPolicyResource GetSnapshotPolicyResource(ResourceIdentifier id)
+        {
+            SnapshotPolicyResource.ValidateResourceId(id);
+            return new SnapshotPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetAppVolumeGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppVolumeGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetAppVolumeGroupResource"/> object. </returns>
+        public virtual NetAppVolumeGroupResource GetNetAppVolumeGroupResource(ResourceIdentifier id)
+        {
+            NetAppVolumeGroupResource.ValidateResourceId(id);
+            return new NetAppVolumeGroupResource(Client, id);
         }
     }
 }

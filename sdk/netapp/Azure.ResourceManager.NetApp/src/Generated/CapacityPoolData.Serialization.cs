@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp
             float? customThroughputMibps = default;
             CapacityPoolQosType? qosType = default;
             bool? coolAccess = default;
-            CapacityPoolEncryptionType? encryptionType = default;
+            PoolPropertiesEncryptionType? encryptionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetApp
                                 encryptionType = null;
                                 continue;
                             }
-                            encryptionType = new CapacityPoolEncryptionType(property0.Value.GetString());
+                            encryptionType = new PoolPropertiesEncryptionType(property0.Value.GetString());
                             continue;
                         }
                     }
