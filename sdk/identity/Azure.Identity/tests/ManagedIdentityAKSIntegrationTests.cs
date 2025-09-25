@@ -63,7 +63,7 @@ namespace Azure.Identity.Tests
         public void KubectlExecuteIdentityAKSTests()
         {
             SetupKubernetesEnvironment();
-            
+
             // Make the executable file executable and run it
             RunCommand(kubectlPath, $"exec {podName} -- chmod +x ./Integration.Identity.Container");
             string output = RunCommand(kubectlPath, $"exec {podName} -- ./Integration.Identity.Container");
@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests
         {
             if (timeout == default)
                 timeout = TimeSpan.FromSeconds(60);
-                
+
             try
             {
                 Console.WriteLine($"Running command: {fileName} {args}");
