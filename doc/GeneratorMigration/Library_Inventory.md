@@ -4,15 +4,17 @@
 
 - Total libraries: 414
 - Management Plane (Swagger): 165
-- Management Plane (TSP-Old): 55
+- Management Plane (TSP-Old): 54
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
-- Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 4
+- Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 5
 - Management Plane (TypeSpec - @typespec/http-client-csharp): 0
+- Management Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 0
 - Data Plane (Swagger): 115
-- Data Plane (TSP-Old): 27
+- Data Plane (TSP-Old): 26
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 8
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 0
 - Data Plane (TypeSpec - @typespec/http-client-csharp): 2
+- Data Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 1
 - No generator: 38
 
 
@@ -42,13 +44,21 @@ TypeSpec with @typespec/http-client-csharp generator is detected by the presence
 | openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
 
 
-## Data Plane Libraries using TypeSpec (Old Generator)
+## Data Plane Libraries using TypeSpec (Unknown TypeSpec Generator: eng/emitter-package.json)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 27
+TypeSpec with Unknown TypeSpec Generator: eng/emitter-package.json generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing Unknown TypeSpec Generator: eng/emitter-package.json, or through special handling for specific libraries. Total: 1
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | ai | Azure.AI.Agents.Persistent | sdk/ai/Azure.AI.Agents.Persistent |
+
+
+## Data Plane Libraries using TypeSpec (Old Generator)
+
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 26
+
+| Service | Library | Path |
+| ------- | ------- | ---- |
 | ai | Azure.AI.Inference | sdk/ai/Azure.AI.Inference |
 | anomalydetector | Azure.AI.AnomalyDetector | sdk/anomalydetector/Azure.AI.AnomalyDetector |
 | batch | Azure.Compute.Batch | sdk/batch/Azure.Compute.Batch |
@@ -202,12 +212,13 @@ Total: 115
 
 ## Management Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp-mgmt)
 
-TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp-mgmt, or through special handling for specific libraries. Total: 4
+TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp-mgmt, or through special handling for specific libraries. Total: 5
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | computerecommender | Azure.ResourceManager.Compute.Recommender | sdk/computerecommender/Azure.ResourceManager.Compute.Recommender |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes |
+| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot |
 | storageactions | Azure.ResourceManager.StorageActions | sdk/storageactions/Azure.ResourceManager.StorageActions |
 
