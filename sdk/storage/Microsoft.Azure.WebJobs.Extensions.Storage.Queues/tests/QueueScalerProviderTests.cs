@@ -11,6 +11,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
     [TestFixture]
     public class QueueScalerProviderTests
     {
+        // Added full matrix of normalization scenarios.
+        [TestCase("%MY_QUEUE%", "mixedcasequeuename", TestName = "TokenResolvedAndLowercased")]
+        [TestCase("MixedCaseQueueName", "mixedcasequeuename", TestName = "DirectMixedCaseLowercased")]
+        [TestCase("alreadylowercase", "alreadylowercase", TestName = "AlreadyLowercaseUnchanged")]
+        [TestCase("", "", TestName = "EmptyStringRemainsEmpty")]
+        [TestCase(null, null, TestName = "NullRemainsNull")]
+        public void ResolveProperties_LowercasesQueueName(string queueName, string expectedOutput)
+        {
+            var metadata = new QueueScalerProvider.QueueMetadata
+            {
+                Connection = "AnyConnection",
+                QueueName = queueName // token to resolve / normalize
+            };
+            var resolver = new TestNameResolver();
+
+            // Act
+            metadata.ResolveProperties(resolver);
+
+            // Assert
+            Assert.AreEqual(expectedOutput, metadata.QueueName);
+        }
+
         private class TestNameResolver : INameResolver
         {
             public string Resolve(string name)
@@ -21,23 +43,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
                 }
                 return null;
             }
-        }
-
-        [Test]
-        public void ResolveProperties_LowercasesQueueName()
-        {
-            var metadata = new QueueScalerProvider.QueueMetadata
-            {
-                Connection = "AnyConnection",
-                QueueName = "%MY_QUEUE%" // token to resolve
-            };
-            var resolver = new TestNameResolver();
-
-            // Act
-            metadata.ResolveProperties(resolver);
-
-            // Assert
-            Assert.AreEqual("mixedcasequeuename", metadata.QueueName);
         }
     }
 }
