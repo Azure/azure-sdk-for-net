@@ -5,7 +5,7 @@ parameters:
 
 steps:
   # Need to authenticate so our pipeline can update packages in the feed.
-  # - task: NuGetAuthenticate@1
+   - task: NuGetAuthenticate@1
 
   # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
   - task: UseDotNet@2
