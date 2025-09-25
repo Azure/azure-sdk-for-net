@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="linuxConfiguration"> Linux Configuration. </param>
         /// <param name="cloudInitConfiguration"> Cloud-init Configuration. </param>
         /// <returns> A new <see cref="Models.OSProfileForVmInstance"/> instance for mocking. </returns>
-        public static OSProfileForVmInstance OSProfileForVmInstance(string computerName = null, string adminUsername = null, string adminPassword = null, string guestId = null, VMwareOSType? osType = null, string osSku = null, string toolsRunningStatus = null, string toolsVersionStatus = null, string toolsVersion = null, VMwareVmWindowsConfiguration windowsConfiguration = null, LinuxConfiguration linuxConfiguration = null, CloudInitConfiguration cloudInitConfiguration = null)
+        public static OSProfileForVmInstance OSProfileForVmInstance(string computerName = null, string adminUsername = null, string adminPassword = null, string guestId = null, VMwareOSType? osType = null, string osSku = null, string toolsRunningStatus = null, string toolsVersionStatus = null, string toolsVersion = null, VMwareVmWindowsConfiguration windowsConfiguration = null, VMwareVmLinuxConfiguration linuxConfiguration = null, CloudInitConfiguration cloudInitConfiguration = null)
         {
             return new OSProfileForVmInstance(
                 computerName,

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class LinuxConfiguration : IUtf8JsonSerializable, IJsonModel<LinuxConfiguration>
+    public partial class VMwareVmLinuxConfiguration : IUtf8JsonSerializable, IJsonModel<VMwareVmLinuxConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVmLinuxConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LinuxConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VMwareVmLinuxConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVmLinuxConfiguration)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(TimeZone))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
         }
 
-        LinuxConfiguration IJsonModel<LinuxConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VMwareVmLinuxConfiguration IJsonModel<VMwareVmLinuxConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVmLinuxConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLinuxConfiguration(document.RootElement, options);
+            return DeserializeVMwareVmLinuxConfiguration(document.RootElement, options);
         }
 
-        internal static LinuxConfiguration DeserializeLinuxConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VMwareVmLinuxConfiguration DeserializeVMwareVmLinuxConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LinuxConfiguration(timeZone, linuxCustomizationScript, serializedAdditionalRawData);
+            return new VMwareVmLinuxConfiguration(timeZone, linuxCustomizationScript, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LinuxConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VMwareVmLinuxConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVmLinuxConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LinuxConfiguration IPersistableModel<LinuxConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VMwareVmLinuxConfiguration IPersistableModel<VMwareVmLinuxConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLinuxConfiguration(document.RootElement, options);
+                        return DeserializeVMwareVmLinuxConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVmLinuxConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LinuxConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VMwareVmLinuxConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

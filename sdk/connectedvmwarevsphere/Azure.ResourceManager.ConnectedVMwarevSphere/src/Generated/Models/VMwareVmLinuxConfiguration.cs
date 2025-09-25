@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Specifies the Linux Configuration settings for the virtual machine. </summary>
-    public partial class LinuxConfiguration
+    public partial class VMwareVmLinuxConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
-        public LinuxConfiguration()
+        /// <summary> Initializes a new instance of <see cref="VMwareVmLinuxConfiguration"/>. </summary>
+        public VMwareVmLinuxConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmLinuxConfiguration"/>. </summary>
         /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. "Pacific/Fiji". Valid time zone values are based on the tz (timezone) database used by Linux and other Unix systems. These values are generally strings that are in the format &lt;area&gt;/&lt;Location&gt;. For more info: https://knowledge.broadcom.com/external/article?legacyId=2145518. </param>
         /// <param name="linuxCustomizationScript"> Sets the linux customization script. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxConfiguration(string timeZone, string linuxCustomizationScript, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VMwareVmLinuxConfiguration(string timeZone, string linuxCustomizationScript, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeZone = timeZone;
             LinuxCustomizationScript = linuxCustomizationScript;

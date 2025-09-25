@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             string toolsVersionStatus = default;
             string toolsVersion = default;
             VMwareVmWindowsConfiguration windowsConfiguration = default;
-            LinuxConfiguration linuxConfiguration = default;
+            VMwareVmLinuxConfiguration linuxConfiguration = default;
             CloudInitConfiguration cloudInitConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value, options);
+                    linuxConfiguration = VMwareVmLinuxConfiguration.DeserializeVMwareVmLinuxConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cloudInitConfiguration"u8))

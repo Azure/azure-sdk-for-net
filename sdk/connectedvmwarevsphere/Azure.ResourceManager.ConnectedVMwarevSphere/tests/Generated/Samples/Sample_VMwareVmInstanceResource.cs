@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
                 {
                     ComputerName = "DemoVM",
                     OSType = VMwareOSType.Linux,
-                    LinuxConfiguration = new LinuxConfiguration
+                    LinuxConfiguration = new VMwareVmLinuxConfiguration
                     {
                         TimeZone = "America/Los_Angeles",
                         LinuxCustomizationScript = "echo 0",

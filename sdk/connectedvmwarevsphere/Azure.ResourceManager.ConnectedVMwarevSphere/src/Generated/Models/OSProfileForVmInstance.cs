@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="linuxConfiguration"> Linux Configuration. </param>
         /// <param name="cloudInitConfiguration"> Cloud-init Configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSProfileForVmInstance(string computerName, string adminUsername, string adminPassword, string guestId, VMwareOSType? osType, string osSku, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion, VMwareVmWindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, CloudInitConfiguration cloudInitConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OSProfileForVmInstance(string computerName, string adminUsername, string adminPassword, string guestId, VMwareOSType? osType, string osSku, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion, VMwareVmWindowsConfiguration windowsConfiguration, VMwareVmLinuxConfiguration linuxConfiguration, CloudInitConfiguration cloudInitConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Windows Configuration. </summary>
         public VMwareVmWindowsConfiguration WindowsConfiguration { get; set; }
         /// <summary> Linux Configuration. </summary>
-        public LinuxConfiguration LinuxConfiguration { get; set; }
+        public VMwareVmLinuxConfiguration LinuxConfiguration { get; set; }
         /// <summary> Cloud-init Configuration. </summary>
         public CloudInitConfiguration CloudInitConfiguration { get; set; }
     }

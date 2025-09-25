@@ -94,6 +94,7 @@ rename-mapping:
   VirtualNetworksList: VMwareVirtualNetworkListResult
   WindowsConfiguration: VMwareVmWindowsConfiguration
   WindowsConfiguration.autoLogon: isAutoLogon
+  LinuxConfiguration: VMwareVmLinuxConfiguration
 
 directive:
   # Add this configuration to flatten the properties.properties property of InventoryItem
