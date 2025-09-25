@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAStorageDiscoveryWorkspace()
         {
-            // Generated from example definition: 2025-06-01-preview/StorageDiscoveryWorkspaces_CreateOrUpdate.json
+            // Generated from example definition: 2025-09-01/StorageDiscoveryWorkspaces_CreateOrUpdate.json
             // this example is just showing the usage of "StorageDiscoveryWorkspace_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ Tags =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStorageDiscoveryWorkspace()
         {
-            // Generated from example definition: 2025-06-01-preview/StorageDiscoveryWorkspaces_Get.json
+            // Generated from example definition: 2025-09-01/StorageDiscoveryWorkspaces_Get.json
             // this example is just showing the usage of "StorageDiscoveryWorkspace_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ Tags =
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListStorageDiscoveryWorkspacesByResourceGroup()
         {
-            // Generated from example definition: 2025-06-01-preview/StorageDiscoveryWorkspaces_ListByResourceGroup.json
+            // Generated from example definition: 2025-09-01/StorageDiscoveryWorkspaces_ListByResourceGroup.json
             // this example is just showing the usage of "StorageDiscoveryWorkspace_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -154,7 +154,7 @@ Tags =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAStorageDiscoveryWorkspace()
         {
-            // Generated from example definition: 2025-06-01-preview/StorageDiscoveryWorkspaces_Get.json
+            // Generated from example definition: 2025-09-01/StorageDiscoveryWorkspaces_Get.json
             // this example is just showing the usage of "StorageDiscoveryWorkspace_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,7 +183,7 @@ Tags =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAStorageDiscoveryWorkspace()
         {
-            // Generated from example definition: 2025-06-01-preview/StorageDiscoveryWorkspaces_Get.json
+            // Generated from example definition: 2025-09-01/StorageDiscoveryWorkspaces_Get.json
             // this example is just showing the usage of "StorageDiscoveryWorkspace_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
