@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 namespace: Azure.ResourceManager.ConnectedVMwarevSphere
-require: https://github.com/Azure/azure-rest-api-specs/blob/b8932418d4fd4940849e8722cc90e2b7bf1f8fda/specification/connectedvmware/resource-manager/readme.md
-#tag: package-2023-10
+require: https://github.com/Azure/azure-rest-api-specs-pr/blob/8844c0e36bfe943125c90cc7309a8a53222bc79d/specification/connectedvmware/resource-manager/readme.md
+#tag: package-2025-01  rpaas
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -94,4 +94,12 @@ rename-mapping:
   VirtualNetworksList: VMwareVirtualNetworkListResult
   WindowsConfiguration: VMwareVmWindowsConfiguration
   WindowsConfiguration.autoLogon: isAutoLogon
+
+directive:
+  # Add this configuration to flatten the properties.properties property of InventoryItem
+  - from: swagger-document
+    where: $.definitions.InventoryItem.properties.properties
+    transform: >
+      $['x-ms-client-flatten'] = true;
+
 ```

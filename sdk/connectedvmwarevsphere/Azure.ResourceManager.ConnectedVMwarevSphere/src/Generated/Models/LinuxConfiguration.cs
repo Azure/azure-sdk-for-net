@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    /// <summary> List of VirtualNetworks. </summary>
-    internal partial class VMwareVirtualNetworkListResult
+    /// <summary> Specifies the Linux Configuration settings for the virtual machine. </summary>
+    public partial class LinuxConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkListResult"/>. </summary>
-        /// <param name="value"> The VirtualNetwork items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal VMwareVirtualNetworkListResult(IEnumerable<VMwareVirtualNetworkData> value)
+        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
+        public LinuxConfiguration()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkListResult"/>. </summary>
-        /// <param name="value"> The VirtualNetwork items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
+        /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. "Pacific/Fiji". Valid time zone values are based on the tz (timezone) database used by Linux and other Unix systems. These values are generally strings that are in the format &lt;area&gt;/&lt;Location&gt;. For more info: https://knowledge.broadcom.com/external/article?legacyId=2145518. </param>
+        /// <param name="linuxCustomizationScript"> Sets the linux customization script. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareVirtualNetworkListResult(IReadOnlyList<VMwareVirtualNetworkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LinuxConfiguration(string timeZone, string linuxCustomizationScript, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            TimeZone = timeZone;
+            LinuxCustomizationScript = linuxCustomizationScript;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkListResult"/> for deserialization. </summary>
-        internal VMwareVirtualNetworkListResult()
-        {
-        }
-
-        /// <summary> The VirtualNetwork items on this page. </summary>
-        public IReadOnlyList<VMwareVirtualNetworkData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Specifies the time zone of the virtual machine. e.g. "Pacific/Fiji". Valid time zone values are based on the tz (timezone) database used by Linux and other Unix systems. These values are generally strings that are in the format &lt;area&gt;/&lt;Location&gt;. For more info: https://knowledge.broadcom.com/external/article?legacyId=2145518. </summary>
+        public string TimeZone { get; set; }
+        /// <summary> Sets the linux customization script. </summary>
+        public string LinuxCustomizationScript { get; set; }
     }
 }

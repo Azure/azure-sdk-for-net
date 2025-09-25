@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    /// <summary> List of VirtualNetworks. </summary>
-    internal partial class VMwareVirtualNetworkListResult
+    /// <summary> Specifies the cloud init related settings on the virtual machine. </summary>
+    public partial class CloudInitConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkListResult"/>. </summary>
-        /// <param name="value"> The VirtualNetwork items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal VMwareVirtualNetworkListResult(IEnumerable<VMwareVirtualNetworkData> value)
+        /// <summary> Initializes a new instance of <see cref="CloudInitConfiguration"/>. </summary>
+        public CloudInitConfiguration()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkListResult"/>. </summary>
-        /// <param name="value"> The VirtualNetwork items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="CloudInitConfiguration"/>. </summary>
+        /// <param name="metadata"> Sets metadata which includes the network, instance id and hostname that cloud-init processes to configure the VM. </param>
+        /// <param name="userdata"> Sets the user custom content that cloud-init processes to configure the VM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareVirtualNetworkListResult(IReadOnlyList<VMwareVirtualNetworkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudInitConfiguration(string metadata, string userdata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Metadata = metadata;
+            Userdata = userdata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkListResult"/> for deserialization. </summary>
-        internal VMwareVirtualNetworkListResult()
-        {
-        }
-
-        /// <summary> The VirtualNetwork items on this page. </summary>
-        public IReadOnlyList<VMwareVirtualNetworkData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Sets metadata which includes the network, instance id and hostname that cloud-init processes to configure the VM. </summary>
+        public string Metadata { get; set; }
+        /// <summary> Sets the user custom content that cloud-init processes to configure the VM. </summary>
+        public string Userdata { get; set; }
     }
 }

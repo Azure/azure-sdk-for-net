@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-12-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, VCenterInventoryItemData data)
+        internal RequestUriBuilder CreateListByVCenterRequestUri(string subscriptionId, string resourceGroupName, string vcenterName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -46,17 +46,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/vcenters/", false);
             uri.AppendPath(vcenterName, true);
-            uri.AppendPath("/inventoryItems/", false);
-            uri.AppendPath(inventoryItemName, true);
+            uri.AppendPath("/inventoryItems", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, VCenterInventoryItemData data)
+        internal HttpMessage CreateListByVCenterRequest(string subscriptionId, string resourceGroupName, string vcenterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -65,45 +64,36 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/vcenters/", false);
             uri.AppendPath(vcenterName, true);
-            uri.AppendPath("/inventoryItems/", false);
-            uri.AppendPath(inventoryItemName, true);
+            uri.AppendPath("/inventoryItems", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create Or Update InventoryItem. </summary>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <summary> Returns the list of inventoryItems of the given vCenter. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
-        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/>, <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VCenterInventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, VCenterInventoryItemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VCenterInventoryItemListResult>> ListByVCenterAsync(string subscriptionId, string resourceGroupName, string vcenterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, data);
+            using var message = CreateListByVCenterRequest(subscriptionId, resourceGroupName, vcenterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VCenterInventoryItemData value = default;
+                        VCenterInventoryItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VCenterInventoryItemData.DeserializeVCenterInventoryItemData(document.RootElement);
+                        value = VCenterInventoryItemListResult.DeserializeVCenterInventoryItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,32 +101,28 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Create Or Update InventoryItem. </summary>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <summary> Returns the list of inventoryItems of the given vCenter. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
-        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/>, <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VCenterInventoryItemData> Create(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, VCenterInventoryItemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VCenterInventoryItemListResult> ListByVCenter(string subscriptionId, string resourceGroupName, string vcenterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, data);
+            using var message = CreateListByVCenterRequest(subscriptionId, resourceGroupName, vcenterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VCenterInventoryItemData value = default;
+                        VCenterInventoryItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VCenterInventoryItemData.DeserializeVCenterInventoryItemData(document.RootElement);
+                        value = VCenterInventoryItemListResult.DeserializeVCenterInventoryItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,8 +169,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Implements InventoryItem GET method. </summary>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,8 +202,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Implements InventoryItem GET method. </summary>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,6 +229,114 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     }
                 case 404:
                     return Response.FromValue((VCenterInventoryItemData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, VCenterInventoryItemData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/vcenters/", false);
+            uri.AppendPath(vcenterName, true);
+            uri.AppendPath("/inventoryItems/", false);
+            uri.AppendPath(inventoryItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, VCenterInventoryItemData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/vcenters/", false);
+            uri.AppendPath(vcenterName, true);
+            uri.AppendPath("/inventoryItems/", false);
+            uri.AppendPath(inventoryItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Create Or Update InventoryItem. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vcenterName"> Name of the vCenter. </param>
+        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="data"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/>, <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VCenterInventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, VCenterInventoryItemData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        VCenterInventoryItemData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = VCenterInventoryItemData.DeserializeVCenterInventoryItemData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Create Or Update InventoryItem. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vcenterName"> Name of the vCenter. </param>
+        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="data"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/>, <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VCenterInventoryItemData> Create(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, VCenterInventoryItemData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        VCenterInventoryItemData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = VCenterInventoryItemData.DeserializeVCenterInventoryItemData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -287,8 +381,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Implements inventoryItem DELETE method. </summary>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -314,8 +408,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Implements inventoryItem DELETE method. </summary>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -335,100 +429,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByVCenterRequestUri(string subscriptionId, string resourceGroupName, string vcenterName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/vcenters/", false);
-            uri.AppendPath(vcenterName, true);
-            uri.AppendPath("/inventoryItems", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByVCenterRequest(string subscriptionId, string resourceGroupName, string vcenterName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/vcenters/", false);
-            uri.AppendPath(vcenterName, true);
-            uri.AppendPath("/inventoryItems", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns the list of inventoryItems of the given vCenter. </summary>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
-        /// <param name="vcenterName"> Name of the vCenter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VCenterInventoryItemListResult>> ListByVCenterAsync(string subscriptionId, string resourceGroupName, string vcenterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
-
-            using var message = CreateListByVCenterRequest(subscriptionId, resourceGroupName, vcenterName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VCenterInventoryItemListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VCenterInventoryItemListResult.DeserializeVCenterInventoryItemListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns the list of inventoryItems of the given vCenter. </summary>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
-        /// <param name="vcenterName"> Name of the vCenter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VCenterInventoryItemListResult> ListByVCenter(string subscriptionId, string resourceGroupName, string vcenterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
-
-            using var message = CreateListByVCenterRequest(subscriptionId, resourceGroupName, vcenterName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VCenterInventoryItemListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VCenterInventoryItemListResult.DeserializeVCenterInventoryItemListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -458,8 +458,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary> Returns the list of inventoryItems of the given vCenter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>
@@ -489,8 +489,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary> Returns the list of inventoryItems of the given vCenter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Subscription ID. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>

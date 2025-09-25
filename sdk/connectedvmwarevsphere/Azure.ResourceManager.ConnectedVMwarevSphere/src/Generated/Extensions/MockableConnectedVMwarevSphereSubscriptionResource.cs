@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableConnectedVMwarevSphereSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _vMwareResourcePoolResourcePoolsClientDiagnostics;
-        private ResourcePoolsRestOperations _vMwareResourcePoolResourcePoolsRestClient;
         private ClientDiagnostics _vMwareClusterClustersClientDiagnostics;
         private ClustersRestOperations _vMwareClusterClustersRestClient;
-        private ClientDiagnostics _vMwareHostHostsClientDiagnostics;
-        private HostsRestOperations _vMwareHostHostsRestClient;
         private ClientDiagnostics _vMwareDatastoreDatastoresClientDiagnostics;
         private DatastoresRestOperations _vMwareDatastoreDatastoresRestClient;
+        private ClientDiagnostics _vMwareHostHostsClientDiagnostics;
+        private HostsRestOperations _vMwareHostHostsRestClient;
+        private ClientDiagnostics _vMwareResourcePoolResourcePoolsClientDiagnostics;
+        private ResourcePoolsRestOperations _vMwareResourcePoolResourcePoolsRestClient;
         private ClientDiagnostics _vMwareVCenterVCentersClientDiagnostics;
         private VCentersRestOperations _vMwareVCenterVCentersRestClient;
         private ClientDiagnostics _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics;
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
         }
 
-        private ClientDiagnostics VMwareResourcePoolResourcePoolsClientDiagnostics => _vMwareResourcePoolResourcePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareResourcePoolResource.ResourceType.Namespace, Diagnostics);
-        private ResourcePoolsRestOperations VMwareResourcePoolResourcePoolsRestClient => _vMwareResourcePoolResourcePoolsRestClient ??= new ResourcePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareResourcePoolResource.ResourceType));
         private ClientDiagnostics VMwareClusterClustersClientDiagnostics => _vMwareClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareClusterResource.ResourceType.Namespace, Diagnostics);
         private ClustersRestOperations VMwareClusterClustersRestClient => _vMwareClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareClusterResource.ResourceType));
-        private ClientDiagnostics VMwareHostHostsClientDiagnostics => _vMwareHostHostsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareHostResource.ResourceType.Namespace, Diagnostics);
-        private HostsRestOperations VMwareHostHostsRestClient => _vMwareHostHostsRestClient ??= new HostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareHostResource.ResourceType));
         private ClientDiagnostics VMwareDatastoreDatastoresClientDiagnostics => _vMwareDatastoreDatastoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareDatastoreResource.ResourceType.Namespace, Diagnostics);
         private DatastoresRestOperations VMwareDatastoreDatastoresRestClient => _vMwareDatastoreDatastoresRestClient ??= new DatastoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareDatastoreResource.ResourceType));
+        private ClientDiagnostics VMwareHostHostsClientDiagnostics => _vMwareHostHostsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareHostResource.ResourceType.Namespace, Diagnostics);
+        private HostsRestOperations VMwareHostHostsRestClient => _vMwareHostHostsRestClient ??= new HostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareHostResource.ResourceType));
+        private ClientDiagnostics VMwareResourcePoolResourcePoolsClientDiagnostics => _vMwareResourcePoolResourcePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareResourcePoolResource.ResourceType.Namespace, Diagnostics);
+        private ResourcePoolsRestOperations VMwareResourcePoolResourcePoolsRestClient => _vMwareResourcePoolResourcePoolsRestClient ??= new ResourcePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareResourcePoolResource.ResourceType));
         private ClientDiagnostics VMwareVCenterVCentersClientDiagnostics => _vMwareVCenterVCentersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareVCenterResource.ResourceType.Namespace, Diagnostics);
         private VCentersRestOperations VMwareVCenterVCentersRestClient => _vMwareVCenterVCentersRestClient ??= new VCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareVCenterResource.ResourceType));
         private ClientDiagnostics VMwareVmTemplateVirtualMachineTemplatesClientDiagnostics => _vMwareVmTemplateVirtualMachineTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareVmTemplateResource.ResourceType.Namespace, Diagnostics);
@@ -61,66 +61,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// List of resourcePools in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourcePools_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VMwareResourcePoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareResourcePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VMwareResourcePoolResource> GetVMwareResourcePoolsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareResourcePoolResourcePoolsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareResourcePoolResourcePoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), VMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareResourcePools", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List of resourcePools in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourcePools_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VMwareResourcePoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareResourcePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VMwareResourcePoolResource> GetVMwareResourcePools(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareResourcePoolResourcePoolsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareResourcePoolResourcePoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), VMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareResourcePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +76,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,7 +106,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,66 +124,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         }
 
         /// <summary>
-        /// List of hosts in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Hosts_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VMwareHostResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareHostResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VMwareHostResource> GetVMwareHostsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareHosts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List of hosts in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Hosts_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VMwareHostResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareHostResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VMwareHostResource> GetVMwareHosts(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareHosts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// List of datastores in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -256,7 +136,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -286,7 +166,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -304,6 +184,126 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         }
 
         /// <summary>
+        /// List of hosts in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hosts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareHostResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VMwareHostResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VMwareHostResource> GetVMwareHostsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareHosts", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of hosts in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hosts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareHostResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VMwareHostResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VMwareHostResource> GetVMwareHosts(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareHosts", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of resourcePools in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcePools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareResourcePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VMwareResourcePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VMwareResourcePoolResource> GetVMwareResourcePoolsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareResourcePoolResourcePoolsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareResourcePoolResourcePoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), VMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareResourcePools", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of resourcePools in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcePools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareResourcePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VMwareResourcePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VMwareResourcePoolResource> GetVMwareResourcePools(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareResourcePoolResourcePoolsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareResourcePoolResourcePoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), VMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareResourcePools", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// List of vCenters in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

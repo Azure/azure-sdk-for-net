@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VMwareVmTemplateListResult"/>. </summary>
-        /// <param name="value"> Array of VirtualMachineTemplates. </param>
+        /// <param name="value"> The VirtualMachineTemplate items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareVmTemplateListResult(IEnumerable<VMwareVmTemplateData> value)
         {
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareVmTemplateListResult"/>. </summary>
-        /// <param name="nextLink"> Url to follow for getting next page of VirtualMachineTemplates. </param>
-        /// <param name="value"> Array of VirtualMachineTemplates. </param>
+        /// <param name="value"> The VirtualMachineTemplate items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareVmTemplateListResult(string nextLink, IReadOnlyList<VMwareVmTemplateData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VMwareVmTemplateListResult(IReadOnlyList<VMwareVmTemplateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
         }
 
-        /// <summary> Url to follow for getting next page of VirtualMachineTemplates. </summary>
-        public string NextLink { get; }
-        /// <summary> Array of VirtualMachineTemplates. </summary>
+        /// <summary> The VirtualMachineTemplate items on this page. </summary>
         public IReadOnlyList<VMwareVmTemplateData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration, options);
             }
+            if (Optional.IsDefined(LinuxConfiguration))
+            {
+                writer.WritePropertyName("linuxConfiguration"u8);
+                writer.WriteObjectValue(LinuxConfiguration, options);
+            }
+            if (Optional.IsDefined(CloudInitConfiguration))
+            {
+                writer.WritePropertyName("cloudInitConfiguration"u8);
+                writer.WriteObjectValue(CloudInitConfiguration, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -131,6 +141,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             string toolsVersionStatus = default;
             string toolsVersion = default;
             VMwareVmWindowsConfiguration windowsConfiguration = default;
+            LinuxConfiguration linuxConfiguration = default;
+            CloudInitConfiguration cloudInitConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,6 +205,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     windowsConfiguration = VMwareVmWindowsConfiguration.DeserializeVMwareVmWindowsConfiguration(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("linuxConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("cloudInitConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudInitConfiguration = CloudInitConfiguration.DeserializeCloudInitConfiguration(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -210,6 +240,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 toolsVersionStatus,
                 toolsVersion,
                 windowsConfiguration,
+                linuxConfiguration,
+                cloudInitConfiguration,
                 serializedAdditionalRawData);
         }
 

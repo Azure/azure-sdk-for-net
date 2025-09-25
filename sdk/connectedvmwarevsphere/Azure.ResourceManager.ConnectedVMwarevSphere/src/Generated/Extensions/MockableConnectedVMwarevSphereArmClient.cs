@@ -43,15 +43,39 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VMwareResourcePoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VMwareResourcePoolResource.CreateResourceIdentifier" /> to create a <see cref="VMwareResourcePoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="VMwareVmInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VMwareVmInstanceResource.CreateResourceIdentifier" /> to create a <see cref="VMwareVmInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMwareResourcePoolResource"/> object. </returns>
-        public virtual VMwareResourcePoolResource GetVMwareResourcePoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VMwareVmInstanceResource"/> object. </returns>
+        public virtual VMwareVmInstanceResource GetVMwareVmInstanceResource(ResourceIdentifier id)
         {
-            VMwareResourcePoolResource.ValidateResourceId(id);
-            return new VMwareResourcePoolResource(Client, id);
+            VMwareVmInstanceResource.ValidateResourceId(id);
+            return new VMwareVmInstanceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VmInstanceGuestAgentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VmInstanceGuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="VmInstanceGuestAgentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VmInstanceGuestAgentResource"/> object. </returns>
+        public virtual VmInstanceGuestAgentResource GetVmInstanceGuestAgentResource(ResourceIdentifier id)
+        {
+            VmInstanceGuestAgentResource.ValidateResourceId(id);
+            return new VmInstanceGuestAgentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VmInstanceHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VmInstanceHybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="VmInstanceHybridIdentityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VmInstanceHybridIdentityMetadataResource"/> object. </returns>
+        public virtual VmInstanceHybridIdentityMetadataResource GetVmInstanceHybridIdentityMetadataResource(ResourceIdentifier id)
+        {
+            VmInstanceHybridIdentityMetadataResource.ValidateResourceId(id);
+            return new VmInstanceHybridIdentityMetadataResource(Client, id);
         }
 
         /// <summary>
@@ -67,6 +91,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="VMwareDatastoreResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VMwareDatastoreResource.CreateResourceIdentifier" /> to create a <see cref="VMwareDatastoreResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VMwareDatastoreResource"/> object. </returns>
+        public virtual VMwareDatastoreResource GetVMwareDatastoreResource(ResourceIdentifier id)
+        {
+            VMwareDatastoreResource.ValidateResourceId(id);
+            return new VMwareDatastoreResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="VMwareHostResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VMwareHostResource.CreateResourceIdentifier" /> to create a <see cref="VMwareHostResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -79,15 +115,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VMwareDatastoreResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VMwareDatastoreResource.CreateResourceIdentifier" /> to create a <see cref="VMwareDatastoreResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="VMwareResourcePoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VMwareResourcePoolResource.CreateResourceIdentifier" /> to create a <see cref="VMwareResourcePoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMwareDatastoreResource"/> object. </returns>
-        public virtual VMwareDatastoreResource GetVMwareDatastoreResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VMwareResourcePoolResource"/> object. </returns>
+        public virtual VMwareResourcePoolResource GetVMwareResourcePoolResource(ResourceIdentifier id)
         {
-            VMwareDatastoreResource.ValidateResourceId(id);
-            return new VMwareDatastoreResource(Client, id);
+            VMwareResourcePoolResource.ValidateResourceId(id);
+            return new VMwareResourcePoolResource(Client, id);
         }
 
         /// <summary>
@@ -136,42 +172,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             VCenterInventoryItemResource.ValidateResourceId(id);
             return new VCenterInventoryItemResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VMwareVmInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VMwareVmInstanceResource.CreateResourceIdentifier" /> to create a <see cref="VMwareVmInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMwareVmInstanceResource"/> object. </returns>
-        public virtual VMwareVmInstanceResource GetVMwareVmInstanceResource(ResourceIdentifier id)
-        {
-            VMwareVmInstanceResource.ValidateResourceId(id);
-            return new VMwareVmInstanceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VmInstanceHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VmInstanceHybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="VmInstanceHybridIdentityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VmInstanceHybridIdentityMetadataResource"/> object. </returns>
-        public virtual VmInstanceHybridIdentityMetadataResource GetVmInstanceHybridIdentityMetadataResource(ResourceIdentifier id)
-        {
-            VmInstanceHybridIdentityMetadataResource.ValidateResourceId(id);
-            return new VmInstanceHybridIdentityMetadataResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VmInstanceGuestAgentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VmInstanceGuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="VmInstanceGuestAgentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VmInstanceGuestAgentResource"/> object. </returns>
-        public virtual VmInstanceGuestAgentResource GetVmInstanceGuestAgentResource(ResourceIdentifier id)
-        {
-            VmInstanceGuestAgentResource.ValidateResourceId(id);
-            return new VmInstanceGuestAgentResource(Client, id);
         }
     }
 }

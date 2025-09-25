@@ -34,11 +34,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 throw new FormatException($"The model {nameof(VMwareResourcePoolListResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
             foreach (var item in Value)
@@ -46,6 +41,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,17 +83,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            string nextLink = default;
             IReadOnlyList<VMwareResourcePoolData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("value"u8))
                 {
                     List<VMwareResourcePoolData> array = new List<VMwareResourcePoolData>();
@@ -104,13 +99,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VMwareResourcePoolListResult(nextLink, value, serializedAdditionalRawData);
+            return new VMwareResourcePoolListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareResourcePoolListResult>.Write(ModelReaderWriterOptions options)
