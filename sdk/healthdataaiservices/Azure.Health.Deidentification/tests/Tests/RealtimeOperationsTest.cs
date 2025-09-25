@@ -24,7 +24,7 @@ namespace Azure.Health.Deidentification.Tests
         }
 
         [Test]
-        public async Task Realtime_Surrogate_ReturnsExcepted()
+        public async Task Realtime_Surrogate_ReturnsExpected()
         {
             DeidentificationClient client = GetDeidClient();
 
@@ -41,7 +41,7 @@ namespace Azure.Health.Deidentification.Tests
 
 
         [Test]
-        public async Task Realtime_Tag_ReturnsExcepted()
+        public async Task Realtime_Tag_ReturnsExpected()
         {
             DeidentificationClient client = GetDeidClient();
 
@@ -61,7 +61,7 @@ namespace Azure.Health.Deidentification.Tests
         }
 
         [Test]
-        public async Task Realtime_Redact_ReturnsExcepted()
+        public async Task Realtime_Redact_ReturnsExpected()
         {
             DeidentificationClient client = GetDeidClient();
 
@@ -76,7 +76,7 @@ namespace Azure.Health.Deidentification.Tests
         }
 
         [Test]
-        public async Task Realtime_SurrogateOnly_ReturnsExcepted()
+        public async Task Realtime_SurrogateOnly_ReturnsExpected()
         {
             DeidentificationClient client = GetDeidClient();
 
