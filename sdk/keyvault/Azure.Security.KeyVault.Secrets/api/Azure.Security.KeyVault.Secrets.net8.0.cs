@@ -138,7 +138,9 @@ namespace Azure.Security.KeyVault.Secrets
         public static Azure.Security.KeyVault.Secrets.KeyVaultSecret KeyVaultSecret(Azure.Security.KeyVault.Secrets.SecretProperties properties, string value = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id, System.Uri vaultUri, string name, string version, bool managed, System.Uri keyId, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string recoveryLevel) { throw null; }
-        public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id = null, System.Uri vaultUri = null, string name = null, string version = null, bool managed = false, System.Uri keyId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null, int? recoverableDays = default(int?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id, System.Uri vaultUri, string name, string version, bool managed, System.Uri keyId, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string recoveryLevel, int? recoverableDays) { throw null; }
+        public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id = null, System.Uri vaultUri = null, string name = null, string version = null, bool managed = false, System.Uri keyId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null, int? recoverableDays = default(int?), string previousVersion = null) { throw null; }
     }
     public partial class SecretProperties
     {
@@ -153,6 +155,7 @@ namespace Azure.Security.KeyVault.Secrets
         public bool Managed { get { throw null; } }
         public string Name { get { throw null; } }
         public System.DateTimeOffset? NotBefore { get { throw null; } set { } }
+        public string PreviousVersion { get { throw null; } }
         public int? RecoverableDays { get { throw null; } }
         public string RecoveryLevel { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
