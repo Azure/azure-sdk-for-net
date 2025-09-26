@@ -49,11 +49,9 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="voiceInternal">
         /// supported voice identifiers and configurations.
-        ///      To assign an object to this property use .  To assign an already formatted json string to this property use . 
-        ///     Supported types:
-        ///     . . . 
-        ///     Examples:
-        ///      BinaryData.FromObjectAsJson("foo").  Creates a payload of "foo".  BinaryData.FromString("\"foo\"").  Creates a payload of "foo".  BinaryData.FromObjectAsJson(new { key = "value" }).  Creates a payload of { "key": "value" }.  BinaryData.FromString("{\"key\": \"value\"}").  Creates a payload of { "key": "value" }.
+        ///     To assign an object to this property use <see cref="BinaryData.FromObjectAsJson``1(``0,System.Text.Json.JsonSerializerOptions)"/>.To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.Supported types:
+        ///     <see cref="OAIVoice"/>.<see cref="OpenAIVoice"/>.<see cref="AzureVoice"/>.Examples:
+        ///     BinaryData.FromObjectAsJson("foo").Creates a payload of "foo".BinaryData.FromString("\"foo\"").Creates a payload of "foo".BinaryData.FromObjectAsJson(new { key = "value" }).Creates a payload of { "key": "value" }.BinaryData.FromString("{\"key\": \"value\"}").Creates a payload of { "key": "value" }.
         /// </param>
         /// <param name="modalitiesInternal"></param>
         /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
