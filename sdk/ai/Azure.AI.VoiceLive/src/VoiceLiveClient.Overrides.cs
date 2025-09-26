@@ -48,6 +48,6 @@ namespace Azure.AI.VoiceLive
             _options = options;
             ClientDiagnostics = new ClientDiagnostics(options.InternalOptions, true);
         }
-#pragma warning disable AZC0007 // A websocket based client cannot use the pipeline provided by the typical options class, and showing it will cause confusion.
+#pragma warning restore AZC0007 // A websocket based client cannot use the pipeline provided by the typical options class, and showing it will cause confusion.
     }
 }

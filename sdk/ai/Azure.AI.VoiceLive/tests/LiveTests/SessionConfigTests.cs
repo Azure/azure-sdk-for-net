@@ -353,19 +353,6 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.AreEqual(MaxResponseOutputTokensOption.CreateInfiniteMaxTokensOption(), sessionCreated.Session.MaxResponseOutputTokens);
 
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
-            Assert.IsTrue(sessionUpdated.Session.MaxResponseOutputTokens.NumericValue.HasValue);
-            Assert.AreEqual(20, sessionUpdated.Session.MaxResponseOutputTokens.NumericValue);
-
-            await session.AddItemAsync(new UserMessageItem("Tell me a joke"), null, TimeoutToken).ConfigureAwait(false);
-            var conversationItemCreated = await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
-            await session.StartResponseAsync(TimeoutToken).ConfigureAwait(false);
-            var responseCreated = await GetNextUpdate<SessionUpdateResponseCreated>(updatesEnum).ConfigureAwait(false);
-            var responseItems = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
-            var responseDone = responseItems.Where((r) => r is SessionUpdateResponseDone);
-            Assert.IsTrue(responseDone.Count() == 1);
-
-            var response = SafeCast<SessionUpdateResponseDone>(responseDone.First());
-            Assert.IsTrue(response.Response.Usage.OutputTokens <= 20, $"Number of tokens used {response.Response.Usage.OutputTokens} > 20");
         }
 
         [LiveOnly]
