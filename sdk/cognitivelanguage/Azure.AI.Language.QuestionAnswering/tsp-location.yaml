@@ -1,0 +1,5 @@
+additionalDirectories: []
+commit: 0a626b790148b419c9b0bbbc7f4db746d4d886e4
+repo: Azure/azure-rest-api-specs
+directory: specification/cognitiveservices/Language.QuestionAnswering
+
