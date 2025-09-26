@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Model Deployment Definition. </summary>
-    public partial class ModelDeployment : AssetDeployment, IJsonModel<ModelDeployment>
+    public partial class ModelDeployment : AIProjectDeployment, IJsonModel<ModelDeployment>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownAssetDeployment : IJsonModel<AssetDeployment>
+    internal partial class UnknownAIProjectDeployment : AIProjectDeployment, IJsonModel<AIProjectDeployment>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAIProjectDeployment"/> for deserialization. </summary>
         internal UnknownAIProjectDeployment()

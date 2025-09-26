@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownBaseCredentials : IJsonModel<BaseCredentials>
+    internal partial class UnknownAIProjectConnectionBaseCredential : AIProjectConnectionBaseCredential, IJsonModel<AIProjectConnectionBaseCredential>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAIProjectConnectionBaseCredential"/> for deserialization. </summary>
         internal UnknownAIProjectConnectionBaseCredential()

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Entra ID credential definition. </summary>
-    public partial class AIProjectConnectionEntraIDCredential : IJsonModel<AIProjectConnectionEntraIDCredential>
+    public partial class EntraIDCredentials : IJsonModel<EntraIDCredentials>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

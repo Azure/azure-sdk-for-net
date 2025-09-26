@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Credentials that do not require authentication. </summary>
-    public partial class NoAuthenticationCredentials : BaseCredentials, IJsonModel<NoAuthenticationCredentials>
+    public partial class NoAuthenticationCredentials : AIProjectConnectionBaseCredential, IJsonModel<NoAuthenticationCredentials>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

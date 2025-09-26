@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> FileDatasetVersion Definition. </summary>
-    public partial class FolderDatasetVersion : IJsonModel<FolderDatasetVersion>
+    public partial class FolderDataset : AIProjectDataset, IJsonModel<FolderDataset>
     {
         /// <summary> Initializes a new instance of <see cref="FolderDataset"/> for deserialization. </summary>
         internal FolderDataset()
