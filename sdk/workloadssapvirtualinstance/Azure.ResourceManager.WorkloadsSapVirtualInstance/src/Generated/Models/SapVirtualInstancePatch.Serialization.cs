@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    public partial class SapVirtualInstancePatch : IUtf8JsonSerializable, IJsonModel<SapVirtualInstancePatch>
+    /// <summary> Defines the request body for updating Virtual Instance for SAP. </summary>
+    public partial class SapVirtualInstancePatch : IJsonModel<SapVirtualInstancePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapVirtualInstancePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapVirtualInstancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapVirtualInstancePatch)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -41,6 +42,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -55,15 +61,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +78,27 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        SapVirtualInstancePatch IJsonModel<SapVirtualInstancePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapVirtualInstancePatch IJsonModel<SapVirtualInstancePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapVirtualInstancePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapVirtualInstancePatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapVirtualInstancePatch(document.RootElement, options);
         }
 
-        internal static SapVirtualInstancePatch DeserializeSapVirtualInstancePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SapVirtualInstancePatch DeserializeSapVirtualInstancePatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,55 +106,63 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             IDictionary<string, string> tags = default;
             SapVirtualInstanceIdentity identity = default;
             UpdateSapVirtualInstanceProperties properties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = SapVirtualInstanceIdentity.DeserializeSapVirtualInstanceIdentity(property.Value, options);
+                    identity = SapVirtualInstanceIdentity.DeserializeSapVirtualInstanceIdentity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = UpdateSapVirtualInstanceProperties.DeserializeUpdateSapVirtualInstanceProperties(property.Value, options);
+                    properties = UpdateSapVirtualInstanceProperties.DeserializeUpdateSapVirtualInstanceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SapVirtualInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, serializedAdditionalRawData);
+            return new SapVirtualInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SapVirtualInstancePatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SapVirtualInstancePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -153,15 +172,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        SapVirtualInstancePatch IPersistableModel<SapVirtualInstancePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapVirtualInstancePatch IPersistableModel<SapVirtualInstancePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapVirtualInstancePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSapVirtualInstancePatch(document.RootElement, options);
                     }
                 default:
@@ -169,6 +193,19 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SapVirtualInstancePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="patch"> The <see cref="SapVirtualInstancePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SapVirtualInstancePatch patch)
+        {
+            if (patch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

@@ -13,137 +13,152 @@ using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
-    /// <summary>
-    /// A class representing the SapVirtualInstance data model.
-    /// Define the Virtual Instance for SAP solutions resource.
-    /// </summary>
+    /// <summary> Define the Virtual Instance for SAP solutions resource. </summary>
     public partial class SapVirtualInstanceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SapVirtualInstanceData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
-        /// <param name="sapProduct"> Defines the SAP Product type. </param>
-        /// <param name="managedResourcesNetworkAccessType"> Specifies the network access configuration for the resources that will be deployed in the Managed Resource Group. The options to choose from are Public and Private. If 'Private' is chosen, the Storage Account service tag should be enabled on the subnets in which the SAP VMs exist. This is required for establishing connectivity between VM extensions and the managed resource group storage account. This setting is currently applicable only to Storage Account. Learn more here https://go.microsoft.com/fwlink/?linkid=2247228. </param>
-        /// <param name="configuration">
-        /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
-        /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
-        /// </param>
-        /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
-        /// <param name="status"> Defines the SAP Instance status. </param>
-        /// <param name="health"> Defines the health of SAP Instances. </param>
-        /// <param name="state"> Defines the Virtual Instance for SAP state. </param>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Indicates any errors on the Virtual Instance for SAP solutions resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapVirtualInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SapEnvironmentType? environment, SapProductType? sapProduct, ManagedResourcesNetworkAccessType? managedResourcesNetworkAccessType, SapConfiguration configuration, ManagedRGConfiguration managedResourceGroupConfiguration, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceState? state, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, SapVirtualInstanceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SapVirtualInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SapVirtualInstanceProperties properties, SapVirtualInstanceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            Environment = environment;
-            SapProduct = sapProduct;
-            ManagedResourcesNetworkAccessType = managedResourcesNetworkAccessType;
-            Configuration = configuration;
-            ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
-            Status = status;
-            Health = health;
-            State = state;
-            ProvisioningState = provisioningState;
-            Errors = errors;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceData"/> for deserialization. </summary>
-        internal SapVirtualInstanceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal SapVirtualInstanceProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public SapVirtualInstanceIdentity Identity { get; set; }
 
         /// <summary> Defines the environment type - Production/Non Production. </summary>
-        public SapEnvironmentType? Environment { get; set; }
-        /// <summary> Defines the SAP Product type. </summary>
-        public SapProductType? SapProduct { get; set; }
-        /// <summary> Specifies the network access configuration for the resources that will be deployed in the Managed Resource Group. The options to choose from are Public and Private. If 'Private' is chosen, the Storage Account service tag should be enabled on the subnets in which the SAP VMs exist. This is required for establishing connectivity between VM extensions and the managed resource group storage account. This setting is currently applicable only to Storage Account. Learn more here https://go.microsoft.com/fwlink/?linkid=2247228. </summary>
-        public ManagedResourcesNetworkAccessType? ManagedResourcesNetworkAccessType { get; set; }
-        /// <summary>
-        /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
-        /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
-        /// </summary>
-        public SapConfiguration Configuration { get; set; }
-        /// <summary> Managed resource group configuration. </summary>
-        internal ManagedRGConfiguration ManagedResourceGroupConfiguration { get; set; }
-        /// <summary> Managed resource group name. </summary>
-        public string ManagedResourceGroupName
+        public SapEnvironmentType Environment
         {
-            get => ManagedResourceGroupConfiguration is null ? default : ManagedResourceGroupConfiguration.Name;
+            get
+            {
+                return Properties is null ? default : Properties.Environment;
+            }
             set
             {
-                if (ManagedResourceGroupConfiguration is null)
-                    ManagedResourceGroupConfiguration = new ManagedRGConfiguration();
-                ManagedResourceGroupConfiguration.Name = value;
+                if (Properties is null)
+                {
+                    Properties = new SapVirtualInstanceProperties();
+                }
+                Properties.Environment = value;
+            }
+        }
+
+        /// <summary> Defines the SAP Product type. </summary>
+        public SapProductType SapProduct
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SapProduct;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapVirtualInstanceProperties();
+                }
+                Properties.SapProduct = value;
+            }
+        }
+
+        /// <summary> Specifies the network access configuration for the resources that will be deployed in the Managed Resource Group. The options to choose from are Public and Private. If 'Private' is chosen, the Storage Account service tag should be enabled on the subnets in which the SAP VMs exist. This is required for establishing connectivity between VM extensions and the managed resource group storage account. This setting is currently applicable only to Storage Account. Learn more here https://go.microsoft.com/fwlink/?linkid=2247228. </summary>
+        public ManagedResourcesNetworkAccessType? ManagedResourcesNetworkAccessType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedResourcesNetworkAccessType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapVirtualInstanceProperties();
+                }
+                Properties.ManagedResourcesNetworkAccessType = value.Value;
             }
         }
 
         /// <summary> Defines the SAP Instance status. </summary>
-        public SapVirtualInstanceStatus? Status { get; }
+        public SapVirtualInstanceStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Defines the health of SAP Instances. </summary>
-        public SapHealthState? Health { get; }
+        public SapHealthState? Health
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Health;
+            }
+        }
+
         /// <summary> Defines the Virtual Instance for SAP state. </summary>
-        public SapVirtualInstanceState? State { get; }
+        public SapVirtualInstanceState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> Defines the provisioning states. </summary>
-        public SapVirtualInstanceProvisioningState? ProvisioningState { get; }
-        /// <summary> Indicates any errors on the Virtual Instance for SAP solutions resource. </summary>
-        internal SapVirtualInstanceError Errors { get; }
+        public SapVirtualInstanceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Managed resource group name. </summary>
+        public string ManagedResourceGroupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedResourceGroupName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapVirtualInstanceProperties();
+                }
+                Properties.ManagedResourceGroupName = value;
+            }
+        }
+
         /// <summary> The Virtual Instance for SAP error body. </summary>
         public SapVirtualInstanceErrorDetail ErrorsProperties
         {
-            get => Errors?.Properties;
+            get
+            {
+                return Properties is null ? default : Properties.ErrorsProperties;
+            }
         }
-
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public SapVirtualInstanceIdentity Identity { get; set; }
     }
 }

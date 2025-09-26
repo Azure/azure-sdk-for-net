@@ -8,69 +8,42 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> Database VM details. </summary>
     public partial class DatabaseVmDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseVmDetails"/>. </summary>
         internal DatabaseVmDetails()
         {
-            StorageDetails = new ChangeTrackingList<SubResource>();
+            StorageDetails = new ChangeTrackingList<StorageInformation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseVmDetails"/>. </summary>
         /// <param name="virtualMachineId"> The virtual machine id. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the Database Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseVmDetails(ResourceIdentifier virtualMachineId, SapVirtualInstanceStatus? status, IReadOnlyList<SubResource> storageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseVmDetails(ResourceIdentifier virtualMachineId, SapVirtualInstanceStatus? status, IReadOnlyList<StorageInformation> storageDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineId = virtualMachineId;
             Status = status;
             StorageDetails = storageDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The virtual machine id. </summary>
         public ResourceIdentifier VirtualMachineId { get; }
+
         /// <summary> Defines the SAP Instance status. </summary>
         public SapVirtualInstanceStatus? Status { get; }
+
         /// <summary> Storage details of all the Storage Accounts attached to the Database Virtual Machine. For e.g. NFS on AFS Shared Storage. </summary>
-        public IReadOnlyList<SubResource> StorageDetails { get; }
+        public IReadOnlyList<StorageInformation> StorageDetails { get; }
     }
 }

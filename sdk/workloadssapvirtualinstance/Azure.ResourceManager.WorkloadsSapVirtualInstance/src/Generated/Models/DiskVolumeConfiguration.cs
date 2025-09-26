@@ -11,39 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> The disk configuration required for the selected volume. </summary>
-    public partial class DiskVolumeConfiguration
+    internal partial class DiskVolumeConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiskVolumeConfiguration"/>. </summary>
         public DiskVolumeConfiguration()
@@ -54,29 +25,37 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="count"> The total number of disks required for the concerned volume. </param>
         /// <param name="sizeInGB"> The disk size in GB. </param>
         /// <param name="sku"> The disk SKU details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskVolumeConfiguration(long? count, long? sizeInGB, SapDiskSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiskVolumeConfiguration(long? count, long? sizeInGB, SapDiskSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             SizeInGB = sizeInGB;
             Sku = sku;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The total number of disks required for the concerned volume. </summary>
         public long? Count { get; set; }
+
         /// <summary> The disk size in GB. </summary>
         public long? SizeInGB { get; set; }
+
         /// <summary> The disk SKU details. </summary>
         internal SapDiskSku Sku { get; set; }
+
         /// <summary> Defines the disk sku name. </summary>
         public DiskDetailsDiskSkuName? SkuName
         {
-            get => Sku is null ? default : Sku.Name;
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
             set
             {
                 if (Sku is null)
+                {
                     Sku = new SapDiskSku();
+                }
                 Sku.Name = value;
             }
         }

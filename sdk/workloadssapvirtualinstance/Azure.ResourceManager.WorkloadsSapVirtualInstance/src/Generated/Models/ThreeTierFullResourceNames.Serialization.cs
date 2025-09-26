@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    public partial class ThreeTierFullResourceNames : IUtf8JsonSerializable, IJsonModel<ThreeTierFullResourceNames>
+    /// <summary> The resource name object where the specified values will be full resource names of the corresponding resources in a three tier SAP system. </summary>
+    internal partial class ThreeTierFullResourceNames : IJsonModel<ThreeTierFullResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierFullResourceNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ThreeTierFullResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(CentralServer))
             {
@@ -57,95 +57,101 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        ThreeTierFullResourceNames IJsonModel<ThreeTierFullResourceNames>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreeTierFullResourceNames IJsonModel<ThreeTierFullResourceNames>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ThreeTierFullResourceNames)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ThreeTierCustomResourceNames JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeThreeTierFullResourceNames(document.RootElement, options);
         }
 
-        internal static ThreeTierFullResourceNames DeserializeThreeTierFullResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ThreeTierFullResourceNames DeserializeThreeTierFullResourceNames(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            SapNamingPatternType namingPatternType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CentralServerFullResourceNames centralServer = default;
             ApplicationServerFullResourceNames applicationServer = default;
             DatabaseServerFullResourceNames databaseServer = default;
             SharedStorageResourceNames sharedStorage = default;
-            SapNamingPatternType namingPatternType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("centralServer"u8))
+                if (prop.NameEquals("namingPatternType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    namingPatternType = new SapNamingPatternType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("centralServer"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    centralServer = CentralServerFullResourceNames.DeserializeCentralServerFullResourceNames(property.Value, options);
+                    centralServer = CentralServerFullResourceNames.DeserializeCentralServerFullResourceNames(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("applicationServer"u8))
+                if (prop.NameEquals("applicationServer"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    applicationServer = ApplicationServerFullResourceNames.DeserializeApplicationServerFullResourceNames(property.Value, options);
+                    applicationServer = ApplicationServerFullResourceNames.DeserializeApplicationServerFullResourceNames(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("databaseServer"u8))
+                if (prop.NameEquals("databaseServer"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    databaseServer = DatabaseServerFullResourceNames.DeserializeDatabaseServerFullResourceNames(property.Value, options);
+                    databaseServer = DatabaseServerFullResourceNames.DeserializeDatabaseServerFullResourceNames(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sharedStorage"u8))
+                if (prop.NameEquals("sharedStorage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sharedStorage = SharedStorageResourceNames.DeserializeSharedStorageResourceNames(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("namingPatternType"u8))
-                {
-                    namingPatternType = new SapNamingPatternType(property.Value.GetString());
+                    sharedStorage = SharedStorageResourceNames.DeserializeSharedStorageResourceNames(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ThreeTierFullResourceNames(
                 namingPatternType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 centralServer,
                 applicationServer,
                 databaseServer,
                 sharedStorage);
         }
 
-        BinaryData IPersistableModel<ThreeTierFullResourceNames>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ThreeTierFullResourceNames>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -155,15 +161,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        ThreeTierFullResourceNames IPersistableModel<ThreeTierFullResourceNames>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreeTierFullResourceNames IPersistableModel<ThreeTierFullResourceNames>.Create(BinaryData data, ModelReaderWriterOptions options) => (ThreeTierFullResourceNames)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ThreeTierCustomResourceNames PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeThreeTierFullResourceNames(document.RootElement, options);
                     }
                 default:
@@ -171,6 +182,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ThreeTierFullResourceNames>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

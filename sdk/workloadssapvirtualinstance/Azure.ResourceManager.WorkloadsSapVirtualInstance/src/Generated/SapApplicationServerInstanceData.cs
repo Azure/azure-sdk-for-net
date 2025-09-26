@@ -10,148 +10,186 @@ using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
-    /// <summary>
-    /// A class representing the SapApplicationServerInstance data model.
-    /// Define the SAP Application Server Instance resource.
-    /// </summary>
+    /// <summary> Define the SAP Application Server Instance resource. </summary>
     public partial class SapApplicationServerInstanceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstanceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SapApplicationServerInstanceData(AzureLocation location) : base(location)
         {
-            VmDetails = new ChangeTrackingList<ApplicationServerVmDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="instanceNo"> Application server Instance Number. </param>
-        /// <param name="subnetId"> Application server Subnet. </param>
-        /// <param name="hostname"> Application server instance SAP hostname. </param>
-        /// <param name="kernelVersion"> Application server instance SAP Kernel Version. </param>
-        /// <param name="kernelPatch"> Application server instance SAP Kernel Patch level. </param>
-        /// <param name="ipAddress"> Application server instance SAP IP Address. </param>
-        /// <param name="gatewayPort"> Application server instance gateway Port. </param>
-        /// <param name="icmHttpPort"> Application server instance ICM HTTP Port. </param>
-        /// <param name="icmHttpsPort"> Application server instance ICM HTTPS Port. </param>
-        /// <param name="dispatcherStatus"> Application server instance dispatcher status. </param>
-        /// <param name="loadBalancerDetails"> The Load Balancer details such as LoadBalancer ID attached to Application Server Virtual Machines. </param>
-        /// <param name="vmDetails"> The list of virtual machines. </param>
-        /// <param name="status"> Defines the SAP Instance status. </param>
-        /// <param name="health"> Defines the health of SAP Instances. </param>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Defines the Application Instance errors. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, string hostname, string kernelVersion, string kernelPatch, IPAddress ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, string dispatcherStatus, SubResource loadBalancerDetails, IReadOnlyList<ApplicationServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SapApplicationServerProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            InstanceNo = instanceNo;
-            SubnetId = subnetId;
-            Hostname = hostname;
-            KernelVersion = kernelVersion;
-            KernelPatch = kernelPatch;
-            IPAddress = ipAddress;
-            GatewayPort = gatewayPort;
-            IcmHttpPort = icmHttpPort;
-            IcmHttpsPort = icmHttpsPort;
-            DispatcherStatus = dispatcherStatus;
-            LoadBalancerDetails = loadBalancerDetails;
-            VmDetails = vmDetails;
-            Status = status;
-            Health = health;
-            ProvisioningState = provisioningState;
-            Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstanceData"/> for deserialization. </summary>
-        internal SapApplicationServerInstanceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal SapApplicationServerProperties Properties { get; set; }
 
         /// <summary> Application server Instance Number. </summary>
-        public string InstanceNo { get; }
-        /// <summary> Application server Subnet. </summary>
-        public ResourceIdentifier SubnetId { get; }
-        /// <summary> Application server instance SAP hostname. </summary>
-        public string Hostname { get; }
-        /// <summary> Application server instance SAP Kernel Version. </summary>
-        public string KernelVersion { get; }
-        /// <summary> Application server instance SAP Kernel Patch level. </summary>
-        public string KernelPatch { get; }
-        /// <summary> Application server instance SAP IP Address. </summary>
-        public IPAddress IPAddress { get; }
-        /// <summary> Application server instance gateway Port. </summary>
-        public long? GatewayPort { get; }
-        /// <summary> Application server instance ICM HTTP Port. </summary>
-        public long? IcmHttpPort { get; }
-        /// <summary> Application server instance ICM HTTPS Port. </summary>
-        public long? IcmHttpsPort { get; }
-        /// <summary> Application server instance dispatcher status. </summary>
-        public string DispatcherStatus { get; }
-        /// <summary> The Load Balancer details such as LoadBalancer ID attached to Application Server Virtual Machines. </summary>
-        internal SubResource LoadBalancerDetails { get; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier LoadBalancerDetailsId
+        public string InstanceNo
         {
-            get => LoadBalancerDetails?.Id;
+            get
+            {
+                return Properties is null ? default : Properties.InstanceNo;
+            }
+        }
+
+        /// <summary> Application server Subnet. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+        }
+
+        /// <summary> Application server instance SAP hostname. </summary>
+        public string Hostname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Hostname;
+            }
+        }
+
+        /// <summary> Application server instance SAP Kernel Version. </summary>
+        public string KernelVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KernelVersion;
+            }
+        }
+
+        /// <summary> Application server instance SAP Kernel Patch level. </summary>
+        public string KernelPatch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KernelPatch;
+            }
+        }
+
+        /// <summary> Application server instance SAP IP Address. </summary>
+        public IPAddress IpAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpAddress;
+            }
+        }
+
+        /// <summary> Application server instance gateway Port. </summary>
+        public long? GatewayPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GatewayPort;
+            }
+        }
+
+        /// <summary> Application server instance ICM HTTP Port. </summary>
+        public long? IcmHttpPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IcmHttpPort;
+            }
+        }
+
+        /// <summary> Application server instance ICM HTTPS Port. </summary>
+        public long? IcmHttpsPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IcmHttpsPort;
+            }
+        }
+
+        /// <summary> Application server instance dispatcher status. </summary>
+        public string DispatcherStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DispatcherStatus;
+            }
         }
 
         /// <summary> The list of virtual machines. </summary>
-        public IReadOnlyList<ApplicationServerVmDetails> VmDetails { get; }
+        public IReadOnlyList<ApplicationServerVmDetails> VmDetails
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapApplicationServerProperties();
+                }
+                return Properties.VmDetails;
+            }
+        }
+
         /// <summary> Defines the SAP Instance status. </summary>
-        public SapVirtualInstanceStatus? Status { get; }
+        public SapVirtualInstanceStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Defines the health of SAP Instances. </summary>
-        public SapHealthState? Health { get; }
+        public SapHealthState? Health
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Health;
+            }
+        }
+
         /// <summary> Defines the provisioning states. </summary>
-        public SapVirtualInstanceProvisioningState? ProvisioningState { get; }
-        /// <summary> Defines the Application Instance errors. </summary>
-        internal SapVirtualInstanceError Errors { get; }
+        public SapVirtualInstanceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Fully qualified resource ID for the load balancer. </summary>
+        public string LoadBalancerDetailsId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerDetailsId;
+            }
+        }
+
         /// <summary> The Virtual Instance for SAP error body. </summary>
         public SapVirtualInstanceErrorDetail ErrorsProperties
         {
-            get => Errors?.Properties;
+            get
+            {
+                return Properties is null ? default : Properties.ErrorsProperties;
+            }
         }
     }
 }

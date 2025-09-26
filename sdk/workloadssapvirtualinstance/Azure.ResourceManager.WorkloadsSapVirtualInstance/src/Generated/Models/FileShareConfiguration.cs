@@ -12,55 +12,27 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary>
     /// File Share configuration details, populated with information on storage configuration mounted on the VIS. The createAndMount option is selected in case of missing input.
-    /// Please note <see cref="FileShareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CreateAndMountFileShareConfiguration"/>, <see cref="MountFileShareConfiguration"/> and <see cref="SkipFileShareConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkipFileShareConfiguration"/>, <see cref="CreateAndMountFileShareConfiguration"/>, and <see cref="MountFileShareConfiguration"/>.
     /// </summary>
-    public abstract partial class FileShareConfiguration
+    internal abstract partial class FileShareConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileShareConfiguration"/>. </summary>
-        protected FileShareConfiguration()
+        /// <param name="configurationType"> The type of file share config, eg: Mount/CreateAndMount/Skip. </param>
+        private protected FileShareConfiguration(FileShareConfigurationType configurationType)
         {
+            ConfigurationType = configurationType;
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config, eg: Mount/CreateAndMount/Skip. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareConfiguration(FileShareConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileShareConfiguration(FileShareConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationType = configurationType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of file share config, eg: Mount/CreateAndMount/Skip. </summary>

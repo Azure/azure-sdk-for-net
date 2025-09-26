@@ -8,20 +8,25 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
-    public partial class SapApplicationServerInstanceData : IUtf8JsonSerializable, IJsonModel<SapApplicationServerInstanceData>
+    /// <summary> Define the SAP Application Server Instance resource. </summary>
+    public partial class SapApplicationServerInstanceData : IJsonModel<SapApplicationServerInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapApplicationServerInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstanceData"/> for deserialization. </summary>
+        internal SapApplicationServerInstanceData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapApplicationServerInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -33,369 +38,144 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(InstanceNo))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("instanceNo"u8);
-                writer.WriteStringValue(InstanceNo);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubnetId))
-            {
-                writer.WritePropertyName("subnet"u8);
-                writer.WriteStringValue(SubnetId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Hostname))
-            {
-                writer.WritePropertyName("hostname"u8);
-                writer.WriteStringValue(Hostname);
-            }
-            if (options.Format != "W" && Optional.IsDefined(KernelVersion))
-            {
-                writer.WritePropertyName("kernelVersion"u8);
-                writer.WriteStringValue(KernelVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(KernelPatch))
-            {
-                writer.WritePropertyName("kernelPatch"u8);
-                writer.WriteStringValue(KernelPatch);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
-            {
-                writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(GatewayPort))
-            {
-                writer.WritePropertyName("gatewayPort"u8);
-                writer.WriteNumberValue(GatewayPort.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IcmHttpPort))
-            {
-                writer.WritePropertyName("icmHttpPort"u8);
-                writer.WriteNumberValue(IcmHttpPort.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IcmHttpsPort))
-            {
-                writer.WritePropertyName("icmHttpsPort"u8);
-                writer.WriteNumberValue(IcmHttpsPort.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DispatcherStatus))
-            {
-                writer.WritePropertyName("dispatcherStatus"u8);
-                writer.WriteStringValue(DispatcherStatus);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LoadBalancerDetails))
-            {
-                writer.WritePropertyName("loadBalancerDetails"u8);
-                ((IJsonModel<SubResource>)LoadBalancerDetails).Write(writer, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VmDetails))
-            {
-                writer.WritePropertyName("vmDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmDetails)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Health))
-            {
-                writer.WritePropertyName("health"u8);
-                writer.WriteStringValue(Health.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Errors))
-            {
-                writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors, options);
-            }
-            writer.WriteEndObject();
         }
 
-        SapApplicationServerInstanceData IJsonModel<SapApplicationServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapApplicationServerInstanceData IJsonModel<SapApplicationServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SapApplicationServerInstanceData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapApplicationServerInstanceData(document.RootElement, options);
         }
 
-        internal static SapApplicationServerInstanceData DeserializeSapApplicationServerInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SapApplicationServerInstanceData DeserializeSapApplicationServerInstanceData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string instanceNo = default;
-            ResourceIdentifier subnet = default;
-            string hostname = default;
-            string kernelVersion = default;
-            string kernelPatch = default;
-            IPAddress ipAddress = default;
-            long? gatewayPort = default;
-            long? icmHttpPort = default;
-            long? icmHttpsPort = default;
-            string dispatcherStatus = default;
-            SubResource loadBalancerDetails = default;
-            IReadOnlyList<ApplicationServerVmDetails> vmDetails = default;
-            SapVirtualInstanceStatus? status = default;
-            SapHealthState? health = default;
-            SapVirtualInstanceProvisioningState? provisioningState = default;
-            SapVirtualInstanceError errors = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            SapApplicationServerProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("instanceNo"u8))
-                        {
-                            instanceNo = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("subnet"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subnet = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("hostname"u8))
-                        {
-                            hostname = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("kernelVersion"u8))
-                        {
-                            kernelVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("kernelPatch"u8))
-                        {
-                            kernelPatch = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipAddress = IPAddress.Parse(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("gatewayPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            gatewayPort = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("icmHttpPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            icmHttpPort = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("icmHttpsPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            icmHttpsPort = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("dispatcherStatus"u8))
-                        {
-                            dispatcherStatus = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("loadBalancerDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            loadBalancerDetails = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("vmDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ApplicationServerVmDetails> array = new List<ApplicationServerVmDetails>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ApplicationServerVmDetails.DeserializeApplicationServerVmDetails(item, options));
-                            }
-                            vmDetails = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = new SapVirtualInstanceStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("health"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            health = new SapHealthState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new SapVirtualInstanceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("errors"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = SapApplicationServerProperties.DeserializeSapApplicationServerProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SapApplicationServerInstanceData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                instanceNo,
-                subnet,
-                hostname,
-                kernelVersion,
-                kernelPatch,
-                ipAddress,
-                gatewayPort,
-                icmHttpPort,
-                icmHttpsPort,
-                dispatcherStatus,
-                loadBalancerDetails,
-                vmDetails ?? new ChangeTrackingList<ApplicationServerVmDetails>(),
-                status,
-                health,
-                provisioningState,
-                errors,
-                serializedAdditionalRawData);
+                properties);
         }
 
-        BinaryData IPersistableModel<SapApplicationServerInstanceData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SapApplicationServerInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -405,15 +185,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             }
         }
 
-        SapApplicationServerInstanceData IPersistableModel<SapApplicationServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapApplicationServerInstanceData IPersistableModel<SapApplicationServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SapApplicationServerInstanceData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSapApplicationServerInstanceData(document.RootElement, options);
                     }
                 default:
@@ -421,6 +206,27 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SapApplicationServerInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sapApplicationServerInstanceData"> The <see cref="SapApplicationServerInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SapApplicationServerInstanceData sapApplicationServerInstanceData)
+        {
+            if (sapApplicationServerInstanceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sapApplicationServerInstanceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SapApplicationServerInstanceData"/> from. </param>
+        internal static SapApplicationServerInstanceData FromResponse(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeSapApplicationServerInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

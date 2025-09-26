@@ -12,22 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> The SAP Software configuration Input when the software is installed externally outside the service. </summary>
-    public partial class ExternalInstallationSoftwareConfiguration : SapSoftwareConfiguration
+    internal partial class ExternalInstallationSoftwareConfiguration : SapSoftwareConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="ExternalInstallationSoftwareConfiguration"/>. </summary>
-        public ExternalInstallationSoftwareConfiguration()
+        public ExternalInstallationSoftwareConfiguration() : base(SapSoftwareInstallationType.External)
         {
-            SoftwareInstallationType = SapSoftwareInstallationType.External;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExternalInstallationSoftwareConfiguration"/>. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="centralServerVmId"> The resource ID of the virtual machine containing the central server instance. </param>
-        internal ExternalInstallationSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier centralServerVmId) : base(softwareInstallationType, serializedAdditionalRawData)
+        internal ExternalInstallationSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier centralServerVmId) : base(softwareInstallationType, additionalBinaryDataProperties)
         {
             CentralServerVmId = centralServerVmId;
-            SoftwareInstallationType = softwareInstallationType;
         }
 
         /// <summary> The resource ID of the virtual machine containing the central server instance. </summary>

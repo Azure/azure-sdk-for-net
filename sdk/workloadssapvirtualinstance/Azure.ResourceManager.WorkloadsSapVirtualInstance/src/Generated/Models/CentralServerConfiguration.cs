@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> Gets or sets the central server configuration. </summary>
-    public partial class CentralServerConfiguration
+    internal partial class CentralServerConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CentralServerConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet id. </param>
@@ -65,24 +37,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of central server VMs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CentralServerConfiguration(ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CentralServerConfiguration(ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetId = subnetId;
             VirtualMachineConfiguration = virtualMachineConfiguration;
             InstanceCount = instanceCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CentralServerConfiguration"/> for deserialization. </summary>
-        internal CentralServerConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The subnet id. </summary>
         public ResourceIdentifier SubnetId { get; set; }
+
         /// <summary> Gets or sets the virtual machine configuration. </summary>
         public SapVirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
+
         /// <summary> The number of central server VMs. </summary>
         public long InstanceCount { get; set; }
     }

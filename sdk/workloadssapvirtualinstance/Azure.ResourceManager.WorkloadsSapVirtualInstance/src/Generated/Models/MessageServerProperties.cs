@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> Defines the SAP message server properties. </summary>
     public partial class MessageServerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MessageServerProperties"/>. </summary>
         public MessageServerProperties()
@@ -59,31 +30,37 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="hostname"> message server SAP Hostname. </param>
         /// <param name="ipAddress"> message server IP Address. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, IPAddress ipAddress, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, IPAddress ipAddress, SapHealthState? health, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MsPort = msPort;
             InternalMsPort = internalMsPort;
             HttpPort = httpPort;
             HttpsPort = httpsPort;
             Hostname = hostname;
-            IPAddress = ipAddress;
+            IpAddress = ipAddress;
             Health = health;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> message server port. </summary>
         public long? MsPort { get; }
+
         /// <summary> message server internal MS port. </summary>
         public long? InternalMsPort { get; }
+
         /// <summary> message server HTTP Port. </summary>
         public long? HttpPort { get; }
+
         /// <summary> message server HTTPS Port. </summary>
         public long? HttpsPort { get; }
+
         /// <summary> message server SAP Hostname. </summary>
         public string Hostname { get; }
+
         /// <summary> message server IP Address. </summary>
-        public IPAddress IPAddress { get; }
+        public IPAddress IpAddress { get; }
+
         /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
     }

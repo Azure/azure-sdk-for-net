@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> Gets or sets the three tier SAP configuration. For prerequisites for creating the infrastructure, please see [here](https://go.microsoft.com/fwlink/?linkid=2212611&amp;clcid=0x409). </summary>
-    public partial class ThreeTierConfiguration : InfrastructureConfiguration
+    internal partial class ThreeTierConfiguration : InfrastructureConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="ThreeTierConfiguration"/>. </summary>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="applicationServer"> The application server configuration. </param>
         /// <param name="databaseServer"> The database configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/>, <paramref name="centralServer"/>, <paramref name="applicationServer"/> or <paramref name="databaseServer"/> is null. </exception>
-        public ThreeTierConfiguration(string appResourceGroup, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer) : base(appResourceGroup)
+        public ThreeTierConfiguration(string appResourceGroup, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer) : base(appResourceGroup, SapDeploymentType.ThreeTier)
         {
             Argument.AssertNotNull(appResourceGroup, nameof(appResourceGroup));
             Argument.AssertNotNull(centralServer, nameof(centralServer));
@@ -29,25 +30,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             CentralServer = centralServer;
             ApplicationServer = applicationServer;
             DatabaseServer = databaseServer;
-            DeploymentType = SapDeploymentType.ThreeTier;
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreeTierConfiguration"/>. </summary>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <param name="deploymentType"> The SAP deployment type. Eg: SingleServer/ThreeTier. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkConfiguration"> Network configuration common to all servers. </param>
         /// <param name="centralServer"> The central server configuration. </param>
         /// <param name="applicationServer"> The application server configuration. </param>
         /// <param name="databaseServer"> The database configuration. </param>
         /// <param name="highAvailabilityConfig"> The high availability configuration. </param>
         /// <param name="storageConfiguration"> The storage configuration. </param>
-        /// <param name="customResourceNames">
-        /// The set of custom names to be used for underlying azure resources that are part of the SAP system.
-        /// Please note <see cref="ThreeTierCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ThreeTierFullResourceNames"/>.
-        /// </param>
-        internal ThreeTierConfiguration(string appResourceGroup, SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkConfiguration networkConfiguration, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer, HighAvailabilityConfiguration highAvailabilityConfig, SapStorageConfiguration storageConfiguration, ThreeTierCustomResourceNames customResourceNames) : base(appResourceGroup, deploymentType, serializedAdditionalRawData)
+        /// <param name="customResourceNames"> The set of custom names to be used for underlying azure resources that are part of the SAP system. </param>
+        internal ThreeTierConfiguration(string appResourceGroup, SapDeploymentType deploymentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkConfiguration networkConfiguration, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer, HighAvailabilityConfiguration highAvailabilityConfig, SapStorageConfiguration storageConfiguration, ThreeTierCustomResourceNames customResourceNames) : base(appResourceGroup, deploymentType, additionalBinaryDataProperties)
         {
             NetworkConfiguration = networkConfiguration;
             CentralServer = centralServer;
@@ -56,69 +52,70 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             HighAvailabilityConfig = highAvailabilityConfig;
             StorageConfiguration = storageConfiguration;
             CustomResourceNames = customResourceNames;
-            DeploymentType = deploymentType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ThreeTierConfiguration"/> for deserialization. </summary>
-        internal ThreeTierConfiguration()
-        {
         }
 
         /// <summary> Network configuration common to all servers. </summary>
         internal NetworkConfiguration NetworkConfiguration { get; set; }
-        /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </summary>
-        public bool? IsSecondaryIPEnabled
-        {
-            get => NetworkConfiguration is null ? default : NetworkConfiguration.IsSecondaryIPEnabled;
-            set
-            {
-                if (NetworkConfiguration is null)
-                    NetworkConfiguration = new NetworkConfiguration();
-                NetworkConfiguration.IsSecondaryIPEnabled = value;
-            }
-        }
 
         /// <summary> The central server configuration. </summary>
         public CentralServerConfiguration CentralServer { get; set; }
+
         /// <summary> The application server configuration. </summary>
         public ApplicationServerConfiguration ApplicationServer { get; set; }
+
         /// <summary> The database configuration. </summary>
         public DatabaseConfiguration DatabaseServer { get; set; }
+
         /// <summary> The high availability configuration. </summary>
         internal HighAvailabilityConfiguration HighAvailabilityConfig { get; set; }
+
+        /// <summary> The storage configuration. </summary>
+        public SapStorageConfiguration StorageConfiguration { get; set; }
+
+        /// <summary> The set of custom names to be used for underlying azure resources that are part of the SAP system. </summary>
+        internal ThreeTierCustomResourceNames CustomResourceNames { get; set; }
+
+        /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </summary>
+        public bool? IsSecondaryIpEnabled
+        {
+            get
+            {
+                return NetworkConfiguration is null ? default : NetworkConfiguration.IsSecondaryIpEnabled;
+            }
+            set
+            {
+                if (NetworkConfiguration is null)
+                {
+                    NetworkConfiguration = new NetworkConfiguration();
+                }
+                NetworkConfiguration.IsSecondaryIpEnabled = value;
+            }
+        }
+
         /// <summary> The high availability type. </summary>
         public SapHighAvailabilityType? HighAvailabilityType
         {
-            get => HighAvailabilityConfig is null ? default(SapHighAvailabilityType?) : HighAvailabilityConfig.HighAvailabilityType;
+            get
+            {
+                return HighAvailabilityConfig is null ? default : HighAvailabilityConfig.HighAvailabilityType;
+            }
             set
             {
-                HighAvailabilityConfig = value.HasValue ? new HighAvailabilityConfiguration(value.Value) : null;
+                HighAvailabilityConfig = value.HasValue ? new HighAvailabilityConfiguration(value.Value) : default;
             }
         }
 
-        /// <summary> The storage configuration. </summary>
-        internal SapStorageConfiguration StorageConfiguration { get; set; }
-        /// <summary>
-        /// The properties of the transport directory attached to the VIS. The default for transportFileShareConfiguration is the createAndMount flow if storage configuration is missing.
-        /// Please note <see cref="FileShareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateAndMountFileShareConfiguration"/>, <see cref="MountFileShareConfiguration"/> and <see cref="SkipFileShareConfiguration"/>.
-        /// </summary>
-        public FileShareConfiguration StorageTransportFileShareConfiguration
+        /// <summary> The pattern type to be used for resource naming. </summary>
+        internal SapNamingPatternType? CustomResourceNamesNamingPatternType
         {
-            get => StorageConfiguration is null ? default : StorageConfiguration.TransportFileShareConfiguration;
+            get
+            {
+                return CustomResourceNames is null ? default : CustomResourceNames.NamingPatternType;
+            }
             set
             {
-                if (StorageConfiguration is null)
-                    StorageConfiguration = new SapStorageConfiguration();
-                StorageConfiguration.TransportFileShareConfiguration = value;
+                CustomResourceNames = value.HasValue ? new Models.ThreeTierCustomResourceNames(value.Value) : default;
             }
         }
-
-        /// <summary>
-        /// The set of custom names to be used for underlying azure resources that are part of the SAP system.
-        /// Please note <see cref="ThreeTierCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ThreeTierFullResourceNames"/>.
-        /// </summary>
-        public ThreeTierCustomResourceNames CustomResourceNames { get; set; }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> Defines the network configuration type for SAP system infrastructure that is being deployed. </summary>
     internal partial class NetworkConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkConfiguration"/>. </summary>
         public NetworkConfiguration()
@@ -51,15 +22,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkConfiguration"/>. </summary>
-        /// <param name="isSecondaryIPEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkConfiguration(bool? isSecondaryIPEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="isSecondaryIpEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkConfiguration(bool? isSecondaryIpEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsSecondaryIPEnabled = isSecondaryIPEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IsSecondaryIpEnabled = isSecondaryIpEnabled;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </summary>
-        public bool? IsSecondaryIPEnabled { get; set; }
+        public bool? IsSecondaryIpEnabled { get; set; }
     }
 }

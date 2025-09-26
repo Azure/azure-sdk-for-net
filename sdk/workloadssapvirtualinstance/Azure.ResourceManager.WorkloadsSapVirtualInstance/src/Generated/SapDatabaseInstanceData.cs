@@ -10,120 +10,123 @@ using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
-    /// <summary>
-    /// A class representing the SapDatabaseInstance data model.
-    /// Define the Database resource.
-    /// </summary>
+    /// <summary> Define the Database resource. </summary>
     public partial class SapDatabaseInstanceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SapDatabaseInstanceData(AzureLocation location) : base(location)
         {
-            VmDetails = new ChangeTrackingList<DatabaseVmDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="subnetId"> Database subnet. </param>
-        /// <param name="databaseSid"> Database SID name. </param>
-        /// <param name="databaseType"> Database type, that is if the DB is HANA, DB2, Oracle, SAP ASE, Max DB or MS SQL Server. </param>
-        /// <param name="ipAddress"> Database IP Address. </param>
-        /// <param name="loadBalancerDetails"> The Load Balancer details such as LoadBalancer ID attached to Database Virtual Machines. </param>
-        /// <param name="vmDetails"> The list of virtual machines corresponding to the Database resource. </param>
-        /// <param name="status"> Defines the SAP Instance status. </param>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Defines the errors related to Database resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapDatabaseInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string databaseSid, string databaseType, IPAddress ipAddress, SubResource loadBalancerDetails, IReadOnlyList<DatabaseVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal SapDatabaseInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SapDatabaseProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            SubnetId = subnetId;
-            DatabaseSid = databaseSid;
-            DatabaseType = databaseType;
-            IPAddress = ipAddress;
-            LoadBalancerDetails = loadBalancerDetails;
-            VmDetails = vmDetails;
-            Status = status;
-            ProvisioningState = provisioningState;
-            Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceData"/> for deserialization. </summary>
-        internal SapDatabaseInstanceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal SapDatabaseProperties Properties { get; set; }
 
         /// <summary> Database subnet. </summary>
-        public ResourceIdentifier SubnetId { get; }
-        /// <summary> Database SID name. </summary>
-        public string DatabaseSid { get; }
-        /// <summary> Database type, that is if the DB is HANA, DB2, Oracle, SAP ASE, Max DB or MS SQL Server. </summary>
-        public string DatabaseType { get; }
-        /// <summary> Database IP Address. </summary>
-        public IPAddress IPAddress { get; }
-        /// <summary> The Load Balancer details such as LoadBalancer ID attached to Database Virtual Machines. </summary>
-        internal SubResource LoadBalancerDetails { get; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier LoadBalancerDetailsId
+        public ResourceIdentifier SubnetId
         {
-            get => LoadBalancerDetails?.Id;
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+        }
+
+        /// <summary> Database SID name. </summary>
+        public string DatabaseSid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseSid;
+            }
+        }
+
+        /// <summary> Database type, that is if the DB is HANA, DB2, Oracle, SAP ASE, Max DB or MS SQL Server. </summary>
+        public string DatabaseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseType;
+            }
+        }
+
+        /// <summary> Database IP Address. </summary>
+        public IPAddress IpAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpAddress;
+            }
         }
 
         /// <summary> The list of virtual machines corresponding to the Database resource. </summary>
-        public IReadOnlyList<DatabaseVmDetails> VmDetails { get; }
+        public IReadOnlyList<DatabaseVmDetails> VmDetails
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapDatabaseProperties();
+                }
+                return Properties.VmDetails;
+            }
+        }
+
         /// <summary> Defines the SAP Instance status. </summary>
-        public SapVirtualInstanceStatus? Status { get; }
+        public SapVirtualInstanceStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Defines the provisioning states. </summary>
-        public SapVirtualInstanceProvisioningState? ProvisioningState { get; }
-        /// <summary> Defines the errors related to Database resource. </summary>
-        internal SapVirtualInstanceError Errors { get; }
+        public SapVirtualInstanceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Fully qualified resource ID for the load balancer. </summary>
+        public string LoadBalancerDetailsId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerDetailsId;
+            }
+        }
+
         /// <summary> The Virtual Instance for SAP error body. </summary>
         public SapVirtualInstanceErrorDetail ErrorsProperties
         {
-            get => Errors?.Properties;
+            get
+            {
+                return Properties is null ? default : Properties.ErrorsProperties;
+            }
         }
     }
 }

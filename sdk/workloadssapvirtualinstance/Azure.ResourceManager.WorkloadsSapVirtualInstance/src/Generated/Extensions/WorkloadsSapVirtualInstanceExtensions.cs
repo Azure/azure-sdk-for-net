@@ -8,40 +8,37 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.WorkloadsSapVirtualInstance. </summary>
     public static partial class WorkloadsSapVirtualInstanceExtensions
     {
+        /// <param name="client"></param>
         private static MockableWorkloadsSapVirtualInstanceArmClient GetMockableWorkloadsSapVirtualInstanceArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableWorkloadsSapVirtualInstanceArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableWorkloadsSapVirtualInstanceArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableWorkloadsSapVirtualInstanceResourceGroupResource GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableWorkloadsSapVirtualInstanceResourceGroupResource GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableWorkloadsSapVirtualInstanceResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableWorkloadsSapVirtualInstanceResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableWorkloadsSapVirtualInstanceSubscriptionResource GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableWorkloadsSapVirtualInstanceSubscriptionResource GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableWorkloadsSapVirtualInstanceSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableWorkloadsSapVirtualInstanceSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SapVirtualInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapVirtualInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapVirtualInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceArmClient.GetSapVirtualInstanceResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <summary> Gets an object representing a <see cref="SapVirtualInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="SapVirtualInstanceResource"/> object. </returns>
@@ -52,15 +49,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             return GetMockableWorkloadsSapVirtualInstanceArmClient(client).GetSapVirtualInstanceResource(id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SapCentralServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapCentralServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapCentralServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceArmClient.GetSapCentralServerInstanceResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <summary> Gets an object representing a <see cref="SapCentralServerInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="SapCentralServerInstanceResource"/> object. </returns>
@@ -71,15 +61,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             return GetMockableWorkloadsSapVirtualInstanceArmClient(client).GetSapCentralServerInstanceResource(id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SapDatabaseInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapDatabaseInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapDatabaseInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceArmClient.GetSapDatabaseInstanceResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <summary> Gets an object representing a <see cref="SapDatabaseInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="SapDatabaseInstanceResource"/> object. </returns>
@@ -90,15 +73,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             return GetMockableWorkloadsSapVirtualInstanceArmClient(client).GetSapDatabaseInstanceResource(id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SapApplicationServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapApplicationServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapApplicationServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceArmClient.GetSapApplicationServerInstanceResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <summary> Gets an object representing a <see cref="SapApplicationServerInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="SapApplicationServerInstanceResource"/> object. </returns>
@@ -109,16 +85,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             return GetMockableWorkloadsSapVirtualInstanceArmClient(client).GetSapApplicationServerInstanceResource(id);
         }
 
-        /// <summary>
-        /// Gets a collection of SapVirtualInstanceResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.GetSapVirtualInstances()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of SapVirtualInstances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
+        /// <returns> An object representing collection of SapVirtualInstances and their operations over a SapVirtualInstanceResource. </returns>
         public static SapVirtualInstanceCollection GetSapVirtualInstances(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -126,36 +96,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             return GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).GetSapVirtualInstances();
         }
 
-        /// <summary>
-        /// Gets a Virtual Instance for SAP solutions resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.GetSapVirtualInstanceAsync(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <summary> Gets a Virtual Instance for SAP solutions resource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SapVirtualInstanceResource>> GetSapVirtualInstanceAsync(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
@@ -164,36 +109,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             return await GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).GetSapVirtualInstanceAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets a Virtual Instance for SAP solutions resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.GetSapVirtualInstance(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <summary> Gets a Virtual Instance for SAP solutions resource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<SapVirtualInstanceResource> GetSapVirtualInstance(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
@@ -202,35 +122,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             return GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).GetSapVirtualInstance(sapVirtualInstanceName, cancellationToken);
         }
 
-        /// <summary>
-        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstance_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <summary> Gets all Virtual Instances for SAP solutions resources in a Subscription. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -238,32 +134,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             return GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
         }
 
-        /// <summary>
-        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstance_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <summary> Gets all Virtual Instances for SAP solutions resources in a Subscription. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
@@ -272,302 +144,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetSapVirtualInstances(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the sizing recommendations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetSizingRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSizingRecommendationsSapVirtualInstance(AzureLocation,SapSizingRecommendationContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<SapSizingRecommendationResult>> GetSizingRecommendationsSapVirtualInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetSizingRecommendationsSapVirtualInstanceAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the sizing recommendations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetSizingRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSizingRecommendationsSapVirtualInstance(AzureLocation,SapSizingRecommendationContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<SapSizingRecommendationResult> GetSizingRecommendationsSapVirtualInstance(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetSizingRecommendationsSapVirtualInstance(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetSapSupportedSku</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapSupportedSkuSapVirtualInstance(AzureLocation,SapSupportedSkusContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<SapSupportedResourceSkusResult>> GetSapSupportedSkuSapVirtualInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetSapSupportedSkuSapVirtualInstanceAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetSapSupportedSku</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapSupportedSkuSapVirtualInstance(AzureLocation,SapSupportedSkusContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<SapSupportedResourceSkusResult> GetSapSupportedSkuSapVirtualInstance(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetSapSupportedSkuSapVirtualInstance(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetDiskConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetDiskConfigurationsSapVirtualInstance(AzureLocation,SapDiskConfigurationsContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<SapDiskConfigurationsResult>> GetDiskConfigurationsSapVirtualInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetDiskConfigurationsSapVirtualInstanceAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetDiskConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetDiskConfigurationsSapVirtualInstance(AzureLocation,SapDiskConfigurationsContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<SapDiskConfigurationsResult> GetDiskConfigurationsSapVirtualInstance(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetDiskConfigurationsSapVirtualInstance(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the recommended SAP Availability Zone Pair Details for your region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetAvailabilityZoneDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstance(AzureLocation,SapAvailabilityZoneDetailsContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<SapAvailabilityZoneDetailsResult>> GetAvailabilityZoneDetailsSapVirtualInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetAvailabilityZoneDetailsSapVirtualInstanceAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the recommended SAP Availability Zone Pair Details for your region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_GetAvailabilityZoneDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapVirtualInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstance(AzureLocation,SapAvailabilityZoneDetailsContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<SapAvailabilityZoneDetailsResult> GetAvailabilityZoneDetailsSapVirtualInstance(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableWorkloadsSapVirtualInstanceSubscriptionResource(subscriptionResource).GetAvailabilityZoneDetailsSapVirtualInstance(location, content, cancellationToken);
         }
     }
 }

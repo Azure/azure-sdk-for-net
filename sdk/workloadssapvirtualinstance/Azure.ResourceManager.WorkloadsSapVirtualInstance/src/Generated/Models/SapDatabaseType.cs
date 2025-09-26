@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> Defines the supported SAP Database types. </summary>
-    public readonly partial struct SapDatabaseType : IEquatable<SapDatabaseType>
+    internal readonly partial struct SapDatabaseType : IEquatable<SapDatabaseType>
     {
         private readonly string _value;
+        /// <summary> HANA Database type of SAP system. </summary>
+        private const string HanaValue = "HANA";
+        /// <summary> DB2 database type of the SAP system. </summary>
+        private const string DB2Value = "DB2";
 
         /// <summary> Initializes a new instance of <see cref="SapDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapDatabaseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HanaValue = "HANA";
-        private const string DB2Value = "DB2";
+            _value = value;
+        }
 
         /// <summary> HANA Database type of SAP system. </summary>
         public static SapDatabaseType Hana { get; } = new SapDatabaseType(HanaValue);
+
         /// <summary> DB2 database type of the SAP system. </summary>
         public static SapDatabaseType DB2 { get; } = new SapDatabaseType(DB2Value);
+
         /// <summary> Determines if two <see cref="SapDatabaseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapDatabaseType left, SapDatabaseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapDatabaseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapDatabaseType left, SapDatabaseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDatabaseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapDatabaseType(string value) => new SapDatabaseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapDatabaseType?(string value) => value == null ? null : new SapDatabaseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapDatabaseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapDatabaseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
