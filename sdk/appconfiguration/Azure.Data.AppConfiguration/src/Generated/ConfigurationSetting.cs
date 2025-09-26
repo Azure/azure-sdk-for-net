@@ -20,11 +20,11 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of <see cref="ConfigurationSetting"/>. </summary>
         /// <param name="key">
         /// The primary identifier of the configuration setting.
-        ///     A  is used together with a  to uniquely identify a configuration setting.
+        ///     A <see cref="Key"/> is used together with a <see cref="Label"/> to uniquely identify a configuration setting.
         /// </param>
         /// <param name="label">
         /// A value used to group configuration settings.
-        ///     A  is used together with a  to uniquely identify a configuration setting.
+        ///     A <see cref="Label"/> is used together with a <see cref="Key"/> to uniquely identify a configuration setting.
         /// </param>
         /// <param name="contentType">
         /// The content type of the configuration setting's value.
