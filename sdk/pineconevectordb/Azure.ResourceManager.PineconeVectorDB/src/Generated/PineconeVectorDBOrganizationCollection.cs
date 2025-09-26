@@ -8,90 +8,86 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PineconeVectorDB
 {
     /// <summary>
     /// A class representing a collection of <see cref="PineconeVectorDBOrganizationResource"/> and their operations.
-    /// Each <see cref="PineconeVectorDBOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="PineconeVectorDBOrganizationCollection"/> instance call the GetPineconeVectorDBOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="PineconeVectorDBOrganizationResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="PineconeVectorDBOrganizationCollection"/> instance call the GetPineconeVectorDBOrganizations method from an instance of the parent resource.
     /// </summary>
     public partial class PineconeVectorDBOrganizationCollection : ArmCollection, IEnumerable<PineconeVectorDBOrganizationResource>, IAsyncEnumerable<PineconeVectorDBOrganizationResource>
     {
-        private readonly ClientDiagnostics _pineconeVectorDBOrganizationOrganizationsClientDiagnostics;
-        private readonly OrganizationsRestOperations _pineconeVectorDBOrganizationOrganizationsRestClient;
+        private readonly ClientDiagnostics _organizationsClientDiagnostics;
+        private readonly Organizations _organizationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PineconeVectorDBOrganizationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PineconeVectorDBOrganizationCollection for mocking. </summary>
         protected PineconeVectorDBOrganizationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PineconeVectorDBOrganizationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBOrganizationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PineconeVectorDBOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _pineconeVectorDBOrganizationOrganizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PineconeVectorDB", PineconeVectorDBOrganizationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PineconeVectorDBOrganizationResource.ResourceType, out string pineconeVectorDBOrganizationOrganizationsApiVersion);
-            _pineconeVectorDBOrganizationOrganizationsRestClient = new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, pineconeVectorDBOrganizationOrganizationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(PineconeVectorDBOrganizationResource.ResourceType, out string pineconeVectorDBOrganizationApiVersion);
+            _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PineconeVectorDB", PineconeVectorDBOrganizationResource.ResourceType.Namespace, Diagnostics);
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, pineconeVectorDBOrganizationApiVersion ?? "2024-10-22-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Create a OrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a OrganizationResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PineconeVectorDBOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationname, PineconeVectorDBOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _pineconeVectorDBOrganizationOrganizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _pineconeVectorDBOrganizationOrganizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationname, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource>(new PineconeVectorDBOrganizationOperationSource(Client), _pineconeVectorDBOrganizationOrganizationsClientDiagnostics, Pipeline, _pineconeVectorDBOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationname, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, PineconeVectorDBOrganizationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource> operation = new PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource>(
+                    new PineconeVectorDBOrganizationOperationSource(Client),
+                    _organizationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -101,46 +97,39 @@ namespace Azure.ResourceManager.PineconeVectorDB
             }
         }
 
-        /// <summary>
-        /// Create a OrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a OrganizationResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PineconeVectorDBOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationname, PineconeVectorDBOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _pineconeVectorDBOrganizationOrganizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _pineconeVectorDBOrganizationOrganizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, organizationname, data, cancellationToken);
-                var operation = new PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource>(new PineconeVectorDBOrganizationOperationSource(Client), _pineconeVectorDBOrganizationOrganizationsClientDiagnostics, Pipeline, _pineconeVectorDBOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationname, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, PineconeVectorDBOrganizationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource> operation = new PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource>(
+                    new PineconeVectorDBOrganizationOperationSource(Client),
+                    _organizationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,42 +139,30 @@ namespace Azure.ResourceManager.PineconeVectorDB
             }
         }
 
-        /// <summary>
-        /// Get a OrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a OrganizationResource. </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PineconeVectorDBOrganizationResource>> GetAsync(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _pineconeVectorDBOrganizationOrganizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.Get");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _pineconeVectorDBOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PineconeVectorDBOrganizationData> response = Response.FromValue(PineconeVectorDBOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PineconeVectorDBOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,42 +172,30 @@ namespace Azure.ResourceManager.PineconeVectorDB
             }
         }
 
-        /// <summary>
-        /// Get a OrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a OrganizationResource. </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PineconeVectorDBOrganizationResource> Get(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _pineconeVectorDBOrganizationOrganizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.Get");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.Get");
             scope.Start();
             try
             {
-                var response = _pineconeVectorDBOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PineconeVectorDBOrganizationData> response = Response.FromValue(PineconeVectorDBOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PineconeVectorDBOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +205,50 @@ namespace Azure.ResourceManager.PineconeVectorDB
             }
         }
 
-        /// <summary>
-        /// List OrganizationResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List OrganizationResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PineconeVectorDBOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _pineconeVectorDBOrganizationOrganizationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _pineconeVectorDBOrganizationOrganizationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PineconeVectorDBOrganizationResource(Client, PineconeVectorDBOrganizationData.DeserializePineconeVectorDBOrganizationData(e)), _pineconeVectorDBOrganizationOrganizationsClientDiagnostics, Pipeline, "PineconeVectorDBOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PineconeVectorDBOrganizationResource(Client, data));
         }
 
-        /// <summary>
-        /// List OrganizationResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List OrganizationResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PineconeVectorDBOrganizationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _pineconeVectorDBOrganizationOrganizationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _pineconeVectorDBOrganizationOrganizationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PineconeVectorDBOrganizationResource(Client, PineconeVectorDBOrganizationData.DeserializePineconeVectorDBOrganizationData(e)), _pineconeVectorDBOrganizationOrganizationsClientDiagnostics, Pipeline, "PineconeVectorDBOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PineconeVectorDBOrganizationResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _pineconeVectorDBOrganizationOrganizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.Exists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _pineconeVectorDBOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PineconeVectorDBOrganizationData> response = Response.FromValue(PineconeVectorDBOrganizationData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,40 +258,26 @@ namespace Azure.ResourceManager.PineconeVectorDB
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _pineconeVectorDBOrganizationOrganizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.Exists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _pineconeVectorDBOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PineconeVectorDBOrganizationData> response = Response.FromValue(PineconeVectorDBOrganizationData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,42 +287,30 @@ namespace Azure.ResourceManager.PineconeVectorDB
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PineconeVectorDBOrganizationResource>> GetIfExistsAsync(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _pineconeVectorDBOrganizationOrganizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.GetIfExists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _pineconeVectorDBOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PineconeVectorDBOrganizationData> response = Response.FromValue(PineconeVectorDBOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PineconeVectorDBOrganizationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PineconeVectorDBOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,42 +320,30 @@ namespace Azure.ResourceManager.PineconeVectorDB
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PineconeVectorDBOrganizationResource> GetIfExists(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _pineconeVectorDBOrganizationOrganizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.GetIfExists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("PineconeVectorDBOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _pineconeVectorDBOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PineconeVectorDBOrganizationData> response = Response.FromValue(PineconeVectorDBOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PineconeVectorDBOrganizationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PineconeVectorDBOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +363,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PineconeVectorDBOrganizationResource> IAsyncEnumerable<PineconeVectorDBOrganizationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
