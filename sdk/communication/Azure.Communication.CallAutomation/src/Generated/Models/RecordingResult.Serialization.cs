@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
             }
             string recordingId = default;
             RecordingStorageInfo recordingStorageInfo = default;
-            IReadOnlyList<ErrorDetails> errors = default;
+            IReadOnlyList<ErrorDetailInfo> errors = default;
             DateTimeOffset? recordingStartTime = default;
             long? recordingDurationMs = default;
             CallSessionEndReason? sessionEndReason = default;
@@ -48,10 +48,10 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    List<ErrorDetails> array = new List<ErrorDetails>();
+                    List<ErrorDetailInfo> array = new List<ErrorDetailInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetails.DeserializeErrorDetails(item));
+                        array.Add(ErrorDetailInfo.DeserializeErrorDetailInfo(item));
                     }
                     errors = array;
                     continue;
@@ -96,7 +96,7 @@ namespace Azure.Communication.CallAutomation
             return new RecordingResult(
                 recordingId,
                 recordingStorageInfo,
-                errors ?? new ChangeTrackingList<ErrorDetails>(),
+                errors ?? new ChangeTrackingList<ErrorDetailInfo>(),
                 recordingStartTime,
                 recordingDurationMs,
                 sessionEndReason,
