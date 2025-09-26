@@ -218,6 +218,8 @@ TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by t
 | ------- | ------- | ---- |
 | computerecommender | Azure.ResourceManager.Compute.Recommender | sdk/computerecommender/Azure.ResourceManager.Compute.Recommender |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes |
+| lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | sdk/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute |
+| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot |
 | storageactions | Azure.ResourceManager.StorageActions | sdk/storageactions/Azure.ResourceManager.StorageActions |
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | sdk/storagediscovery/Azure.ResourceManager.StorageDiscovery |
@@ -258,13 +260,11 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity | sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement |
 | iotoperations | Azure.ResourceManager.IotOperations | sdk/iotoperations/Azure.ResourceManager.IotOperations |
-| lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | sdk/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute |
 | mongocluster | Azure.ResourceManager.MongoCluster | sdk/mongocluster/Azure.ResourceManager.MongoCluster |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas |
 | neonpostgres | Azure.ResourceManager.NeonPostgres | sdk/neonpostgres/Azure.ResourceManager.NeonPostgres |
 | onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | sdk/onlineexperimentation/Azure.ResourceManager.OnlineExperimentation |
 | oracle | Azure.ResourceManager.OracleDatabase | sdk/oracle/Azure.ResourceManager.OracleDatabase |
-| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | sdk/planetarycomputer/Azure.ResourceManager.PlanetaryComputer |
 | playwright | Azure.ResourceManager.Playwright | sdk/playwright/Azure.ResourceManager.Playwright |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock |
