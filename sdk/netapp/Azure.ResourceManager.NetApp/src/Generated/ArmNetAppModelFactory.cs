@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="totalProgress"> The progress of the replication. </param>
         /// <param name="errorMessage"> Displays error message if the replication is in an error state. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeReplicationStatus"/> instance for mocking. </returns>
-        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, VolumeReplicationRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
+        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
         {
             return new NetAppVolumeReplicationStatus(
                 isHealthy,

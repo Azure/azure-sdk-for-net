@@ -3,6 +3,7 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.NetApp.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Generated\Samples\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>

@@ -259,9 +259,9 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
-#   RelationshipStatus: NetAppRelationshipStatus
   VolumeBackupRelationshipStatus: NetAppRelationshipStatus
   VolumeRestoreRelationshipStatus: NetAppRelationshipStatus
+  Bucket: NetAppBucket
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
