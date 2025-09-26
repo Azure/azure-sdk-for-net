@@ -1,4 +1,4 @@
 directory: specification/liftrpinecone/Pinecone.VectorDb.Management
-commit: a1dfa7878d4e4d377db8d734f53fa02f07d7589d
+commit: 0076d53056c97ccf2913b481e9401aaf15c8ce60
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
