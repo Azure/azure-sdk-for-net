@@ -26,8 +26,8 @@ AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new Defau
 Using the default Connection to Azure Blob Storage, upload a local file to storage, and register it as a Dataset within the Project.
 
 ```C# Snippet:AI_Projects_VectorStoreWithDatasetsDatasetCreation
-Console.WriteLine("Retrieve the default Azure Blob Storage connection to use when creating a dataset");
-AIProjectConnection storageConnection = projectClient.Connections.GetDefaultConnection(ConnectionType.AzureBlobStorage);
+Console.WriteLine("Retrieve the default Azure Storage Account connection to use when creating a dataset");
+AIProjectConnection storageConnection = projectClient.Connections.GetDefaultConnection(ConnectionType.AzureStorageAccount);
 
 Console.WriteLine($"Uploading a file to create Dataset with name {datasetName} and version {datasetVersion}:");
 FileDataset fileDataset = projectClient.Datasets.UploadFile(
