@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Tests
     {
         [Test]
         [SyncOnly]
-        public void DatasetsExample()
+        public void VectorStoreWithDatasetsExample()
         {
             #region Snippet:AI_Projects_VectorStoreWithDatasetsInitializeProjectClient
 #if SNIPPET
@@ -37,8 +37,8 @@ namespace Azure.AI.Projects.Tests
             #endregion
 
             #region Snippet:AI_Projects_VectorStoreWithDatasetsDatasetCreation
-            Console.WriteLine("Retrieve the default Azure Blob Storage connection to use when creating a dataset");
-            AIProjectConnection storageConnection = projectClient.Connections.GetDefaultConnection(ConnectionType.AzureBlobStorage);
+            Console.WriteLine("Retrieve the default Azure Storage Account connection to use when creating a dataset");
+            AIProjectConnection storageConnection = projectClient.Connections.GetDefaultConnection(ConnectionType.AzureStorageAccount);
 
             Console.WriteLine($"Uploading a file to create Dataset with name {datasetName} and version {datasetVersion}:");
             FileDataset fileDataset = projectClient.Datasets.UploadFile(
