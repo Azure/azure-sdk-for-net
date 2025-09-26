@@ -26,9 +26,7 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task BadModelName()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = GetLiveClient();
 
             var voice = new AzureStandardVoice("en-US-AriaNeural");
 
@@ -51,9 +49,7 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task BadVoiceName()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = GetLiveClient();
 
             var voice = new AzureStandardVoice("NotARealVoice");
 
