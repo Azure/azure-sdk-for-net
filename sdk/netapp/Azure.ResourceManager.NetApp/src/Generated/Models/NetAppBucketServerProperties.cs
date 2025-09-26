@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// Properties of the server managing the lifecycle of volume buckets
     /// Serialized Name: BucketServerProperties
     /// </summary>
-    public partial class BucketServerProperties
+    public partial class NetAppBucketServerProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BucketServerProperties"/>. </summary>
-        public BucketServerProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketServerProperties"/>. </summary>
+        public NetAppBucketServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BucketServerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketServerProperties"/>. </summary>
         /// <param name="fqdn">
         /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
         /// Serialized Name: BucketServerProperties.fqdn
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Serialized Name: BucketServerProperties.certificateObject
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketServerProperties(string fqdn, string certificateCommonName, DateTimeOffset? certificateExpiryOn, string ipAddress, string certificateObject, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketServerProperties(string fqdn, string certificateCommonName, DateTimeOffset? certificateExpiryOn, string ipAddress, string certificateObject, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
             CertificateCommonName = certificateCommonName;

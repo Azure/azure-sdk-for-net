@@ -2598,7 +2598,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeBackupBackupRestoreFilesContent(fileList?.ToList(), restoreFilePath, destinationVolumeId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.BucketData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBucketData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2631,10 +2631,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation.
         /// Serialized Name: Bucket.properties.permissions
         /// </param>
-        /// <returns> A new <see cref="NetApp.BucketData"/> instance for mocking. </returns>
-        public static BucketData BucketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, FileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, CredentialsStatus? status = null, BucketServerProperties server = null, BucketPermission? permissions = null)
+        /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
+        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, FileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, CredentialsStatus? status = null, NetAppBucketServerProperties server = null, NetAppBucketPermission? permissions = null)
         {
-            return new BucketData(
+            return new NetAppBucketData(
                 id,
                 name,
                 resourceType,
@@ -2648,7 +2648,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BucketServerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppBucketServerProperties"/>. </summary>
         /// <param name="fqdn">
         /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
         /// Serialized Name: BucketServerProperties.fqdn
@@ -2669,10 +2669,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner.
         /// Serialized Name: BucketServerProperties.certificateObject
         /// </param>
-        /// <returns> A new <see cref="Models.BucketServerProperties"/> instance for mocking. </returns>
-        public static BucketServerProperties BucketServerProperties(string fqdn = null, string certificateCommonName = null, DateTimeOffset? certificateExpiryOn = null, string ipAddress = null, string certificateObject = null)
+        /// <returns> A new <see cref="Models.NetAppBucketServerProperties"/> instance for mocking. </returns>
+        public static NetAppBucketServerProperties NetAppBucketServerProperties(string fqdn = null, string certificateCommonName = null, DateTimeOffset? certificateExpiryOn = null, string ipAddress = null, string certificateObject = null)
         {
-            return new BucketServerProperties(
+            return new NetAppBucketServerProperties(
                 fqdn,
                 certificateCommonName,
                 certificateExpiryOn,
@@ -2681,7 +2681,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BucketPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppBucketPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2706,10 +2706,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Access permissions for the bucket. Either ReadOnly or ReadWrite.
         /// Serialized Name: BucketPatch.properties.permissions
         /// </param>
-        /// <returns> A new <see cref="Models.BucketPatch"/> instance for mocking. </returns>
-        public static BucketPatch BucketPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, FileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, BucketServerPatchProperties server = null, BucketPatchPermission? permissions = null)
+        /// <returns> A new <see cref="Models.NetAppBucketPatch"/> instance for mocking. </returns>
+        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, FileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, NetAppBucketServerPatchProperties server = null, NetAppBucketPatchPermission? permissions = null)
         {
-            return new BucketPatch(
+            return new NetAppBucketPatch(
                 id,
                 name,
                 resourceType,
@@ -2722,7 +2722,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BucketGenerateCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppBucketGenerateCredentials"/>. </summary>
         /// <param name="accessKey">
         /// The Access Key that is required along with the Secret Key to access the bucket.
         /// Serialized Name: BucketGenerateCredentials.accessKey
@@ -2735,10 +2735,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// The bucket's Access and Secret key pair expiry date and time (in UTC).
         /// Serialized Name: BucketGenerateCredentials.keyPairExpiry
         /// </param>
-        /// <returns> A new <see cref="Models.BucketGenerateCredentials"/> instance for mocking. </returns>
-        public static BucketGenerateCredentials BucketGenerateCredentials(string accessKey = null, string secretKey = null, DateTimeOffset? keyPairExpiry = null)
+        /// <returns> A new <see cref="Models.NetAppBucketGenerateCredentials"/> instance for mocking. </returns>
+        public static NetAppBucketGenerateCredentials NetAppBucketGenerateCredentials(string accessKey = null, string secretKey = null, DateTimeOffset? keyPairExpiry = null)
         {
-            return new BucketGenerateCredentials(accessKey, secretKey, keyPairExpiry, serializedAdditionalRawData: null);
+            return new NetAppBucketGenerateCredentials(accessKey, secretKey, keyPairExpiry, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.NetAppAccountData" />. </summary>

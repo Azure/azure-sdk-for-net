@@ -9,16 +9,14 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary>
-    /// A class representing the Bucket data model.
     /// Bucket resource
-    /// Serialized Name: Bucket
+    /// Serialized Name: BucketPatch
     /// </summary>
-    public partial class BucketData : ResourceData
+    public partial class NetAppBucketPatch : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,89 +50,71 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BucketData"/>. </summary>
-        public BucketData()
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketPatch"/>. </summary>
+        public NetAppBucketPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BucketData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="path">
-        /// The volume path mounted inside the bucket. The default is the root path '/' if no value is provided when the bucket is created.
-        /// Serialized Name: Bucket.properties.path
+        /// The volume path mounted inside the bucket.
+        /// Serialized Name: BucketPatch.properties.path
         /// </param>
         /// <param name="fileSystemUser">
         /// File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both.
-        /// Serialized Name: Bucket.properties.fileSystemUser
+        /// Serialized Name: BucketPatch.properties.fileSystemUser
         /// </param>
         /// <param name="provisioningState">
         /// Provisioning state of the resource
-        /// Serialized Name: Bucket.properties.provisioningState
-        /// </param>
-        /// <param name="status">
-        /// The bucket credentials status. There states:
-        ///
-        /// "NoCredentialsSet": Access and Secret key pair have not been generated.
-        /// "CredentialsExpired": Access and Secret key pair have expired.
-        /// "Active": The certificate has been installed and credentials are unexpired.
-        /// Serialized Name: Bucket.properties.status
+        /// Serialized Name: BucketPatch.properties.provisioningState
         /// </param>
         /// <param name="server">
         /// Properties of the server managing the lifecycle of volume buckets
-        /// Serialized Name: Bucket.properties.server
+        /// Serialized Name: BucketPatch.properties.server
         /// </param>
         /// <param name="permissions">
-        /// Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation.
-        /// Serialized Name: Bucket.properties.permissions
+        /// Access permissions for the bucket. Either ReadOnly or ReadWrite.
+        /// Serialized Name: BucketPatch.properties.permissions
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, FileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, CredentialsStatus? status, BucketServerProperties server, BucketPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppBucketPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, FileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, NetAppBucketServerPatchProperties server, NetAppBucketPatchPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             FileSystemUser = fileSystemUser;
             ProvisioningState = provisioningState;
-            Status = status;
             Server = server;
             Permissions = permissions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        /// The volume path mounted inside the bucket. The default is the root path '/' if no value is provided when the bucket is created.
-        /// Serialized Name: Bucket.properties.path
+        /// The volume path mounted inside the bucket.
+        /// Serialized Name: BucketPatch.properties.path
         /// </summary>
         public string Path { get; set; }
         /// <summary>
         /// File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both.
-        /// Serialized Name: Bucket.properties.fileSystemUser
+        /// Serialized Name: BucketPatch.properties.fileSystemUser
         /// </summary>
         public FileSystemUser FileSystemUser { get; set; }
         /// <summary>
         /// Provisioning state of the resource
-        /// Serialized Name: Bucket.properties.provisioningState
+        /// Serialized Name: BucketPatch.properties.provisioningState
         /// </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
         /// <summary>
-        /// The bucket credentials status. There states:
-        ///
-        /// "NoCredentialsSet": Access and Secret key pair have not been generated.
-        /// "CredentialsExpired": Access and Secret key pair have expired.
-        /// "Active": The certificate has been installed and credentials are unexpired.
-        /// Serialized Name: Bucket.properties.status
-        /// </summary>
-        public CredentialsStatus? Status { get; }
-        /// <summary>
         /// Properties of the server managing the lifecycle of volume buckets
-        /// Serialized Name: Bucket.properties.server
+        /// Serialized Name: BucketPatch.properties.server
         /// </summary>
-        public BucketServerProperties Server { get; set; }
+        public NetAppBucketServerPatchProperties Server { get; set; }
         /// <summary>
-        /// Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation.
-        /// Serialized Name: Bucket.properties.permissions
+        /// Access permissions for the bucket. Either ReadOnly or ReadWrite.
+        /// Serialized Name: BucketPatch.properties.permissions
         /// </summary>
-        public BucketPermission? Permissions { get; set; }
+        public NetAppBucketPatchPermission? Permissions { get; set; }
     }
 }

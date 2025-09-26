@@ -11,10 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary>
-    /// Properties of the server managing the lifecycle of volume buckets
-    /// Serialized Name: BucketServerPatchProperties
+    /// List of volume bucket resources
+    /// Serialized Name: BucketList
     /// </summary>
-    public partial class BucketServerPatchProperties
+    internal partial class NetAppBucketList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,37 +48,38 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BucketServerPatchProperties"/>. </summary>
-        public BucketServerPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketList"/>. </summary>
+        internal NetAppBucketList()
         {
+            Value = new ChangeTrackingList<NetAppBucketData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BucketServerPatchProperties"/>. </summary>
-        /// <param name="fqdn">
-        /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
-        /// Serialized Name: BucketServerPatchProperties.fqdn
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketList"/>. </summary>
+        /// <param name="value">
+        /// List of volume buckets
+        /// Serialized Name: BucketList.value
         /// </param>
-        /// <param name="certificateObject">
-        /// A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner.
-        /// Serialized Name: BucketServerPatchProperties.certificateObject
+        /// <param name="nextLink">
+        /// URL to get the next set of results.
+        /// Serialized Name: BucketList.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketServerPatchProperties(string fqdn, string certificateObject, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketList(IReadOnlyList<NetAppBucketData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Fqdn = fqdn;
-            CertificateObject = certificateObject;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
-        /// Serialized Name: BucketServerPatchProperties.fqdn
+        /// List of volume buckets
+        /// Serialized Name: BucketList.value
         /// </summary>
-        public string Fqdn { get; set; }
+        public IReadOnlyList<NetAppBucketData> Value { get; }
         /// <summary>
-        /// A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner.
-        /// Serialized Name: BucketServerPatchProperties.certificateObject
+        /// URL to get the next set of results.
+        /// Serialized Name: BucketList.nextLink
         /// </summary>
-        public string CertificateObject { get; set; }
+        public string NextLink { get; }
     }
 }

@@ -11,10 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary>
-    /// List of volume bucket resources
-    /// Serialized Name: BucketList
+    /// The bucket's Access and Secret key pair Expiry Time expressed as the number of days from now.
+    /// Serialized Name: BucketCredentialsExpiry
     /// </summary>
-    internal partial class BucketList
+    public partial class NetAppBucketCredentialsExpiry
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,38 +48,27 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BucketList"/>. </summary>
-        internal BucketList()
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketCredentialsExpiry"/>. </summary>
+        public NetAppBucketCredentialsExpiry()
         {
-            Value = new ChangeTrackingList<BucketData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BucketList"/>. </summary>
-        /// <param name="value">
-        /// List of volume buckets
-        /// Serialized Name: BucketList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of results.
-        /// Serialized Name: BucketList.nextLink
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketCredentialsExpiry"/>. </summary>
+        /// <param name="keyPairExpiryDays">
+        /// The number of days from now until the newly generated Access and Secret key pair will expire.
+        /// Serialized Name: BucketCredentialsExpiry.keyPairExpiryDays
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketList(IReadOnlyList<BucketData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketCredentialsExpiry(int? keyPairExpiryDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            KeyPairExpiryDays = keyPairExpiryDays;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        /// List of volume buckets
-        /// Serialized Name: BucketList.value
+        /// The number of days from now until the newly generated Access and Secret key pair will expire.
+        /// Serialized Name: BucketCredentialsExpiry.keyPairExpiryDays
         /// </summary>
-        public IReadOnlyList<BucketData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of results.
-        /// Serialized Name: BucketList.nextLink
-        /// </summary>
-        public string NextLink { get; }
+        public int? KeyPairExpiryDays { get; set; }
     }
 }

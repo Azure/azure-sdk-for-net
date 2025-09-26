@@ -16,14 +16,14 @@ using Azure.ResourceManager.NetApp.Models;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A Class representing a Bucket along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BucketResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBucketResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource"/> using the GetBucket method.
+    /// A Class representing a NetAppBucket along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppBucketResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetAppBucketResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource"/> using the GetNetAppBucket method.
     /// </summary>
-    public partial class BucketResource : ArmResource
+    public partial class NetAppBucketResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BucketResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NetAppBucketResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="accountName"> The accountName. </param>
@@ -36,35 +36,35 @@ namespace Azure.ResourceManager.NetApp
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _bucketClientDiagnostics;
-        private readonly BucketsRestOperations _bucketRestClient;
-        private readonly BucketData _data;
+        private readonly ClientDiagnostics _netAppBucketBucketsClientDiagnostics;
+        private readonly BucketsRestOperations _netAppBucketBucketsRestClient;
+        private readonly NetAppBucketData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/buckets";
 
-        /// <summary> Initializes a new instance of the <see cref="BucketResource"/> class for mocking. </summary>
-        protected BucketResource()
+        /// <summary> Initializes a new instance of the <see cref="NetAppBucketResource"/> class for mocking. </summary>
+        protected NetAppBucketResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BucketResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppBucketResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BucketResource(ArmClient client, BucketData data) : this(client, data.Id)
+        internal NetAppBucketResource(ArmClient client, NetAppBucketData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BucketResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppBucketResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BucketResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetAppBucketResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _bucketClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string bucketApiVersion);
-            _bucketRestClient = new BucketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bucketApiVersion);
+            _netAppBucketBucketsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string netAppBucketBucketsApiVersion);
+            _netAppBucketBucketsRestClient = new BucketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppBucketBucketsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BucketData Data
+        public virtual NetAppBucketData Data
         {
             get
             {
@@ -108,21 +108,21 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BucketResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBucketResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _bucketClientDiagnostics.CreateScope("BucketResource.Get");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.Get");
             scope.Start();
             try
             {
-                var response = await _bucketRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _netAppBucketBucketsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BucketResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppBucketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BucketResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NetAppBucketResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _bucketClientDiagnostics.CreateScope("BucketResource.Get");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.Get");
             scope.Start();
             try
             {
-                var response = _bucketRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _netAppBucketBucketsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BucketResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppBucketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _bucketClientDiagnostics.CreateScope("BucketResource.Delete");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.Delete");
             scope.Start();
             try
             {
-                var response = await _bucketRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_bucketClientDiagnostics, Pipeline, _bucketRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _netAppBucketBucketsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation(_netAppBucketBucketsClientDiagnostics, Pipeline, _netAppBucketBucketsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _bucketClientDiagnostics.CreateScope("BucketResource.Delete");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.Delete");
             scope.Start();
             try
             {
-                var response = _bucketRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation(_bucketClientDiagnostics, Pipeline, _bucketRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _netAppBucketBucketsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new NetAppArmOperation(_netAppBucketBucketsClientDiagnostics, Pipeline, _netAppBucketBucketsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,16 +280,16 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="patch"> The bucket details including user details, and the volume path that should be mounted inside the bucket. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<BucketResource>> UpdateAsync(WaitUntil waitUntil, BucketPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetAppBucketResource>> UpdateAsync(WaitUntil waitUntil, NetAppBucketPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _bucketClientDiagnostics.CreateScope("BucketResource.Update");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.Update");
             scope.Start();
             try
             {
-                var response = await _bucketRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<BucketResource>(new BucketOperationSource(Client), _bucketClientDiagnostics, Pipeline, _bucketRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _netAppBucketBucketsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetAppBucketResource>(new NetAppBucketOperationSource(Client), _netAppBucketBucketsClientDiagnostics, Pipeline, _netAppBucketBucketsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,16 +326,16 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="patch"> The bucket details including user details, and the volume path that should be mounted inside the bucket. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<BucketResource> Update(WaitUntil waitUntil, BucketPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetAppBucketResource> Update(WaitUntil waitUntil, NetAppBucketPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _bucketClientDiagnostics.CreateScope("BucketResource.Update");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.Update");
             scope.Start();
             try
             {
-                var response = _bucketRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new NetAppArmOperation<BucketResource>(new BucketOperationSource(Client), _bucketClientDiagnostics, Pipeline, _bucketRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _netAppBucketBucketsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new NetAppArmOperation<NetAppBucketResource>(new NetAppBucketOperationSource(Client), _netAppBucketBucketsClientDiagnostics, Pipeline, _netAppBucketBucketsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -364,22 +364,22 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> The bucket's Access and Secret key pair expiry time expressed as the number of days from now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<BucketGenerateCredentials>> GenerateCredentialsAsync(BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBucketGenerateCredentials>> GenerateCredentialsAsync(NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _bucketClientDiagnostics.CreateScope("BucketResource.GenerateCredentials");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.GenerateCredentials");
             scope.Start();
             try
             {
-                var response = await _bucketRestClient.GenerateCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _netAppBucketBucketsRestClient.GenerateCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -406,22 +406,22 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> The bucket's Access and Secret key pair expiry time expressed as the number of days from now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<BucketGenerateCredentials> GenerateCredentials(BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppBucketGenerateCredentials> GenerateCredentials(NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _bucketClientDiagnostics.CreateScope("BucketResource.GenerateCredentials");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.GenerateCredentials");
             scope.Start();
             try
             {
-                var response = _bucketRestClient.GenerateCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, body, cancellationToken);
+                var response = _netAppBucketBucketsRestClient.GenerateCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, body, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -6,60 +6,6 @@ namespace Azure.ResourceManager.NetApp
         public static Azure.ResourceManager.NetApp.AzureResourceManagerNetAppContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class BucketCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.BucketResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.BucketResource>, System.Collections.IEnumerable
-    {
-        protected BucketCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.BucketResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bucketName, Azure.ResourceManager.NetApp.BucketData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.BucketResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bucketName, Azure.ResourceManager.NetApp.BucketData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.NetApp.BucketResource> Get(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.NetApp.BucketResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.BucketResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.BucketResource>> GetAsync(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.NetApp.BucketResource> GetIfExists(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetApp.BucketResource>> GetIfExistsAsync(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetApp.BucketResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.BucketResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetApp.BucketResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.BucketResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class BucketData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.BucketData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.BucketData>
-    {
-        public BucketData() { }
-        public Azure.ResourceManager.NetApp.Models.FileSystemUser FileSystemUser { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.BucketPermission? Permissions { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.NetApp.Models.BucketServerProperties Server { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.CredentialsStatus? Status { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.BucketData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.BucketData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.BucketData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.BucketData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.BucketData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.BucketData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.BucketData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BucketResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.BucketData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.BucketData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected BucketResource() { }
-        public virtual Azure.ResourceManager.NetApp.BucketData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials> GenerateCredentials(Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials>> GenerateCredentialsAsync(Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.NetApp.BucketResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.BucketResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.NetApp.BucketData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.BucketData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.BucketData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.BucketData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.BucketData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.BucketData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.BucketData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.BucketResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.BucketPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.BucketResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.BucketPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class CapacityPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.CapacityPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.CapacityPoolResource>, System.Collections.IEnumerable
     {
         protected CapacityPoolCollection() { }
@@ -441,6 +387,60 @@ namespace Azure.ResourceManager.NetApp
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppBackupVaultResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppBackupVaultPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppBackupVaultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppBackupVaultPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class NetAppBucketCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.NetAppBucketResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.NetAppBucketResource>, System.Collections.IEnumerable
+    {
+        protected NetAppBucketCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppBucketResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bucketName, Azure.ResourceManager.NetApp.NetAppBucketData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppBucketResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bucketName, Azure.ResourceManager.NetApp.NetAppBucketData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppBucketResource> Get(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetApp.NetAppBucketResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.NetAppBucketResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppBucketResource>> GetAsync(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetApp.NetAppBucketResource> GetIfExists(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetApp.NetAppBucketResource>> GetIfExistsAsync(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetApp.NetAppBucketResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.NetAppBucketResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetApp.NetAppBucketResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.NetAppBucketResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class NetAppBucketData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBucketData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBucketData>
+    {
+        public NetAppBucketData() { }
+        public Azure.ResourceManager.NetApp.Models.FileSystemUser FileSystemUser { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppBucketPermission? Permissions { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties Server { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.CredentialsStatus? Status { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.NetAppBucketData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.NetAppBucketData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBucketData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetAppBucketResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBucketData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBucketData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected NetAppBucketResource() { }
+        public virtual Azure.ResourceManager.NetApp.NetAppBucketData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials> GenerateCredentials(Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>> GenerateCredentialsAsync(Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppBucketResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppBucketResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.NetApp.NetAppBucketData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.NetAppBucketData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBucketData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppBucketResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppBucketPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppBucketResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppBucketPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class NetAppExtensions
     {
         public static Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.NetAppFilePathAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -449,7 +449,6 @@ namespace Azure.ResourceManager.NetApp
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.NetAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.NetApp.BucketResource GetBucketResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NetApp.CapacityPoolResource GetCapacityPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountResource> GetNetAppAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountResource>> GetNetAppAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -462,6 +461,7 @@ namespace Azure.ResourceManager.NetApp
         public static Azure.ResourceManager.NetApp.NetAppBackupPolicyResource GetNetAppBackupPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppBackupVaultResource GetNetAppBackupVaultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.NetApp.NetAppBucketResource GetNetAppBucketResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string quotaLimitName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string quotaLimitName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -807,13 +807,13 @@ namespace Azure.ResourceManager.NetApp
         public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus> GetBackupStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus>> GetBackupStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.NetApp.BucketResource> GetBucket(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.BucketResource>> GetBucketAsync(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.NetApp.BucketCollection GetBuckets() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserResult> GetGetGroupIdListForLdapUser(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserResult>> GetGetGroupIdListForLdapUserAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus> GetLatestStatusBackup(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus>> GetLatestStatusBackupAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppBucketResource> GetNetAppBucket(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppBucketResource>> GetNetAppBucketAsync(string bucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetApp.NetAppBucketCollection GetNetAppBuckets() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource> GetNetAppSubvolumeInfo(string subvolumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource>> GetNetAppSubvolumeInfoAsync(string subvolumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppSubvolumeInfoCollection GetNetAppSubvolumeInfos() { throw null; }
@@ -1038,7 +1038,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
     public partial class MockableNetAppArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableNetAppArmClient() { }
-        public virtual Azure.ResourceManager.NetApp.BucketResource GetBucketResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.CapacityPoolResource GetCapacityPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.NetApp.NetAppAccountBackupResource GetNetAppAccountBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1046,6 +1045,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         public virtual Azure.ResourceManager.NetApp.NetAppBackupPolicyResource GetNetAppBackupPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppBackupVaultResource GetNetAppBackupVaultResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetApp.NetAppBucketResource GetNetAppBucketResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeBackupResource GetNetAppVolumeBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1117,10 +1117,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.Models.AvailabilityZoneMapping AvailabilityZoneMapping(string availabilityZone = null, bool? isAvailable = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.NetApp.BucketData BucketData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, Azure.ResourceManager.NetApp.Models.FileSystemUser fileSystemUser = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), Azure.ResourceManager.NetApp.Models.CredentialsStatus? status = default(Azure.ResourceManager.NetApp.Models.CredentialsStatus?), Azure.ResourceManager.NetApp.Models.BucketServerProperties server = null, Azure.ResourceManager.NetApp.Models.BucketPermission? permissions = default(Azure.ResourceManager.NetApp.Models.BucketPermission?)) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials BucketGenerateCredentials(string accessKey = null, string secretKey = null, System.DateTimeOffset? keyPairExpiry = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.BucketPatch BucketPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, Azure.ResourceManager.NetApp.Models.FileSystemUser fileSystemUser = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties server = null, Azure.ResourceManager.NetApp.Models.BucketPatchPermission? permissions = default(Azure.ResourceManager.NetApp.Models.BucketPatchPermission?)) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.BucketServerProperties BucketServerProperties(string fqdn = null, string certificateCommonName = null, System.DateTimeOffset? certificateExpiryOn = default(System.DateTimeOffset?), string ipAddress = null, string certificateObject = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetApp.CapacityPoolData CapacityPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Guid? poolId, long size, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType? encryptionType) { throw null; }
         public static Azure.ResourceManager.NetApp.CapacityPoolData CapacityPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), System.Guid? poolId = default(System.Guid?), long size = (long)0, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel serviceLevel = default(Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel), string provisioningState = null, float? totalThroughputMibps = default(float?), float? utilizedThroughputMibps = default(float?), float? customThroughputMibps = default(float?), Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType = default(Azure.ResourceManager.NetApp.Models.CapacityPoolQosType?), bool? isCoolAccessEnabled = default(bool?), Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType? encryptionType = default(Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType?)) { throw null; }
@@ -1150,6 +1146,10 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.NetAppBackupPolicyData NetAppBackupPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier backupPolicyId = null, string provisioningState = null, int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail> volumeBackups = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppBackupPolicyPatch NetAppBackupPolicyPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier backupPolicyId = null, string provisioningState = null, int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail> volumeBackups = null) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppBackupVaultData NetAppBackupVaultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.NetApp.NetAppBucketData NetAppBucketData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, Azure.ResourceManager.NetApp.Models.FileSystemUser fileSystemUser = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), Azure.ResourceManager.NetApp.Models.CredentialsStatus? status = default(Azure.ResourceManager.NetApp.Models.CredentialsStatus?), Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties server = null, Azure.ResourceManager.NetApp.Models.NetAppBucketPermission? permissions = default(Azure.ResourceManager.NetApp.Models.NetAppBucketPermission?)) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials NetAppBucketGenerateCredentials(string accessKey = null, string secretKey = null, System.DateTimeOffset? keyPairExpiry = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketPatch NetAppBucketPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, Azure.ResourceManager.NetApp.Models.FileSystemUser fileSystemUser = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties server = null, Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission? permissions = default(Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission?)) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties NetAppBucketServerProperties(string fqdn = null, string certificateCommonName = null, System.DateTimeOffset? certificateExpiryOn = default(System.DateTimeOffset?), string ipAddress = null, string certificateObject = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppChangeKeyVault NetAppChangeKeyVault(System.Uri keyVaultUri = null, string keyName = null, Azure.Core.ResourceIdentifier keyVaultResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult NetAppCheckAvailabilityResult(bool? isAvailable = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason? reason = default(Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication NetAppDestinationReplication(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.NetApp.Models.NetAppReplicationType? replicationType = default(Azure.ResourceManager.NetApp.Models.NetAppReplicationType?), string region = null, string zone = null) { throw null; }
@@ -1256,108 +1256,6 @@ namespace Azure.ResourceManager.NetApp.Models
         Azure.ResourceManager.NetApp.Models.BackupsMigrationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BucketCredentialsExpiry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry>
-    {
-        public BucketCredentialsExpiry() { }
-        public int? KeyPairExpiryDays { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketCredentialsExpiry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BucketGenerateCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials>
-    {
-        internal BucketGenerateCredentials() { }
-        public string AccessKey { get { throw null; } }
-        public System.DateTimeOffset? KeyPairExpiry { get { throw null; } }
-        public string SecretKey { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketGenerateCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BucketPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketPatch>
-    {
-        public BucketPatch() { }
-        public Azure.ResourceManager.NetApp.Models.FileSystemUser FileSystemUser { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.BucketPatchPermission? Permissions { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties Server { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BucketPatchPermission : System.IEquatable<Azure.ResourceManager.NetApp.Models.BucketPatchPermission>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BucketPatchPermission(string value) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.BucketPatchPermission ReadOnly { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.BucketPatchPermission ReadWrite { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetApp.Models.BucketPatchPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetApp.Models.BucketPatchPermission left, Azure.ResourceManager.NetApp.Models.BucketPatchPermission right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetApp.Models.BucketPatchPermission (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetApp.Models.BucketPatchPermission left, Azure.ResourceManager.NetApp.Models.BucketPatchPermission right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BucketPermission : System.IEquatable<Azure.ResourceManager.NetApp.Models.BucketPermission>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BucketPermission(string value) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.BucketPermission ReadOnly { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.BucketPermission ReadWrite { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetApp.Models.BucketPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetApp.Models.BucketPermission left, Azure.ResourceManager.NetApp.Models.BucketPermission right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetApp.Models.BucketPermission (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetApp.Models.BucketPermission left, Azure.ResourceManager.NetApp.Models.BucketPermission right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class BucketServerPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties>
-    {
-        public BucketServerPatchProperties() { }
-        public string CertificateObject { get { throw null; } set { } }
-        public string Fqdn { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketServerPatchProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BucketServerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketServerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketServerProperties>
-    {
-        public BucketServerProperties() { }
-        public string CertificateCommonName { get { throw null; } }
-        public System.DateTimeOffset? CertificateExpiryOn { get { throw null; } }
-        public string CertificateObject { get { throw null; } set { } }
-        public string Fqdn { get { throw null; } set { } }
-        public string IPAddress { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketServerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketServerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketServerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketServerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketServerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketServerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketServerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CapacityPoolEncryptionType : System.IEquatable<Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType>
@@ -1779,6 +1677,108 @@ namespace Azure.ResourceManager.NetApp.Models
         Azure.ResourceManager.NetApp.Models.NetAppBackupVaultPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBackupVaultPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBackupVaultPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBackupVaultPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetAppBucketCredentialsExpiry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry>
+    {
+        public NetAppBucketCredentialsExpiry() { }
+        public int? KeyPairExpiryDays { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetAppBucketGenerateCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>
+    {
+        internal NetAppBucketGenerateCredentials() { }
+        public string AccessKey { get { throw null; } }
+        public System.DateTimeOffset? KeyPairExpiry { get { throw null; } }
+        public string SecretKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetAppBucketPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketPatch>
+    {
+        public NetAppBucketPatch() { }
+        public Azure.ResourceManager.NetApp.Models.FileSystemUser FileSystemUser { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission? Permissions { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties Server { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetAppBucketPatchPermission : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetAppBucketPatchPermission(string value) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission ReadOnly { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission ReadWrite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission left, Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission left, Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetAppBucketPermission : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppBucketPermission>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetAppBucketPermission(string value) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketPermission ReadOnly { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketPermission ReadWrite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppBucketPermission other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppBucketPermission left, Azure.ResourceManager.NetApp.Models.NetAppBucketPermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppBucketPermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppBucketPermission left, Azure.ResourceManager.NetApp.Models.NetAppBucketPermission right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NetAppBucketServerPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties>
+    {
+        public NetAppBucketServerPatchProperties() { }
+        public string CertificateObject { get { throw null; } set { } }
+        public string Fqdn { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetAppBucketServerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties>
+    {
+        public NetAppBucketServerProperties() { }
+        public string CertificateCommonName { get { throw null; } }
+        public System.DateTimeOffset? CertificateExpiryOn { get { throw null; } }
+        public string CertificateObject { get { throw null; } set { } }
+        public string Fqdn { get { throw null; } set { } }
+        public string IPAddress { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetAppChangeKeyVault : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppChangeKeyVault>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppChangeKeyVault>
     {

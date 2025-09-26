@@ -11,10 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary>
-    /// The bucket's Access and Secret key pair Expiry Time expressed as the number of days from now.
-    /// Serialized Name: BucketCredentialsExpiry
+    /// Properties of the server managing the lifecycle of volume buckets
+    /// Serialized Name: BucketServerPatchProperties
     /// </summary>
-    public partial class BucketCredentialsExpiry
+    public partial class NetAppBucketServerPatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,27 +48,37 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BucketCredentialsExpiry"/>. </summary>
-        public BucketCredentialsExpiry()
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketServerPatchProperties"/>. </summary>
+        public NetAppBucketServerPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BucketCredentialsExpiry"/>. </summary>
-        /// <param name="keyPairExpiryDays">
-        /// The number of days from now until the newly generated Access and Secret key pair will expire.
-        /// Serialized Name: BucketCredentialsExpiry.keyPairExpiryDays
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketServerPatchProperties"/>. </summary>
+        /// <param name="fqdn">
+        /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
+        /// Serialized Name: BucketServerPatchProperties.fqdn
+        /// </param>
+        /// <param name="certificateObject">
+        /// A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner.
+        /// Serialized Name: BucketServerPatchProperties.certificateObject
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketCredentialsExpiry(int? keyPairExpiryDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketServerPatchProperties(string fqdn, string certificateObject, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            KeyPairExpiryDays = keyPairExpiryDays;
+            Fqdn = fqdn;
+            CertificateObject = certificateObject;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        /// The number of days from now until the newly generated Access and Secret key pair will expire.
-        /// Serialized Name: BucketCredentialsExpiry.keyPairExpiryDays
+        /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
+        /// Serialized Name: BucketServerPatchProperties.fqdn
         /// </summary>
-        public int? KeyPairExpiryDays { get; set; }
+        public string Fqdn { get; set; }
+        /// <summary>
+        /// A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner.
+        /// Serialized Name: BucketServerPatchProperties.certificateObject
+        /// </summary>
+        public string CertificateObject { get; set; }
     }
 }

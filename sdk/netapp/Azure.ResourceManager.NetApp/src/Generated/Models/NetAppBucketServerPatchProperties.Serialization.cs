@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class BucketServerPatchProperties : IUtf8JsonSerializable, IJsonModel<BucketServerPatchProperties>
+    public partial class NetAppBucketServerPatchProperties : IUtf8JsonSerializable, IJsonModel<NetAppBucketServerPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BucketServerPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBucketServerPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BucketServerPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppBucketServerPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketServerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketServerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BucketServerPatchProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBucketServerPatchProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Fqdn))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        BucketServerPatchProperties IJsonModel<BucketServerPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppBucketServerPatchProperties IJsonModel<NetAppBucketServerPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketServerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketServerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BucketServerPatchProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBucketServerPatchProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBucketServerPatchProperties(document.RootElement, options);
+            return DeserializeNetAppBucketServerPatchProperties(document.RootElement, options);
         }
 
-        internal static BucketServerPatchProperties DeserializeBucketServerPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppBucketServerPatchProperties DeserializeNetAppBucketServerPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BucketServerPatchProperties(fqdn, certificateObject, serializedAdditionalRawData);
+            return new NetAppBucketServerPatchProperties(fqdn, certificateObject, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BucketServerPatchProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppBucketServerPatchProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketServerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketServerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BucketServerPatchProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBucketServerPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BucketServerPatchProperties IPersistableModel<BucketServerPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppBucketServerPatchProperties IPersistableModel<NetAppBucketServerPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketServerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketServerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBucketServerPatchProperties(document.RootElement, options);
+                        return DeserializeNetAppBucketServerPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BucketServerPatchProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBucketServerPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BucketServerPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppBucketServerPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

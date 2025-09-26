@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation.
     /// Serialized Name: BucketPermissions
     /// </summary>
-    public readonly partial struct BucketPermission : IEquatable<BucketPermission>
+    public readonly partial struct NetAppBucketPermission : IEquatable<NetAppBucketPermission>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="BucketPermission"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketPermission"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BucketPermission(string value)
+        public NetAppBucketPermission(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Read-only access to bucket.
         /// Serialized Name: BucketPermissions.ReadOnly
         /// </summary>
-        public static BucketPermission ReadOnly { get; } = new BucketPermission(ReadOnlyValue);
+        public static NetAppBucketPermission ReadOnly { get; } = new NetAppBucketPermission(ReadOnlyValue);
         /// <summary>
         /// Read-write access to bucket.
         /// Serialized Name: BucketPermissions.ReadWrite
         /// </summary>
-        public static BucketPermission ReadWrite { get; } = new BucketPermission(ReadWriteValue);
-        /// <summary> Determines if two <see cref="BucketPermission"/> values are the same. </summary>
-        public static bool operator ==(BucketPermission left, BucketPermission right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="BucketPermission"/> values are not the same. </summary>
-        public static bool operator !=(BucketPermission left, BucketPermission right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BucketPermission"/>. </summary>
-        public static implicit operator BucketPermission(string value) => new BucketPermission(value);
+        public static NetAppBucketPermission ReadWrite { get; } = new NetAppBucketPermission(ReadWriteValue);
+        /// <summary> Determines if two <see cref="NetAppBucketPermission"/> values are the same. </summary>
+        public static bool operator ==(NetAppBucketPermission left, NetAppBucketPermission right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="NetAppBucketPermission"/> values are not the same. </summary>
+        public static bool operator !=(NetAppBucketPermission left, NetAppBucketPermission right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppBucketPermission"/>. </summary>
+        public static implicit operator NetAppBucketPermission(string value) => new NetAppBucketPermission(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BucketPermission other && Equals(other);
+        public override bool Equals(object obj) => obj is NetAppBucketPermission other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(BucketPermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NetAppBucketPermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class BucketCredentialsExpiry : IUtf8JsonSerializable, IJsonModel<BucketCredentialsExpiry>
+    public partial class NetAppBucketCredentialsExpiry : IUtf8JsonSerializable, IJsonModel<NetAppBucketCredentialsExpiry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BucketCredentialsExpiry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBucketCredentialsExpiry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BucketCredentialsExpiry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppBucketCredentialsExpiry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BucketCredentialsExpiry)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBucketCredentialsExpiry)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(KeyPairExpiryDays))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        BucketCredentialsExpiry IJsonModel<BucketCredentialsExpiry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppBucketCredentialsExpiry IJsonModel<NetAppBucketCredentialsExpiry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BucketCredentialsExpiry)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBucketCredentialsExpiry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBucketCredentialsExpiry(document.RootElement, options);
+            return DeserializeNetAppBucketCredentialsExpiry(document.RootElement, options);
         }
 
-        internal static BucketCredentialsExpiry DeserializeBucketCredentialsExpiry(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppBucketCredentialsExpiry DeserializeNetAppBucketCredentialsExpiry(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BucketCredentialsExpiry(keyPairExpiryDays, serializedAdditionalRawData);
+            return new NetAppBucketCredentialsExpiry(keyPairExpiryDays, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BucketCredentialsExpiry>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppBucketCredentialsExpiry>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BucketCredentialsExpiry)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBucketCredentialsExpiry)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BucketCredentialsExpiry IPersistableModel<BucketCredentialsExpiry>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppBucketCredentialsExpiry IPersistableModel<NetAppBucketCredentialsExpiry>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBucketCredentialsExpiry(document.RootElement, options);
+                        return DeserializeNetAppBucketCredentialsExpiry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BucketCredentialsExpiry)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBucketCredentialsExpiry)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BucketCredentialsExpiry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppBucketCredentialsExpiry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

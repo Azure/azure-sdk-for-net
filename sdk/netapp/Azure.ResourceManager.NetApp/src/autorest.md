@@ -110,6 +110,15 @@ prepend-rp-prefix:
   - KeyVaultPrivateEndpoint
   - ReplicationType
   - VolumeLanguage
+  - Bucket
+  - BucketCredentialsExpiry
+  - BucketGenerateCredentials
+  - BucketPatch
+  - BucketList
+  - BucketServerProperties
+  - BucketServerPatchProperties
+  - BucketPermissions
+  - BucketPatchPermissions
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -272,7 +281,7 @@ list-exception:
 directive:
   # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
-  
+
   # # assigning formats
   # # Fix ProvisioningState
   - from: netapp.json

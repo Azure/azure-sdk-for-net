@@ -262,22 +262,22 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BucketResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BucketResource.CreateResourceIdentifier" /> to create a <see cref="BucketResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppBucketResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBucketResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBucketResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetBucketResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppBucketResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BucketResource"/> object. </returns>
-        public static BucketResource GetBucketResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBucketResource"/> object. </returns>
+        public static NetAppBucketResource GetNetAppBucketResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetBucketResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppBucketResource(id);
         }
 
         /// <summary>

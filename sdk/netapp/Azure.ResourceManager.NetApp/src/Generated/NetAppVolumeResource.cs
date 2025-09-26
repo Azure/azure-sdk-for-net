@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.NetApp
             return GetNetAppSubvolumeInfos().Get(subvolumeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BucketResources in the NetAppVolume. </summary>
-        /// <returns> An object representing collection of BucketResources and their operations over a BucketResource. </returns>
-        public virtual BucketCollection GetBuckets()
+        /// <summary> Gets a collection of NetAppBucketResources in the NetAppVolume. </summary>
+        /// <returns> An object representing collection of NetAppBucketResources and their operations over a NetAppBucketResource. </returns>
+        public virtual NetAppBucketCollection GetNetAppBuckets()
         {
-            return GetCachedClient(client => new BucketCollection(client, Id));
+            return GetCachedClient(client => new NetAppBucketCollection(client, Id));
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,9 +341,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="bucketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bucketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BucketResource>> GetBucketAsync(string bucketName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBucketResource>> GetNetAppBucketAsync(string bucketName, CancellationToken cancellationToken = default)
         {
-            return await GetBuckets().GetAsync(bucketName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppBuckets().GetAsync(bucketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BucketResource"/></description>
+        /// <description><see cref="NetAppBucketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,9 +372,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="bucketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bucketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BucketResource> GetBucket(string bucketName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppBucketResource> GetNetAppBucket(string bucketName, CancellationToken cancellationToken = default)
         {
-            return GetBuckets().Get(bucketName, cancellationToken);
+            return GetNetAppBuckets().Get(bucketName, cancellationToken);
         }
 
         /// <summary>
