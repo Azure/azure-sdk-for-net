@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PlanetaryComputer
 {
+    /// <summary></summary>
     public partial class PlanetaryComputerGeoCatalogResource : IJsonModel<PlanetaryComputerGeoCatalogData>
     {
-        private static PlanetaryComputerGeoCatalogData s_dataDeserializationInstance;
-        private static PlanetaryComputerGeoCatalogData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PlanetaryComputerGeoCatalogData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PlanetaryComputerGeoCatalogData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PlanetaryComputerGeoCatalogData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlanetaryComputerGeoCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PlanetaryComputerGeoCatalogData>)Data).Write(writer, options);
 
-        PlanetaryComputerGeoCatalogData IJsonModel<PlanetaryComputerGeoCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlanetaryComputerGeoCatalogData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PlanetaryComputerGeoCatalogData IJsonModel<PlanetaryComputerGeoCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PlanetaryComputerGeoCatalogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PlanetaryComputerGeoCatalogData>(Data, options, AzureResourceManagerPlanetaryComputerContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PlanetaryComputerGeoCatalogData IPersistableModel<PlanetaryComputerGeoCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlanetaryComputerGeoCatalogData>(data, options, AzureResourceManagerPlanetaryComputerContext.Default);
 
-        string IPersistableModel<PlanetaryComputerGeoCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlanetaryComputerGeoCatalogData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PlanetaryComputerGeoCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -5,98 +5,61 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PlanetaryComputer;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockablePlanetaryComputerSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics;
-        private GeoCatalogsRestOperations _planetaryComputerGeoCatalogGeoCatalogsRestClient;
+        private ClientDiagnostics _geoCatalogsClientDiagnostics;
+        private GeoCatalogs _geoCatalogsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePlanetaryComputerSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePlanetaryComputerSubscriptionResource for mocking. </summary>
         protected MockablePlanetaryComputerSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePlanetaryComputerSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePlanetaryComputerSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePlanetaryComputerSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics PlanetaryComputerGeoCatalogGeoCatalogsClientDiagnostics => _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", PlanetaryComputerGeoCatalogResource.ResourceType.Namespace, Diagnostics);
-        private GeoCatalogsRestOperations PlanetaryComputerGeoCatalogGeoCatalogsRestClient => _planetaryComputerGeoCatalogGeoCatalogsRestClient ??= new GeoCatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PlanetaryComputerGeoCatalogResource.ResourceType));
+        private ClientDiagnostics GeoCatalogsClientDiagnostics => _geoCatalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private GeoCatalogs GeoCatalogsRestClient => _geoCatalogsRestClient ??= new GeoCatalogs(GeoCatalogsClientDiagnostics, Pipeline, Endpoint, "2025-02-11-preview");
 
-        /// <summary>
-        /// List GeoCatalog resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Orbital/geoCatalogs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GeoCatalog_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-11-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List GeoCatalog resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlanetaryComputerGeoCatalogResource> GetPlanetaryComputerGeoCatalogsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PlanetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlanetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlanetaryComputerGeoCatalogResource(Client, PlanetaryComputerGeoCatalogData.DeserializePlanetaryComputerGeoCatalogData(e)), PlanetaryComputerGeoCatalogGeoCatalogsClientDiagnostics, Pipeline, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetBySubscriptionAsyncCollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
 
-        /// <summary>
-        /// List GeoCatalog resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Orbital/geoCatalogs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GeoCatalog_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-11-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List GeoCatalog resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlanetaryComputerGeoCatalogResource> GetPlanetaryComputerGeoCatalogs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PlanetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlanetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlanetaryComputerGeoCatalogResource(Client, PlanetaryComputerGeoCatalogData.DeserializePlanetaryComputerGeoCatalogData(e)), PlanetaryComputerGeoCatalogGeoCatalogsClientDiagnostics, Pipeline, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetBySubscriptionCollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
     }
 }
