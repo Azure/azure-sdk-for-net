@@ -8,18 +8,18 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Error details. </summary>
-    public partial class ErrorDetails
+    public partial class ErrorDetailInfo
     {
-        /// <summary> Initializes a new instance of <see cref="ErrorDetails"/>. </summary>
-        internal ErrorDetails()
+        /// <summary> Initializes a new instance of <see cref="ErrorDetailInfo"/>. </summary>
+        internal ErrorDetailInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDetailInfo"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="innerError"> Inner error details. </param>
-        internal ErrorDetails(string code, string message, ErrorDetails innerError)
+        internal ErrorDetailInfo(string code, string message, ErrorDetailInfo innerError)
         {
             Code = code;
             Message = message;
@@ -31,6 +31,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Error message. </summary>
         public string Message { get; }
         /// <summary> Inner error details. </summary>
-        public ErrorDetails InnerError { get; }
+        public ErrorDetailInfo InnerError { get; }
     }
 }

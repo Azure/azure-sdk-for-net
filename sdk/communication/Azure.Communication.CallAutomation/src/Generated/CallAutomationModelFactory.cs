@@ -55,9 +55,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sessionEndReason"></param>
         /// <param name="recordingExpirationTime"></param>
         /// <returns> A new <see cref="CallAutomation.RecordingResult"/> instance for mocking. </returns>
-        public static RecordingResult RecordingResult(string recordingId = null, RecordingStorageInfo recordingStorageInfo = null, IEnumerable<ErrorDetails> errors = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, CallSessionEndReason? sessionEndReason = null, DateTimeOffset? recordingExpirationTime = null)
+        public static RecordingResult RecordingResult(string recordingId = null, RecordingStorageInfo recordingStorageInfo = null, IEnumerable<ErrorDetailInfo> errors = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, CallSessionEndReason? sessionEndReason = null, DateTimeOffset? recordingExpirationTime = null)
         {
-            errors ??= new List<ErrorDetails>();
+            errors ??= new List<ErrorDetailInfo>();
 
             return new RecordingResult(
                 recordingId,
@@ -98,14 +98,14 @@ namespace Azure.Communication.CallAutomation
                 deleteLocation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.ErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ErrorDetailInfo"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="innerError"> Inner error details. </param>
-        /// <returns> A new <see cref="CallAutomation.ErrorDetails"/> instance for mocking. </returns>
-        public static ErrorDetails ErrorDetails(string code = null, string message = null, ErrorDetails innerError = null)
+        /// <returns> A new <see cref="CallAutomation.ErrorDetailInfo"/> instance for mocking. </returns>
+        public static ErrorDetailInfo ErrorDetailInfo(string code = null, string message = null, ErrorDetailInfo innerError = null)
         {
-            return new ErrorDetails(code, message, innerError);
+            return new ErrorDetailInfo(code, message, innerError);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>

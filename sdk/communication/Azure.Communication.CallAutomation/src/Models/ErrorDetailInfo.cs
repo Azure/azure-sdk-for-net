@@ -5,7 +5,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("Error")]
-    public partial class ErrorDetails
+    public partial class ErrorDetailInfo
     {
     }
 }
