@@ -4,6 +4,19 @@
 
 ### Features Added
 
+- Added `VideoBackground` class to support video background customization with `Color` and `ImageUrl` properties
+- Added new properties to `VideoParams`:
+  - `Background` (VideoBackground): Configure video background settings
+  - `GopSize` (int?): Configure Group of Pictures size
+- Added new properties to turn detection classes for enhanced control:
+  - `CreateResponse` (bool?): Added to `ServerVadTurnDetection`, `AzureSemanticVadTurnDetection`, and related classes
+  - `InterruptResponse` (bool?): Added to the same turn detection classes
+- Added string constructor overloads for message item classes:
+  - `AssistantMessageItem(string assistantMessageText)`
+  - `SystemMessageItem(string systemMessageText)`  
+  - `UserMessageItem(string userMessageText)`
+- Enhanced README with new code examples for function calling and user message handling
+
 ### Breaking Changes
 ### Breaking Changes
 
@@ -162,6 +175,19 @@ Several turn detection classes have new properties that should be considered:
 ### VoiceLiveResponse
 - **Property changed**: `Modalities` is now `ModalitiesInternal` and returns `IList<InteractionModality>` instead of `SessionUpdateModality`
 
+### Authentication Changes
+
+### VoiceLiveClient Authentication Scope
+- **Authentication scope changed**: The default authentication scope has been updated from `https://cognitiveservices.azure.com/.default` to `https://ai.azure.com/.default`
+- **Impact**: This change should be transparent for most users, but custom authentication implementations may need adjustment.
+
+### Class Inheritance and Interface Implementation Changes
+
+### AzureSemanticEouDetectionEn and AzureSemanticEouDetectionMultilingual
+- **Before**: These classes were incomplete and did not properly inherit from base classes
+- **After**: Both classes now properly inherit from `EouDetection` and implement full serialization interfaces
+- **Impact**: These classes are now fully functional and consistent with the API pattern
+
 ### Migration Guide
 
 1. **Update enum usage**: While the conversion to extensible enums maintains backward compatibility through implicit conversions, consider updating to use the new struct-based pattern for future-proofing.
@@ -182,6 +208,10 @@ Several turn detection classes have new properties that should be considered:
 ### Bugs Fixed
 
 ### Other Changes
+
+- Updated README examples to use new `InteractionModality` instead of `InputModality`
+- Updated default service version examples to use `V2025_10_01`
+- Enhanced documentation with additional code snippets for function response handling and user message creation
 
 ## 1.0.0-beta.2 (2025-09-22)
 
