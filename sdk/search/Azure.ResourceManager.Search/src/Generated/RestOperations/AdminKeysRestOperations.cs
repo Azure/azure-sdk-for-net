@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-05-01";
+            _apiVersion = apiVersion ?? "2025-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Gets the primary and secondary admin API keys for the specified Azure AI Search service. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Gets the primary and secondary admin API keys for the specified Azure AI Search service. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Regenerates either the primary or secondary admin API key. You can only regenerate one key at a time. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="keyKind"> Specifies which key to regenerate. Valid values include 'primary' and 'secondary'. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Regenerates either the primary or secondary admin API key. You can only regenerate one key at a time. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="keyKind"> Specifies which key to regenerate. Valid values include 'primary' and 'secondary'. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
