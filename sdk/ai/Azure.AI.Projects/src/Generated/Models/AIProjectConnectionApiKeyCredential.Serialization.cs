@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> API Key Credential definition. </summary>
-    public partial class ApiKeyCredentials : IJsonModel<ApiKeyCredentials>
+    public partial class AIProjectConnectionApiKeyCredential : AIProjectConnectionBaseCredential, IJsonModel<AIProjectConnectionApiKeyCredential>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

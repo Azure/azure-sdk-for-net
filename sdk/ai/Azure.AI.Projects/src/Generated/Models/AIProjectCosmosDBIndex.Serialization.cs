@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> CosmosDB Vector Store Index Definition. </summary>
-    public partial class CosmosDBIndex : IJsonModel<CosmosDBIndex>
+    public partial class AIProjectCosmosDBIndex : AIProjectIndex, IJsonModel<AIProjectCosmosDBIndex>
     {
         /// <summary> Initializes a new instance of <see cref="AIProjectCosmosDBIndex"/> for deserialization. </summary>
         internal AIProjectCosmosDBIndex()
