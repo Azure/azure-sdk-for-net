@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("reason"u8);
-            writer.WriteStringValue(Reason.ToSerialString());
+            writer.WriteStringValue(Reason.ToString());
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -68,19 +68,19 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            VoiceLiveResponseStatus @type = default;
+            SessionResponseStatus @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResponseIncompleteDetailsReason reason = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new VoiceLiveResponseStatus(prop.Value.GetString());
+                    @type = new SessionResponseStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
                 {
-                    reason = prop.Value.GetString().ToResponseIncompleteDetailsReason();
+                    reason = new ResponseIncompleteDetailsReason(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

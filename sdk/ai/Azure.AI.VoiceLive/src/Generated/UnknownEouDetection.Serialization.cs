@@ -71,7 +71,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("model"u8))
                 {
-                    model = prop.Value.GetString().ToEOUDetectionModel();
+                    model = new EOUDetectionModel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

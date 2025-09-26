@@ -26,13 +26,17 @@ namespace Azure.AI.VoiceLive
         /// <param name="silenceDurationMs"> Gets or sets the SilenceDurationMs. </param>
         /// <param name="endOfUtteranceDetection"></param>
         /// <param name="autoTruncate"></param>
-        internal ServerVadTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
+        /// <param name="createResponse"></param>
+        /// <param name="interruptResponse"></param>
+        internal ServerVadTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
             SilenceDurationMs = silenceDurationMs;
             EndOfUtteranceDetection = endOfUtteranceDetection;
             AutoTruncate = autoTruncate;
+            CreateResponse = createResponse;
+            InterruptResponse = interruptResponse;
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
@@ -43,5 +47,11 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the AutoTruncate. </summary>
         public bool? AutoTruncate { get; set; }
+
+        /// <summary> Gets or sets the CreateResponse. </summary>
+        public bool? CreateResponse { get; set; }
+
+        /// <summary> Gets or sets the InterruptResponse. </summary>
+        public bool? InterruptResponse { get; set; }
     }
 }

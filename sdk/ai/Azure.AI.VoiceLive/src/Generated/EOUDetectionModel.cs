@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    internal enum EOUDetectionModel
+    internal readonly partial struct EOUDetectionModel : IEquatable<EOUDetectionModel>
     {
-        /// <summary> SemanticDetectionV1. </summary>
-        SemanticDetectionV1,
-        /// <summary> SemanticDetectionV1En. </summary>
-        SemanticDetectionV1En,
-        /// <summary> SemanticDetectionV1Multilingual. </summary>
-        SemanticDetectionV1Multilingual
+        private readonly string _value;
+        private const string SemanticDetectionV1Value = "semantic_detection_v1";
+        private const string SemanticDetectionV1EnValue = "semantic_detection_v1_en";
+        private const string SemanticDetectionV1MultilingualValue = "semantic_detection_v1_multilingual";
+
+        /// <summary> Initializes a new instance of <see cref="EOUDetectionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EOUDetectionModel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SemanticDetectionV1. </summary>
+        public static EOUDetectionModel SemanticDetectionV1 { get; } = new EOUDetectionModel(SemanticDetectionV1Value);
+
+        /// <summary> Gets the SemanticDetectionV1En. </summary>
+        public static EOUDetectionModel SemanticDetectionV1En { get; } = new EOUDetectionModel(SemanticDetectionV1EnValue);
+
+        /// <summary> Gets the SemanticDetectionV1Multilingual. </summary>
+        public static EOUDetectionModel SemanticDetectionV1Multilingual { get; } = new EOUDetectionModel(SemanticDetectionV1MultilingualValue);
+
+        /// <summary> Determines if two <see cref="EOUDetectionModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(EOUDetectionModel left, EOUDetectionModel right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="EOUDetectionModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(EOUDetectionModel left, EOUDetectionModel right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="EOUDetectionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EOUDetectionModel(string value) => new EOUDetectionModel(value);
+
+        /// <summary> Converts a string to a <see cref="EOUDetectionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EOUDetectionModel?(string value) => value == null ? null : new EOUDetectionModel(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is EOUDetectionModel other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(EOUDetectionModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }
