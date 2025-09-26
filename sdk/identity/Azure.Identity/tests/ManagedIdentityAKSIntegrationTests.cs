@@ -31,7 +31,7 @@ namespace Azure.Identity.Tests
             string targetFramework = Environment.GetEnvironmentVariable("TESTTARGETFRAMEWORK");
             podName = Environment.GetEnvironmentVariable("IDENTITY_AKS_POD_NAME");
 
-            // Ge the path to az
+            // Get the path to az
             string azPath = RunCommand("which", "az");
 
             // Get the path to kubectl
@@ -50,27 +50,37 @@ namespace Azure.Identity.Tests
             string podOutput = RunCommand(kubectlPath, "get pods -o jsonpath='{.items[0].metadata.name}'");
             Assert.That(podOutput, Does.Contain(podName));
 
-            // copy the test binaries to the cluster
-            RunCommand(kubectlPath, $"cp {buildArtifacts}/artifacts/bin/Azure.Identity.Tests/Debug/{targetFramework} {podName}:./tests/");
+            // Publish the Integration.Identity.Container project as self-contained
+            string containerProjectPath = $"{buildArtifacts}/sdk/identity/Azure.Identity/integration/Integration.Identity.Container/Integration.Identity.Container.csproj";
+            string publishDir = $"{buildArtifacts}/artifacts/publish/Integration.Identity.Container/{targetFramework}";
+            RunCommand("dotnet", $"publish {containerProjectPath} -c Debug -f {targetFramework} --self-contained -r linux-x64 -o {publishDir}", TimeSpan.FromMinutes(2));
+
+            // Copy the published self-contained app to the cluster
+            RunCommand(kubectlPath, $"cp {publishDir}/Integration.Identity.Container {podName}:./Integration.Identity.Container");
         }
 
         [Test]
         public void KubectlExecuteIdentityAKSTests()
         {
             SetupKubernetesEnvironment();
-            // Run the test app on the cluster
-            string output = RunCommand(kubectlPath, $"exec {podName} -- ./tests/Integration.Identity.Container");
+
+            // Make the executable file executable and run it
+            RunCommand(kubectlPath, $"exec {podName} -- chmod +x ./Integration.Identity.Container");
+            string output = RunCommand(kubectlPath, $"exec {podName} -- ./Integration.Identity.Container");
             Assert.That(output, Does.Contain("Passed!"));
         }
 
-        private string RunCommand(string fileName, string args)
+        private string RunCommand(string fileName, string args, TimeSpan timeout = default)
         {
+            if (timeout == default)
+                timeout = TimeSpan.FromSeconds(60);
+
             try
             {
                 Console.WriteLine($"Running command: {fileName} {args}");
                 ProcessRunner runner = new ProcessRunner(
                     ProcessService.Default.Create(new ProcessStartInfo(fileName, args)),
-                    TimeSpan.FromSeconds(30),
+                    timeout,
                     true,
                     default);
                 var output = runner.Run();
