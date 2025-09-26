@@ -157,23 +157,24 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
-      - script: >-
-          dotnet test eng/service.proj
-          --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
-          --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=$(ServiceDirectory)
-          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
-          /p:RunApiCompat=false /p:InheritDocEnabled=false
-          /p:Configuration=$(BuildConfiguration)
-          /p:CollectCoverage=$(CollectCoverage)
-          /p:EnableSourceLink=false
-          /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
-          /p:EnableOverrideExclusions=true
-          $(AdditionalTestArguments)
-          $(DiagnosticArguments)
+      - pwsh: >
+          ./eng/scripts/runwithdevopslogging.ps1
+            dotnet test eng/service.proj
+              --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
+              --framework $(TestTargetFramework)
+              --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+              --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
+              /p:SDKType=${{ parameters.SDKType }}
+              /p:ServiceDirectory=$(ServiceDirectory)
+              /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
+              /p:RunApiCompat=false /p:InheritDocEnabled=false
+              /p:Configuration=$(BuildConfiguration)
+              /p:CollectCoverage=$(CollectCoverage)
+              /p:EnableSourceLink=false
+              /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
+              /p:EnableOverrideExclusions=true
+              $(AdditionalTestArguments)
+              $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
 
       - task: PublishTestResults@2

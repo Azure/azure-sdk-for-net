@@ -33,7 +33,7 @@ namespace Azure.Template.Tests
         [RecordedTest]
         public async Task CanGetSecret()
         {
-            TemplateClient client = CreateClient();
+            TemplateClient client = CreateClient()
 
             Response<SecretBundle> secret = await client.GetSecretValueAsync("TestSecret");
 
