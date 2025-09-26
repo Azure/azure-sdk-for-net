@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates the processing status of a response item. </summary>
-    public readonly partial struct VoiceLiveResponseItemStatus : IEquatable<VoiceLiveResponseItemStatus>
+    public readonly partial struct SessionResponseItemStatus : IEquatable<SessionResponseItemStatus>
     {
         private readonly string _value;
         /// <summary> Item that is in progress. </summary>
@@ -21,10 +21,10 @@ namespace Azure.AI.VoiceLive
         /// <summary> Item has been processed but is incomplete. </summary>
         private const string IncompleteValue = "incomplete";
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveResponseItemStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionResponseItemStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VoiceLiveResponseItemStatus(string value)
+        public SessionResponseItemStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -32,38 +32,38 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Item that is in progress. </summary>
-        public static VoiceLiveResponseItemStatus InProgress { get; } = new VoiceLiveResponseItemStatus(InProgressValue);
+        public static SessionResponseItemStatus InProgress { get; } = new SessionResponseItemStatus(InProgressValue);
 
         /// <summary> Item has been fully processed and is complete. </summary>
-        public static VoiceLiveResponseItemStatus Completed { get; } = new VoiceLiveResponseItemStatus(CompletedValue);
+        public static SessionResponseItemStatus Completed { get; } = new SessionResponseItemStatus(CompletedValue);
 
         /// <summary> Item has been processed but is incomplete. </summary>
-        public static VoiceLiveResponseItemStatus Incomplete { get; } = new VoiceLiveResponseItemStatus(IncompleteValue);
+        public static SessionResponseItemStatus Incomplete { get; } = new SessionResponseItemStatus(IncompleteValue);
 
-        /// <summary> Determines if two <see cref="VoiceLiveResponseItemStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SessionResponseItemStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VoiceLiveResponseItemStatus left, VoiceLiveResponseItemStatus right) => left.Equals(right);
+        public static bool operator ==(SessionResponseItemStatus left, SessionResponseItemStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VoiceLiveResponseItemStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SessionResponseItemStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VoiceLiveResponseItemStatus left, VoiceLiveResponseItemStatus right) => !left.Equals(right);
+        public static bool operator !=(SessionResponseItemStatus left, SessionResponseItemStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VoiceLiveResponseItemStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SessionResponseItemStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VoiceLiveResponseItemStatus(string value) => new VoiceLiveResponseItemStatus(value);
+        public static implicit operator SessionResponseItemStatus(string value) => new SessionResponseItemStatus(value);
 
-        /// <summary> Converts a string to a <see cref="VoiceLiveResponseItemStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SessionResponseItemStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VoiceLiveResponseItemStatus?(string value) => value == null ? null : new VoiceLiveResponseItemStatus(value);
+        public static implicit operator SessionResponseItemStatus?(string value) => value == null ? null : new SessionResponseItemStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VoiceLiveResponseItemStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is SessionResponseItemStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VoiceLiveResponseItemStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SessionResponseItemStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

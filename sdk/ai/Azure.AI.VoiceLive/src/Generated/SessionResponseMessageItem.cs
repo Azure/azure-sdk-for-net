@@ -12,20 +12,20 @@ using System.Linq;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base type for message item within a conversation. </summary>
-    public partial class ResponseMessageItem : ResponseItem
+    public partial class SessionResponseMessageItem : SessionResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseMessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionResponseMessageItem"/>. </summary>
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(ResponseMessageRole role, IEnumerable<VoiceLiveContentPart> content, VoiceLiveResponseItemStatus status) : base(ItemType.Message)
+        internal SessionResponseMessageItem(ResponseMessageRole role, IEnumerable<VoiceLiveContentPart> content, SessionResponseItemStatus status) : base(ItemType.Message)
         {
             Role = role;
             Content = content.ToList();
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseMessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionResponseMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<VoiceLiveContentPart> content, VoiceLiveResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal SessionResponseMessageItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<VoiceLiveContentPart> content, SessionResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -47,6 +47,6 @@ namespace Azure.AI.VoiceLive
         public IList<VoiceLiveContentPart> Content { get; }
 
         /// <summary> Gets the Status. </summary>
-        public VoiceLiveResponseItemStatus Status { get; }
+        public SessionResponseItemStatus Status { get; }
     }
 }

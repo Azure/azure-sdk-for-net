@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details for an incomplete response. </summary>
-    public partial class ResponseIncompleteDetails : ResponseStatusDetails, IJsonModel<ResponseIncompleteDetails>
+    public partial class ResponseIncompleteDetails : IJsonModel<ResponseIncompleteDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseIncompleteDetails"/> for deserialization. </summary>
         internal ResponseIncompleteDetails()
@@ -68,14 +68,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            VoiceLiveResponseStatus @type = default;
+            SessionResponseStatus @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResponseIncompleteDetailsReason reason = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new VoiceLiveResponseStatus(prop.Value.GetString());
+                    @type = new SessionResponseStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))

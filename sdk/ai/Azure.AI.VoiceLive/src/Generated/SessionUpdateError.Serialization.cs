@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// problem. Most errors are recoverable and the session will stay open, we
     /// recommend to implementors to monitor and log error messages by default.
     /// </summary>
-    public partial class SessionUpdateError : SessionUpdate, IJsonModel<SessionUpdateError>
+    public partial class SessionUpdateError : IJsonModel<SessionUpdateError>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateError"/> for deserialization. </summary>
         internal SessionUpdateError()

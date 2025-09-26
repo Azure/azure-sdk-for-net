@@ -521,7 +521,7 @@ public class CustomerServiceBot : IDisposable
                     functionName, callId, arguments);
             }
         }
-        else if (outputItemAdded.Item is ResponseMessageItem messageItem &&
+        else if (outputItemAdded.Item is SessionResponseMessageItem messageItem &&
             messageItem.Role == ResponseMessageRole.Assistant)
         {
             // Keep track of the items that are from the assistant, so we know how to display the conversation.

@@ -87,7 +87,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsTrue(conversationItemCreated.PreviousItemId == null);
             Assert.IsTrue(conversationItemCreated.Item.Type == ItemType.Message);
 
-            var message = SafeCast<ResponseMessageItem>(conversationItemCreated.Item);
+            var message = SafeCast<SessionResponseMessageItem>(conversationItemCreated.Item);
             Assert.AreEqual(ResponseMessageRole.User, message.Role);
             Assert.AreEqual(1, message.Content.Count);
             Assert.AreEqual(ContentPartType.InputAudio, message.Content[0].Type);
@@ -146,7 +146,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var conversationItemCreated = await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
             Assert.IsTrue(string.IsNullOrEmpty(conversationItemCreated.PreviousItemId));
-            var message = SafeCast<ResponseMessageItem>(conversationItemCreated.Item);
+            var message = SafeCast<SessionResponseMessageItem>(conversationItemCreated.Item);
             Assert.AreEqual(ResponseMessageRole.User, message.Role);
             Assert.AreEqual(1, message.Content.Count);
             Assert.AreEqual(ContentPartType.InputText, message.Content[0].Type);
@@ -215,7 +215,7 @@ namespace Azure.AI.VoiceLive.Tests
             await session.AddItemAsync(new UserMessageItem(new[] { content1, content2 }), null, TimeoutToken).ConfigureAwait(false);
 
             var conversationItemCreated = await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
-            var message = SafeCast<ResponseMessageItem>(conversationItemCreated.Item);
+            var message = SafeCast<SessionResponseMessageItem>(conversationItemCreated.Item);
             Assert.AreEqual(ResponseMessageRole.User, message.Role);
             Assert.AreEqual(2, message.Content.Count);
             Assert.AreEqual(ContentPartType.InputText, message.Content[0].Type);
@@ -303,15 +303,15 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsNotNull(response.Response);
             var outputItems = response.Response.Output.Where((item) =>
                 {
-                    if (item is not ResponseMessageItem)
+                    if (item is not SessionResponseMessageItem)
                     {
                         return false;
                     }
-                    var message = SafeCast<ResponseMessageItem>(item);
+                    var message = SafeCast<SessionResponseMessageItem>(item);
                     return true;
                 });
             Assert.IsTrue(outputItems.Count() == 1);
-            var messageItem = SafeCast<ResponseMessageItem>(outputItems.First());
+            var messageItem = SafeCast<SessionResponseMessageItem>(outputItems.First());
             var textParts = messageItem.Content.Where((part) => part.Type == ContentPartType.Text);
             Assert.IsTrue(textParts.Count() == 1);
             var textPart = SafeCast<ResponseTextContentPart>(textParts.First());
@@ -385,15 +385,15 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsNotNull(response.Response);
             var outputItems = response.Response.Output.Where((item) =>
                 {
-                    if (item is not ResponseMessageItem)
+                    if (item is not SessionResponseMessageItem)
                     {
                         return false;
                     }
-                    var message = SafeCast<ResponseMessageItem>(item);
+                    var message = SafeCast<SessionResponseMessageItem>(item);
                     return true;
                 });
             Assert.IsTrue(outputItems.Count() == 1);
-            var messageItem = SafeCast<ResponseMessageItem>(outputItems.First());
+            var messageItem = SafeCast<SessionResponseMessageItem>(outputItems.First());
             var textParts = messageItem.Content.Where((part) => part.Type == ContentPartType.Text);
             Assert.IsTrue(textParts.Count() == 1);
             var textPart = SafeCast<ResponseTextContentPart>(textParts.First());
@@ -415,15 +415,15 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsNotNull(response.Response);
             outputItems = response.Response.Output.Where((item) =>
                 {
-                    if (item is not ResponseMessageItem)
+                    if (item is not SessionResponseMessageItem)
                     {
                         return false;
                     }
-                    var message = SafeCast<ResponseMessageItem>(item);
+                    var message = SafeCast<SessionResponseMessageItem>(item);
                     return true;
                 });
             Assert.IsTrue(outputItems.Count() == 1);
-            messageItem = SafeCast<ResponseMessageItem>(outputItems.First());
+            messageItem = SafeCast<SessionResponseMessageItem>(outputItems.First());
             textParts = messageItem.Content.Where((part) => part.Type == ContentPartType.Text);
             Assert.IsTrue(textParts.Count() == 1);
             textPart = SafeCast<ResponseTextContentPart>(textParts.First());
@@ -535,11 +535,11 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsNotNull(response.Response);
             var outputItems = response.Response.Output.Where((item) =>
                 {
-                    if (item is not ResponseMessageItem)
+                    if (item is not SessionResponseMessageItem)
                     {
                         return false;
                     }
-                    var message = SafeCast<ResponseMessageItem>(item);
+                    var message = SafeCast<SessionResponseMessageItem>(item);
 
                     return true;
                 });
@@ -605,7 +605,7 @@ namespace Azure.AI.VoiceLive.Tests
 
                         var response = responseCreated.Response;
                         Assert.IsNotNull(response);
-                        Assert.AreEqual(VoiceLiveResponseStatus.InProgress, response.Status);
+                        Assert.AreEqual(SessionResponseStatus.InProgress, response.Status);
 
                         responseId = response.Id;
                         incompleteOutputItems.Push(new HashSet<string>());
@@ -621,13 +621,13 @@ namespace Azure.AI.VoiceLive.Tests
 
                         switch (outputItem.Item)
                         {
-                            case ResponseMessageItem messageItem:
+                            case SessionResponseMessageItem messageItem:
                                 Assert.AreEqual(ResponseMessageRole.Assistant, messageItem.Role);
-                                Assert.AreEqual(VoiceLiveResponseItemStatus.Incomplete, messageItem.Status);
+                                Assert.AreEqual(SessionResponseItemStatus.Incomplete, messageItem.Status);
                                 break;
                             case ResponseFunctionCallItem functionCallItem:
                                 responseItemId = functionCallItem.Id;
-                                Assert.AreEqual(VoiceLiveResponseItemStatus.InProgress, functionCallItem.Status);
+                                Assert.AreEqual(SessionResponseItemStatus.InProgress, functionCallItem.Status);
                                 Assert.IsFalse(string.IsNullOrWhiteSpace(functionCallItem.Name));
 
                                 deltaBuilders.Add(functionCallItem.CallId, new StringBuilder());
@@ -644,7 +644,7 @@ namespace Azure.AI.VoiceLive.Tests
 
                         switch (newConversationItem.Item)
                         {
-                            case ResponseMessageItem messageItem:
+                            case SessionResponseMessageItem messageItem:
                                 Assert.AreEqual(ResponseMessageRole.Assistant, messageItem.Role);
                                 break;
 
@@ -733,9 +733,9 @@ namespace Azure.AI.VoiceLive.Tests
 
                         switch (responseOutputDone.Item)
                         {
-                            case ResponseMessageItem messageItem:
+                            case SessionResponseMessageItem messageItem:
                                 Assert.AreEqual(ResponseMessageRole.Assistant, messageItem.Role);
-                                Assert.AreEqual(VoiceLiveResponseItemStatus.Completed, messageItem.Status);
+                                Assert.AreEqual(SessionResponseItemStatus.Completed, messageItem.Status);
                                 Assert.IsTrue(messageItem.Content.Count > 0);
 
                                 switch (messageItem.Content[0])
@@ -756,7 +756,7 @@ namespace Azure.AI.VoiceLive.Tests
                                 break;
 
                             case ResponseFunctionCallItem functionCallItem:
-                                Assert.AreEqual(VoiceLiveResponseItemStatus.Completed, functionCallItem.Status);
+                                Assert.AreEqual(SessionResponseItemStatus.Completed, functionCallItem.Status);
                                 Assert.IsFalse(string.IsNullOrWhiteSpace(functionCallItem.Name));
                                 Assert.AreEqual(functionCallItem.Arguments, deltaBuilders[functionCallItem.CallId].ToString());
                                 break;
@@ -770,7 +770,7 @@ namespace Azure.AI.VoiceLive.Tests
                     case SessionUpdateResponseDone responseDone:
                         Assert.IsNotNull(responseDone.Response);
 
-                        Assert.AreEqual(VoiceLiveResponseStatus.Completed, responseDone.Response.Status);
+                        Assert.AreEqual(SessionResponseStatus.Completed, responseDone.Response.Status);
                         Assert.AreEqual(responseId, responseDone.Response.Id);
 
                         var usage = responseDone.Response.Usage;
@@ -786,9 +786,9 @@ namespace Azure.AI.VoiceLive.Tests
                         Assert.IsTrue(responseDone.Response.Output.Count > 0);
                         switch (responseDone.Response.Output[0])
                         {
-                            case ResponseMessageItem messageItem:
+                            case SessionResponseMessageItem messageItem:
                                 Assert.AreEqual(ResponseMessageRole.Assistant, messageItem.Role);
-                                Assert.AreEqual(VoiceLiveResponseItemStatus.Completed, messageItem.Status);
+                                Assert.AreEqual(SessionResponseItemStatus.Completed, messageItem.Status);
                                 Assert.AreEqual(responseItemId, messageItem.Id);
                                 Assert.IsTrue(messageItem.Content.Count > 0);
                                 switch (messageItem.Content[0])
@@ -809,7 +809,7 @@ namespace Azure.AI.VoiceLive.Tests
                                 break;
 
                             case ResponseFunctionCallItem functionCallItem:
-                                Assert.AreEqual(VoiceLiveResponseItemStatus.Completed, functionCallItem.Status);
+                                Assert.AreEqual(SessionResponseItemStatus.Completed, functionCallItem.Status);
                                 Assert.AreEqual(responseItemId, functionCallItem.Id);
                                 Assert.IsFalse(string.IsNullOrWhiteSpace(functionCallItem.Name));
                                 Assert.AreEqual(functionCallItem.Arguments, deltaBuilders[functionCallItem.CallId].ToString());

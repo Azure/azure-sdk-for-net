@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the model-generated function call arguments are updated. </summary>
-    public partial class SessionUpdateResponseFunctionCallArgumentsDelta : SessionUpdate, IJsonModel<SessionUpdateResponseFunctionCallArgumentsDelta>
+    public partial class SessionUpdateResponseFunctionCallArgumentsDelta : IJsonModel<SessionUpdateResponseFunctionCallArgumentsDelta>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/> for deserialization. </summary>
         internal SessionUpdateResponseFunctionCallArgumentsDelta()

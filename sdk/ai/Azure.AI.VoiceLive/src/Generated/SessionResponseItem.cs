@@ -12,26 +12,26 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, and <see cref="ResponseFunctionCallOutputItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, and <see cref="ResponseFunctionCallOutputItem"/>.
     /// </summary>
-    public abstract partial class ResponseItem
+    public abstract partial class SessionResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionResponseItem"/>. </summary>
         /// <param name="type"></param>
-        private protected ResponseItem(ItemType @type)
+        private protected SessionResponseItem(ItemType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionResponseItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base for session configuration in the response. </summary>
-    public partial class VoiceLiveSessionResponse : VoiceLiveSessionOptions, IJsonModel<VoiceLiveSessionResponse>
+    public partial class VoiceLiveSessionResponse : IJsonModel<VoiceLiveSessionResponse>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,6 +74,7 @@ namespace Azure.AI.VoiceLive
             string model = default;
             IList<InteractionModality> modalities = default;
             AnimationOptions animation = default;
+            VoiceProvider voice = default;
             string instructions = default;
             int? inputAudioSamplingRate = default;
             InputAudioFormat? inputAudioFormat = default;
@@ -85,7 +86,6 @@ namespace Azure.AI.VoiceLive
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
             float? temperature = default;
-            BinaryData voiceInternal = default;
             BinaryData maxResponseOutputTokens = default;
             BinaryData toolChoice = default;
             BinaryData turnDetection = default;
@@ -120,6 +120,15 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     animation = AnimationOptions.DeserializeAnimationOptions(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("voice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    voice = VoiceProvider.DeserializeVoiceProvider(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
@@ -227,15 +236,6 @@ namespace Azure.AI.VoiceLive
                     temperature = prop.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("voice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    voiceInternal = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
                 if (prop.NameEquals("max_response_output_tokens"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -286,6 +286,7 @@ namespace Azure.AI.VoiceLive
                 model,
                 modalities ?? new ChangeTrackingList<InteractionModality>(),
                 animation,
+                voice,
                 instructions,
                 inputAudioSamplingRate,
                 inputAudioFormat,
@@ -297,7 +298,6 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 temperature,
-                voiceInternal,
                 maxResponseOutputTokens,
                 toolChoice,
                 turnDetection,

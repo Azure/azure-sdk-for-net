@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the model-generated transcription of audio output is updated. </summary>
-    public partial class SessionUpdateResponseAudioTranscriptDelta : SessionUpdate, IJsonModel<SessionUpdateResponseAudioTranscriptDelta>
+    public partial class SessionUpdateResponseAudioTranscriptDelta : IJsonModel<SessionUpdateResponseAudioTranscriptDelta>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTranscriptDelta"/> for deserialization. </summary>
         internal SessionUpdateResponseAudioTranscriptDelta()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a new Item is created during Response generation. </summary>
-    public partial class SessionUpdateResponseOutputItemAdded : SessionUpdate, IJsonModel<SessionUpdateResponseOutputItemAdded>
+    public partial class SessionUpdateResponseOutputItemAdded : IJsonModel<SessionUpdateResponseOutputItemAdded>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseOutputItemAdded"/> for deserialization. </summary>
         internal SessionUpdateResponseOutputItemAdded()
@@ -80,7 +80,7 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string responseId = default;
             int outputIndex = default;
-            ResponseItem item = default;
+            SessionResponseItem item = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -109,7 +109,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = ResponseItem.DeserializeResponseItem(prop.Value, options);
+                    item = SessionResponseItem.DeserializeSessionResponseItem(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

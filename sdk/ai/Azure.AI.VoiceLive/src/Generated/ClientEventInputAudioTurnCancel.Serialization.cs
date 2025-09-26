@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventInputAudioTurnCancel : ClientEvent, IJsonModel<ClientEventInputAudioTurnCancel>
+    internal partial class ClientEventInputAudioTurnCancel : IJsonModel<ClientEventInputAudioTurnCancel>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnCancel"/> for deserialization. </summary>
         internal ClientEventInputAudioTurnCancel()

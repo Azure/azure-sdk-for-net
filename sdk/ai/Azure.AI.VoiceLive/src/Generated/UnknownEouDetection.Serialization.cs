@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownEouDetection : EouDetection, IJsonModel<EouDetection>
+    internal partial class UnknownEouDetection : IJsonModel<EouDetection>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEouDetection"/> for deserialization. </summary>
         internal UnknownEouDetection()

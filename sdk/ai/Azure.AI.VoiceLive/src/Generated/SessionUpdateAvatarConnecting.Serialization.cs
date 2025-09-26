@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Sent when the server is in the process of establishing an avatar media connection and provides its SDP answer. </summary>
-    public partial class SessionUpdateAvatarConnecting : SessionUpdate, IJsonModel<SessionUpdateAvatarConnecting>
+    public partial class SessionUpdateAvatarConnecting : IJsonModel<SessionUpdateAvatarConnecting>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateAvatarConnecting"/> for deserialization. </summary>
         internal SessionUpdateAvatarConnecting()

@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownResponseItem : ResponseItem
+    internal partial class UnknownSessionResponseItem : SessionResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSessionResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownResponseItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, @object, additionalBinaryDataProperties)
+        internal UnknownSessionResponseItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, @object, additionalBinaryDataProperties)
         {
         }
     }

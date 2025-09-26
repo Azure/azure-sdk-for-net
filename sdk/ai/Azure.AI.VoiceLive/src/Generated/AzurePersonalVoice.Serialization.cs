@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure personal voice configuration. </summary>
-    public partial class AzurePersonalVoice : AzureVoice, IJsonModel<AzurePersonalVoice>
+    public partial class AzurePersonalVoice : IJsonModel<AzurePersonalVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzurePersonalVoice"/> for deserialization. </summary>
         internal AzurePersonalVoice()

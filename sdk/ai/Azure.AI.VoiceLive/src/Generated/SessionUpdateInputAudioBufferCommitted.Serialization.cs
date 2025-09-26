@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
     /// message item that will be created, thus a `conversation.item.created` event
     /// will also be sent to the client.
     /// </summary>
-    public partial class SessionUpdateInputAudioBufferCommitted : SessionUpdate, IJsonModel<SessionUpdateInputAudioBufferCommitted>
+    public partial class SessionUpdateInputAudioBufferCommitted : IJsonModel<SessionUpdateInputAudioBufferCommitted>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferCommitted"/> for deserialization. </summary>
         internal SessionUpdateInputAudioBufferCommitted()

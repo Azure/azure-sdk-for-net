@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventConversationItemTruncate : ClientEvent, IJsonModel<ClientEventConversationItemTruncate>
+    internal partial class ClientEventConversationItemTruncate : IJsonModel<ClientEventConversationItemTruncate>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemTruncate"/> for deserialization. </summary>
         internal ClientEventConversationItemTruncate()

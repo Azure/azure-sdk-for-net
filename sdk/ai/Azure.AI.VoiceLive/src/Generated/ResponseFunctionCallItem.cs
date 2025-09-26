@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A function call item within a conversation. </summary>
-    public partial class ResponseFunctionCallItem : ResponseItem
+    public partial class ResponseFunctionCallItem : SessionResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        internal ResponseFunctionCallItem(string name, string callId, string arguments, VoiceLiveResponseItemStatus status) : base(ItemType.FunctionCall)
+        internal ResponseFunctionCallItem(string name, string callId, string arguments, SessionResponseItemStatus status) : base(ItemType.FunctionCall)
         {
             Name = name;
             CallId = callId;
@@ -35,7 +35,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        internal ResponseFunctionCallItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string callId, string arguments, VoiceLiveResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal ResponseFunctionCallItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string callId, string arguments, SessionResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Name = name;
             CallId = callId;
@@ -53,6 +53,6 @@ namespace Azure.AI.VoiceLive
         public string Arguments { get; }
 
         /// <summary> Gets the Status. </summary>
-        public VoiceLiveResponseItemStatus Status { get; }
+        public SessionResponseItemStatus Status { get; }
     }
 }

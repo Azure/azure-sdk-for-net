@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A function call output item within a conversation. </summary>
-    public partial class ResponseFunctionCallOutputItem : ResponseItem
+    public partial class ResponseFunctionCallOutputItem : SessionResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallOutputItem"/>. </summary>
         /// <param name="callId"></param>

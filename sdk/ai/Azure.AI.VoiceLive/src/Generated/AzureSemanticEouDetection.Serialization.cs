@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure semantic end-of-utterance detection (default). </summary>
-    public partial class AzureSemanticEouDetection : EouDetection, IJsonModel<AzureSemanticEouDetection>
+    public partial class AzureSemanticEouDetection : IJsonModel<AzureSemanticEouDetection>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -73,7 +73,7 @@ namespace Azure.AI.VoiceLive
             }
             EOUDetectionModel model = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureSemanticDetectionThresholdLevel? thresholdLevel = default;
+            EouThresholdLevel? thresholdLevel = default;
             float? timeoutMs = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -88,7 +88,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    thresholdLevel = new AzureSemanticDetectionThresholdLevel(prop.Value.GetString());
+                    thresholdLevel = new EouThresholdLevel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timeout_ms"u8))

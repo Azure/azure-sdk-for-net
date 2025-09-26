@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -15,5 +17,10 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         /// <returns></returns>
         internal abstract BinaryData ToBinaryData();
+
+        internal static VoiceProvider DeserializeVoiceProvider(JsonElement element, ModelReaderWriterOptions options)
+        {
+            return null;
+        }
     }
 }
