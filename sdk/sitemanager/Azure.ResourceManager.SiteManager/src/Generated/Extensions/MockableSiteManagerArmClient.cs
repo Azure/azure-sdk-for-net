@@ -35,15 +35,39 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeSiteResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSiteResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ResourceGroupEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupEdgeSiteResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupEdgeSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeSiteResource"/> object. </returns>
-        public virtual EdgeSiteResource GetEdgeSiteResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupEdgeSiteResource"/> object. </returns>
+        public virtual ResourceGroupEdgeSiteResource GetResourceGroupEdgeSiteResource(ResourceIdentifier id)
         {
-            EdgeSiteResource.ValidateResourceId(id);
-            return new EdgeSiteResource(Client, id);
+            ResourceGroupEdgeSiteResource.ValidateResourceId(id);
+            return new ResourceGroupEdgeSiteResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionEdgeSiteResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionEdgeSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionEdgeSiteResource"/> object. </returns>
+        public virtual SubscriptionEdgeSiteResource GetSubscriptionEdgeSiteResource(ResourceIdentifier id)
+        {
+            SubscriptionEdgeSiteResource.ValidateResourceId(id);
+            return new SubscriptionEdgeSiteResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantSiteResource.CreateResourceIdentifier" /> to create a <see cref="TenantSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantSiteResource"/> object. </returns>
+        public virtual TenantSiteResource GetTenantSiteResource(ResourceIdentifier id)
+        {
+            TenantSiteResource.ValidateResourceId(id);
+            return new TenantSiteResource(Client, id);
         }
     }
 }

@@ -15,13 +15,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SiteManager.Samples
 {
-    public partial class Sample_EdgeSiteCollection
+    public partial class Sample_TenantSiteCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateOrUpdateSiteGeneratedByMaximumSetRule()
+        public async Task CreateOrUpdate_SitesByServiceGroupCreateOrUpdateGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,15 +29,11 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this TenantSiteResource
+            string servicegroupName = "string";
+            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
 
             // invoke the operation
             string siteName = "string";
@@ -62,8 +58,8 @@ namespace Azure.ResourceManager.SiteManager.Samples
 },
                 },
             };
-            ArmOperation<EdgeSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, siteName, data);
-            EdgeSiteResource result = lro.Value;
+            ArmOperation<TenantSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, siteName, data);
+            TenantSiteResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -74,9 +70,9 @@ namespace Azure.ResourceManager.SiteManager.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetSiteGeneratedByMaximumSetRule()
+        public async Task Get_SitesByServiceGroupGetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,19 +80,15 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this TenantSiteResource
+            string servicegroupName = "string";
+            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
 
             // invoke the operation
             string siteName = "string";
-            EdgeSiteResource result = await collection.GetAsync(siteName);
+            TenantSiteResource result = await collection.GetAsync(siteName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -107,28 +99,24 @@ namespace Azure.ResourceManager.SiteManager.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListBySiteSubscriptionGeneratedByMaximumSetRule()
+        public async Task GetAll_SitesByServiceGroupListByServiceGroupGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "Site_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_ListByServiceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "Site_ListByServiceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this TenantSiteResource
+            string servicegroupName = "string";
+            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
 
             // invoke the operation and iterate over the result
-            await foreach (EdgeSiteResource item in collection.GetAllAsync())
+            await foreach (TenantSiteResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -142,9 +130,9 @@ namespace Azure.ResourceManager.SiteManager.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetSiteGeneratedByMaximumSetRule()
+        public async Task Exists_SitesByServiceGroupGetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,15 +140,11 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this TenantSiteResource
+            string servicegroupName = "string";
+            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
 
             // invoke the operation
             string siteName = "string";
@@ -171,9 +155,9 @@ namespace Azure.ResourceManager.SiteManager.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetSiteGeneratedByMaximumSetRule()
+        public async Task GetIfExists_SitesByServiceGroupGetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,20 +165,16 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this TenantSiteResource
+            string servicegroupName = "string";
+            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
 
             // invoke the operation
             string siteName = "string";
-            NullableResponse<EdgeSiteResource> response = await collection.GetIfExistsAsync(siteName);
-            EdgeSiteResource result = response.HasValue ? response.Value : null;
+            NullableResponse<TenantSiteResource> response = await collection.GetIfExistsAsync(siteName);
+            TenantSiteResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

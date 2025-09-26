@@ -14,13 +14,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SiteManager.Samples
 {
-    public partial class Sample_EdgeSiteResource
+    public partial class Sample_TenantSiteResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetSiteGeneratedByMaximumSetRule()
+        public async Task Get_SitesByServiceGroupGetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,16 +28,15 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this EdgeSiteResource created on azure
-            // for more information of creating EdgeSiteResource, please refer to the document of EdgeSiteResource
-            string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
+            // this example assumes you already have this TenantSiteResource created on azure
+            // for more information of creating TenantSiteResource, please refer to the document of TenantSiteResource
+            string servicegroupName = "string";
             string siteName = "string";
-            ResourceIdentifier edgeSiteResourceId = EdgeSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            EdgeSiteResource edgeSite = client.GetEdgeSiteResource(edgeSiteResourceId);
+            ResourceIdentifier tenantSiteResourceId = TenantSiteResource.CreateResourceIdentifier(servicegroupName, siteName);
+            TenantSiteResource tenantSite = client.GetTenantSiteResource(tenantSiteResourceId);
 
             // invoke the operation
-            EdgeSiteResource result = await edgeSite.GetAsync();
+            TenantSiteResource result = await tenantSite.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -48,9 +47,9 @@ namespace Azure.ResourceManager.SiteManager.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteSiteGeneratedByMaximumSetRule()
+        public async Task Delete_SitesByServiceGroupDeleteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,25 +57,24 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this EdgeSiteResource created on azure
-            // for more information of creating EdgeSiteResource, please refer to the document of EdgeSiteResource
-            string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
+            // this example assumes you already have this TenantSiteResource created on azure
+            // for more information of creating TenantSiteResource, please refer to the document of TenantSiteResource
+            string servicegroupName = "string";
             string siteName = "string";
-            ResourceIdentifier edgeSiteResourceId = EdgeSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            EdgeSiteResource edgeSite = client.GetEdgeSiteResource(edgeSiteResourceId);
+            ResourceIdentifier tenantSiteResourceId = TenantSiteResource.CreateResourceIdentifier(servicegroupName, siteName);
+            TenantSiteResource tenantSite = client.GetTenantSiteResource(tenantSiteResourceId);
 
             // invoke the operation
-            await edgeSite.DeleteAsync(WaitUntil.Completed);
+            await tenantSite.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateSiteGeneratedByMaximumSetRule()
+        public async Task Update_SitesByServiceGroupUpdateGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesByServiceGroup_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,13 +82,12 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this EdgeSiteResource created on azure
-            // for more information of creating EdgeSiteResource, please refer to the document of EdgeSiteResource
-            string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
+            // this example assumes you already have this TenantSiteResource created on azure
+            // for more information of creating TenantSiteResource, please refer to the document of TenantSiteResource
+            string servicegroupName = "string";
             string siteName = "string";
-            ResourceIdentifier edgeSiteResourceId = EdgeSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            EdgeSiteResource edgeSite = client.GetEdgeSiteResource(edgeSiteResourceId);
+            ResourceIdentifier tenantSiteResourceId = TenantSiteResource.CreateResourceIdentifier(servicegroupName, siteName);
+            TenantSiteResource tenantSite = client.GetTenantSiteResource(tenantSiteResourceId);
 
             // invoke the operation
             EdgeSitePatch patch = new EdgeSitePatch
@@ -114,7 +111,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
 },
                 },
             };
-            EdgeSiteResource result = await edgeSite.UpdateAsync(patch);
+            TenantSiteResource result = await tenantSite.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

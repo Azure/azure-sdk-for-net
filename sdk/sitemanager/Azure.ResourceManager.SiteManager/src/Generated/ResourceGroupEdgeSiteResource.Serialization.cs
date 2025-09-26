@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    public partial class EdgeSiteResource : IJsonModel<EdgeSiteData>
+    public partial class ResourceGroupEdgeSiteResource : IJsonModel<EdgeSiteData>
     {
         private static EdgeSiteData s_dataDeserializationInstance;
         private static EdgeSiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
