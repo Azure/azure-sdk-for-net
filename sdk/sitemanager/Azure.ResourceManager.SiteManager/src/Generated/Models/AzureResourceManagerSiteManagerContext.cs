@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.SiteManager
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(EdgeSiteAddressProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeSiteData))]
     [ModelReaderWriterBuildable(typeof(EdgeSitePatch))]
     [ModelReaderWriterBuildable(typeof(EdgeSitePatchProperties))]
@@ -22,7 +23,6 @@ namespace Azure.ResourceManager.SiteManager
     [ModelReaderWriterBuildable(typeof(ResourceGroupEdgeSiteResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupEdgeSiteResource))]
-    [ModelReaderWriterBuildable(typeof(SiteAddressProperties))]
     [ModelReaderWriterBuildable(typeof(SiteListResult))]
     [ModelReaderWriterBuildable(typeof(SubscriptionEdgeSiteResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

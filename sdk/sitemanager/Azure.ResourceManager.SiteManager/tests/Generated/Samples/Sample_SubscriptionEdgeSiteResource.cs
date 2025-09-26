@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
                 {
                     DisplayName = "string",
                     Description = "zztr",
-                    SiteAddress = new SiteAddressProperties
+                    SiteAddress = new EdgeSiteAddressProperties
                     {
                         StreetAddress1 = "fodimymrxbhrfslsmzfhmitn",
                         StreetAddress2 = "widjg",

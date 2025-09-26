@@ -173,7 +173,23 @@ namespace Azure.ResourceManager.SiteManager.Models
     public static partial class ArmSiteManagerModelFactory
     {
         public static Azure.ResourceManager.SiteManager.EdgeSiteData EdgeSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties EdgeSiteProperties(string displayName = null, string description = null, Azure.ResourceManager.SiteManager.Models.SiteAddressProperties siteAddress = null, System.Collections.Generic.IDictionary<string, string> labels = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState? provisioningState = default(Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties EdgeSiteProperties(string displayName = null, string description = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties siteAddress = null, System.Collections.Generic.IDictionary<string, string> labels = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState? provisioningState = default(Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState?)) { throw null; }
+    }
+    public partial class EdgeSiteAddressProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>
+    {
+        public EdgeSiteAddressProperties() { }
+        public string City { get { throw null; } set { } }
+        public string Country { get { throw null; } set { } }
+        public string PostalCode { get { throw null; } set { } }
+        public string StateOrProvince { get { throw null; } set { } }
+        public string StreetAddress1 { get { throw null; } set { } }
+        public string StreetAddress2 { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EdgeSitePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSitePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSitePatch>
     {
@@ -192,7 +208,7 @@ namespace Azure.ResourceManager.SiteManager.Models
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } }
-        public Azure.ResourceManager.SiteManager.Models.SiteAddressProperties SiteAddress { get { throw null; } set { } }
+        public Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties SiteAddress { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -207,7 +223,7 @@ namespace Azure.ResourceManager.SiteManager.Models
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } }
         public Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.SiteManager.Models.SiteAddressProperties SiteAddress { get { throw null; } set { } }
+        public Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties SiteAddress { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -233,21 +249,5 @@ namespace Azure.ResourceManager.SiteManager.Models
         public static implicit operator Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState left, Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SiteAddressProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>
-    {
-        public SiteAddressProperties() { }
-        public string City { get { throw null; } set { } }
-        public string Country { get { throw null; } set { } }
-        public string PostalCode { get { throw null; } set { } }
-        public string StateOrProvince { get { throw null; } set { } }
-        public string StreetAddress1 { get { throw null; } set { } }
-        public string StreetAddress2 { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SiteManager.Models.SiteAddressProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SiteManager.Models.SiteAddressProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
