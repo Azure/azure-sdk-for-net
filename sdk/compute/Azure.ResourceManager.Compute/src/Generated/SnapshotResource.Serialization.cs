@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         SnapshotData IJsonModel<SnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SnapshotData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SnapshotData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        SnapshotData IPersistableModel<SnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SnapshotData>(data, options);
+        SnapshotData IPersistableModel<SnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SnapshotData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<SnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SnapshotData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         AutomationCredentialData IJsonModel<AutomationCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationCredentialData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomationCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationCredentialData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        AutomationCredentialData IPersistableModel<AutomationCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationCredentialData>(data, options);
+        AutomationCredentialData IPersistableModel<AutomationCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationCredentialData>(data, options, AzureResourceManagerAutomationContext.Default);
 
         string IPersistableModel<AutomationCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationCredentialData>)Data).GetFormatFromOptions(options);
     }

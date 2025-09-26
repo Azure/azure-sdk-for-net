@@ -16,7 +16,7 @@ namespace _Type._Enum.Extensible
 
         public ExtensibleClient(Uri endpoint, ExtensibleClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual String GetStringClient() => throw null;
     }

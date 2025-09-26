@@ -191,7 +191,7 @@ namespace Azure.AI.AnomalyDetector
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAnomalyDetectorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ModelState)} does not support writing '{options.Format}' format.");
             }

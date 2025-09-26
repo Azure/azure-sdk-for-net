@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceServerConfigurationOptionResource IOperationSource<ManagedInstanceServerConfigurationOptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceServerConfigurationOptionData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceServerConfigurationOptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceServerConfigurationOptionResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceServerConfigurationOptionResource> IOperationSource<ManagedInstanceServerConfigurationOptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceServerConfigurationOptionData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceServerConfigurationOptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ManagedInstanceServerConfigurationOptionResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryData)} does not support writing '{options.Format}' format.");
             }

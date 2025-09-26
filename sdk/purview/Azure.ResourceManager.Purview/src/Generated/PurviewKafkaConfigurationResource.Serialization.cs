@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Purview
 
         PurviewKafkaConfigurationData IJsonModel<PurviewKafkaConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewKafkaConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PurviewKafkaConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PurviewKafkaConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewKafkaConfigurationData>(Data, options, AzureResourceManagerPurviewContext.Default);
 
-        PurviewKafkaConfigurationData IPersistableModel<PurviewKafkaConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewKafkaConfigurationData>(data, options);
+        PurviewKafkaConfigurationData IPersistableModel<PurviewKafkaConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewKafkaConfigurationData>(data, options, AzureResourceManagerPurviewContext.Default);
 
         string IPersistableModel<PurviewKafkaConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewKafkaConfigurationData>)Data).GetFormatFromOptions(options);
     }

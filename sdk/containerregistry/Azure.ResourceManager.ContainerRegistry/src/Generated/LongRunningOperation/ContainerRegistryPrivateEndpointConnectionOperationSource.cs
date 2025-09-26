@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryPrivateEndpointConnectionResource IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerRegistryPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
             return new ContainerRegistryPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<ContainerRegistryPrivateEndpointConnectionResource> IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerRegistryPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
             return await Task.FromResult(new ContainerRegistryPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -236,6 +236,12 @@ namespace Azure.ResourceManager.OracleDatabase
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.AutonomousDBVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.AutonomousDBVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureResourceManagerOracleDatabaseContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerOracleDatabaseContext() { }
+        public static Azure.ResourceManager.OracleDatabase.AzureResourceManagerOracleDatabaseContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CloudExadataInfrastructureCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.OracleDatabase.CloudExadataInfrastructureResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OracleDatabase.CloudExadataInfrastructureResource>, System.Collections.IEnumerable
     {
         protected CloudExadataInfrastructureCollection() { }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         LocalNetworkGatewayResource IOperationSource<LocalNetworkGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LocalNetworkGatewayData>(response.Content);
+            var data = ModelReaderWriter.Read<LocalNetworkGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new LocalNetworkGatewayResource(_client, data);
         }
 
         async ValueTask<LocalNetworkGatewayResource> IOperationSource<LocalNetworkGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LocalNetworkGatewayData>(response.Content);
+            var data = ModelReaderWriter.Read<LocalNetworkGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new LocalNetworkGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }

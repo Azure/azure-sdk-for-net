@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="tools">
         /// The collection of tools enabled for the agent.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </param>
         /// <param name="toolResources">
         /// A set of resources that are used by the agent's tools. The resources are specific to the type of tool. For example, the `code_interpreter`
@@ -104,7 +104,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="tools">
         /// The collection of tools enabled for the agent.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </param>
         /// <param name="toolResources">
         /// A set of resources that are used by the agent's tools. The resources are specific to the type of tool. For example, the `code_interpreter`
@@ -162,7 +162,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// The collection of tools enabled for the agent.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </summary>
         public IReadOnlyList<ToolDefinition> Tools { get; }
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.AI.Agents.Persistent
         /// <description><see cref="PersistentAgentsResponseFormatMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="PersistentAgentsResponseFormat"/></description>
+        /// <description><see cref="InternalPersistentAgentsResponseFormat"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="ResponseFormatJsonSchemaType"/></description>

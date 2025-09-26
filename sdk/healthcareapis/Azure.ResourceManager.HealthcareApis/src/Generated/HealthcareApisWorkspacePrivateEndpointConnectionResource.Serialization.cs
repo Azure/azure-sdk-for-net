@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HealthcareApis
 
         HealthcareApisPrivateEndpointConnectionData IJsonModel<HealthcareApisPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisPrivateEndpointConnectionData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        HealthcareApisPrivateEndpointConnectionData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisPrivateEndpointConnectionData>(data, options);
+        HealthcareApisPrivateEndpointConnectionData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisPrivateEndpointConnectionData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
         string IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

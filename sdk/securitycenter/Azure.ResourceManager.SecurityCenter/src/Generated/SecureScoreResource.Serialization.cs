@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecureScoreData IJsonModel<SecureScoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecureScoreData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecureScoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecureScoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecureScoreData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecureScoreData IPersistableModel<SecureScoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecureScoreData>(data, options);
+        SecureScoreData IPersistableModel<SecureScoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecureScoreData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecureScoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecureScoreData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Authorization
 
         RoleEligibilityScheduleData IJsonModel<RoleEligibilityScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleEligibilityScheduleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RoleEligibilityScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RoleEligibilityScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoleEligibilityScheduleData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        RoleEligibilityScheduleData IPersistableModel<RoleEligibilityScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleEligibilityScheduleData>(data, options);
+        RoleEligibilityScheduleData IPersistableModel<RoleEligibilityScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleEligibilityScheduleData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
         string IPersistableModel<RoleEligibilityScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleEligibilityScheduleData>)Data).GetFormatFromOptions(options);
     }

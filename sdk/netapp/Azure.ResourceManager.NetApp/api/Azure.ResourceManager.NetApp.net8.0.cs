@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.NetApp
 {
+    public partial class AzureResourceManagerNetAppContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerNetAppContext() { }
+        public static Azure.ResourceManager.NetApp.AzureResourceManagerNetAppContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CapacityPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.CapacityPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.CapacityPoolResource>, System.Collections.IEnumerable
     {
         protected CapacityPoolCollection() { }

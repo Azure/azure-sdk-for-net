@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support writing '{options.Format}' format.");
             }

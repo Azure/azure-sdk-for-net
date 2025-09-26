@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MobileNetwork
 
         PacketCoreControlPlaneData IJsonModel<PacketCoreControlPlaneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PacketCoreControlPlaneData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PacketCoreControlPlaneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PacketCoreControlPlaneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PacketCoreControlPlaneData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        PacketCoreControlPlaneData IPersistableModel<PacketCoreControlPlaneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PacketCoreControlPlaneData>(data, options);
+        PacketCoreControlPlaneData IPersistableModel<PacketCoreControlPlaneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PacketCoreControlPlaneData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
         string IPersistableModel<PacketCoreControlPlaneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PacketCoreControlPlaneData>)Data).GetFormatFromOptions(options);
     }

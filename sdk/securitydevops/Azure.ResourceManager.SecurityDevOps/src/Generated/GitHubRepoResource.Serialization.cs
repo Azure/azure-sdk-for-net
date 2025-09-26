@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         GitHubRepoData IJsonModel<GitHubRepoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GitHubRepoData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GitHubRepoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GitHubRepoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GitHubRepoData>(Data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
-        GitHubRepoData IPersistableModel<GitHubRepoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GitHubRepoData>(data, options);
+        GitHubRepoData IPersistableModel<GitHubRepoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GitHubRepoData>(data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
         string IPersistableModel<GitHubRepoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GitHubRepoData>)Data).GetFormatFromOptions(options);
     }

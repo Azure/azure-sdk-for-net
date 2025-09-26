@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
+            if (Optional.IsDefined(LinuxLicenseType))
+            {
+                writer.WritePropertyName("linuxLicenseType"u8);
+                writer.WriteStringValue(LinuxLicenseType.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
@@ -266,6 +271,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(UnprotectedDisks))
+            {
+                writer.WritePropertyName("unprotectedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in UnprotectedDisks)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(IsLastUpgradeSuccessful))
             {
                 writer.WritePropertyName("isLastUpgradeSuccessful"u8);
@@ -316,6 +331,71 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("discoveredVmDetails"u8);
                 writer.WriteObjectValue(DiscoveredVmDetails, options);
             }
+            if (Optional.IsCollectionDefined(TargetVmTags))
+            {
+                writer.WritePropertyName("targetVmTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in TargetVmTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SeedManagedDiskTags))
+            {
+                writer.WritePropertyName("seedManagedDiskTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in SeedManagedDiskTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
+            {
+                writer.WritePropertyName("targetManagedDiskTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in TargetManagedDiskTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TargetNicTags))
+            {
+                writer.WritePropertyName("targetNicTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in TargetNicTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SqlServerLicenseType))
+            {
+                writer.WritePropertyName("sqlServerLicenseType"u8);
+                writer.WriteStringValue(SqlServerLicenseType);
+            }
+            if (Optional.IsCollectionDefined(SupportedOSVersions))
+            {
+                writer.WritePropertyName("supportedOSVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedOSVersions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(OSName))
+            {
+                writer.WritePropertyName("osName"u8);
+                writer.WriteStringValue(OSName);
+            }
+            if (Optional.IsDefined(TargetVmSecurityProfile))
+            {
+                writer.WritePropertyName("targetVmSecurityProfile"u8);
+                writer.WriteObjectValue(TargetVmSecurityProfile, options);
+            }
         }
 
         InMageRcmReplicationDetails IJsonModel<InMageRcmReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -352,6 +432,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IPAddress primaryNicIPAddress = default;
             string targetGeneration = default;
             string licenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             ResourceIdentifier storageAccountId = default;
             string targetVmName = default;
             string targetVmSize = default;
@@ -383,6 +464,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string agentUpgradeJobId = default;
             string agentUpgradeAttemptToVersion = default;
             IReadOnlyList<InMageRcmProtectedDiskDetails> protectedDisks = default;
+            IReadOnlyList<InMageRcmUnProtectedDiskDetails> unprotectedDisks = default;
             string isLastUpgradeSuccessful = default;
             bool? isAgentRegistrationSuccessfulAfterFailover = default;
             InMageRcmMobilityAgentDetails mobilityAgentDetails = default;
@@ -390,6 +472,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = default;
             IReadOnlyList<InMageRcmNicDetails> vmNics = default;
             InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = default;
+            IReadOnlyList<UserCreatedResourceTag> targetVmTags = default;
+            IReadOnlyList<UserCreatedResourceTag> seedManagedDiskTags = default;
+            IReadOnlyList<UserCreatedResourceTag> targetManagedDiskTags = default;
+            IReadOnlyList<UserCreatedResourceTag> targetNicTags = default;
+            string sqlServerLicenseType = default;
+            IReadOnlyList<string> supportedOSVersions = default;
+            string osName = default;
+            RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -479,6 +569,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 if (property.NameEquals("licenseType"u8))
                 {
                     licenseType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("linuxLicenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountId"u8))
@@ -733,6 +832,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedDisks = array;
                     continue;
                 }
+                if (property.NameEquals("unprotectedDisks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InMageRcmUnProtectedDiskDetails> array = new List<InMageRcmUnProtectedDiskDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InMageRcmUnProtectedDiskDetails.DeserializeInMageRcmUnProtectedDiskDetails(item, options));
+                    }
+                    unprotectedDisks = array;
+                    continue;
+                }
                 if (property.NameEquals("isLastUpgradeSuccessful"u8))
                 {
                     isLastUpgradeSuccessful = property.Value.GetString();
@@ -807,6 +920,95 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     discoveredVmDetails = InMageRcmDiscoveredProtectedVmDetails.DeserializeInMageRcmDiscoveredProtectedVmDetails(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("targetVmTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    targetVmTags = array;
+                    continue;
+                }
+                if (property.NameEquals("seedManagedDiskTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    seedManagedDiskTags = array;
+                    continue;
+                }
+                if (property.NameEquals("targetManagedDiskTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    targetManagedDiskTags = array;
+                    continue;
+                }
+                if (property.NameEquals("targetNicTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    targetNicTags = array;
+                    continue;
+                }
+                if (property.NameEquals("sqlServerLicenseType"u8))
+                {
+                    sqlServerLicenseType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("supportedOSVersions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    supportedOSVersions = array;
+                    continue;
+                }
+                if (property.NameEquals("osName"u8))
+                {
+                    osName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetVmSecurityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
@@ -835,6 +1037,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 primaryNicIPAddress,
                 targetGeneration,
                 licenseType,
+                linuxLicenseType,
                 storageAccountId,
                 targetVmName,
                 targetVmSize,
@@ -866,13 +1069,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 agentUpgradeJobId,
                 agentUpgradeAttemptToVersion,
                 protectedDisks ?? new ChangeTrackingList<InMageRcmProtectedDiskDetails>(),
+                unprotectedDisks ?? new ChangeTrackingList<InMageRcmUnProtectedDiskDetails>(),
                 isLastUpgradeSuccessful,
                 isAgentRegistrationSuccessfulAfterFailover,
                 mobilityAgentDetails,
                 lastAgentUpgradeErrorDetails ?? new ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails>(),
                 agentUpgradeBlockingErrorDetails ?? new ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails>(),
                 vmNics ?? new ChangeTrackingList<InMageRcmNicDetails>(),
-                discoveredVmDetails);
+                discoveredVmDetails,
+                targetVmTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                seedManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                targetManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                targetNicTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                sqlServerLicenseType,
+                supportedOSVersions ?? new ChangeTrackingList<string>(),
+                osName,
+                targetVmSecurityProfile);
         }
 
         BinaryData IPersistableModel<InMageRcmReplicationDetails>.Write(ModelReaderWriterOptions options)
@@ -882,7 +1094,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support writing '{options.Format}' format.");
             }

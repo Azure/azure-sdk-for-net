@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStoragePoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiskPoolListResult)} does not support writing '{options.Format}' format.");
             }

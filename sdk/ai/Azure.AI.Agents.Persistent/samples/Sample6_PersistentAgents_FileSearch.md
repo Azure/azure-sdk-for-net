@@ -47,7 +47,7 @@ Synchronous sample:
 ```C# Snippet:AgentsCreateVectorStore_Sync
 // Create a vector store with the file and wait for it to be processed.
 // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
-VectorStore vectorStore = client.VectorStores.CreateVectorStore(
+PersistentAgentsVectorStore vectorStore = client.VectorStores.CreateVectorStore(
     fileIds: new List<string> { uploadedAgentFile.Id },
     name: "my_vector_store");
 ```
@@ -56,7 +56,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsCreateVectorStore
 // Create a vector store with the file and wait for it to be processed.
 // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
-VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
+PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     fileIds:  new List<string> { uploadedAgentFile.Id },
     name: "my_vector_store");
 ```
@@ -94,9 +94,9 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
 
 5. To properly render the links to the file name we use the `WriteMessages` method, which internally calls `replaceReferences` method to replace reference placeholders by file IDs or by file names.
 ```C# Snippet:AgentsFilesSearchExample_Print
-private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
+private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages, Dictionary<string, string> fileIds)
 {
-    foreach (ThreadMessage threadMessage in messages)
+    foreach (PersistentThreadMessage threadMessage in messages)
     {
         Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
         foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -150,7 +150,7 @@ Synchronous sample:
 PersistentAgentThread thread = client.Threads.CreateThread();
 
 // Create message to thread
-ThreadMessage messageResponse = client.Messages.CreateMessage(
+PersistentThreadMessage messageResponse = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "Can you give me the documented codes for 'banana' and 'orange'?");
@@ -169,7 +169,7 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -182,7 +182,7 @@ Asynchronous sample:
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
 // Create message to thread
-ThreadMessage messageResponse = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage messageResponse = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "Can you give me the documented codes for 'banana' and 'orange'?");
@@ -201,7 +201,7 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 ).ToListAsync();

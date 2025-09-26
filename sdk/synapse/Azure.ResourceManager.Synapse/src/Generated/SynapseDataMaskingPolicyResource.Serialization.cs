@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseDataMaskingPolicyData IJsonModel<SynapseDataMaskingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDataMaskingPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseDataMaskingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseDataMaskingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseDataMaskingPolicyData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseDataMaskingPolicyData IPersistableModel<SynapseDataMaskingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDataMaskingPolicyData>(data, options);
+        SynapseDataMaskingPolicyData IPersistableModel<SynapseDataMaskingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDataMaskingPolicyData>(data, options, AzureResourceManagerSynapseContext.Default);
 
         string IPersistableModel<SynapseDataMaskingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDataMaskingPolicyData>)Data).GetFormatFromOptions(options);
     }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
+    public partial class AzureResourceManagerWorkloadsSapVirtualInstanceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerWorkloadsSapVirtualInstanceContext() { }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.AzureResourceManagerWorkloadsSapVirtualInstanceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class SapApplicationServerInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadsSapVirtualInstance.SapApplicationServerInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapVirtualInstance.SapApplicationServerInstanceResource>, System.Collections.IEnumerable
     {
         protected SapApplicationServerInstanceCollection() { }

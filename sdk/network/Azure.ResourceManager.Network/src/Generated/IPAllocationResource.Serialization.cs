@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         IPAllocationData IJsonModel<IPAllocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IPAllocationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IPAllocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IPAllocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IPAllocationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        IPAllocationData IPersistableModel<IPAllocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IPAllocationData>(data, options);
+        IPAllocationData IPersistableModel<IPAllocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IPAllocationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<IPAllocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IPAllocationData>)Data).GetFormatFromOptions(options);
     }

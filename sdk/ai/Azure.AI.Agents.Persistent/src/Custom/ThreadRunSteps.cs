@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Agents.Persistent
 {
     [CodeGenClient("RunSteps")]
-    public partial class ThreadRunSteps
+    internal partial class ThreadRunSteps
     {
         /// <summary> Returns a list of run steps associated an agent thread run. </summary>
         /// <param name = "run" > The <see cref="ThreadRun"/> instance from which run steps should be listed. </param>

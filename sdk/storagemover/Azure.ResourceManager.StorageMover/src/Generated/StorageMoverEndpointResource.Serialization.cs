@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StorageMover
 
         StorageMoverEndpointData IJsonModel<StorageMoverEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageMoverEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StorageMoverEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageMoverEndpointData>(Data, options, AzureResourceManagerStorageMoverContext.Default);
 
-        StorageMoverEndpointData IPersistableModel<StorageMoverEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageMoverEndpointData>(data, options);
+        StorageMoverEndpointData IPersistableModel<StorageMoverEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageMoverEndpointData>(data, options, AzureResourceManagerStorageMoverContext.Default);
 
         string IPersistableModel<StorageMoverEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageMoverEndpointData>)Data).GetFormatFromOptions(options);
     }

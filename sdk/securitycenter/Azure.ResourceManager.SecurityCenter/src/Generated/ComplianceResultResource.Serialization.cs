@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         ComplianceResultData IJsonModel<ComplianceResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComplianceResultData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ComplianceResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ComplianceResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComplianceResultData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        ComplianceResultData IPersistableModel<ComplianceResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComplianceResultData>(data, options);
+        ComplianceResultData IPersistableModel<ComplianceResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComplianceResultData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<ComplianceResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComplianceResultData>)Data).GetFormatFromOptions(options);
     }

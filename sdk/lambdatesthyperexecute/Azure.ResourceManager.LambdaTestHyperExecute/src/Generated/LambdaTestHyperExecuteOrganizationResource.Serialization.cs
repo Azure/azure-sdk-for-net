@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
 
         LambdaTestHyperExecuteOrganizationData IJsonModel<LambdaTestHyperExecuteOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LambdaTestHyperExecuteOrganizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LambdaTestHyperExecuteOrganizationData>(Data, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
 
-        LambdaTestHyperExecuteOrganizationData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LambdaTestHyperExecuteOrganizationData>(data, options);
+        LambdaTestHyperExecuteOrganizationData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LambdaTestHyperExecuteOrganizationData>(data, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
 
         string IPersistableModel<LambdaTestHyperExecuteOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LambdaTestHyperExecuteOrganizationData>)Data).GetFormatFromOptions(options);
     }

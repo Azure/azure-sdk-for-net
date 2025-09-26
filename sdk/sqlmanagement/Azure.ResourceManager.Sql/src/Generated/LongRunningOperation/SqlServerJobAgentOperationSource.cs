@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerJobAgentResource IOperationSource<SqlServerJobAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerJobAgentData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerJobAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerJobAgentResource(_client, data);
         }
 
         async ValueTask<SqlServerJobAgentResource> IOperationSource<SqlServerJobAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerJobAgentData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerJobAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new SqlServerJobAgentResource(_client, data)).ConfigureAwait(false);
         }
     }

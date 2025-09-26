@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutoUpgradeProfileGenerateResult)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         DeviceProvisioningServiceData IJsonModel<DeviceProvisioningServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceProvisioningServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceProvisioningServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceProvisioningServiceData>(Data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
-        DeviceProvisioningServiceData IPersistableModel<DeviceProvisioningServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServiceData>(data, options);
+        DeviceProvisioningServiceData IPersistableModel<DeviceProvisioningServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServiceData>(data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
         string IPersistableModel<DeviceProvisioningServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServiceData>)Data).GetFormatFromOptions(options);
     }

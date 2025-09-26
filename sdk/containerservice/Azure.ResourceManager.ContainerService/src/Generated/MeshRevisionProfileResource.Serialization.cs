@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerService
 
         MeshRevisionProfileData IJsonModel<MeshRevisionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MeshRevisionProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MeshRevisionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MeshRevisionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MeshRevisionProfileData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        MeshRevisionProfileData IPersistableModel<MeshRevisionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MeshRevisionProfileData>(data, options);
+        MeshRevisionProfileData IPersistableModel<MeshRevisionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MeshRevisionProfileData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
         string IPersistableModel<MeshRevisionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MeshRevisionProfileData>)Data).GetFormatFromOptions(options);
     }

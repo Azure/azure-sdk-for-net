@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         AdaptiveNetworkHardeningData IJsonModel<AdaptiveNetworkHardeningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdaptiveNetworkHardeningData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AdaptiveNetworkHardeningData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AdaptiveNetworkHardeningData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdaptiveNetworkHardeningData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        AdaptiveNetworkHardeningData IPersistableModel<AdaptiveNetworkHardeningData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdaptiveNetworkHardeningData>(data, options);
+        AdaptiveNetworkHardeningData IPersistableModel<AdaptiveNetworkHardeningData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdaptiveNetworkHardeningData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<AdaptiveNetworkHardeningData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdaptiveNetworkHardeningData>)Data).GetFormatFromOptions(options);
     }

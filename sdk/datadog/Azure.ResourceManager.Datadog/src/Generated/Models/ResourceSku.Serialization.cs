@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Datadog.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceSku)} does not support writing '{options.Format}' format.");
             }

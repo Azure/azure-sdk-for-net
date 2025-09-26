@@ -17,7 +17,7 @@ namespace Parameters.CollectionFormat
     {
         protected Header() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Csv(IEnumerable<string> colors, RequestContext context) => throw null;
 

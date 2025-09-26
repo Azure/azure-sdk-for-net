@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Grafana
 {
+    public partial class AzureResourceManagerGrafanaContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerGrafanaContext() { }
+        public static Azure.ResourceManager.Grafana.AzureResourceManagerGrafanaContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class GrafanaExtensions
     {
         public static Azure.ResourceManager.Grafana.GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }

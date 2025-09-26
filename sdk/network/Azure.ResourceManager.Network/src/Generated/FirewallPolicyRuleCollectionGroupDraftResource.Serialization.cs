@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         FirewallPolicyRuleCollectionGroupDraftData IJsonModel<FirewallPolicyRuleCollectionGroupDraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirewallPolicyRuleCollectionGroupDraftData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FirewallPolicyRuleCollectionGroupDraftData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        FirewallPolicyRuleCollectionGroupDraftData IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirewallPolicyRuleCollectionGroupDraftData>(data, options);
+        FirewallPolicyRuleCollectionGroupDraftData IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirewallPolicyRuleCollectionGroupDraftData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>)Data).GetFormatFromOptions(options);
     }

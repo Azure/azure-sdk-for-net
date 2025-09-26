@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         MonitoringMetricConfigurationData IJsonModel<MonitoringMetricConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitoringMetricConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MonitoringMetricConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MonitoringMetricConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitoringMetricConfigurationData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        MonitoringMetricConfigurationData IPersistableModel<MonitoringMetricConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitoringMetricConfigurationData>(data, options);
+        MonitoringMetricConfigurationData IPersistableModel<MonitoringMetricConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitoringMetricConfigurationData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
         string IPersistableModel<MonitoringMetricConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitoringMetricConfigurationData>)Data).GetFormatFromOptions(options);
     }

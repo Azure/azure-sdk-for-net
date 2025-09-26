@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NotificationHubs
 
         NotificationHubNamespaceResource IOperationSource<NotificationHubNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NotificationHubNamespaceData>(response.Content);
+            var data = ModelReaderWriter.Read<NotificationHubNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNotificationHubsContext.Default);
             return new NotificationHubNamespaceResource(_client, data);
         }
 
         async ValueTask<NotificationHubNamespaceResource> IOperationSource<NotificationHubNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NotificationHubNamespaceData>(response.Content);
+            var data = ModelReaderWriter.Read<NotificationHubNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNotificationHubsContext.Default);
             return await Task.FromResult(new NotificationHubNamespaceResource(_client, data)).ConfigureAwait(false);
         }
     }

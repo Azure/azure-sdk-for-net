@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.WebPubSub
 
         WebPubSubHubResource IOperationSource<WebPubSubHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WebPubSubHubData>(response.Content);
+            var data = ModelReaderWriter.Read<WebPubSubHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
             return new WebPubSubHubResource(_client, data);
         }
 
         async ValueTask<WebPubSubHubResource> IOperationSource<WebPubSubHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WebPubSubHubData>(response.Content);
+            var data = ModelReaderWriter.Read<WebPubSubHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
             return await Task.FromResult(new WebPubSubHubResource(_client, data)).ConfigureAwait(false);
         }
     }

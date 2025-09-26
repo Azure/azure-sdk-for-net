@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EdgeZones
 
         ExtendedZoneData IJsonModel<ExtendedZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedZoneData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExtendedZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExtendedZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtendedZoneData>(Data, options, AzureResourceManagerEdgeZonesContext.Default);
 
-        ExtendedZoneData IPersistableModel<ExtendedZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedZoneData>(data, options);
+        ExtendedZoneData IPersistableModel<ExtendedZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedZoneData>(data, options, AzureResourceManagerEdgeZonesContext.Default);
 
         string IPersistableModel<ExtendedZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedZoneData>)Data).GetFormatFromOptions(options);
     }

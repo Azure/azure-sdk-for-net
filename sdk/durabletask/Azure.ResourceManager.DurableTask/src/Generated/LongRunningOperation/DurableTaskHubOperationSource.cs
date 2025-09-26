@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DurableTask
 
         DurableTaskHubResource IOperationSource<DurableTaskHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskHubData>(response.Content);
+            var data = ModelReaderWriter.Read<DurableTaskHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
             return new DurableTaskHubResource(_client, data);
         }
 
         async ValueTask<DurableTaskHubResource> IOperationSource<DurableTaskHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskHubData>(response.Content);
+            var data = ModelReaderWriter.Read<DurableTaskHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
             return await Task.FromResult(new DurableTaskHubResource(_client, data)).ConfigureAwait(false);
         }
     }

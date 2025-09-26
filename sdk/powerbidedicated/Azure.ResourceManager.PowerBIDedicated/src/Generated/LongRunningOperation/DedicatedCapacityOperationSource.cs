@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         DedicatedCapacityResource IOperationSource<DedicatedCapacityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DedicatedCapacityData>(response.Content);
+            var data = ModelReaderWriter.Read<DedicatedCapacityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPowerBIDedicatedContext.Default);
             return new DedicatedCapacityResource(_client, data);
         }
 
         async ValueTask<DedicatedCapacityResource> IOperationSource<DedicatedCapacityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DedicatedCapacityData>(response.Content);
+            var data = ModelReaderWriter.Read<DedicatedCapacityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPowerBIDedicatedContext.Default);
             return await Task.FromResult(new DedicatedCapacityResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -78,7 +78,7 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "image_file": return MessageInputImageFileBlock.DeserializeMessageInputImageFileBlock(element, options);
-                    case "image_url": return MessageInputImageUrlBlock.DeserializeMessageInputImageUrlBlock(element, options);
+                    case "image_url": return MessageInputImageUriBlock.DeserializeMessageInputImageUriBlock(element, options);
                     case "text": return MessageInputTextBlock.DeserializeMessageInputTextBlock(element, options);
                 }
             }
@@ -92,7 +92,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MessageInputContentBlock)} does not support writing '{options.Format}' format.");
             }

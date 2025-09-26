@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         FirewallPolicyRuleCollectionGroupResource IOperationSource<FirewallPolicyRuleCollectionGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FirewallPolicyRuleCollectionGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<FirewallPolicyRuleCollectionGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new FirewallPolicyRuleCollectionGroupResource(_client, data);
         }
 
         async ValueTask<FirewallPolicyRuleCollectionGroupResource> IOperationSource<FirewallPolicyRuleCollectionGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FirewallPolicyRuleCollectionGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<FirewallPolicyRuleCollectionGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new FirewallPolicyRuleCollectionGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

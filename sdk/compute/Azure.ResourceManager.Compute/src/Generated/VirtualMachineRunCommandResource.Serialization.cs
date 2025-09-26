@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         VirtualMachineRunCommandData IJsonModel<VirtualMachineRunCommandData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineRunCommandData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualMachineRunCommandData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualMachineRunCommandData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineRunCommandData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        VirtualMachineRunCommandData IPersistableModel<VirtualMachineRunCommandData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineRunCommandData>(data, options);
+        VirtualMachineRunCommandData IPersistableModel<VirtualMachineRunCommandData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineRunCommandData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<VirtualMachineRunCommandData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineRunCommandData>)Data).GetFormatFromOptions(options);
     }

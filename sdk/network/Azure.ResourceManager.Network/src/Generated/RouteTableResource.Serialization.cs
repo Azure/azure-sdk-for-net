@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         RouteTableData IJsonModel<RouteTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteTableData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RouteTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RouteTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RouteTableData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        RouteTableData IPersistableModel<RouteTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteTableData>(data, options);
+        RouteTableData IPersistableModel<RouteTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteTableData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<RouteTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteTableData>)Data).GetFormatFromOptions(options);
     }

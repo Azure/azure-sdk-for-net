@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         LogicalDatabaseTransparentDataEncryptionResource IOperationSource<LogicalDatabaseTransparentDataEncryptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LogicalDatabaseTransparentDataEncryptionData>(response.Content);
+            var data = ModelReaderWriter.Read<LogicalDatabaseTransparentDataEncryptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new LogicalDatabaseTransparentDataEncryptionResource(_client, data);
         }
 
         async ValueTask<LogicalDatabaseTransparentDataEncryptionResource> IOperationSource<LogicalDatabaseTransparentDataEncryptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LogicalDatabaseTransparentDataEncryptionData>(response.Content);
+            var data = ModelReaderWriter.Read<LogicalDatabaseTransparentDataEncryptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new LogicalDatabaseTransparentDataEncryptionResource(_client, data)).ConfigureAwait(false);
         }
     }

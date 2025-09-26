@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Marketplace
 
         PrivateStoreData IJsonModel<PrivateStoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PrivateStoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PrivateStoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateStoreData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
 
-        PrivateStoreData IPersistableModel<PrivateStoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateStoreData>(data, options);
+        PrivateStoreData IPersistableModel<PrivateStoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateStoreData>(data, options, AzureResourceManagerMarketplaceContext.Default);
 
         string IPersistableModel<PrivateStoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateStoreData>)Data).GetFormatFromOptions(options);
     }

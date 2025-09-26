@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         ExpressRouteCircuitData IJsonModel<ExpressRouteCircuitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteCircuitData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ExpressRouteCircuitData IPersistableModel<ExpressRouteCircuitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCircuitData>(data, options);
+        ExpressRouteCircuitData IPersistableModel<ExpressRouteCircuitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCircuitData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<ExpressRouteCircuitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCircuitData>)Data).GetFormatFromOptions(options);
     }

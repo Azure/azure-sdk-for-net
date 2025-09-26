@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UploadLimitSchedule)} does not support writing '{options.Format}' format.");
             }

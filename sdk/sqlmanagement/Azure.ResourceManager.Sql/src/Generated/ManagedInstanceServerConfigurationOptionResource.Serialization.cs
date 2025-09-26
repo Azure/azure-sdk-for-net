@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceServerConfigurationOptionData IJsonModel<ManagedInstanceServerConfigurationOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceServerConfigurationOptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedInstanceServerConfigurationOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedInstanceServerConfigurationOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceServerConfigurationOptionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedInstanceServerConfigurationOptionData IPersistableModel<ManagedInstanceServerConfigurationOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceServerConfigurationOptionData>(data, options);
+        ManagedInstanceServerConfigurationOptionData IPersistableModel<ManagedInstanceServerConfigurationOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceServerConfigurationOptionData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedInstanceServerConfigurationOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceServerConfigurationOptionData>)Data).GetFormatFromOptions(options);
     }

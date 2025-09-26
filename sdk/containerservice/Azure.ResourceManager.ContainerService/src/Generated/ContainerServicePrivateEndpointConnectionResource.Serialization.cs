@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerService
 
         ContainerServicePrivateEndpointConnectionData IJsonModel<ContainerServicePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServicePrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServicePrivateEndpointConnectionData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        ContainerServicePrivateEndpointConnectionData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServicePrivateEndpointConnectionData>(data, options);
+        ContainerServicePrivateEndpointConnectionData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServicePrivateEndpointConnectionData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
         string IPersistableModel<ContainerServicePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServicePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

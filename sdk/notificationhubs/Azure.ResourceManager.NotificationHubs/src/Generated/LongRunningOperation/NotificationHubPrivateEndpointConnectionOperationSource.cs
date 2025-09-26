@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NotificationHubs
 
         NotificationHubPrivateEndpointConnectionResource IOperationSource<NotificationHubPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NotificationHubPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<NotificationHubPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNotificationHubsContext.Default);
             return new NotificationHubPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<NotificationHubPrivateEndpointConnectionResource> IOperationSource<NotificationHubPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NotificationHubPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<NotificationHubPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNotificationHubsContext.Default);
             return await Task.FromResult(new NotificationHubPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

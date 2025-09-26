@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.MachineLearning
 {
+    public partial class AzureResourceManagerMachineLearningContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMachineLearningContext() { }
+        public static Azure.ResourceManager.MachineLearning.AzureResourceManagerMachineLearningContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MachineLearningBatchDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearning.MachineLearningBatchDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.MachineLearningBatchDeploymentResource>, System.Collections.IEnumerable
     {
         protected MachineLearningBatchDeploymentCollection() { }

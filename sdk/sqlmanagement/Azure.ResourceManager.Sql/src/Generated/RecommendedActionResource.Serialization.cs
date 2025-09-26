@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         RecommendedActionData IJsonModel<RecommendedActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecommendedActionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RecommendedActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RecommendedActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecommendedActionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        RecommendedActionData IPersistableModel<RecommendedActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecommendedActionData>(data, options);
+        RecommendedActionData IPersistableModel<RecommendedActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecommendedActionData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<RecommendedActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecommendedActionData>)Data).GetFormatFromOptions(options);
     }

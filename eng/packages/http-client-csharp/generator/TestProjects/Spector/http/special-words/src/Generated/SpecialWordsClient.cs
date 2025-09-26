@@ -16,7 +16,7 @@ namespace SpecialWords
 
         public SpecialWordsClient(Uri endpoint, SpecialWordsClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Models GetModelsClient() => throw null;
 

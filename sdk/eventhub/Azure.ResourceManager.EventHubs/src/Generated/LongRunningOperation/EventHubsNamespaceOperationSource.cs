@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventHubs
 
         EventHubsNamespaceResource IOperationSource<EventHubsNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventHubsNamespaceData>(response.Content);
+            var data = ModelReaderWriter.Read<EventHubsNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventHubsContext.Default);
             return new EventHubsNamespaceResource(_client, data);
         }
 
         async ValueTask<EventHubsNamespaceResource> IOperationSource<EventHubsNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventHubsNamespaceData>(response.Content);
+            var data = ModelReaderWriter.Read<EventHubsNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventHubsContext.Default);
             return await Task.FromResult(new EventHubsNamespaceResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -108,6 +108,7 @@ namespace Azure.Storage
         public const string ErrorCodeLower = "code";
         public const string ErrorMessage = "Message";
         public const string ErrorMessageLower = "message";
+        public const string HeaderName = "HeaderName";
 
         public const string CommaString = ",";
         public const char CommaChar = ',';
@@ -129,6 +130,14 @@ namespace Azure.Storage
         public const string DisableExpectContinueHeaderEnvVar = "AZURE_STORAGE_DISABLE_EXPECT_CONTINUE_HEADER";
 
         public const string DefaultScope = "/.default";
+
+        /// <summary>
+        /// Error string constant values.
+        /// </summary>
+        internal static class Errors
+        {
+            public const string InvalidVersionHeaderMessage = "The provided service version is not enabled on this storage account.  Please see https://learn.microsoft.com/rest/api/storageservices/versioning-for-the-azure-storage-services for additional information.\n";
+        }
 
         /// <summary>
         /// Storage Connection String constant values.
@@ -199,6 +208,7 @@ namespace Azure.Storage
             public const string LastModified = "Last-Modified";
             public const string ETag = "ETag";
             public const string CopySourceErrorCode = "x-ms-copy-source-error-code";
+            public const string Version = "x-ms-version";
         }
 
         internal static class ErrorCodes
@@ -208,6 +218,7 @@ namespace Azure.Storage
             public const string ServerBusy = "ServerBusy";
             public const string ContainerAlreadyExists = "ContainerAlreadyExists";
             public const string BlobAlreadyExists = "BlobAlreadyExists";
+            public const string InvalidHeaderValue = "InvalidHeaderValue";
         }
 
         /// <summary>

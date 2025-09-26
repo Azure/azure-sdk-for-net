@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Kusto
 
         KustoScriptData IJsonModel<KustoScriptData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoScriptData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoScriptData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KustoScriptData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoScriptData>(Data, options, AzureResourceManagerKustoContext.Default);
 
-        KustoScriptData IPersistableModel<KustoScriptData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoScriptData>(data, options);
+        KustoScriptData IPersistableModel<KustoScriptData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoScriptData>(data, options, AzureResourceManagerKustoContext.Default);
 
         string IPersistableModel<KustoScriptData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoScriptData>)Data).GetFormatFromOptions(options);
     }

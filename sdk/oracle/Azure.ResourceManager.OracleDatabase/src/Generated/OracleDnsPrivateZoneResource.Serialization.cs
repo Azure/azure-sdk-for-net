@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OracleDatabase
 
         OracleDnsPrivateZoneData IJsonModel<OracleDnsPrivateZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleDnsPrivateZoneData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OracleDnsPrivateZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OracleDnsPrivateZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleDnsPrivateZoneData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        OracleDnsPrivateZoneData IPersistableModel<OracleDnsPrivateZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleDnsPrivateZoneData>(data, options);
+        OracleDnsPrivateZoneData IPersistableModel<OracleDnsPrivateZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleDnsPrivateZoneData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         string IPersistableModel<OracleDnsPrivateZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleDnsPrivateZoneData>)Data).GetFormatFromOptions(options);
     }

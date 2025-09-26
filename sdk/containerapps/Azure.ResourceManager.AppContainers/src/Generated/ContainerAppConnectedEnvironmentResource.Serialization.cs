@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppContainers
 
         ContainerAppConnectedEnvironmentData IJsonModel<ContainerAppConnectedEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppConnectedEnvironmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerAppConnectedEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerAppConnectedEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppConnectedEnvironmentData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        ContainerAppConnectedEnvironmentData IPersistableModel<ContainerAppConnectedEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppConnectedEnvironmentData>(data, options);
+        ContainerAppConnectedEnvironmentData IPersistableModel<ContainerAppConnectedEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppConnectedEnvironmentData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
         string IPersistableModel<ContainerAppConnectedEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppConnectedEnvironmentData>)Data).GetFormatFromOptions(options);
     }

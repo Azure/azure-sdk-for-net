@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppBackupData IJsonModel<NetAppBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetAppBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppBackupData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        NetAppBackupData IPersistableModel<NetAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppBackupData>(data, options);
+        NetAppBackupData IPersistableModel<NetAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppBackupData>(data, options, AzureResourceManagerNetAppContext.Default);
 
         string IPersistableModel<NetAppBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppBackupData>)Data).GetFormatFromOptions(options);
     }

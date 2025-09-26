@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EventGridTopicPatch)} does not support writing '{options.Format}' format.");
             }

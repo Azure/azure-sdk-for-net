@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ResourceMover
 
         MoverResource IOperationSource<MoverResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MoverResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MoverResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourceMoverContext.Default);
             return new MoverResource(_client, data);
         }
 
         async ValueTask<MoverResource> IOperationSource<MoverResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MoverResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MoverResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourceMoverContext.Default);
             return await Task.FromResult(new MoverResource(_client, data)).ConfigureAwait(false);
         }
     }

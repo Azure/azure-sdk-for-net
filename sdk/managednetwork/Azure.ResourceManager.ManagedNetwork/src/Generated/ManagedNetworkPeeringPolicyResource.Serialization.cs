@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         ManagedNetworkPeeringPolicyData IJsonModel<ManagedNetworkPeeringPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkPeeringPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedNetworkPeeringPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedNetworkPeeringPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedNetworkPeeringPolicyData>(Data, options, AzureResourceManagerManagedNetworkContext.Default);
 
-        ManagedNetworkPeeringPolicyData IPersistableModel<ManagedNetworkPeeringPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkPeeringPolicyData>(data, options);
+        ManagedNetworkPeeringPolicyData IPersistableModel<ManagedNetworkPeeringPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkPeeringPolicyData>(data, options, AzureResourceManagerManagedNetworkContext.Default);
 
         string IPersistableModel<ManagedNetworkPeeringPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedNetworkPeeringPolicyData>)Data).GetFormatFromOptions(options);
     }

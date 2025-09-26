@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The VectorStore_object. </summary>
+    /// <summary> The VectorStoreObject. </summary>
     public readonly partial struct VectorStoreObject : IEquatable<VectorStoreObject>
     {
         private readonly string _value;

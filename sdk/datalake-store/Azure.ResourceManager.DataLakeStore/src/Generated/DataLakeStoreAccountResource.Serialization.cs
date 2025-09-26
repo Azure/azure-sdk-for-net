@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataLakeStore
 
         DataLakeStoreAccountData IJsonModel<DataLakeStoreAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeStoreAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeStoreAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeStoreAccountData>(Data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
-        DataLakeStoreAccountData IPersistableModel<DataLakeStoreAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreAccountData>(data, options);
+        DataLakeStoreAccountData IPersistableModel<DataLakeStoreAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreAccountData>(data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
         string IPersistableModel<DataLakeStoreAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreAccountData>)Data).GetFormatFromOptions(options);
     }

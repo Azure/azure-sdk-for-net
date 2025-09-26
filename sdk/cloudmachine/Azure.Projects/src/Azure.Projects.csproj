@@ -15,7 +15,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Data.AppConfiguration" />
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
     <PackageReference Include="Azure.Messaging.EventGrid" />
@@ -26,6 +25,7 @@
     <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="Azure.Search.Documents" />
     <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
 </Project>

@@ -86,7 +86,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 new MessageInputImageFileBlock(new MessageImageFileParam(uploadedFile.Id))
             };
 
-            ThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
+            PersistentThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
                 thread.Id,
                 MessageRole.User,
                 contentBlocks: contentBlocks
@@ -118,9 +118,9 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 8) Retrieve messages (including any agent responses) and print them
             #region Snippet:AgentsImageFileInMessageReview
-            AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(thread.Id);
+            AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(thread.Id);
 
-            await foreach (ThreadMessage msg in messages)
+            await foreach (PersistentThreadMessage msg in messages)
             {
                 Console.WriteLine($"{msg.CreatedAt:yyyy-MM-dd HH:mm:ss} - {msg.Role,10}:");
 
@@ -200,7 +200,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 new MessageInputImageFileBlock(new MessageImageFileParam(uploadedFile.Id))
             };
 
-            ThreadMessage imageMessage = client.Messages.CreateMessage(
+            PersistentThreadMessage imageMessage = client.Messages.CreateMessage(
                 threadId: thread.Id,
                 role: MessageRole.User,
                 contentBlocks: contentBlocks
@@ -232,9 +232,9 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 8) Retrieve messages (including any agent responses) and print them
             #region Snippet:AgentsImageFileInMessageReview_Sync
-            Pageable<ThreadMessage> messages = client.Messages.GetMessages(thread.Id);
+            Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(thread.Id);
 
-            foreach (ThreadMessage msg in messages)
+            foreach (PersistentThreadMessage msg in messages)
             {
                 Console.WriteLine($"{msg.CreatedAt:yyyy-MM-dd HH:mm:ss} - {msg.Role,10}:");
 

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ExtendedLocations
 
         CustomLocationResource IOperationSource<CustomLocationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CustomLocationData>(response.Content);
+            var data = ModelReaderWriter.Read<CustomLocationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerExtendedLocationsContext.Default);
             return new CustomLocationResource(_client, data);
         }
 
         async ValueTask<CustomLocationResource> IOperationSource<CustomLocationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CustomLocationData>(response.Content);
+            var data = ModelReaderWriter.Read<CustomLocationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerExtendedLocationsContext.Default);
             return await Task.FromResult(new CustomLocationResource(_client, data)).ConfigureAwait(false);
         }
     }

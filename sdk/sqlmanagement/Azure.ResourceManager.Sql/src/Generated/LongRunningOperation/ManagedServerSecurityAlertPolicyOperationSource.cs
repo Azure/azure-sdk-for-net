@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedServerSecurityAlertPolicyResource IOperationSource<ManagedServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedServerSecurityAlertPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedServerSecurityAlertPolicyResource(_client, data);
         }
 
         async ValueTask<ManagedServerSecurityAlertPolicyResource> IOperationSource<ManagedServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedServerSecurityAlertPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ManagedServerSecurityAlertPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

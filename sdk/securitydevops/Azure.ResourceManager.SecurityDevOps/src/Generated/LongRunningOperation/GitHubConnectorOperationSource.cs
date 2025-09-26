@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         GitHubConnectorResource IOperationSource<GitHubConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GitHubConnectorData>(response.Content);
+            var data = ModelReaderWriter.Read<GitHubConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityDevOpsContext.Default);
             return new GitHubConnectorResource(_client, data);
         }
 
         async ValueTask<GitHubConnectorResource> IOperationSource<GitHubConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GitHubConnectorData>(response.Content);
+            var data = ModelReaderWriter.Read<GitHubConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityDevOpsContext.Default);
             return await Task.FromResult(new GitHubConnectorResource(_client, data)).ConfigureAwait(false);
         }
     }

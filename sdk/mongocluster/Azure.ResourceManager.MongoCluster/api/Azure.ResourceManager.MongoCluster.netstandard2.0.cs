@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.MongoCluster
 {
+    public partial class AzureResourceManagerMongoClusterContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMongoClusterContext() { }
+        public static Azure.ResourceManager.MongoCluster.AzureResourceManagerMongoClusterContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MongoClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MongoCluster.MongoClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.MongoClusterResource>, System.Collections.IEnumerable
     {
         protected MongoClusterCollection() { }

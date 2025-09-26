@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MySql
 
         MySqlPrivateLinkResourceData IJsonModel<MySqlPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MySqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MySqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlPrivateLinkResourceData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
-        MySqlPrivateLinkResourceData IPersistableModel<MySqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlPrivateLinkResourceData>(data, options);
+        MySqlPrivateLinkResourceData IPersistableModel<MySqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlPrivateLinkResourceData>(data, options, AzureResourceManagerMySqlContext.Default);
 
         string IPersistableModel<MySqlPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

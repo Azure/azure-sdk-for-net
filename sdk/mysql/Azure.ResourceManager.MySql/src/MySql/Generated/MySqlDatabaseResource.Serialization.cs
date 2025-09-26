@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MySql
 
         MySqlDatabaseData IJsonModel<MySqlDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlDatabaseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MySqlDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MySqlDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlDatabaseData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
-        MySqlDatabaseData IPersistableModel<MySqlDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlDatabaseData>(data, options);
+        MySqlDatabaseData IPersistableModel<MySqlDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlDatabaseData>(data, options, AzureResourceManagerMySqlContext.Default);
 
         string IPersistableModel<MySqlDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlDatabaseData>)Data).GetFormatFromOptions(options);
     }

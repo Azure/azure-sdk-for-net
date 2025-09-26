@@ -73,8 +73,5 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The type of binding, which is always 'storage_queue'. </summary>
         public AzureFunctionBindingType Type { get; } = AzureFunctionBindingType.StorageQueue;
-
-        /// <summary> Storage queue. </summary>
-        public AzureFunctionStorageQueue StorageQueue { get; set; }
     }
 }

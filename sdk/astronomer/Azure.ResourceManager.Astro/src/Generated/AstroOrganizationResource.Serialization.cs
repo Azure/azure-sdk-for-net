@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Astro
 
         AstroOrganizationData IJsonModel<AstroOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AstroOrganizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AstroOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AstroOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AstroOrganizationData>(Data, options, AzureResourceManagerAstroContext.Default);
 
-        AstroOrganizationData IPersistableModel<AstroOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AstroOrganizationData>(data, options);
+        AstroOrganizationData IPersistableModel<AstroOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AstroOrganizationData>(data, options, AzureResourceManagerAstroContext.Default);
 
         string IPersistableModel<AstroOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AstroOrganizationData>)Data).GetFormatFromOptions(options);
     }

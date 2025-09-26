@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServerDatabaseData IJsonModel<PostgreSqlFlexibleServerDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerDatabaseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlFlexibleServerDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerDatabaseData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlFlexibleServerDatabaseData IPersistableModel<PostgreSqlFlexibleServerDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerDatabaseData>(data, options);
+        PostgreSqlFlexibleServerDatabaseData IPersistableModel<PostgreSqlFlexibleServerDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerDatabaseData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlFlexibleServerDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerDatabaseData>)Data).GetFormatFromOptions(options);
     }

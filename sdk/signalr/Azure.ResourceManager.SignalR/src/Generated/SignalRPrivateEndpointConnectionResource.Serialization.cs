@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRPrivateEndpointConnectionData IJsonModel<SignalRPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SignalRPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SignalRPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRPrivateEndpointConnectionData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
-        SignalRPrivateEndpointConnectionData IPersistableModel<SignalRPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRPrivateEndpointConnectionData>(data, options);
+        SignalRPrivateEndpointConnectionData IPersistableModel<SignalRPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRPrivateEndpointConnectionData>(data, options, AzureResourceManagerSignalRContext.Default);
 
         string IPersistableModel<SignalRPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

@@ -1,5 +1,11 @@
 namespace Azure.AI.Language.Conversations
 {
+    public partial class AzureAILanguageConversationsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAILanguageConversationsContext() { }
+        public static Azure.AI.Language.Conversations.AzureAILanguageConversationsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConversationAnalysisClient
     {
         protected ConversationAnalysisClient() { }

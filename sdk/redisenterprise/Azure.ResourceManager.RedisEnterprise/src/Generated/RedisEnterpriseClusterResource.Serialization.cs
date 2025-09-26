@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         RedisEnterpriseClusterData IJsonModel<RedisEnterpriseClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisEnterpriseClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RedisEnterpriseClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisEnterpriseClusterData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        RedisEnterpriseClusterData IPersistableModel<RedisEnterpriseClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterpriseClusterData>(data, options);
+        RedisEnterpriseClusterData IPersistableModel<RedisEnterpriseClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterpriseClusterData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
         string IPersistableModel<RedisEnterpriseClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterpriseClusterData>)Data).GetFormatFromOptions(options);
     }

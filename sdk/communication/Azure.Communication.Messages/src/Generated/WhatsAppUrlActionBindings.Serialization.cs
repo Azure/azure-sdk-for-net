@@ -91,7 +91,7 @@ namespace Azure.Communication.Messages.Models.Channels
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WhatsAppUrlActionBindings)} does not support writing '{options.Format}' format.");
             }

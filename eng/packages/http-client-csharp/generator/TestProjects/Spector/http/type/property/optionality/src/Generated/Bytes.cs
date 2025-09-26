@@ -17,7 +17,7 @@ namespace _Type.Property.Optional
     {
         protected Bytes() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAll(RequestContext context) => throw null;
 

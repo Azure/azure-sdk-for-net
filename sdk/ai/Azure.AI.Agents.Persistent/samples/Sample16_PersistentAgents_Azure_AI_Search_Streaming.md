@@ -19,7 +19,7 @@ var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTIO
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_CreateTool
-AzureAISearchResource searchResource = new(
+AzureAISearchToolResource searchResource = new(
     connectionID,
     "sample_index",
     5,
@@ -43,7 +43,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_CreateTool_Async
-AzureAISearchResource searchResource = new(
+AzureAISearchToolResource searchResource = new(
     connectionID,
     "sample_index",
     5,
@@ -73,7 +73,7 @@ Synchronous sample:
 PersistentAgentThread thread = client.Threads.CreateThread();
 
 // Create message to thread
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "What is the temperature rating of the cozynights sleeping bag?");
@@ -85,7 +85,7 @@ Asynchronous sample:
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
 // Create message to thread
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What is the temperature rating of the cozynights sleeping bag?");

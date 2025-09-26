@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             int length = stringBuilder.Length;
             bool inMultilineString = false;
 
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            BinaryData data = ModelReaderWriter.Write(childObject, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < lines.Length; i++)
             {

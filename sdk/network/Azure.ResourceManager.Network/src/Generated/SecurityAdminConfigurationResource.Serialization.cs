@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         SecurityAdminConfigurationData IJsonModel<SecurityAdminConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAdminConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityAdminConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityAdminConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityAdminConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        SecurityAdminConfigurationData IPersistableModel<SecurityAdminConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAdminConfigurationData>(data, options);
+        SecurityAdminConfigurationData IPersistableModel<SecurityAdminConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAdminConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<SecurityAdminConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAdminConfigurationData>)Data).GetFormatFromOptions(options);
     }

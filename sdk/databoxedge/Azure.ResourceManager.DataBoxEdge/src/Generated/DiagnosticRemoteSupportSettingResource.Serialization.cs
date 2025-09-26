@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DiagnosticRemoteSupportSettingData IJsonModel<DiagnosticRemoteSupportSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticRemoteSupportSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiagnosticRemoteSupportSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DiagnosticRemoteSupportSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticRemoteSupportSettingData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        DiagnosticRemoteSupportSettingData IPersistableModel<DiagnosticRemoteSupportSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticRemoteSupportSettingData>(data, options);
+        DiagnosticRemoteSupportSettingData IPersistableModel<DiagnosticRemoteSupportSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticRemoteSupportSettingData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
         string IPersistableModel<DiagnosticRemoteSupportSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticRemoteSupportSettingData>)Data).GetFormatFromOptions(options);
     }

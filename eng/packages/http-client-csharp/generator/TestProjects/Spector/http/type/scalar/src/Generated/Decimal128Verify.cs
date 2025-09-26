@@ -18,7 +18,7 @@ namespace _Type.Scalar
     {
         protected Decimal128Verify() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PrepareVerify(RequestContext context) => throw null;
 

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         ResourceGuardProxyBaseResourceData IJsonModel<ResourceGuardProxyBaseResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGuardProxyBaseResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceGuardProxyBaseResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ResourceGuardProxyBaseResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceGuardProxyBaseResourceData>(Data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
-        ResourceGuardProxyBaseResourceData IPersistableModel<ResourceGuardProxyBaseResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGuardProxyBaseResourceData>(data, options);
+        ResourceGuardProxyBaseResourceData IPersistableModel<ResourceGuardProxyBaseResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGuardProxyBaseResourceData>(data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
         string IPersistableModel<ResourceGuardProxyBaseResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGuardProxyBaseResourceData>)Data).GetFormatFromOptions(options);
     }

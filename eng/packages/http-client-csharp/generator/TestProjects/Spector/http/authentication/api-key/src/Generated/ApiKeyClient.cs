@@ -21,7 +21,7 @@ namespace Authentication.ApiKey
 
         public ApiKeyClient(Uri endpoint, AzureKeyCredential keyCredential, ApiKeyClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Valid(RequestContext context) => throw null;
 

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         RestorePointData IJsonModel<RestorePointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RestorePointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RestorePointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RestorePointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RestorePointData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        RestorePointData IPersistableModel<RestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RestorePointData>(data, options);
+        RestorePointData IPersistableModel<RestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RestorePointData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<RestorePointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RestorePointData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StorageMover
 
         JobRunData IJsonModel<JobRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JobRunData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JobRunData>(Data, options, AzureResourceManagerStorageMoverContext.Default);
 
-        JobRunData IPersistableModel<JobRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JobRunData>(data, options);
+        JobRunData IPersistableModel<JobRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JobRunData>(data, options, AzureResourceManagerStorageMoverContext.Default);
 
         string IPersistableModel<JobRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JobRunData>)Data).GetFormatFromOptions(options);
     }

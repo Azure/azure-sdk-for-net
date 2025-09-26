@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         KubeEnvironmentData IJsonModel<KubeEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubeEnvironmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KubeEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KubeEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubeEnvironmentData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        KubeEnvironmentData IPersistableModel<KubeEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubeEnvironmentData>(data, options);
+        KubeEnvironmentData IPersistableModel<KubeEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubeEnvironmentData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<KubeEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubeEnvironmentData>)Data).GetFormatFromOptions(options);
     }

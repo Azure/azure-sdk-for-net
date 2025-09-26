@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OracleDatabase
 
         OracleSubscriptionData IJsonModel<OracleSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleSubscriptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OracleSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OracleSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleSubscriptionData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        OracleSubscriptionData IPersistableModel<OracleSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleSubscriptionData>(data, options);
+        OracleSubscriptionData IPersistableModel<OracleSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleSubscriptionData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         string IPersistableModel<OracleSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleSubscriptionData>)Data).GetFormatFromOptions(options);
     }

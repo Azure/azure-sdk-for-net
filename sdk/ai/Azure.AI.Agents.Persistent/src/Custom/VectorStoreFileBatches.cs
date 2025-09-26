@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class VectorStoreFileBatches
+    internal partial class VectorStoreFileBatches
     {
         /// <summary> Returns a list of vector store files in a batch. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         ActivityLogAlertData IJsonModel<ActivityLogAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ActivityLogAlertData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ActivityLogAlertData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        ActivityLogAlertData IPersistableModel<ActivityLogAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActivityLogAlertData>(data, options);
+        ActivityLogAlertData IPersistableModel<ActivityLogAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActivityLogAlertData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         string IPersistableModel<ActivityLogAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ActivityLogAlertData>)Data).GetFormatFromOptions(options);
     }

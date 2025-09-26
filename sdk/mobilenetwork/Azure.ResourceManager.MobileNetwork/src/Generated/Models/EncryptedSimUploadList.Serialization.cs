@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMobileNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EncryptedSimUploadList)} does not support writing '{options.Format}' format.");
             }

@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataProductData)} does not support writing '{options.Format}' format.");
             }

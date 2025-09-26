@@ -23,6 +23,26 @@ namespace Azure.AI.Agents.Persistent
             return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Persistent.AISearchIndexResource"/>. </summary>
+        /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this agent. </param>
+        /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
+        /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
+        /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
+        /// <param name="filter"> filter string for search resource. </param>
+        /// <param name="indexAssetId"> Index asset id for search resource. </param>
+        /// <returns> A new <see cref="Persistent.AISearchIndexResource"/> instance for mocking. </returns>
+        public static AISearchIndexResource AISearchIndexResource(string indexConnectionId = null, string indexName = null, AzureAISearchQueryType? queryType = null, int? topK = null, string filter = null, string indexAssetId = null)
+        {
+            return new AISearchIndexResource(
+                indexConnectionId,
+                indexName,
+                queryType,
+                topK,
+                filter,
+                indexAssetId,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Persistent.ResponseFormatJsonSchemaType"/>. </summary>
         /// <param name="type"> Type. </param>
         /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
@@ -81,21 +101,21 @@ namespace Azure.AI.Agents.Persistent
             return new MessageImageFileParam(fileId, detail, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageInputImageUrlBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Persistent.MessageInputImageUriBlock"/>. </summary>
         /// <param name="imageUrl"> Information about the external image URL, including the URL and optional detail level. </param>
-        /// <returns> A new <see cref="Persistent.MessageInputImageUrlBlock"/> instance for mocking. </returns>
-        public static MessageInputImageUrlBlock MessageInputImageUrlBlock(MessageImageUrlParam imageUrl = null)
+        /// <returns> A new <see cref="Persistent.MessageInputImageUriBlock"/> instance for mocking. </returns>
+        public static MessageInputImageUriBlock MessageInputImageUriBlock(MessageImageUriParam imageUrl = null)
         {
-            return new MessageInputImageUrlBlock(MessageBlockType.ImageUrl, serializedAdditionalRawData: null, imageUrl);
+            return new MessageInputImageUriBlock(MessageBlockType.ImageUrl, serializedAdditionalRawData: null, imageUrl);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageImageUrlParam"/>. </summary>
-        /// <param name="url"> The publicly accessible URL of the external image. </param>
+        /// <summary> Initializes a new instance of <see cref="Persistent.MessageImageUriParam"/>. </summary>
+        /// <param name="uri"> The publicly accessible URL of the external image. </param>
         /// <param name="detail"> Optional detail level for the image (auto, low, or high). Defaults to 'auto' if not specified. </param>
-        /// <returns> A new <see cref="Persistent.MessageImageUrlParam"/> instance for mocking. </returns>
-        public static MessageImageUrlParam MessageImageUrlParam(string url = null, ImageDetailLevel? detail = null)
+        /// <returns> A new <see cref="Persistent.MessageImageUriParam"/> instance for mocking. </returns>
+        public static MessageImageUriParam MessageImageUriParam(string uri = null, ImageDetailLevel? detail = null)
         {
-            return new MessageImageUrlParam(url, detail, serializedAdditionalRawData: null);
+            return new MessageImageUriParam(uri, detail, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RequiredToolCall"/>. </summary>
@@ -151,30 +171,30 @@ namespace Azure.AI.Agents.Persistent
             return new UnknownMessageTextAnnotation(type, text, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageTextUrlCitationAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Persistent.MessageTextUriCitationAnnotation"/>. </summary>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="urlCitation"> The details of the URL citation. </param>
+        /// <param name="uriCitation"> The details of the URL citation. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
-        /// <returns> A new <see cref="Persistent.MessageTextUrlCitationAnnotation"/> instance for mocking. </returns>
-        public static MessageTextUrlCitationAnnotation MessageTextUrlCitationAnnotation(string text = null, MessageTextUrlCitationDetails urlCitation = null, int? startIndex = null, int? endIndex = null)
+        /// <returns> A new <see cref="Persistent.MessageTextUriCitationAnnotation"/> instance for mocking. </returns>
+        public static MessageTextUriCitationAnnotation MessageTextUriCitationAnnotation(string text = null, MessageTextUriCitationDetails uriCitation = null, int? startIndex = null, int? endIndex = null)
         {
-            return new MessageTextUrlCitationAnnotation(
+            return new MessageTextUriCitationAnnotation(
                 "url_citation",
                 text,
                 serializedAdditionalRawData: null,
-                urlCitation,
+                uriCitation,
                 startIndex,
                 endIndex);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageTextUrlCitationDetails"/>. </summary>
-        /// <param name="url"> The URL associated with this citation. </param>
+        /// <summary> Initializes a new instance of <see cref="Persistent.MessageTextUriCitationDetails"/>. </summary>
+        /// <param name="uri"> The URL associated with this citation. </param>
         /// <param name="title"> The title of the URL. </param>
-        /// <returns> A new <see cref="Persistent.MessageTextUrlCitationDetails"/> instance for mocking. </returns>
-        public static MessageTextUrlCitationDetails MessageTextUrlCitationDetails(string url = null, string title = null)
+        /// <returns> A new <see cref="Persistent.MessageTextUriCitationDetails"/> instance for mocking. </returns>
+        public static MessageTextUriCitationDetails MessageTextUriCitationDetails(string uri = null, string title = null)
         {
-            return new MessageTextUrlCitationDetails(url, title, serializedAdditionalRawData: null);
+            return new MessageTextUriCitationDetails(uri, title, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMessageCreationDetails"/>. </summary>
@@ -197,7 +217,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Persistent.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/> and <see cref="Persistent.RunStepOpenAPIToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -304,39 +324,6 @@ namespace Azure.AI.Agents.Persistent
             return new RunStepAzureAISearchToolCall("azure_ai_search", id, serializedAdditionalRawData: null, azureAISearch);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepSharepointToolCall"/>. </summary>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="sharePoint"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepSharepointToolCall"/> instance for mocking. </returns>
-        public static RunStepSharepointToolCall RunStepSharepointToolCall(string id = null, IReadOnlyDictionary<string, string> sharePoint = null)
-        {
-            sharePoint ??= new Dictionary<string, string>();
-
-            return new RunStepSharepointToolCall("sharepoint_grounding", id, serializedAdditionalRawData: null, sharePoint);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>. </summary>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="microsoftFabric"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepMicrosoftFabricToolCall"/> instance for mocking. </returns>
-        public static RunStepMicrosoftFabricToolCall RunStepMicrosoftFabricToolCall(string id = null, IReadOnlyDictionary<string, string> microsoftFabric = null)
-        {
-            microsoftFabric ??= new Dictionary<string, string>();
-
-            return new RunStepMicrosoftFabricToolCall("fabric_dataagent", id, serializedAdditionalRawData: null, microsoftFabric);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepBingCustomSearchToolCall"/>. </summary>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="bingCustomSearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepBingCustomSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepBingCustomSearchToolCall RunStepBingCustomSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
-        {
-            bingCustomSearch ??= new Dictionary<string, string>();
-
-            return new RunStepBingCustomSearchToolCall("bing_custom_search", id, serializedAdditionalRawData: null, bingCustomSearch);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepOpenAPIToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="openAPI"> Reserved for future use. </param>
@@ -367,7 +354,7 @@ namespace Azure.AI.Agents.Persistent
             return new RunStepCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.VectorStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Persistent.PersistentAgentsVectorStore"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `vector_store`. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store was created. </param>
@@ -379,12 +366,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="expiresAt"> The Unix timestamp (in seconds) for when the vector store will expire. </param>
         /// <param name="lastActiveAt"> The Unix timestamp (in seconds) for when the vector store was last active. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Persistent.VectorStore"/> instance for mocking. </returns>
-        public static VectorStore VectorStore(string id = null, VectorStoreObject @object = default, DateTimeOffset createdAt = default, string name = null, int usageBytes = default, VectorStoreFileCount fileCounts = null, VectorStoreStatus status = default, VectorStoreExpirationPolicy expiresAfter = null, DateTimeOffset? expiresAt = null, DateTimeOffset? lastActiveAt = null, IReadOnlyDictionary<string, string> metadata = null)
+        /// <returns> A new <see cref="Persistent.PersistentAgentsVectorStore"/> instance for mocking. </returns>
+        public static PersistentAgentsVectorStore PersistentAgentsVectorStore(string id = null, PersistentAgentsVectorStoreObject @object = default, DateTimeOffset createdAt = default, string name = null, int usageBytes = default, VectorStoreFileCount fileCounts = null, VectorStoreStatus status = default, VectorStoreExpirationPolicy expiresAfter = null, DateTimeOffset? expiresAt = null, DateTimeOffset? lastActiveAt = null, IReadOnlyDictionary<string, string> metadata = null)
         {
             metadata ??= new Dictionary<string, string>();
 
-            return new VectorStore(
+            return new PersistentAgentsVectorStore(
                 id,
                 @object,
                 createdAt,
@@ -423,16 +410,6 @@ namespace Azure.AI.Agents.Persistent
         public static VectorStoreStaticChunkingStrategyRequest VectorStoreStaticChunkingStrategyRequest(VectorStoreStaticChunkingStrategyOptions @static = null)
         {
             return new VectorStoreStaticChunkingStrategyRequest(VectorStoreChunkingStrategyRequestType.Static, serializedAdditionalRawData: null, @static);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreDeletionStatus"/>. </summary>
-        /// <param name="id"> The ID of the resource specified for deletion. </param>
-        /// <param name="deleted"> A value indicating whether deletion was successful. </param>
-        /// <param name="object"> The object type, which is always 'vector_store.deleted'. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreDeletionStatus"/> instance for mocking. </returns>
-        public static VectorStoreDeletionStatus VectorStoreDeletionStatus(string id = null, bool deleted = default, VectorStoreDeletionStatusObject @object = default)
-        {
-            return new VectorStoreDeletionStatus(id, deleted, @object, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreFile"/>. </summary>
@@ -481,16 +458,6 @@ namespace Azure.AI.Agents.Persistent
         public static VectorStoreStaticChunkingStrategyResponse VectorStoreStaticChunkingStrategyResponse(VectorStoreStaticChunkingStrategyOptions @static = null)
         {
             return new VectorStoreStaticChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType.Static, serializedAdditionalRawData: null, @static);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreFileDeletionStatus"/>. </summary>
-        /// <param name="id"> The ID of the resource specified for deletion. </param>
-        /// <param name="deleted"> A value indicating whether deletion was successful. </param>
-        /// <param name="object"> The object type, which is always 'vector_store.deleted'. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreFileDeletionStatus"/> instance for mocking. </returns>
-        public static VectorStoreFileDeletionStatus VectorStoreFileDeletionStatus(string id = null, bool deleted = default, VectorStoreFileDeletionStatusObject @object = default)
-        {
-            return new VectorStoreFileDeletionStatus(id, deleted, @object, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreFileBatch"/>. </summary>
@@ -578,7 +545,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="annotations">
         /// Annotations for the text.
         /// Please note <see cref="Persistent.MessageDeltaTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/>, <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/> and <see cref="Persistent.MessageDeltaTextUrlCitationAnnotation"/>.
+        /// The available derived classes include <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/>, <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/> and <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.MessageDeltaTextContentObject"/> instance for mocking. </returns>
         public static MessageDeltaTextContentObject MessageDeltaTextContentObject(string value = null, IEnumerable<MessageDeltaTextAnnotation> annotations = null)
@@ -597,30 +564,30 @@ namespace Azure.AI.Agents.Persistent
             return new UnknownMessageDeltaTextAnnotation(index, type, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextUrlCitationAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
-        /// <param name="urlCitation"> The details of the URL citation. </param>
+        /// <param name="uriCitation"> The details of the URL citation. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextUrlCitationAnnotation"/> instance for mocking. </returns>
-        public static MessageDeltaTextUrlCitationAnnotation MessageDeltaTextUrlCitationAnnotation(int index = default, MessageDeltaTextUrlCitationDetails urlCitation = null, int? startIndex = null, int? endIndex = null)
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/> instance for mocking. </returns>
+        public static MessageDeltaTextUriCitationAnnotation MessageDeltaTextUriCitationAnnotation(int index = default, MessageDeltaTextUriCitationDetails uriCitation = null, int? startIndex = null, int? endIndex = null)
         {
-            return new MessageDeltaTextUrlCitationAnnotation(
+            return new MessageDeltaTextUriCitationAnnotation(
                 index,
                 "url_citation",
                 serializedAdditionalRawData: null,
-                urlCitation,
+                uriCitation,
                 startIndex,
                 endIndex);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextUrlCitationDetails"/>. </summary>
-        /// <param name="url"> The URL associated with this citation. </param>
+        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextUriCitationDetails"/>. </summary>
+        /// <param name="uri"> The URL associated with this citation. </param>
         /// <param name="title"> The title of the URL. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextUrlCitationDetails"/> instance for mocking. </returns>
-        public static MessageDeltaTextUrlCitationDetails MessageDeltaTextUrlCitationDetails(string url = null, string title = null)
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextUriCitationDetails"/> instance for mocking. </returns>
+        public static MessageDeltaTextUriCitationDetails MessageDeltaTextUriCitationDetails(string uri = null, string title = null)
         {
-            return new MessageDeltaTextUrlCitationDetails(url, title, serializedAdditionalRawData: null);
+            return new MessageDeltaTextUriCitationDetails(uri, title, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/>. </summary>

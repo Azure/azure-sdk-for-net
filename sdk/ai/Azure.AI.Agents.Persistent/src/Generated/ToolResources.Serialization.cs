@@ -88,7 +88,7 @@ namespace Azure.AI.Agents.Persistent
             }
             CodeInterpreterToolResource codeInterpreter = default;
             FileSearchToolResource fileSearch = default;
-            AzureAISearchResource azureAiSearch = default;
+            AzureAISearchToolResource azureAiSearch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    azureAiSearch = AzureAISearchResource.DeserializeAzureAISearchResource(property.Value, options);
+                    azureAiSearch = AzureAISearchToolResource.DeserializeAzureAISearchToolResource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +136,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ToolResources)} does not support writing '{options.Format}' format.");
             }

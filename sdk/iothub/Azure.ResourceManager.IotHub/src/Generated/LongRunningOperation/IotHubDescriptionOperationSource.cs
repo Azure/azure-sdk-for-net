@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.IotHub
 
         IotHubDescriptionResource IOperationSource<IotHubDescriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotHubDescriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<IotHubDescriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotHubContext.Default);
             return new IotHubDescriptionResource(_client, data);
         }
 
         async ValueTask<IotHubDescriptionResource> IOperationSource<IotHubDescriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotHubDescriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<IotHubDescriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotHubContext.Default);
             return await Task.FromResult(new IotHubDescriptionResource(_client, data)).ConfigureAwait(false);
         }
     }

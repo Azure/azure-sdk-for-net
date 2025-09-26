@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 return null;
             }
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContainersContext.Default).ToObjectFromJson<Dictionary<string, string>>();
             return lroDetails["id"];
         }
         /// <inheritdoc />

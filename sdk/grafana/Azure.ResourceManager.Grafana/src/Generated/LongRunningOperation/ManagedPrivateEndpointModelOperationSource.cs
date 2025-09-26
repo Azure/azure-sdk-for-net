@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Grafana
 
         ManagedPrivateEndpointModelResource IOperationSource<ManagedPrivateEndpointModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedPrivateEndpointModelData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedPrivateEndpointModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
             return new ManagedPrivateEndpointModelResource(_client, data);
         }
 
         async ValueTask<ManagedPrivateEndpointModelResource> IOperationSource<ManagedPrivateEndpointModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedPrivateEndpointModelData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedPrivateEndpointModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
             return await Task.FromResult(new ManagedPrivateEndpointModelResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridContainerService
 
         ProvisionedClusterResource IOperationSource<ProvisionedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ProvisionedClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<ProvisionedClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridContainerServiceContext.Default);
             return new ProvisionedClusterResource(_client, data);
         }
 
         async ValueTask<ProvisionedClusterResource> IOperationSource<ProvisionedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ProvisionedClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<ProvisionedClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridContainerServiceContext.Default);
             return await Task.FromResult(new ProvisionedClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

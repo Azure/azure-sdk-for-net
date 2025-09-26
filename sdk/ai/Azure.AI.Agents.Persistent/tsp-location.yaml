@@ -1,4 +1,4 @@
 directory: specification/ai/Azure.AI.Agents
-commit: 2f0af7bbb6340f5b3f89ab423267de352b834f7b
+commit: 75e29d97bf8864dd5e87c0a1054d21e986b757e1
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 

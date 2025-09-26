@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityCloudConnectorData IJsonModel<SecurityCloudConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCloudConnectorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityCloudConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityCloudConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityCloudConnectorData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityCloudConnectorData IPersistableModel<SecurityCloudConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCloudConnectorData>(data, options);
+        SecurityCloudConnectorData IPersistableModel<SecurityCloudConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCloudConnectorData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityCloudConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCloudConnectorData>)Data).GetFormatFromOptions(options);
     }

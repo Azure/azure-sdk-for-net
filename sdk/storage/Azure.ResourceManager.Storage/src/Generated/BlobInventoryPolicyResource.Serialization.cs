@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Storage
 
         BlobInventoryPolicyData IJsonModel<BlobInventoryPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BlobInventoryPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BlobInventoryPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BlobInventoryPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BlobInventoryPolicyData>(Data, options, AzureResourceManagerStorageContext.Default);
 
-        BlobInventoryPolicyData IPersistableModel<BlobInventoryPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BlobInventoryPolicyData>(data, options);
+        BlobInventoryPolicyData IPersistableModel<BlobInventoryPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BlobInventoryPolicyData>(data, options, AzureResourceManagerStorageContext.Default);
 
         string IPersistableModel<BlobInventoryPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BlobInventoryPolicyData>)Data).GetFormatFromOptions(options);
     }

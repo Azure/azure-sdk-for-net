@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmGuestAgentResource IOperationSource<ScVmmGuestAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScVmmGuestAgentData>(response.Content);
+            var data = ModelReaderWriter.Read<ScVmmGuestAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
             return new ScVmmGuestAgentResource(_client, data);
         }
 
         async ValueTask<ScVmmGuestAgentResource> IOperationSource<ScVmmGuestAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScVmmGuestAgentData>(response.Content);
+            var data = ModelReaderWriter.Read<ScVmmGuestAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
             return await Task.FromResult(new ScVmmGuestAgentResource(_client, data)).ConfigureAwait(false);
         }
     }

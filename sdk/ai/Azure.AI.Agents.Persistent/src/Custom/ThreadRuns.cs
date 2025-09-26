@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -15,6 +16,24 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenClient("Runs")]
     public partial class ThreadRuns
     {
+        private readonly ThreadRunSteps _threadRunStepsClient;
+        /// <summary> Initializes a new instance of ThreadRuns. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <param name="threadRunStepsClient">The thread run steps client to be used.</param>
+        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, ThreadRunSteps threadRunStepsClient): this (
+                clientDiagnostics: clientDiagnostics,
+                pipeline: pipeline,
+                tokenCredential: tokenCredential,
+                endpoint: endpoint,
+                apiVersion: apiVersion
+            )
+        {
+            _threadRunStepsClient = threadRunStepsClient;
+        }
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.
         /// </summary>
@@ -291,6 +310,161 @@ namespace Azure.AI.Agents.Persistent
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(threadId, limit, order, after, before, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadRunsClient.GetRuns", "data", null, context);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////
+        // Thread run step client methods.
+        ////////////////////////////////////////////////////////////////////////////
+        /// <summary> Returns a list of run steps associated an agent thread run. </summary>
+        /// <param name = "run" > The <see cref="ThreadRun"/> instance from which run steps should be listed. </param>
+        /// <param name = "limit" > A limit on the number of objects to be returned.Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name = "order" > Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name = "after" > A cursor for use in pagination.after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after = obj_foo in order to fetch the next page of the list. </param>
+        /// <param name = "before" > A cursor for use in pagination.before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before = obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name = "cancellationToken" > The cancellation token to use. </param>
+        /// <exception cref ="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+        public virtual Pageable<RunStep> GetRunSteps(
+            ThreadRun run,
+            int? limit = null,
+            ListSortOrder? order = null,
+            string after = null,
+            string before = null,
+            CancellationToken cancellationToken = default)
+        {
+            return _threadRunStepsClient.GetRunSteps(
+                run: run,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                cancellationToken: cancellationToken
+            );
+        }
+
+        /// <summary> Returns a list of run steps associated an agent thread run. </summary>
+        /// <param name="run"> The <see cref="ThreadRun"/> instance from which run steps should be listed. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+        public virtual AsyncPageable<RunStep> GetRunStepsAsync(
+            ThreadRun run,
+            int? limit = null,
+            ListSortOrder? order = null,
+            string after = null,
+            string before = null,
+            CancellationToken cancellationToken = default)
+        {
+            return _threadRunStepsClient.GetRunStepsAsync(
+                run: run,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                cancellationToken: cancellationToken
+            );
+        }
+
+        /// <summary> Gets a list of run steps from a thread run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="include">
+        /// A list of additional fields to include in the response.
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
+        /// </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<RunStep> GetRunStepsAsync(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            return _threadRunStepsClient.GetRunStepsAsync(
+                threadId: threadId,
+                runId: runId,
+                include: include,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                cancellationToken: cancellationToken
+            );
+        }
+
+        /// <summary> Gets a list of run steps from a thread run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="include">
+        /// A list of additional fields to include in the response.
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
+        /// </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<RunStep> GetRunSteps(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            return _threadRunStepsClient.GetRunSteps(
+                threadId: threadId,
+                runId: runId,
+                include: include,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                cancellationToken: cancellationToken
+            );
+        }
+
+        /// <summary> Retrieves a single run step from a thread run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="stepId"> Identifier of the run step. </param>
+        /// <param name="include">
+        /// A list of additional fields to include in the response.
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
+        {
+            return await _threadRunStepsClient.GetRunStepAsync(
+                threadId: threadId,
+                runId: runId,
+                stepId: stepId,
+                include: include,
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves a single run step from a thread run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="stepId"> Identifier of the run step. </param>
+        /// <param name="include">
+        /// A list of additional fields to include in the response.
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<RunStep> GetRunStep(string threadId, string runId, string stepId, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
+        {
+            return _threadRunStepsClient.GetRunStep(
+                threadId: threadId,
+                runId: runId,
+                stepId: stepId,
+                include: include,
+                cancellationToken: cancellationToken
+            );
         }
     }
 }

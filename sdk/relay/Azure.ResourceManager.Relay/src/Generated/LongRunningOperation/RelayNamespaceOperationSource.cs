@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Relay
 
         RelayNamespaceResource IOperationSource<RelayNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RelayNamespaceData>(response.Content);
+            var data = ModelReaderWriter.Read<RelayNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRelayContext.Default);
             return new RelayNamespaceResource(_client, data);
         }
 
         async ValueTask<RelayNamespaceResource> IOperationSource<RelayNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RelayNamespaceData>(response.Content);
+            var data = ModelReaderWriter.Read<RelayNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRelayContext.Default);
             return await Task.FromResult(new RelayNamespaceResource(_client, data)).ConfigureAwait(false);
         }
     }

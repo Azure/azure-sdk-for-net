@@ -76,7 +76,5 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> URI to the Azure Storage Queue service allowing you to manipulate a queue. </summary>
         public string StorageServiceEndpoint { get; set; }
-        /// <summary> The name of an Azure function storage queue. </summary>
-        public string QueueName { get; set; }
     }
 }

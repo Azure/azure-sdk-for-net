@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ElasticSan
 {
+    public partial class AzureResourceManagerElasticSanContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerElasticSanContext() { }
+        public static Azure.ResourceManager.ElasticSan.AzureResourceManagerElasticSanContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ElasticSanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ElasticSan.ElasticSanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ElasticSan.ElasticSanResource>, System.Collections.IEnumerable
     {
         protected ElasticSanCollection() { }

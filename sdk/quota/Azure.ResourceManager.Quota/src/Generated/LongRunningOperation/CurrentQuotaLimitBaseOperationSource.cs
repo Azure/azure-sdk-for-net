@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Quota
 
         CurrentQuotaLimitBaseResource IOperationSource<CurrentQuotaLimitBaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CurrentQuotaLimitBaseData>(response.Content);
+            var data = ModelReaderWriter.Read<CurrentQuotaLimitBaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new CurrentQuotaLimitBaseResource(_client, data);
         }
 
         async ValueTask<CurrentQuotaLimitBaseResource> IOperationSource<CurrentQuotaLimitBaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CurrentQuotaLimitBaseData>(response.Content);
+            var data = ModelReaderWriter.Read<CurrentQuotaLimitBaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return await Task.FromResult(new CurrentQuotaLimitBaseResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -122,6 +122,12 @@ namespace Azure.ResourceManager
         public virtual Azure.ResourceManager.Resources.TagResource GetTagResource() { throw null; }
         protected virtual bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
+    public partial class AzureResourceManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerContext() { }
+        public static Azure.ResourceManager.AzureResourceManagerContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public enum AzureStackProfile
     {
         Profile20200901Hybrid = 0,

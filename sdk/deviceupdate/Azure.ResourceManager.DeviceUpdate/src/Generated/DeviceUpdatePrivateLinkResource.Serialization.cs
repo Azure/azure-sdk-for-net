@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         DeviceUpdatePrivateLinkData IJsonModel<DeviceUpdatePrivateLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateLinkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceUpdatePrivateLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceUpdatePrivateLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceUpdatePrivateLinkData>(Data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
-        DeviceUpdatePrivateLinkData IPersistableModel<DeviceUpdatePrivateLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdatePrivateLinkData>(data, options);
+        DeviceUpdatePrivateLinkData IPersistableModel<DeviceUpdatePrivateLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdatePrivateLinkData>(data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
         string IPersistableModel<DeviceUpdatePrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdatePrivateLinkData>)Data).GetFormatFromOptions(options);
     }

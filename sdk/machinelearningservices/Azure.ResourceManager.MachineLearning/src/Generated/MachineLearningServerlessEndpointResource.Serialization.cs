@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningServerlessEndpointData IJsonModel<MachineLearningServerlessEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningServerlessEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningServerlessEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningServerlessEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningServerlessEndpointData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningServerlessEndpointData IPersistableModel<MachineLearningServerlessEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningServerlessEndpointData>(data, options);
+        MachineLearningServerlessEndpointData IPersistableModel<MachineLearningServerlessEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningServerlessEndpointData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         string IPersistableModel<MachineLearningServerlessEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningServerlessEndpointData>)Data).GetFormatFromOptions(options);
     }

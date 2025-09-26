@@ -36,7 +36,14 @@ namespace Azure.AI.Agents.Persistent
             }
 
             writer.WritePropertyName("file"u8);
-            writer.WriteObjectValue(Data, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(global::System.BinaryData.FromStream(Data));
+#else
+            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(Data), ModelSerializationExtensions.JsonDocumentOptions))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("purpose"u8);
             writer.WriteStringValue(Purpose.ToString());
             if (Optional.IsDefined(Filename))
@@ -81,7 +88,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            File file = default;
+            Stream file = default;
             PersistentAgentFilePurpose purpose = default;
             string filename = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -90,7 +97,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("file"u8))
                 {
-                    file = File.DeserializeFile(property.Value, options);
+                    file = BinaryData.FromString(property.Value.GetRawText()).ToStream();
                     continue;
                 }
                 if (property.NameEquals("purpose"u8))
@@ -134,7 +141,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

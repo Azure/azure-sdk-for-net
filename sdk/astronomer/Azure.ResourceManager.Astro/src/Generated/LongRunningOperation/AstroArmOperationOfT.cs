@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Astro
             {
                 return null;
             }
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerAstroContext.Default).ToObjectFromJson<Dictionary<string, string>>();
             return lroDetails["id"];
         }
         /// <inheritdoc />

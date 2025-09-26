@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.CostManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CostManagementViewData)} does not support writing '{options.Format}' format.");
             }

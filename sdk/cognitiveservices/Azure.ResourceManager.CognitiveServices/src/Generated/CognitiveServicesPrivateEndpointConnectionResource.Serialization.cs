@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices
 
         CognitiveServicesPrivateEndpointConnectionData IJsonModel<CognitiveServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CognitiveServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CognitiveServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CognitiveServicesPrivateEndpointConnectionData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        CognitiveServicesPrivateEndpointConnectionData IPersistableModel<CognitiveServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesPrivateEndpointConnectionData>(data, options);
+        CognitiveServicesPrivateEndpointConnectionData IPersistableModel<CognitiveServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesPrivateEndpointConnectionData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         string IPersistableModel<CognitiveServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CognitiveServicesPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

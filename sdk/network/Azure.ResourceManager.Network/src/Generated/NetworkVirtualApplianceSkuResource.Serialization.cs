@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkVirtualApplianceSkuData IJsonModel<NetworkVirtualApplianceSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVirtualApplianceSkuData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkVirtualApplianceSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkVirtualApplianceSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkVirtualApplianceSkuData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkVirtualApplianceSkuData IPersistableModel<NetworkVirtualApplianceSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkVirtualApplianceSkuData>(data, options);
+        NetworkVirtualApplianceSkuData IPersistableModel<NetworkVirtualApplianceSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkVirtualApplianceSkuData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<NetworkVirtualApplianceSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkVirtualApplianceSkuData>)Data).GetFormatFromOptions(options);
     }

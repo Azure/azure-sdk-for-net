@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         BackendAddressPoolData IJsonModel<BackendAddressPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackendAddressPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackendAddressPoolData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        BackendAddressPoolData IPersistableModel<BackendAddressPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackendAddressPoolData>(data, options);
+        BackendAddressPoolData IPersistableModel<BackendAddressPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackendAddressPoolData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<BackendAddressPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackendAddressPoolData>)Data).GetFormatFromOptions(options);
     }

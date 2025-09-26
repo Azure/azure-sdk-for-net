@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Resources
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

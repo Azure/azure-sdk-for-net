@@ -30,7 +30,7 @@ public partial class ToolOutput
     /// <summary> Initializes a new instance of <see cref="ToolOutput"/>. </summary>
     /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
     /// <param name="output"> The output from the tool to be submitted. </param>
-    public ToolOutput(string toolCallId, string output)
+    public ToolOutput(string toolCallId, string output=null)
     {
         ToolCallId = toolCallId;
         Output = output;

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.EdgeZones
 {
+    public partial class AzureResourceManagerEdgeZonesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerEdgeZonesContext() { }
+        public static Azure.ResourceManager.EdgeZones.AzureResourceManagerEdgeZonesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class EdgeZonesExtensions
     {
         public static Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> GetExtendedZone(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

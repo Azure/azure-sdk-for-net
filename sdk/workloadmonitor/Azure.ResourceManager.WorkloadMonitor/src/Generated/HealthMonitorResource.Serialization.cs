@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         HealthMonitorData IJsonModel<HealthMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthMonitorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthMonitorData>(Data, options, AzureResourceManagerWorkloadMonitorContext.Default);
 
-        HealthMonitorData IPersistableModel<HealthMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthMonitorData>(data, options);
+        HealthMonitorData IPersistableModel<HealthMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthMonitorData>(data, options, AzureResourceManagerWorkloadMonitorContext.Default);
 
         string IPersistableModel<HealthMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthMonitorData>)Data).GetFormatFromOptions(options);
     }

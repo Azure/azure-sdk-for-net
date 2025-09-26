@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataShare
 
         DataShareConsumerInvitationData IJsonModel<DataShareConsumerInvitationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataShareConsumerInvitationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataShareConsumerInvitationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataShareConsumerInvitationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataShareConsumerInvitationData>(Data, options, AzureResourceManagerDataShareContext.Default);
 
-        DataShareConsumerInvitationData IPersistableModel<DataShareConsumerInvitationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareConsumerInvitationData>(data, options);
+        DataShareConsumerInvitationData IPersistableModel<DataShareConsumerInvitationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareConsumerInvitationData>(data, options, AzureResourceManagerDataShareContext.Default);
 
         string IPersistableModel<DataShareConsumerInvitationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataShareConsumerInvitationData>)Data).GetFormatFromOptions(options);
     }

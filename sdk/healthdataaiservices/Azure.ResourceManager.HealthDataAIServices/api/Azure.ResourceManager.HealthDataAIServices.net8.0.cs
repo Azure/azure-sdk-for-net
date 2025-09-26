@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.HealthDataAIServices
 {
+    public partial class AzureResourceManagerHealthDataAIServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerHealthDataAIServicesContext() { }
+        public static Azure.ResourceManager.HealthDataAIServices.AzureResourceManagerHealthDataAIServicesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DeidServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HealthDataAIServices.DeidServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthDataAIServices.DeidServiceResource>, System.Collections.IEnumerable
     {
         protected DeidServiceCollection() { }

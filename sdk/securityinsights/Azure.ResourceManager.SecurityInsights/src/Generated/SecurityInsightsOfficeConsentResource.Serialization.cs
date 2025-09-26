@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         SecurityInsightsOfficeConsentData IJsonModel<SecurityInsightsOfficeConsentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsOfficeConsentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsOfficeConsentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsOfficeConsentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsOfficeConsentData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsOfficeConsentData IPersistableModel<SecurityInsightsOfficeConsentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsOfficeConsentData>(data, options);
+        SecurityInsightsOfficeConsentData IPersistableModel<SecurityInsightsOfficeConsentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsOfficeConsentData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         string IPersistableModel<SecurityInsightsOfficeConsentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsOfficeConsentData>)Data).GetFormatFromOptions(options);
     }

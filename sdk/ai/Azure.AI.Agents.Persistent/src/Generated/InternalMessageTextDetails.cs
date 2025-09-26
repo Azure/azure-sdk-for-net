@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="annotations">
         /// A list of annotations associated with this text.
         /// Please note <see cref="MessageTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/> and <see cref="MessageTextUrlCitationAnnotation"/>.
+        /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/> and <see cref="MessageTextUriCitationAnnotation"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="annotations"/> is null. </exception>
         internal InternalMessageTextDetails(string text, IEnumerable<MessageTextAnnotation> annotations)
@@ -68,7 +68,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="annotations">
         /// A list of annotations associated with this text.
         /// Please note <see cref="MessageTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/> and <see cref="MessageTextUrlCitationAnnotation"/>.
+        /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/> and <see cref="MessageTextUriCitationAnnotation"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InternalMessageTextDetails(string text, IReadOnlyList<MessageTextAnnotation> annotations, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// A list of annotations associated with this text.
         /// Please note <see cref="MessageTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/> and <see cref="MessageTextUrlCitationAnnotation"/>.
+        /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/> and <see cref="MessageTextUriCitationAnnotation"/>.
         /// </summary>
         public IReadOnlyList<MessageTextAnnotation> Annotations { get; }
     }

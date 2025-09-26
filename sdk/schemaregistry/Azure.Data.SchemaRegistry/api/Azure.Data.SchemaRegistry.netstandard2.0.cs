@@ -1,5 +1,11 @@
 namespace Azure.Data.SchemaRegistry
 {
+    public partial class AzureDataSchemaRegistryContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureDataSchemaRegistryContext() { }
+        public static Azure.Data.SchemaRegistry.AzureDataSchemaRegistryContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SchemaFormat : System.IEquatable<Azure.Data.SchemaRegistry.SchemaFormat>
     {

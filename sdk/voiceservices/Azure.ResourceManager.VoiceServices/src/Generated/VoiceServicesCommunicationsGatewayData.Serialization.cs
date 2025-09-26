@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.VoiceServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerVoiceServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VoiceServicesCommunicationsGatewayData)} does not support writing '{options.Format}' format.");
             }

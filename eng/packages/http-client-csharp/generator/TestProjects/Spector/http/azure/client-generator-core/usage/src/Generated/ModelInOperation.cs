@@ -18,7 +18,7 @@ namespace _Specs_.Azure.ClientGenerator.Core.Usage
     {
         protected ModelInOperation() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response InputToInputOutput(RequestContent content, RequestContext context = null) => throw null;
 

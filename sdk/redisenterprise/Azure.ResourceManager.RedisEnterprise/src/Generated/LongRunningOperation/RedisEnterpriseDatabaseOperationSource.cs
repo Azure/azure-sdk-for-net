@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         RedisEnterpriseDatabaseResource IOperationSource<RedisEnterpriseDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(response.Content);
+            var data = ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisEnterpriseContext.Default);
             return new RedisEnterpriseDatabaseResource(_client, data);
         }
 
         async ValueTask<RedisEnterpriseDatabaseResource> IOperationSource<RedisEnterpriseDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(response.Content);
+            var data = ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisEnterpriseContext.Default);
             return await Task.FromResult(new RedisEnterpriseDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Advisor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ShortDescription)} does not support writing '{options.Format}' format.");
             }

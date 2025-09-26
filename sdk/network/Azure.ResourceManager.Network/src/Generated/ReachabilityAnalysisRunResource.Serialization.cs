@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         ReachabilityAnalysisRunData IJsonModel<ReachabilityAnalysisRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReachabilityAnalysisRunData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ReachabilityAnalysisRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ReachabilityAnalysisRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReachabilityAnalysisRunData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ReachabilityAnalysisRunData IPersistableModel<ReachabilityAnalysisRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReachabilityAnalysisRunData>(data, options);
+        ReachabilityAnalysisRunData IPersistableModel<ReachabilityAnalysisRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReachabilityAnalysisRunData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<ReachabilityAnalysisRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReachabilityAnalysisRunData>)Data).GetFormatFromOptions(options);
     }

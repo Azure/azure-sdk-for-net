@@ -68,7 +68,7 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="contentBlocks">
         /// A collection of specialized content blocks (e.g., <see cref="MessageInputTextBlock"/>,
-        /// <see cref="MessageInputImageFileBlock"/>, <see cref="MessageInputImageUrlBlock"/>)
+        /// <see cref="MessageInputImageFileBlock"/>, <see cref="MessageInputImageUriBlock"/>)
         /// that can include text, images, or other media.
         /// </param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="contentBlocks"/> is <c>null</c>.</exception>

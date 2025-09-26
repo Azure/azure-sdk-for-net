@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedServices
 
         ManagedServicesRegistrationAssignmentData IJsonModel<ManagedServicesRegistrationAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServicesRegistrationAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedServicesRegistrationAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedServicesRegistrationAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedServicesRegistrationAssignmentData>(Data, options, AzureResourceManagerManagedServicesContext.Default);
 
-        ManagedServicesRegistrationAssignmentData IPersistableModel<ManagedServicesRegistrationAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServicesRegistrationAssignmentData>(data, options);
+        ManagedServicesRegistrationAssignmentData IPersistableModel<ManagedServicesRegistrationAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServicesRegistrationAssignmentData>(data, options, AzureResourceManagerManagedServicesContext.Default);
 
         string IPersistableModel<ManagedServicesRegistrationAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedServicesRegistrationAssignmentData>)Data).GetFormatFromOptions(options);
     }

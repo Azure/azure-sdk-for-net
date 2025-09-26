@@ -17,7 +17,7 @@ namespace _Type.Property.Nullable
     {
         protected CollectionsString() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetNonNull(RequestContext context) => throw null;
 

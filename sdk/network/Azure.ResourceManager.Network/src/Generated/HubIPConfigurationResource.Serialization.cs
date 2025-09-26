@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         HubIPConfigurationData IJsonModel<HubIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HubIPConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HubIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HubIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HubIPConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        HubIPConfigurationData IPersistableModel<HubIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubIPConfigurationData>(data, options);
+        HubIPConfigurationData IPersistableModel<HubIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubIPConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<HubIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HubIPConfigurationData>)Data).GetFormatFromOptions(options);
     }

@@ -70,6 +70,12 @@ namespace Azure.ResourceManager.Compute
         public virtual Azure.Response ValidateMigrationToVirtualMachineScaleSet(Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateMigrationToVirtualMachineScaleSetAsync(Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerComputeContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerComputeContext() { }
+        public static Azure.ResourceManager.Compute.AzureResourceManagerComputeContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CapacityReservationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CapacityReservationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CapacityReservationResource>, System.Collections.IEnumerable
     {
         protected CapacityReservationCollection() { }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetworkAnalytics
 
         DataProductData IJsonModel<DataProductData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataProductData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataProductData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataProductData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataProductData>(Data, options, AzureResourceManagerNetworkAnalyticsContext.Default);
 
-        DataProductData IPersistableModel<DataProductData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataProductData>(data, options);
+        DataProductData IPersistableModel<DataProductData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataProductData>(data, options, AzureResourceManagerNetworkAnalyticsContext.Default);
 
         string IPersistableModel<DataProductData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataProductData>)Data).GetFormatFromOptions(options);
     }

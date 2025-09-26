@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Dns
 
         DnssecConfigResource IOperationSource<DnssecConfigResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnssecConfigData>(response.Content);
+            var data = ModelReaderWriter.Read<DnssecConfigData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsContext.Default);
             return new DnssecConfigResource(_client, data);
         }
 
         async ValueTask<DnssecConfigResource> IOperationSource<DnssecConfigResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnssecConfigData>(response.Content);
+            var data = ModelReaderWriter.Read<DnssecConfigData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsContext.Default);
             return await Task.FromResult(new DnssecConfigResource(_client, data)).ConfigureAwait(false);
         }
     }

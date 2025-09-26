@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute
 
         DiskEncryptionSetResource IOperationSource<DiskEncryptionSetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiskEncryptionSetData>(response.Content);
+            var data = ModelReaderWriter.Read<DiskEncryptionSetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return new DiskEncryptionSetResource(_client, data);
         }
 
         async ValueTask<DiskEncryptionSetResource> IOperationSource<DiskEncryptionSetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiskEncryptionSetData>(response.Content);
+            var data = ModelReaderWriter.Read<DiskEncryptionSetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return await Task.FromResult(new DiskEncryptionSetResource(_client, data)).ConfigureAwait(false);
         }
     }

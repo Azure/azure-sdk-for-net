@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CustomerInsights
 
         KpiResourceFormatResource IOperationSource<KpiResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KpiResourceFormatData>(response.Content);
+            var data = ModelReaderWriter.Read<KpiResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
             return new KpiResourceFormatResource(_client, data);
         }
 
         async ValueTask<KpiResourceFormatResource> IOperationSource<KpiResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KpiResourceFormatData>(response.Content);
+            var data = ModelReaderWriter.Read<KpiResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
             return await Task.FromResult(new KpiResourceFormatResource(_client, data)).ConfigureAwait(false);
         }
     }

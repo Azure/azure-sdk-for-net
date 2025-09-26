@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.TrafficManager
 
         TrafficManagerUserMetricData IJsonModel<TrafficManagerUserMetricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerUserMetricData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TrafficManagerUserMetricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TrafficManagerUserMetricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficManagerUserMetricData>(Data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        TrafficManagerUserMetricData IPersistableModel<TrafficManagerUserMetricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerUserMetricData>(data, options);
+        TrafficManagerUserMetricData IPersistableModel<TrafficManagerUserMetricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerUserMetricData>(data, options, AzureResourceManagerTrafficManagerContext.Default);
 
         string IPersistableModel<TrafficManagerUserMetricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerUserMetricData>)Data).GetFormatFromOptions(options);
     }

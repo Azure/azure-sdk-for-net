@@ -46,16 +46,8 @@ namespace Azure.AI.Agents.Persistent
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/>. </summary>
-        /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this agent. </param>
-        /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexConnectionId"/> or <paramref name="indexName"/> is null. </exception>
-        public AISearchIndexResource(string indexConnectionId, string indexName)
+        public AISearchIndexResource()
         {
-            Argument.AssertNotNull(indexConnectionId, nameof(indexConnectionId));
-            Argument.AssertNotNull(indexName, nameof(indexName));
-
-            IndexConnectionId = indexConnectionId;
-            IndexName = indexName;
         }
 
         /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/>. </summary>
@@ -76,23 +68,7 @@ namespace Azure.AI.Agents.Persistent
             IndexAssetId = indexAssetId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/> for deserialization. </summary>
-        internal AISearchIndexResource()
-        {
-        }
-
-        /// <summary> An index connection id in an IndexResource attached to this agent. </summary>
-        public string IndexConnectionId { get; set; }
-        /// <summary> The name of an index in an IndexResource attached to this agent. </summary>
-        public string IndexName { get; set; }
         /// <summary> Type of query in an AIIndexResource attached to this agent. </summary>
         public AzureAISearchQueryType? QueryType { get; set; }
-        /// <summary> Number of documents to retrieve from search and present to the model. </summary>
-        public int? TopK { get; set; }
-        /// <summary> filter string for search resource. </summary>
-        public string Filter { get; set; }
-        /// <summary> Index asset id for search resource. </summary>
-        public string IndexAssetId { get; set; }
     }
 }

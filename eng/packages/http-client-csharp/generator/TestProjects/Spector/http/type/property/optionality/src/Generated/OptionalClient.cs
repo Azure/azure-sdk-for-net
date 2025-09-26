@@ -16,7 +16,7 @@ namespace _Type.Property.Optional
 
         public OptionalClient(Uri endpoint, OptionalClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual String GetStringClient() => throw null;
 

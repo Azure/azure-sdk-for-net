@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.SecurityInsights
 {
+    public partial class AzureResourceManagerSecurityInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSecurityInsightsContext() { }
+        public static Azure.ResourceManager.SecurityInsights.AzureResourceManagerSecurityInsightsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class OperationalInsightsWorkspaceSecurityInsightsResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;

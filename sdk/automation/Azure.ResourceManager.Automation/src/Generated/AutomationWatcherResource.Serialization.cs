@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         AutomationWatcherData IJsonModel<AutomationWatcherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWatcherData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationWatcherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomationWatcherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationWatcherData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        AutomationWatcherData IPersistableModel<AutomationWatcherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationWatcherData>(data, options);
+        AutomationWatcherData IPersistableModel<AutomationWatcherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationWatcherData>(data, options, AzureResourceManagerAutomationContext.Default);
 
         string IPersistableModel<AutomationWatcherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationWatcherData>)Data).GetFormatFromOptions(options);
     }

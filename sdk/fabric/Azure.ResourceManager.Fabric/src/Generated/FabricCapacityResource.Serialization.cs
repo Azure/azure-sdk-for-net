@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Fabric
 
         FabricCapacityData IJsonModel<FabricCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FabricCapacityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FabricCapacityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FabricCapacityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FabricCapacityData>(Data, options, AzureResourceManagerFabricContext.Default);
 
-        FabricCapacityData IPersistableModel<FabricCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FabricCapacityData>(data, options);
+        FabricCapacityData IPersistableModel<FabricCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FabricCapacityData>(data, options, AzureResourceManagerFabricContext.Default);
 
         string IPersistableModel<FabricCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FabricCapacityData>)Data).GetFormatFromOptions(options);
     }

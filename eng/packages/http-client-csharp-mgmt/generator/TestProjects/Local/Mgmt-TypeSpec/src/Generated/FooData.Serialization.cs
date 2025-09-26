@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
@@ -50,7 +52,7 @@ namespace MgmtTypeSpec.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                JsonSerializer.Serialize(ExtendedLocation);
             }
         }
 
@@ -60,7 +62,7 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FooData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -110,7 +112,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(prop.Value, options);
+                    systemData = prop.Value.Deserialize<SystemData>();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -154,7 +156,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    extendedLocation = prop.Value.Deserialize<ExtendedLocation>();
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +180,7 @@ namespace MgmtTypeSpec.Models
         BinaryData IPersistableModel<FooData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FooData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -196,7 +198,7 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FooData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         AgFoodPlatformPrivateEndpointConnectionData IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AgFoodPlatformPrivateEndpointConnectionData>(Data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
-        AgFoodPlatformPrivateEndpointConnectionData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgFoodPlatformPrivateEndpointConnectionData>(data, options);
+        AgFoodPlatformPrivateEndpointConnectionData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgFoodPlatformPrivateEndpointConnectionData>(data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
         string IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

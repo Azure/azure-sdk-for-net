@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetApp
 
         CapacityPoolResource IOperationSource<CapacityPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CapacityPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<CapacityPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new CapacityPoolResource(_client, data);
         }
 
         async ValueTask<CapacityPoolResource> IOperationSource<CapacityPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CapacityPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<CapacityPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return await Task.FromResult(new CapacityPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

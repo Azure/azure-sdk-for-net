@@ -22,22 +22,22 @@ namespace Azure.AI.Agents.Persistent
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ThreadMessageCreatedValue = "thread.message.created";
-        private const string ThreadMessageInProgressValue = "thread.message.in_progress";
-        private const string ThreadMessageDeltaValue = "thread.message.delta";
-        private const string ThreadMessageCompletedValue = "thread.message.completed";
-        private const string ThreadMessageIncompleteValue = "thread.message.incomplete";
+        private const string MessageCreatedValue = "thread.message.created";
+        private const string MessageInProgressValue = "thread.message.in_progress";
+        private const string MessageDeltaValue = "thread.message.delta";
+        private const string MessageCompletedValue = "thread.message.completed";
+        private const string MessageIncompleteValue = "thread.message.incomplete";
 
         /// <summary> Event sent when a new message is created. The data of this event is of type ThreadMessage. </summary>
-        public static MessageStreamEvent ThreadMessageCreated { get; } = new MessageStreamEvent(ThreadMessageCreatedValue);
+        public static MessageStreamEvent MessageCreated { get; } = new MessageStreamEvent(MessageCreatedValue);
         /// <summary> Event sent when a message moves to `in_progress` status. The data of this event is of type ThreadMessage. </summary>
-        public static MessageStreamEvent ThreadMessageInProgress { get; } = new MessageStreamEvent(ThreadMessageInProgressValue);
+        public static MessageStreamEvent MessageInProgress { get; } = new MessageStreamEvent(MessageInProgressValue);
         /// <summary> Event sent when a message is being streamed. The data of this event is of type MessageDeltaChunk. </summary>
-        public static MessageStreamEvent ThreadMessageDelta { get; } = new MessageStreamEvent(ThreadMessageDeltaValue);
+        public static MessageStreamEvent MessageDelta { get; } = new MessageStreamEvent(MessageDeltaValue);
         /// <summary> Event sent when a message is completed. The data of this event is of type ThreadMessage. </summary>
-        public static MessageStreamEvent ThreadMessageCompleted { get; } = new MessageStreamEvent(ThreadMessageCompletedValue);
+        public static MessageStreamEvent MessageCompleted { get; } = new MessageStreamEvent(MessageCompletedValue);
         /// <summary> Event sent before a message is completed. The data of this event is of type ThreadMessage. </summary>
-        public static MessageStreamEvent ThreadMessageIncomplete { get; } = new MessageStreamEvent(ThreadMessageIncompleteValue);
+        public static MessageStreamEvent MessageIncomplete { get; } = new MessageStreamEvent(MessageIncompleteValue);
         /// <summary> Determines if two <see cref="MessageStreamEvent"/> values are the same. </summary>
         public static bool operator ==(MessageStreamEvent left, MessageStreamEvent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageStreamEvent"/> values are not the same. </summary>

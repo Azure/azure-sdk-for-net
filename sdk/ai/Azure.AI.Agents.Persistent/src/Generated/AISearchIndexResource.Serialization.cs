@@ -34,10 +34,16 @@ namespace Azure.AI.Agents.Persistent
                 throw new FormatException($"The model {nameof(AISearchIndexResource)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("index_connection_id"u8);
-            writer.WriteStringValue(IndexConnectionId);
-            writer.WritePropertyName("index_name"u8);
-            writer.WriteStringValue(IndexName);
+            if (Optional.IsDefined(IndexConnectionId))
+            {
+                writer.WritePropertyName("index_connection_id"u8);
+                writer.WriteStringValue(IndexConnectionId);
+            }
+            if (Optional.IsDefined(IndexName))
+            {
+                writer.WritePropertyName("index_name"u8);
+                writer.WriteStringValue(IndexName);
+            }
             if (Optional.IsDefined(QueryType))
             {
                 writer.WritePropertyName("query_type"u8);
@@ -166,7 +172,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AISearchIndexResource)} does not support writing '{options.Format}' format.");
             }

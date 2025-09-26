@@ -123,7 +123,7 @@ namespace Azure.AI.Agents.Persistent
             string name = default;
             VectorStoreConfiguration configuration = default;
             VectorStoreExpirationPolicy expiresAfter = default;
-            VectorStoreChunkingStrategyRequest chunkingStrategy = default;
+            VectorStoreChunkingStrategy chunkingStrategy = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -172,7 +172,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    chunkingStrategy = VectorStoreChunkingStrategyRequest.DeserializeVectorStoreChunkingStrategyRequest(property.Value, options);
+                    chunkingStrategy = VectorStoreChunkingStrategy.DeserializeVectorStoreChunkingStrategy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -212,7 +212,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CreateVectorStoreRequest)} does not support writing '{options.Format}' format.");
             }

@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ImportExistingDatabaseDefinition)} does not support writing '{options.Format}' format.");
             }

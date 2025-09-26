@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabric
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServiceFabricVmSizeResourceData)} does not support writing '{options.Format}' format.");
             }

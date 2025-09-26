@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataBox
 
         DataBoxJobResource IOperationSource<DataBoxJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxJobData>(response.Content);
+            var data = ModelReaderWriter.Read<DataBoxJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxContext.Default);
             return new DataBoxJobResource(_client, data);
         }
 
         async ValueTask<DataBoxJobResource> IOperationSource<DataBoxJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxJobData>(response.Content);
+            var data = ModelReaderWriter.Read<DataBoxJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxContext.Default);
             return await Task.FromResult(new DataBoxJobResource(_client, data)).ConfigureAwait(false);
         }
     }

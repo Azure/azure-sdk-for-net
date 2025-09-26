@@ -59,12 +59,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="expiresAfter"> Details on when this vector store expires. </param>
         /// <param name="chunkingStrategy">
         /// The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty.
-        /// Please note <see cref="VectorStoreChunkingStrategyRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategyRequest"/> and <see cref="VectorStoreStaticChunkingStrategyRequest"/>.
+        /// Please note <see cref="VectorStoreChunkingStrategy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategy"/> and <see cref="VectorStoreStaticChunkingStrategyRequest"/>.
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateVectorStoreRequest(IReadOnlyList<string> fileIds, string name, VectorStoreConfiguration storeConfiguration, VectorStoreExpirationPolicy expiresAfter, VectorStoreChunkingStrategyRequest chunkingStrategy, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateVectorStoreRequest(IReadOnlyList<string> fileIds, string name, VectorStoreConfiguration storeConfiguration, VectorStoreExpirationPolicy expiresAfter, VectorStoreChunkingStrategy chunkingStrategy, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileIds = fileIds;
             Name = name;
@@ -85,10 +85,10 @@ namespace Azure.AI.Agents.Persistent
         public VectorStoreExpirationPolicy ExpiresAfter { get; }
         /// <summary>
         /// The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty.
-        /// Please note <see cref="VectorStoreChunkingStrategyRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategyRequest"/> and <see cref="VectorStoreStaticChunkingStrategyRequest"/>.
+        /// Please note <see cref="VectorStoreChunkingStrategy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategy"/> and <see cref="VectorStoreStaticChunkingStrategyRequest"/>.
         /// </summary>
-        public VectorStoreChunkingStrategyRequest ChunkingStrategy { get; }
+        public VectorStoreChunkingStrategy ChunkingStrategy { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }

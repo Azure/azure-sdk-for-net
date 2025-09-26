@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         RedisEnterprisePrivateEndpointConnectionData IJsonModel<RedisEnterprisePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterprisePrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisEnterprisePrivateEndpointConnectionData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        RedisEnterprisePrivateEndpointConnectionData IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterprisePrivateEndpointConnectionData>(data, options);
+        RedisEnterprisePrivateEndpointConnectionData IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterprisePrivateEndpointConnectionData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
         string IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

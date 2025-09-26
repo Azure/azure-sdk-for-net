@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Advisor
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MetadataEntityData)} does not support writing '{options.Format}' format.");
             }

@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Sql
 
         ServiceObjectiveData IJsonModel<ServiceObjectiveData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceObjectiveData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceObjectiveData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceObjectiveData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceObjectiveData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ServiceObjectiveData IPersistableModel<ServiceObjectiveData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceObjectiveData>(data, options);
+        ServiceObjectiveData IPersistableModel<ServiceObjectiveData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceObjectiveData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ServiceObjectiveData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceObjectiveData>)Data).GetFormatFromOptions(options);
     }

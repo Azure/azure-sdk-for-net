@@ -88,7 +88,7 @@ var contentBlocks = new List<MessageInputContentBlock>
     new MessageInputImageFileBlock(new MessageImageFileParam(uploadedFile.Id))
 };
 
-ThreadMessage imageMessage = client.Messages.CreateMessage(
+PersistentThreadMessage imageMessage = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     contentBlocks: contentBlocks
@@ -103,7 +103,7 @@ var contentBlocks = new List<MessageInputContentBlock>
     new MessageInputImageFileBlock(new MessageImageFileParam(uploadedFile.Id))
 };
 
-ThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     contentBlocks: contentBlocks
@@ -164,9 +164,9 @@ if (run.Status != RunStatus.Completed)
 
 Synchronous sample:
 ```C# Snippet:AgentsImageFileInMessageReview_Sync
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(thread.Id);
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(thread.Id);
 
-foreach (ThreadMessage msg in messages)
+foreach (PersistentThreadMessage msg in messages)
 {
     Console.WriteLine($"{msg.CreatedAt:yyyy-MM-dd HH:mm:ss} - {msg.Role,10}:");
 
@@ -188,9 +188,9 @@ foreach (ThreadMessage msg in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsImageFileInMessageReview
-AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(thread.Id);
+AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(thread.Id);
 
-await foreach (ThreadMessage msg in messages)
+await foreach (PersistentThreadMessage msg in messages)
 {
     Console.WriteLine($"{msg.CreatedAt:yyyy-MM-dd HH:mm:ss} - {msg.Role,10}:");
 

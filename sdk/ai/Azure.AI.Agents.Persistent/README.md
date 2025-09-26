@@ -104,7 +104,7 @@ PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
 With a thread created, messages can be created on it:
 ```C# Snippet:AgentsOverviewCreateMessage
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -140,11 +140,11 @@ Assert.AreEqual(
 Assuming the run successfully completed, listing messages from the thread that was run will now reflect new information
 added by the agent:
 ```C# Snippet:AgentsOverviewListUpdatedMessages
-AsyncPageable<ThreadMessage> messages
+AsyncPageable<PersistentThreadMessage> messages
     = client.Messages.GetMessagesAsync(
         threadId: thread.Id, order: ListSortOrder.Ascending);
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -190,7 +190,7 @@ Once uploaded, the file ID can then be provided to create a vector store for it
 ```C# Snippet:AgentsCreateVectorStore
 // Create a vector store with the file and wait for it to be processed.
 // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
-VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
+PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     fileIds:  new List<string> { uploadedAgentFile.Id },
     name: "my_vector_store");
 ```
@@ -221,7 +221,7 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
+PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store",
     storeConfiguration: new VectorStoreConfiguration(
         dataSources: [ ds ]
@@ -247,11 +247,11 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
+PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store"
 );
 
-VectorStoreFileBatch vctFile = await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
+VectorStoreFileBatch vctFile = await client.VectorStores.CreateVectorStoreFileBatchAsync(
     vectorStoreId: vectorStore.Id,
     dataSources: [ ds ]
 );
@@ -290,7 +290,7 @@ var attachment = new MessageAttachment(
 
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "Can you give me the documented codes for 'banana' and 'orange'?",
@@ -341,7 +341,7 @@ Search requires an existing Azure AI Search Index. For more information and setu
 guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 
 ```C# Snippet:AgentsCreateAgentWithAzureAISearchTool
-AzureAISearchResource searchResource = new(
+AzureAISearchToolResource searchResource = new(
     connectionID,
     "sample_index",
     5,
@@ -369,12 +369,12 @@ the reference placeholder by the actual reference and url. Please note, that to
 get sensible result, the index needs to have fields "title" and "url".
 
 ```C# Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool
-AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -387,11 +387,11 @@ await foreach (ThreadMessage threadMessage in messages)
                 string annotatedText = textItem.Text;
                 foreach (MessageTextAnnotation annotation in textItem.Annotations)
                 {
-                    if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                    if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                     {
                         annotatedText = annotatedText.Replace(
-                            urlAnnotation.Text,
-                            $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                            uriAnnotation.Text,
+                            $" [see {uriAnnotation.UriCitation.Title}] ({uriAnnotation.UriCitation.Uri})");
                     }
                 }
                 Console.Write(annotatedText);
@@ -701,7 +701,7 @@ After we have created a message with request to ask "What would foo say?", we ne
 ```C# Snippet:AgentsAzureFunctionsHandlePollingWithRequiredAction
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What is the most prevalent element in the universe? What would foo say?");
@@ -818,7 +818,7 @@ After the processing, the output queue should contain the message with the follo
   "CorrelationId": "42"
 }
 ```
-Please note that the in input `CorrelationId` value is the same as in the output.
+Please note that the input `CorrelationId` value is the same as in the output.
 *Hint:* Place multiple messages to input queue and keep second internet browser window with the output queue open, hit the refresh button on the portal user interface, so that you will not miss the message. If the function completed with error the message instead gets into the `azure-function-foo-input-poison` queue. If that happened, please check your setup.
 After we have tested the function and confirmed that it works, please make sure that the Azure AI Project have the next roles for the storage account: `Storage Account Contributor`, `Storage Blob Data Contributor`, `Storage File Data Privileged Contributor`, `Storage Queue Data Contributor` and `Storage Table Data Contributor`. Now the function is ready to be used by the agent.
 
@@ -834,7 +834,7 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-    auth: oaiAuth,
+    openApiAuthentication: oaiAuth,
     defaultParams: [ "format" ]
 );
 
@@ -849,7 +849,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
 In this example we are using the `weather_openapi.json` file and agent will request the [wttr.in](https://wttr.in) website for the weather in a location from the prompt.
 ```C# Snippet:AgentsOpenAPIHandlePollingWithRequiredAction
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What's the weather in Seattle?");

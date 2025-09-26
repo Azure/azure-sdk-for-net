@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricIPCommunityData IJsonModel<NetworkFabricIPCommunityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricIPCommunityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFabricIPCommunityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkFabricIPCommunityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricIPCommunityData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkFabricIPCommunityData IPersistableModel<NetworkFabricIPCommunityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricIPCommunityData>(data, options);
+        NetworkFabricIPCommunityData IPersistableModel<NetworkFabricIPCommunityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricIPCommunityData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         string IPersistableModel<NetworkFabricIPCommunityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricIPCommunityData>)Data).GetFormatFromOptions(options);
     }

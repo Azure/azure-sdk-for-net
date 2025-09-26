@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary>
     /// Defines a single content block when creating a message. The 'type' field determines whether it is text, an image file, or an external image URL, etc.
     /// Please note <see cref="MessageInputContentBlock"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MessageInputImageFileBlock"/>, <see cref="MessageInputImageUrlBlock"/> and <see cref="MessageInputTextBlock"/>.
+    /// The available derived classes include <see cref="MessageInputImageFileBlock"/>, <see cref="MessageInputImageUriBlock"/> and <see cref="MessageInputTextBlock"/>.
     /// </summary>
     public abstract partial class MessageInputContentBlock
     {

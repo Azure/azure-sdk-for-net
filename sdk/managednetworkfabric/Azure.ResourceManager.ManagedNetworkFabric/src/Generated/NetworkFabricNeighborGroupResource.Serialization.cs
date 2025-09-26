@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricNeighborGroupData IJsonModel<NetworkFabricNeighborGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricNeighborGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFabricNeighborGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkFabricNeighborGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricNeighborGroupData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkFabricNeighborGroupData IPersistableModel<NetworkFabricNeighborGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricNeighborGroupData>(data, options);
+        NetworkFabricNeighborGroupData IPersistableModel<NetworkFabricNeighborGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricNeighborGroupData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         string IPersistableModel<NetworkFabricNeighborGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricNeighborGroupData>)Data).GetFormatFromOptions(options);
     }

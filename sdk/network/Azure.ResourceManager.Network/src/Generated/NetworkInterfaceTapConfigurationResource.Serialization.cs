@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkInterfaceTapConfigurationData IJsonModel<NetworkInterfaceTapConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceTapConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkInterfaceTapConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkInterfaceTapConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkInterfaceTapConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkInterfaceTapConfigurationData IPersistableModel<NetworkInterfaceTapConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkInterfaceTapConfigurationData>(data, options);
+        NetworkInterfaceTapConfigurationData IPersistableModel<NetworkInterfaceTapConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkInterfaceTapConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<NetworkInterfaceTapConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkInterfaceTapConfigurationData>)Data).GetFormatFromOptions(options);
     }

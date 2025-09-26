@@ -45,7 +45,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
             name: "get_weather",
             description: "Retrieve weather information for a location",
             spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-            auth: oaiAuth,
+            openApiAuthentication: oaiAuth,
             defaultParams: [ "format" ]
         );
 
@@ -59,7 +59,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
 
         #region Snippet:AgentsOpenAPIHandlePollingWithRequiredAction
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
-        ThreadMessage message = await client.Messages.CreateMessageAsync(
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "What's the weather in Seattle?");
@@ -81,12 +81,12 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
         #endregion
 
         #region Snippet:AgentsOpenAPI_Print
-        AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+        AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        await foreach (ThreadMessage threadMessage in messages)
+        await foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -129,7 +129,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
             name: "get_weather",
             description: "Retrieve weather information for a location",
             spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-            auth: oaiAuth,
+            openApiAuthentication: oaiAuth,
             defaultParams: ["format"]
         );
 
@@ -143,7 +143,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
 
         #region Snippet:AgentsOpenAPISyncHandlePollingWithRequiredAction
         PersistentAgentThread thread = client.Threads.CreateThread();
-        ThreadMessage message = client.Messages.CreateMessage(
+        PersistentThreadMessage message = client.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "What's the weather in Seattle?");
@@ -165,12 +165,12 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
         #endregion
 
         #region Snippet:AgentsOpenAPISync_Print
-        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        foreach (ThreadMessage threadMessage in messages)
+        foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)

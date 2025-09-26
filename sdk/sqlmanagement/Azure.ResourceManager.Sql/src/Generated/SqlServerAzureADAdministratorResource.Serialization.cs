@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerAzureADAdministratorData IJsonModel<SqlServerAzureADAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADAdministratorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerAzureADAdministratorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerAzureADAdministratorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerAzureADAdministratorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerAzureADAdministratorData IPersistableModel<SqlServerAzureADAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(data, options);
+        SqlServerAzureADAdministratorData IPersistableModel<SqlServerAzureADAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerAzureADAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerAzureADAdministratorData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Hci
 
         HciEdgeDeviceData IJsonModel<HciEdgeDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciEdgeDeviceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HciEdgeDeviceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HciEdgeDeviceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciEdgeDeviceData>(Data, options, AzureResourceManagerHciContext.Default);
 
-        HciEdgeDeviceData IPersistableModel<HciEdgeDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciEdgeDeviceData>(data, options);
+        HciEdgeDeviceData IPersistableModel<HciEdgeDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciEdgeDeviceData>(data, options, AzureResourceManagerHciContext.Default);
 
         string IPersistableModel<HciEdgeDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciEdgeDeviceData>)Data).GetFormatFromOptions(options);
     }

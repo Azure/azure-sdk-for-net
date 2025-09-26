@@ -1,5 +1,11 @@
 namespace Azure.Storage.Queues
 {
+    public partial class AzureStorageQueuesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureStorageQueuesContext() { }
+        public static Azure.Storage.Queues.AzureStorageQueuesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class QueueClient
     {
         protected QueueClient() { }
@@ -74,7 +80,7 @@ namespace Azure.Storage.Queues
     }
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
-        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2025_07_05) { }
+        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2025_11_05) { }
         public Azure.Storage.Queues.Models.QueueAudience? Audience { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
@@ -350,7 +356,9 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueProperties
     {
         public QueueProperties() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int ApproximateMessagesCount { get { throw null; } }
+        public long ApproximateMessagesCountLong { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
     public partial class QueueRetentionPolicy
@@ -388,7 +396,9 @@ namespace Azure.Storage.Queues.Models
         public static Azure.Storage.Queues.Models.QueueMessage QueueMessage(string messageId, string popReceipt, System.BinaryData body, long dequeueCount, System.DateTimeOffset? nextVisibleOn = default(System.DateTimeOffset?), System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Queues.Models.QueueMessage QueueMessage(string messageId, string popReceipt, string messageText, long dequeueCount, System.DateTimeOffset? nextVisibleOn = default(System.DateTimeOffset?), System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Queues.Models.QueueProperties QueueProperties(System.Collections.Generic.IDictionary<string, string> metadata, int approximateMessagesCount) { throw null; }
+        public static Azure.Storage.Queues.Models.QueueProperties QueueProperties(System.Collections.Generic.IDictionary<string, string> metadata, long approximateMessagesCount) { throw null; }
         public static Azure.Storage.Queues.Models.QueueServiceStatistics QueueServiceStatistics(Azure.Storage.Queues.Models.QueueGeoReplication geoReplication = null) { throw null; }
         public static Azure.Storage.Queues.Models.SendReceipt SendReceipt(string messageId, System.DateTimeOffset insertionTime, System.DateTimeOffset expirationTime, string popReceipt, System.DateTimeOffset timeNextVisible) { throw null; }
         public static Azure.Storage.Queues.Models.UpdateReceipt UpdateReceipt(string popReceipt, System.DateTimeOffset nextVisibleOn) { throw null; }
@@ -429,7 +439,7 @@ namespace Azure.Storage.Queues.Specialized
     }
     public partial class SpecializedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
     {
-        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2025_07_05) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
+        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2025_11_05) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedQueueExtensions

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         DataProtectionBackupVaultResource IOperationSource<DataProtectionBackupVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataProtectionBackupVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<DataProtectionBackupVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataProtectionBackupContext.Default);
             return new DataProtectionBackupVaultResource(_client, data);
         }
 
         async ValueTask<DataProtectionBackupVaultResource> IOperationSource<DataProtectionBackupVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataProtectionBackupVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<DataProtectionBackupVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataProtectionBackupContext.Default);
             return await Task.FromResult(new DataProtectionBackupVaultResource(_client, data)).ConfigureAwait(false);
         }
     }

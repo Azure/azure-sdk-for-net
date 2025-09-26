@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         DataLakeAnalyticsStorageContainerData IJsonModel<DataLakeAnalyticsStorageContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsStorageContainerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeAnalyticsStorageContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeAnalyticsStorageContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeAnalyticsStorageContainerData>(Data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        DataLakeAnalyticsStorageContainerData IPersistableModel<DataLakeAnalyticsStorageContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsStorageContainerData>(data, options);
+        DataLakeAnalyticsStorageContainerData IPersistableModel<DataLakeAnalyticsStorageContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsStorageContainerData>(data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
         string IPersistableModel<DataLakeAnalyticsStorageContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsStorageContainerData>)Data).GetFormatFromOptions(options);
     }

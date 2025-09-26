@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Kusto
 
         KustoManagedPrivateEndpointData IJsonModel<KustoManagedPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoManagedPrivateEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoManagedPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KustoManagedPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoManagedPrivateEndpointData>(Data, options, AzureResourceManagerKustoContext.Default);
 
-        KustoManagedPrivateEndpointData IPersistableModel<KustoManagedPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(data, options);
+        KustoManagedPrivateEndpointData IPersistableModel<KustoManagedPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(data, options, AzureResourceManagerKustoContext.Default);
 
         string IPersistableModel<KustoManagedPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoManagedPrivateEndpointData>)Data).GetFormatFromOptions(options);
     }

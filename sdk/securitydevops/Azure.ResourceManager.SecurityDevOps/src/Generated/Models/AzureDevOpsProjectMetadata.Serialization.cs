@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityDevOpsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureDevOpsProjectMetadata)} does not support writing '{options.Format}' format.");
             }

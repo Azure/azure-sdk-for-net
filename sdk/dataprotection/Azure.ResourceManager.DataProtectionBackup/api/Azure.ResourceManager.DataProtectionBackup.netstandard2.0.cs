@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DataProtectionBackup
 {
+    public partial class AzureResourceManagerDataProtectionBackupContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDataProtectionBackupContext() { }
+        public static Azure.ResourceManager.DataProtectionBackup.AzureResourceManagerDataProtectionBackupContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class DataProtectionBackupExtensions
     {
         public static Azure.Response<Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationContentBase content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

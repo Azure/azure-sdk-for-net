@@ -2094,30 +2094,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(operation.HasValue);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
-        [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
-        public async Task StartCopyFromUriAsync_SourceErrorAndStatusCode()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
-
-            // Arrange
-            BlobBaseClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-
-            Uri sourceUri = srcBlob.GenerateSasUri(BlobSasPermissions.Read, GetUtcNow().AddDays(1));
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.StartCopyFromUriAsync(sourceUri),
-                e =>
-                {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 404"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: BlobNotFound"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: The specified blob does not exist."));
-                });
-        }
-
         [RecordedTest]
         [TestCase(nameof(BlobRequestConditions.LeaseId))]
         public async Task StartCopyFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
@@ -3504,7 +3480,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
         public async Task SyncCopyFromUriAsync_SourceErrorAndStatusCode()
         {
@@ -3519,9 +3494,9 @@ namespace Azure.Storage.Blobs.Test
                 destBlob.SyncCopyFromUriAsync(srcBlob.Uri),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 409"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: PublicAccessNotPermitted"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Public access is not permitted on this storage account."));
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 401"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."));
                 });
         }
 

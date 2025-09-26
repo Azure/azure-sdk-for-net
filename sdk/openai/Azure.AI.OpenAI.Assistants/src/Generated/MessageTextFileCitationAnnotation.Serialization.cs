@@ -115,7 +115,7 @@ namespace Azure.AI.OpenAI.Assistants
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIAssistantsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MessageTextFileCitationAnnotation)} does not support writing '{options.Format}' format.");
             }

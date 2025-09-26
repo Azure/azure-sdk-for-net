@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Media
 
         MediaServicesPrivateEndpointConnectionData IJsonModel<MediaServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaServicesPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MediaServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MediaServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MediaServicesPrivateEndpointConnectionData>(Data, options, AzureResourceManagerMediaContext.Default);
 
-        MediaServicesPrivateEndpointConnectionData IPersistableModel<MediaServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaServicesPrivateEndpointConnectionData>(data, options);
+        MediaServicesPrivateEndpointConnectionData IPersistableModel<MediaServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaServicesPrivateEndpointConnectionData>(data, options, AzureResourceManagerMediaContext.Default);
 
         string IPersistableModel<MediaServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaServicesPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

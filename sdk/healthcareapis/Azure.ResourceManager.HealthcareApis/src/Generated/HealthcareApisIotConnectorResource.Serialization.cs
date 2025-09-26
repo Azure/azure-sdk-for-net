@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HealthcareApis
 
         HealthcareApisIotConnectorData IJsonModel<HealthcareApisIotConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisIotConnectorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthcareApisIotConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthcareApisIotConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisIotConnectorData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        HealthcareApisIotConnectorData IPersistableModel<HealthcareApisIotConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisIotConnectorData>(data, options);
+        HealthcareApisIotConnectorData IPersistableModel<HealthcareApisIotConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisIotConnectorData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
         string IPersistableModel<HealthcareApisIotConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisIotConnectorData>)Data).GetFormatFromOptions(options);
     }

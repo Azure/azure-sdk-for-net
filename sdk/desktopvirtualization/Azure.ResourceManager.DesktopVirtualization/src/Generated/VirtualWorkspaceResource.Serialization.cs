@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         VirtualWorkspaceData IJsonModel<VirtualWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWorkspaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualWorkspaceData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        VirtualWorkspaceData IPersistableModel<VirtualWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualWorkspaceData>(data, options);
+        VirtualWorkspaceData IPersistableModel<VirtualWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualWorkspaceData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         string IPersistableModel<VirtualWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualWorkspaceData>)Data).GetFormatFromOptions(options);
     }

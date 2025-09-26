@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlVirtualNetworkRuleData IJsonModel<PostgreSqlVirtualNetworkRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlVirtualNetworkRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostgreSqlVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlVirtualNetworkRuleData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlVirtualNetworkRuleData IPersistableModel<PostgreSqlVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlVirtualNetworkRuleData>(data, options);
+        PostgreSqlVirtualNetworkRuleData IPersistableModel<PostgreSqlVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlVirtualNetworkRuleData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlVirtualNetworkRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlVirtualNetworkRuleData>)Data).GetFormatFromOptions(options);
     }

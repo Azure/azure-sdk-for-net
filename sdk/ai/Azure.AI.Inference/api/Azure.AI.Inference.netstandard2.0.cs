@@ -53,6 +53,12 @@ namespace Azure.AI.Inference
             V2024_05_01_Preview = 1,
         }
     }
+    public partial class AzureAIInferenceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIInferenceContext() { }
+        public static Azure.AI.Inference.AzureAIInferenceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ChatChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatChoice>
     {
         internal ChatChoice() { }

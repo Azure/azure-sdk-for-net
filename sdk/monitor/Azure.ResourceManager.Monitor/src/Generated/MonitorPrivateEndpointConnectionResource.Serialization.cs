@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         MonitorPrivateEndpointConnectionData IJsonModel<MonitorPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MonitorPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MonitorPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitorPrivateEndpointConnectionData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        MonitorPrivateEndpointConnectionData IPersistableModel<MonitorPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorPrivateEndpointConnectionData>(data, options);
+        MonitorPrivateEndpointConnectionData IPersistableModel<MonitorPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorPrivateEndpointConnectionData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         string IPersistableModel<MonitorPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitorPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

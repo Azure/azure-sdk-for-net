@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         CustomEntityStoreAssignmentData IJsonModel<CustomEntityStoreAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomEntityStoreAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CustomEntityStoreAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CustomEntityStoreAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomEntityStoreAssignmentData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        CustomEntityStoreAssignmentData IPersistableModel<CustomEntityStoreAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomEntityStoreAssignmentData>(data, options);
+        CustomEntityStoreAssignmentData IPersistableModel<CustomEntityStoreAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomEntityStoreAssignmentData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<CustomEntityStoreAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomEntityStoreAssignmentData>)Data).GetFormatFromOptions(options);
     }

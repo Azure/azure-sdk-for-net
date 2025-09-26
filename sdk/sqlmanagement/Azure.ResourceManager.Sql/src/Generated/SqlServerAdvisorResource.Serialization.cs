@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlAdvisorData IJsonModel<SqlAdvisorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlAdvisorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlAdvisorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlAdvisorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlAdvisorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlAdvisorData IPersistableModel<SqlAdvisorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlAdvisorData>(data, options);
+        SqlAdvisorData IPersistableModel<SqlAdvisorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlAdvisorData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlAdvisorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlAdvisorData>)Data).GetFormatFromOptions(options);
     }

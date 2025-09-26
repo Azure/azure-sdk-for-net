@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceAdvancedThreatProtectionResource IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceAdvancedThreatProtectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceAdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceAdvancedThreatProtectionResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceAdvancedThreatProtectionResource> IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceAdvancedThreatProtectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceAdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ManagedInstanceAdvancedThreatProtectionResource(_client, data)).ConfigureAwait(false);
         }
     }

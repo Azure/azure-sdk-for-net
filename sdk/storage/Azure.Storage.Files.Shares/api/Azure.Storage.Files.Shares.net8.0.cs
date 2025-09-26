@@ -1,5 +1,11 @@
 namespace Azure.Storage.Files.Shares
 {
+    public partial class AzureStorageFilesSharesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureStorageFilesSharesContext() { }
+        public static Azure.Storage.Files.Shares.AzureStorageFilesSharesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ShareClient
     {
         protected ShareClient() { }
@@ -115,7 +121,7 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2025_07_05) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2025_11_05) { }
         public bool? AllowSourceTrailingDot { get { throw null; } set { } }
         public bool? AllowTrailingDot { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareAudience? Audience { get { throw null; } set { } }
@@ -815,6 +821,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareNotFound { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotCountExceeded { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotInProgress { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotNotFound { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotOperationNotSupported { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode SharingViolation { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode UnsupportedHeader { get { throw null; } }

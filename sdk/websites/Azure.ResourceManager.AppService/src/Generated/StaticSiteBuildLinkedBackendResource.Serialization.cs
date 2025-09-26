@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteLinkedBackendData IJsonModel<StaticSiteLinkedBackendData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteLinkedBackendData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StaticSiteLinkedBackendData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StaticSiteLinkedBackendData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteLinkedBackendData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        StaticSiteLinkedBackendData IPersistableModel<StaticSiteLinkedBackendData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteLinkedBackendData>(data, options);
+        StaticSiteLinkedBackendData IPersistableModel<StaticSiteLinkedBackendData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteLinkedBackendData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<StaticSiteLinkedBackendData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteLinkedBackendData>)Data).GetFormatFromOptions(options);
     }

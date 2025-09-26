@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         ScriptPackageData IJsonModel<ScriptPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScriptPackageData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScriptPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScriptPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScriptPackageData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        ScriptPackageData IPersistableModel<ScriptPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScriptPackageData>(data, options);
+        ScriptPackageData IPersistableModel<ScriptPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScriptPackageData>(data, options, AzureResourceManagerAvsContext.Default);
 
         string IPersistableModel<ScriptPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScriptPackageData>)Data).GetFormatFromOptions(options);
     }

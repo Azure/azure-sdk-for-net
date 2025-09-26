@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary>
     /// The abstract base representation of a streamed text content part's text annotation.
     /// Please note <see cref="MessageDeltaTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MessageDeltaTextFileCitationAnnotation"/>, <see cref="MessageDeltaTextFilePathAnnotation"/> and <see cref="MessageDeltaTextUrlCitationAnnotation"/>.
+    /// The available derived classes include <see cref="MessageDeltaTextFileCitationAnnotation"/>, <see cref="MessageDeltaTextFilePathAnnotation"/> and <see cref="MessageDeltaTextUriCitationAnnotation"/>.
     /// </summary>
     public abstract partial class MessageDeltaTextAnnotation
     {

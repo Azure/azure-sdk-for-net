@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         DomainOwnershipIdentifierData IJsonModel<DomainOwnershipIdentifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DomainOwnershipIdentifierData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DomainOwnershipIdentifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DomainOwnershipIdentifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DomainOwnershipIdentifierData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        DomainOwnershipIdentifierData IPersistableModel<DomainOwnershipIdentifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DomainOwnershipIdentifierData>(data, options);
+        DomainOwnershipIdentifierData IPersistableModel<DomainOwnershipIdentifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DomainOwnershipIdentifierData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<DomainOwnershipIdentifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DomainOwnershipIdentifierData>)Data).GetFormatFromOptions(options);
     }

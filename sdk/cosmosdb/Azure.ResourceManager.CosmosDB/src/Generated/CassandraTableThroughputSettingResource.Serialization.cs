@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         ThroughputSettingData IJsonModel<ThroughputSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ThroughputSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ThroughputSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ThroughputSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ThroughputSettingData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        ThroughputSettingData IPersistableModel<ThroughputSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ThroughputSettingData>(data, options);
+        ThroughputSettingData IPersistableModel<ThroughputSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ThroughputSettingData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<ThroughputSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ThroughputSettingData>)Data).GetFormatFromOptions(options);
     }

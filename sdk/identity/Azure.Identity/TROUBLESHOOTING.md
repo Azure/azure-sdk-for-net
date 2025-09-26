@@ -15,7 +15,6 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Troubleshoot ClientSecretCredential authentication issues](#troubleshoot-clientsecretcredential-authentication-issues)
 - [Troubleshoot ClientCertificateCredential authentication issues](#troubleshoot-clientcertificatecredential-authentication-issues)
 - [Troubleshoot ClientAssertionCredential authentication issues](#troubleshoot-clientassertioncredential-authentication-issues)
-- [Troubleshoot UsernamePasswordCredential authentication issues](#troubleshoot-usernamepasswordcredential-authentication-issues)
 - [Troubleshoot WorkloadIdentityCredential authentication issues](#troubleshoot-workloadidentitycredential-authentication-issues)
 - [Troubleshoot ManagedIdentityCredential authentication issues](#troubleshoot-managedidentitycredential-authentication-issues)
   - [Azure Virtual Machine managed identity](#azure-virtual-machine-managed-identity)
@@ -164,15 +163,6 @@ DefaultAzureCredentialOptions options = new
 |AADSTS700021| Client assertion application identifier doesn't match 'client_id' parameter. Review the documentation at [Microsoft Identity platform application authentication certificate credentials](https://learn.microsoft.com/entra/identity-platform/certificate-credentials). | Ensure the JWT assertion created has the correct values specified for the `sub` and `issuer` value of the payload, both of these should have the value be equal to `clientId`. Refer to the documentation for [client assertion format](https://learn.microsoft.com/entra/identity-platform/certificate-credentials).|
 |AADSTS700023| Client assertion audience claim doesn't match Realm issuer. Review the documentation at [Microsoft Identity platform application authentication certificate credentials](https://learn.microsoft.com/entra/identity-platform/certificate-credentials). | Ensure the audience `aud` field in the JWT assertion created has the correct value for the audience specified in the payload. This should be set to `https://login.microsoftonline.com/{tenantId}/v2`.|
 |AADSTS50027| JWT token is invalid or malformed. | Ensure the JWT assertion token is in the valid format. Refer to the documentation for [client assertion format](https://learn.microsoft.com/entra/identity-platform/certificate-credentials).|
-
-## Troubleshoot `UsernamePasswordCredential` authentication issues
-
-`AuthenticationFailedException`
-
-| Error Code | Issue | Mitigation |
-|---|---|---|
-|AADSTS50076|Multifactor authentication (MFA) is enabled on your Entra tenant, and the username + password flow is incompatible with MFA.|Use a different credential, per the guidance at [Planning for mandatory MFA: Client libraries](https://aka.ms/azsdk/identity/mfa).|
-|AADSTS50126|The provided username or password is invalid|Ensure the `username` and `password` provided when constructing the credential are valid.|
 
 ## Troubleshoot `WorkloadIdentityCredential` authentication issues
 

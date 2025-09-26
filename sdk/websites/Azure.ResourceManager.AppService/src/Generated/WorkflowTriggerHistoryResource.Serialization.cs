@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         WorkflowTriggerHistoryData IJsonModel<WorkflowTriggerHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowTriggerHistoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkflowTriggerHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkflowTriggerHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowTriggerHistoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        WorkflowTriggerHistoryData IPersistableModel<WorkflowTriggerHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowTriggerHistoryData>(data, options);
+        WorkflowTriggerHistoryData IPersistableModel<WorkflowTriggerHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowTriggerHistoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<WorkflowTriggerHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowTriggerHistoryData>)Data).GetFormatFromOptions(options);
     }

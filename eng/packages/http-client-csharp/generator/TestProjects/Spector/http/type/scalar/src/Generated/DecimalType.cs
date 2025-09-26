@@ -17,7 +17,7 @@ namespace _Type.Scalar
     {
         protected DecimalType() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response ResponseBody(RequestContext context) => throw null;
 

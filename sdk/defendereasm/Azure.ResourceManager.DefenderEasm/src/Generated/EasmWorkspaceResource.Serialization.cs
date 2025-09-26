@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DefenderEasm
 
         EasmWorkspaceData IJsonModel<EasmWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EasmWorkspaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EasmWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EasmWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EasmWorkspaceData>(Data, options, AzureResourceManagerDefenderEasmContext.Default);
 
-        EasmWorkspaceData IPersistableModel<EasmWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EasmWorkspaceData>(data, options);
+        EasmWorkspaceData IPersistableModel<EasmWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EasmWorkspaceData>(data, options, AzureResourceManagerDefenderEasmContext.Default);
 
         string IPersistableModel<EasmWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EasmWorkspaceData>)Data).GetFormatFromOptions(options);
     }

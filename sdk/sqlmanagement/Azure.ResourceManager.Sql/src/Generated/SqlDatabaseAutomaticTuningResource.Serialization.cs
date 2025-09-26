@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlDatabaseAutomaticTuningData IJsonModel<SqlDatabaseAutomaticTuningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseAutomaticTuningData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlDatabaseAutomaticTuningData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlDatabaseAutomaticTuningData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlDatabaseAutomaticTuningData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlDatabaseAutomaticTuningData IPersistableModel<SqlDatabaseAutomaticTuningData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDatabaseAutomaticTuningData>(data, options);
+        SqlDatabaseAutomaticTuningData IPersistableModel<SqlDatabaseAutomaticTuningData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDatabaseAutomaticTuningData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlDatabaseAutomaticTuningData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDatabaseAutomaticTuningData>)Data).GetFormatFromOptions(options);
     }

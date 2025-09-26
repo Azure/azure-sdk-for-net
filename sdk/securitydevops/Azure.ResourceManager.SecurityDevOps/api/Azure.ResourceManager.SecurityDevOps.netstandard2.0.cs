@@ -201,6 +201,12 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerSecurityDevOpsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSecurityDevOpsContext() { }
+        public static Azure.ResourceManager.SecurityDevOps.AzureResourceManagerSecurityDevOpsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class GitHubConnectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>, System.Collections.IEnumerable
     {
         protected GitHubConnectorCollection() { }

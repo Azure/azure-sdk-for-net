@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityHealthReportData IJsonModel<SecurityHealthReportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityHealthReportData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityHealthReportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityHealthReportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityHealthReportData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityHealthReportData IPersistableModel<SecurityHealthReportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityHealthReportData>(data, options);
+        SecurityHealthReportData IPersistableModel<SecurityHealthReportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityHealthReportData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityHealthReportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityHealthReportData>)Data).GetFormatFromOptions(options);
     }

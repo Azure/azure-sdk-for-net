@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabNotificationChannelData IJsonModel<DevTestLabNotificationChannelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabNotificationChannelData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabNotificationChannelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabNotificationChannelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabNotificationChannelData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabNotificationChannelData IPersistableModel<DevTestLabNotificationChannelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabNotificationChannelData>(data, options);
+        DevTestLabNotificationChannelData IPersistableModel<DevTestLabNotificationChannelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabNotificationChannelData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
         string IPersistableModel<DevTestLabNotificationChannelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabNotificationChannelData>)Data).GetFormatFromOptions(options);
     }

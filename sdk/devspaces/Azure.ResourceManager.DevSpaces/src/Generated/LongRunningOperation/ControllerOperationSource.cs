@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DevSpaces
 
         ControllerResource IOperationSource<ControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ControllerData>(response.Content);
+            var data = ModelReaderWriter.Read<ControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevSpacesContext.Default);
             return new ControllerResource(_client, data);
         }
 
         async ValueTask<ControllerResource> IOperationSource<ControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ControllerData>(response.Content);
+            var data = ModelReaderWriter.Read<ControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevSpacesContext.Default);
             return await Task.FromResult(new ControllerResource(_client, data)).ConfigureAwait(false);
         }
     }

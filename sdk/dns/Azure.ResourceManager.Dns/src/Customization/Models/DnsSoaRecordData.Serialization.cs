@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Dns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsSoaRecordData)} does not support '{options.Format}' format.");
             }

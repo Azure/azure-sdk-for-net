@@ -21,7 +21,7 @@ namespace Authentication.Http.Custom
 
         public CustomClient(Uri endpoint, AzureKeyCredential keyCredential, CustomClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Valid(RequestContext context) => throw null;
 

@@ -8,7 +8,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent;
 
 /// <summary>
-/// Represents a streaming update to <see cref="ThreadMessage"/> content as part of the Agents API.
+/// Represents a streaming update to <see cref="PersistentThreadMessage"/> content as part of the Agents API.
 /// </summary>
 /// <remarks>
 /// Distinct <see cref="MessageContentUpdate"/> instances will be generated for each <see cref="MessageContent"/> part

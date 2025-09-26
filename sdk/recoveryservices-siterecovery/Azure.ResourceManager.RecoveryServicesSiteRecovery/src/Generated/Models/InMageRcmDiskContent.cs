@@ -66,13 +66,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskType"> The disk type. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             LogStorageAccountId = logStorageAccountId;
             DiskType = diskType;
             DiskEncryptionSetId = diskEncryptionSetId;
+            SectorSizeInBytes = sectorSizeInBytes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,5 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public SiteRecoveryDiskAccountType DiskType { get; }
         /// <summary> The DiskEncryptionSet ARM Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
+        /// <summary> The logical sector size (in bytes), 512 by default. </summary>
+        public int? SectorSizeInBytes { get; set; }
     }
 }

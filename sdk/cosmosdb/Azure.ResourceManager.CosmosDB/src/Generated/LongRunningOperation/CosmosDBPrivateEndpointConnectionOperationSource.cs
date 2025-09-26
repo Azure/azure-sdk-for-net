@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBPrivateEndpointConnectionResource IOperationSource<CosmosDBPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new CosmosDBPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<CosmosDBPrivateEndpointConnectionResource> IOperationSource<CosmosDBPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return await Task.FromResult(new CosmosDBPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

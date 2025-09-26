@@ -36,7 +36,7 @@ Synchronous sample:
 ```C# Snippet:AgentsStreaming_CreateThread
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "Hi, Agent! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
@@ -46,7 +46,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsStreamingAsync_CreateThread
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "Hi, Agent! Draw a graph for a line with a slope of 4 and y-intercept of 9.");

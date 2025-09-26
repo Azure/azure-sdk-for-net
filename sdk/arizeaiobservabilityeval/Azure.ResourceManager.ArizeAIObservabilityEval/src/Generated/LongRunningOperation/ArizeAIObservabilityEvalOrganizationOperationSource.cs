@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
 
         ArizeAIObservabilityEvalOrganizationResource IOperationSource<ArizeAIObservabilityEvalOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
             return new ArizeAIObservabilityEvalOrganizationResource(_client, data);
         }
 
         async ValueTask<ArizeAIObservabilityEvalOrganizationResource> IOperationSource<ArizeAIObservabilityEvalOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
             return await Task.FromResult(new ArizeAIObservabilityEvalOrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }

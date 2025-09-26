@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         HybridConnectionLimitData IJsonModel<HybridConnectionLimitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectionLimitData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridConnectionLimitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridConnectionLimitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridConnectionLimitData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        HybridConnectionLimitData IPersistableModel<HybridConnectionLimitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectionLimitData>(data, options);
+        HybridConnectionLimitData IPersistableModel<HybridConnectionLimitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectionLimitData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<HybridConnectionLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectionLimitData>)Data).GetFormatFromOptions(options);
     }

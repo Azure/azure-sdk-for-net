@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformServiceRegistryData IJsonModel<AppPlatformServiceRegistryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformServiceRegistryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformServiceRegistryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppPlatformServiceRegistryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformServiceRegistryData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        AppPlatformServiceRegistryData IPersistableModel<AppPlatformServiceRegistryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformServiceRegistryData>(data, options);
+        AppPlatformServiceRegistryData IPersistableModel<AppPlatformServiceRegistryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformServiceRegistryData>(data, options, AzureResourceManagerAppPlatformContext.Default);
 
         string IPersistableModel<AppPlatformServiceRegistryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformServiceRegistryData>)Data).GetFormatFromOptions(options);
     }

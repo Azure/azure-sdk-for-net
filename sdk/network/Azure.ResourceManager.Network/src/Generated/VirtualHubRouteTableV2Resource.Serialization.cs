@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         VirtualHubRouteTableV2Data IJsonModel<VirtualHubRouteTableV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualHubRouteTableV2Data>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualHubRouteTableV2Data>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualHubRouteTableV2Data>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualHubRouteTableV2Data>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VirtualHubRouteTableV2Data IPersistableModel<VirtualHubRouteTableV2Data>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualHubRouteTableV2Data>(data, options);
+        VirtualHubRouteTableV2Data IPersistableModel<VirtualHubRouteTableV2Data>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualHubRouteTableV2Data>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<VirtualHubRouteTableV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualHubRouteTableV2Data>)Data).GetFormatFromOptions(options);
     }

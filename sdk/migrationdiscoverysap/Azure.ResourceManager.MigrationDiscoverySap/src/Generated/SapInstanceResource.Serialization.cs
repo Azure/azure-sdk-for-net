@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
 
         SapInstanceData IJsonModel<SapInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapInstanceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SapInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SapInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapInstanceData>(Data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
 
-        SapInstanceData IPersistableModel<SapInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapInstanceData>(data, options);
+        SapInstanceData IPersistableModel<SapInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapInstanceData>(data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
 
         string IPersistableModel<SapInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapInstanceData>)Data).GetFormatFromOptions(options);
     }

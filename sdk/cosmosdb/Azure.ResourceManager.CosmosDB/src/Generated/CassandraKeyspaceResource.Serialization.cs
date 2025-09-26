@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         CassandraKeyspaceData IJsonModel<CassandraKeyspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraKeyspaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CassandraKeyspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CassandraKeyspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraKeyspaceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CassandraKeyspaceData IPersistableModel<CassandraKeyspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraKeyspaceData>(data, options);
+        CassandraKeyspaceData IPersistableModel<CassandraKeyspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraKeyspaceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<CassandraKeyspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraKeyspaceData>)Data).GetFormatFromOptions(options);
     }

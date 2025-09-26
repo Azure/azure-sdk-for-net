@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DigitalTwins
 
         TimeSeriesDatabaseConnectionResource IOperationSource<TimeSeriesDatabaseConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TimeSeriesDatabaseConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<TimeSeriesDatabaseConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDigitalTwinsContext.Default);
             return new TimeSeriesDatabaseConnectionResource(_client, data);
         }
 
         async ValueTask<TimeSeriesDatabaseConnectionResource> IOperationSource<TimeSeriesDatabaseConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TimeSeriesDatabaseConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<TimeSeriesDatabaseConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDigitalTwinsContext.Default);
             return await Task.FromResult(new TimeSeriesDatabaseConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

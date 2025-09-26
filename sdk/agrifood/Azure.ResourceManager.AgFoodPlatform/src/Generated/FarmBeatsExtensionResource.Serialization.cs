@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         FarmBeatsExtensionData IJsonModel<FarmBeatsExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FarmBeatsExtensionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FarmBeatsExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FarmBeatsExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FarmBeatsExtensionData>(Data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
-        FarmBeatsExtensionData IPersistableModel<FarmBeatsExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FarmBeatsExtensionData>(data, options);
+        FarmBeatsExtensionData IPersistableModel<FarmBeatsExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FarmBeatsExtensionData>(data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
         string IPersistableModel<FarmBeatsExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FarmBeatsExtensionData>)Data).GetFormatFromOptions(options);
     }

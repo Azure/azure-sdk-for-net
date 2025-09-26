@@ -17,7 +17,7 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-VectorStore vectorStore = client.VectorStores.CreateVectorStore(
+PersistentAgentsVectorStore vectorStore = client.VectorStores.CreateVectorStore(
     name: "sample_vector_store",
     storeConfiguration: new VectorStoreConfiguration(
         dataSources: [ds]
@@ -42,7 +42,7 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
+PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store",
     storeConfiguration: new VectorStoreConfiguration(
         dataSources: [ ds ]
@@ -67,7 +67,7 @@ Synchronous sample:
 ```C# Snippet:AgentsEnterpriseFileSearch_CreateThreadMessage
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
@@ -95,7 +95,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsEnterpriseFileSearchAsync_CreateThreadMessage
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
@@ -123,13 +123,13 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsEnterpriseFileSearch_ListUpdatedMessages
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 // Build the map of file IDs to file names.
 Dictionary<string, string> dtFiles = [];
-Pageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFiles(
+Pageable<VectorStoreFile> storeFiles = client.VectorStores.GetVectorStoreFiles(
     vectorStoreId: vectorStore.Id
 );
 foreach (VectorStoreFile fle in storeFiles)
@@ -143,13 +143,13 @@ WriteMessages(messages, dtFiles);
 
 Asynchronous sample:
 ```C# Snippet:AgentsEnterpriseFileSearchAsync_ListUpdatedMessages
-List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 ).ToListAsync();
 // Build the map of file IDs to file names.
 Dictionary<string, string> dtFiles = [];
-AsyncPageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFilesAsync(
+AsyncPageable<VectorStoreFile> storeFiles = client.VectorStores.GetVectorStoreFilesAsync(
     vectorStoreId: vectorStore.Id
 );
 await foreach (VectorStoreFile fle in storeFiles)
@@ -163,9 +163,9 @@ WriteMessages(messages, dtFiles);
 
 5. To properly render the links to the file name we use the `WriteMessages` method, which internally calls `replaceReferences` method to replace reference placeholders by file IDs or by file names.
 ```C# Snippet:AgentsEnterpriseFileSearch_WriteMessages
-private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
+private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages, Dictionary<string, string> fileIds)
 {
-    foreach (ThreadMessage threadMessage in messages)
+    foreach (PersistentThreadMessage threadMessage in messages)
     {
         Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
         foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -214,8 +214,8 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 
 Synchronous sample:
 ```C# Snippet:AgentsEnterpriseFileSearch_Cleanup
-VectorStoreDeletionStatus delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
-if (delTask.Deleted)
+bool delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
+if (delTask)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
 }
@@ -229,8 +229,8 @@ client.Administration.DeleteAgent(agent.Id);
 
 Asynchronous sample:
 ```C# Snippet:AgentsEnterpriseFileSearchAsync_Cleanup
-VectorStoreDeletionStatus delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
-if (delTask.Deleted)
+bool delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
+if (delTask)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
 }

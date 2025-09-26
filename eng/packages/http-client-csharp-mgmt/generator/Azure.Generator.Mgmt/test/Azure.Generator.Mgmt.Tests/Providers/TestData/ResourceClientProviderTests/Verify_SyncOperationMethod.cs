@@ -1,4 +1,4 @@
-﻿using global::Azure.Core.Pipeline.DiagnosticScope scope = _responsetypeClientDiagnostics.CreateScope("Samples.Get");
+﻿using global::Azure.Core.Pipeline.DiagnosticScope scope = _responsetypeClientDiagnostics.CreateScope("ResponseTypeResource.Get");
 scope.Start();
 try
 {

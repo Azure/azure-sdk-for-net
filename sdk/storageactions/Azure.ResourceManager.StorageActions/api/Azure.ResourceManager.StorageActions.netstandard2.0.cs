@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.StorageActions
 {
+    public partial class AzureResourceManagerStorageActionsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerStorageActionsContext() { }
+        public static Azure.ResourceManager.StorageActions.AzureResourceManagerStorageActionsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class StorageActionsExtensions
     {
         public static Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource> GetStorageTask(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string storageTaskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

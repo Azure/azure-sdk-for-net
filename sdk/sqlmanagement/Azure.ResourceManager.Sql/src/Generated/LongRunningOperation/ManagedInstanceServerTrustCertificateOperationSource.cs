@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceServerTrustCertificateResource IOperationSource<ManagedInstanceServerTrustCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerTrustCertificateData>(response.Content);
+            var data = ModelReaderWriter.Read<ServerTrustCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceServerTrustCertificateResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceServerTrustCertificateResource> IOperationSource<ManagedInstanceServerTrustCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerTrustCertificateData>(response.Content);
+            var data = ModelReaderWriter.Read<ServerTrustCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ManagedInstanceServerTrustCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }

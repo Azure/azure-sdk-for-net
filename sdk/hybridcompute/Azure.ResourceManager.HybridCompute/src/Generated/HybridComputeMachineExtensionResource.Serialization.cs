@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridCompute
 
         HybridComputeMachineExtensionData IJsonModel<HybridComputeMachineExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeMachineExtensionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridComputeMachineExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridComputeMachineExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputeMachineExtensionData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        HybridComputeMachineExtensionData IPersistableModel<HybridComputeMachineExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputeMachineExtensionData>(data, options);
+        HybridComputeMachineExtensionData IPersistableModel<HybridComputeMachineExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputeMachineExtensionData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
         string IPersistableModel<HybridComputeMachineExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputeMachineExtensionData>)Data).GetFormatFromOptions(options);
     }

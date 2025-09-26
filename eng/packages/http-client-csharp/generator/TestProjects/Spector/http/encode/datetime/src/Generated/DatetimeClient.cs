@@ -16,7 +16,7 @@ namespace Encode.Datetime
 
         public DatetimeClient(Uri endpoint, DatetimeClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Query GetQueryClient() => throw null;
 

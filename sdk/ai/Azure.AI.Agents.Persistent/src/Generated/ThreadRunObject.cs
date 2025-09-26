@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The ThreadRun_object. </summary>
+    /// <summary> The ThreadRunObject. </summary>
     internal readonly partial struct ThreadRunObject : IEquatable<ThreadRunObject>
     {
         private readonly string _value;

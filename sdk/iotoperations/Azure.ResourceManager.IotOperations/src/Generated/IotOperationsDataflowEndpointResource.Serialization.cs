@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.IotOperations
 
         IotOperationsDataflowEndpointData IJsonModel<IotOperationsDataflowEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsDataflowEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotOperationsDataflowEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IotOperationsDataflowEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotOperationsDataflowEndpointData>(Data, options, AzureResourceManagerIotOperationsContext.Default);
 
-        IotOperationsDataflowEndpointData IPersistableModel<IotOperationsDataflowEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(data, options);
+        IotOperationsDataflowEndpointData IPersistableModel<IotOperationsDataflowEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(data, options, AzureResourceManagerIotOperationsContext.Default);
 
         string IPersistableModel<IotOperationsDataflowEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotOperationsDataflowEndpointData>)Data).GetFormatFromOptions(options);
     }

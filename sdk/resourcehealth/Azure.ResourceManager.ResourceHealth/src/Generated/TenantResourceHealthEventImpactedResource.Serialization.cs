@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ResourceHealth
 
         ResourceHealthEventImpactedResourceData IJsonModel<ResourceHealthEventImpactedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthEventImpactedResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthEventImpactedResourceData>(Data, options, AzureResourceManagerResourceHealthContext.Default);
 
-        ResourceHealthEventImpactedResourceData IPersistableModel<ResourceHealthEventImpactedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthEventImpactedResourceData>(data, options);
+        ResourceHealthEventImpactedResourceData IPersistableModel<ResourceHealthEventImpactedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthEventImpactedResourceData>(data, options, AzureResourceManagerResourceHealthContext.Default);
 
         string IPersistableModel<ResourceHealthEventImpactedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthEventImpactedResourceData>)Data).GetFormatFromOptions(options);
     }

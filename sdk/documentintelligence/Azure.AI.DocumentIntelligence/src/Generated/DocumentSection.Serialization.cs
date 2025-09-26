@@ -134,7 +134,7 @@ namespace Azure.AI.DocumentIntelligence
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DocumentSection)} does not support writing '{options.Format}' format.");
             }

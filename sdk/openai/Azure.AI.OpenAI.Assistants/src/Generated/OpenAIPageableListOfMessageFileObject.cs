@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> The OpenAIPageableListOfMessageFile_object. </summary>
+    /// <summary> The OpenAIPageableListOfMessageFileObject. </summary>
     internal readonly partial struct OpenAIPageableListOfMessageFileObject : IEquatable<OpenAIPageableListOfMessageFileObject>
     {
         private readonly string _value;

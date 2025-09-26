@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         BackupPrivateEndpointConnectionResource IOperationSource<BackupPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesBackupContext.Default);
             return new BackupPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<BackupPrivateEndpointConnectionResource> IOperationSource<BackupPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesBackupContext.Default);
             return await Task.FromResult(new BackupPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

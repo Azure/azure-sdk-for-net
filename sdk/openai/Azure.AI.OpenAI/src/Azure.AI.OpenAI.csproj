@@ -10,6 +10,9 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001;OPENAI002;AOAI001</NoWarn>
+    <!-- Needs System.ClientModel 1.5.0 in order to add the context and use the new overloads -->
+    <!-- After this https://github.com/Azure/azure-sdk-for-net/issues/49916 we can remove this no warn -->
+    <NoWarn>$(NoWarn);AZC0150</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>disable</Nullable>

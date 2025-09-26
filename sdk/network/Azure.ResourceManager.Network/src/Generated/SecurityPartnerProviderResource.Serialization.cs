@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         SecurityPartnerProviderData IJsonModel<SecurityPartnerProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityPartnerProviderData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityPartnerProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityPartnerProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityPartnerProviderData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        SecurityPartnerProviderData IPersistableModel<SecurityPartnerProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityPartnerProviderData>(data, options);
+        SecurityPartnerProviderData IPersistableModel<SecurityPartnerProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityPartnerProviderData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<SecurityPartnerProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityPartnerProviderData>)Data).GetFormatFromOptions(options);
     }

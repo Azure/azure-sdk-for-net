@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseSqlPoolSecurityAlertPolicyData IJsonModel<SynapseSqlPoolSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolSecurityAlertPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseSqlPoolSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseSqlPoolSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseSqlPoolSecurityAlertPolicyData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseSqlPoolSecurityAlertPolicyData IPersistableModel<SynapseSqlPoolSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSqlPoolSecurityAlertPolicyData>(data, options);
+        SynapseSqlPoolSecurityAlertPolicyData IPersistableModel<SynapseSqlPoolSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSqlPoolSecurityAlertPolicyData>(data, options, AzureResourceManagerSynapseContext.Default);
 
         string IPersistableModel<SynapseSqlPoolSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSqlPoolSecurityAlertPolicyData>)Data).GetFormatFromOptions(options);
     }

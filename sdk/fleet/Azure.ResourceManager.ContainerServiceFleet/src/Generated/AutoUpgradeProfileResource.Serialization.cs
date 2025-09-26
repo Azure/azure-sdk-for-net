@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         AutoUpgradeProfileData IJsonModel<AutoUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoUpgradeProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutoUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutoUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoUpgradeProfileData>(Data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
-        AutoUpgradeProfileData IPersistableModel<AutoUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoUpgradeProfileData>(data, options);
+        AutoUpgradeProfileData IPersistableModel<AutoUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoUpgradeProfileData>(data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
         string IPersistableModel<AutoUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoUpgradeProfileData>)Data).GetFormatFromOptions(options);
     }

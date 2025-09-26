@@ -71,7 +71,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
@@ -79,7 +79,7 @@ namespace Azure.AI.Agents.Persistent
             CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, attachments?.ToList() as IReadOnlyList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateMessageAsync(threadId, createMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
 
         /// <summary> Creates a new message on a specified thread. </summary>
@@ -101,7 +101,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentThreadMessage> CreateMessage(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
@@ -109,7 +109,7 @@ namespace Azure.AI.Agents.Persistent
             CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, attachments?.ToList() as IReadOnlyList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateMessage(threadId, createMessageRequest.ToRequestContent(), context);
-            return Response.FromValue(ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
 
         /// <summary>
@@ -200,14 +200,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadMessage>> GetMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentThreadMessage>> GetMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetMessageAsync(threadId, messageId, context).ConfigureAwait(false);
-            return Response.FromValue(ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
 
         /// <summary> Retrieves an existing message. </summary>
@@ -216,14 +216,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadMessage> GetMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentThreadMessage> GetMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetMessage(threadId, messageId, context);
-            return Response.FromValue(ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
@@ -323,7 +323,7 @@ namespace Azure.AI.Agents.Persistent
             UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateMessageAsync(threadId, messageId, updateMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
 
         /// <summary> Modifies an existing message on an existing thread. </summary>
@@ -333,7 +333,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadMessage> UpdateMessage(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentThreadMessage> UpdateMessage(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
@@ -341,7 +341,7 @@ namespace Azure.AI.Agents.Persistent
             UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateMessage(threadId, messageId, updateMessageRequest.ToRequestContent(), context);
-            return Response.FromValue(ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
 
         /// <summary>

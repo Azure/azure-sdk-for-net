@@ -20,7 +20,7 @@ namespace Azure.AI.Agents.Persistent
     /// A collection of vector-store file operations under
     /// `/vector_stores/{vectorStoreId}/files`.
     /// </summary>
-    public partial class VectorStoreFiles
+    internal partial class VectorStoreFiles
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -62,7 +62,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategy chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
@@ -80,7 +80,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategy chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
@@ -100,7 +100,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFileAsync(string,string,VectorStoreDataSource,VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreFileAsync(string,string,VectorStoreDataSource,VectorStoreChunkingStrategy,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -141,7 +141,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFile(string,string,VectorStoreDataSource,VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreFile(string,string,VectorStoreDataSource,VectorStoreChunkingStrategy,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -292,14 +292,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFileDeletionStatus>> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<InternalVectorStoreFileDeletionStatus>> InternalDeleteVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DeleteVectorStoreFileAsync(vectorStoreId, fileId, context).ConfigureAwait(false);
-            return Response.FromValue(VectorStoreFileDeletionStatus.FromResponse(response), response);
+            Response response = await InternalDeleteVectorStoreFileAsync(vectorStoreId, fileId, context).ConfigureAwait(false);
+            return Response.FromValue(InternalVectorStoreFileDeletionStatus.FromResponse(response), response);
         }
 
         /// <summary> Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself). </summary>
@@ -308,14 +308,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFileDeletionStatus> DeleteVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        internal virtual Response<InternalVectorStoreFileDeletionStatus> InternalDeleteVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DeleteVectorStoreFile(vectorStoreId, fileId, context);
-            return Response.FromValue(VectorStoreFileDeletionStatus.FromResponse(response), response);
+            Response response = InternalDeleteVectorStoreFile(vectorStoreId, fileId, context);
+            return Response.FromValue(InternalVectorStoreFileDeletionStatus.FromResponse(response), response);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteVectorStoreFileAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalDeleteVectorStoreFileAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -340,16 +340,16 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
+        internal virtual async Task<Response> InternalDeleteVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFiles.DeleteVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoreFiles.InternalDeleteVectorStoreFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
+                using HttpMessage message = CreateInternalDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -369,7 +369,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteVectorStoreFile(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalDeleteVectorStoreFile(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -381,16 +381,16 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
+        internal virtual Response InternalDeleteVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFiles.DeleteVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoreFiles.InternalDeleteVectorStoreFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
+                using HttpMessage message = CreateInternalDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -471,7 +471,7 @@ namespace Azure.AI.Agents.Persistent
             return message;
         }
 
-        internal HttpMessage CreateDeleteVectorStoreFileRequest(string vectorStoreId, string fileId, RequestContext context)
+        internal HttpMessage CreateInternalDeleteVectorStoreFileRequest(string vectorStoreId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

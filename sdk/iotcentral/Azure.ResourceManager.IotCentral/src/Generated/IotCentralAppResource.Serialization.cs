@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.IotCentral
 
         IotCentralAppData IJsonModel<IotCentralAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralAppData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotCentralAppData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IotCentralAppData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotCentralAppData>(Data, options, AzureResourceManagerIotCentralContext.Default);
 
-        IotCentralAppData IPersistableModel<IotCentralAppData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotCentralAppData>(data, options);
+        IotCentralAppData IPersistableModel<IotCentralAppData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotCentralAppData>(data, options, AzureResourceManagerIotCentralContext.Default);
 
         string IPersistableModel<IotCentralAppData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotCentralAppData>)Data).GetFormatFromOptions(options);
     }
