@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volume group properties. </summary>
+    /// <summary>
+    /// Volume group properties
+    /// Serialized Name: VolumeGroupMetaData
+    /// </summary>
     public partial class NetAppVolumeGroupMetadata
     {
         /// <summary>
@@ -52,11 +55,26 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupMetadata"/>. </summary>
-        /// <param name="groupDescription"> Group Description. </param>
-        /// <param name="applicationType"> Application Type. </param>
-        /// <param name="applicationIdentifier"> Application specific identifier. </param>
-        /// <param name="globalPlacementRules"> Application specific placement rules for the volume group. </param>
-        /// <param name="volumesCount"> Number of volumes in volume group. </param>
+        /// <param name="groupDescription">
+        /// Group Description
+        /// Serialized Name: VolumeGroupMetaData.groupDescription
+        /// </param>
+        /// <param name="applicationType">
+        /// Application Type
+        /// Serialized Name: VolumeGroupMetaData.applicationType
+        /// </param>
+        /// <param name="applicationIdentifier">
+        /// Application specific identifier
+        /// Serialized Name: VolumeGroupMetaData.applicationIdentifier
+        /// </param>
+        /// <param name="globalPlacementRules">
+        /// Application specific placement rules for the volume group
+        /// Serialized Name: VolumeGroupMetaData.globalPlacementRules
+        /// </param>
+        /// <param name="volumesCount">
+        /// Number of volumes in volume group
+        /// Serialized Name: VolumeGroupMetaData.volumesCount
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeGroupMetadata(string groupDescription, NetAppApplicationType? applicationType, string applicationIdentifier, IList<NetAppVolumePlacementRule> globalPlacementRules, long? volumesCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,15 +86,30 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Group Description. </summary>
+        /// <summary>
+        /// Group Description
+        /// Serialized Name: VolumeGroupMetaData.groupDescription
+        /// </summary>
         public string GroupDescription { get; set; }
-        /// <summary> Application Type. </summary>
+        /// <summary>
+        /// Application Type
+        /// Serialized Name: VolumeGroupMetaData.applicationType
+        /// </summary>
         public NetAppApplicationType? ApplicationType { get; set; }
-        /// <summary> Application specific identifier. </summary>
+        /// <summary>
+        /// Application specific identifier
+        /// Serialized Name: VolumeGroupMetaData.applicationIdentifier
+        /// </summary>
         public string ApplicationIdentifier { get; set; }
-        /// <summary> Application specific placement rules for the volume group. </summary>
+        /// <summary>
+        /// Application specific placement rules for the volume group
+        /// Serialized Name: VolumeGroupMetaData.globalPlacementRules
+        /// </summary>
         public IList<NetAppVolumePlacementRule> GlobalPlacementRules { get; }
-        /// <summary> Number of volumes in volume group. </summary>
+        /// <summary>
+        /// Number of volumes in volume group
+        /// Serialized Name: VolumeGroupMetaData.volumesCount
+        /// </summary>
         public long? VolumesCount { get; }
     }
 }

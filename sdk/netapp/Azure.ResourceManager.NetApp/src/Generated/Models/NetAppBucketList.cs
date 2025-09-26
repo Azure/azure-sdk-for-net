@@ -10,8 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Subscription Quota Items. </summary>
-    internal partial class SubscriptionQuotaItemList
+    /// <summary>
+    /// List of volume bucket resources
+    /// Serialized Name: BucketList
+    /// </summary>
+    internal partial class NetAppBucketList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +48,38 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        internal SubscriptionQuotaItemList()
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketList"/>. </summary>
+        internal NetAppBucketList()
         {
-            Value = new ChangeTrackingList<NetAppSubscriptionQuotaItem>();
+            Value = new ChangeTrackingList<NetAppBucketData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        /// <param name="value"> A list of SubscriptionQuotaItems. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketList"/>. </summary>
+        /// <param name="value">
+        /// List of volume buckets
+        /// Serialized Name: BucketList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of results.
+        /// Serialized Name: BucketList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketList(IReadOnlyList<NetAppBucketData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of SubscriptionQuotaItems. </summary>
-        public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
+        /// <summary>
+        /// List of volume buckets
+        /// Serialized Name: BucketList.value
+        /// </summary>
+        public IReadOnlyList<NetAppBucketData> Value { get; }
+        /// <summary>
+        /// URL to get the next set of results.
+        /// Serialized Name: BucketList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

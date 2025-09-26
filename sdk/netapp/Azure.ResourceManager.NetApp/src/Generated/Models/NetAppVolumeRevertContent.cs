@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> revert a volume to the snapshot. </summary>
+    /// <summary>
+    /// revert a volume to the snapshot
+    /// Serialized Name: VolumeRevert
+    /// </summary>
     public partial class NetAppVolumeRevertContent
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeRevertContent"/>. </summary>
-        /// <param name="snapshotId"> Resource id of the snapshot. </param>
+        /// <param name="snapshotId">
+        /// Resource id of the snapshot
+        /// Serialized Name: VolumeRevert.snapshotId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeRevertContent(string snapshotId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource id of the snapshot. </summary>
+        /// <summary>
+        /// Resource id of the snapshot
+        /// Serialized Name: VolumeRevert.snapshotId
+        /// </summary>
         public string SnapshotId { get; set; }
     }
 }

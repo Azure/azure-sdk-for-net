@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Information about cluster peering process. </summary>
+    /// <summary>
+    /// Information about cluster peering process
+    /// Serialized Name: ClusterPeerCommandResponse
+    /// </summary>
     public partial class ClusterPeerCommandResult
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterPeerCommandResult"/>. </summary>
-        /// <param name="peerAcceptCommand"> A command that needs to be run on the external ONTAP to accept cluster peering.  Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
+        /// <param name="peerAcceptCommand">
+        /// A command that needs to be run on the external ONTAP to accept cluster peering.  Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;
+        /// Serialized Name: ClusterPeerCommandResponse.peerAcceptCommand
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClusterPeerCommandResult(string peerAcceptCommand, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A command that needs to be run on the external ONTAP to accept cluster peering.  Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </summary>
+        /// <summary>
+        /// A command that needs to be run on the external ONTAP to accept cluster peering.  Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;
+        /// Serialized Name: ClusterPeerCommandResponse.peerAcceptCommand
+        /// </summary>
         public string PeerAcceptCommand { get; }
     }
 }

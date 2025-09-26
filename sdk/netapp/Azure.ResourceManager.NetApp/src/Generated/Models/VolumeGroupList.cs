@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of volume group resources. </summary>
+    /// <summary>
+    /// List of volume group resources
+    /// Serialized Name: VolumeGroupList
+    /// </summary>
     internal partial class VolumeGroupList
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/>. </summary>
-        /// <param name="value"> List of volume Groups. </param>
+        /// <param name="value">
+        /// List of volume Groups
+        /// Serialized Name: VolumeGroupList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VolumeGroupList(IReadOnlyList<NetAppVolumeGroupResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volume Groups. </summary>
+        /// <summary>
+        /// List of volume Groups
+        /// Serialized Name: VolumeGroupList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeGroupResult> Value { get; }
     }
 }

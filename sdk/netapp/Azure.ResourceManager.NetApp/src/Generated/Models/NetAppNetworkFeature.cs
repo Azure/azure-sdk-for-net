@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Network features available to the volume, or current state of update. </summary>
+    /// <summary>
+    /// Network features available to the volume, or current state of update.
+    /// Serialized Name: NetworkFeatures
+    /// </summary>
     public readonly partial struct NetAppNetworkFeature : IEquatable<NetAppNetworkFeature>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string BasicStandardValue = "Basic_Standard";
         private const string StandardBasicValue = "Standard_Basic";
 
-        /// <summary> Basic network features. </summary>
+        /// <summary>
+        /// Basic network features.
+        /// Serialized Name: NetworkFeatures.Basic
+        /// </summary>
         public static NetAppNetworkFeature Basic { get; } = new NetAppNetworkFeature(BasicValue);
-        /// <summary> Standard network features. </summary>
+        /// <summary>
+        /// Standard network features.
+        /// Serialized Name: NetworkFeatures.Standard
+        /// </summary>
         public static NetAppNetworkFeature Standard { get; } = new NetAppNetworkFeature(StandardValue);
-        /// <summary> Updating from Basic to Standard network features. </summary>
+        /// <summary>
+        /// Updating from Basic to Standard network features.
+        /// Serialized Name: NetworkFeatures.Basic_Standard
+        /// </summary>
         public static NetAppNetworkFeature BasicStandard { get; } = new NetAppNetworkFeature(BasicStandardValue);
-        /// <summary> Updating from Standard to Basic network features. </summary>
+        /// <summary>
+        /// Updating from Standard to Basic network features.
+        /// Serialized Name: NetworkFeatures.Standard_Basic
+        /// </summary>
         public static NetAppNetworkFeature StandardBasic { get; } = new NetAppNetworkFeature(StandardBasicValue);
         /// <summary> Determines if two <see cref="NetAppNetworkFeature"/> values are the same. </summary>
         public static bool operator ==(NetAppNetworkFeature left, NetAppNetworkFeature right) => left.Equals(right);
