@@ -94,43 +94,37 @@ steps:
   # surprised by new errors that pop up only in internal when public CI was clean.
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
     # only use the project list override file if the service directory is not auto
-    - pwsh: |
-        . eng/common/scripts/Helpers/CommandInvocation-Helpers.ps1
-        
-        $cmd = "dotnet pack eng/service.proj -warnaserror `
-          /p:ValidateRunApiCompat=true `
-          /p:SDKType=${{ parameters.SDKType }} `
-          /p:IncludeTests=false `
-          /p:PublicSign=false $(VersioningProperties) `
-          /p:Configuration=Release `
-          /p:CommitSHA=$(Build.SourceVersion) `
-          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
-          /p:ServiceDirectory=* `
-          /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
-          /p:IncludePerf=false `
-          /p:IncludeStress=false `
-          /p:IncludeIntegrationTests=false `
-          /p:EnableOverrideExclusions=true `
-          $(DiagnosticArguments)"
-
-          Invoke-LoggedMsbuildCommand $cmd
+    - pwsh: >
+        ./eng/scripts/runwithdevopslogging.ps1
+          dotnet pack eng/service.proj -warnaserror
+            /p:ValidateRunApiCompat=true
+            /p:SDKType=${{ parameters.SDKType }}
+            /p:IncludeTests=false
+            /p:PublicSign=false $(VersioningProperties)
+            /p:Configuration=Release
+            /p:CommitSHA=$(Build.SourceVersion)
+            /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+            /p:ServiceDirectory=*
+            /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
+            /p:IncludePerf=false
+            /p:IncludeStress=false
+            /p:IncludeIntegrationTests=false
+            /p:EnableOverrideExclusions=true
+            $(DiagnosticArguments)
       displayName: "Build and Package for PR"
   - ${{ else }}:
-    - pwsh: |
-        . eng/common/scripts/Helpers/CommandInvocation-Helpers.ps1
-
-        $cmd = "dotnet pack eng/service.proj -warnaserror `
-          /p:ValidateRunApiCompat=true `
-          /p:SDKType=${{ parameters.SDKType }} `
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }} `
-          /p:IncludeTests=false `
-          /p:PublicSign=false $(VersioningProperties) `
-          /p:Configuration=Release `
-          /p:CommitSHA=$(Build.SourceVersion) `
-          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
-          $(DiagnosticArguments)"
-
-        Invoke-LoggedMsbuildCommand $cmd
+    - pwsh: >
+        ./eng/scripts/runwithdevopslogging.ps1
+          dotnet pack eng/service.proj -warnaserror
+            /p:ValidateRunApiCompat=true
+            /p:SDKType=${{ parameters.SDKType }}
+            /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+            /p:IncludeTests=false
+            /p:PublicSign=false $(VersioningProperties)
+            /p:Configuration=Release
+            /p:CommitSHA=$(Build.SourceVersion)
+            /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+            $(DiagnosticArguments)
       displayName: "Build and Package Service Directory"
 
   # save package properties again, this time honoring the dev version number
