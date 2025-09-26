@@ -12,25 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    internal class TenantSiteOperationSource : IOperationSource<TenantSiteResource>
+    internal class ServiceGroupEdgeSiteOperationSource : IOperationSource<ServiceGroupEdgeSiteResource>
     {
         private readonly ArmClient _client;
 
-        internal TenantSiteOperationSource(ArmClient client)
+        internal ServiceGroupEdgeSiteOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        TenantSiteResource IOperationSource<TenantSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceGroupEdgeSiteResource IOperationSource<ServiceGroupEdgeSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<EdgeSiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSiteManagerContext.Default);
-            return new TenantSiteResource(_client, data);
+            return new ServiceGroupEdgeSiteResource(_client, data);
         }
 
-        async ValueTask<TenantSiteResource> IOperationSource<TenantSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceGroupEdgeSiteResource> IOperationSource<ServiceGroupEdgeSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<EdgeSiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSiteManagerContext.Default);
-            return await Task.FromResult(new TenantSiteResource(_client, data)).ConfigureAwait(false);
+            return await Task.FromResult(new ServiceGroupEdgeSiteResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

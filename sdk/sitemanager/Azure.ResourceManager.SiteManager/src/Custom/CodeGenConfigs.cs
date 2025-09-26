@@ -18,3 +18,14 @@ using Azure.Core;
         "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}",
         "SubscriptionEdgeSite"
     })]
+[assembly: CodeGenConfig("request-path-to-resource-name",
+    new string[]
+    {
+        "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}",
+        "ServiceGroupEdgeSite"
+    })]
+[assembly: CodeGenConfig("parameterized-scopes",
+    new string[]
+    {
+        "/providers/Microsoft.Management/serviceGroups/{servicegroupName}"
+    })]

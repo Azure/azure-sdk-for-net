@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SiteManager.Samples
 {
-    public partial class Sample_TenantSiteResource
+    public partial class Sample_ServiceGroupEdgeSiteResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantSiteResource created on azure
-            // for more information of creating TenantSiteResource, please refer to the document of TenantSiteResource
+            // this example assumes you already have this ServiceGroupEdgeSiteResource created on azure
+            // for more information of creating ServiceGroupEdgeSiteResource, please refer to the document of ServiceGroupEdgeSiteResource
             string servicegroupName = "string";
             string siteName = "string";
-            ResourceIdentifier tenantSiteResourceId = TenantSiteResource.CreateResourceIdentifier(servicegroupName, siteName);
-            TenantSiteResource tenantSite = client.GetTenantSiteResource(tenantSiteResourceId);
+            ResourceIdentifier serviceGroupEdgeSiteResourceId = ServiceGroupEdgeSiteResource.CreateResourceIdentifier(servicegroupName, siteName);
+            ServiceGroupEdgeSiteResource serviceGroupEdgeSite = client.GetServiceGroupEdgeSiteResource(serviceGroupEdgeSiteResourceId);
 
             // invoke the operation
-            TenantSiteResource result = await tenantSite.GetAsync();
+            ServiceGroupEdgeSiteResource result = await serviceGroupEdgeSite.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantSiteResource created on azure
-            // for more information of creating TenantSiteResource, please refer to the document of TenantSiteResource
+            // this example assumes you already have this ServiceGroupEdgeSiteResource created on azure
+            // for more information of creating ServiceGroupEdgeSiteResource, please refer to the document of ServiceGroupEdgeSiteResource
             string servicegroupName = "string";
             string siteName = "string";
-            ResourceIdentifier tenantSiteResourceId = TenantSiteResource.CreateResourceIdentifier(servicegroupName, siteName);
-            TenantSiteResource tenantSite = client.GetTenantSiteResource(tenantSiteResourceId);
+            ResourceIdentifier serviceGroupEdgeSiteResourceId = ServiceGroupEdgeSiteResource.CreateResourceIdentifier(servicegroupName, siteName);
+            ServiceGroupEdgeSiteResource serviceGroupEdgeSite = client.GetServiceGroupEdgeSiteResource(serviceGroupEdgeSiteResourceId);
 
             // invoke the operation
-            await tenantSite.DeleteAsync(WaitUntil.Completed);
+            await serviceGroupEdgeSite.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantSiteResource created on azure
-            // for more information of creating TenantSiteResource, please refer to the document of TenantSiteResource
+            // this example assumes you already have this ServiceGroupEdgeSiteResource created on azure
+            // for more information of creating ServiceGroupEdgeSiteResource, please refer to the document of ServiceGroupEdgeSiteResource
             string servicegroupName = "string";
             string siteName = "string";
-            ResourceIdentifier tenantSiteResourceId = TenantSiteResource.CreateResourceIdentifier(servicegroupName, siteName);
-            TenantSiteResource tenantSite = client.GetTenantSiteResource(tenantSiteResourceId);
+            ResourceIdentifier serviceGroupEdgeSiteResourceId = ServiceGroupEdgeSiteResource.CreateResourceIdentifier(servicegroupName, siteName);
+            ServiceGroupEdgeSiteResource serviceGroupEdgeSite = client.GetServiceGroupEdgeSiteResource(serviceGroupEdgeSiteResourceId);
 
             // invoke the operation
             EdgeSitePatch patch = new EdgeSitePatch
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
 },
                 },
             };
-            TenantSiteResource result = await tenantSite.UpdateAsync(patch);
+            ServiceGroupEdgeSiteResource result = await serviceGroupEdgeSite.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

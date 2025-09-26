@@ -9,13 +9,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SiteManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.SiteManager.Samples
 {
-    public partial class Sample_TenantSiteCollection
+    public partial class Sample_ServiceGroupEdgeSiteCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -29,11 +28,10 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this TenantSiteResource
+            // get the collection of this ServiceGroupEdgeSiteResource
             string servicegroupName = "string";
-            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
+            string scope = $"/providers/Microsoft.Management/serviceGroups/{servicegroupName}";
+            ServiceGroupEdgeSiteCollection collection = client.GetServiceGroupEdgeSites(new ResourceIdentifier(scope));
 
             // invoke the operation
             string siteName = "string";
@@ -58,8 +56,8 @@ namespace Azure.ResourceManager.SiteManager.Samples
 },
                 },
             };
-            ArmOperation<TenantSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, siteName, data);
-            TenantSiteResource result = lro.Value;
+            ArmOperation<ServiceGroupEdgeSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, siteName, data);
+            ServiceGroupEdgeSiteResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -80,15 +78,14 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this TenantSiteResource
+            // get the collection of this ServiceGroupEdgeSiteResource
             string servicegroupName = "string";
-            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
+            string scope = $"/providers/Microsoft.Management/serviceGroups/{servicegroupName}";
+            ServiceGroupEdgeSiteCollection collection = client.GetServiceGroupEdgeSites(new ResourceIdentifier(scope));
 
             // invoke the operation
             string siteName = "string";
-            TenantSiteResource result = await collection.GetAsync(siteName);
+            ServiceGroupEdgeSiteResource result = await collection.GetAsync(siteName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -109,14 +106,13 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this TenantSiteResource
+            // get the collection of this ServiceGroupEdgeSiteResource
             string servicegroupName = "string";
-            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
+            string scope = $"/providers/Microsoft.Management/serviceGroups/{servicegroupName}";
+            ServiceGroupEdgeSiteCollection collection = client.GetServiceGroupEdgeSites(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
-            await foreach (TenantSiteResource item in collection.GetAllAsync())
+            await foreach (ServiceGroupEdgeSiteResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -140,11 +136,10 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this TenantSiteResource
+            // get the collection of this ServiceGroupEdgeSiteResource
             string servicegroupName = "string";
-            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
+            string scope = $"/providers/Microsoft.Management/serviceGroups/{servicegroupName}";
+            ServiceGroupEdgeSiteCollection collection = client.GetServiceGroupEdgeSites(new ResourceIdentifier(scope));
 
             // invoke the operation
             string siteName = "string";
@@ -165,16 +160,15 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this TenantSiteResource
+            // get the collection of this ServiceGroupEdgeSiteResource
             string servicegroupName = "string";
-            TenantSiteCollection collection = tenantResource.GetTenantSites(servicegroupName);
+            string scope = $"/providers/Microsoft.Management/serviceGroups/{servicegroupName}";
+            ServiceGroupEdgeSiteCollection collection = client.GetServiceGroupEdgeSites(new ResourceIdentifier(scope));
 
             // invoke the operation
             string siteName = "string";
-            NullableResponse<TenantSiteResource> response = await collection.GetIfExistsAsync(siteName);
-            TenantSiteResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ServiceGroupEdgeSiteResource> response = await collection.GetIfExistsAsync(siteName);
+            ServiceGroupEdgeSiteResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
