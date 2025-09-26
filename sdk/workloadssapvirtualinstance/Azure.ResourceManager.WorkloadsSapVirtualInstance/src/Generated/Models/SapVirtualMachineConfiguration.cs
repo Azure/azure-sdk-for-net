@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> Defines the virtual machine configuration. </summary>
-    public partial class SapVirtualMachineConfiguration
+    internal partial class SapVirtualMachineConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapVirtualMachineConfiguration"/>. </summary>
         /// <param name="vmSize"> The virtual machine size. </param>
@@ -58,32 +30,29 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
             VmSize = vmSize;
             ImageReference = imageReference;
-            OSProfile = osProfile;
+            OsProfile = osProfile;
         }
 
         /// <summary> Initializes a new instance of <see cref="SapVirtualMachineConfiguration"/>. </summary>
         /// <param name="vmSize"> The virtual machine size. </param>
         /// <param name="imageReference"> The image reference. </param>
         /// <param name="osProfile"> The OS profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapVirtualMachineConfiguration(string vmSize, SapImageReference imageReference, SapOSProfile osProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapVirtualMachineConfiguration(string vmSize, SapImageReference imageReference, SapOSProfile osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             ImageReference = imageReference;
-            OSProfile = osProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SapVirtualMachineConfiguration"/> for deserialization. </summary>
-        internal SapVirtualMachineConfiguration()
-        {
+            OsProfile = osProfile;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The virtual machine size. </summary>
         public string VmSize { get; set; }
+
         /// <summary> The image reference. </summary>
         public SapImageReference ImageReference { get; set; }
+
         /// <summary> The OS profile. </summary>
-        public SapOSProfile OSProfile { get; set; }
+        public SapOSProfile OsProfile { get; set; }
     }
 }

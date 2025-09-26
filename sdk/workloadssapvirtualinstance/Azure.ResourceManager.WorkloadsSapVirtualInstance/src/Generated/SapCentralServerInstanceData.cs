@@ -9,140 +9,200 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
-    /// <summary>
-    /// A class representing the SapCentralServerInstance data model.
-    /// Define the SAP Central Services Instance resource.
-    /// </summary>
+    /// <summary> Define the SAP Central Services Instance resource. </summary>
     public partial class SapCentralServerInstanceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapCentralServerInstanceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SapCentralServerInstanceData(AzureLocation location) : base(location)
         {
-            VmDetails = new ChangeTrackingList<CentralServerVmDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SapCentralServerInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="instanceNo"> The central services instance number. </param>
-        /// <param name="subnetId"> The central services instance subnet. </param>
-        /// <param name="messageServerProperties"> Defines the SAP message server properties. </param>
-        /// <param name="enqueueServerProperties"> Defines the SAP Enqueue Server properties. </param>
-        /// <param name="gatewayServerProperties"> Defines the SAP Gateway Server properties. </param>
-        /// <param name="enqueueReplicationServerProperties"> Defines the SAP Enqueue Replication Server (ERS) properties. </param>
-        /// <param name="kernelVersion"> The central services instance Kernel Version. </param>
-        /// <param name="kernelPatch"> The central services instance Kernel Patch level. </param>
-        /// <param name="loadBalancerDetails"> The Load Balancer details such as LoadBalancer ID attached to ASCS Virtual Machines. </param>
-        /// <param name="vmDetails"> The list of virtual machines corresponding to the Central Services instance. </param>
-        /// <param name="status"> Defines the SAP Instance status. </param>
-        /// <param name="health"> Defines the health of SAP Instances. </param>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Defines the errors related to SAP Central Services Instance resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapCentralServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, MessageServerProperties messageServerProperties, EnqueueServerProperties enqueueServerProperties, GatewayServerProperties gatewayServerProperties, EnqueueReplicationServerProperties enqueueReplicationServerProperties, string kernelVersion, string kernelPatch, SubResource loadBalancerDetails, IReadOnlyList<CentralServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal SapCentralServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SapCentralServerProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            InstanceNo = instanceNo;
-            SubnetId = subnetId;
-            MessageServerProperties = messageServerProperties;
-            EnqueueServerProperties = enqueueServerProperties;
-            GatewayServerProperties = gatewayServerProperties;
-            EnqueueReplicationServerProperties = enqueueReplicationServerProperties;
-            KernelVersion = kernelVersion;
-            KernelPatch = kernelPatch;
-            LoadBalancerDetails = loadBalancerDetails;
-            VmDetails = vmDetails;
-            Status = status;
-            Health = health;
-            ProvisioningState = provisioningState;
-            Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SapCentralServerInstanceData"/> for deserialization. </summary>
-        internal SapCentralServerInstanceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal SapCentralServerProperties Properties { get; set; }
 
         /// <summary> The central services instance number. </summary>
-        public string InstanceNo { get; }
-        /// <summary> The central services instance subnet. </summary>
-        public ResourceIdentifier SubnetId { get; }
-        /// <summary> Defines the SAP message server properties. </summary>
-        public MessageServerProperties MessageServerProperties { get; set; }
-        /// <summary> Defines the SAP Enqueue Server properties. </summary>
-        public EnqueueServerProperties EnqueueServerProperties { get; set; }
-        /// <summary> Defines the SAP Gateway Server properties. </summary>
-        public GatewayServerProperties GatewayServerProperties { get; set; }
-        /// <summary> Defines the SAP Enqueue Replication Server (ERS) properties. </summary>
-        public EnqueueReplicationServerProperties EnqueueReplicationServerProperties { get; set; }
-        /// <summary> The central services instance Kernel Version. </summary>
-        public string KernelVersion { get; }
-        /// <summary> The central services instance Kernel Patch level. </summary>
-        public string KernelPatch { get; }
-        /// <summary> The Load Balancer details such as LoadBalancer ID attached to ASCS Virtual Machines. </summary>
-        internal SubResource LoadBalancerDetails { get; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier LoadBalancerDetailsId
+        public string InstanceNo
         {
-            get => LoadBalancerDetails?.Id;
+            get
+            {
+                return Properties is null ? default : Properties.InstanceNo;
+            }
+        }
+
+        /// <summary> The central services instance subnet. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+        }
+
+        /// <summary> Defines the SAP message server properties. </summary>
+        public MessageServerProperties MessageServerProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MessageServerProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapCentralServerProperties();
+                }
+                Properties.MessageServerProperties = value;
+            }
+        }
+
+        /// <summary> Defines the SAP Enqueue Server properties. </summary>
+        public EnqueueServerProperties EnqueueServerProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnqueueServerProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapCentralServerProperties();
+                }
+                Properties.EnqueueServerProperties = value;
+            }
+        }
+
+        /// <summary> Defines the SAP Gateway Server properties. </summary>
+        public GatewayServerProperties GatewayServerProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GatewayServerProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapCentralServerProperties();
+                }
+                Properties.GatewayServerProperties = value;
+            }
+        }
+
+        /// <summary> Defines the SAP Enqueue Replication Server (ERS) properties. </summary>
+        public EnqueueReplicationServerProperties EnqueueReplicationServerProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnqueueReplicationServerProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapCentralServerProperties();
+                }
+                Properties.EnqueueReplicationServerProperties = value;
+            }
+        }
+
+        /// <summary> The central services instance Kernel Version. </summary>
+        public string KernelVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KernelVersion;
+            }
+        }
+
+        /// <summary> The central services instance Kernel Patch level. </summary>
+        public string KernelPatch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KernelPatch;
+            }
         }
 
         /// <summary> The list of virtual machines corresponding to the Central Services instance. </summary>
-        public IReadOnlyList<CentralServerVmDetails> VmDetails { get; }
+        public IReadOnlyList<CentralServerVmDetails> VmDetails
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SapCentralServerProperties();
+                }
+                return Properties.VmDetails;
+            }
+        }
+
         /// <summary> Defines the SAP Instance status. </summary>
-        public SapVirtualInstanceStatus? Status { get; }
+        public SapVirtualInstanceStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Defines the health of SAP Instances. </summary>
-        public SapHealthState? Health { get; }
+        public SapHealthState? Health
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Health;
+            }
+        }
+
         /// <summary> Defines the provisioning states. </summary>
-        public SapVirtualInstanceProvisioningState? ProvisioningState { get; }
-        /// <summary> Defines the errors related to SAP Central Services Instance resource. </summary>
-        internal SapVirtualInstanceError Errors { get; }
+        public SapVirtualInstanceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Fully qualified resource ID for the load balancer. </summary>
+        public string LoadBalancerDetailsId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerDetailsId;
+            }
+        }
+
         /// <summary> The Virtual Instance for SAP error body. </summary>
         public SapVirtualInstanceErrorDetail ErrorsProperties
         {
-            get => Errors?.Properties;
+            get
+            {
+                return Properties is null ? default : Properties.ErrorsProperties;
+            }
         }
     }
 }

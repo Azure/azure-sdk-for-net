@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    public partial class ThreeTierConfiguration : IUtf8JsonSerializable, IJsonModel<ThreeTierConfiguration>
+    /// <summary> Gets or sets the three tier SAP configuration. For prerequisites for creating the infrastructure, please see [here](https://go.microsoft.com/fwlink/?linkid=2212611&amp;clcid=0x409). </summary>
+    internal partial class ThreeTierConfiguration : IJsonModel<ThreeTierConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ThreeTierConfiguration"/> for deserialization. </summary>
+        internal ThreeTierConfiguration()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ThreeTierConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(NetworkConfiguration))
             {
@@ -63,26 +68,34 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        ThreeTierConfiguration IJsonModel<ThreeTierConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreeTierConfiguration IJsonModel<ThreeTierConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ThreeTierConfiguration)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InfrastructureConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeThreeTierConfiguration(document.RootElement, options);
         }
 
-        internal static ThreeTierConfiguration DeserializeThreeTierConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ThreeTierConfiguration DeserializeThreeTierConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string appResourceGroup = default;
+            SapDeploymentType deploymentType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkConfiguration networkConfiguration = default;
             CentralServerConfiguration centralServer = default;
             ApplicationServerConfiguration applicationServer = default;
@@ -90,83 +103,78 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             HighAvailabilityConfiguration highAvailabilityConfig = default;
             SapStorageConfiguration storageConfiguration = default;
             ThreeTierCustomResourceNames customResourceNames = default;
-            string appResourceGroup = default;
-            SapDeploymentType deploymentType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("networkConfiguration"u8))
+                if (prop.NameEquals("appResourceGroup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    appResourceGroup = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("deploymentType"u8))
+                {
+                    deploymentType = new SapDeploymentType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("networkConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value, options);
+                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("centralServer"u8))
+                if (prop.NameEquals("centralServer"u8))
                 {
-                    centralServer = CentralServerConfiguration.DeserializeCentralServerConfiguration(property.Value, options);
+                    centralServer = CentralServerConfiguration.DeserializeCentralServerConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("applicationServer"u8))
+                if (prop.NameEquals("applicationServer"u8))
                 {
-                    applicationServer = ApplicationServerConfiguration.DeserializeApplicationServerConfiguration(property.Value, options);
+                    applicationServer = ApplicationServerConfiguration.DeserializeApplicationServerConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("databaseServer"u8))
+                if (prop.NameEquals("databaseServer"u8))
                 {
-                    databaseServer = DatabaseConfiguration.DeserializeDatabaseConfiguration(property.Value, options);
+                    databaseServer = DatabaseConfiguration.DeserializeDatabaseConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("highAvailabilityConfig"u8))
+                if (prop.NameEquals("highAvailabilityConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    highAvailabilityConfig = HighAvailabilityConfiguration.DeserializeHighAvailabilityConfiguration(property.Value, options);
+                    highAvailabilityConfig = HighAvailabilityConfiguration.DeserializeHighAvailabilityConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageConfiguration"u8))
+                if (prop.NameEquals("storageConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageConfiguration = SapStorageConfiguration.DeserializeSapStorageConfiguration(property.Value, options);
+                    storageConfiguration = SapStorageConfiguration.DeserializeSapStorageConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("customResourceNames"u8))
+                if (prop.NameEquals("customResourceNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customResourceNames = ThreeTierCustomResourceNames.DeserializeThreeTierCustomResourceNames(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("appResourceGroup"u8))
-                {
-                    appResourceGroup = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("deploymentType"u8))
-                {
-                    deploymentType = new SapDeploymentType(property.Value.GetString());
+                    customResourceNames = ThreeTierCustomResourceNames.DeserializeThreeTierCustomResourceNames(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ThreeTierConfiguration(
                 appResourceGroup,
                 deploymentType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 networkConfiguration,
                 centralServer,
                 applicationServer,
@@ -176,10 +184,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 customResourceNames);
         }
 
-        BinaryData IPersistableModel<ThreeTierConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ThreeTierConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -189,15 +200,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        ThreeTierConfiguration IPersistableModel<ThreeTierConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreeTierConfiguration IPersistableModel<ThreeTierConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (ThreeTierConfiguration)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InfrastructureConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeThreeTierConfiguration(document.RootElement, options);
                     }
                 default:
@@ -205,6 +221,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ThreeTierConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
