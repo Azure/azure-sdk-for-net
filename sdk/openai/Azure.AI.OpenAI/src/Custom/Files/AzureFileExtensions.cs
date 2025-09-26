@@ -71,7 +71,7 @@ public static partial class AzureFileExtensions
             Purpose = purpose,
             SerializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>
             {
-                ["expires_after"] = ModelReaderWriter.Write(expirationOptions),
+                ["expires_after"] = ModelReaderWriter.Write(expirationOptions, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default),
             }
         };
 
@@ -98,7 +98,7 @@ public static partial class AzureFileExtensions
             Purpose = purpose,
             SerializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>
             {
-                ["expires_after"] = ModelReaderWriter.Write(expirationOptions),
+                ["expires_after"] = ModelReaderWriter.Write(expirationOptions, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default),
             }
         };
 

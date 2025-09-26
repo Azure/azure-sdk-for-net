@@ -18,7 +18,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             options,
             continuation => CreateGetVectorStoresRequest(limit, order, continuation?.After ?? after, before, options),
             page => VectorStoreCollectionPageToken.FromResponse(page, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListVectorStoresResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListVectorStoresResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             options?.CancellationToken ?? default);
     }
 
@@ -29,7 +29,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             options,
             continuation => CreateGetVectorStoresRequest(limit, order, continuation?.After ?? after, before, options),
             page => VectorStoreCollectionPageToken.FromResponse(page, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListVectorStoresResponse>(page.GetRawResponse().Content).Data);
+            page => ModelReaderWriter.Read<InternalListVectorStoresResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data);
     }
 
     public override AsyncCollectionResult GetFileAssociationsAsync(string vectorStoreId, int? limit, string order, string after, string before, string filter, RequestOptions options)
@@ -41,7 +41,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             options,
             continuation => CreateGetVectorStoreFilesRequest(vectorStoreId, limit, order, continuation?.After ?? after, before, filter, options),
             page => VectorStoreFileCollectionPageToken.FromResponse(page, vectorStoreId, limit, order, before, filter),
-            page => ModelReaderWriter.Read<InternalListVectorStoreFilesResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListVectorStoreFilesResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             options?.CancellationToken ?? default);
     }
 
@@ -54,7 +54,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             options,
             continuation => CreateGetVectorStoreFilesRequest(vectorStoreId, limit, order, continuation?.After ?? after, before, filter, options),
             page => VectorStoreFileCollectionPageToken.FromResponse(page, vectorStoreId, limit, order, before, filter),
-            page => ModelReaderWriter.Read<InternalListVectorStoreFilesResponse>(page.GetRawResponse().Content).Data);
+            page => ModelReaderWriter.Read<InternalListVectorStoreFilesResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data);
     }
 
     internal override PipelineMessage CreateGetVectorStoresRequest(int? limit, string order, string after, string before, RequestOptions options)
