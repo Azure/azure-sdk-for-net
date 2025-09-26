@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details for an incomplete response. </summary>
-    public partial class ResponseIncompleteDetails : IJsonModel<ResponseIncompleteDetails>
+    public partial class ResponseIncompleteDetails : ResponseStatusDetails, IJsonModel<ResponseIncompleteDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseIncompleteDetails"/> for deserialization. </summary>
         internal ResponseIncompleteDetails()

@@ -1,6 +1,6 @@
 # Microsoft Azure Site Manager management client library for .NET
 
-The Site Manager simplifies audit & remediation of overall health & cost management of Azure resources associated at a particular address by providing tailored experiences by integrating with Azure Monitor, Update Management Center & Azure Device Updates, Microsoft Defender for Cloud and Azure cost management. Site would enable IT administrators to apply policies, perform update management, monitor health & governance uniformly on all resources. 
+The Site Manager simplifies audit & remediation of overall health & cost management of Azure resources associated at a particular address by providing tailored experiences by integrating with Azure Monitor, Update Management Center & Azure Device Updates, Microsoft Defender for Cloud and Azure cost management. Site would enable IT administrators to apply policies, perform update management, monitor health & governance uniformly on all resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,7 +10,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 

@@ -359,7 +359,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="jobName"> Gets or sets the JobName. </param>
         /// <param name="tags"></param>
         /// <returns> A new <see cref="Models.JobResourcePatch"/> instance for mocking. </returns>
-        public static JobResourcePatch JobResourcePatch(string jobName, IDictionary<string, string> tags = default)
+        public static JobResourcePatch JobResourcePatch(string jobName = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

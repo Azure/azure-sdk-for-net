@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details for a cancelled response. </summary>
-    public partial class ResponseCancelledDetails : IJsonModel<ResponseCancelledDetails>
+    public partial class ResponseCancelledDetails : ResponseStatusDetails, IJsonModel<ResponseCancelledDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseCancelledDetails"/> for deserialization. </summary>
         internal ResponseCancelledDetails()

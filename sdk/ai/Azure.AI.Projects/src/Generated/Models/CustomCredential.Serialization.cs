@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Custom credential definition. </summary>
-    public partial class CustomCredential : IJsonModel<CustomCredential>
+    public partial class CustomCredential : BaseCredentials, IJsonModel<CustomCredential>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
