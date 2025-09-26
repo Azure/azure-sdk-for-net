@@ -33,12 +33,12 @@ namespace Azure.AI.VoiceLive
         /// <param name="inputAudioTranscription"> Configuration for input audio transcription. </param>
         /// <param name="outputAudioTimestampTypes"> Types of timestamps to include in audio response content. </param>
         /// <param name="tools"> Configuration for tools to be used during the session, if applicable. </param>
+        /// <param name="toolChoice"> Gets or sets the tool choice strategy for response generation. </param>
         /// <param name="temperature"> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </param>
-        /// <param name="maxResponseOutputTokens"></param>
-        /// <param name="toolChoice"></param>
+        /// <param name="maxResponseOutputTokens"> Gets or sets the maximum number of tokens to generate in the response. </param>
         /// <param name="turnDetection"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
-        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, float? temperature = default, BinaryData maxResponseOutputTokens = default, BinaryData toolChoice = default, BinaryData turnDetection = default)
+        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, ToolChoiceOption toolChoice = default, float? temperature = default, MaxResponseOutputTokensOption maxResponseOutputTokens = default, BinaryData turnDetection = default)
         {
             modalities ??= new ChangeTrackingList<InteractionModality>();
             outputAudioTimestampTypes ??= new ChangeTrackingList<AudioTimestampType>();
@@ -59,9 +59,9 @@ namespace Azure.AI.VoiceLive
                 inputAudioTranscription,
                 outputAudioTimestampTypes.ToList(),
                 tools.ToList(),
+                toolChoice,
                 temperature,
                 maxResponseOutputTokens,
-                toolChoice,
                 turnDetection,
                 additionalBinaryDataProperties: null);
         }
@@ -956,14 +956,14 @@ namespace Azure.AI.VoiceLive
         /// <param name="inputAudioTranscription"> Configuration for input audio transcription. </param>
         /// <param name="outputAudioTimestampTypes"> Types of timestamps to include in audio response content. </param>
         /// <param name="tools"> Configuration for tools to be used during the session, if applicable. </param>
+        /// <param name="toolChoice"> Gets or sets the tool choice strategy for response generation. </param>
         /// <param name="temperature"> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </param>
-        /// <param name="maxResponseOutputTokens"></param>
-        /// <param name="toolChoice"></param>
+        /// <param name="maxResponseOutputTokens"> Gets or sets the maximum number of tokens to generate in the response. </param>
         /// <param name="turnDetection"></param>
         /// <param name="agent"> The agent configuration for the session, if applicable. </param>
         /// <param name="id"> The unique identifier for the session. </param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionResponse"/> instance for mocking. </returns>
-        public static VoiceLiveSessionResponse VoiceLiveSessionResponse(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, float? temperature = default, BinaryData maxResponseOutputTokens = default, BinaryData toolChoice = default, BinaryData turnDetection = default, RespondingAgentOptions agent = default, string id = default)
+        public static VoiceLiveSessionResponse VoiceLiveSessionResponse(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, ToolChoiceOption toolChoice = default, float? temperature = default, MaxResponseOutputTokensOption maxResponseOutputTokens = default, BinaryData turnDetection = default, RespondingAgentOptions agent = default, string id = default)
         {
             modalities ??= new ChangeTrackingList<InteractionModality>();
             outputAudioTimestampTypes ??= new ChangeTrackingList<AudioTimestampType>();
@@ -984,9 +984,9 @@ namespace Azure.AI.VoiceLive
                 inputAudioTranscription,
                 outputAudioTimestampTypes.ToList(),
                 tools.ToList(),
+                toolChoice,
                 temperature,
                 maxResponseOutputTokens,
-                toolChoice,
                 turnDetection,
                 additionalBinaryDataProperties: null,
                 agent,

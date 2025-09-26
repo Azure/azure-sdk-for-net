@@ -16,8 +16,8 @@
   - `SystemMessageItem(string systemMessageText)`  
   - `UserMessageItem(string userMessageText)`
 - Enhanced README with new code examples for function calling and user message handling
+- Added Headers dictionary to VoiceLiveClientOptions to specify additional headers to set on connect.
 
-### Breaking Changes
 ### Breaking Changes
 
 ### Type Changes from Enums to Extensible Enums

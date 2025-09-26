@@ -85,9 +85,9 @@ namespace Azure.AI.VoiceLive
             AudioInputTranscriptionOptions inputAudioTranscription = default;
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
+            ToolChoiceOption toolChoice = default;
             float? temperature = default;
-            BinaryData maxResponseOutputTokens = default;
-            BinaryData toolChoice = default;
+            MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RespondingAgentOptions agent = default;
@@ -227,6 +227,15 @@ namespace Azure.AI.VoiceLive
                     tools = array;
                     continue;
                 }
+                if (prop.NameEquals("tool_choice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -242,16 +251,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    maxResponseOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("tool_choice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    maxResponseOutputTokens = MaxResponseOutputTokensOption.DeserializeMaxResponseOutputTokensOption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("turn_detection"u8))
@@ -297,9 +297,9 @@ namespace Azure.AI.VoiceLive
                 inputAudioTranscription,
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
+                toolChoice,
                 temperature,
                 maxResponseOutputTokens,
-                toolChoice,
                 turnDetection,
                 additionalBinaryDataProperties,
                 agent,

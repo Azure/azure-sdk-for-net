@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.VoiceLive
@@ -24,6 +25,7 @@ namespace Azure.AI.VoiceLive
             };
 
             InternalOptions = new VoiceLiveClientOptionsInternal();
+            Headers = new Dictionary<string, string>();
         }
 
         internal VoiceLiveClientOptionsInternal InternalOptions { get; }
@@ -42,5 +44,10 @@ namespace Azure.AI.VoiceLive
             /// <summary> V2025_10_01. </summary>
             V2025_10_01 = 1
         }
+
+        /// <summary>
+        /// Additional headers to include on the initial connection.
+        /// </summary>
+        public IDictionary<string, string> Headers { get; }
     }
 }

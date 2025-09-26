@@ -118,34 +118,20 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ToolChoice))
+            {
+                writer.WritePropertyName("tool_choice"u8);
+                writer.WriteObjectValue(ToolChoice, options);
+            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(_maxResponseOutputTokens))
+            if (Optional.IsDefined(MaxResponseOutputTokens))
             {
                 writer.WritePropertyName("max_response_output_tokens"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(_maxResponseOutputTokens);
-#else
-                using (JsonDocument document = JsonDocument.Parse(_maxResponseOutputTokens))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (Optional.IsDefined(_toolChoice))
-            {
-                writer.WritePropertyName("tool_choice"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(_toolChoice);
-#else
-                using (JsonDocument document = JsonDocument.Parse(_toolChoice))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(MaxResponseOutputTokens, options);
             }
             if (Optional.IsDefined(_turnDetection))
             {
@@ -215,9 +201,9 @@ namespace Azure.AI.VoiceLive
             AudioInputTranscriptionOptions inputAudioTranscription = default;
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
+            ToolChoiceOption toolChoice = default;
             float? temperature = default;
-            BinaryData maxResponseOutputTokens = default;
-            BinaryData toolChoice = default;
+            MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -355,6 +341,15 @@ namespace Azure.AI.VoiceLive
                     tools = array;
                     continue;
                 }
+                if (prop.NameEquals("tool_choice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -370,16 +365,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    maxResponseOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("tool_choice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    maxResponseOutputTokens = MaxResponseOutputTokensOption.DeserializeMaxResponseOutputTokensOption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("turn_detection"u8))
@@ -411,9 +397,9 @@ namespace Azure.AI.VoiceLive
                 inputAudioTranscription,
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
+                toolChoice,
                 temperature,
                 maxResponseOutputTokens,
-                toolChoice,
                 turnDetection,
                 additionalBinaryDataProperties);
         }

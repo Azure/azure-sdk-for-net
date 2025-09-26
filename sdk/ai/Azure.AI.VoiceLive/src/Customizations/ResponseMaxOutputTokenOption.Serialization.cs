@@ -13,12 +13,12 @@ namespace Azure.AI.VoiceLive
     public partial class MaxResponseOutputTokensOption : IJsonModel<MaxResponseOutputTokensOption>
     {
         void IJsonModel<MaxResponseOutputTokensOption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => SerializeConversationMaxTokensChoice(this, writer, options);
+            => SerializeMaxResponseOutputTokensOption(this, writer, options);
 
         MaxResponseOutputTokensOption IJsonModel<MaxResponseOutputTokensOption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationMaxTokensChoice(document.RootElement, options);
+            return DeserializeMaxResponseOutputTokensOption(document.RootElement, options);
         }
 
         BinaryData IPersistableModel<MaxResponseOutputTokensOption>.Write(ModelReaderWriterOptions options)
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
 
         string IPersistableModel<MaxResponseOutputTokensOption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static void SerializeConversationMaxTokensChoice(MaxResponseOutputTokensOption instance, Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static void SerializeMaxResponseOutputTokensOption(MaxResponseOutputTokensOption instance, Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if (instance._isDefaultNullValue == true)
             {
@@ -47,7 +47,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        internal static MaxResponseOutputTokensOption DeserializeConversationMaxTokensChoice(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MaxResponseOutputTokensOption DeserializeMaxResponseOutputTokensOption(JsonElement element, ModelReaderWriterOptions options = null)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.AI.VoiceLive
                 return new MaxResponseOutputTokensOption(isDefaultNullValue: true);
             }
             using JsonDocument document = JsonDocument.Parse(bytes);
-            return DeserializeConversationMaxTokensChoice(document.RootElement);
+            return DeserializeMaxResponseOutputTokensOption(document.RootElement);
         }
     }
 }
