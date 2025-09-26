@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
     ///   - The client has sent a `conversation.item.create` event to add a new Item
     ///     to the Conversation.
     /// </summary>
-    public partial class SessionUpdateConversationItemCreated : IJsonModel<SessionUpdateConversationItemCreated>
+    public partial class SessionUpdateConversationItemCreated : SessionUpdate, IJsonModel<SessionUpdateConversationItemCreated>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

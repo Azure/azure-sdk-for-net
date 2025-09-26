@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base type for message item within a conversation. </summary>
-    public partial class SessionResponseMessageItem : IJsonModel<SessionResponseMessageItem>
+    public partial class SessionResponseMessageItem : SessionResponseItem, IJsonModel<SessionResponseMessageItem>
     {
         /// <summary> Initializes a new instance of <see cref="SessionResponseMessageItem"/> for deserialization. </summary>
         internal SessionResponseMessageItem()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base model for VAD-based turn detection. </summary>
-    public partial class ServerVadTurnDetection : IJsonModel<ServerVadTurnDetection>
+    public partial class ServerVadTurnDetection : TurnDetection, IJsonModel<ServerVadTurnDetection>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

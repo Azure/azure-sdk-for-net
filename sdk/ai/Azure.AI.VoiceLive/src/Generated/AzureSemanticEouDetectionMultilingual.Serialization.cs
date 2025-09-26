@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure semantic end-of-utterance detection (multilingual). </summary>
-    public partial class AzureSemanticEouDetectionMultilingual : IJsonModel<AzureSemanticEouDetectionMultilingual>
+    public partial class AzureSemanticEouDetectionMultilingual : EouDetection, IJsonModel<AzureSemanticEouDetectionMultilingual>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

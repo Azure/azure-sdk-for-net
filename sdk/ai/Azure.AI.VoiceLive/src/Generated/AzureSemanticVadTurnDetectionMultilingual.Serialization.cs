@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Server Speech Detection (Azure semantic VAD). </summary>
-    public partial class AzureSemanticVadTurnDetectionMultilingual : IJsonModel<AzureSemanticVadTurnDetectionMultilingual>
+    public partial class AzureSemanticVadTurnDetectionMultilingual : TurnDetection, IJsonModel<AzureSemanticVadTurnDetectionMultilingual>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

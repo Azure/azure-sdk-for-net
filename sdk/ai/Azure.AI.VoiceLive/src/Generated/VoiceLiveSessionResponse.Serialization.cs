@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base for session configuration in the response. </summary>
-    public partial class VoiceLiveSessionResponse : IJsonModel<VoiceLiveSessionResponse>
+    public partial class VoiceLiveSessionResponse : VoiceLiveSessionOptions, IJsonModel<VoiceLiveSessionResponse>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

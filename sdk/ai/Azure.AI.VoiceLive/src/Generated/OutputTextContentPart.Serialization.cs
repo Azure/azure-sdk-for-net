@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Output text content part. </summary>
-    public partial class OutputTextContentPart : IJsonModel<OutputTextContentPart>
+    public partial class OutputTextContentPart : MessageContentPart, IJsonModel<OutputTextContentPart>
     {
         /// <summary> Initializes a new instance of <see cref="OutputTextContentPart"/> for deserialization. </summary>
         internal OutputTextContentPart()
