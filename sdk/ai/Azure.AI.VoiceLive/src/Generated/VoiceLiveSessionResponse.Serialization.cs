@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The VoiceLiveSessionResponse. </summary>
+    /// <summary> Base for session configuration in the response. </summary>
     public partial class VoiceLiveSessionResponse : VoiceLiveSessionOptions, IJsonModel<VoiceLiveSessionResponse>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -72,8 +72,9 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             string model = default;
-            IList<InputModality> modalities = default;
+            IList<InteractionModality> modalities = default;
             AnimationOptions animation = default;
+            VoiceProvider voice = default;
             string instructions = default;
             int? inputAudioSamplingRate = default;
             InputAudioFormat? inputAudioFormat = default;
@@ -81,13 +82,12 @@ namespace Azure.AI.VoiceLive
             AudioNoiseReduction inputAudioNoiseReduction = default;
             AudioEchoCancellation inputAudioEchoCancellation = default;
             AvatarConfiguration avatar = default;
-            AudioInputTranscriptionSettings inputAudioTranscription = default;
+            AudioInputTranscriptionOptions inputAudioTranscription = default;
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
+            ToolChoiceOption toolChoice = default;
             float? temperature = default;
-            BinaryData voiceInternal = default;
-            BinaryData maxResponseOutputTokens = default;
-            BinaryData toolChoice = default;
+            MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RespondingAgentOptions agent = default;
@@ -105,10 +105,10 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    List<InputModality> array = new List<InputModality>();
+                    List<InteractionModality> array = new List<InteractionModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new InputModality(item.GetString()));
+                        array.Add(new InteractionModality(item.GetString()));
                     }
                     modalities = array;
                     continue;
@@ -120,6 +120,15 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     animation = AnimationOptions.DeserializeAnimationOptions(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("voice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    voice = VoiceProvider.DeserializeVoiceProvider(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
@@ -187,7 +196,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    inputAudioTranscription = AudioInputTranscriptionSettings.DeserializeAudioInputTranscriptionSettings(prop.Value, options);
+                    inputAudioTranscription = AudioInputTranscriptionOptions.DeserializeAudioInputTranscriptionOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_audio_timestamp_types"u8))
@@ -218,6 +227,15 @@ namespace Azure.AI.VoiceLive
                     tools = array;
                     continue;
                 }
+                if (prop.NameEquals("tool_choice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -227,31 +245,13 @@ namespace Azure.AI.VoiceLive
                     temperature = prop.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("voice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    voiceInternal = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
                 if (prop.NameEquals("max_response_output_tokens"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxResponseOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("tool_choice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    maxResponseOutputTokens = MaxResponseOutputTokensOption.DeserializeMaxResponseOutputTokensOption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("turn_detection"u8))
@@ -284,8 +284,9 @@ namespace Azure.AI.VoiceLive
             }
             return new VoiceLiveSessionResponse(
                 model,
-                modalities ?? new ChangeTrackingList<InputModality>(),
+                modalities ?? new ChangeTrackingList<InteractionModality>(),
                 animation,
+                voice,
                 instructions,
                 inputAudioSamplingRate,
                 inputAudioFormat,
@@ -296,10 +297,9 @@ namespace Azure.AI.VoiceLive
                 inputAudioTranscription,
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
-                temperature,
-                voiceInternal,
-                maxResponseOutputTokens,
                 toolChoice,
+                temperature,
+                maxResponseOutputTokens,
                 turnDetection,
                 additionalBinaryDataProperties,
                 agent,

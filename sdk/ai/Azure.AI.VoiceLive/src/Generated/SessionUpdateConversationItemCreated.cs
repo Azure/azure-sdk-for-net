@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// client to understand the order of the conversation.
         /// </param>
         /// <param name="item"></param>
-        internal SessionUpdateConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, ResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, SessionResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             Item = item;
@@ -50,6 +50,6 @@ namespace Azure.AI.VoiceLive
         public string PreviousItemId { get; }
 
         /// <summary> Gets the Item. </summary>
-        public ResponseItem Item { get; }
+        public SessionResponseItem Item { get; }
     }
 }

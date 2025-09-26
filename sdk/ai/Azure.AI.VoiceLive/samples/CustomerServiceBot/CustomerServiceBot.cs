@@ -146,8 +146,8 @@ public class CustomerServiceBot : IDisposable
 
         // Ensure modalities include audio
         sessionOptions.Modalities.Clear();
-        sessionOptions.Modalities.Add(InputModality.Text);
-        sessionOptions.Modalities.Add(InputModality.Audio);
+        sessionOptions.Modalities.Add(InteractionModality.Text);
+        sessionOptions.Modalities.Add(InteractionModality.Audio);
 
         // Add function tools for customer service operations
         sessionOptions.Tools.Add(CreateCheckOrderStatusTool());
@@ -521,7 +521,7 @@ public class CustomerServiceBot : IDisposable
                     functionName, callId, arguments);
             }
         }
-        else if (outputItemAdded.Item is ResponseMessageItem messageItem &&
+        else if (outputItemAdded.Item is SessionResponseMessageItem messageItem &&
             messageItem.Role == ResponseMessageRole.Assistant)
         {
             // Keep track of the items that are from the assistant, so we know how to display the conversation.

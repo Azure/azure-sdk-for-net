@@ -30,6 +30,6 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// The duration up to which the audio was truncated.
         /// </summary>
-        public TimeSpan AudioEnd => TimeSpan.FromMilliseconds(AudioEndMs);
+        public TimeSpan AudioEnd { get => TimeSpan.FromMilliseconds(AudioEndMs); }
     }
 }
