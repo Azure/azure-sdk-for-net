@@ -67,7 +67,7 @@ namespace Azure.Core
         /// <param name="content">The <see cref="string"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="string"/>.</returns>
         /// <remarks>The returned content represents the UTF-8 Encoding of the given string.</remarks>
-        public static RequestContent Create(string content) => new StringContent(content, s_UTF8NoBomEncoding);
+        public static RequestContent Create(string content) => new CustomStringContent(content, s_UTF8NoBomEncoding);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.
@@ -345,12 +345,12 @@ namespace Azure.Core
             }
         }
 
-        private sealed class StringContent : RequestContent
+        private sealed class CustomStringContent : RequestContent
         {
             private readonly byte[] _buffer;
             private readonly int _actualByteCount;
 
-            public StringContent(string value, Encoding? encoding = null)
+            public CustomStringContent(string value, Encoding? encoding = null)
             {
                 encoding ??= Encoding.UTF8;
 #if NET6_0_OR_GREATER
