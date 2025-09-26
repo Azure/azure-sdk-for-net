@@ -176,7 +176,7 @@ namespace Azure.AI.VoiceLive
             IList<InputModality> modalities = default;
             string instructions = default;
             BinaryData voice = default;
-            AudioFormat? outputAudioFormat = default;
+            OutputAudioFormat? outputAudioFormat = default;
             IList<VoiceLiveToolDefinition> tools = default;
             string toolChoice = default;
             float? temperature = default;
@@ -264,7 +264,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    outputAudioFormat = new AudioFormat(prop.Value.GetString());
+                    outputAudioFormat = new OutputAudioFormat(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))

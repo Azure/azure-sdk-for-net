@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Azure AI Search Index Definition. </summary>
-    public partial class AzureAISearchIndex : IJsonModel<AzureAISearchIndex>
+    public partial class AzureAISearchIndex : SearchIndex, IJsonModel<AzureAISearchIndex>
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/> for deserialization. </summary>
         internal AzureAISearchIndex()

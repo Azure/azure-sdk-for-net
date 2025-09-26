@@ -18,6 +18,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
+    <PackageReference Include="System.Net.ServerSentEvents" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

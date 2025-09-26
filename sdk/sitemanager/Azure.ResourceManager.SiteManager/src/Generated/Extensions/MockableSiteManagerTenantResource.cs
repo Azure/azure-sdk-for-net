@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,7 +69,8 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SitesByServiceGroupRestClient.CreateListByServiceGroupRequest(servicegroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new EdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), SitesByServiceGroupClientDiagnostics, Pipeline, "MockableSiteManagerTenantResource.GetEdgeSites", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SitesByServiceGroupRestClient.CreateListByServiceGroupNextPageRequest(nextLink, servicegroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), SitesByServiceGroupClientDiagnostics, Pipeline, "MockableSiteManagerTenantResource.GetEdgeSites", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +100,8 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SitesByServiceGroupRestClient.CreateListByServiceGroupRequest(servicegroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new EdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), SitesByServiceGroupClientDiagnostics, Pipeline, "MockableSiteManagerTenantResource.GetEdgeSites", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SitesByServiceGroupRestClient.CreateListByServiceGroupNextPageRequest(nextLink, servicegroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), SitesByServiceGroupClientDiagnostics, Pipeline, "MockableSiteManagerTenantResource.GetEdgeSites", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -115,7 +117,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,7 +199,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,7 +246,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,7 +293,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,7 +336,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,7 +379,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,7 +420,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>

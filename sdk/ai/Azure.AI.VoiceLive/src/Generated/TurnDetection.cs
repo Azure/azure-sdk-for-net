@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for turn detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NoTurnDetection"/>, <see cref="ServerVad"/>, <see cref="AzureSemanticVad"/>, <see cref="AzureSemanticVadEn"/>, <see cref="AzureSemanticVadServer"/>, and <see cref="AzureMultilingualSemanticVad"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetection"/>, <see cref="AzureSemanticVadEnTurnDetection"/>, and <see cref="AzureSemanticVadMultilingualTurnDetection"/>.
     /// </summary>
     public abstract partial class TurnDetection
     {

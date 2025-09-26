@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateSiteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/Sites_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Sites_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSiteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/Sites_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Sites_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListBySiteSubscriptionGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/Sites_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Sites_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSiteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/Sites_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Sites_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSiteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/Sites_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Sites_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

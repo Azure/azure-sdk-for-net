@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownResponseStatusDetails : IJsonModel<ResponseStatusDetails>
+    internal partial class UnknownResponseStatusDetails : ResponseStatusDetails, IJsonModel<ResponseStatusDetails>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownResponseStatusDetails"/> for deserialization. </summary>
         internal UnknownResponseStatusDetails()
@@ -65,13 +65,13 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "unknown";
+            VoiceLiveResponseStatus @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceLiveResponseStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -899,7 +899,7 @@ namespace BasicTypeSpec
                 requiredBadDescription,
                 optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
-                null);
+                default);
             Response result = AnonymousBody(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((ThingModel)result, result);
         }
@@ -943,7 +943,7 @@ namespace BasicTypeSpec
                 requiredBadDescription,
                 optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
-                null);
+                default);
             Response result = await AnonymousBodyAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((ThingModel)result, result);
         }
@@ -1020,7 +1020,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            FriendModel spreadModel = new FriendModel(name, null);
+            FriendModel spreadModel = new FriendModel(name, default);
             Response result = FriendlyModel(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((FriendModel)result, result);
         }
@@ -1035,7 +1035,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            FriendModel spreadModel = new FriendModel(name, null);
+            FriendModel spreadModel = new FriendModel(name, default);
             Response result = await FriendlyModelAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((FriendModel)result, result);
         }
@@ -1182,7 +1182,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RenamedModel spreadModel = new RenamedModel(name, null);
+            RenamedModel spreadModel = new RenamedModel(name, default);
             Response result = ProjectedNameModel(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((RenamedModel)result, result);
         }
@@ -1197,7 +1197,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RenamedModel spreadModel = new RenamedModel(name, null);
+            RenamedModel spreadModel = new RenamedModel(name, default);
             Response result = await ProjectedNameModelAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((RenamedModel)result, result);
         }
