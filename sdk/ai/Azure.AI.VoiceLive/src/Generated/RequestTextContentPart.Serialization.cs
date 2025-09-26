@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The RequestTextContentPart. </summary>
-    public partial class RequestTextContentPart : IJsonModel<RequestTextContentPart>
+    /// <summary> A text content part for a request. </summary>
+    public partial class RequestTextContentPart : VoiceLiveContentPart, IJsonModel<RequestTextContentPart>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

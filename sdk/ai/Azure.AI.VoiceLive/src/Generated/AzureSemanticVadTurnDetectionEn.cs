@@ -10,16 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Server Speech Detection (Azure semantic VAD). </summary>
-    public partial class AzureSemanticVadMultilingualTurnDetection : TurnDetection
+    /// <summary> Server Speech Detection (Azure semantic VAD, English-only). </summary>
+    public partial class AzureSemanticVadTurnDetectionEn : TurnDetection
     {
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadMultilingualTurnDetection"/>. </summary>
-        public AzureSemanticVadMultilingualTurnDetection() : base(TurnDetectionType.AzureSemanticVadMultilingual)
+        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadTurnDetectionEn"/>. </summary>
+        public AzureSemanticVadTurnDetectionEn() : base(TurnDetectionType.AzureSemanticVadEn)
         {
-            Languages = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadMultilingualTurnDetection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadTurnDetectionEn"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
@@ -28,9 +27,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="endOfUtteranceDetection"></param>
         /// <param name="speechDurationMs"> Gets or sets the SpeechDurationMs. </param>
         /// <param name="removeFillerWords"></param>
-        /// <param name="languages"></param>
         /// <param name="autoTruncate"></param>
-        internal AzureSemanticVadMultilingualTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, IList<string> languages, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
+        /// <param name="createResponse"></param>
+        /// <param name="interruptResponse"></param>
+        internal AzureSemanticVadTurnDetectionEn(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
@@ -38,8 +38,9 @@ namespace Azure.AI.VoiceLive
             EndOfUtteranceDetection = endOfUtteranceDetection;
             SpeechDurationMs = speechDurationMs;
             RemoveFillerWords = removeFillerWords;
-            Languages = languages;
             AutoTruncate = autoTruncate;
+            CreateResponse = createResponse;
+            InterruptResponse = interruptResponse;
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
@@ -51,10 +52,13 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets or sets the RemoveFillerWords. </summary>
         public bool? RemoveFillerWords { get; set; }
 
-        /// <summary> Gets the Languages. </summary>
-        public IList<string> Languages { get; }
-
         /// <summary> Gets or sets the AutoTruncate. </summary>
         public bool? AutoTruncate { get; set; }
+
+        /// <summary> Gets or sets the CreateResponse. </summary>
+        public bool? CreateResponse { get; set; }
+
+        /// <summary> Gets or sets the InterruptResponse. </summary>
+        public bool? InterruptResponse { get; set; }
     }
 }

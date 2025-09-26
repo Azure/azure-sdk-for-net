@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseFunctionCallItem. </summary>
-    public partial class ResponseFunctionCallItem : IJsonModel<ResponseFunctionCallItem>
+    /// <summary> A function call item within a conversation. </summary>
+    public partial class ResponseFunctionCallItem : ResponseItem, IJsonModel<ResponseFunctionCallItem>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallItem"/> for deserialization. </summary>
         internal ResponseFunctionCallItem()

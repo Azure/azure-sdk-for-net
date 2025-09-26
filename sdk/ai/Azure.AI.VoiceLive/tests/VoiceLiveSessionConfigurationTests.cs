@@ -205,7 +205,7 @@ namespace Azure.AI.VoiceLive.Tests
             var sessionOpts2 = new VoiceLiveSessionOptions
             {
                 Model = TestConstants.ModelName,
-                MaxResponseOutputTokens = ResponseMaxOutputTokensOption.CreateInfiniteMaxTokensOption()
+                MaxResponseOutputTokens = MaxResponseOutputTokensOption.CreateInfiniteMaxTokensOption()
             };
 
             Assert.IsNull(sessionOpts2.MaxResponseOutputTokens.NumericValue);

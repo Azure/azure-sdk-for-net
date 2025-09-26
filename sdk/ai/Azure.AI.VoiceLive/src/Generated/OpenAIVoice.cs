@@ -16,21 +16,21 @@ namespace Azure.AI.VoiceLive
     /// This provides a unified interface for OpenAI voices, complementing the
     /// existing string-based OAIVoice for backward compatibility.
     /// </summary>
-    public partial class OpenAIVoice
+    public partial class OpenAIVoice : VoiceProvider
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenAIVoice"/>. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the OpenAI voice. </param>
         public OpenAIVoice(OAIVoice name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAIVoice"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
+        /// <param name="type"> The type of the voice. </param>
+        /// <param name="name"> The name of the OpenAI voice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OpenAIVoice(string @type, OAIVoice name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -39,10 +39,10 @@ namespace Azure.AI.VoiceLive
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Type. </summary>
+        /// <summary> The type of the voice. </summary>
         public string Type { get; } = "openai";
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> The name of the OpenAI voice. </summary>
         public OAIVoice Name { get; set; }
     }
 }

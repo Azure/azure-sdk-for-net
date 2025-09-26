@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>
-    /// The ResponseItem.
+    /// Base for any response item; discriminated by `type`.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, and <see cref="ResponseFunctionCallOutputItem"/>.
     /// </summary>
     public abstract partial class ResponseItem

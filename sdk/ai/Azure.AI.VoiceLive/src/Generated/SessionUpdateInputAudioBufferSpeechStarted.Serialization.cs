@@ -24,7 +24,7 @@ namespace Azure.AI.VoiceLive
     /// `input_audio_buffer.speech_stopped` event (unless the client manually commits
     /// the audio buffer during VAD activation).
     /// </summary>
-    public partial class SessionUpdateInputAudioBufferSpeechStarted : IJsonModel<SessionUpdateInputAudioBufferSpeechStarted>
+    public partial class SessionUpdateInputAudioBufferSpeechStarted : SessionUpdate, IJsonModel<SessionUpdateInputAudioBufferSpeechStarted>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferSpeechStarted"/> for deserialization. </summary>
         internal SessionUpdateInputAudioBufferSpeechStarted()

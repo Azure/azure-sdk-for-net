@@ -55,12 +55,12 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets or sets the maximum number of tokens to generate in the response.
         /// </summary>
-        public ResponseMaxOutputTokensOption MaxResponseOutputTokens
+        public MaxResponseOutputTokensOption MaxResponseOutputTokens
         {
-            get => ResponseMaxOutputTokensOption.FromBinaryData(_maxResponseOutputTokens);
+            get => MaxResponseOutputTokensOption.FromBinaryData(_maxResponseOutputTokens);
             set
             {
-                var persistable = value as IPersistableModel<ResponseMaxOutputTokensOption>;
+                var persistable = value as IPersistableModel<MaxResponseOutputTokensOption>;
                 _maxResponseOutputTokens = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
             }
         }

@@ -232,7 +232,7 @@ namespace Azure.AI.VoiceLive.Tests
                     };
 
                 case "azure-multilingual":
-                    return new AzureSemanticVadMultilingualTurnDetection
+                    return new AzureSemanticVadTurnDetectionMultilingual
                     {
                         Languages = { "en-US", "es-ES", "fr-FR" },
                         Threshold = 0.7f

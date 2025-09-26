@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The VoiceLiveSessionOptions. </summary>
+    /// <summary> Base for session configuration shared between request and response. </summary>
     public partial class VoiceLiveSessionOptions : IJsonModel<VoiceLiveSessionOptions>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -218,7 +218,7 @@ namespace Azure.AI.VoiceLive
             AudioNoiseReduction inputAudioNoiseReduction = default;
             AudioEchoCancellation inputAudioEchoCancellation = default;
             AvatarConfiguration avatar = default;
-            AudioInputTranscriptionSettings inputAudioTranscription = default;
+            AudioInputTranscriptionOptions inputAudioTranscription = default;
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
             float? temperature = default;
@@ -322,7 +322,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    inputAudioTranscription = AudioInputTranscriptionSettings.DeserializeAudioInputTranscriptionSettings(prop.Value, options);
+                    inputAudioTranscription = AudioInputTranscriptionOptions.DeserializeAudioInputTranscriptionOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_audio_timestamp_types"u8))

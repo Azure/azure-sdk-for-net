@@ -10,13 +10,17 @@ using System.ComponentModel;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary></summary>
+    /// <summary> Supported modalities for the session. </summary>
     public readonly partial struct InteractionModality : IEquatable<InteractionModality>
     {
         private readonly string _value;
+        /// <summary> Text modality. </summary>
         private const string TextValue = "text";
+        /// <summary> Audio modality. </summary>
         private const string AudioValue = "audio";
+        /// <summary> Animation modality. </summary>
         private const string AnimationValue = "animation";
+        /// <summary> Avatar modality. </summary>
         private const string AvatarValue = "avatar";
 
         /// <summary> Initializes a new instance of <see cref="InteractionModality"/>. </summary>
@@ -29,16 +33,16 @@ namespace Azure.AI.VoiceLive
             _value = value;
         }
 
-        /// <summary> Gets the Text. </summary>
+        /// <summary> Text modality. </summary>
         public static InteractionModality Text { get; } = new InteractionModality(TextValue);
 
-        /// <summary> Gets the Audio. </summary>
+        /// <summary> Audio modality. </summary>
         public static InteractionModality Audio { get; } = new InteractionModality(AudioValue);
 
-        /// <summary> Gets the Animation. </summary>
+        /// <summary> Animation modality. </summary>
         public static InteractionModality Animation { get; } = new InteractionModality(AnimationValue);
 
-        /// <summary> Gets the Avatar. </summary>
+        /// <summary> Avatar modality. </summary>
         public static InteractionModality Avatar { get; } = new InteractionModality(AvatarValue);
 
         /// <summary> Determines if two <see cref="InteractionModality"/> values are the same. </summary>

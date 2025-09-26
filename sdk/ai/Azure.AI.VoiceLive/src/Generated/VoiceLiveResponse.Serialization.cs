@@ -89,9 +89,9 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("modalities"u8);
                 writer.WriteStartArray();
-                foreach (ResponseModality item in ModalitiesInternal)
+                foreach (InteractionModality item in ModalitiesInternal)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +167,7 @@ namespace Azure.AI.VoiceLive
             ResponseTokenStatistics usage = default;
             string conversationId = default;
             BinaryData voiceInternal = default;
-            IList<ResponseModality> modalitiesInternal = default;
+            IList<InteractionModality> modalitiesInternal = default;
             OutputAudioFormat? outputAudioFormat = default;
             float? temperature = default;
             BinaryData maxOutputTokens = default;
@@ -245,10 +245,10 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    List<ResponseModality> array = new List<ResponseModality>();
+                    List<InteractionModality> array = new List<InteractionModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToResponseModality());
+                        array.Add(new InteractionModality(item.GetString()));
                     }
                     modalitiesInternal = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.AI.VoiceLive
                 usage,
                 conversationId,
                 voiceInternal,
-                modalitiesInternal ?? new ChangeTrackingList<ResponseModality>(),
+                modalitiesInternal ?? new ChangeTrackingList<InteractionModality>(),
                 outputAudioFormat,
                 temperature,
                 maxOutputTokens,

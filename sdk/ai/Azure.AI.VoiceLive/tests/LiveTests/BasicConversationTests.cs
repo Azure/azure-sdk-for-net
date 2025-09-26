@@ -330,7 +330,7 @@ namespace Azure.AI.VoiceLive.Tests
             {
                 Model = "gpt-4o",
                 InputAudioFormat = InputAudioFormat.Pcm16,
-                TurnDetection = new AzureSemanticVadEnTurnDetection()
+                TurnDetection = new AzureSemanticVadTurnDetectionEn()
             };
 
             var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
@@ -345,7 +345,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsTrue(defaultTurnDetection is ServerVadTurnDetection, $"Default turn detection was {defaultTurnDetection.GetType().Name} and not {typeof(ServerVadTurnDetection).Name}");
 
             var modifiedTurnDetection = sessionUpdated.Session.TurnDetection;
-            Assert.IsTrue(modifiedTurnDetection is AzureSemanticVadEnTurnDetection, $"Updated turn detection was {modifiedTurnDetection.GetType().Name} and not {typeof(AzureSemanticVadEnTurnDetection).Name}");
+            Assert.IsTrue(modifiedTurnDetection is AzureSemanticVadTurnDetectionEn, $"Updated turn detection was {modifiedTurnDetection.GetType().Name} and not {typeof(AzureSemanticVadTurnDetectionEn).Name}");
         }
 
         [LiveOnly]
@@ -473,7 +473,7 @@ namespace Azure.AI.VoiceLive.Tests
             {
                 Model = "gpt-4o",
                 InputAudioFormat = InputAudioFormat.Pcm16,
-                TurnDetection = new AzureSemanticVadMultilingualTurnDetection()
+                TurnDetection = new AzureSemanticVadTurnDetectionMultilingual()
             };
 
             var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
@@ -488,7 +488,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsTrue(defaultTurnDetection is ServerVadTurnDetection, $"Default turn detection was {defaultTurnDetection.GetType().Name} and not {typeof(ServerVadTurnDetection).Name}");
 
             var modifiedTurnDetection = sessionUpdated.Session.TurnDetection;
-            Assert.IsTrue(modifiedTurnDetection is AzureSemanticVadMultilingualTurnDetection, $"Updated turn detection was {modifiedTurnDetection.GetType().Name} and not {typeof(AzureSemanticVadMultilingualTurnDetection).Name}");
+            Assert.IsTrue(modifiedTurnDetection is AzureSemanticVadTurnDetectionMultilingual, $"Updated turn detection was {modifiedTurnDetection.GetType().Name} and not {typeof(AzureSemanticVadTurnDetectionMultilingual).Name}");
         }
 
         [LiveOnly]

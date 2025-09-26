@@ -13,16 +13,16 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Configuration for input audio transcription. </summary>
-    public partial class AudioInputTranscriptionSettings : IJsonModel<AudioInputTranscriptionSettings>
+    public partial class AudioInputTranscriptionOptions : IJsonModel<AudioInputTranscriptionOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionSettings"/> for deserialization. </summary>
-        internal AudioInputTranscriptionSettings()
+        /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionOptions"/> for deserialization. </summary>
+        internal AudioInputTranscriptionOptions()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AudioInputTranscriptionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AudioInputTranscriptionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioInputTranscriptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AudioInputTranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioInputTranscriptionSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioInputTranscriptionOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model.ToString());
@@ -95,30 +95,30 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AudioInputTranscriptionSettings IJsonModel<AudioInputTranscriptionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AudioInputTranscriptionOptions IJsonModel<AudioInputTranscriptionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AudioInputTranscriptionSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AudioInputTranscriptionOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioInputTranscriptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AudioInputTranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioInputTranscriptionSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioInputTranscriptionOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAudioInputTranscriptionSettings(document.RootElement, options);
+            return DeserializeAudioInputTranscriptionOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AudioInputTranscriptionSettings DeserializeAudioInputTranscriptionSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static AudioInputTranscriptionOptions DeserializeAudioInputTranscriptionOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AudioInputTranscriptionSettingsModel model = default;
+            AudioInputTranscriptionOptionsModel model = default;
             string language = default;
             IDictionary<string, string> customSpeech = default;
             IList<string> phraseList = default;
@@ -127,7 +127,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("model"u8))
                 {
-                    model = new AudioInputTranscriptionSettingsModel(prop.Value.GetString());
+                    model = new AudioInputTranscriptionOptionsModel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("language"u8))
@@ -182,47 +182,47 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AudioInputTranscriptionSettings(model, language, customSpeech ?? new ChangeTrackingDictionary<string, string>(), phraseList ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AudioInputTranscriptionOptions(model, language, customSpeech ?? new ChangeTrackingDictionary<string, string>(), phraseList ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AudioInputTranscriptionSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AudioInputTranscriptionOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioInputTranscriptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AudioInputTranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AudioInputTranscriptionSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioInputTranscriptionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AudioInputTranscriptionSettings IPersistableModel<AudioInputTranscriptionSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AudioInputTranscriptionOptions IPersistableModel<AudioInputTranscriptionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AudioInputTranscriptionSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AudioInputTranscriptionOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioInputTranscriptionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AudioInputTranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeAudioInputTranscriptionSettings(document.RootElement, options);
+                        return DeserializeAudioInputTranscriptionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioInputTranscriptionSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioInputTranscriptionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AudioInputTranscriptionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AudioInputTranscriptionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

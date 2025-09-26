@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseMessageItem. </summary>
-    public partial class ResponseMessageItem : IJsonModel<ResponseMessageItem>
+    /// <summary> Base type for message item within a conversation. </summary>
+    public partial class ResponseMessageItem : ResponseItem, IJsonModel<ResponseMessageItem>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseMessageItem"/> for deserialization. </summary>
         internal ResponseMessageItem()

@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
         private const string AuthorizationHeader = "api-key";
         /// <summary> A credential used to authenticate to the service. </summary>
         private readonly TokenCredential _tokenCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
 
         /// <summary> Initializes a new instance of VoiceLiveClient for mocking. </summary>
         protected VoiceLiveClient()

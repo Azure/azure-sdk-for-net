@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Configuration for input audio transcription. </summary>
-    public partial class AudioInputTranscriptionSettings
+    public partial class AudioInputTranscriptionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionOptions"/>. </summary>
         /// <param name="model">
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
         /// 'azure-speech'.
         /// </param>
-        public AudioInputTranscriptionSettings(AudioInputTranscriptionSettingsModel model)
+        public AudioInputTranscriptionOptions(AudioInputTranscriptionOptionsModel model)
         {
             Model = model;
             CustomSpeech = new ChangeTrackingDictionary<string, string>();
             PhraseList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionOptions"/>. </summary>
         /// <param name="model">
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="customSpeech"> Optional configuration for custom speech models. </param>
         /// <param name="phraseList"> Optional list of phrase hints to bias recognition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AudioInputTranscriptionSettings(AudioInputTranscriptionSettingsModel model, string language, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AudioInputTranscriptionOptions(AudioInputTranscriptionOptionsModel model, string language, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Language = language;
@@ -53,7 +53,7 @@ namespace Azure.AI.VoiceLive
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
         /// 'azure-speech'.
         /// </summary>
-        public AudioInputTranscriptionSettingsModel Model { get; set; }
+        public AudioInputTranscriptionOptionsModel Model { get; set; }
 
         /// <summary> Optional language code in BCP-47 (e.g., 'en-US'), or ISO-639-1 (e.g., 'en'), or multi languages with auto detection, (e.g., 'en,zh'). </summary>
         public string Language { get; set; }

@@ -10,12 +10,15 @@ using System.ComponentModel;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary></summary>
+    /// <summary> Indicates the processing status of a response item. </summary>
     public readonly partial struct VoiceLiveResponseItemStatus : IEquatable<VoiceLiveResponseItemStatus>
     {
         private readonly string _value;
+        /// <summary> Item that is in progress. </summary>
         private const string InProgressValue = "in_progress";
+        /// <summary> Item has been fully processed and is complete. </summary>
         private const string CompletedValue = "completed";
+        /// <summary> Item has been processed but is incomplete. </summary>
         private const string IncompleteValue = "incomplete";
 
         /// <summary> Initializes a new instance of <see cref="VoiceLiveResponseItemStatus"/>. </summary>
@@ -28,13 +31,13 @@ namespace Azure.AI.VoiceLive
             _value = value;
         }
 
-        /// <summary> Gets the InProgress. </summary>
+        /// <summary> Item that is in progress. </summary>
         public static VoiceLiveResponseItemStatus InProgress { get; } = new VoiceLiveResponseItemStatus(InProgressValue);
 
-        /// <summary> Gets the Completed. </summary>
+        /// <summary> Item has been fully processed and is complete. </summary>
         public static VoiceLiveResponseItemStatus Completed { get; } = new VoiceLiveResponseItemStatus(CompletedValue);
 
-        /// <summary> Gets the Incomplete. </summary>
+        /// <summary> Item has been processed but is incomplete. </summary>
         public static VoiceLiveResponseItemStatus Incomplete { get; } = new VoiceLiveResponseItemStatus(IncompleteValue);
 
         /// <summary> Determines if two <see cref="VoiceLiveResponseItemStatus"/> values are the same. </summary>

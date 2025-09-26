@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseMessageItem. </summary>
+    /// <summary> Base type for message item within a conversation. </summary>
     public partial class ResponseMessageItem : ResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="ResponseMessageItem"/>. </summary>

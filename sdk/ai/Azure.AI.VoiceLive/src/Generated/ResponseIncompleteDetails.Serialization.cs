@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details for an incomplete response. </summary>
-    public partial class ResponseIncompleteDetails : IJsonModel<ResponseIncompleteDetails>
+    public partial class ResponseIncompleteDetails : ResponseStatusDetails, IJsonModel<ResponseIncompleteDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseIncompleteDetails"/> for deserialization. </summary>
         internal ResponseIncompleteDetails()
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("reason"u8);
-            writer.WriteStringValue(Reason.ToSerialString());
+            writer.WriteStringValue(Reason.ToString());
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -80,7 +80,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("reason"u8))
                 {
-                    reason = prop.Value.GetString().ToResponseIncompleteDetailsReason();
+                    reason = new ResponseIncompleteDetailsReason(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

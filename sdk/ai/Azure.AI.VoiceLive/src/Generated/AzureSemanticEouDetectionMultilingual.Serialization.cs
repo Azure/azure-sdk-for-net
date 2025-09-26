@@ -13,11 +13,11 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure semantic end-of-utterance detection (multilingual). </summary>
-    public partial class AzureSemanticMultilingualEouDetection : IJsonModel<AzureSemanticMultilingualEouDetection>
+    public partial class AzureSemanticEouDetectionMultilingual : EouDetection, IJsonModel<AzureSemanticEouDetectionMultilingual>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureSemanticMultilingualEouDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureSemanticEouDetectionMultilingual>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,44 +28,44 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticMultilingualEouDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticEouDetectionMultilingual>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureSemanticMultilingualEouDetection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSemanticEouDetectionMultilingual)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Threshold))
+            if (Optional.IsDefined(ThresholdLevel))
             {
-                writer.WritePropertyName("threshold"u8);
-                writer.WriteNumberValue(Threshold.Value);
+                writer.WritePropertyName("threshold_level"u8);
+                writer.WriteStringValue(ThresholdLevel.Value.ToString());
             }
             if (Optional.IsDefined(TimeoutMs))
             {
-                writer.WritePropertyName("timeout"u8);
+                writer.WritePropertyName("timeout_ms"u8);
                 writer.WriteNumberValue(TimeoutMs.Value);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureSemanticMultilingualEouDetection IJsonModel<AzureSemanticMultilingualEouDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureSemanticMultilingualEouDetection)JsonModelCreateCore(ref reader, options);
+        AzureSemanticEouDetectionMultilingual IJsonModel<AzureSemanticEouDetectionMultilingual>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureSemanticEouDetectionMultilingual)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EouDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticMultilingualEouDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticEouDetectionMultilingual>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureSemanticMultilingualEouDetection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSemanticEouDetectionMultilingual)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureSemanticMultilingualEouDetection(document.RootElement, options);
+            return DeserializeAzureSemanticEouDetectionMultilingual(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureSemanticMultilingualEouDetection DeserializeAzureSemanticMultilingualEouDetection(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureSemanticEouDetectionMultilingual DeserializeAzureSemanticEouDetectionMultilingual(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -73,25 +73,25 @@ namespace Azure.AI.VoiceLive
             }
             EOUDetectionModel model = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            float? threshold = default;
+            AzureSemanticDetectionMultilingualThresholdLevel? thresholdLevel = default;
             float? timeoutMs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("model"u8))
                 {
-                    model = prop.Value.GetString().ToEOUDetectionModel();
+                    model = new EOUDetectionModel(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("threshold"u8))
+                if (prop.NameEquals("threshold_level"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    threshold = prop.Value.GetSingle();
+                    thresholdLevel = new AzureSemanticDetectionMultilingualThresholdLevel(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("timeout"u8))
+                if (prop.NameEquals("timeout_ms"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,47 +105,47 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureSemanticMultilingualEouDetection(model, additionalBinaryDataProperties, threshold, timeoutMs);
+            return new AzureSemanticEouDetectionMultilingual(model, additionalBinaryDataProperties, thresholdLevel, timeoutMs);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureSemanticMultilingualEouDetection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureSemanticEouDetectionMultilingual>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticMultilingualEouDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticEouDetectionMultilingual>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureSemanticMultilingualEouDetection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSemanticEouDetectionMultilingual)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureSemanticMultilingualEouDetection IPersistableModel<AzureSemanticMultilingualEouDetection>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureSemanticMultilingualEouDetection)PersistableModelCreateCore(data, options);
+        AzureSemanticEouDetectionMultilingual IPersistableModel<AzureSemanticEouDetectionMultilingual>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureSemanticEouDetectionMultilingual)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EouDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticMultilingualEouDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticEouDetectionMultilingual>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeAzureSemanticMultilingualEouDetection(document.RootElement, options);
+                        return DeserializeAzureSemanticEouDetectionMultilingual(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureSemanticMultilingualEouDetection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSemanticEouDetectionMultilingual)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureSemanticMultilingualEouDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureSemanticEouDetectionMultilingual>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
