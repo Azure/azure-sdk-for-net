@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.StorageDiscovery;
 
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     /// <summary> The template for adding updateable properties. </summary>
     public partial class StorageDiscoveryWorkspacePropertiesUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageDiscoveryWorkspacePropertiesUpdate"/>. </summary>
         public StorageDiscoveryWorkspacePropertiesUpdate()
@@ -58,22 +30,25 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="description"> The description of the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDiscoveryWorkspacePropertiesUpdate(StorageDiscoverySku? sku, string description, IList<ResourceIdentifier> workspaceRoots, IList<StorageDiscoveryScope> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageDiscoveryWorkspacePropertiesUpdate(StorageDiscoverySku? sku, string description, IList<ResourceIdentifier> workspaceRoots, IList<StorageDiscoveryScope> scopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Description = description;
             WorkspaceRoots = workspaceRoots;
             Scopes = scopes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The storage discovery sku. </summary>
         public StorageDiscoverySku? Sku { get; set; }
+
         /// <summary> The description of the storage discovery workspace. </summary>
         public string Description { get; set; }
+
         /// <summary> The view level storage discovery data estate. </summary>
         public IList<ResourceIdentifier> WorkspaceRoots { get; }
+
         /// <summary> The scopes of the storage discovery workspace. </summary>
         public IList<StorageDiscoveryScope> Scopes { get; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageDiscovery;
 
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
     public readonly partial struct StorageDiscoveryResourceType : IEquatable<StorageDiscoveryResourceType>
     {
         private readonly string _value;
+        /// <summary> Storage Account Resource Type. </summary>
+        private const string StorageAccountsValue = "Microsoft.Storage/storageAccounts";
 
         /// <summary> Initializes a new instance of <see cref="StorageDiscoveryResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageDiscoveryResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StorageAccountsValue = "Microsoft.Storage/storageAccounts";
+            _value = value;
+        }
 
         /// <summary> Storage Account Resource Type. </summary>
         public static StorageDiscoveryResourceType StorageAccounts { get; } = new StorageDiscoveryResourceType(StorageAccountsValue);
+
         /// <summary> Determines if two <see cref="StorageDiscoveryResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageDiscoveryResourceType left, StorageDiscoveryResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageDiscoveryResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageDiscoveryResourceType left, StorageDiscoveryResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageDiscoveryResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageDiscoveryResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageDiscoveryResourceType(string value) => new StorageDiscoveryResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageDiscoveryResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageDiscoveryResourceType?(string value) => value == null ? null : new StorageDiscoveryResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageDiscoveryResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageDiscoveryResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
