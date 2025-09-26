@@ -65,16 +65,17 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="identity"> The identity used for the resource. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
+        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Identity = identity;
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.NetApp
             DisableShowmount = disableShowmount;
             NfsV4IdDomain = nfsV4IdDomain;
             MultiAdStatus = multiAdStatus;
+            LdapConfiguration = ldapConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -92,9 +94,9 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The identity used for the resource. </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
@@ -108,5 +110,7 @@ namespace Azure.ResourceManager.NetApp
         public string NfsV4IdDomain { get; set; }
         /// <summary> MultiAD Status for the account. </summary>
         public MultiAdStatus? MultiAdStatus { get; }
+        /// <summary> LDAP Configuration for the account. </summary>
+        public LdapConfiguration LdapConfiguration { get; set; }
     }
 }
