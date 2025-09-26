@@ -413,7 +413,6 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="requestContext"> The request context to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         internal async Task<Response<PersistentAgent>> CreateAgentAsync(string model, string name, string description, string instructions, IEnumerable<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, RequestContext requestContext)
         {
             Argument.AssertNotNull(model, nameof(model));
