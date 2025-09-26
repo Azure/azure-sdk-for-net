@@ -22,5 +22,26 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             return ContainerAppManagedEnvironmentStorageData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: new ManagedEnvironmentStorageProperties() { AzureFile = managedEnvironmentStorageAzureFile });
         }
+
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppConnectedEnvironmentStorageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="connectedEnvironmentStorageAzureFile"> Storage properties. </param>
+        /// <returns> A new <see cref="AppContainers.ContainerAppConnectedEnvironmentStorageData"/> instance for mocking. </returns>
+        public static ContainerAppConnectedEnvironmentStorageData ContainerAppConnectedEnvironmentStorageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerAppAzureFileProperties connectedEnvironmentStorageAzureFile = null)
+        {
+            return new ContainerAppConnectedEnvironmentStorageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                 new Models.ConnectedEnvironmentStorageProperties()
+                 {
+                     AzureFile = connectedEnvironmentStorageAzureFile
+                 },
+                serializedAdditionalRawData: null);
+        }
     }
 }

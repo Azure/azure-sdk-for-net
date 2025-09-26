@@ -299,6 +299,42 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual ContainerAppPrivateEndpointConnectionResource GetContainerAppPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            ContainerAppPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new ContainerAppPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HttpRouteConfigResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HttpRouteConfigResource.CreateResourceIdentifier" /> to create a <see cref="HttpRouteConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HttpRouteConfigResource"/> object. </returns>
+        public virtual HttpRouteConfigResource GetHttpRouteConfigResource(ResourceIdentifier id)
+        {
+            HttpRouteConfigResource.ValidateResourceId(id);
+            return new HttpRouteConfigResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceConfigurationResource"/> object. </returns>
+        public virtual MaintenanceConfigurationResource GetMaintenanceConfigurationResource(ResourceIdentifier id)
+        {
+            MaintenanceConfigurationResource.ValidateResourceId(id);
+            return new MaintenanceConfigurationResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentStorageResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppManagedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentStorageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -332,6 +368,30 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppSourceControlResource.ValidateResourceId(id);
             return new ContainerAppSourceControlResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LogicAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LogicAppResource"/> object. </returns>
+        public virtual LogicAppResource GetLogicAppResource(ResourceIdentifier id)
+        {
+            LogicAppResource.ValidateResourceId(id);
+            return new LogicAppResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkflowEnvelopeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkflowEnvelopeResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowEnvelopeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkflowEnvelopeResource"/> object. </returns>
+        public virtual WorkflowEnvelopeResource GetWorkflowEnvelopeResource(ResourceIdentifier id)
+        {
+            WorkflowEnvelopeResource.ValidateResourceId(id);
+            return new WorkflowEnvelopeResource(Client, id);
         }
     }
 }
