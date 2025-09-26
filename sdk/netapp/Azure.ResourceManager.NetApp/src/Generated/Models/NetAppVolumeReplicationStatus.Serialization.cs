@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             bool? healthy = default;
-            NetAppRelationshipStatus? relationshipStatus = default;
+            VolumeReplicationRelationshipStatus? relationshipStatus = default;
             NetAppMirrorState? mirrorState = default;
             string totalProgress = default;
             string errorMessage = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    relationshipStatus = new NetAppRelationshipStatus(property.Value.GetString());
+                    relationshipStatus = new VolumeReplicationRelationshipStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("mirrorState"u8))

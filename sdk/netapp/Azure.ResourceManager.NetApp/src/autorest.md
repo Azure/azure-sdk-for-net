@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/901fc7865ebfbfd4cd21c5e88707ddab153773de/specification/netapp/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/51c2fd53bfed275d78bc3078440b8b81cdf13335/specification/netapp/resource-manager/readme.md
 #tag: package-preview-2025-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -259,8 +259,8 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
-  RelationshipStatus: NetAppRestoreRelationshipStatus
-  VolumeReplicationRelationshipStatus: NetAppRelationshipStatus
+#   RelationshipStatus: NetAppRelationshipStatus
+#  VolumeReplicationRelationshipStatus: NetAppRelationshipStatusFoo
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
@@ -271,5 +271,8 @@ list-exception:
 directive:
   # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
-
+  - from: swagger-document
+    where: $.definitions.NetAppProvisioningState
+    transform: >
+      $["x-ms-enum"].modelAsString = false;
 ```
