@@ -61,7 +61,7 @@ namespace Azure.AI.Agents.Persistent
 
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
@@ -79,7 +79,7 @@ namespace Azure.AI.Agents.Persistent
 
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(body, nameof(body));
 
             using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
@@ -107,7 +107,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(body, nameof(body));
 
             using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }

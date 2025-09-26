@@ -288,8 +288,7 @@ namespace Azure.AI.Agents.Persistent
             // Load details about the agent if not already loaded.
             if (_agent is null)
             {
-                var response = await _client!.Administration.GetAgentAsync(_agentId, ToUserAgentRequestContext(cancellationToken)).ConfigureAwait(false);
-                var agent = Response.FromValue(PersistentAgent.FromResponse(response), response);
+                PersistentAgent agent = await _client!.Administration.InternalGetAgentAsync(_agentId, ToUserAgentRequestContext(cancellationToken)).ConfigureAwait(false);
                 Interlocked.CompareExchange(ref _agent, agent, null);
             }
 

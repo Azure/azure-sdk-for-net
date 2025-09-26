@@ -443,7 +443,7 @@ namespace Azure.AI.Agents.Persistent
                 toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
                 stream,
                 null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             return SubmitToolOutputsInternal(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest.ToRequestContent(), context);
         }
 
@@ -458,7 +458,7 @@ namespace Azure.AI.Agents.Persistent
         {
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(
                 toolOutputs.ToList(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             return await SubmitToolOutputsInternalAsync(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
         }
 
@@ -593,7 +593,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            return GetRunsAsync(threadId, limit, order, after, before, cancellationToken.ToRequestContext());
+            return GetRunsAsync(threadId, limit, order, after, before, FromCancellationToken(cancellationToken));
         }
 
         /// <summary> Gets a list of runs for a specified thread. </summary>
