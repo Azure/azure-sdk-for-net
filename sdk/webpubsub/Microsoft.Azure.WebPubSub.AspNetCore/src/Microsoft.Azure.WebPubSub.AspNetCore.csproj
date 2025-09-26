@@ -10,7 +10,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);419</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
-		<ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net8.0'">netcoreapp3.1</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
