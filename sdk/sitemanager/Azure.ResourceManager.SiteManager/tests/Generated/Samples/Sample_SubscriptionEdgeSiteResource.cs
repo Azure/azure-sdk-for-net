@@ -14,13 +14,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SiteManager.Samples
 {
-    public partial class Sample_EdgeSiteResource
+    public partial class Sample_SubscriptionEdgeSiteResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetSiteGeneratedByMaximumSetRule()
+        public async Task Get_GetSiteSubscriptionGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesBySubscription_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,16 +28,15 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this EdgeSiteResource created on azure
-            // for more information of creating EdgeSiteResource, please refer to the document of EdgeSiteResource
+            // this example assumes you already have this SubscriptionEdgeSiteResource created on azure
+            // for more information of creating SubscriptionEdgeSiteResource, please refer to the document of SubscriptionEdgeSiteResource
             string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
             string siteName = "string";
-            ResourceIdentifier edgeSiteResourceId = EdgeSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            EdgeSiteResource edgeSite = client.GetEdgeSiteResource(edgeSiteResourceId);
+            ResourceIdentifier subscriptionEdgeSiteResourceId = SubscriptionEdgeSiteResource.CreateResourceIdentifier(subscriptionId, siteName);
+            SubscriptionEdgeSiteResource subscriptionEdgeSite = client.GetSubscriptionEdgeSiteResource(subscriptionEdgeSiteResourceId);
 
             // invoke the operation
-            EdgeSiteResource result = await edgeSite.GetAsync();
+            SubscriptionEdgeSiteResource result = await subscriptionEdgeSite.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -48,9 +47,9 @@ namespace Azure.ResourceManager.SiteManager.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteSiteGeneratedByMaximumSetRule()
+        public async Task Delete_DeleteSiteSubscriptionGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesBySubscription_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,25 +57,24 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this EdgeSiteResource created on azure
-            // for more information of creating EdgeSiteResource, please refer to the document of EdgeSiteResource
+            // this example assumes you already have this SubscriptionEdgeSiteResource created on azure
+            // for more information of creating SubscriptionEdgeSiteResource, please refer to the document of SubscriptionEdgeSiteResource
             string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
             string siteName = "string";
-            ResourceIdentifier edgeSiteResourceId = EdgeSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            EdgeSiteResource edgeSite = client.GetEdgeSiteResource(edgeSiteResourceId);
+            ResourceIdentifier subscriptionEdgeSiteResourceId = SubscriptionEdgeSiteResource.CreateResourceIdentifier(subscriptionId, siteName);
+            SubscriptionEdgeSiteResource subscriptionEdgeSite = client.GetSubscriptionEdgeSiteResource(subscriptionEdgeSiteResourceId);
 
             // invoke the operation
-            await edgeSite.DeleteAsync(WaitUntil.Completed);
+            await subscriptionEdgeSite.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateSiteGeneratedByMaximumSetRule()
+        public async Task Update_PatchSiteSubscriptionGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-06-01/Sites_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesBySubscription_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,13 +82,12 @@ namespace Azure.ResourceManager.SiteManager.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this EdgeSiteResource created on azure
-            // for more information of creating EdgeSiteResource, please refer to the document of EdgeSiteResource
+            // this example assumes you already have this SubscriptionEdgeSiteResource created on azure
+            // for more information of creating SubscriptionEdgeSiteResource, please refer to the document of SubscriptionEdgeSiteResource
             string subscriptionId = "0154f7fe-df09-4981-bf82-7ad5c1f596eb";
-            string resourceGroupName = "rgsites";
             string siteName = "string";
-            ResourceIdentifier edgeSiteResourceId = EdgeSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            EdgeSiteResource edgeSite = client.GetEdgeSiteResource(edgeSiteResourceId);
+            ResourceIdentifier subscriptionEdgeSiteResourceId = SubscriptionEdgeSiteResource.CreateResourceIdentifier(subscriptionId, siteName);
+            SubscriptionEdgeSiteResource subscriptionEdgeSite = client.GetSubscriptionEdgeSiteResource(subscriptionEdgeSiteResourceId);
 
             // invoke the operation
             EdgeSitePatch patch = new EdgeSitePatch
@@ -99,7 +96,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
                 {
                     DisplayName = "string",
                     Description = "zztr",
-                    SiteAddress = new SiteAddressProperties
+                    SiteAddress = new EdgeSiteAddressProperties
                     {
                         StreetAddress1 = "fodimymrxbhrfslsmzfhmitn",
                         StreetAddress2 = "widjg",
@@ -114,7 +111,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
 },
                 },
             };
-            EdgeSiteResource result = await edgeSite.UpdateAsync(patch);
+            SubscriptionEdgeSiteResource result = await subscriptionEdgeSite.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

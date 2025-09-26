@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// <param name="labels"> Key-value pairs for labeling the site resource. </param>
         /// <param name="provisioningState"> Provisioning state of last operation. </param>
         /// <returns> A new <see cref="Models.EdgeSiteProperties"/> instance for mocking. </returns>
-        public static EdgeSiteProperties EdgeSiteProperties(string displayName = null, string description = null, SiteAddressProperties siteAddress = null, IDictionary<string, string> labels = null, EdgeSiteProvisioningState? provisioningState = null)
+        public static EdgeSiteProperties EdgeSiteProperties(string displayName = null, string description = null, EdgeSiteAddressProperties siteAddress = null, IDictionary<string, string> labels = null, EdgeSiteProvisioningState? provisioningState = null)
         {
             labels ??= new Dictionary<string, string>();
 

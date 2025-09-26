@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SiteManager.Samples
 {
-    public partial class Sample_EdgeSiteCollection
+    public partial class Sample_ResourceGroupEdgeSiteCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.SiteManager.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this ResourceGroupEdgeSiteResource
+            ResourceGroupEdgeSiteCollection collection = resourceGroupResource.GetResourceGroupEdgeSites();
 
             // invoke the operation
             string siteName = "string";
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
                 {
                     DisplayName = "string",
                     Description = "enxcmpvfvadbapo",
-                    SiteAddress = new SiteAddressProperties
+                    SiteAddress = new EdgeSiteAddressProperties
                     {
                         StreetAddress1 = "fodimymrxbhrfslsmzfhmitn",
                         StreetAddress2 = "widjg",
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.SiteManager.Samples
 },
                 },
             };
-            ArmOperation<EdgeSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, siteName, data);
-            EdgeSiteResource result = lro.Value;
+            ArmOperation<ResourceGroupEdgeSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, siteName, data);
+            ResourceGroupEdgeSiteResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.SiteManager.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this ResourceGroupEdgeSiteResource
+            ResourceGroupEdgeSiteCollection collection = resourceGroupResource.GetResourceGroupEdgeSites();
 
             // invoke the operation
             string siteName = "string";
-            EdgeSiteResource result = await collection.GetAsync(siteName);
+            ResourceGroupEdgeSiteResource result = await collection.GetAsync(siteName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.SiteManager.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this ResourceGroupEdgeSiteResource
+            ResourceGroupEdgeSiteCollection collection = resourceGroupResource.GetResourceGroupEdgeSites();
 
             // invoke the operation and iterate over the result
-            await foreach (EdgeSiteResource item in collection.GetAllAsync())
+            await foreach (ResourceGroupEdgeSiteResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.SiteManager.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this ResourceGroupEdgeSiteResource
+            ResourceGroupEdgeSiteCollection collection = resourceGroupResource.GetResourceGroupEdgeSites();
 
             // invoke the operation
             string siteName = "string";
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.SiteManager.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this EdgeSiteResource
-            EdgeSiteCollection collection = resourceGroupResource.GetEdgeSites();
+            // get the collection of this ResourceGroupEdgeSiteResource
+            ResourceGroupEdgeSiteCollection collection = resourceGroupResource.GetResourceGroupEdgeSites();
 
             // invoke the operation
             string siteName = "string";
-            NullableResponse<EdgeSiteResource> response = await collection.GetIfExistsAsync(siteName);
-            EdgeSiteResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ResourceGroupEdgeSiteResource> response = await collection.GetIfExistsAsync(siteName);
+            ResourceGroupEdgeSiteResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

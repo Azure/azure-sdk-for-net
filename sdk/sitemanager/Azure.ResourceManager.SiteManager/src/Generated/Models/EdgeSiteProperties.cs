@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// <param name="labels"> Key-value pairs for labeling the site resource. </param>
         /// <param name="provisioningState"> Provisioning state of last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSiteProperties(string displayName, string description, SiteAddressProperties siteAddress, IDictionary<string, string> labels, EdgeSiteProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeSiteProperties(string displayName, string description, EdgeSiteAddressProperties siteAddress, IDictionary<string, string> labels, EdgeSiteProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// <summary> Description of Site resource. </summary>
         public string Description { get; set; }
         /// <summary> Physical address of the site. </summary>
-        public SiteAddressProperties SiteAddress { get; set; }
+        public EdgeSiteAddressProperties SiteAddress { get; set; }
         /// <summary> Key-value pairs for labeling the site resource. </summary>
         public IDictionary<string, string> Labels { get; }
         /// <summary> Provisioning state of last operation. </summary>
