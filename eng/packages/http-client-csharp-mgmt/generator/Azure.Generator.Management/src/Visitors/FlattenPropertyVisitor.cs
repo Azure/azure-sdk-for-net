@@ -60,7 +60,6 @@ namespace Azure.Generator.Management.Visitors
             var parameterMap = new Dictionary<ParameterProvider, ParameterProvider>();
             var updatedParameters = new List<ParameterProvider>(method.Signature.Parameters.Count);
             var updated = false;
-            var parameterShouldBeNullable = false; // if the previous method parameter is nullable, we need to ensure that the current parameter is also set with default value
             foreach (var parameter in method.Signature.Parameters)
             {
                 if (propertyNameMap.TryGetValue(parameter.Name, out var value))
@@ -70,35 +69,24 @@ namespace Azure.Generator.Management.Visitors
                     {
                         // If the flattened property is a value type, we need to ensure that we handle the nullability correctly.
                         var propertyParameter = flattenedProperty.AsParameter;
-                        if (parameterShouldBeNullable || flattenedProperty.Type.IsNullable)
-                        {
-                            // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
-                            var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type, propertyParameter.DefaultValue,
-                                propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
-                                propertyParameter.Field, propertyParameter.InitializationValue, propertyParameter.Location, propertyParameter.WireInfo, propertyParameter.Validation);
 
-                            if (isOverriddenValueType)
-                            {
-                                updatedParameter.Update(type: updatedParameter.Type.WithNullable(true));
-                            }
-                            parameterShouldBeNullable = true;
-                            updatedParameter.DefaultValue = Default; // Ensure that the default value is set to null for nullable types
+                        // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
+                        var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type, propertyParameter.DefaultValue,
+                            propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
+                            propertyParameter.Field, propertyParameter.InitializationValue, propertyParameter.Location, propertyParameter.WireInfo, propertyParameter.Validation);
 
-                            parameterMap.Add(propertyParameter, updatedParameter);
-                            updatedParameters.Add(updatedParameter);
-                        }
-                        else
+                        if (isOverriddenValueType)
                         {
-                            updatedParameters.Add(propertyParameter);
+                            updatedParameter.Update(type: updatedParameter.Type.WithNullable(true));
                         }
+                        updatedParameter.DefaultValue = Default; // Ensure that the default value is set to null for nullable types
+
+                        parameterMap.Add(propertyParameter, updatedParameter);
+                        updatedParameters.Add(updatedParameter);
                     }
                 }
                 else
                 {
-                    if (parameter.Type.IsNullable)
-                    {
-                        parameterShouldBeNullable = true;
-                    }
                     updatedParameters.Add(parameter);
                 }
             }
