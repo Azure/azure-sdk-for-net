@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WriteStartArray();
                 foreach (KeyVaultDataAction item in DataActions)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WriteStartArray();
                 foreach (KeyVaultDataAction item in NotDataActions)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -183,7 +183,7 @@ namespace Azure.Security.KeyVault.Administration
                     List<KeyVaultDataAction> array = new List<KeyVaultDataAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new KeyVaultDataAction(item.GetString()));
+                        array.Add(KeyVaultDataAction.DeserializeKeyVaultDataAction(item, options));
                     }
                     dataActions = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.Security.KeyVault.Administration
                     List<KeyVaultDataAction> array = new List<KeyVaultDataAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new KeyVaultDataAction(item.GetString()));
+                        array.Add(KeyVaultDataAction.DeserializeKeyVaultDataAction(item, options));
                     }
                     notDataActions = array;
                     continue;
