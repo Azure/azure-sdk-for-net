@@ -21,10 +21,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         private const string ThreadId = "thread-id";
 
         [Test]
-        public async Task TestUserAgentHeaderAddedToAllRequestToCreateRunWhenThreadExists()
+        public async Task TestUserAgentHeaderAddedToAllRequestToCreateRunRegardlessIfThreadExists([Values(null, ThreadId)] string threadId)
         {
-            string threadId = ThreadId; // Provide thread id to skip thread creation
-
             List<string> requestPaths = [];
 
             var mockTransport = new MockTransport((request) =>
@@ -39,34 +37,16 @@ namespace Azure.AI.Agents.Persistent.Tests
             await chatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Hello"));
 
             Assert.AreEqual(3, requestPaths.Count);
-            Assert.AreEqual("GET:/assistants/agent-id", requestPaths[0]);     // client.Administration.GetAgentAsync(...)
-            Assert.AreEqual("GET:/threads/thread-id/runs", requestPaths[1]);  // client.Runs.GetRunsAsync(...)
-            Assert.AreEqual("POST:/threads/thread-id/runs", requestPaths[2]); // client.Runs.CreateRunStreamingAsync(...)
-        }
-
-        [Test]
-        public async Task TestUserAgentHeaderAddedToAllRequestToCreateRunWhenNoThreadExists()
-        {
-            string threadId = null; // Provide no thread id to create a new thread
-
-            List<string> requestPaths = [];
-
-            var mockTransport = new MockTransport((request) =>
+            Assert.AreEqual("GET:/assistants/agent-id", requestPaths[0]);       // client.Administration.GetAgentAsync(...)
+            if (threadId is null)
             {
-                AssertContainsMEAIHeader(request.Headers);
-                requestPaths.Add($"{request.Method}:{request.Uri.Path}");
-                return GerResponse(request);
-            });
-
-            // Create chat client with no default thread id
-            PersistentAgentsChatClient chatClient = GetChatClient(mockTransport, threadId);
-
-            await chatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Hello"));
-
-            Assert.AreEqual(3, requestPaths.Count);
-            Assert.AreEqual("GET:/assistants/agent-id", requestPaths[0]);     // client.Administration.GetAgentAsync(...)
-            Assert.AreEqual("POST:/threads", requestPaths[1]);                // client.Threads.CreateThreadAsync(...)
-            Assert.AreEqual("POST:/threads/thread-id/runs", requestPaths[2]); // client.Runs.CreateRunStreamingAsync(...)
+                Assert.AreEqual("POST:/threads", requestPaths[1]);              // client.Threads.CreateThreadAsync(...)
+            }
+            else
+            {
+                Assert.AreEqual("GET:/threads/thread-id/runs", requestPaths[1]);// client.Runs.GetRunsAsync(...)
+            }
+            Assert.AreEqual("POST:/threads/thread-id/runs", requestPaths[2]);   // client.Runs.CreateRunStreamingAsync(...)
         }
 
         [Test]
