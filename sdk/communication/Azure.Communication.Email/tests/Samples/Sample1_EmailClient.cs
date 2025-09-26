@@ -30,8 +30,8 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ {
                 var emailSendOperation = emailClient.Send(
                     wait: WaitUntil.Completed,
-                    //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                    //@@ recipientAddress: "<recipient email address>"
+                    //@@ senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+                    //@@ recipientAddress: "<recipient email address>",
                     /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                     /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                     subject: "This is the subject",
@@ -68,8 +68,8 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ recipientAddress: "<recipient email address>"
+                //@@ senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>",
                 /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 content: emailContent);
@@ -113,13 +113,13 @@ namespace Azure.Communication.Email.Tests.Samples
             var toRecipients = new List<EmailAddress>
             {
                 new EmailAddress(
-                    //@@ address: "<recipient email address>"
-                    //@@ displayName: "<recipient displayname>"
+                    //@@ address: "<recipient email address>",
+                    //@@ displayName: "<recipient displayname>"),
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
-                    //@@ address: "<recipient email address>"
-                    //@@ displayName: "<recipient displayname>"
+                    //@@ address: "<recipient email address>",
+                    //@@ displayName: "<recipient displayname>")
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
             };
@@ -128,13 +128,13 @@ namespace Azure.Communication.Email.Tests.Samples
             var ccRecipients = new List<EmailAddress>
             {
                 new EmailAddress(
-                    //@@ address: "<recipient email address>"
-                    //@@ displayName: "<recipient displayname>"
+                    //@@ address: "<recipient email address>",
+                    //@@ displayName: "<recipient displayname>"),
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
-                    //@@ address: "<recipient email address>"
-                    //@@ displayName: "<recipient displayname>"
+                    //@@ address: "<recipient email address>",
+                    //@@ displayName: "<recipient displayname>")
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
             };
@@ -143,13 +143,13 @@ namespace Azure.Communication.Email.Tests.Samples
             var bccRecipients = new List<EmailAddress>
             {
                 new EmailAddress(
-                    //@@ address: "<recipient email address>"
-                    //@@ displayName: "<recipient displayname>"
+                    //@@ address: "<recipient email address>",
+                    //@@ displayName: "<recipient displayname>"),
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
-                    //@@ address: "<recipient email address>"
-                    //@@ displayName: "<recipient displayname>"
+                    //@@ address: "<recipient email address>",
+                    //@@ displayName: "<recipient displayname>")
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
             };
@@ -158,7 +158,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
                 /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 emailRecipients,
                 emailContent);
@@ -188,6 +188,7 @@ namespace Azure.Communication.Email.Tests.Samples
         {
             EmailClient emailClient = CreateEmailClient();
 
+            #region Snippet:Azure_Communication_Email_Send_With_Attachments
             // Create the email content
             var emailContent = new EmailContent("This is the subject")
             {
@@ -195,11 +196,10 @@ namespace Azure.Communication.Email.Tests.Samples
                 Html = "<html><body>This is the html body</body></html>"
             };
 
-            #region Snippet:Azure_Communication_Email_Send_With_Attachments
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ recipientAddress: "<recipient email address>"
+                //@@ senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>",
                 /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 content: emailContent);
@@ -254,8 +254,8 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ recipientAddress: "<recipient email address>"
+                //@@ senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>",
                 /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 content: emailContent);
@@ -307,8 +307,8 @@ namespace Azure.Communication.Email.Tests.Samples
             /// Send the email message with WaitUntil.Started
             var emailSendOperation = emailClient.Send(
                 wait: WaitUntil.Started,
-                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ recipientAddress: "<recipient email address>"
+                //@@ senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>",
                 /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 subject: "This is the subject",
