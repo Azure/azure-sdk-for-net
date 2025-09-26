@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CloudInitConfiguration))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(HttpProxyConfiguration))]
     [ModelReaderWriterBuildable(typeof(NicIPAddressSettings))]
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     [ModelReaderWriterBuildable(typeof(VMwareVmInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(VMwareVmInstancePatch))]
     [ModelReaderWriterBuildable(typeof(VMwareVmInstanceResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareVmLinuxConfiguration))]
     [ModelReaderWriterBuildable(typeof(VMwareVmTemplateData))]
     [ModelReaderWriterBuildable(typeof(VMwareVmTemplateListResult))]
     [ModelReaderWriterBuildable(typeof(VMwareVmTemplateResource))]
