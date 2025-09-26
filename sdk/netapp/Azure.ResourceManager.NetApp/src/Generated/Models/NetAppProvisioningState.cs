@@ -5,62 +5,24 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
-    public readonly partial struct NetAppProvisioningState : IEquatable<NetAppProvisioningState>
+    public enum NetAppProvisioningState
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NetAppProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetAppProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string AcceptedValue = "Accepted";
-        private const string CreatingValue = "Creating";
-        private const string PatchingValue = "Patching";
-        private const string DeletingValue = "Deleting";
-        private const string MovingValue = "Moving";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-
         /// <summary> Accepted. </summary>
-        public static NetAppProvisioningState Accepted { get; } = new NetAppProvisioningState(AcceptedValue);
+        Accepted,
         /// <summary> Creating. </summary>
-        public static NetAppProvisioningState Creating { get; } = new NetAppProvisioningState(CreatingValue);
+        Creating,
         /// <summary> Patching. </summary>
-        public static NetAppProvisioningState Patching { get; } = new NetAppProvisioningState(PatchingValue);
+        Patching,
         /// <summary> Deleting. </summary>
-        public static NetAppProvisioningState Deleting { get; } = new NetAppProvisioningState(DeletingValue);
+        Deleting,
         /// <summary> Moving. </summary>
-        public static NetAppProvisioningState Moving { get; } = new NetAppProvisioningState(MovingValue);
+        Moving,
         /// <summary> Failed. </summary>
-        public static NetAppProvisioningState Failed { get; } = new NetAppProvisioningState(FailedValue);
+        Failed,
         /// <summary> Succeeded. </summary>
-        public static NetAppProvisioningState Succeeded { get; } = new NetAppProvisioningState(SucceededValue);
-        /// <summary> Determines if two <see cref="NetAppProvisioningState"/> values are the same. </summary>
-        public static bool operator ==(NetAppProvisioningState left, NetAppProvisioningState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="NetAppProvisioningState"/> values are not the same. </summary>
-        public static bool operator !=(NetAppProvisioningState left, NetAppProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppProvisioningState"/>. </summary>
-        public static implicit operator NetAppProvisioningState(string value) => new NetAppProvisioningState(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is NetAppProvisioningState other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(NetAppProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        Succeeded
     }
 }

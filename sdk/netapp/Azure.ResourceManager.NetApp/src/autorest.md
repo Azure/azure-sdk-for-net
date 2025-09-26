@@ -260,7 +260,8 @@ rename-mapping:
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
 #   RelationshipStatus: NetAppRelationshipStatus
-#  VolumeReplicationRelationshipStatus: NetAppRelationshipStatusFoo
+  VolumeBackupRelationshipStatus: NetAppRelationshipStatus
+  VolumeRestoreRelationshipStatus: NetAppRelationshipStatus
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

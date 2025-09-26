@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
         /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeBackupStatus"/> instance for mocking. </returns>
-        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, VolumeBackupRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
         {
             return new NetAppVolumeBackupStatus(
                 isHealthy,
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
         /// <returns> A new <see cref="Models.NetAppRestoreStatus"/> instance for mocking. </returns>
-        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, VolumeRestoreRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
+        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
         {
             return new NetAppRestoreStatus(
                 isHealthy,
@@ -2011,6 +2011,22 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId)
         {
             return NetAppBackupData(id: id, name: name, resourceType: resourceType, systemData: systemData, backupId: backupId, createdOn: createdOn, snapshotCreationOn: default, completionOn: default, provisioningState: provisioningState, size: size, label: label, backupType: backupType, failureReason: failureReason, volumeResourceId: volumeResourceId, useExistingSnapshot: useExistingSnapshot, snapshotName: snapshotName, backupPolicyArmResourceId: backupPolicyArmResourceId, isLargeVolume: default);
+        }
+
+        /// <summary> Initializes a new instance of NetAppVolumeBackupStatus. </summary>
+        /// <param name="isHealthy"> Backup health status. </param>
+        /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
+        /// <param name="mirrorState"> The status of the backup. </param>
+        /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
+        /// <param name="errorMessage"> Displays error message if the backup is in an error state. </param>
+        /// <param name="lastTransferSize"> Displays the last transfer size. </param>
+        /// <param name="lastTransferType"> Displays the last transfer type. </param>
+        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes)
+        {
+            return NetAppVolumeBackupStatus(isHealthy: isHealthy, relationshipStatus: relationshipStatus, mirrorState: mirrorState, unhealthyReason: unhealthyReason, errorMessage: errorMessage, lastTransferSize: lastTransferSize, lastTransferType: lastTransferType, totalTransferBytes: totalTransferBytes, transferProgressBytes: default);
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
