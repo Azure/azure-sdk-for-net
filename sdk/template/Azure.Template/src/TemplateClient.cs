@@ -45,7 +45,7 @@ namespace Azure.Template
         public virtual Response<SecretBundle> GetSecretValue(string secretName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(TemplateClient)}.{nameof(GetSecretValue)}");
-            scope.Start();
+            scope.Start()
 
             try
             {
