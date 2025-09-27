@@ -91,6 +91,25 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="UserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UserResource.CreateResourceIdentifier" /> to create an <see cref="UserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMongoClusterArmClient.GetUserResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="UserResource"/> object. </returns>
+        public static UserResource GetUserResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMongoClusterArmClient(client).GetUserResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of MongoClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -120,7 +139,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -158,7 +177,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,7 +215,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +251,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +287,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -305,7 +324,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
