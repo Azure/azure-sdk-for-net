@@ -5,7 +5,9 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.Assistants;
@@ -56,11 +58,11 @@ internal partial class AzureAssistantClient : AssistantClient
     public override AsyncCollectionResult GetMessagesAsync(string threadId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-        return new AzureAsyncCollectionResult<ThreadMessage, MessageCollectionPageToken>(
+        return new AzureAsyncCollectionResult<ThreadMessage, AssistantCollectionPageToken>(
             Pipeline,
             options,
             continuation => CreateGetMessagesRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => MessageCollectionPageToken.FromResponse(page, threadId, limit, order, before),
+            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
             page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data,
             options?.CancellationToken ?? default);
     }
@@ -68,11 +70,11 @@ internal partial class AzureAssistantClient : AssistantClient
     public override CollectionResult GetMessages(string threadId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-        return new AzureCollectionResult<ThreadMessage, MessageCollectionPageToken>(
+        return new AzureCollectionResult<ThreadMessage, AssistantCollectionPageToken>(
            Pipeline,
            options,
            continuation => CreateGetMessagesRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-           page => MessageCollectionPageToken.FromResponse(page, threadId, limit, order, before),
+           page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
            page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data);
     }
 
@@ -213,11 +215,11 @@ internal partial class AzureAssistantClient : AssistantClient
     public override AsyncCollectionResult GetRunsAsync(string threadId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-        return new AzureAsyncCollectionResult<ThreadRun, RunCollectionPageToken>(
+        return new AzureAsyncCollectionResult<ThreadRun, AssistantCollectionPageToken>(
             Pipeline,
             options,
             continuation => CreateGetRunsRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => RunCollectionPageToken.FromResponse(page, threadId, limit, order, before),
+            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
             page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data,
             options?.CancellationToken ?? default);
     }
@@ -225,15 +227,14 @@ internal partial class AzureAssistantClient : AssistantClient
     public override CollectionResult GetRuns(string threadId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-        return new AzureCollectionResult<ThreadRun, RunCollectionPageToken>(
+        return new AzureCollectionResult<ThreadRun, AssistantCollectionPageToken>(
             Pipeline,
             options,
             continuation => CreateGetRunsRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => RunCollectionPageToken.FromResponse(page, threadId, limit, order, before),
+            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
             page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data);
     }
 
-    /// <inheritdoc cref="InternalAssistantRunClient.GetRunAsync"/>
     public override async Task<ClientResult> GetRunAsync(string threadId, string runId, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -243,7 +244,6 @@ internal partial class AzureAssistantClient : AssistantClient
         return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }
 
-    /// <inheritdoc cref="InternalAssistantRunClient.GetRun"/>
     public override ClientResult GetRun(string threadId, string runId, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -362,7 +362,6 @@ internal partial class AzureAssistantClient : AssistantClient
             page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data);
     }
 
-    /// <inheritdoc cref="InternalAssistantRunClient.GetRunStepAsync"/>
     public override async Task<ClientResult> GetRunStepAsync(string threadId, string runId, string stepId, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -373,7 +372,6 @@ internal partial class AzureAssistantClient : AssistantClient
         return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }
 
-    /// <inheritdoc cref="InternalAssistantRunClient.GetRunStep"/>
     public override ClientResult GetRunStep(string threadId, string runId, string stepId, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -548,6 +546,308 @@ internal partial class AzureAssistantClient : AssistantClient
     private AzureOpenAIPipelineMessageBuilder NewGetListBuilder(int? limit, string order, string after, string before, RequestOptions options)
         => NewJsonGetBuilder(options)
         .WithCommonListParameters(limit, order, after, before);
+
+    private class AssistantCollectionPageToken : ContinuationToken
+    {
+        protected AssistantCollectionPageToken(int? limit, string order, string after, string before)
+        {
+            Limit = limit;
+            Order = order;
+            After = after;
+            Before = before;
+        }
+
+        public int? Limit { get; }
+
+        public string Order { get; }
+
+        public string After { get; }
+
+        public string Before { get; }
+
+        public override BinaryData ToBytes()
+        {
+            using MemoryStream stream = new();
+            using Utf8JsonWriter writer = new(stream);
+
+            writer.WriteStartObject();
+
+            if (Limit.HasValue)
+            {
+                writer.WriteNumber("limit", Limit.Value);
+            }
+
+            if (Order is not null)
+            {
+                writer.WriteString("order", Order);
+            }
+
+            if (After is not null)
+            {
+                writer.WriteString("after", After);
+            }
+
+            if (Before is not null)
+            {
+                writer.WriteString("before", Before);
+            }
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+            stream.Position = 0;
+
+            return BinaryData.FromStream(stream);
+        }
+
+        public static AssistantCollectionPageToken FromToken(ContinuationToken token)
+        {
+            if (token is AssistantCollectionPageToken pageToken)
+            {
+                return pageToken;
+            }
+
+            BinaryData data = token.ToBytes();
+
+            if (data.ToMemory().Length == 0)
+            {
+                throw new ArgumentException("Failed to create AssistantsPageToken from provided pageToken.", nameof(pageToken));
+            }
+
+            Utf8JsonReader reader = new(data);
+
+            int? limit = null;
+            string order = null;
+            string after = null;
+            string before = null;
+
+            reader.Read();
+
+            Debug.Assert(reader.TokenType == JsonTokenType.StartObject);
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                {
+                    break;
+                }
+
+                Debug.Assert(reader.TokenType == JsonTokenType.PropertyName);
+
+                string propertyName = reader.GetString()!;
+
+                switch (propertyName)
+                {
+                    case "limit":
+                        reader.Read();
+                        Debug.Assert(reader.TokenType == JsonTokenType.Number);
+                        limit = reader.GetInt32();
+                        break;
+                    case "order":
+                        reader.Read();
+                        Debug.Assert(reader.TokenType == JsonTokenType.String);
+                        order = reader.GetString();
+                        break;
+                    case "after":
+                        reader.Read();
+                        Debug.Assert(reader.TokenType == JsonTokenType.String);
+                        after = reader.GetString();
+                        break;
+                    case "before":
+                        reader.Read();
+                        Debug.Assert(reader.TokenType == JsonTokenType.String);
+                        before = reader.GetString();
+                        break;
+                    default:
+                        throw new JsonException($"Unrecognized property '{propertyName}'.");
+                }
+            }
+
+            return new(limit, order, after, before);
+        }
+
+        public static AssistantCollectionPageToken FromOptions(int? limit, string order, string after, string before)
+            => new AssistantCollectionPageToken(limit, order, after, before);
+
+        public static AssistantCollectionPageToken FromResponse(ClientResult result, int? limit, string order, string before)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument doc = JsonDocument.Parse(response.Content);
+            string lastId = doc.RootElement.GetProperty("last_id"u8).GetString()!;
+            bool hasMore = doc.RootElement.GetProperty("has_more"u8).GetBoolean();
+
+            if (!hasMore || lastId is null)
+            {
+                return null;
+            }
+
+            return new(limit, order, lastId, before);
+        }
+    }
+
+private class RunStepCollectionPageToken : ContinuationToken
+{
+    protected RunStepCollectionPageToken(string threadId, string runId, int? limit, string order, string after, string before)
+    {
+        ThreadId = threadId;
+        RunId = runId;
+
+        Limit = limit;
+        Order = order;
+        After = after;
+        Before = before;
+    }
+
+    public string ThreadId { get; }
+
+    public string RunId { get; }
+
+    public int? Limit { get; }
+
+    public string Order { get; }
+
+    public string After { get; }
+
+    public string Before { get; }
+
+    public override BinaryData ToBytes()
+    {
+        using MemoryStream stream = new();
+        using Utf8JsonWriter writer = new(stream);
+
+        writer.WriteStartObject();
+        writer.WriteString("threadId", ThreadId);
+        writer.WriteString("runId", RunId);
+
+        if (Limit.HasValue)
+        {
+            writer.WriteNumber("limit", Limit.Value);
+        }
+
+        if (Order is not null)
+        {
+            writer.WriteString("order", Order);
+        }
+
+        if (After is not null)
+        {
+            writer.WriteString("after", After);
+        }
+
+        if (Before is not null)
+        {
+            writer.WriteString("before", Before);
+        }
+
+        writer.WriteEndObject();
+
+        writer.Flush();
+        stream.Position = 0;
+
+        return BinaryData.FromStream(stream);
+    }
+
+    public static RunStepCollectionPageToken FromToken(ContinuationToken pageToken)
+    {
+        if (pageToken is RunStepCollectionPageToken token)
+        {
+            return token;
+        }
+
+        BinaryData data = pageToken.ToBytes();
+
+        if (data.ToMemory().Length == 0)
+        {
+            throw new ArgumentException("Failed to create RunStepsPageToken from provided pageToken.", nameof(pageToken));
+        }
+
+        Utf8JsonReader reader = new(data);
+
+        string threadId = null!;
+        string runId = null!;
+        int? limit = null;
+        string order = null;
+        string after = null;
+        string before = null;
+
+        reader.Read();
+
+        Debug.Assert(reader.TokenType == JsonTokenType.StartObject);
+
+        while (reader.Read())
+        {
+            if (reader.TokenType == JsonTokenType.EndObject)
+            {
+                break;
+            }
+
+            Debug.Assert(reader.TokenType == JsonTokenType.PropertyName);
+
+            string propertyName = reader.GetString()!;
+
+            switch (propertyName)
+            {
+                case "threadId":
+                    reader.Read();
+                    Debug.Assert(reader.TokenType == JsonTokenType.String);
+                    threadId = reader.GetString()!;
+                    break;
+                case "runId":
+                    reader.Read();
+                    Debug.Assert(reader.TokenType == JsonTokenType.String);
+                    runId = reader.GetString()!;
+                    break;
+                case "limit":
+                    reader.Read();
+                    Debug.Assert(reader.TokenType == JsonTokenType.Number);
+                    limit = reader.GetInt32();
+                    break;
+                case "order":
+                    reader.Read();
+                    Debug.Assert(reader.TokenType == JsonTokenType.String);
+                    order = reader.GetString();
+                    break;
+                case "after":
+                    reader.Read();
+                    Debug.Assert(reader.TokenType == JsonTokenType.String);
+                    after = reader.GetString();
+                    break;
+                case "before":
+                    reader.Read();
+                    Debug.Assert(reader.TokenType == JsonTokenType.String);
+                    before = reader.GetString();
+                    break;
+                default:
+                    throw new JsonException($"Unrecognized property '{propertyName}'.");
+            }
+        }
+
+        if (threadId is null || runId is null)
+        {
+            throw new ArgumentException("Failed to create RunStepsPageToken from provided pageToken.", nameof(pageToken));
+        }
+
+        return new(threadId, runId, limit, order, after, before);
+    }
+
+    public static RunStepCollectionPageToken FromOptions(string threadId, string runId, int? limit, string order, string after, string before)
+        => new(threadId, runId, limit, order, after, before);
+
+    public static RunStepCollectionPageToken FromResponse(ClientResult result, string threadId, string runId, int? limit, string order, string before)
+    {
+        PipelineResponse response = result.GetRawResponse();
+        using JsonDocument doc = JsonDocument.Parse(response.Content);
+        string lastId = doc.RootElement.GetProperty("last_id"u8).GetString()!;
+        bool hasMore = doc.RootElement.GetProperty("has_more"u8).GetBoolean();
+
+        if (!hasMore || lastId is null)
+        {
+            return null;
+        }
+
+        return new(threadId, runId, limit, order, lastId, before);
+    }
+}
 }
 
 #endif
