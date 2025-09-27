@@ -5,8 +5,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning;
 
@@ -59,6 +61,12 @@ public class BicepList<T> :
 
         // Everything else is handled by the base Assign
         base.Assign(source);
+
+        // handle self in all the items
+        for (int i = 0; i < _values.Count; i++)
+        {
+            SetSelfForItem(_values[i], i);
+        }
     }
 
     /// <summary>
@@ -91,7 +99,18 @@ public class BicepList<T> :
             }
             else
             {
-                return _values[index];
+                if (index < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), "Index must be non-negative.");
+                }
+                // if we are referencing an actual value
+                if (index < _values.Count)
+                {
+                    return _values[index];
+                }
+                // the index is out of range, we put a value factory as the literal value of this bicep value
+                // this would blow up when we try to compile it later, but it would be fine if we convert it to an expression
+                return new BicepValue<T>(GetItemSelf(index), () => _values[index].Value);
             }
         }
         set
@@ -101,16 +120,95 @@ public class BicepList<T> :
                 throw new InvalidOperationException($"Cannot assign to {_self?.PropertyName}");
             }
             _values[index] = value;
+            // update the _self pointing the new item
+            SetSelfForItem(value, index);
         }
     }
 
-    public void Insert(int index, BicepValue<T> item) => _values.Insert(index, item);
-    public void Add(BicepValue<T> item) => _values.Add(item);
+    private BicepValueReference? GetItemSelf(int index) =>
+        _self is not null
+            ? new BicepListValueReference(_self.Construct, _self.PropertyName, _self.BicepPath?.ToArray(), index)
+            : null;
 
-    // TODO: Decide whether it's important to "unlink" resources on removal
-    public void RemoveAt(int index) => _values.RemoveAt(index);
-    public void Clear() => _values.Clear();
-    public bool Remove(BicepValue<T> item) => _values.Remove(item);
+    private void SetSelfForItem(BicepValue<T> item, int index)
+    {
+        var itemSelf = GetItemSelf(index);
+        item.SetSelf(itemSelf);
+    }
+
+    private void RemoveSelfForItem(BicepValue<T> item)
+    {
+        item.SetSelf(null);
+    }
+
+    public void Insert(int index, BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Insert to {_self?.PropertyName}, the list is an expression or output only");
+        }
+        _values.Insert(index, item);
+        // update the _self for the inserted item and all items after it
+        for (int i = index; i < _values.Count; i++)
+        {
+            SetSelfForItem(_values[i], i);
+        }
+    }
+
+    public void Add(BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Add to {_self?.PropertyName}, the list is an expression or output only");
+        }
+        _values.Add(item);
+        // update the _self pointing the new item
+        SetSelfForItem(item, _values.Count - 1);
+    }
+
+    public void RemoveAt(int index)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the list is an expression or output only");
+        }
+        var removed = _values[index];
+        _values.RemoveAt(index);
+        // maintain the self reference for the removed item and remaining items
+        RemoveSelfForItem(removed);
+        for (int i = index; i < _values.Count; i++)
+        {
+            SetSelfForItem(_values[i], i);
+        }
+    }
+
+    public void Clear()
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Clear {_self?.PropertyName}, the list is an expression or output only");
+        }
+        for (int i = 0; i < _values.Count; i++)
+        {
+            RemoveSelfForItem(_values[i]);
+        }
+        _values.Clear();
+    }
+
+    public bool Remove(BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the list is an expression or output only");
+        }
+        int index = _values.IndexOf(item);
+        if (index >= 0)
+        {
+            RemoveAt(index);
+            return true;
+        }
+        return false;
+    }
 
     public int Count => _values.Count;
     public bool IsReadOnly => _values.IsReadOnly;

@@ -81,6 +81,7 @@ namespace Azure.Provisioning
     }
     public static partial class BicepValueExtensions
     {
+        public static Azure.Provisioning.Expressions.BicepExpression ToBicepExpression(this Azure.Provisioning.IBicepValue bicepValue) { throw null; }
         public static T Unwrap<T>(this Azure.Provisioning.BicepValue<T> value) where T : Azure.Provisioning.Primitives.ProvisionableConstruct, new() { throw null; }
     }
     public enum BicepValueKind
