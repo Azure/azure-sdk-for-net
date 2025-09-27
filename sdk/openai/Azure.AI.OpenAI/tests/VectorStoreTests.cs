@@ -36,7 +36,6 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         VectorStoreClient client = GetTestClient();
 
         VectorStore vectorStore = await client.CreateVectorStoreAsync();
-        Validate(vectorStore);
         VectorStoreDeletionResult deletionResult = await client.DeleteVectorStoreAsync(vectorStore.Id);
         Assert.That(deletionResult.VectorStoreId, Is.EqualTo(vectorStore.Id));
         Assert.That(deletionResult.Deleted, Is.True);
@@ -86,7 +85,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         {
             options.FileIds.Add(file.Id);
         }
-        vectorStore = await client.GetVectorStoreAsync(vectorStore.Id);
+        vectorStore = await client.CreateVectorStoreAsync(options);
         Validate(vectorStore);
         Assert.Multiple(() =>
         {

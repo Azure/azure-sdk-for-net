@@ -8,6 +8,7 @@ using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using System.Threading;
 using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.Assistants;
@@ -15,25 +16,24 @@ namespace Azure.AI.OpenAI.Assistants;
 [Experimental("OPENAI001")]
 internal partial class AzureAssistantClient : AssistantClient
 {
-    public override AsyncCollectionResult GetAssistantsAsync(int? limit, string order, string after, string before, RequestOptions options)
+    public override AsyncCollectionResult<Assistant> GetAssistantsAsync(AssistantCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         return new AzureAsyncCollectionResult<Assistant, AssistantCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
+            continuation => CreateGetAssistantsRequest(options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
+            page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
             page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data,
-            options?.CancellationToken ?? default);
+            cancellationToken);
     }
 
-    public override CollectionResult GetAssistants(int? limit, string order, string after, string before, RequestOptions options)
+    public override CollectionResult<Assistant> GetAssistants(AssistantCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         return new AzureCollectionResult<Assistant, AssistantCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data);
+            continuation => CreateGetAssistantsRequest(options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
+            page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
+            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data,
+            cancellationToken);
     }
 
     /// <inheritdoc cref="InternalAssistantMessageClient.CreateMessageAsync"/>
@@ -55,27 +55,26 @@ internal partial class AzureAssistantClient : AssistantClient
     }
 
     /// <inheritdoc />
-    public override AsyncCollectionResult GetMessagesAsync(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+    public override AsyncCollectionResult<ThreadMessage> GetMessagesAsync(string threadId, MessageCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         return new AzureAsyncCollectionResult<ThreadMessage, AssistantCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetMessagesRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
+            continuation => CreateGetMessagesRequest(threadId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
+            page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
             page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data,
-            options?.CancellationToken ?? default);
+            cancellationToken);
     }
 
-    public override CollectionResult GetMessages(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+    public override CollectionResult<ThreadMessage> GetMessages(string threadId, MessageCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         return new AzureCollectionResult<ThreadMessage, AssistantCollectionPageToken>(
            Pipeline,
-           options,
-           continuation => CreateGetMessagesRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-           page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
-           page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data);
+           continuation => CreateGetMessagesRequest(threadId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
+           page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
+           page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data,
+           cancellationToken);
     }
 
     /// <inheritdoc cref="InternalAssistantMessageClient.GetMessageAsync"/>
@@ -212,27 +211,26 @@ internal partial class AzureAssistantClient : AssistantClient
         }
     }
 
-    public override AsyncCollectionResult GetRunsAsync(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+    public override AsyncCollectionResult<ThreadRun> GetRunsAsync(string threadId, RunCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         return new AzureAsyncCollectionResult<ThreadRun, AssistantCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetRunsRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
+            continuation => CreateGetRunsRequest(threadId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
+            page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
             page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data,
-            options?.CancellationToken ?? default);
+            cancellationToken);
     }
 
-    public override CollectionResult GetRuns(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+    public override CollectionResult<ThreadRun> GetRuns(string threadId, RunCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         return new AzureCollectionResult<ThreadRun, AssistantCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetRunsRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data);
+            continuation => CreateGetRunsRequest(threadId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
+            page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
+            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data,
+            cancellationToken);
     }
 
     public override async Task<ClientResult> GetRunAsync(string threadId, string runId, RequestOptions options)
@@ -335,31 +333,30 @@ internal partial class AzureAssistantClient : AssistantClient
         }
     }
 
-    public override AsyncCollectionResult GetRunStepsAsync(string threadId, string runId, int? limit, string order, string after, string before, RequestOptions options)
+    public override AsyncCollectionResult<RunStep> GetRunStepsAsync(string threadId, string runId, RunStepCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-        return new AzureAsyncCollectionResult<RunStep, RunStepCollectionPageToken>(
+        return new AzureAsyncCollectionResult<RunStep, AssistantCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetRunStepsRequest(threadId, runId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => RunStepCollectionPageToken.FromResponse(page, threadId, runId, limit, order, before),
+            continuation => CreateGetRunStepsRequest(threadId, runId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
+            page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
             page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data,
-            options?.CancellationToken ?? default);
+            cancellationToken);
     }
 
-    public override CollectionResult GetRunSteps(string threadId, string runId, int? limit, string order, string after, string before, RequestOptions options)
+    public override CollectionResult<RunStep> GetRunSteps(string threadId, string runId, RunStepCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-        return new AzureCollectionResult<RunStep, RunStepCollectionPageToken>(
+        return new AzureCollectionResult<RunStep, AssistantCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetRunStepsRequest(threadId, runId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
-            page => RunStepCollectionPageToken.FromResponse(page, threadId, runId, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data);
+            continuation => CreateGetRunStepsRequest(threadId, runId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
+            page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
+            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data,
+            cancellationToken);
     }
 
     public override async Task<ClientResult> GetRunStepAsync(string threadId, string runId, string stepId, RequestOptions options)
@@ -684,170 +681,6 @@ internal partial class AzureAssistantClient : AssistantClient
             return new(limit, order, lastId, before);
         }
     }
-
-private class RunStepCollectionPageToken : ContinuationToken
-{
-    protected RunStepCollectionPageToken(string threadId, string runId, int? limit, string order, string after, string before)
-    {
-        ThreadId = threadId;
-        RunId = runId;
-
-        Limit = limit;
-        Order = order;
-        After = after;
-        Before = before;
-    }
-
-    public string ThreadId { get; }
-
-    public string RunId { get; }
-
-    public int? Limit { get; }
-
-    public string Order { get; }
-
-    public string After { get; }
-
-    public string Before { get; }
-
-    public override BinaryData ToBytes()
-    {
-        using MemoryStream stream = new();
-        using Utf8JsonWriter writer = new(stream);
-
-        writer.WriteStartObject();
-        writer.WriteString("threadId", ThreadId);
-        writer.WriteString("runId", RunId);
-
-        if (Limit.HasValue)
-        {
-            writer.WriteNumber("limit", Limit.Value);
-        }
-
-        if (Order is not null)
-        {
-            writer.WriteString("order", Order);
-        }
-
-        if (After is not null)
-        {
-            writer.WriteString("after", After);
-        }
-
-        if (Before is not null)
-        {
-            writer.WriteString("before", Before);
-        }
-
-        writer.WriteEndObject();
-
-        writer.Flush();
-        stream.Position = 0;
-
-        return BinaryData.FromStream(stream);
-    }
-
-    public static RunStepCollectionPageToken FromToken(ContinuationToken pageToken)
-    {
-        if (pageToken is RunStepCollectionPageToken token)
-        {
-            return token;
-        }
-
-        BinaryData data = pageToken.ToBytes();
-
-        if (data.ToMemory().Length == 0)
-        {
-            throw new ArgumentException("Failed to create RunStepsPageToken from provided pageToken.", nameof(pageToken));
-        }
-
-        Utf8JsonReader reader = new(data);
-
-        string threadId = null!;
-        string runId = null!;
-        int? limit = null;
-        string order = null;
-        string after = null;
-        string before = null;
-
-        reader.Read();
-
-        Debug.Assert(reader.TokenType == JsonTokenType.StartObject);
-
-        while (reader.Read())
-        {
-            if (reader.TokenType == JsonTokenType.EndObject)
-            {
-                break;
-            }
-
-            Debug.Assert(reader.TokenType == JsonTokenType.PropertyName);
-
-            string propertyName = reader.GetString()!;
-
-            switch (propertyName)
-            {
-                case "threadId":
-                    reader.Read();
-                    Debug.Assert(reader.TokenType == JsonTokenType.String);
-                    threadId = reader.GetString()!;
-                    break;
-                case "runId":
-                    reader.Read();
-                    Debug.Assert(reader.TokenType == JsonTokenType.String);
-                    runId = reader.GetString()!;
-                    break;
-                case "limit":
-                    reader.Read();
-                    Debug.Assert(reader.TokenType == JsonTokenType.Number);
-                    limit = reader.GetInt32();
-                    break;
-                case "order":
-                    reader.Read();
-                    Debug.Assert(reader.TokenType == JsonTokenType.String);
-                    order = reader.GetString();
-                    break;
-                case "after":
-                    reader.Read();
-                    Debug.Assert(reader.TokenType == JsonTokenType.String);
-                    after = reader.GetString();
-                    break;
-                case "before":
-                    reader.Read();
-                    Debug.Assert(reader.TokenType == JsonTokenType.String);
-                    before = reader.GetString();
-                    break;
-                default:
-                    throw new JsonException($"Unrecognized property '{propertyName}'.");
-            }
-        }
-
-        if (threadId is null || runId is null)
-        {
-            throw new ArgumentException("Failed to create RunStepsPageToken from provided pageToken.", nameof(pageToken));
-        }
-
-        return new(threadId, runId, limit, order, after, before);
-    }
-
-    public static RunStepCollectionPageToken FromOptions(string threadId, string runId, int? limit, string order, string after, string before)
-        => new(threadId, runId, limit, order, after, before);
-
-    public static RunStepCollectionPageToken FromResponse(ClientResult result, string threadId, string runId, int? limit, string order, string before)
-    {
-        PipelineResponse response = result.GetRawResponse();
-        using JsonDocument doc = JsonDocument.Parse(response.Content);
-        string lastId = doc.RootElement.GetProperty("last_id"u8).GetString()!;
-        bool hasMore = doc.RootElement.GetProperty("has_more"u8).GetBoolean();
-
-        if (!hasMore || lastId is null)
-        {
-            return null;
-        }
-
-        return new(threadId, runId, limit, order, lastId, before);
-    }
-}
 }
 
 #endif
