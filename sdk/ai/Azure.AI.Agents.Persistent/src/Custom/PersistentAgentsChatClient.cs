@@ -324,7 +324,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         switch (tool)
                         {
-                            case AIFunction aiFunction:
+                            case AIFunctionDeclaration aiFunction:
                                 toolDefinitions.Add(new FunctionToolDefinition(
                                     aiFunction.Name,
                                     aiFunction.Description,
@@ -371,6 +371,10 @@ namespace Azure.AI.Agents.Persistent
 
                             case HostedWebSearchTool webSearch when webSearch.AdditionalProperties?.TryGetValue("connectionId", out object? connectionId) is true:
                                 toolDefinitions.Add(new BingGroundingToolDefinition(new BingGroundingSearchToolParameters([new BingGroundingSearchConfiguration(connectionId!.ToString())])));
+                                break;
+
+                            case ToolDefinitionAITool rawTool:
+                                toolDefinitions.Add(rawTool.Tool);
                                 break;
                         }
                     }
@@ -577,6 +581,19 @@ namespace Azure.AI.Agents.Persistent
             }
 
             return runId;
+        }
+
+        /// <summary>
+        /// <see cref="AITool"/> type that allows for any <see cref="ToolDefinition"/> to be
+        /// passed into the <see cref="IChatClient"/> via <see cref="ChatOptions.Tools"/>.
+        /// </summary>
+        internal sealed class ToolDefinitionAITool(ToolDefinition tool) : AITool
+        {
+            public override string Name => tool.GetType().Name;
+            public ToolDefinition Tool => tool;
+            public override object? GetService(Type serviceType, object? serviceKey) =>
+                serviceKey is null && serviceType?.IsInstanceOfType(Tool) is true ? Tool :
+                base.GetService(serviceType!, serviceKey);
         }
 
         [JsonSerializable(typeof(JsonElement))]
