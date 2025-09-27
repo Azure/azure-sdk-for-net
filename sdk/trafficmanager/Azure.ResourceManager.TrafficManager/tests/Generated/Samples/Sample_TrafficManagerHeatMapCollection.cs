@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HeatMapGET()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/HeatMap-GET.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HeatMapGETWithNullValues()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET-With-Null-Values.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/HeatMap-GET-With-Null-Values.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HeatMapGETWithTopLeftBotRight()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET-With-TopLeft-BotRight.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/HeatMap-GET-With-TopLeft-BotRight.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_HeatMapGET()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/HeatMap-GET.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_HeatMapGETWithNullValues()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET-With-Null-Values.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/HeatMap-GET-With-Null-Values.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_HeatMapGETWithTopLeftBotRight()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET-With-TopLeft-BotRight.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/HeatMap-GET-With-TopLeft-BotRight.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HeatMapGET()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/HeatMap-GET.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HeatMapGETWithNullValues()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET-With-Null-Values.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/HeatMap-GET-With-Null-Values.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HeatMapGETWithTopLeftBotRight()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/HeatMap-GET-With-TopLeft-BotRight.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/HeatMap-GET-With-TopLeft-BotRight.json
             // this example is just showing the usage of "HeatMap_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
