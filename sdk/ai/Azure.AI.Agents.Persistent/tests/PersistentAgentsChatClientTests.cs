@@ -399,7 +399,6 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             return new PersistentAgentsClient(admClient);
         }
-
         #endregion
 
         #region Cleanup
