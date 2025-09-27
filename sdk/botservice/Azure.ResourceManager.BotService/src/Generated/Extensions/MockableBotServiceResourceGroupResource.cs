@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
