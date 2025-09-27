@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -63,6 +64,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             );
 
             return statements;
+        }
+
+        protected override IReadOnlyList<MethodBodyStatement> BuildClientPipelineHandling(
+            VariableExpression messageVariable,
+            VariableExpression contextVariable,
+            out ScopedApi<Response> responseVariable)
+        {
+            return BuildExistsOperationPipelineHandling(messageVariable, contextVariable, out responseVariable);
         }
     }
 }
