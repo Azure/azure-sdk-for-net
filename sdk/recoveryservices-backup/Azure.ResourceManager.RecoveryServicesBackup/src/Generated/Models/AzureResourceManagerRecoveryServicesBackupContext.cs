@@ -184,6 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(ResourceGuardProxyProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceGuardProxyResource))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthDetails))]
+    [ModelReaderWriterBuildable(typeof(ResourceList))]
     [ModelReaderWriterBuildable(typeof(ResourceProtectionIntent))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreContent))]
