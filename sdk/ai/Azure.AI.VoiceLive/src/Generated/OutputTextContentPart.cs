@@ -11,15 +11,12 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Output text content part. </summary>
-    public partial class OutputTextContentPart
+    public partial class OutputTextContentPart : MessageContentPart
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="OutputTextContentPart"/>. </summary>
-        /// <param name="text"></param>
+        /// <param name="text"> The text content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public OutputTextContentPart(string text)
+        public OutputTextContentPart(string text) : base("text")
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -27,20 +24,15 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="OutputTextContentPart"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="text"></param>
+        /// <param name="type"> The type of the content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputTextContentPart(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="text"> The text content. </param>
+        internal OutputTextContentPart(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
-            Type = @type;
             Text = text;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Type. </summary>
-        public string Type { get; } = "text";
-
-        /// <summary> Gets or sets the Text. </summary>
+        /// <summary> The text content. </summary>
         public string Text { get; set; }
     }
 }

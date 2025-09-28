@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The FunctionCallOutputItem. </summary>
+    /// <summary> A function call output item within a conversation. </summary>
     public partial class FunctionCallOutputItem : ConversationRequestItem
     {
         /// <summary> Initializes a new instance of <see cref="FunctionCallOutputItem"/>. </summary>

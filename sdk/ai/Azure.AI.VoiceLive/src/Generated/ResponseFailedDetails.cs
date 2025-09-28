@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFailedDetails"/>. </summary>
         /// <param name="error"></param>
-        internal ResponseFailedDetails(BinaryData error) : base(VoiceLiveResponseStatus.Failed)
+        internal ResponseFailedDetails(BinaryData error) : base(SessionResponseStatus.Failed)
         {
             Error = error;
         }
@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"></param>
-        internal ResponseFailedDetails(VoiceLiveResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData error) : base(@type, additionalBinaryDataProperties)
+        internal ResponseFailedDetails(SessionResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData error) : base(@type, additionalBinaryDataProperties)
         {
             Error = error;
         }

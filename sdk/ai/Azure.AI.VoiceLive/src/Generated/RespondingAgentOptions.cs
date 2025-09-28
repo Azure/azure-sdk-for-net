@@ -10,16 +10,16 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The RespondingAgentOptions. </summary>
+    /// <summary> Configuration for the agent. </summary>
     public partial class RespondingAgentOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RespondingAgentOptions"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="agentId"></param>
-        /// <param name="threadId"></param>
+        /// <param name="name"> The name of the agent. </param>
+        /// <param name="agentId"> The ID of the agent. </param>
+        /// <param name="threadId"> The ID of the conversation thread. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="agentId"/> or <paramref name="threadId"/> is null. </exception>
         public RespondingAgentOptions(string name, string agentId, string threadId)
         {
@@ -33,11 +33,11 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="RespondingAgentOptions"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <param name="description"></param>
-        /// <param name="agentId"></param>
-        /// <param name="threadId"></param>
+        /// <param name="type"> The type of agent to use. </param>
+        /// <param name="name"> The name of the agent. </param>
+        /// <param name="description"> Optional description of the agent. </param>
+        /// <param name="agentId"> The ID of the agent. </param>
+        /// <param name="threadId"> The ID of the conversation thread. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RespondingAgentOptions(string @type, string name, string description, string agentId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -49,19 +49,19 @@ namespace Azure.AI.VoiceLive
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Type. </summary>
+        /// <summary> The type of agent to use. </summary>
         public string Type { get; } = "agent";
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> The name of the agent. </summary>
         public string Name { get; set; }
 
-        /// <summary> Gets or sets the Description. </summary>
+        /// <summary> Optional description of the agent. </summary>
         public string Description { get; set; }
 
-        /// <summary> Gets or sets the AgentId. </summary>
+        /// <summary> The ID of the agent. </summary>
         public string AgentId { get; set; }
 
-        /// <summary> Gets or sets the ThreadId. </summary>
+        /// <summary> The ID of the conversation thread. </summary>
         public string ThreadId { get; set; }
     }
 }

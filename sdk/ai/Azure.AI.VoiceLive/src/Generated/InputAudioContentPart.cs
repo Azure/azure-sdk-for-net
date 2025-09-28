@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The InputAudioContentPart. </summary>
-    public partial class InputAudioContentPart : UserContentPart
+    /// <summary> Input audio content part. </summary>
+    public partial class InputAudioContentPart : MessageContentPart
     {
         /// <summary> Initializes a new instance of <see cref="InputAudioContentPart"/>. </summary>
         /// <param name="audio"></param>
@@ -24,7 +24,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="InputAudioContentPart"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> The type of the content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="audio"></param>
         /// <param name="transcript"></param>

@@ -34,14 +34,14 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(AzureSemanticEouDetection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Threshold))
+            if (Optional.IsDefined(ThresholdLevel))
             {
-                writer.WritePropertyName("threshold"u8);
-                writer.WriteNumberValue(Threshold.Value);
+                writer.WritePropertyName("threshold_level"u8);
+                writer.WriteStringValue(ThresholdLevel.Value.ToString());
             }
             if (Optional.IsDefined(TimeoutMs))
             {
-                writer.WritePropertyName("timeout"u8);
+                writer.WritePropertyName("timeout_ms"u8);
                 writer.WriteNumberValue(TimeoutMs.Value);
             }
         }
@@ -73,25 +73,25 @@ namespace Azure.AI.VoiceLive
             }
             EOUDetectionModel model = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            float? threshold = default;
+            EouThresholdLevel? thresholdLevel = default;
             float? timeoutMs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("model"u8))
                 {
-                    model = prop.Value.GetString().ToEOUDetectionModel();
+                    model = new EOUDetectionModel(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("threshold"u8))
+                if (prop.NameEquals("threshold_level"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    threshold = prop.Value.GetSingle();
+                    thresholdLevel = new EouThresholdLevel(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("timeout"u8))
+                if (prop.NameEquals("timeout_ms"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureSemanticEouDetection(model, additionalBinaryDataProperties, threshold, timeoutMs);
+            return new AzureSemanticEouDetection(model, additionalBinaryDataProperties, thresholdLevel, timeoutMs);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

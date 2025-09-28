@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The RespondingAgentOptions. </summary>
+    /// <summary> Configuration for the agent. </summary>
     public partial class RespondingAgentOptions : IJsonModel<RespondingAgentOptions>
     {
         /// <summary> Initializes a new instance of <see cref="RespondingAgentOptions"/> for deserialization. </summary>
