@@ -19,8 +19,5 @@
     "@typespec/streams": "0.74.0",
     "@typespec/versioning": "0.74.0",
     "@typespec/xml": "0.74.0"
-  },
-  "overrides": {
-    "@autorest/csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/@autorest/csharp/-/csharp-3.0.0-alpha.20250925.2.tgz"
   }
 }
