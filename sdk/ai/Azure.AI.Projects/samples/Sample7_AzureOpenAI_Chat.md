@@ -16,13 +16,14 @@ This sample demonstrates how to use the synchronous and asynchronous `Azure Open
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
+
 Console.WriteLine("Create the Azure OpenAI chat client");
 var credential = new DefaultAzureCredential();
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
 
 ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
-if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
+if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
 {
     throw new InvalidOperationException("Invalid URI.");
 }
@@ -47,7 +48,7 @@ AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credentia
 
 ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
-if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
+if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
 {
     throw new InvalidOperationException("Invalid URI.");
 }
