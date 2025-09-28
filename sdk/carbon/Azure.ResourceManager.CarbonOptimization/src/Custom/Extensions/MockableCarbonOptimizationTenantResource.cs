@@ -42,8 +42,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
             scope.Start();
             try
             {
-                var response = await CarbonServiceRestClient.QueryCarbonEmissionReportsAsync(queryParameters, cancellationToken).ConfigureAwait(false);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                var message = _carbonServiceRestClient.CreateQueryCarbonEmissionReportsRequest(CarbonEmissionQueryFilter.ToRequestContent(queryParameters), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Response.FromValue(CarbonEmissionListResult.FromResponse(response), response);
             }
             catch (Exception e)
             {
@@ -78,8 +83,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
             scope.Start();
             try
             {
-                var response = CarbonServiceRestClient.QueryCarbonEmissionReports(queryParameters, cancellationToken);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                var message = _carbonServiceRestClient.CreateQueryCarbonEmissionReportsRequest(CarbonEmissionQueryFilter.ToRequestContent(queryParameters), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return Response.FromValue(CarbonEmissionListResult.FromResponse(response), response);
             }
             catch (Exception e)
             {

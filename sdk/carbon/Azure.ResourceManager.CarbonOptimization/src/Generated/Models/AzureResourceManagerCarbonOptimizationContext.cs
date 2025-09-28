@@ -12,10 +12,9 @@ namespace Azure.ResourceManager.CarbonOptimization
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CarbonEmission))]
-    [ModelReaderWriterBuildable(typeof(CarbonEmissionAvailableDateRange))]
     [ModelReaderWriterBuildable(typeof(CarbonEmissionItemDetail))]
     [ModelReaderWriterBuildable(typeof(CarbonEmissionListResult))]
     [ModelReaderWriterBuildable(typeof(CarbonEmissionMonthlySummary))]
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.CarbonOptimization
     [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionItemDetail))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionTopItemMonthlySummary))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionTopItemsSummary))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAccessDecision))]
     [ModelReaderWriterBuildable(typeof(TopItemsMonthlySummaryReportQueryFilter))]
     [ModelReaderWriterBuildable(typeof(TopItemsSummaryReportQueryFilter))]

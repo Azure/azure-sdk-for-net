@@ -19,16 +19,11 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="itemName"> Item name, it can be resource name, resource type name, location, resource group name or subscriptionId. It depends on category type. </param>
         /// <param name="categoryType"> Item category, see supported type value defined in CategoryTypeEnum. </param>
         /// <param name="date"> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemName"/> or <paramref name="date"/> is null. </exception>
-        internal CarbonEmissionTopItemMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string date) : base(latestMonthEmissions, previousMonthEmissions)
+        internal CarbonEmissionTopItemMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string date) : base(CarbonEmissionDataType.TopItemsMonthlySummaryData, latestMonthEmissions, previousMonthEmissions)
         {
-            Argument.AssertNotNull(itemName, nameof(itemName));
-            Argument.AssertNotNull(date, nameof(date));
-
             ItemName = itemName;
             CategoryType = categoryType;
             Date = date;
-            DataType = CarbonEmissionDataType.TopItemsMonthlySummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionTopItemMonthlySummary"/>. </summary>
@@ -37,27 +32,23 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
         /// <param name="monthlyEmissionsChangeValue"> The change in carbon emissions between the current and previous period, calculated as: latestMonthEmissions - previousMonthEmissions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemName"> Item name, it can be resource name, resource type name, location, resource group name or subscriptionId. It depends on category type. </param>
         /// <param name="categoryType"> Item category, see supported type value defined in CategoryTypeEnum. </param>
         /// <param name="date"> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </param>
-        internal CarbonEmissionTopItemMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string date) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal CarbonEmissionTopItemMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemName, CarbonEmissionCategoryType categoryType, string date) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, additionalBinaryDataProperties)
         {
             ItemName = itemName;
             CategoryType = categoryType;
             Date = date;
-            DataType = dataType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CarbonEmissionTopItemMonthlySummary"/> for deserialization. </summary>
-        internal CarbonEmissionTopItemMonthlySummary()
-        {
         }
 
         /// <summary> Item name, it can be resource name, resource type name, location, resource group name or subscriptionId. It depends on category type. </summary>
         public string ItemName { get; }
+
         /// <summary> Item category, see supported type value defined in CategoryTypeEnum. </summary>
         public CarbonEmissionCategoryType CategoryType { get; }
+
         /// <summary> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </summary>
         public string Date { get; }
     }

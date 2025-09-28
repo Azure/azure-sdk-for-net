@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    public partial class OverallSummaryReportQueryFilter : IUtf8JsonSerializable, IJsonModel<OverallSummaryReportQueryFilter>
+    /// <summary> Query filter parameter to configure OverallSummaryReport queries. </summary>
+    public partial class OverallSummaryReportQueryFilter : IJsonModel<OverallSummaryReportQueryFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OverallSummaryReportQueryFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="OverallSummaryReportQueryFilter"/> for deserialization. </summary>
+        internal OverallSummaryReportQueryFilter()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OverallSummaryReportQueryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,31 +35,35 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        OverallSummaryReportQueryFilter IJsonModel<OverallSummaryReportQueryFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OverallSummaryReportQueryFilter IJsonModel<OverallSummaryReportQueryFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OverallSummaryReportQueryFilter)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CarbonEmissionQueryFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOverallSummaryReportQueryFilter(document.RootElement, options);
         }
 
-        internal static OverallSummaryReportQueryFilter DeserializeOverallSummaryReportQueryFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OverallSummaryReportQueryFilter DeserializeOverallSummaryReportQueryFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,76 +75,89 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             IList<ResourceType> resourceTypeList = default;
             IList<AzureLocation> locationList = default;
             IList<CarbonEmissionScope> carbonScopeList = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("reportType"u8))
+                if (prop.NameEquals("reportType"u8))
                 {
-                    reportType = new CarbonEmissionQueryReportType(property.Value.GetString());
+                    reportType = new CarbonEmissionQueryReportType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dateRange"u8))
+                if (prop.NameEquals("dateRange"u8))
                 {
-                    dateRange = CarbonEmissionQueryDateRange.DeserializeCarbonEmissionQueryDateRange(property.Value, options);
+                    dateRange = CarbonEmissionQueryDateRange.DeserializeCarbonEmissionQueryDateRange(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("subscriptionList"u8))
+                if (prop.NameEquals("subscriptionList"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     subscriptionList = array;
                     continue;
                 }
-                if (property.NameEquals("resourceGroupUrlList"u8))
+                if (prop.NameEquals("resourceGroupUrlList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     resourceGroupUrlList = array;
                     continue;
                 }
-                if (property.NameEquals("resourceTypeList"u8))
+                if (prop.NameEquals("resourceTypeList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceType> array = new List<ResourceType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ResourceType(item.GetString()));
                     }
                     resourceTypeList = array;
                     continue;
                 }
-                if (property.NameEquals("locationList"u8))
+                if (prop.NameEquals("locationList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AzureLocation(item.GetString()));
                     }
                     locationList = array;
                     continue;
                 }
-                if (property.NameEquals("carbonScopeList"u8))
+                if (prop.NameEquals("carbonScopeList"u8))
                 {
                     List<CarbonEmissionScope> array = new List<CarbonEmissionScope>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new CarbonEmissionScope(item.GetString()));
                     }
@@ -142,10 +166,9 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new OverallSummaryReportQueryFilter(
                 reportType,
                 dateRange,
@@ -154,13 +177,16 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 resourceTypeList ?? new ChangeTrackingList<ResourceType>(),
                 locationList ?? new ChangeTrackingList<AzureLocation>(),
                 carbonScopeList,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<OverallSummaryReportQueryFilter>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OverallSummaryReportQueryFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -170,15 +196,20 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
         }
 
-        OverallSummaryReportQueryFilter IPersistableModel<OverallSummaryReportQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OverallSummaryReportQueryFilter IPersistableModel<OverallSummaryReportQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (OverallSummaryReportQueryFilter)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CarbonEmissionQueryFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOverallSummaryReportQueryFilter(document.RootElement, options);
                     }
                 default:
@@ -186,6 +217,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OverallSummaryReportQueryFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

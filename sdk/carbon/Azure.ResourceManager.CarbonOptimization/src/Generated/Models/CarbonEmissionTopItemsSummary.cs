@@ -18,14 +18,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="itemName"> The identifier of the item being reported on, which could refer to the resource name, resource type name, location, resource group name, or subscription ID, depending on the specified category type. </param>
         /// <param name="categoryType"> The category type of the item. This defines which dimension the emissions are aggregated by, and the supported values are defined in CategoryTypeEnum (e.g., Subscription, ResourceGroup, Resource, etc.). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemName"/> is null. </exception>
-        internal CarbonEmissionTopItemsSummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType) : base(latestMonthEmissions, previousMonthEmissions)
+        internal CarbonEmissionTopItemsSummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType) : base(CarbonEmissionDataType.TopItemsSummaryData, latestMonthEmissions, previousMonthEmissions)
         {
-            Argument.AssertNotNull(itemName, nameof(itemName));
-
             ItemName = itemName;
             CategoryType = categoryType;
-            DataType = CarbonEmissionDataType.TopItemsSummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionTopItemsSummary"/>. </summary>
@@ -34,23 +30,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
         /// <param name="monthlyEmissionsChangeValue"> The change in carbon emissions between the current and previous period, calculated as: latestMonthEmissions - previousMonthEmissions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemName"> The identifier of the item being reported on, which could refer to the resource name, resource type name, location, resource group name, or subscription ID, depending on the specified category type. </param>
         /// <param name="categoryType"> The category type of the item. This defines which dimension the emissions are aggregated by, and the supported values are defined in CategoryTypeEnum (e.g., Subscription, ResourceGroup, Resource, etc.). </param>
-        internal CarbonEmissionTopItemsSummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal CarbonEmissionTopItemsSummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemName, CarbonEmissionCategoryType categoryType) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, additionalBinaryDataProperties)
         {
             ItemName = itemName;
             CategoryType = categoryType;
-            DataType = dataType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CarbonEmissionTopItemsSummary"/> for deserialization. </summary>
-        internal CarbonEmissionTopItemsSummary()
-        {
         }
 
         /// <summary> The identifier of the item being reported on, which could refer to the resource name, resource type name, location, resource group name, or subscription ID, depending on the specified category type. </summary>
         public string ItemName { get; }
+
         /// <summary> The category type of the item. This defines which dimension the emissions are aggregated by, and the supported values are defined in CategoryTypeEnum (e.g., Subscription, ResourceGroup, Resource, etc.). </summary>
         public CarbonEmissionCategoryType CategoryType { get; }
     }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="sortDirection"> Direction for sorting results. See supported values in SortDirectionEnum. </param>
         /// <param name="pageSize"> Number of items to return in one request, max value is 5000. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/>, <paramref name="subscriptionList"/> or <paramref name="carbonScopeList"/> is null. </exception>
-        public ItemDetailsQueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<CarbonEmissionScope> carbonScopeList, CarbonEmissionCategoryType categoryType, CarbonEmissionQueryOrderByColumn orderBy, CarbonEmissionQuerySortDirection sortDirection, int pageSize) : base(dateRange, subscriptionList, carbonScopeList)
+        public ItemDetailsQueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<CarbonEmissionScope> carbonScopeList, CarbonEmissionCategoryType categoryType, CarbonEmissionQueryOrderByColumn orderBy, CarbonEmissionQuerySortDirection sortDirection, int pageSize) : base(CarbonEmissionQueryReportType.ItemDetailsReport, dateRange, subscriptionList, carbonScopeList)
         {
             Argument.AssertNotNull(dateRange, nameof(dateRange));
             Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
@@ -33,7 +34,6 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             OrderBy = orderBy;
             SortDirection = sortDirection;
             PageSize = pageSize;
-            ReportType = CarbonEmissionQueryReportType.ItemDetailsReport;
         }
 
         /// <summary> Initializes a new instance of <see cref="ItemDetailsQueryFilter"/>. </summary>
@@ -44,35 +44,33 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceTypeList"> List of resource types for carbon emissions data. Optional. Each resource type should be specified in lowercase, following the format 'microsoft.{service}/{resourceType}', e.g., 'microsoft.storage/storageaccounts'. </param>
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="categoryType"> Specifies the category type for detailed emissions data, such as Resource, ResourceGroup, ResourceType, Location, or Subscription. See supported types in CategoryTypeEnum. </param>
         /// <param name="orderBy"> The column name to order the results by. See supported values in OrderByColumnEnum. </param>
         /// <param name="sortDirection"> Direction for sorting results. See supported values in SortDirectionEnum. </param>
         /// <param name="pageSize"> Number of items to return in one request, max value is 5000. </param>
         /// <param name="skipToken"> Pagination token for fetching the next page of data. This token is nullable and will be returned in the previous response if additional data pages are available. </param>
-        internal ItemDetailsQueryFilter(CarbonEmissionQueryReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<ResourceType> resourceTypeList, IList<AzureLocation> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData, CarbonEmissionCategoryType categoryType, CarbonEmissionQueryOrderByColumn orderBy, CarbonEmissionQuerySortDirection sortDirection, int pageSize, string skipToken) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
+        internal ItemDetailsQueryFilter(CarbonEmissionQueryReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<ResourceType> resourceTypeList, IList<AzureLocation> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> additionalBinaryDataProperties, CarbonEmissionCategoryType categoryType, CarbonEmissionQueryOrderByColumn orderBy, CarbonEmissionQuerySortDirection sortDirection, int pageSize, string skipToken) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, additionalBinaryDataProperties)
         {
             CategoryType = categoryType;
             OrderBy = orderBy;
             SortDirection = sortDirection;
             PageSize = pageSize;
             SkipToken = skipToken;
-            ReportType = reportType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ItemDetailsQueryFilter"/> for deserialization. </summary>
-        internal ItemDetailsQueryFilter()
-        {
         }
 
         /// <summary> Specifies the category type for detailed emissions data, such as Resource, ResourceGroup, ResourceType, Location, or Subscription. See supported types in CategoryTypeEnum. </summary>
         public CarbonEmissionCategoryType CategoryType { get; }
+
         /// <summary> The column name to order the results by. See supported values in OrderByColumnEnum. </summary>
         public CarbonEmissionQueryOrderByColumn OrderBy { get; }
+
         /// <summary> Direction for sorting results. See supported values in SortDirectionEnum. </summary>
         public CarbonEmissionQuerySortDirection SortDirection { get; }
+
         /// <summary> Number of items to return in one request, max value is 5000. </summary>
         public int PageSize { get; }
+
         /// <summary> Pagination token for fetching the next page of data. This token is nullable and will be returned in the previous response if additional data pages are available. </summary>
         public string SkipToken { get; set; }
     }

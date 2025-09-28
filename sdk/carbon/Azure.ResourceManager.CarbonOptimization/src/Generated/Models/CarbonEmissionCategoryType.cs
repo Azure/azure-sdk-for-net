@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     public readonly partial struct CarbonEmissionCategoryType : IEquatable<CarbonEmissionCategoryType>
     {
         private readonly string _value;
+        /// <summary> Emissions aggregated at the subscription level. </summary>
+        private const string SubscriptionValue = "Subscription";
+        /// <summary> Emissions aggregated at the resource group level. </summary>
+        private const string ResourceGroupValue = "ResourceGroup";
+        /// <summary> Emissions aggregated at the location level. </summary>
+        private const string LocationValue = "Location";
+        /// <summary> Emissions aggregated at the resource level. </summary>
+        private const string ResourceValue = "Resource";
+        /// <summary> Emissions aggregated at the resource type level. </summary>
+        private const string ResourceTypeValue = "ResourceType";
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionCategoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CarbonEmissionCategoryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SubscriptionValue = "Subscription";
-        private const string ResourceGroupValue = "ResourceGroup";
-        private const string LocationValue = "Location";
-        private const string ResourceValue = "Resource";
-        private const string ResourceTypeValue = "ResourceType";
+            _value = value;
+        }
 
         /// <summary> Emissions aggregated at the subscription level. </summary>
         public static CarbonEmissionCategoryType Subscription { get; } = new CarbonEmissionCategoryType(SubscriptionValue);
+
         /// <summary> Emissions aggregated at the resource group level. </summary>
         public static CarbonEmissionCategoryType ResourceGroup { get; } = new CarbonEmissionCategoryType(ResourceGroupValue);
+
         /// <summary> Emissions aggregated at the location level. </summary>
         public static CarbonEmissionCategoryType Location { get; } = new CarbonEmissionCategoryType(LocationValue);
+
         /// <summary> Emissions aggregated at the resource level. </summary>
         public static CarbonEmissionCategoryType Resource { get; } = new CarbonEmissionCategoryType(ResourceValue);
+
         /// <summary> Emissions aggregated at the resource type level. </summary>
         public static CarbonEmissionCategoryType ResourceType { get; } = new CarbonEmissionCategoryType(ResourceTypeValue);
+
         /// <summary> Determines if two <see cref="CarbonEmissionCategoryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CarbonEmissionCategoryType left, CarbonEmissionCategoryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CarbonEmissionCategoryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CarbonEmissionCategoryType left, CarbonEmissionCategoryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionCategoryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CarbonEmissionCategoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CarbonEmissionCategoryType(string value) => new CarbonEmissionCategoryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CarbonEmissionCategoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CarbonEmissionCategoryType?(string value) => value == null ? null : new CarbonEmissionCategoryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CarbonEmissionCategoryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CarbonEmissionCategoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
