@@ -247,8 +247,20 @@ namespace Azure.ResourceManager.PlanetaryComputer
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PlanetaryComputerGeoCatalogData> response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PlanetaryComputerGeoCatalogData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlanetaryComputerGeoCatalogData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,8 +288,20 @@ namespace Azure.ResourceManager.PlanetaryComputer
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PlanetaryComputerGeoCatalogData> response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PlanetaryComputerGeoCatalogData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlanetaryComputerGeoCatalogData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,8 +329,20 @@ namespace Azure.ResourceManager.PlanetaryComputer
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PlanetaryComputerGeoCatalogData> response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PlanetaryComputerGeoCatalogData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlanetaryComputerGeoCatalogData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<PlanetaryComputerGeoCatalogResource>(response.GetRawResponse());
@@ -338,8 +374,20 @@ namespace Azure.ResourceManager.PlanetaryComputer
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PlanetaryComputerGeoCatalogData> response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PlanetaryComputerGeoCatalogData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlanetaryComputerGeoCatalogData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<PlanetaryComputerGeoCatalogResource>(response.GetRawResponse());
