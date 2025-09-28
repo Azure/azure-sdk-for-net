@@ -134,6 +134,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
+            if (Optional.IsDefined(ScittConfiguration))
+            {
+                writer.WritePropertyName("scittConfiguration"u8);
+                writer.WriteStringValue(ScittConfiguration);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -189,6 +194,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             int? workerThreads = default;
             ConfidentialLedgerEnclavePlatform? enclavePlatform = default;
             ConfidentialLedgerApplicationType? applicationType = default;
+            string scittConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -345,6 +351,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     applicationType = new ConfidentialLedgerApplicationType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("scittConfiguration"u8))
+                {
+                    scittConfiguration = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -370,6 +381,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 workerThreads,
                 enclavePlatform,
                 applicationType,
+                scittConfiguration,
                 serializedAdditionalRawData);
         }
 

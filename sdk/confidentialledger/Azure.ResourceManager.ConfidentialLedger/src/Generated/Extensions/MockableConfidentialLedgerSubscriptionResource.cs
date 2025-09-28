@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Name availability request payload. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Name availability request payload. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
