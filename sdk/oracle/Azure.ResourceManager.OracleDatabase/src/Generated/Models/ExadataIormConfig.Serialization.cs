@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class ExadataIormConfig : IUtf8JsonSerializable, IJsonModel<ExadataIormConfig>
+    /// <summary> ExadataIormConfig for cloud vm cluster. </summary>
+    public partial class ExadataIormConfig : IJsonModel<ExadataIormConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExadataIormConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExadataIormConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +29,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExadataIormConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExadataIormConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExadataIormConfig)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(DBPlans))
             {
                 writer.WritePropertyName("dbPlans"u8);
                 writer.WriteStartArray();
-                foreach (var item in DBPlans)
+                foreach (DBIormConfig item in DBPlans)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("objective"u8);
                 writer.WriteStringValue(Objective.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,84 +76,90 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        ExadataIormConfig IJsonModel<ExadataIormConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExadataIormConfig IJsonModel<ExadataIormConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExadataIormConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExadataIormConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExadataIormConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExadataIormConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExadataIormConfig(document.RootElement, options);
         }
 
-        internal static ExadataIormConfig DeserializeExadataIormConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExadataIormConfig DeserializeExadataIormConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<DBIormConfig> dbPlans = default;
+            IList<DBIormConfig> dbPlans = default;
             string lifecycleDetails = default;
             IormLifecycleState? lifecycleState = default;
             IormObjective? objective = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dbPlans"u8))
+                if (prop.NameEquals("dbPlans"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DBIormConfig> array = new List<DBIormConfig>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DBIormConfig.DeserializeDBIormConfig(item, options));
                     }
                     dbPlans = array;
                     continue;
                 }
-                if (property.NameEquals("lifecycleDetails"u8))
+                if (prop.NameEquals("lifecycleDetails"u8))
                 {
-                    lifecycleDetails = property.Value.GetString();
+                    lifecycleDetails = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lifecycleState"u8))
+                if (prop.NameEquals("lifecycleState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lifecycleState = new IormLifecycleState(property.Value.GetString());
+                    lifecycleState = new IormLifecycleState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("objective"u8))
+                if (prop.NameEquals("objective"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    objective = new IormObjective(property.Value.GetString());
+                    objective = new IormObjective(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ExadataIormConfig(dbPlans ?? new ChangeTrackingList<DBIormConfig>(), lifecycleDetails, lifecycleState, objective, serializedAdditionalRawData);
+            return new ExadataIormConfig(dbPlans ?? new ChangeTrackingList<DBIormConfig>(), lifecycleDetails, lifecycleState, objective, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ExadataIormConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExadataIormConfig>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExadataIormConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExadataIormConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -163,15 +169,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        ExadataIormConfig IPersistableModel<ExadataIormConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExadataIormConfig>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExadataIormConfig IPersistableModel<ExadataIormConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExadataIormConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExadataIormConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExadataIormConfig(document.RootElement, options);
                     }
                 default:
@@ -179,6 +190,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExadataIormConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

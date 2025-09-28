@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct CloudVmClusterDiskRedundancy : IEquatable<CloudVmClusterDiskRedundancy>
     {
         private readonly string _value;
+        /// <summary> High redundancy. </summary>
+        private const string HighValue = "High";
+        /// <summary> Normal redundancy. </summary>
+        private const string NormalValue = "Normal";
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterDiskRedundancy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CloudVmClusterDiskRedundancy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HighValue = "High";
-        private const string NormalValue = "Normal";
+            _value = value;
+        }
 
         /// <summary> High redundancy. </summary>
         public static CloudVmClusterDiskRedundancy High { get; } = new CloudVmClusterDiskRedundancy(HighValue);
+
         /// <summary> Normal redundancy. </summary>
         public static CloudVmClusterDiskRedundancy Normal { get; } = new CloudVmClusterDiskRedundancy(NormalValue);
+
         /// <summary> Determines if two <see cref="CloudVmClusterDiskRedundancy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CloudVmClusterDiskRedundancy left, CloudVmClusterDiskRedundancy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CloudVmClusterDiskRedundancy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CloudVmClusterDiskRedundancy left, CloudVmClusterDiskRedundancy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudVmClusterDiskRedundancy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CloudVmClusterDiskRedundancy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CloudVmClusterDiskRedundancy(string value) => new CloudVmClusterDiskRedundancy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CloudVmClusterDiskRedundancy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CloudVmClusterDiskRedundancy?(string value) => value == null ? null : new CloudVmClusterDiskRedundancy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CloudVmClusterDiskRedundancy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CloudVmClusterDiskRedundancy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

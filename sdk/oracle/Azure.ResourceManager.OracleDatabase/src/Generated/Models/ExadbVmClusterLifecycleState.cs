@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct ExadbVmClusterLifecycleState : IEquatable<ExadbVmClusterLifecycleState>
     {
         private readonly string _value;
+        /// <summary> Indicates that resource in Provisioning state. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Indicates that resource in Available state. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Indicates that resource in Updating state. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Indicates that resource in Terminating state. </summary>
+        private const string TerminatingValue = "Terminating";
+        /// <summary> Indicates that resource in Terminated state. </summary>
+        private const string TerminatedValue = "Terminated";
+        /// <summary> Indicates that resource Maintenance in progress state. </summary>
+        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
+        /// <summary> Indicates that resource in Failed state. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="ExadbVmClusterLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExadbVmClusterLifecycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProvisioningValue = "Provisioning";
-        private const string AvailableValue = "Available";
-        private const string UpdatingValue = "Updating";
-        private const string TerminatingValue = "Terminating";
-        private const string TerminatedValue = "Terminated";
-        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Indicates that resource in Provisioning state. </summary>
         public static ExadbVmClusterLifecycleState Provisioning { get; } = new ExadbVmClusterLifecycleState(ProvisioningValue);
+
         /// <summary> Indicates that resource in Available state. </summary>
         public static ExadbVmClusterLifecycleState Available { get; } = new ExadbVmClusterLifecycleState(AvailableValue);
+
         /// <summary> Indicates that resource in Updating state. </summary>
         public static ExadbVmClusterLifecycleState Updating { get; } = new ExadbVmClusterLifecycleState(UpdatingValue);
+
         /// <summary> Indicates that resource in Terminating state. </summary>
         public static ExadbVmClusterLifecycleState Terminating { get; } = new ExadbVmClusterLifecycleState(TerminatingValue);
+
         /// <summary> Indicates that resource in Terminated state. </summary>
         public static ExadbVmClusterLifecycleState Terminated { get; } = new ExadbVmClusterLifecycleState(TerminatedValue);
+
         /// <summary> Indicates that resource Maintenance in progress state. </summary>
         public static ExadbVmClusterLifecycleState MaintenanceInProgress { get; } = new ExadbVmClusterLifecycleState(MaintenanceInProgressValue);
+
         /// <summary> Indicates that resource in Failed state. </summary>
         public static ExadbVmClusterLifecycleState Failed { get; } = new ExadbVmClusterLifecycleState(FailedValue);
+
         /// <summary> Determines if two <see cref="ExadbVmClusterLifecycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExadbVmClusterLifecycleState left, ExadbVmClusterLifecycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExadbVmClusterLifecycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExadbVmClusterLifecycleState left, ExadbVmClusterLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExadbVmClusterLifecycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExadbVmClusterLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExadbVmClusterLifecycleState(string value) => new ExadbVmClusterLifecycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExadbVmClusterLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExadbVmClusterLifecycleState?(string value) => value == null ? null : new ExadbVmClusterLifecycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExadbVmClusterLifecycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExadbVmClusterLifecycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

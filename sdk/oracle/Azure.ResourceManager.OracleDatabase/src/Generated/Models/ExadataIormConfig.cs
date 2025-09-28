@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> ExadataIormConfig for cloud vm cluster. </summary>
     public partial class ExadataIormConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExadataIormConfig"/>. </summary>
         internal ExadataIormConfig()
@@ -56,22 +28,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycleState. </param>
         /// <param name="lifecycleState"> The current state of IORM configuration for the Exadata DB system. </param>
         /// <param name="objective"> The current value for the IORM objective. The default is AUTO. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExadataIormConfig(IReadOnlyList<DBIormConfig> dbPlans, string lifecycleDetails, IormLifecycleState? lifecycleState, IormObjective? objective, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExadataIormConfig(IList<DBIormConfig> dbPlans, string lifecycleDetails, IormLifecycleState? lifecycleState, IormObjective? objective, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DBPlans = dbPlans;
             LifecycleDetails = lifecycleDetails;
             LifecycleState = lifecycleState;
             Objective = objective;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of IORM settings for all the database in the Exadata DB system. </summary>
-        public IReadOnlyList<DBIormConfig> DBPlans { get; }
+        public IList<DBIormConfig> DBPlans { get; }
+
         /// <summary> Additional information about the current lifecycleState. </summary>
         public string LifecycleDetails { get; }
+
         /// <summary> The current state of IORM configuration for the Exadata DB system. </summary>
         public IormLifecycleState? LifecycleState { get; }
+
         /// <summary> The current value for the IORM objective. The default is AUTO. </summary>
         public IormObjective? Objective { get; }
     }

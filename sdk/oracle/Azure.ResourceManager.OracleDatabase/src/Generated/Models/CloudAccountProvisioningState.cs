@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct CloudAccountProvisioningState : IEquatable<CloudAccountProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Pending - Initial state when Oracle cloud account is not configured. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Provisioning - State when Oracle cloud account is being provisioned. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Available - State when Oracle cloud account cloud linking is complete and it is available. </summary>
+        private const string AvailableValue = "Available";
 
         /// <summary> Initializes a new instance of <see cref="CloudAccountProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CloudAccountProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ProvisioningValue = "Provisioning";
-        private const string AvailableValue = "Available";
+            _value = value;
+        }
 
         /// <summary> Pending - Initial state when Oracle cloud account is not configured. </summary>
         public static CloudAccountProvisioningState Pending { get; } = new CloudAccountProvisioningState(PendingValue);
+
         /// <summary> Provisioning - State when Oracle cloud account is being provisioned. </summary>
         public static CloudAccountProvisioningState Provisioning { get; } = new CloudAccountProvisioningState(ProvisioningValue);
+
         /// <summary> Available - State when Oracle cloud account cloud linking is complete and it is available. </summary>
         public static CloudAccountProvisioningState Available { get; } = new CloudAccountProvisioningState(AvailableValue);
+
         /// <summary> Determines if two <see cref="CloudAccountProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CloudAccountProvisioningState left, CloudAccountProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CloudAccountProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CloudAccountProvisioningState left, CloudAccountProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudAccountProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CloudAccountProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CloudAccountProvisioningState(string value) => new CloudAccountProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CloudAccountProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CloudAccountProvisioningState?(string value) => value == null ? null : new CloudAccountProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CloudAccountProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CloudAccountProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

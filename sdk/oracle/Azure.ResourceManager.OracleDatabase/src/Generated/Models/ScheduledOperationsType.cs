@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> The list of scheduled operations. </summary>
     public partial class ScheduledOperationsType
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. </param>
@@ -59,35 +31,35 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="dayOfWeek"> Day of week. </param>
         /// <param name="autoStartOn"> auto start time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="autoStopOn"> auto stop time. value must be of ISO-8601 format HH:mm. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledOperationsType(OracleDatabaseDayOfWeek dayOfWeek, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledOperationsType(OracleDatabaseDayOfWeek dayOfWeek, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DayOfWeek = dayOfWeek;
             AutoStartOn = autoStartOn;
             AutoStopOn = autoStopOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/> for deserialization. </summary>
-        internal ScheduledOperationsType()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Day of week. </summary>
         internal OracleDatabaseDayOfWeek DayOfWeek { get; set; }
-        /// <summary> Name of the day of the week. </summary>
-        public OracleDatabaseDayOfWeekName? DayOfWeekName
-        {
-            get => DayOfWeek is null ? default(OracleDatabaseDayOfWeekName?) : DayOfWeek.Name;
-            set
-            {
-                DayOfWeek = value.HasValue ? new OracleDatabaseDayOfWeek(value.Value) : null;
-            }
-        }
 
         /// <summary> auto start time. value must be of ISO-8601 format HH:mm. </summary>
         public DateTimeOffset? AutoStartOn { get; set; }
+
         /// <summary> auto stop time. value must be of ISO-8601 format HH:mm. </summary>
         public DateTimeOffset? AutoStopOn { get; set; }
+
+        /// <summary> Name of the day of the week. </summary>
+        public OracleDatabaseDayOfWeekName? DayOfWeekName
+        {
+            get
+            {
+                return DayOfWeek is null ? default : DayOfWeek.Name;
+            }
+            set
+            {
+                DayOfWeek = value.HasValue ? new OracleDatabaseDayOfWeek(value.Value) : default;
+            }
+        }
     }
 }

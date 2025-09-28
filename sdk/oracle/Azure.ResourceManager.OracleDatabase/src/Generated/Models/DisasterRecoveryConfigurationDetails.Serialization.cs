@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class DisasterRecoveryConfigurationDetails : IUtf8JsonSerializable, IJsonModel<DisasterRecoveryConfigurationDetails>
+    /// <summary> Configurations of a Disaster Recovery Details. </summary>
+    public partial class DisasterRecoveryConfigurationDetails : IJsonModel<DisasterRecoveryConfigurationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DisasterRecoveryConfigurationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DisasterRecoveryConfigurationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DisasterRecoveryConfigurationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DisasterRecoveryConfigurationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DisasterRecoveryConfigurationDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DisasterRecoveryType))
             {
                 writer.WritePropertyName("disasterRecoveryType"u8);
@@ -54,15 +55,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("isReplicateAutomaticBackups"u8);
                 writer.WriteBooleanValue(IsReplicateAutomaticBackups.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +72,27 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        DisasterRecoveryConfigurationDetails IJsonModel<DisasterRecoveryConfigurationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DisasterRecoveryConfigurationDetails IJsonModel<DisasterRecoveryConfigurationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DisasterRecoveryConfigurationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DisasterRecoveryConfigurationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DisasterRecoveryConfigurationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DisasterRecoveryConfigurationDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDisasterRecoveryConfigurationDetails(document.RootElement, options);
         }
 
-        internal static DisasterRecoveryConfigurationDetails DeserializeDisasterRecoveryConfigurationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DisasterRecoveryConfigurationDetails DeserializeDisasterRecoveryConfigurationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,59 +101,60 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DateTimeOffset? timeSnapshotStandbyEnabledTill = default;
             bool? isSnapshotStandby = default;
             bool? isReplicateAutomaticBackups = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("disasterRecoveryType"u8))
+                if (prop.NameEquals("disasterRecoveryType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disasterRecoveryType = new DisasterRecoveryType(property.Value.GetString());
+                    disasterRecoveryType = new DisasterRecoveryType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timeSnapshotStandbyEnabledTill"u8))
+                if (prop.NameEquals("timeSnapshotStandbyEnabledTill"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeSnapshotStandbyEnabledTill = property.Value.GetDateTimeOffset("O");
+                    timeSnapshotStandbyEnabledTill = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isSnapshotStandby"u8))
+                if (prop.NameEquals("isSnapshotStandby"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSnapshotStandby = property.Value.GetBoolean();
+                    isSnapshotStandby = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isReplicateAutomaticBackups"u8))
+                if (prop.NameEquals("isReplicateAutomaticBackups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isReplicateAutomaticBackups = property.Value.GetBoolean();
+                    isReplicateAutomaticBackups = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DisasterRecoveryConfigurationDetails(disasterRecoveryType, timeSnapshotStandbyEnabledTill, isSnapshotStandby, isReplicateAutomaticBackups, serializedAdditionalRawData);
+            return new DisasterRecoveryConfigurationDetails(disasterRecoveryType, timeSnapshotStandbyEnabledTill, isSnapshotStandby, isReplicateAutomaticBackups, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DisasterRecoveryConfigurationDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DisasterRecoveryConfigurationDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DisasterRecoveryConfigurationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisasterRecoveryConfigurationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -157,15 +164,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        DisasterRecoveryConfigurationDetails IPersistableModel<DisasterRecoveryConfigurationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DisasterRecoveryConfigurationDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DisasterRecoveryConfigurationDetails IPersistableModel<DisasterRecoveryConfigurationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DisasterRecoveryConfigurationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisasterRecoveryConfigurationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDisasterRecoveryConfigurationDetails(document.RootElement, options);
                     }
                 default:
@@ -173,6 +185,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DisasterRecoveryConfigurationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="disasterRecoveryConfigurationDetails"> The <see cref="DisasterRecoveryConfigurationDetails"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DisasterRecoveryConfigurationDetails disasterRecoveryConfigurationDetails)
+        {
+            if (disasterRecoveryConfigurationDetails == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(disasterRecoveryConfigurationDetails, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct AutonomousDatabasePermissionLevelType : IEquatable<AutonomousDatabasePermissionLevelType>
     {
         private readonly string _value;
+        /// <summary> Restricted permission level. </summary>
+        private const string RestrictedValue = "Restricted";
+        /// <summary> Unrestricted permission level. </summary>
+        private const string UnrestrictedValue = "Unrestricted";
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabasePermissionLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutonomousDatabasePermissionLevelType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RestrictedValue = "Restricted";
-        private const string UnrestrictedValue = "Unrestricted";
+            _value = value;
+        }
 
         /// <summary> Restricted permission level. </summary>
         public static AutonomousDatabasePermissionLevelType Restricted { get; } = new AutonomousDatabasePermissionLevelType(RestrictedValue);
+
         /// <summary> Unrestricted permission level. </summary>
         public static AutonomousDatabasePermissionLevelType Unrestricted { get; } = new AutonomousDatabasePermissionLevelType(UnrestrictedValue);
+
         /// <summary> Determines if two <see cref="AutonomousDatabasePermissionLevelType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutonomousDatabasePermissionLevelType left, AutonomousDatabasePermissionLevelType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutonomousDatabasePermissionLevelType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutonomousDatabasePermissionLevelType left, AutonomousDatabasePermissionLevelType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabasePermissionLevelType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutonomousDatabasePermissionLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutonomousDatabasePermissionLevelType(string value) => new AutonomousDatabasePermissionLevelType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutonomousDatabasePermissionLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutonomousDatabasePermissionLevelType?(string value) => value == null ? null : new AutonomousDatabasePermissionLevelType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutonomousDatabasePermissionLevelType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutonomousDatabasePermissionLevelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

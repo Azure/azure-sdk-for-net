@@ -8,89 +8,81 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// A class representing a collection of <see cref="OracleSystemVersionResource"/> and their operations.
-    /// Each <see cref="OracleSystemVersionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="OracleSystemVersionCollection"/> instance call the GetOracleSystemVersions method from an instance of <see cref="SubscriptionResource"/>.
+    /// Each <see cref="OracleSystemVersionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="OracleSystemVersionCollection"/> instance call the GetOracleSystemVersions method from an instance of the parent resource.
     /// </summary>
     public partial class OracleSystemVersionCollection : ArmCollection, IEnumerable<OracleSystemVersionResource>, IAsyncEnumerable<OracleSystemVersionResource>
     {
-        private readonly ClientDiagnostics _oracleSystemVersionSystemVersionsClientDiagnostics;
-        private readonly SystemVersionsRestOperations _oracleSystemVersionSystemVersionsRestClient;
+        private readonly ClientDiagnostics _systemVersionsClientDiagnostics;
+        private readonly SystemVersions _systemVersionsRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="OracleSystemVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OracleSystemVersionCollection for mocking. </summary>
         protected OracleSystemVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OracleSystemVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleSystemVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal OracleSystemVersionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
+            TryGetApiVersion(OracleSystemVersionResource.ResourceType, out string oracleSystemVersionApiVersion);
             _location = location;
-            _oracleSystemVersionSystemVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleSystemVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OracleSystemVersionResource.ResourceType, out string oracleSystemVersionSystemVersionsApiVersion);
-            _oracleSystemVersionSystemVersionsRestClient = new SystemVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleSystemVersionSystemVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _systemVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleSystemVersionResource.ResourceType.Namespace, Diagnostics);
+            _systemVersionsRestClient = new SystemVersions(_systemVersionsClientDiagnostics, Pipeline, Endpoint, oracleSystemVersionApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get a SystemVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a SystemVersion. </summary>
         /// <param name="systemversionname"> SystemVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OracleSystemVersionResource>> GetAsync(string systemversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
 
-            using var scope = _oracleSystemVersionSystemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.Get");
+            using DiagnosticScope scope = _systemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oracleSystemVersionSystemVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), systemversionname, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleSystemVersionData> response = Response.FromValue(OracleSystemVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleSystemVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,42 +92,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Get a SystemVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a SystemVersion. </summary>
         /// <param name="systemversionname"> SystemVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OracleSystemVersionResource> Get(string systemversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
 
-            using var scope = _oracleSystemVersionSystemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.Get");
+            using DiagnosticScope scope = _systemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _oracleSystemVersionSystemVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), systemversionname, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleSystemVersionData> response = Response.FromValue(OracleSystemVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleSystemVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,100 +125,50 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// List SystemVersion resources by SubscriptionLocationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List SystemVersion resources by SubscriptionLocationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleSystemVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OracleSystemVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleSystemVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleSystemVersionSystemVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleSystemVersionSystemVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleSystemVersionResource(Client, OracleSystemVersionData.DeserializeOracleSystemVersionData(e)), _oracleSystemVersionSystemVersionsClientDiagnostics, Pipeline, "OracleSystemVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationAsyncCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleSystemVersionResource(Client, data));
         }
 
-        /// <summary>
-        /// List SystemVersion resources by SubscriptionLocationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List SystemVersion resources by SubscriptionLocationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleSystemVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleSystemVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleSystemVersionSystemVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleSystemVersionSystemVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleSystemVersionResource(Client, OracleSystemVersionData.DeserializeOracleSystemVersionData(e)), _oracleSystemVersionSystemVersionsClientDiagnostics, Pipeline, "OracleSystemVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleSystemVersionResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="systemversionname"> SystemVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string systemversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
 
-            using var scope = _oracleSystemVersionSystemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.Exists");
+            using DiagnosticScope scope = _systemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _oracleSystemVersionSystemVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), systemversionname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleSystemVersionData> response = Response.FromValue(OracleSystemVersionData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,40 +178,26 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="systemversionname"> SystemVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string systemversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
 
-            using var scope = _oracleSystemVersionSystemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.Exists");
+            using DiagnosticScope scope = _systemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _oracleSystemVersionSystemVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), systemversionname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleSystemVersionData> response = Response.FromValue(OracleSystemVersionData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,42 +207,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="systemversionname"> SystemVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OracleSystemVersionResource>> GetIfExistsAsync(string systemversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
 
-            using var scope = _oracleSystemVersionSystemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _systemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oracleSystemVersionSystemVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), systemversionname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleSystemVersionData> response = Response.FromValue(OracleSystemVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleSystemVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleSystemVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,42 +240,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="systemversionname"> SystemVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OracleSystemVersionResource> GetIfExists(string systemversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
 
-            using var scope = _oracleSystemVersionSystemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _systemVersionsClientDiagnostics.CreateScope("OracleSystemVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oracleSystemVersionSystemVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), systemversionname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleSystemVersionData> response = Response.FromValue(OracleSystemVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleSystemVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleSystemVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,6 +283,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OracleSystemVersionResource> IAsyncEnumerable<OracleSystemVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

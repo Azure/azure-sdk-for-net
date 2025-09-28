@@ -8,89 +8,81 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// A class representing a collection of <see cref="AutonomousDBVersionResource"/> and their operations.
-    /// Each <see cref="AutonomousDBVersionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="AutonomousDBVersionCollection"/> instance call the GetAutonomousDBVersions method from an instance of <see cref="SubscriptionResource"/>.
+    /// Each <see cref="AutonomousDBVersionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="AutonomousDBVersionCollection"/> instance call the GetAutonomousDBVersions method from an instance of the parent resource.
     /// </summary>
     public partial class AutonomousDBVersionCollection : ArmCollection, IEnumerable<AutonomousDBVersionResource>, IAsyncEnumerable<AutonomousDBVersionResource>
     {
-        private readonly ClientDiagnostics _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics;
-        private readonly AutonomousDatabaseVersionsRestOperations _autonomousDBVersionAutonomousDatabaseVersionsRestClient;
+        private readonly ClientDiagnostics _autonomousDatabaseVersionsClientDiagnostics;
+        private readonly AutonomousDatabaseVersions _autonomousDatabaseVersionsRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="AutonomousDBVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AutonomousDBVersionCollection for mocking. </summary>
         protected AutonomousDBVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutonomousDBVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutonomousDBVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal AutonomousDBVersionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
+            TryGetApiVersion(AutonomousDBVersionResource.ResourceType, out string autonomousDBVersionApiVersion);
             _location = location;
-            _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDBVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AutonomousDBVersionResource.ResourceType, out string autonomousDBVersionAutonomousDatabaseVersionsApiVersion);
-            _autonomousDBVersionAutonomousDatabaseVersionsRestClient = new AutonomousDatabaseVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDBVersionAutonomousDatabaseVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _autonomousDatabaseVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDBVersionResource.ResourceType.Namespace, Diagnostics);
+            _autonomousDatabaseVersionsRestClient = new AutonomousDatabaseVersions(_autonomousDatabaseVersionsClientDiagnostics, Pipeline, Endpoint, autonomousDBVersionApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get a AutonomousDbVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a AutonomousDbVersion. </summary>
         /// <param name="autonomousdbversionsname"> AutonomousDbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AutonomousDBVersionResource>> GetAsync(string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdbversionsname, nameof(autonomousdbversionsname));
 
-            using var scope = _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.Get");
+            using DiagnosticScope scope = _autonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _autonomousDBVersionAutonomousDatabaseVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), autonomousdbversionsname, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutonomousDBVersionData> response = Response.FromValue(AutonomousDBVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutonomousDBVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,42 +92,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Get a AutonomousDbVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a AutonomousDbVersion. </summary>
         /// <param name="autonomousdbversionsname"> AutonomousDbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AutonomousDBVersionResource> Get(string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdbversionsname, nameof(autonomousdbversionsname));
 
-            using var scope = _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.Get");
+            using DiagnosticScope scope = _autonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _autonomousDBVersionAutonomousDatabaseVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), autonomousdbversionsname, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutonomousDBVersionData> response = Response.FromValue(AutonomousDBVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutonomousDBVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,100 +125,50 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// List AutonomousDbVersion resources by SubscriptionLocationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List AutonomousDbVersion resources by SubscriptionLocationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutonomousDBVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutonomousDBVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutonomousDBVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _autonomousDBVersionAutonomousDatabaseVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autonomousDBVersionAutonomousDatabaseVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutonomousDBVersionResource(Client, AutonomousDBVersionData.DeserializeAutonomousDBVersionData(e)), _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics, Pipeline, "AutonomousDBVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDBVersionResource(Client, data));
         }
 
-        /// <summary>
-        /// List AutonomousDbVersion resources by SubscriptionLocationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List AutonomousDbVersion resources by SubscriptionLocationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutonomousDBVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutonomousDBVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _autonomousDBVersionAutonomousDatabaseVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autonomousDBVersionAutonomousDatabaseVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutonomousDBVersionResource(Client, AutonomousDBVersionData.DeserializeAutonomousDBVersionData(e)), _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics, Pipeline, "AutonomousDBVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDBVersionResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="autonomousdbversionsname"> AutonomousDbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdbversionsname, nameof(autonomousdbversionsname));
 
-            using var scope = _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.Exists");
+            using DiagnosticScope scope = _autonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _autonomousDBVersionAutonomousDatabaseVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), autonomousdbversionsname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutonomousDBVersionData> response = Response.FromValue(AutonomousDBVersionData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,40 +178,26 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="autonomousdbversionsname"> AutonomousDbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdbversionsname, nameof(autonomousdbversionsname));
 
-            using var scope = _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.Exists");
+            using DiagnosticScope scope = _autonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _autonomousDBVersionAutonomousDatabaseVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), autonomousdbversionsname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutonomousDBVersionData> response = Response.FromValue(AutonomousDBVersionData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,42 +207,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="autonomousdbversionsname"> AutonomousDbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AutonomousDBVersionResource>> GetIfExistsAsync(string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdbversionsname, nameof(autonomousdbversionsname));
 
-            using var scope = _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _autonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _autonomousDBVersionAutonomousDatabaseVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), autonomousdbversionsname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutonomousDBVersionData> response = Response.FromValue(AutonomousDBVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutonomousDBVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutonomousDBVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,42 +240,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="autonomousdbversionsname"> AutonomousDbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autonomousdbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AutonomousDBVersionResource> GetIfExists(string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdbversionsname, nameof(autonomousdbversionsname));
 
-            using var scope = _autonomousDBVersionAutonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _autonomousDatabaseVersionsClientDiagnostics.CreateScope("AutonomousDBVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _autonomousDBVersionAutonomousDatabaseVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), autonomousdbversionsname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutonomousDBVersionData> response = Response.FromValue(AutonomousDBVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutonomousDBVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutonomousDBVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,6 +283,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AutonomousDBVersionResource> IAsyncEnumerable<AutonomousDBVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

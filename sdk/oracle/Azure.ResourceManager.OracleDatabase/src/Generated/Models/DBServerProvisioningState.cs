@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DBServerProvisioningState : IEquatable<DBServerProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Indicates that resource in Creating state. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Indicates that resource in Available state. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Indicates that resource in Unavailable state. </summary>
+        private const string UnavailableValue = "Unavailable";
+        /// <summary> Indicates that resource in Deleting state. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Indicates that resource in Deleted state. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> Indicates that resource maintenance in progress state. </summary>
+        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
 
         /// <summary> Initializes a new instance of <see cref="DBServerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DBServerProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string AvailableValue = "Available";
-        private const string UnavailableValue = "Unavailable";
-        private const string DeletingValue = "Deleting";
-        private const string DeletedValue = "Deleted";
-        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
+            _value = value;
+        }
 
         /// <summary> Indicates that resource in Creating state. </summary>
         public static DBServerProvisioningState Creating { get; } = new DBServerProvisioningState(CreatingValue);
+
         /// <summary> Indicates that resource in Available state. </summary>
         public static DBServerProvisioningState Available { get; } = new DBServerProvisioningState(AvailableValue);
+
         /// <summary> Indicates that resource in Unavailable state. </summary>
         public static DBServerProvisioningState Unavailable { get; } = new DBServerProvisioningState(UnavailableValue);
+
         /// <summary> Indicates that resource in Deleting state. </summary>
         public static DBServerProvisioningState Deleting { get; } = new DBServerProvisioningState(DeletingValue);
+
         /// <summary> Indicates that resource in Deleted state. </summary>
         public static DBServerProvisioningState Deleted { get; } = new DBServerProvisioningState(DeletedValue);
+
         /// <summary> Indicates that resource maintenance in progress state. </summary>
         public static DBServerProvisioningState MaintenanceInProgress { get; } = new DBServerProvisioningState(MaintenanceInProgressValue);
+
         /// <summary> Determines if two <see cref="DBServerProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DBServerProvisioningState left, DBServerProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DBServerProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DBServerProvisioningState left, DBServerProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DBServerProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DBServerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DBServerProvisioningState(string value) => new DBServerProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DBServerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DBServerProvisioningState?(string value) => value == null ? null : new DBServerProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DBServerProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DBServerProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

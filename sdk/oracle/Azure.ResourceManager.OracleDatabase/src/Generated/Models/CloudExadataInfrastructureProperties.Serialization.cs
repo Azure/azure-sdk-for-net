@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class CloudExadataInfrastructureProperties : IUtf8JsonSerializable, IJsonModel<CloudExadataInfrastructureProperties>
+    /// <summary> CloudExadataInfrastructure resource model. </summary>
+    public partial class CloudExadataInfrastructureProperties : IJsonModel<CloudExadataInfrastructureProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudExadataInfrastructureProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureProperties"/> for deserialization. </summary>
+        internal CloudExadataInfrastructureProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudExadataInfrastructureProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +34,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudExadataInfrastructureProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsCollectionDefined(DefinedFileSystemConfiguration))
             {
                 writer.WritePropertyName("definedFileSystemConfiguration"u8);
                 writer.WriteStartArray();
-                foreach (var item in DefinedFileSystemConfiguration)
+                foreach (DefinedFileSystemConfiguration item in DefinedFileSystemConfiguration)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("customerContacts"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomerContacts)
+                foreach (OracleCustomerContact item in CustomerContacts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -213,15 +218,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("computeModel"u8);
                 writer.WriteStringValue(ComputeModel.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(ExascaleConfig))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("exascaleConfig"u8);
+                writer.WriteObjectValue(ExascaleConfig, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -230,33 +240,38 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        CloudExadataInfrastructureProperties IJsonModel<CloudExadataInfrastructureProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudExadataInfrastructureProperties IJsonModel<CloudExadataInfrastructureProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudExadataInfrastructureProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudExadataInfrastructureProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudExadataInfrastructureProperties(document.RootElement, options);
         }
 
-        internal static CloudExadataInfrastructureProperties DeserializeCloudExadataInfrastructureProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CloudExadataInfrastructureProperties DeserializeCloudExadataInfrastructureProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration = default;
-            string ocid = default;
+            string exadataInfraOcid = default;
             int? computeCount = default;
             int? storageCount = default;
             int? totalStorageSizeInGbs = default;
             int? availableStorageSizeInGbs = default;
-            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? createdOn = default;
             string lifecycleDetails = default;
             OracleDatabaseMaintenanceWindow maintenanceWindow = default;
             EstimatedPatchingTime estimatedPatchingTime = default;
@@ -264,13 +279,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OracleDatabaseProvisioningState? provisioningState = default;
             CloudExadataInfrastructureLifecycleState? lifecycleState = default;
             string shape = default;
-            Uri ociUrl = default;
+            Uri ociUri = default;
             int? cpuCount = default;
             int? maxCpuCount = default;
             int? memorySizeInGbs = default;
             int? maxMemoryInGbs = default;
             int? dbNodeStorageSizeInGbs = default;
-            int? maxDbNodeStorageSizeInGbs = default;
+            int? maxDBNodeStorageSizeInGbs = default;
             double? dataStorageSizeInTbs = default;
             double? maxDataStorageInTbs = default;
             string dbServerVersion = default;
@@ -278,308 +293,316 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? activatedStorageCount = default;
             int? additionalStorageCount = default;
             string displayName = default;
-            string lastMaintenanceRunId = default;
-            string nextMaintenanceRunId = default;
-            string monthlyDbServerVersion = default;
+            string lastMaintenanceRunOcid = default;
+            string nextMaintenanceRunOcid = default;
+            string monthlyDBServerVersion = default;
             string monthlyStorageServerVersion = default;
             string databaseServerType = default;
             string storageServerType = default;
             OracleDatabaseComputeModel? computeModel = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ExascaleConfigDetails exascaleConfig = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("definedFileSystemConfiguration"u8))
+                if (prop.NameEquals("definedFileSystemConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DefinedFileSystemConfiguration> array = new List<DefinedFileSystemConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.DefinedFileSystemConfiguration.DeserializeDefinedFileSystemConfiguration(item, options));
                     }
                     definedFileSystemConfiguration = array;
                     continue;
                 }
-                if (property.NameEquals("ocid"u8))
+                if (prop.NameEquals("ocid"u8))
                 {
-                    ocid = property.Value.GetString();
+                    exadataInfraOcid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeCount"u8))
+                if (prop.NameEquals("computeCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    computeCount = property.Value.GetInt32();
+                    computeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageCount"u8))
+                if (prop.NameEquals("storageCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageCount = property.Value.GetInt32();
+                    storageCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalStorageSizeInGbs"u8))
+                if (prop.NameEquals("totalStorageSizeInGbs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalStorageSizeInGbs = property.Value.GetInt32();
+                    totalStorageSizeInGbs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("availableStorageSizeInGbs"u8))
+                if (prop.NameEquals("availableStorageSizeInGbs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableStorageSizeInGbs = property.Value.GetInt32();
+                    availableStorageSizeInGbs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeCreated"u8))
+                if (prop.NameEquals("timeCreated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeCreated = property.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lifecycleDetails"u8))
+                if (prop.NameEquals("lifecycleDetails"u8))
                 {
-                    lifecycleDetails = property.Value.GetString();
+                    lifecycleDetails = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maintenanceWindow"u8))
+                if (prop.NameEquals("maintenanceWindow"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintenanceWindow = OracleDatabaseMaintenanceWindow.DeserializeOracleDatabaseMaintenanceWindow(property.Value, options);
+                    maintenanceWindow = OracleDatabaseMaintenanceWindow.DeserializeOracleDatabaseMaintenanceWindow(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("estimatedPatchingTime"u8))
+                if (prop.NameEquals("estimatedPatchingTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    estimatedPatchingTime = EstimatedPatchingTime.DeserializeEstimatedPatchingTime(property.Value, options);
+                    estimatedPatchingTime = EstimatedPatchingTime.DeserializeEstimatedPatchingTime(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("customerContacts"u8))
+                if (prop.NameEquals("customerContacts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<OracleCustomerContact> array = new List<OracleCustomerContact>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OracleCustomerContact.DeserializeOracleCustomerContact(item, options));
                     }
                     customerContacts = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
+                    provisioningState = new OracleDatabaseProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lifecycleState"u8))
+                if (prop.NameEquals("lifecycleState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lifecycleState = new CloudExadataInfrastructureLifecycleState(property.Value.GetString());
+                    lifecycleState = new CloudExadataInfrastructureLifecycleState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("shape"u8))
+                if (prop.NameEquals("shape"u8))
                 {
-                    shape = property.Value.GetString();
+                    shape = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ociUrl"u8))
+                if (prop.NameEquals("ociUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ociUrl = new Uri(property.Value.GetString());
+                    ociUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cpuCount"u8))
+                if (prop.NameEquals("cpuCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cpuCount = property.Value.GetInt32();
+                    cpuCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxCpuCount"u8))
+                if (prop.NameEquals("maxCpuCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxCpuCount = property.Value.GetInt32();
+                    maxCpuCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memorySizeInGbs"u8))
+                if (prop.NameEquals("memorySizeInGbs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memorySizeInGbs = property.Value.GetInt32();
+                    memorySizeInGbs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxMemoryInGbs"u8))
+                if (prop.NameEquals("maxMemoryInGbs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxMemoryInGbs = property.Value.GetInt32();
+                    maxMemoryInGbs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dbNodeStorageSizeInGbs"u8))
+                if (prop.NameEquals("dbNodeStorageSizeInGbs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dbNodeStorageSizeInGbs = property.Value.GetInt32();
+                    dbNodeStorageSizeInGbs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxDbNodeStorageSizeInGbs"u8))
+                if (prop.NameEquals("maxDbNodeStorageSizeInGbs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxDbNodeStorageSizeInGbs = property.Value.GetInt32();
+                    maxDBNodeStorageSizeInGbs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataStorageSizeInTbs"u8))
+                if (prop.NameEquals("dataStorageSizeInTbs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataStorageSizeInTbs = property.Value.GetDouble();
+                    dataStorageSizeInTbs = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maxDataStorageInTbs"u8))
+                if (prop.NameEquals("maxDataStorageInTbs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxDataStorageInTbs = property.Value.GetDouble();
+                    maxDataStorageInTbs = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("dbServerVersion"u8))
+                if (prop.NameEquals("dbServerVersion"u8))
                 {
-                    dbServerVersion = property.Value.GetString();
+                    dbServerVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageServerVersion"u8))
+                if (prop.NameEquals("storageServerVersion"u8))
                 {
-                    storageServerVersion = property.Value.GetString();
+                    storageServerVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activatedStorageCount"u8))
+                if (prop.NameEquals("activatedStorageCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    activatedStorageCount = property.Value.GetInt32();
+                    activatedStorageCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("additionalStorageCount"u8))
+                if (prop.NameEquals("additionalStorageCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    additionalStorageCount = property.Value.GetInt32();
+                    additionalStorageCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastMaintenanceRunId"u8))
+                if (prop.NameEquals("lastMaintenanceRunId"u8))
                 {
-                    lastMaintenanceRunId = property.Value.GetString();
+                    lastMaintenanceRunOcid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextMaintenanceRunId"u8))
+                if (prop.NameEquals("nextMaintenanceRunId"u8))
                 {
-                    nextMaintenanceRunId = property.Value.GetString();
+                    nextMaintenanceRunOcid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("monthlyDbServerVersion"u8))
+                if (prop.NameEquals("monthlyDbServerVersion"u8))
                 {
-                    monthlyDbServerVersion = property.Value.GetString();
+                    monthlyDBServerVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("monthlyStorageServerVersion"u8))
+                if (prop.NameEquals("monthlyStorageServerVersion"u8))
                 {
-                    monthlyStorageServerVersion = property.Value.GetString();
+                    monthlyStorageServerVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseServerType"u8))
+                if (prop.NameEquals("databaseServerType"u8))
                 {
-                    databaseServerType = property.Value.GetString();
+                    databaseServerType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageServerType"u8))
+                if (prop.NameEquals("storageServerType"u8))
                 {
-                    storageServerType = property.Value.GetString();
+                    storageServerType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeModel"u8))
+                if (prop.NameEquals("computeModel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
+                    computeModel = new OracleDatabaseComputeModel(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("exascaleConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exascaleConfig = ExascaleConfigDetails.DeserializeExascaleConfigDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CloudExadataInfrastructureProperties(
                 definedFileSystemConfiguration ?? new ChangeTrackingList<DefinedFileSystemConfiguration>(),
-                ocid,
+                exadataInfraOcid,
                 computeCount,
                 storageCount,
                 totalStorageSizeInGbs,
                 availableStorageSizeInGbs,
-                timeCreated,
+                createdOn,
                 lifecycleDetails,
                 maintenanceWindow,
                 estimatedPatchingTime,
@@ -587,13 +610,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 provisioningState,
                 lifecycleState,
                 shape,
-                ociUrl,
+                ociUri,
                 cpuCount,
                 maxCpuCount,
                 memorySizeInGbs,
                 maxMemoryInGbs,
                 dbNodeStorageSizeInGbs,
-                maxDbNodeStorageSizeInGbs,
+                maxDBNodeStorageSizeInGbs,
                 dataStorageSizeInTbs,
                 maxDataStorageInTbs,
                 dbServerVersion,
@@ -601,20 +624,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 activatedStorageCount,
                 additionalStorageCount,
                 displayName,
-                lastMaintenanceRunId,
-                nextMaintenanceRunId,
-                monthlyDbServerVersion,
+                lastMaintenanceRunOcid,
+                nextMaintenanceRunOcid,
+                monthlyDBServerVersion,
                 monthlyStorageServerVersion,
                 databaseServerType,
                 storageServerType,
                 computeModel,
-                serializedAdditionalRawData);
+                exascaleConfig,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<CloudExadataInfrastructureProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloudExadataInfrastructureProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -624,15 +651,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        CloudExadataInfrastructureProperties IPersistableModel<CloudExadataInfrastructureProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudExadataInfrastructureProperties IPersistableModel<CloudExadataInfrastructureProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudExadataInfrastructureProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudExadataInfrastructureProperties(document.RootElement, options);
                     }
                 default:
@@ -640,6 +672,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CloudExadataInfrastructureProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

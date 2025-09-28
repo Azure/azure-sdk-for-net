@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     internal readonly partial struct OracleDataBaseType : IEquatable<OracleDataBaseType>
     {
         private readonly string _value;
+        /// <summary> Regular DB. </summary>
+        private const string RegularValue = "Regular";
+        /// <summary> Clone DB. </summary>
+        private const string CloneValue = "Clone";
+        /// <summary> Clone DB from backup timestamp. </summary>
+        private const string CloneFromBackupTimestampValue = "CloneFromBackupTimestamp";
+        /// <summary> Cross Region Disaster Recovery. </summary>
+        private const string CrossRegionDisasterRecoveryValue = "CrossRegionDisasterRecovery";
 
         /// <summary> Initializes a new instance of <see cref="OracleDataBaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OracleDataBaseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RegularValue = "Regular";
-        private const string CloneValue = "Clone";
-        private const string CloneFromBackupTimestampValue = "CloneFromBackupTimestamp";
-        private const string CrossRegionDisasterRecoveryValue = "CrossRegionDisasterRecovery";
+            _value = value;
+        }
 
         /// <summary> Regular DB. </summary>
         public static OracleDataBaseType Regular { get; } = new OracleDataBaseType(RegularValue);
+
         /// <summary> Clone DB. </summary>
         public static OracleDataBaseType Clone { get; } = new OracleDataBaseType(CloneValue);
+
         /// <summary> Clone DB from backup timestamp. </summary>
         public static OracleDataBaseType CloneFromBackupTimestamp { get; } = new OracleDataBaseType(CloneFromBackupTimestampValue);
+
         /// <summary> Cross Region Disaster Recovery. </summary>
         public static OracleDataBaseType CrossRegionDisasterRecovery { get; } = new OracleDataBaseType(CrossRegionDisasterRecoveryValue);
+
         /// <summary> Determines if two <see cref="OracleDataBaseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OracleDataBaseType left, OracleDataBaseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OracleDataBaseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OracleDataBaseType left, OracleDataBaseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleDataBaseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OracleDataBaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OracleDataBaseType(string value) => new OracleDataBaseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OracleDataBaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OracleDataBaseType?(string value) => value == null ? null : new OracleDataBaseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OracleDataBaseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OracleDataBaseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

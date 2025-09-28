@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal class OracleSubscriptionOperationSource : IOperationSource<OracleSubscriptionResource>
+    /// <summary></summary>
+    internal partial class OracleSubscriptionOperationSource : IOperationSource<OracleSubscriptionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal OracleSubscriptionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         OracleSubscriptionResource IOperationSource<OracleSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OracleSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            OracleSubscriptionData data = OracleSubscriptionData.DeserializeOracleSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new OracleSubscriptionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<OracleSubscriptionResource> IOperationSource<OracleSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OracleSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
-            return await Task.FromResult(new OracleSubscriptionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            OracleSubscriptionData data = OracleSubscriptionData.DeserializeOracleSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new OracleSubscriptionResource(_client, data);
         }
     }
 }

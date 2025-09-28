@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct ConnectionHostFormatType : IEquatable<ConnectionHostFormatType>
     {
         private readonly string _value;
+        /// <summary> FQDN format. </summary>
+        private const string FqdnValue = "Fqdn";
+        /// <summary> IP format. </summary>
+        private const string IpValue = "Ip";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionHostFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionHostFormatType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FqdnValue = "Fqdn";
-        private const string IPValue = "Ip";
+            _value = value;
+        }
 
         /// <summary> FQDN format. </summary>
         public static ConnectionHostFormatType Fqdn { get; } = new ConnectionHostFormatType(FqdnValue);
+
         /// <summary> IP format. </summary>
-        public static ConnectionHostFormatType IP { get; } = new ConnectionHostFormatType(IPValue);
+        public static ConnectionHostFormatType Ip { get; } = new ConnectionHostFormatType(IpValue);
+
         /// <summary> Determines if two <see cref="ConnectionHostFormatType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionHostFormatType left, ConnectionHostFormatType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionHostFormatType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionHostFormatType left, ConnectionHostFormatType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionHostFormatType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionHostFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionHostFormatType(string value) => new ConnectionHostFormatType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionHostFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionHostFormatType?(string value) => value == null ? null : new ConnectionHostFormatType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionHostFormatType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionHostFormatType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching). </summary>
     public partial class EstimatedPatchingTime
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EstimatedPatchingTime"/>. </summary>
         internal EstimatedPatchingTime()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="estimatedNetworkSwitchesPatchingTime"> The estimated time required in minutes for network switch patching. </param>
         /// <param name="estimatedStorageServerPatchingTime"> The estimated time required in minutes for storage server patching. </param>
         /// <param name="totalEstimatedPatchingTime"> The estimated total time required in minutes for all patching operations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EstimatedPatchingTime(int? estimatedDBServerPatchingTime, int? estimatedNetworkSwitchesPatchingTime, int? estimatedStorageServerPatchingTime, int? totalEstimatedPatchingTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EstimatedPatchingTime(int? estimatedDBServerPatchingTime, int? estimatedNetworkSwitchesPatchingTime, int? estimatedStorageServerPatchingTime, int? totalEstimatedPatchingTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EstimatedDBServerPatchingTime = estimatedDBServerPatchingTime;
             EstimatedNetworkSwitchesPatchingTime = estimatedNetworkSwitchesPatchingTime;
             EstimatedStorageServerPatchingTime = estimatedStorageServerPatchingTime;
             TotalEstimatedPatchingTime = totalEstimatedPatchingTime;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The estimated time required in minutes for database server patching. </summary>
         public int? EstimatedDBServerPatchingTime { get; }
+
         /// <summary> The estimated time required in minutes for network switch patching. </summary>
         public int? EstimatedNetworkSwitchesPatchingTime { get; }
+
         /// <summary> The estimated time required in minutes for storage server patching. </summary>
         public int? EstimatedStorageServerPatchingTime { get; }
+
         /// <summary> The estimated total time required in minutes for all patching operations. </summary>
         public int? TotalEstimatedPatchingTime { get; }
     }

@@ -7,49 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> The updatable properties of the AutonomousDatabase. </summary>
     public partial class AutonomousDatabaseUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseUpdateProperties"/>. </summary>
         public AutonomousDatabaseUpdateProperties()
         {
             CustomerContacts = new ChangeTrackingList<OracleCustomerContact>();
-            WhitelistedIPs = new ChangeTrackingList<string>();
+            ScheduledOperationsList = new ChangeTrackingList<ScheduledOperationsTypeUpdate>();
+            WhitelistedIps = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseUpdateProperties"/>. </summary>
@@ -67,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="isLocalDataGuardEnabled"> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </param>
         /// <param name="isMtlsConnectionRequired"> Specifies if the Autonomous Database requires mTLS connections. </param>
         /// <param name="licenseModel"> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </param>
-        /// <param name="scheduledOperations"> The list of scheduled operations. </param>
+        /// <param name="scheduledOperationsList"> The list of scheduled operations. </param>
         /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
         /// <param name="longTermBackupSchedule"> Details for the long-term backup schedule. </param>
         /// <param name="localAdgAutoFailoverMaxDataLossLimit"> Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard. </param>
@@ -75,9 +48,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="permissionLevel"> The Autonomous Database permission level. </param>
         /// <param name="role"> The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled. </param>
         /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
-        /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseUpdateProperties(string adminPassword, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, float? computeCount, int? cpuCoreCount, IList<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, string peerDBId, bool? isLocalDataGuardEnabled, bool? isMtlsConnectionRequired, OracleLicenseModel? licenseModel, ScheduledOperationsTypeUpdate scheduledOperations, OracleDatabaseEditionType? databaseEdition, LongTermBackUpScheduleDetails longTermBackupSchedule, int? localAdgAutoFailoverMaxDataLossLimit, AutonomousDatabaseModeType? openMode, AutonomousDatabasePermissionLevelType? permissionLevel, DataGuardRoleType? role, int? backupRetentionPeriodInDays, IList<string> whitelistedIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="whitelistedIps"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutonomousDatabaseUpdateProperties(string adminPassword, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, float? computeCount, int? cpuCoreCount, IList<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, string peerDBId, bool? isLocalDataGuardEnabled, bool? isMtlsConnectionRequired, OracleLicenseModel? licenseModel, IList<ScheduledOperationsTypeUpdate> scheduledOperationsList, OracleDatabaseEditionType? databaseEdition, LongTermBackUpScheduleDetails longTermBackupSchedule, int? localAdgAutoFailoverMaxDataLossLimit, AutonomousDatabaseModeType? openMode, AutonomousDatabasePermissionLevelType? permissionLevel, DataGuardRoleType? role, int? backupRetentionPeriodInDays, IList<string> whitelistedIps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdminPassword = adminPassword;
             AutonomousMaintenanceScheduleType = autonomousMaintenanceScheduleType;
@@ -93,7 +66,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IsLocalDataGuardEnabled = isLocalDataGuardEnabled;
             IsMtlsConnectionRequired = isMtlsConnectionRequired;
             LicenseModel = licenseModel;
-            ScheduledOperations = scheduledOperations;
+            ScheduledOperationsList = scheduledOperationsList;
             DatabaseEdition = databaseEdition;
             LongTermBackupSchedule = longTermBackupSchedule;
             LocalAdgAutoFailoverMaxDataLossLimit = localAdgAutoFailoverMaxDataLossLimit;
@@ -101,55 +74,77 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             PermissionLevel = permissionLevel;
             Role = role;
             BackupRetentionPeriodInDays = backupRetentionPeriodInDays;
-            WhitelistedIPs = whitelistedIPs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            WhitelistedIps = whitelistedIps;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Admin password. </summary>
         public string AdminPassword { get; set; }
+
         /// <summary> The maintenance schedule type of the Autonomous Database Serverless. </summary>
         public AutonomousMaintenanceScheduleType? AutonomousMaintenanceScheduleType { get; set; }
+
         /// <summary> The compute amount (CPUs) available to the database. </summary>
         public float? ComputeCount { get; set; }
+
         /// <summary> The number of CPU cores to be made available to the database. </summary>
         public int? CpuCoreCount { get; set; }
+
         /// <summary> Customer Contacts. </summary>
         public IList<OracleCustomerContact> CustomerContacts { get; }
+
         /// <summary> The quantity of data in the database, in terabytes. </summary>
         public int? DataStorageSizeInTbs { get; set; }
+
         /// <summary> The size, in gigabytes, of the data volume that will be created and attached to the database. </summary>
         public int? DataStorageSizeInGbs { get; set; }
+
         /// <summary> The user-friendly name for the Autonomous Database. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Indicates if auto scaling is enabled for the Autonomous Database CPU core count. </summary>
         public bool? IsAutoScalingEnabled { get; set; }
+
         /// <summary> Indicates if auto scaling is enabled for the Autonomous Database storage. </summary>
         public bool? IsAutoScalingForStorageEnabled { get; set; }
+
         /// <summary> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
         public string PeerDBId { get; set; }
+
         /// <summary> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </summary>
         public bool? IsLocalDataGuardEnabled { get; set; }
+
         /// <summary> Specifies if the Autonomous Database requires mTLS connections. </summary>
         public bool? IsMtlsConnectionRequired { get; set; }
+
         /// <summary> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </summary>
         public OracleLicenseModel? LicenseModel { get; set; }
+
         /// <summary> The list of scheduled operations. </summary>
-        public ScheduledOperationsTypeUpdate ScheduledOperations { get; set; }
+        public IList<ScheduledOperationsTypeUpdate> ScheduledOperationsList { get; }
+
         /// <summary> The Oracle Database Edition that applies to the Autonomous databases. </summary>
         public OracleDatabaseEditionType? DatabaseEdition { get; set; }
+
         /// <summary> Details for the long-term backup schedule. </summary>
         public LongTermBackUpScheduleDetails LongTermBackupSchedule { get; set; }
+
         /// <summary> Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard. </summary>
         public int? LocalAdgAutoFailoverMaxDataLossLimit { get; set; }
+
         /// <summary> Indicates the Autonomous Database mode. </summary>
         public AutonomousDatabaseModeType? OpenMode { get; set; }
+
         /// <summary> The Autonomous Database permission level. </summary>
         public AutonomousDatabasePermissionLevelType? PermissionLevel { get; set; }
+
         /// <summary> The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled. </summary>
         public DataGuardRoleType? Role { get; set; }
+
         /// <summary> Retention period, in days, for long-term backups. </summary>
         public int? BackupRetentionPeriodInDays { get; set; }
+
         /// <summary> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </summary>
-        public IList<string> WhitelistedIPs { get; }
+        public IList<string> WhitelistedIps { get; }
     }
 }

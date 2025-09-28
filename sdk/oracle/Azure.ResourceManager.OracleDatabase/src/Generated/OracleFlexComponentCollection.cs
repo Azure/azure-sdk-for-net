@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.OracleDatabase.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,77 +22,68 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// A class representing a collection of <see cref="OracleFlexComponentResource"/> and their operations.
-    /// Each <see cref="OracleFlexComponentResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="OracleFlexComponentCollection"/> instance call the GetOracleFlexComponents method from an instance of <see cref="SubscriptionResource"/>.
+    /// Each <see cref="OracleFlexComponentResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="OracleFlexComponentCollection"/> instance call the GetOracleFlexComponents method from an instance of the parent resource.
     /// </summary>
     public partial class OracleFlexComponentCollection : ArmCollection, IEnumerable<OracleFlexComponentResource>, IAsyncEnumerable<OracleFlexComponentResource>
     {
-        private readonly ClientDiagnostics _oracleFlexComponentFlexComponentsClientDiagnostics;
-        private readonly FlexComponentsRestOperations _oracleFlexComponentFlexComponentsRestClient;
+        private readonly ClientDiagnostics _flexComponentsClientDiagnostics;
+        private readonly FlexComponents _flexComponentsRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="OracleFlexComponentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OracleFlexComponentCollection for mocking. </summary>
         protected OracleFlexComponentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OracleFlexComponentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleFlexComponentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal OracleFlexComponentCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
+            TryGetApiVersion(OracleFlexComponentResource.ResourceType, out string oracleFlexComponentApiVersion);
             _location = location;
-            _oracleFlexComponentFlexComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleFlexComponentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OracleFlexComponentResource.ResourceType, out string oracleFlexComponentFlexComponentsApiVersion);
-            _oracleFlexComponentFlexComponentsRestClient = new FlexComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleFlexComponentFlexComponentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _flexComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleFlexComponentResource.ResourceType.Namespace, Diagnostics);
+            _flexComponentsRestClient = new FlexComponents(_flexComponentsClientDiagnostics, Pipeline, Endpoint, oracleFlexComponentApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get a FlexComponent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FlexComponent. </summary>
         /// <param name="flexComponentName"> The name of the FlexComponent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flexComponentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OracleFlexComponentResource>> GetAsync(string flexComponentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
 
-            using var scope = _oracleFlexComponentFlexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.Get");
+            using DiagnosticScope scope = _flexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oracleFlexComponentFlexComponentsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), flexComponentName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleFlexComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,42 +93,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Get a FlexComponent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FlexComponent. </summary>
         /// <param name="flexComponentName"> The name of the FlexComponent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flexComponentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OracleFlexComponentResource> Get(string flexComponentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
 
-            using var scope = _oracleFlexComponentFlexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.Get");
+            using DiagnosticScope scope = _flexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.Get");
             scope.Start();
             try
             {
-                var response = _oracleFlexComponentFlexComponentsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), flexComponentName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleFlexComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,102 +126,52 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// List FlexComponent resources by SubscriptionLocationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_ListByParent</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="shape"> If provided, filters the results for the given shape. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleFlexComponentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleFlexComponentResource> GetAllAsync(OracleDatabaseSystemShape? shape = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleFlexComponentFlexComponentsRestClient.CreateListByParentRequest(Id.SubscriptionId, new AzureLocation(_location), shape);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleFlexComponentFlexComponentsRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleFlexComponentResource(Client, OracleFlexComponentData.DeserializeOracleFlexComponentData(e)), _oracleFlexComponentFlexComponentsClientDiagnostics, Pipeline, "OracleFlexComponentCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List FlexComponent resources by SubscriptionLocationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_ListByParent</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List FlexComponent resources by SubscriptionLocationResource. </summary>
         /// <param name="shape"> If provided, filters the results for the given shape. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleFlexComponentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleFlexComponentResource> GetAll(OracleDatabaseSystemShape? shape = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleFlexComponentResource> GetAllAsync(OracleDatabaseSystemShape? shape = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleFlexComponentFlexComponentsRestClient.CreateListByParentRequest(Id.SubscriptionId, new AzureLocation(_location), shape);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleFlexComponentFlexComponentsRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleFlexComponentResource(Client, OracleFlexComponentData.DeserializeOracleFlexComponentData(e)), _oracleFlexComponentFlexComponentsClientDiagnostics, Pipeline, "OracleFlexComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentAsyncCollectionResultOfT(_flexComponentsRestClient, Guid.Parse(Id.SubscriptionId), _location, shape.ToString(), context), data => new OracleFlexComponentResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List FlexComponent resources by SubscriptionLocationResource. </summary>
+        /// <param name="shape"> If provided, filters the results for the given shape. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OracleFlexComponentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OracleFlexComponentResource> GetAll(OracleDatabaseSystemShape? shape = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentCollectionResultOfT(_flexComponentsRestClient, Guid.Parse(Id.SubscriptionId), _location, shape.ToString(), context), data => new OracleFlexComponentResource(Client, data));
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="flexComponentName"> The name of the FlexComponent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flexComponentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string flexComponentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
 
-            using var scope = _oracleFlexComponentFlexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.Exists");
+            using DiagnosticScope scope = _flexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _oracleFlexComponentFlexComponentsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), flexComponentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,40 +181,26 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="flexComponentName"> The name of the FlexComponent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flexComponentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string flexComponentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
 
-            using var scope = _oracleFlexComponentFlexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.Exists");
+            using DiagnosticScope scope = _flexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _oracleFlexComponentFlexComponentsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), flexComponentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,42 +210,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="flexComponentName"> The name of the FlexComponent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flexComponentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OracleFlexComponentResource>> GetIfExistsAsync(string flexComponentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
 
-            using var scope = _oracleFlexComponentFlexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.GetIfExists");
+            using DiagnosticScope scope = _flexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oracleFlexComponentFlexComponentsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), flexComponentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleFlexComponentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleFlexComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -339,42 +243,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="flexComponentName"> The name of the FlexComponent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flexComponentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OracleFlexComponentResource> GetIfExists(string flexComponentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
 
-            using var scope = _oracleFlexComponentFlexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.GetIfExists");
+            using DiagnosticScope scope = _flexComponentsClientDiagnostics.CreateScope("OracleFlexComponentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oracleFlexComponentFlexComponentsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), flexComponentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleFlexComponentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleFlexComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,6 +286,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OracleFlexComponentResource> IAsyncEnumerable<OracleFlexComponentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

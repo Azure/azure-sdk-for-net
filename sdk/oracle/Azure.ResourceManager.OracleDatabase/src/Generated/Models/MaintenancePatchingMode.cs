@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct MaintenancePatchingMode : IEquatable<MaintenancePatchingMode>
     {
         private readonly string _value;
+        /// <summary> Rolling patching. </summary>
+        private const string RollingValue = "Rolling";
+        /// <summary> Non Rolling patching. </summary>
+        private const string NonRollingValue = "NonRolling";
 
         /// <summary> Initializes a new instance of <see cref="MaintenancePatchingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MaintenancePatchingMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RollingValue = "Rolling";
-        private const string NonRollingValue = "NonRolling";
+            _value = value;
+        }
 
         /// <summary> Rolling patching. </summary>
         public static MaintenancePatchingMode Rolling { get; } = new MaintenancePatchingMode(RollingValue);
+
         /// <summary> Non Rolling patching. </summary>
         public static MaintenancePatchingMode NonRolling { get; } = new MaintenancePatchingMode(NonRollingValue);
+
         /// <summary> Determines if two <see cref="MaintenancePatchingMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MaintenancePatchingMode left, MaintenancePatchingMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MaintenancePatchingMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MaintenancePatchingMode left, MaintenancePatchingMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenancePatchingMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MaintenancePatchingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MaintenancePatchingMode(string value) => new MaintenancePatchingMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MaintenancePatchingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MaintenancePatchingMode?(string value) => value == null ? null : new MaintenancePatchingMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MaintenancePatchingMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MaintenancePatchingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DisasterRecoveryType : IEquatable<DisasterRecoveryType>
     {
         private readonly string _value;
+        /// <summary> ADG type. </summary>
+        private const string AdgValue = "Adg";
+        /// <summary> Backup based type. </summary>
+        private const string BackupBasedValue = "BackupBased";
 
         /// <summary> Initializes a new instance of <see cref="DisasterRecoveryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DisasterRecoveryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AdgValue = "Adg";
-        private const string BackupBasedValue = "BackupBased";
+            _value = value;
+        }
 
         /// <summary> ADG type. </summary>
         public static DisasterRecoveryType Adg { get; } = new DisasterRecoveryType(AdgValue);
+
         /// <summary> Backup based type. </summary>
         public static DisasterRecoveryType BackupBased { get; } = new DisasterRecoveryType(BackupBasedValue);
+
         /// <summary> Determines if two <see cref="DisasterRecoveryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DisasterRecoveryType left, DisasterRecoveryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DisasterRecoveryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DisasterRecoveryType left, DisasterRecoveryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DisasterRecoveryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DisasterRecoveryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DisasterRecoveryType(string value) => new DisasterRecoveryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DisasterRecoveryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DisasterRecoveryType?(string value) => value == null ? null : new DisasterRecoveryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DisasterRecoveryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DisasterRecoveryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

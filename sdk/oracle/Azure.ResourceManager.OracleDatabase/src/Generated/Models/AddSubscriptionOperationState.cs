@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct AddSubscriptionOperationState : IEquatable<AddSubscriptionOperationState>
     {
         private readonly string _value;
+        /// <summary> Succeeded - State when Add Subscription operation succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Updating - State when Add Subscription operation is being Updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Failed - State when Add Subscription operation failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="AddSubscriptionOperationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AddSubscriptionOperationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string UpdatingValue = "Updating";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Succeeded - State when Add Subscription operation succeeded. </summary>
         public static AddSubscriptionOperationState Succeeded { get; } = new AddSubscriptionOperationState(SucceededValue);
+
         /// <summary> Updating - State when Add Subscription operation is being Updated. </summary>
         public static AddSubscriptionOperationState Updating { get; } = new AddSubscriptionOperationState(UpdatingValue);
+
         /// <summary> Failed - State when Add Subscription operation failed. </summary>
         public static AddSubscriptionOperationState Failed { get; } = new AddSubscriptionOperationState(FailedValue);
+
         /// <summary> Determines if two <see cref="AddSubscriptionOperationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AddSubscriptionOperationState left, AddSubscriptionOperationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AddSubscriptionOperationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AddSubscriptionOperationState left, AddSubscriptionOperationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AddSubscriptionOperationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AddSubscriptionOperationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AddSubscriptionOperationState(string value) => new AddSubscriptionOperationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AddSubscriptionOperationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AddSubscriptionOperationState?(string value) => value == null ? null : new AddSubscriptionOperationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AddSubscriptionOperationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AddSubscriptionOperationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
