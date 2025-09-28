@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="connectedEnvironmentStorageAzureFile"> Storage properties. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppConnectedEnvironmentStorageData"/> instance for mocking. </returns>
-        public static ContainerAppConnectedEnvironmentStorageData ContainerAppConnectedEnvironmentStorageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerAppAzureFileProperties connectedEnvironmentStorageAzureFile = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerAppConnectedEnvironmentStorageData ContainerAppConnectedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAzureFileProperties connectedEnvironmentStorageAzureFile = null)
         {
-            return new ContainerAppConnectedEnvironmentStorageData(
+            return ContainerAppConnectedEnvironmentStorageData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                 new Models.ConnectedEnvironmentStorageProperties()
+                 new ConnectedEnvironmentStorageProperties()
                  {
                      AzureFile = connectedEnvironmentStorageAzureFile
-                 },
-                serializedAdditionalRawData: null);
+                 });
         }
     }
 }

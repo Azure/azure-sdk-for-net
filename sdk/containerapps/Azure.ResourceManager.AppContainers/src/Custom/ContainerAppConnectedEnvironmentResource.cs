@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete]
+        [Obsolete("This method is obsolete and will be removed in a future release")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<ContainerAppConnectedEnvironmentResource>> UpdateAsync(CancellationToken cancellationToken = default)
         {
