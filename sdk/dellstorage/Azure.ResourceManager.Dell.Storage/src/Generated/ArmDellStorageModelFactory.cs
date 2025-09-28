@@ -9,53 +9,54 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Dell.Storage;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDellStorageModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Storage.DellFileSystemData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Storage.DellFileSystemData"/> instance for mocking. </returns>
-        public static DellFileSystemData DellFileSystemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DellFileSystemProperties properties = null, ManagedServiceIdentity identity = null)
+        public static DellFileSystemData DellFileSystemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DellFileSystemProperties properties = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DellFileSystemData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                identity,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DellFileSystemProperties"/>. </summary>
         /// <param name="capacity"> Capacity for Dell Filesystem, Will be received as part of Job Status. </param>
         /// <param name="marketplace"> Marketplace details. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
         /// <param name="delegatedSubnetCidr"> Domain range for the delegated subnet. </param>
-        /// <param name="userEmail"> User Details. </param>
+        /// <param name="userEmail"> User Email. </param>
         /// <param name="fileSystemId"> File system Id of the resource. </param>
         /// <param name="smartConnectFqdn"> Smart Connect FQDN of the resource. </param>
         /// <param name="oneFsUri"> OneFS url. </param>
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
         /// <returns> A new <see cref="Models.DellFileSystemProperties"/> instance for mocking. </returns>
-        public static DellFileSystemProperties DellFileSystemProperties(DellFileSystemCapacity capacity = null, DellFileSystemMarketplaceDetails marketplace = null, DellFileSystemProvisioningState? provisioningState = null, ResourceIdentifier delegatedSubnetId = null, string delegatedSubnetCidr = null, string userEmail = null, string fileSystemId = null, string smartConnectFqdn = null, Uri oneFsUri = null, string dellReferenceNumber = null, DellFileSystemEncryptionProperties encryption = null)
+        public static DellFileSystemProperties DellFileSystemProperties(DellFileSystemCapacity capacity = default, DellFileSystemMarketplaceDetails marketplace = default, DellFileSystemProvisioningState? provisioningState = default, ResourceIdentifier delegatedSubnetId = default, string delegatedSubnetCidr = default, string userEmail = default, string fileSystemId = default, string smartConnectFqdn = default, Uri oneFsUri = default, string dellReferenceNumber = default, DellFileSystemEncryptionProperties encryption = default)
         {
             return new DellFileSystemProperties(
                 capacity,
@@ -63,16 +64,16 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 provisioningState,
                 delegatedSubnetId,
                 delegatedSubnetCidr,
-                userEmail != null ? new DellFileSystemUserDetails(userEmail, serializedAdditionalRawData: null) : null,
+                userEmail is null ? default : new DellFileSystemUserDetails(userEmail, new Dictionary<string, BinaryData>()),
                 fileSystemId,
                 smartConnectFqdn,
                 oneFsUri,
                 dellReferenceNumber,
                 encryption,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DellFileSystemMarketplaceDetails"/>. </summary>
+        /// <summary> MarketplaceDetails of Dell FileSystem resource. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="endDate"> End Date of the subscription. </param>
         /// <param name="termUnit"> Term Unit. </param>
         /// <returns> A new <see cref="Models.DellFileSystemMarketplaceDetails"/> instance for mocking. </returns>
-        public static DellFileSystemMarketplaceDetails DellFileSystemMarketplaceDetails(string marketplaceSubscriptionId = null, string planId = null, string offerId = null, string publisherId = null, string privateOfferId = null, string planName = null, DellFileSystemMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string endDate = null, string termUnit = null)
+        public static DellFileSystemMarketplaceDetails DellFileSystemMarketplaceDetails(string marketplaceSubscriptionId = default, string planId = default, string offerId = default, string publisherId = default, string privateOfferId = default, string planName = default, DellFileSystemMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, string endDate = default, string termUnit = default)
         {
             return new DellFileSystemMarketplaceDetails(
                 marketplaceSubscriptionId,
@@ -95,7 +96,19 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 marketplaceSubscriptionStatus,
                 endDate,
                 termUnit,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the FileSystemResource. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The updatable properties of the FileSystemResource. </param>
+        /// <returns> A new <see cref="Models.DellFileSystemPatch"/> instance for mocking. </returns>
+        public static DellFileSystemPatch DellFileSystemPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, FileSystemResourceUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DellFileSystemPatch(identity, tags, properties, additionalBinaryDataProperties: null);
         }
     }
 }

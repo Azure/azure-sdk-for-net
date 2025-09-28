@@ -9,16 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Dell.Storage;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
-    /// <summary> EncryptionUpdateProperties of Dell FileSystem resource. </summary>
-    public partial class DellFileSystemEncryptionPatchProperties : IJsonModel<DellFileSystemEncryptionPatchProperties>
+    /// <summary> The updatable properties of the FileSystemResource. </summary>
+    public partial class FileSystemResourceUpdateProperties : IJsonModel<FileSystemResourceUpdateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DellFileSystemEncryptionPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileSystemResourceUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,25 +30,25 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DellFileSystemEncryptionPatchProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EncryptionType))
+            if (Optional.IsDefined(DelegatedSubnetId))
             {
-                writer.WritePropertyName("encryptionType"u8);
-                writer.WriteStringValue(EncryptionType.Value.ToString());
+                writer.WritePropertyName("delegatedSubnetId"u8);
+                writer.WriteStringValue(DelegatedSubnetId);
             }
-            if (Optional.IsDefined(KeyUri))
+            if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("keyUrl"u8);
-                writer.WriteStringValue(KeyUri);
+                writer.WritePropertyName("capacity"u8);
+                writer.WriteObjectValue(Capacity, options);
             }
-            if (Optional.IsDefined(EncryptionIdentityProperties))
+            if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryptionIdentityProperties"u8);
-                writer.WriteObjectValue(EncryptionIdentityProperties, options);
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -68,56 +69,60 @@ namespace Azure.ResourceManager.Dell.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DellFileSystemEncryptionPatchProperties IJsonModel<DellFileSystemEncryptionPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FileSystemResourceUpdateProperties IJsonModel<FileSystemResourceUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DellFileSystemEncryptionPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FileSystemResourceUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DellFileSystemEncryptionPatchProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDellFileSystemEncryptionPatchProperties(document.RootElement, options);
+            return DeserializeFileSystemResourceUpdateProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DellFileSystemEncryptionPatchProperties DeserializeDellFileSystemEncryptionPatchProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static FileSystemResourceUpdateProperties DeserializeFileSystemResourceUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DellFileSystemEncryptionType? encryptionType = default;
-            string keyUri = default;
-            DellFileSystemEncryptionIdentityPatchProperties encryptionIdentityProperties = default;
+            ResourceIdentifier delegatedSubnetId = default;
+            DellFileSystemCapacity capacity = default;
+            DellFileSystemEncryptionPatchProperties encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("encryptionType"u8))
+                if (prop.NameEquals("delegatedSubnetId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptionType = new DellFileSystemEncryptionType(prop.Value.GetString());
+                    delegatedSubnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("keyUrl"u8))
-                {
-                    keyUri = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("encryptionIdentityProperties"u8))
+                if (prop.NameEquals("capacity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptionIdentityProperties = DellFileSystemEncryptionIdentityPatchProperties.DeserializeDellFileSystemEncryptionIdentityPatchProperties(prop.Value, options);
+                    capacity = DellFileSystemCapacity.DeserializeDellFileSystemCapacity(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("encryption"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = DellFileSystemEncryptionPatchProperties.DeserializeDellFileSystemEncryptionPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,47 +130,47 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DellFileSystemEncryptionPatchProperties(encryptionType, keyUri, encryptionIdentityProperties, additionalBinaryDataProperties);
+            return new FileSystemResourceUpdateProperties(delegatedSubnetId, capacity, encryption, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DellFileSystemEncryptionPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FileSystemResourceUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDellStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DellFileSystemEncryptionPatchProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DellFileSystemEncryptionPatchProperties IPersistableModel<DellFileSystemEncryptionPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FileSystemResourceUpdateProperties IPersistableModel<FileSystemResourceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DellFileSystemEncryptionPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FileSystemResourceUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeDellFileSystemEncryptionPatchProperties(document.RootElement, options);
+                        return DeserializeFileSystemResourceUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DellFileSystemEncryptionPatchProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DellFileSystemEncryptionPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileSystemResourceUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

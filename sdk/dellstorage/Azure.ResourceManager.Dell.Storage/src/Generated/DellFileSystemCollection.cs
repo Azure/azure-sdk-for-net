@@ -8,90 +8,86 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dell.Storage
 {
     /// <summary>
     /// A class representing a collection of <see cref="DellFileSystemResource"/> and their operations.
-    /// Each <see cref="DellFileSystemResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DellFileSystemCollection"/> instance call the GetDellFileSystems method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DellFileSystemResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DellFileSystemCollection"/> instance call the GetDellFileSystems method from an instance of the parent resource.
     /// </summary>
     public partial class DellFileSystemCollection : ArmCollection, IEnumerable<DellFileSystemResource>, IAsyncEnumerable<DellFileSystemResource>
     {
-        private readonly ClientDiagnostics _dellFileSystemFileSystemsClientDiagnostics;
-        private readonly FileSystemsRestOperations _dellFileSystemFileSystemsRestClient;
+        private readonly ClientDiagnostics _fileSystemsClientDiagnostics;
+        private readonly FileSystems _fileSystemsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DellFileSystemCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DellFileSystemCollection for mocking. </summary>
         protected DellFileSystemCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DellFileSystemCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DellFileSystemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dellFileSystemFileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", DellFileSystemResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DellFileSystemResource.ResourceType, out string dellFileSystemFileSystemsApiVersion);
-            _dellFileSystemFileSystemsRestClient = new FileSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dellFileSystemFileSystemsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DellFileSystemResource.ResourceType, out string dellFileSystemApiVersion);
+            _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", DellFileSystemResource.ResourceType.Namespace, Diagnostics);
+            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Endpoint, dellFileSystemApiVersion ?? "2025-03-21-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Create a FileSystemResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a FileSystemResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DellFileSystemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string filesystemName, DellFileSystemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filesystemName, nameof(filesystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dellFileSystemFileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dellFileSystemFileSystemsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<DellFileSystemResource>(new DellFileSystemOperationSource(Client), _dellFileSystemFileSystemsClientDiagnostics, Pipeline, _dellFileSystemFileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, DellFileSystemData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                StorageArmOperation<DellFileSystemResource> operation = new StorageArmOperation<DellFileSystemResource>(
+                    new DellFileSystemOperationSource(Client),
+                    _fileSystemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -101,46 +97,39 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Create a FileSystemResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a FileSystemResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DellFileSystemResource> CreateOrUpdate(WaitUntil waitUntil, string filesystemName, DellFileSystemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filesystemName, nameof(filesystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dellFileSystemFileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dellFileSystemFileSystemsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, data, cancellationToken);
-                var operation = new StorageArmOperation<DellFileSystemResource>(new DellFileSystemOperationSource(Client), _dellFileSystemFileSystemsClientDiagnostics, Pipeline, _dellFileSystemFileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, DellFileSystemData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageArmOperation<DellFileSystemResource> operation = new StorageArmOperation<DellFileSystemResource>(
+                    new DellFileSystemOperationSource(Client),
+                    _fileSystemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,42 +139,30 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Get a FileSystemResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FileSystemResource. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DellFileSystemResource>> GetAsync(string filesystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filesystemName, nameof(filesystemName));
 
-            using var scope = _dellFileSystemFileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.Get");
+            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dellFileSystemFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DellFileSystemData> response = Response.FromValue(DellFileSystemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DellFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,42 +172,30 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Get a FileSystemResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FileSystemResource. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DellFileSystemResource> Get(string filesystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filesystemName, nameof(filesystemName));
 
-            using var scope = _dellFileSystemFileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.Get");
+            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.Get");
             scope.Start();
             try
             {
-                var response = _dellFileSystemFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DellFileSystemData> response = Response.FromValue(DellFileSystemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DellFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +205,50 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// List FileSystemResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List FileSystemResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DellFileSystemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dellFileSystemFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dellFileSystemFileSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DellFileSystemResource(Client, DellFileSystemData.DeserializeDellFileSystemData(e)), _dellFileSystemFileSystemsClientDiagnostics, Pipeline, "DellFileSystemCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupAsyncCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DellFileSystemResource(Client, data));
         }
 
-        /// <summary>
-        /// List FileSystemResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List FileSystemResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DellFileSystemResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dellFileSystemFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dellFileSystemFileSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DellFileSystemResource(Client, DellFileSystemData.DeserializeDellFileSystemData(e)), _dellFileSystemFileSystemsClientDiagnostics, Pipeline, "DellFileSystemCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DellFileSystemResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string filesystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filesystemName, nameof(filesystemName));
 
-            using var scope = _dellFileSystemFileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.Exists");
+            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dellFileSystemFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DellFileSystemData> response = Response.FromValue(DellFileSystemData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,40 +258,26 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string filesystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filesystemName, nameof(filesystemName));
 
-            using var scope = _dellFileSystemFileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.Exists");
+            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dellFileSystemFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DellFileSystemData> response = Response.FromValue(DellFileSystemData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,42 +287,30 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DellFileSystemResource>> GetIfExistsAsync(string filesystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filesystemName, nameof(filesystemName));
 
-            using var scope = _dellFileSystemFileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.GetIfExists");
+            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dellFileSystemFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DellFileSystemData> response = Response.FromValue(DellFileSystemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DellFileSystemResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DellFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,42 +320,30 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DellFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DellFileSystemResource> GetIfExists(string filesystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filesystemName, nameof(filesystemName));
 
-            using var scope = _dellFileSystemFileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.GetIfExists");
+            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("DellFileSystemCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dellFileSystemFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, filesystemName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DellFileSystemData> response = Response.FromValue(DellFileSystemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DellFileSystemResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DellFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +363,7 @@ namespace Azure.ResourceManager.Dell.Storage
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DellFileSystemResource> IAsyncEnumerable<DellFileSystemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
