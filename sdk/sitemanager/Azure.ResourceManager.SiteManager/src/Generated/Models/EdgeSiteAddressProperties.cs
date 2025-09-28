@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SiteManager.Models
 {
     /// <summary> Site address properties. </summary>
-    public partial class SiteAddressProperties
+    public partial class EdgeSiteAddressProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SiteAddressProperties"/>. </summary>
-        public SiteAddressProperties()
+        /// <summary> Initializes a new instance of <see cref="EdgeSiteAddressProperties"/>. </summary>
+        public EdgeSiteAddressProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SiteAddressProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSiteAddressProperties"/>. </summary>
         /// <param name="streetAddress1"> First line of the street address. </param>
         /// <param name="streetAddress2"> Second line of the street address. </param>
         /// <param name="city"> City of the address. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// <param name="country"> Country of the address. </param>
         /// <param name="postalCode"> Postal or ZIP code of the address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteAddressProperties(string streetAddress1, string streetAddress2, string city, string stateOrProvince, string country, string postalCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeSiteAddressProperties(string streetAddress1, string streetAddress2, string city, string stateOrProvince, string country, string postalCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StreetAddress1 = streetAddress1;
             StreetAddress2 = streetAddress2;

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SiteManager.Models
 {
-    public partial class SiteAddressProperties : IUtf8JsonSerializable, IJsonModel<SiteAddressProperties>
+    public partial class EdgeSiteAddressProperties : IUtf8JsonSerializable, IJsonModel<EdgeSiteAddressProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteAddressProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeSiteAddressProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SiteAddressProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeSiteAddressProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteAddressProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeSiteAddressProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(StreetAddress1))
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.SiteManager.Models
             }
         }
 
-        SiteAddressProperties IJsonModel<SiteAddressProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EdgeSiteAddressProperties IJsonModel<EdgeSiteAddressProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteAddressProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeSiteAddressProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSiteAddressProperties(document.RootElement, options);
+            return DeserializeEdgeSiteAddressProperties(document.RootElement, options);
         }
 
-        internal static SiteAddressProperties DeserializeSiteAddressProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EdgeSiteAddressProperties DeserializeEdgeSiteAddressProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SiteManager.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SiteAddressProperties(
+            return new EdgeSiteAddressProperties(
                 streetAddress1,
                 streetAddress2,
                 city,
@@ -157,35 +157,35 @@ namespace Azure.ResourceManager.SiteManager.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SiteAddressProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EdgeSiteAddressProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSiteManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SiteAddressProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeSiteAddressProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SiteAddressProperties IPersistableModel<SiteAddressProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EdgeSiteAddressProperties IPersistableModel<EdgeSiteAddressProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSiteAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSiteAddressProperties(document.RootElement, options);
+                        return DeserializeEdgeSiteAddressProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteAddressProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeSiteAddressProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SiteAddressProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeSiteAddressProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
