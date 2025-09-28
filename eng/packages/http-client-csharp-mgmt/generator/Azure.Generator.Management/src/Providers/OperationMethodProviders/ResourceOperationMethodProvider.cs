@@ -170,7 +170,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.NonDocumentComment);
         }
 
-        protected virtual TryExpression BuildTryExpression()
+        private TryExpression BuildTryExpression()
         {
             var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
 
