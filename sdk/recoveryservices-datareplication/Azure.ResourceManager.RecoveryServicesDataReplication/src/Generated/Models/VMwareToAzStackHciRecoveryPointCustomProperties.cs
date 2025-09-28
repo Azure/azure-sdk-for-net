@@ -7,27 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMware to AzStackHCI recovery point model custom properties. </summary>
-    public partial class VMwareToAzStackHciRecoveryPointCustomProperties : DataReplicationRecoveryPointCustomProperties
+    internal partial class VMwareToAzStackHCIRecoveryPointCustomProperties : DataReplicationRecoveryPointCustomProperties
     {
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciRecoveryPointCustomProperties"/>. </summary>
-        internal VMwareToAzStackHciRecoveryPointCustomProperties()
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIRecoveryPointCustomProperties"/>. </summary>
+        internal VMwareToAzStackHCIRecoveryPointCustomProperties() : base("VMwareToAzStackHCIRecoveryPointModelCustomProperties")
         {
             DiskIds = new ChangeTrackingList<string>();
-            InstanceType = "VMwareToAzStackHCIRecoveryPointModelCustomProperties";
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciRecoveryPointCustomProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIRecoveryPointCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationRecoveryPointCustomProperties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskIds"> Gets or sets the list of the disk Ids. </param>
-        internal VMwareToAzStackHciRecoveryPointCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<string> diskIds) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareToAzStackHCIRecoveryPointCustomProperties(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<string> diskIds) : base(instanceType, additionalBinaryDataProperties)
         {
             DiskIds = diskIds;
-            InstanceType = instanceType ?? "VMwareToAzStackHCIRecoveryPointModelCustomProperties";
         }
 
         /// <summary> Gets or sets the list of the disk Ids. </summary>

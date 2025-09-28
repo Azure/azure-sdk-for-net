@@ -7,45 +7,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Vault model update. </summary>
-    public partial class DataReplicationVaultPatch : ResourceData
+    public partial class DataReplicationVaultPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationVaultPatch"/>. </summary>
         public DataReplicationVaultPatch()
@@ -54,27 +25,45 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationVaultPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <param name="properties"> Vault properties. </param>
-        /// <param name="identity"> Vault identity. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, DataReplicationVaultProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="identity"> Vault identity. </param>
+        /// <param name="id"> Gets or sets the Id of the resource. </param>
+        /// <param name="name"> Gets or sets the name of the resource. </param>
+        /// <param name="type"> Gets or sets the type of the resource. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationVaultPatch(IDictionary<string, string> tags, DataReplicationVaultProperties properties, VaultIdentityModel identity, string id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Id = id;
+            Name = name;
+            Type = @type;
+            SystemData = systemData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Vault properties. </summary>
         public DataReplicationVaultProperties Properties { get; set; }
-        /// <summary> Vault identity. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Vault identity. </summary>
+        public VaultIdentityModel Identity { get; set; }
+
+        /// <summary> Gets or sets the Id of the resource. </summary>
+        public string Id { get; }
+
+        /// <summary> Gets or sets the name of the resource. </summary>
+        public string Name { get; }
+
+        /// <summary> Gets or sets the type of the resource. </summary>
+        public string Type { get; }
+
+        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
+        public SystemData SystemData { get; }
     }
 }

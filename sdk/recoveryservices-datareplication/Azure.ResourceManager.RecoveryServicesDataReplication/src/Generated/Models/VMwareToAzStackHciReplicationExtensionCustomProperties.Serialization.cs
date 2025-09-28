@@ -10,14 +10,21 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class VMwareToAzStackHciReplicationExtensionCustomProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHciReplicationExtensionCustomProperties>
+    /// <summary> VMware to AzStackHCI Replication extension model custom properties. </summary>
+    public partial class VMwareToAzStackHCIReplicationExtensionCustomProperties : IJsonModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciReplicationExtensionCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIReplicationExtensionCustomProperties"/> for deserialization. </summary>
+        internal VMwareToAzStackHCIReplicationExtensionCustomProperties()
+        {
+        }
 
-        void IJsonModel<VMwareToAzStackHciReplicationExtensionCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciReplicationExtensionCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciReplicationExtensionCustomProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHCIReplicationExtensionCustomProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("vmwareFabricArmId"u8);
             writer.WriteStringValue(VmwareFabricArmId);
@@ -111,26 +117,33 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        VMwareToAzStackHciReplicationExtensionCustomProperties IJsonModel<VMwareToAzStackHciReplicationExtensionCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareToAzStackHCIReplicationExtensionCustomProperties IJsonModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VMwareToAzStackHCIReplicationExtensionCustomProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReplicationExtensionCustomProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciReplicationExtensionCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciReplicationExtensionCustomProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHCIReplicationExtensionCustomProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMwareToAzStackHciReplicationExtensionCustomProperties(document.RootElement, options);
+            return DeserializeVMwareToAzStackHCIReplicationExtensionCustomProperties(document.RootElement, options);
         }
 
-        internal static VMwareToAzStackHciReplicationExtensionCustomProperties DeserializeVMwareToAzStackHciReplicationExtensionCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VMwareToAzStackHCIReplicationExtensionCustomProperties DeserializeVMwareToAzStackHCIReplicationExtensionCustomProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "VMwareToAzStackHCI";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier vmwareFabricArmId = default;
             ResourceIdentifier vmwareSiteId = default;
             ResourceIdentifier azStackHciFabricArmId = default;
@@ -147,125 +160,121 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string resourceLocation = default;
             string subscriptionId = default;
             string resourceGroup = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vmwareFabricArmId"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    vmwareFabricArmId = new ResourceIdentifier(property.Value.GetString());
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmwareSiteId"u8))
+                if (prop.NameEquals("vmwareFabricArmId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    vmwareFabricArmId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("vmwareSiteId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmwareSiteId = new ResourceIdentifier(property.Value.GetString());
+                    vmwareSiteId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("azStackHciFabricArmId"u8))
+                if (prop.NameEquals("azStackHciFabricArmId"u8))
                 {
-                    azStackHciFabricArmId = new ResourceIdentifier(property.Value.GetString());
+                    azStackHciFabricArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("azStackHciSiteId"u8))
+                if (prop.NameEquals("azStackHciSiteId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azStackHciSiteId = new ResourceIdentifier(property.Value.GetString());
+                    azStackHciSiteId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountId"u8))
+                if (prop.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = property.Value.GetString();
+                    storageAccountId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccountSasSecretName"u8))
+                if (prop.NameEquals("storageAccountSasSecretName"u8))
                 {
-                    storageAccountSasSecretName = property.Value.GetString();
+                    storageAccountSasSecretName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("asrServiceUri"u8))
+                if (prop.NameEquals("asrServiceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    asrServiceUri = new Uri(property.Value.GetString());
+                    asrServiceUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rcmServiceUri"u8))
+                if (prop.NameEquals("rcmServiceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rcmServiceUri = new Uri(property.Value.GetString());
+                    rcmServiceUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("gatewayServiceUri"u8))
+                if (prop.NameEquals("gatewayServiceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gatewayServiceUri = new Uri(property.Value.GetString());
+                    gatewayServiceUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceGatewayServiceId"u8))
+                if (prop.NameEquals("sourceGatewayServiceId"u8))
                 {
-                    sourceGatewayServiceId = property.Value.GetString();
+                    sourceGatewayServiceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetGatewayServiceId"u8))
+                if (prop.NameEquals("targetGatewayServiceId"u8))
                 {
-                    targetGatewayServiceId = property.Value.GetString();
+                    targetGatewayServiceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceStorageContainerName"u8))
+                if (prop.NameEquals("sourceStorageContainerName"u8))
                 {
-                    sourceStorageContainerName = property.Value.GetString();
+                    sourceStorageContainerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetStorageContainerName"u8))
+                if (prop.NameEquals("targetStorageContainerName"u8))
                 {
-                    targetStorageContainerName = property.Value.GetString();
+                    targetStorageContainerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"u8))
+                if (prop.NameEquals("resourceLocation"u8))
                 {
-                    resourceLocation = property.Value.GetString();
+                    resourceLocation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"u8))
+                if (prop.NameEquals("resourceGroup"u8))
                 {
-                    resourceGroup = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
+                    resourceGroup = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new VMwareToAzStackHciReplicationExtensionCustomProperties(
+            return new VMwareToAzStackHCIReplicationExtensionCustomProperties(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 vmwareFabricArmId,
                 vmwareSiteId,
                 azStackHciFabricArmId,
@@ -284,35 +293,44 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 resourceGroup);
         }
 
-        BinaryData IPersistableModel<VMwareToAzStackHciReplicationExtensionCustomProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciReplicationExtensionCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciReplicationExtensionCustomProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHCIReplicationExtensionCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VMwareToAzStackHciReplicationExtensionCustomProperties IPersistableModel<VMwareToAzStackHciReplicationExtensionCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciReplicationExtensionCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareToAzStackHCIReplicationExtensionCustomProperties IPersistableModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (VMwareToAzStackHCIReplicationExtensionCustomProperties)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReplicationExtensionCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVMwareToAzStackHciReplicationExtensionCustomProperties(document.RootElement, options);
+                        return DeserializeVMwareToAzStackHCIReplicationExtensionCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciReplicationExtensionCustomProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHCIReplicationExtensionCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VMwareToAzStackHciReplicationExtensionCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VMwareToAzStackHCIReplicationExtensionCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

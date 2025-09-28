@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class DataReplicationFabricAgentProperties : IUtf8JsonSerializable, IJsonModel<DataReplicationFabricAgentProperties>
+    /// <summary> Fabric agent model properties. </summary>
+    public partial class DataReplicationFabricAgentProperties : IJsonModel<DataReplicationFabricAgentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationFabricAgentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataReplicationFabricAgentProperties"/> for deserialization. </summary>
+        internal DataReplicationFabricAgentProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationFabricAgentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationFabricAgentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationFabricAgentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataReplicationFabricAgentProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
@@ -71,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in HealthErrors)
+                foreach (DataReplicationHealthErrorInfo item in HealthErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -79,15 +84,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("customProperties"u8);
             writer.WriteObjectValue(CustomProperties, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +101,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        DataReplicationFabricAgentProperties IJsonModel<DataReplicationFabricAgentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataReplicationFabricAgentProperties IJsonModel<DataReplicationFabricAgentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataReplicationFabricAgentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationFabricAgentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationFabricAgentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataReplicationFabricAgentProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataReplicationFabricAgentProperties(document.RootElement, options);
         }
 
-        internal static DataReplicationFabricAgentProperties DeserializeDataReplicationFabricAgentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataReplicationFabricAgentProperties DeserializeDataReplicationFabricAgentProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -122,97 +132,95 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DataReplicationIdentity authenticationIdentity = default;
             DataReplicationIdentity resourceAccessIdentity = default;
             bool? isResponsive = default;
-            DateTimeOffset? lastHeartbeat = default;
+            DateTimeOffset? lastHeartbeatOn = default;
             string versionNumber = default;
             DataReplicationProvisioningState? provisioningState = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             DataReplicationFabricAgentCustomProperties customProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("correlationId"u8))
+                if (prop.NameEquals("correlationId"u8))
                 {
-                    correlationId = property.Value.GetString();
+                    correlationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineId"u8))
+                if (prop.NameEquals("machineId"u8))
                 {
-                    machineId = property.Value.GetString();
+                    machineId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineName"u8))
+                if (prop.NameEquals("machineName"u8))
                 {
-                    machineName = property.Value.GetString();
+                    machineName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationIdentity"u8))
+                if (prop.NameEquals("authenticationIdentity"u8))
                 {
-                    authenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
+                    authenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resourceAccessIdentity"u8))
+                if (prop.NameEquals("resourceAccessIdentity"u8))
                 {
-                    resourceAccessIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
+                    resourceAccessIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("isResponsive"u8))
+                if (prop.NameEquals("isResponsive"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isResponsive = property.Value.GetBoolean();
+                    isResponsive = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"u8))
+                if (prop.NameEquals("lastHeartbeat"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastHeartbeat = property.Value.GetDateTimeOffset("O");
+                    lastHeartbeatOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("versionNumber"u8))
+                if (prop.NameEquals("versionNumber"u8))
                 {
-                    versionNumber = property.Value.GetString();
+                    versionNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DataReplicationProvisioningState(property.Value.GetString());
+                    provisioningState = new DataReplicationProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthErrors"u8))
+                if (prop.NameEquals("healthErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("customProperties"u8))
+                if (prop.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationFabricAgentCustomProperties.DeserializeDataReplicationFabricAgentCustomProperties(property.Value, options);
+                    customProperties = DataReplicationFabricAgentCustomProperties.DeserializeDataReplicationFabricAgentCustomProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataReplicationFabricAgentProperties(
                 correlationId,
                 machineId,
@@ -220,18 +228,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 authenticationIdentity,
                 resourceAccessIdentity,
                 isResponsive,
-                lastHeartbeat,
+                lastHeartbeatOn,
                 versionNumber,
                 provisioningState,
                 healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
                 customProperties,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataReplicationFabricAgentProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationFabricAgentProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataReplicationFabricAgentProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationFabricAgentProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -241,15 +252,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        DataReplicationFabricAgentProperties IPersistableModel<DataReplicationFabricAgentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationFabricAgentProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataReplicationFabricAgentProperties IPersistableModel<DataReplicationFabricAgentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataReplicationFabricAgentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationFabricAgentProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataReplicationFabricAgentProperties(document.RootElement, options);
                     }
                 default:
@@ -257,6 +273,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataReplicationFabricAgentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

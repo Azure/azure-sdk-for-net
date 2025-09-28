@@ -8,89 +8,86 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// A class representing a collection of <see cref="DataReplicationExtensionResource"/> and their operations.
-    /// Each <see cref="DataReplicationExtensionResource"/> in the collection will belong to the same instance of <see cref="DataReplicationVaultResource"/>.
-    /// To get a <see cref="DataReplicationExtensionCollection"/> instance call the GetDataReplicationExtensions method from an instance of <see cref="DataReplicationVaultResource"/>.
+    /// Each <see cref="DataReplicationExtensionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DataReplicationExtensionCollection"/> instance call the GetDataReplicationExtensions method from an instance of the parent resource.
     /// </summary>
     public partial class DataReplicationExtensionCollection : ArmCollection, IEnumerable<DataReplicationExtensionResource>, IAsyncEnumerable<DataReplicationExtensionResource>
     {
-        private readonly ClientDiagnostics _dataReplicationExtensionReplicationExtensionClientDiagnostics;
-        private readonly ReplicationExtensionRestOperations _dataReplicationExtensionReplicationExtensionRestClient;
+        private readonly ClientDiagnostics _replicationExtensionClientDiagnostics;
+        private readonly ReplicationExtension _replicationExtensionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationExtensionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataReplicationExtensionCollection for mocking. </summary>
         protected DataReplicationExtensionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationExtensionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationExtensionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationExtensionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataReplicationExtensionReplicationExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationExtensionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataReplicationExtensionResource.ResourceType, out string dataReplicationExtensionReplicationExtensionApiVersion);
-            _dataReplicationExtensionReplicationExtensionRestClient = new ReplicationExtensionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationExtensionReplicationExtensionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataReplicationExtensionResource.ResourceType, out string dataReplicationExtensionApiVersion);
+            _replicationExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationExtensionResource.ResourceType.Namespace, Diagnostics);
+            _replicationExtensionRestClient = new ReplicationExtension(_replicationExtensionClientDiagnostics, Pipeline, Endpoint, dataReplicationExtensionApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DataReplicationVaultResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Creates the replication extension in the given vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Creates the replication extension in the given vault. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="data"> Replication extension model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DataReplicationExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string replicationExtensionName, DataReplicationExtensionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _replicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataReplicationExtensionReplicationExtensionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(new DataReplicationExtensionOperationSource(Client), _dataReplicationExtensionReplicationExtensionClientDiagnostics, Pipeline, _dataReplicationExtensionReplicationExtensionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, DataReplicationExtensionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(
+                    new DataReplicationExtensionOperationSource(Client),
+                    _replicationExtensionClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -100,46 +97,39 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Creates the replication extension in the given vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Creates the replication extension in the given vault. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="data"> Replication extension model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DataReplicationExtensionResource> CreateOrUpdate(WaitUntil waitUntil, string replicationExtensionName, DataReplicationExtensionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _replicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataReplicationExtensionReplicationExtensionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, data, cancellationToken);
-                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(new DataReplicationExtensionOperationSource(Client), _dataReplicationExtensionReplicationExtensionClientDiagnostics, Pipeline, _dataReplicationExtensionReplicationExtensionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, DataReplicationExtensionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(
+                    new DataReplicationExtensionOperationSource(Client),
+                    _replicationExtensionClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -149,42 +139,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Gets the details of the replication extension.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the replication extension. </summary>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataReplicationExtensionResource>> GetAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
 
-            using var scope = _dataReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.Get");
+            using DiagnosticScope scope = _replicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataReplicationExtensionReplicationExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationExtensionData> response = Response.FromValue(DataReplicationExtensionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,42 +172,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Gets the details of the replication extension.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the replication extension. </summary>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataReplicationExtensionResource> Get(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
 
-            using var scope = _dataReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.Get");
+            using DiagnosticScope scope = _replicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataReplicationExtensionReplicationExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationExtensionData> response = Response.FromValue(DataReplicationExtensionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,100 +205,50 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Gets the list of replication extensions in the given vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the list of replication extensions in the given vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationExtensionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationExtensionReplicationExtensionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationExtensionReplicationExtensionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationExtensionResource(Client, DataReplicationExtensionData.DeserializeDataReplicationExtensionData(e)), _dataReplicationExtensionReplicationExtensionClientDiagnostics, Pipeline, "DataReplicationExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllAsyncCollectionResultOfT(_replicationExtensionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationExtensionResource(Client, data));
         }
 
-        /// <summary>
-        /// Gets the list of replication extensions in the given vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the list of replication extensions in the given vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataReplicationExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationExtensionReplicationExtensionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationExtensionReplicationExtensionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationExtensionResource(Client, DataReplicationExtensionData.DeserializeDataReplicationExtensionData(e)), _dataReplicationExtensionReplicationExtensionClientDiagnostics, Pipeline, "DataReplicationExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllCollectionResultOfT(_replicationExtensionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationExtensionResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
 
-            using var scope = _dataReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.Exists");
+            using DiagnosticScope scope = _replicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataReplicationExtensionReplicationExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationExtensionData> response = Response.FromValue(DataReplicationExtensionData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -342,40 +258,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
 
-            using var scope = _dataReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.Exists");
+            using DiagnosticScope scope = _replicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataReplicationExtensionReplicationExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationExtensionData> response = Response.FromValue(DataReplicationExtensionData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -385,42 +287,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataReplicationExtensionResource>> GetIfExistsAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
 
-            using var scope = _dataReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataReplicationExtensionReplicationExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationExtensionData> response = Response.FromValue(DataReplicationExtensionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataReplicationExtensionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -430,42 +320,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataReplicationExtensionResource> GetIfExists(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
 
-            using var scope = _dataReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationExtensionClientDiagnostics.CreateScope("DataReplicationExtensionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataReplicationExtensionReplicationExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationExtensionData> response = Response.FromValue(DataReplicationExtensionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataReplicationExtensionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +363,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataReplicationExtensionResource> IAsyncEnumerable<DataReplicationExtensionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

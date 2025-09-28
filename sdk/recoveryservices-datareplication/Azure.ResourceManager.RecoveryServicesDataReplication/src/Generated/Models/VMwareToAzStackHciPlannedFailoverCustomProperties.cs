@@ -14,29 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public partial class VMwareToAzStackHciPlannedFailoverCustomProperties : PlannedFailoverCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPlannedFailoverCustomProperties"/>. </summary>
-        /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
-        public VMwareToAzStackHciPlannedFailoverCustomProperties(bool shutdownSourceVm)
+        /// <param name="shutdownSourceVM"> Gets or sets a value indicating whether VM needs to be shut down. </param>
+        public VMwareToAzStackHciPlannedFailoverCustomProperties(bool shutdownSourceVM) : base("VMwareToAzStackHCI")
         {
-            ShutdownSourceVm = shutdownSourceVm;
-            InstanceType = "VMwareToAzStackHCI";
+            ShutdownSourceVM = shutdownSourceVM;
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPlannedFailoverCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for PlannedFailoverCustomProperties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
-        internal VMwareToAzStackHciPlannedFailoverCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool shutdownSourceVm) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="shutdownSourceVM"> Gets or sets a value indicating whether VM needs to be shut down. </param>
+        internal VMwareToAzStackHciPlannedFailoverCustomProperties(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool shutdownSourceVM) : base(instanceType, additionalBinaryDataProperties)
         {
-            ShutdownSourceVm = shutdownSourceVm;
-            InstanceType = instanceType ?? "VMwareToAzStackHCI";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPlannedFailoverCustomProperties"/> for deserialization. </summary>
-        internal VMwareToAzStackHciPlannedFailoverCustomProperties()
-        {
+            ShutdownSourceVM = shutdownSourceVM;
         }
 
         /// <summary> Gets or sets a value indicating whether VM needs to be shut down. </summary>
-        public bool ShutdownSourceVm { get; set; }
+        public bool ShutdownSourceVM { get; set; }
     }
 }

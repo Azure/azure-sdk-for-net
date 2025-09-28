@@ -7,54 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Fabric agent model properties. </summary>
     public partial class DataReplicationFabricAgentProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationFabricAgentProperties"/>. </summary>
         /// <param name="machineId"> Gets or sets the machine Id where fabric agent is running. </param>
         /// <param name="machineName"> Gets or sets the machine name where fabric agent is running. </param>
         /// <param name="authenticationIdentity"> Identity model. </param>
         /// <param name="resourceAccessIdentity"> Identity model. </param>
-        /// <param name="customProperties">
-        /// Fabric agent model custom properties.
-        /// Please note <see cref="DataReplicationFabricAgentCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareFabricAgentCustomProperties"/>.
-        /// </param>
+        /// <param name="customProperties"> Fabric agent model custom properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineId"/>, <paramref name="machineName"/>, <paramref name="authenticationIdentity"/>, <paramref name="resourceAccessIdentity"/> or <paramref name="customProperties"/> is null. </exception>
         public DataReplicationFabricAgentProperties(string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, DataReplicationFabricAgentCustomProperties customProperties)
         {
@@ -83,13 +51,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="versionNumber"> Gets or sets the fabric agent version. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the fabric agent. </param>
         /// <param name="healthErrors"> Gets or sets the list of health errors. </param>
-        /// <param name="customProperties">
-        /// Fabric agent model custom properties.
-        /// Please note <see cref="DataReplicationFabricAgentCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareFabricAgentCustomProperties"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationFabricAgentProperties(string correlationId, string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, bool? isResponsive, DateTimeOffset? lastHeartbeatOn, string versionNumber, DataReplicationProvisioningState? provisioningState, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DataReplicationFabricAgentCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="customProperties"> Fabric agent model custom properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationFabricAgentProperties(string correlationId, string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, bool? isResponsive, DateTimeOffset? lastHeartbeatOn, string versionNumber, DataReplicationProvisioningState? provisioningState, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DataReplicationFabricAgentCustomProperties customProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CorrelationId = correlationId;
             MachineId = machineId;
@@ -102,39 +66,53 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ProvisioningState = provisioningState;
             HealthErrors = healthErrors;
             CustomProperties = customProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataReplicationFabricAgentProperties"/> for deserialization. </summary>
-        internal DataReplicationFabricAgentProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the fabric agent correlation Id. </summary>
         public string CorrelationId { get; }
+
         /// <summary> Gets or sets the machine Id where fabric agent is running. </summary>
         public string MachineId { get; set; }
+
         /// <summary> Gets or sets the machine name where fabric agent is running. </summary>
         public string MachineName { get; set; }
+
         /// <summary> Identity model. </summary>
         public DataReplicationIdentity AuthenticationIdentity { get; set; }
+
         /// <summary> Identity model. </summary>
         public DataReplicationIdentity ResourceAccessIdentity { get; set; }
+
         /// <summary> Gets or sets a value indicating whether the fabric agent is responsive. </summary>
         public bool? IsResponsive { get; }
+
         /// <summary> Gets or sets the time when last heartbeat was sent by the fabric agent. </summary>
         public DateTimeOffset? LastHeartbeatOn { get; }
+
         /// <summary> Gets or sets the fabric agent version. </summary>
         public string VersionNumber { get; }
+
         /// <summary> Gets or sets the provisioning state of the fabric agent. </summary>
         public DataReplicationProvisioningState? ProvisioningState { get; }
+
         /// <summary> Gets or sets the list of health errors. </summary>
         public IReadOnlyList<DataReplicationHealthErrorInfo> HealthErrors { get; }
-        /// <summary>
-        /// Fabric agent model custom properties.
-        /// Please note <see cref="DataReplicationFabricAgentCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareFabricAgentCustomProperties"/>.
-        /// </summary>
-        public DataReplicationFabricAgentCustomProperties CustomProperties { get; set; }
+
+        /// <summary> Fabric agent model custom properties. </summary>
+        internal DataReplicationFabricAgentCustomProperties CustomProperties { get; set; }
+
+        /// <summary> Discriminator property for DataReplicationFabricAgentCustomProperties. </summary>
+        internal string CustomInstanceType
+        {
+            get
+            {
+                return CustomProperties is null ? default : CustomProperties.InstanceType;
+            }
+            set
+            {
+                CustomProperties = new Models.DataReplicationFabricAgentCustomProperties(value);
+            }
+        }
     }
 }

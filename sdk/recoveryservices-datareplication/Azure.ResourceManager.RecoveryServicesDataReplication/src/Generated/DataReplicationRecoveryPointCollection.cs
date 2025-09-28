@@ -8,85 +8,77 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// A class representing a collection of <see cref="DataReplicationRecoveryPointResource"/> and their operations.
-    /// Each <see cref="DataReplicationRecoveryPointResource"/> in the collection will belong to the same instance of <see cref="DataReplicationProtectedItemResource"/>.
-    /// To get a <see cref="DataReplicationRecoveryPointCollection"/> instance call the GetDataReplicationRecoveryPoints method from an instance of <see cref="DataReplicationProtectedItemResource"/>.
+    /// Each <see cref="DataReplicationRecoveryPointResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DataReplicationRecoveryPointCollection"/> instance call the GetDataReplicationRecoveryPoints method from an instance of the parent resource.
     /// </summary>
     public partial class DataReplicationRecoveryPointCollection : ArmCollection, IEnumerable<DataReplicationRecoveryPointResource>, IAsyncEnumerable<DataReplicationRecoveryPointResource>
     {
-        private readonly ClientDiagnostics _dataReplicationRecoveryPointRecoveryPointClientDiagnostics;
-        private readonly RecoveryPointRestOperations _dataReplicationRecoveryPointRecoveryPointRestClient;
+        private readonly ClientDiagnostics _recoveryPointClientDiagnostics;
+        private readonly RecoveryPoint _recoveryPointRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationRecoveryPointCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataReplicationRecoveryPointCollection for mocking. </summary>
         protected DataReplicationRecoveryPointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationRecoveryPointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationRecoveryPointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataReplicationRecoveryPointRecoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataReplicationRecoveryPointResource.ResourceType, out string dataReplicationRecoveryPointRecoveryPointApiVersion);
-            _dataReplicationRecoveryPointRecoveryPointRestClient = new RecoveryPointRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationRecoveryPointRecoveryPointApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataReplicationRecoveryPointResource.ResourceType, out string dataReplicationRecoveryPointApiVersion);
+            _recoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationRecoveryPointResource.ResourceType.Namespace, Diagnostics);
+            _recoveryPointRestClient = new RecoveryPoint(_recoveryPointClientDiagnostics, Pipeline, Endpoint, dataReplicationRecoveryPointApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DataReplicationProtectedItemResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationProtectedItemResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Gets the details of the recovery point of a protected item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPointModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the recovery point of a protected item. </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataReplicationRecoveryPointResource>> GetAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
 
-            using var scope = _dataReplicationRecoveryPointRecoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.Get");
+            using DiagnosticScope scope = _recoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataReplicationRecoveryPointRecoveryPointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationRecoveryPointData> response = Response.FromValue(DataReplicationRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -96,42 +88,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Gets the details of the recovery point of a protected item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPointModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the recovery point of a protected item. </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataReplicationRecoveryPointResource> Get(string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
 
-            using var scope = _dataReplicationRecoveryPointRecoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.Get");
+            using DiagnosticScope scope = _recoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataReplicationRecoveryPointRecoveryPointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationRecoveryPointData> response = Response.FromValue(DataReplicationRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -141,100 +121,62 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Gets the list of recovery points of the given protected item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPointModel_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the list of recovery points of the given protected item. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationRecoveryPointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationRecoveryPointRecoveryPointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationRecoveryPointRecoveryPointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationRecoveryPointResource(Client, DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(e)), _dataReplicationRecoveryPointRecoveryPointClientDiagnostics, Pipeline, "DataReplicationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataReplicationRecoveryPointData, DataReplicationRecoveryPointResource>(new RecoveryPointGetAllAsyncCollectionResultOfT(
+                _recoveryPointRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new DataReplicationRecoveryPointResource(Client, data));
         }
 
-        /// <summary>
-        /// Gets the list of recovery points of the given protected item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPointModel_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the list of recovery points of the given protected item. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataReplicationRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationRecoveryPointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationRecoveryPointRecoveryPointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationRecoveryPointRecoveryPointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationRecoveryPointResource(Client, DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(e)), _dataReplicationRecoveryPointRecoveryPointClientDiagnostics, Pipeline, "DataReplicationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataReplicationRecoveryPointData, DataReplicationRecoveryPointResource>(new RecoveryPointGetAllCollectionResultOfT(
+                _recoveryPointRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new DataReplicationRecoveryPointResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPointModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
 
-            using var scope = _dataReplicationRecoveryPointRecoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.Exists");
+            using DiagnosticScope scope = _recoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataReplicationRecoveryPointRecoveryPointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationRecoveryPointData> response = Response.FromValue(DataReplicationRecoveryPointData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,40 +186,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPointModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
 
-            using var scope = _dataReplicationRecoveryPointRecoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.Exists");
+            using DiagnosticScope scope = _recoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataReplicationRecoveryPointRecoveryPointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationRecoveryPointData> response = Response.FromValue(DataReplicationRecoveryPointData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -287,42 +215,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPointModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataReplicationRecoveryPointResource>> GetIfExistsAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
 
-            using var scope = _dataReplicationRecoveryPointRecoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.GetIfExists");
+            using DiagnosticScope scope = _recoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataReplicationRecoveryPointRecoveryPointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationRecoveryPointData> response = Response.FromValue(DataReplicationRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataReplicationRecoveryPointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -332,42 +248,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPointModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataReplicationRecoveryPointResource> GetIfExists(string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
 
-            using var scope = _dataReplicationRecoveryPointRecoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.GetIfExists");
+            using DiagnosticScope scope = _recoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataReplicationRecoveryPointRecoveryPointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationRecoveryPointData> response = Response.FromValue(DataReplicationRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataReplicationRecoveryPointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataReplicationRecoveryPointResource> IAsyncEnumerable<DataReplicationRecoveryPointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

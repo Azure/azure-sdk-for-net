@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Gets or sets the selection type of the NIC. </summary>
-    public readonly partial struct VmNicSelection : IEquatable<VmNicSelection>
+    public readonly partial struct VMNicSelection : IEquatable<VMNicSelection>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VmNicSelection"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VmNicSelection(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Not Selected. </summary>
         private const string NotSelectedValue = "NotSelected";
+        /// <summary> Selected by user. </summary>
         private const string SelectedByUserValue = "SelectedByUser";
+        /// <summary> Default selection by ASR. </summary>
         private const string SelectedByDefaultValue = "SelectedByDefault";
+        /// <summary> NIC configuration overridden by user. Differs from SelectedByUser in the sense that the legacy SelectedByUser is used both for explicit modification by user and implicit approval of user if the settings are used for TFO/FO. SelectedByUserOverride implies user overriding at least one of the configurations. </summary>
         private const string SelectedByUserOverrideValue = "SelectedByUserOverride";
 
+        /// <summary> Initializes a new instance of <see cref="VMNicSelection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VMNicSelection(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
         /// <summary> Not Selected. </summary>
-        public static VmNicSelection NotSelected { get; } = new VmNicSelection(NotSelectedValue);
+        public static VMNicSelection NotSelected { get; } = new VMNicSelection(NotSelectedValue);
+
         /// <summary> Selected by user. </summary>
-        public static VmNicSelection SelectedByUser { get; } = new VmNicSelection(SelectedByUserValue);
+        public static VMNicSelection SelectedByUser { get; } = new VMNicSelection(SelectedByUserValue);
+
         /// <summary> Default selection by ASR. </summary>
-        public static VmNicSelection SelectedByDefault { get; } = new VmNicSelection(SelectedByDefaultValue);
+        public static VMNicSelection SelectedByDefault { get; } = new VMNicSelection(SelectedByDefaultValue);
+
         /// <summary> NIC configuration overridden by user. Differs from SelectedByUser in the sense that the legacy SelectedByUser is used both for explicit modification by user and implicit approval of user if the settings are used for TFO/FO. SelectedByUserOverride implies user overriding at least one of the configurations. </summary>
-        public static VmNicSelection SelectedByUserOverride { get; } = new VmNicSelection(SelectedByUserOverrideValue);
-        /// <summary> Determines if two <see cref="VmNicSelection"/> values are the same. </summary>
-        public static bool operator ==(VmNicSelection left, VmNicSelection right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="VmNicSelection"/> values are not the same. </summary>
-        public static bool operator !=(VmNicSelection left, VmNicSelection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VmNicSelection"/>. </summary>
-        public static implicit operator VmNicSelection(string value) => new VmNicSelection(value);
+        public static VMNicSelection SelectedByUserOverride { get; } = new VMNicSelection(SelectedByUserOverrideValue);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two <see cref="VMNicSelection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(VMNicSelection left, VMNicSelection right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="VMNicSelection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(VMNicSelection left, VMNicSelection right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="VMNicSelection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VMNicSelection(string value) => new VMNicSelection(value);
+
+        /// <summary> Converts a string to a <see cref="VMNicSelection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VMNicSelection?(string value) => value == null ? null : new VMNicSelection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VmNicSelection other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(VmNicSelection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is VMNicSelection other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(VMNicSelection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
