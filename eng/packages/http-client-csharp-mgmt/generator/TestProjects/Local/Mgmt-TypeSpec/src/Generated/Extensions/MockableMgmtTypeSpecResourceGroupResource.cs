@@ -19,7 +19,7 @@ namespace MgmtTypeSpec.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableMgmtTypeSpecResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableMgmtTypeSpecResourceGroupResource"/> class for mocking. </summary>
         protected MockableMgmtTypeSpecResourceGroupResource()
         {
         }
