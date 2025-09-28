@@ -64,12 +64,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return statements;
         }
 
-        protected override IReadOnlyList<MethodBodyStatement> BuildClientPipelineHandling(
+        protected override IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            return BuildExistsOperationPipelineHandling(messageVariable, contextVariable, out responseVariable);
+            return BuildExistsOperationPipelineProcessing(messageVariable, contextVariable, out responseVariable);
         }
     }
 }

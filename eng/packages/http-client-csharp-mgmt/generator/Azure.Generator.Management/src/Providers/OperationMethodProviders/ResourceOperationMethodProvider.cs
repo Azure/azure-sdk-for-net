@@ -185,7 +185,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
-            tryStatements.AddRange(BuildClientPipelineHandling(messageVariable, contextVariable, out var responseVariable));
+            tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
             if (IsLongRunningOperation || _isFakeLongRunningOperation)
             {
@@ -201,7 +201,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new TryExpression(tryStatements);
         }
 
-        protected virtual IReadOnlyList<MethodBodyStatement> BuildClientPipelineHandling(
+        protected virtual IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
@@ -229,7 +229,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// Builds client pipeline handling with status code switch logic for exists/get-if-exists operations.
         /// Handles 200 (success) and 404 (not found) status codes specifically.
         /// </summary>
-        protected IReadOnlyList<MethodBodyStatement> BuildExistsOperationPipelineHandling(
+        protected IReadOnlyList<MethodBodyStatement> BuildExistsOperationPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
@@ -261,19 +261,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var switchStatement = new SwitchStatement(resultVariable.Property("Status"));
 
-            // Helper method to create switch case body
-            static List<MethodBodyStatement> CreateSwitchCaseBody(VariableExpression responseVar, ValueExpression valueExpression, VariableExpression resultVariable)
-            {
-                return new List<MethodBodyStatement>
-                {
-                    responseVar.Assign(
-                        Static(typeof(Response)).Invoke(
-                            nameof(Response.FromValue),
-                            new ValueExpression[] { valueExpression, resultVariable })).Terminate(),
-                    Break
-                };
-            }
-
             // Case 200: response = Response.FromValue(FooData.FromResponse(result), result);
             var case200Body = CreateSwitchCaseBody(
                 responseVar,
@@ -301,6 +288,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             statements.Add(switchStatement);
 
             return statements;
+
+            // Helper method to create switch case body
+            static List<MethodBodyStatement> CreateSwitchCaseBody(VariableExpression responseVar, ValueExpression valueExpression, VariableExpression resultVariable)
+            {
+                return new List<MethodBodyStatement>
+                {
+                    responseVar.Assign(
+                        Static(typeof(Response)).Invoke(
+                            nameof(Response.FromValue),
+                            new ValueExpression[] { valueExpression, resultVariable })).Terminate(),
+                    Break
+                };
+            }
         }
 
         private IReadOnlyList<MethodBodyStatement> BuildFakeLroHandling(
