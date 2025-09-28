@@ -12,10 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SiteManager.Tests
 {
-    [TestFixture]
     public class SiteCollectionTests : SiteManagerManagementTestBase
     {
-        public SiteCollectionTests() : base(true)
+        public SiteCollectionTests(bool async) : base(async)
         {
         }
 

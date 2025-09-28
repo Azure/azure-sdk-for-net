@@ -8,10 +8,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SiteManager.Tests
 {
-    [TestFixture]
     public class ServiceGroupSiteCollectionTests : SiteManagerManagementTestBase
     {
-        public ServiceGroupSiteCollectionTests() : base(true)
+        public ServiceGroupSiteCollectionTests(bool async) : base(async)
         {
         }
 
