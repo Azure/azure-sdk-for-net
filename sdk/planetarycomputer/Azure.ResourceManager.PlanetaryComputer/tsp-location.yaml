@@ -1,4 +1,4 @@
 directory: specification/orbitalplanetarycomputer/Orbital.Management
-commit: d0471435776b9083d9e788ef841ab87c04393102
+commit: b32509c16782db529389a08bf7266817bda67e59
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
