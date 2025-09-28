@@ -79,7 +79,7 @@ namespace Azure.Monitor.Query.Tests
         public void CanGetMetricQueryResult()
         {
             var metadata = new Dictionary<string, string> { { "metadatatest1", "metadatatest2" } };
-            var metricValue = MonitorQueryModelFactory.MetricValue(new DateTimeOffset(new DateTime(10)));
+            var metricValue = MonitorQueryModelFactory.MetricValue(new DateTimeOffset(new DateTime(10, DateTimeKind.Utc)));
             var metricValueList = new List<MetricValue>() { metricValue };
             MetricTimeSeriesElement metricTimeSeriesElement = MonitorQueryModelFactory.MetricTimeSeriesElement(metadata, metricValueList);
             Assert.IsNotNull(metricTimeSeriesElement);
@@ -88,7 +88,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("metadatatest1", firstElement.Key);
             Assert.AreEqual("metadatatest2", firstElement.Value);
             Assert.AreEqual(1, metricTimeSeriesElement.Values.Count);
-            Assert.AreEqual(new DateTimeOffset(new DateTime(10)), metricTimeSeriesElement.Values[0].TimeStamp);
+            Assert.AreEqual(new DateTimeOffset(new DateTime(10, DateTimeKind.Utc)), metricTimeSeriesElement.Values[0].TimeStamp);
             IEnumerable<MetricTimeSeriesElement> metricTimeSeriesElements = new[] { metricTimeSeriesElement };
 
             MetricUnit metricUnit = new MetricUnit("test");
