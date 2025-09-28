@@ -1,4 +1,4 @@
 directory: specification/liftrarize/ArizeAi.ObservabilityEval.Management
-commit: 589f71f4a7fe1c6ca70b0988cadd93687df8f73c
+commit: 067681c1dc29f1750c69f6b17bff46f6c00a83a5
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
