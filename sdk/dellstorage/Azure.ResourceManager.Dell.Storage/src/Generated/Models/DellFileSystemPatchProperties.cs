@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
     /// <summary> The updatable properties of the FileSystemResource. </summary>
-    public partial class FileSystemResourceUpdateProperties
+    public partial class DellFileSystemPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceUpdateProperties"/>. </summary>
-        public FileSystemResourceUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemPatchProperties"/>. </summary>
+        public DellFileSystemPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemPatchProperties"/>. </summary>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
         /// <param name="capacity"> Capacity for Dell Filesystem. </param>
         /// <param name="encryption"> Encryption Details of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceUpdateProperties(ResourceIdentifier delegatedSubnetId, DellFileSystemCapacity capacity, DellFileSystemEncryptionPatchProperties encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DellFileSystemPatchProperties(ResourceIdentifier delegatedSubnetId, DellFileSystemCapacity capacity, DellFileSystemEncryptionPatchProperties encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DelegatedSubnetId = delegatedSubnetId;
             Capacity = capacity;

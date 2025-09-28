@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            FileSystemResourceUpdateProperties properties = default;
+            DellFileSystemPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                     {
                         continue;
                     }
-                    properties = FileSystemResourceUpdateProperties.DeserializeFileSystemResourceUpdateProperties(prop.Value, options);
+                    properties = DellFileSystemPatchProperties.DeserializeDellFileSystemPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

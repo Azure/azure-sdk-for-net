@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the FileSystemResource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, FileSystemResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DellFileSystemPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, DellFileSystemPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The updatable properties of the FileSystemResource. </summary>
-        public FileSystemResourceUpdateProperties Properties { get; set; }
+        public DellFileSystemPatchProperties Properties { get; set; }
     }
 }
