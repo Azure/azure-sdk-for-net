@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct MaintenancePreference : IEquatable<MaintenancePreference>
     {
         private readonly string _value;
+        /// <summary> No preference. </summary>
+        private const string NoPreferenceValue = "NoPreference";
+        /// <summary> Custom preference. </summary>
+        private const string CustomPreferenceValue = "CustomPreference";
 
         /// <summary> Initializes a new instance of <see cref="MaintenancePreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MaintenancePreference(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoPreferenceValue = "NoPreference";
-        private const string CustomPreferenceValue = "CustomPreference";
+            _value = value;
+        }
 
         /// <summary> No preference. </summary>
         public static MaintenancePreference NoPreference { get; } = new MaintenancePreference(NoPreferenceValue);
+
         /// <summary> Custom preference. </summary>
         public static MaintenancePreference CustomPreference { get; } = new MaintenancePreference(CustomPreferenceValue);
+
         /// <summary> Determines if two <see cref="MaintenancePreference"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MaintenancePreference left, MaintenancePreference right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MaintenancePreference"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MaintenancePreference left, MaintenancePreference right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenancePreference"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MaintenancePreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MaintenancePreference(string value) => new MaintenancePreference(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MaintenancePreference"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MaintenancePreference?(string value) => value == null ? null : new MaintenancePreference(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MaintenancePreference other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MaintenancePreference other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

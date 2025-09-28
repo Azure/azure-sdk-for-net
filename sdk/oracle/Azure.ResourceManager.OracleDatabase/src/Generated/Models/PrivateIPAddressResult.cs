@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> PrivateIpAddress resource properties. </summary>
     public partial class PrivateIPAddressResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressResult"/>. </summary>
         /// <param name="displayName"> PrivateIpAddresses displayName. </param>
@@ -51,19 +22,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="privateIPAddressesOcid"> PrivateIpAddresses Id. </param>
         /// <param name="ipAddress"> PrivateIpAddresses ipAddress. </param>
         /// <param name="subnetOcid"> PrivateIpAddresses subnetId. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="hostnameLabel"/>, <paramref name="privateIPAddressesOcid"/>, <paramref name="ipAddress"/> or <paramref name="subnetOcid"/> is null. </exception>
         internal PrivateIPAddressResult(string displayName, string hostnameLabel, string privateIPAddressesOcid, string ipAddress, string subnetOcid)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(hostnameLabel, nameof(hostnameLabel));
-            Argument.AssertNotNull(privateIPAddressesOcid, nameof(privateIPAddressesOcid));
-            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
-            Argument.AssertNotNull(subnetOcid, nameof(subnetOcid));
-
             DisplayName = displayName;
             HostnameLabel = hostnameLabel;
             PrivateIPAddressesOcid = privateIPAddressesOcid;
-            IPAddress = ipAddress;
+            IpAddress = ipAddress;
             SubnetOcid = subnetOcid;
         }
 
@@ -73,30 +37,29 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="privateIPAddressesOcid"> PrivateIpAddresses Id. </param>
         /// <param name="ipAddress"> PrivateIpAddresses ipAddress. </param>
         /// <param name="subnetOcid"> PrivateIpAddresses subnetId. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateIPAddressResult(string displayName, string hostnameLabel, string privateIPAddressesOcid, string ipAddress, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateIPAddressResult(string displayName, string hostnameLabel, string privateIPAddressesOcid, string ipAddress, string subnetOcid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             HostnameLabel = hostnameLabel;
             PrivateIPAddressesOcid = privateIPAddressesOcid;
-            IPAddress = ipAddress;
+            IpAddress = ipAddress;
             SubnetOcid = subnetOcid;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PrivateIPAddressResult"/> for deserialization. </summary>
-        internal PrivateIPAddressResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> PrivateIpAddresses displayName. </summary>
         public string DisplayName { get; }
+
         /// <summary> PrivateIpAddresses hostnameLabel. </summary>
         public string HostnameLabel { get; }
+
         /// <summary> PrivateIpAddresses Id. </summary>
         public string PrivateIPAddressesOcid { get; }
+
         /// <summary> PrivateIpAddresses ipAddress. </summary>
-        public string IPAddress { get; }
+        public string IpAddress { get; }
+
         /// <summary> PrivateIpAddresses subnetId. </summary>
         public string SubnetOcid { get; }
     }

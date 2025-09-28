@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
-    /// A Class representing an OracleFlexComponent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OracleFlexComponentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetOracleFlexComponentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetOracleFlexComponent method.
+    /// A class representing a OracleFlexComponent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="OracleFlexComponentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetOracleFlexComponents method.
     /// </summary>
     public partial class OracleFlexComponentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="OracleFlexComponentResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="flexComponentName"> The flexComponentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string flexComponentName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _oracleFlexComponentFlexComponentsClientDiagnostics;
-        private readonly FlexComponentsRestOperations _oracleFlexComponentFlexComponentsRestClient;
+        private readonly ClientDiagnostics _flexComponentsClientDiagnostics;
+        private readonly FlexComponents _flexComponentsRestClient;
         private readonly OracleFlexComponentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Oracle.Database/locations/flexComponents";
 
-        /// <summary> Initializes a new instance of the <see cref="OracleFlexComponentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OracleFlexComponentResource for mocking. </summary>
         protected OracleFlexComponentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OracleFlexComponentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleFlexComponentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OracleFlexComponentResource(ArmClient client, OracleFlexComponentData data) : this(client, data.Id)
@@ -54,71 +44,72 @@ namespace Azure.ResourceManager.OracleDatabase
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OracleFlexComponentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleFlexComponentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OracleFlexComponentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _oracleFlexComponentFlexComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string oracleFlexComponentFlexComponentsApiVersion);
-            _oracleFlexComponentFlexComponentsRestClient = new FlexComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleFlexComponentFlexComponentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string oracleFlexComponentApiVersion);
+            _flexComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
+            _flexComponentsRestClient = new FlexComponents(_flexComponentsClientDiagnostics, Pipeline, Endpoint, oracleFlexComponentApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual OracleFlexComponentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="flexComponentName"> The flexComponentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string flexComponentName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get a FlexComponent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FlexComponent. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<OracleFlexComponentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _oracleFlexComponentFlexComponentsClientDiagnostics.CreateScope("OracleFlexComponentResource.Get");
+            using DiagnosticScope scope = _flexComponentsClientDiagnostics.CreateScope("OracleFlexComponentResource.Get");
             scope.Start();
             try
             {
-                var response = await _oracleFlexComponentFlexComponentsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleFlexComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,37 +119,25 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Get a FlexComponent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FlexComponent. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OracleFlexComponentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _oracleFlexComponentFlexComponentsClientDiagnostics.CreateScope("OracleFlexComponentResource.Get");
+            using DiagnosticScope scope = _flexComponentsClientDiagnostics.CreateScope("OracleFlexComponentResource.Get");
             scope.Start();
             try
             {
-                var response = _oracleFlexComponentFlexComponentsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleFlexComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

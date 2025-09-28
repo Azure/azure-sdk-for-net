@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> virtualNetworkAddress resource properties. </summary>
     public partial class CloudVmClusterVirtualNetworkAddressProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterVirtualNetworkAddressProperties"/>. </summary>
         public CloudVmClusterVirtualNetworkAddressProperties()
@@ -59,10 +30,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="lifecycleState"> virtual network address lifecycle state. </param>
         /// <param name="assignedOn"> The date and time when the create operation for the application virtual IP (VIP) address completed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterVirtualNetworkAddressProperties(string ipAddress, string vipVmOcid, string vipOcid, string domain, string lifecycleDetails, OracleDatabaseProvisioningState? provisioningState, VirtualNetworkAddressLifecycleState? lifecycleState, DateTimeOffset? assignedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudVmClusterVirtualNetworkAddressProperties(string ipAddress, string vipVmOcid, string vipOcid, string domain, string lifecycleDetails, OracleDatabaseProvisioningState? provisioningState, VirtualNetworkAddressLifecycleState? lifecycleState, DateTimeOffset? assignedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IPAddress = ipAddress;
+            IpAddress = ipAddress;
             VipVmOcid = vipVmOcid;
             VipOcid = vipOcid;
             Domain = domain;
@@ -70,23 +41,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ProvisioningState = provisioningState;
             LifecycleState = lifecycleState;
             AssignedOn = assignedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Virtual network Address address. </summary>
-        public string IPAddress { get; set; }
+        public string IpAddress { get; set; }
+
         /// <summary> Virtual Machine OCID. </summary>
         public string VipVmOcid { get; set; }
+
         /// <summary> Application VIP OCID. </summary>
         public string VipOcid { get; }
+
         /// <summary> Virtual network address fully qualified domain name. </summary>
         public string Domain { get; }
+
         /// <summary> Additional information about the current lifecycle state of the application virtual IP (VIP) address. </summary>
         public string LifecycleDetails { get; }
+
         /// <summary> Azure resource provisioning state. </summary>
         public OracleDatabaseProvisioningState? ProvisioningState { get; }
+
         /// <summary> virtual network address lifecycle state. </summary>
         public VirtualNetworkAddressLifecycleState? LifecycleState { get; }
+
         /// <summary> The date and time when the create operation for the application virtual IP (VIP) address completed. </summary>
         public DateTimeOffset? AssignedOn { get; }
     }

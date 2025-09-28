@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> ExadbVmCluster resource model. </summary>
     public partial class ExadbVmClusterProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExadbVmClusterProperties"/>. </summary>
         /// <param name="vnetId"> VNET for network connectivity. </param>
@@ -83,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             SshPublicKeys = sshPublicKeys.ToList();
             TotalEcpuCount = totalEcpuCount;
             VmFileSystemStorage = vmFileSystemStorage;
-            ScanIPIds = new ChangeTrackingList<string>();
+            ScanIpIds = new ChangeTrackingList<string>();
             VipIds = new ChangeTrackingList<string>();
         }
 
@@ -105,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="gridImageType"> The type of Grid Image. </param>
         /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
         /// <param name="hostname"> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </param>
-        /// <param name="licenseModel"> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. . </param>
         /// <param name="memorySizeInGbs"> The memory that you want to be allocated in GBs. Memory is calculated based on 11 GB per VM core reserved. </param>
         /// <param name="nodeCount"> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="nsgCidrs"> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </param>
@@ -121,8 +93,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="totalEcpuCount"> The number of Total ECPUs for an Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="vmFileSystemStorage"> Filesystem storage details. </param>
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
-        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. </param>
-        /// <param name="scanIPIds"> The Single Client Access Name (SCAN) IP addresses associated with the Exadata VM cluster on Exascale Infrastructure. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. . </param>
+        /// <param name="scanIpIds"> The Single Client Access Name (SCAN) IP addresses associated with the Exadata VM cluster on Exascale Infrastructure. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
         /// <param name="scanDnsRecordId"> The OCID of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="snapshotFileSystemStorage"> Snapshot filesystem storage details. </param>
         /// <param name="totalFileSystemStorage"> Total file system storage details. </param>
@@ -131,8 +103,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="iormConfigCache"> iormConfigCache details for Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="backupSubnetOcid"> Cluster backup subnet ocid. </param>
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIPIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="shapeAttribute"> The type of Exascale storage used for Exadata VM cluster. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIpIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, ShapeAttribute? shapeAttribute, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Ocid = ocid;
             ClusterName = clusterName;
@@ -168,7 +141,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             VmFileSystemStorage = vmFileSystemStorage;
             LifecycleDetails = lifecycleDetails;
             ScanDnsName = scanDnsName;
-            ScanIPIds = scanIPIds;
+            ScanIpIds = scanIpIds;
             ScanDnsRecordId = scanDnsRecordId;
             SnapshotFileSystemStorage = snapshotFileSystemStorage;
             TotalFileSystemStorage = totalFileSystemStorage;
@@ -177,121 +150,171 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IormConfigCache = iormConfigCache;
             BackupSubnetOcid = backupSubnetOcid;
             SubnetOcid = subnetOcid;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExadbVmClusterProperties"/> for deserialization. </summary>
-        internal ExadbVmClusterProperties()
-        {
+            ShapeAttribute = shapeAttribute;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ExadbVmCluster ocid. </summary>
         public string Ocid { get; }
+
         /// <summary> The cluster name for Exadata VM cluster on Exascale Infrastructure. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </summary>
         public string ClusterName { get; set; }
+
         /// <summary> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </summary>
         public string BackupSubnetCidr { get; set; }
+
         /// <summary> HTTPS link to OCI Network Security Group exposed to Azure Customer via the Azure Interface. </summary>
         public Uri NsgUri { get; }
+
         /// <summary> Exadata VM cluster on Exascale Infrastructure provisioning state. </summary>
         public OracleDatabaseProvisioningState? ProvisioningState { get; }
+
         /// <summary> CloudVmCluster lifecycle state. </summary>
         public ExadbVmClusterLifecycleState? LifecycleState { get; }
+
         /// <summary> VNET for network connectivity. </summary>
         public ResourceIdentifier VnetId { get; set; }
+
         /// <summary> Client subnet. </summary>
         public ResourceIdentifier SubnetId { get; set; }
+
         /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
         public DiagnosticCollectionConfig DataCollectionOptions { get; set; }
+
         /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> A domain name used for the Exadata VM cluster on Exascale Infrastructure. </summary>
         public string Domain { get; set; }
+
         /// <summary> The number of ECPUs to enable for an Exadata VM cluster on Exascale Infrastructure. </summary>
         public int EnabledEcpuCount { get; set; }
+
         /// <summary> The Azure Resource ID of the Exadata Database Storage Vault. </summary>
         public ResourceIdentifier ExascaleDBStorageVaultId { get; set; }
+
         /// <summary> Grid Setup will be done using this Grid Image OCID. Can be obtained using giMinorVersions API. </summary>
         public string GridImageOcid { get; set; }
+
         /// <summary> The type of Grid Image. </summary>
         public GridImageType? GridImageType { get; }
+
         /// <summary> Oracle Grid Infrastructure (GI) software version. </summary>
         public string GiVersion { get; }
+
         /// <summary> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </summary>
         public string Hostname { get; set; }
-        /// <summary> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. </summary>
+
+        /// <summary> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. . </summary>
         public OracleLicenseModel? LicenseModel { get; set; }
+
         /// <summary> The memory that you want to be allocated in GBs. Memory is calculated based on 11 GB per VM core reserved. </summary>
         public int? MemorySizeInGbs { get; }
+
         /// <summary> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </summary>
         public int NodeCount { get; set; }
+
         /// <summary> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </summary>
         public IList<CloudVmClusterNsgCidr> NsgCidrs { get; }
+
         /// <summary> The OCID of the zone the Exadata VM cluster on Exascale Infrastructure is associated with. </summary>
         public string ZoneOcid { get; }
+
         /// <summary> The OCID of the zone the Exadata VM cluster on Exascale Infrastructure is associated with. </summary>
         public string PrivateZoneOcid { get; set; }
+
         /// <summary> The TCP Single Client Access Name (SCAN) port. The default port is 1521. </summary>
         public int? ScanListenerPortTcp { get; set; }
+
         /// <summary> The TCPS Single Client Access Name (SCAN) port. The default port is 2484. </summary>
         public int? ScanListenerPortTcpSsl { get; set; }
+
         /// <summary> The port number configured for the listener on the Exadata VM cluster on Exascale Infrastructure. </summary>
         public int? ListenerPort { get; }
+
         /// <summary> The shape of the Exadata VM cluster on Exascale Infrastructure resource. </summary>
         public string Shape { get; set; }
+
         /// <summary> The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure. </summary>
         public IList<string> SshPublicKeys { get; }
+
         /// <summary> Operating system version of the image. </summary>
         public string SystemVersion { get; set; }
+
         /// <summary> The time zone of the Exadata VM cluster on Exascale Infrastructure. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </summary>
         public string TimeZone { get; set; }
+
         /// <summary> The number of Total ECPUs for an Exadata VM cluster on Exascale Infrastructure. </summary>
         public int TotalEcpuCount { get; set; }
+
         /// <summary> Filesystem storage details. </summary>
         internal ExadbVmClusterStorageDetails VmFileSystemStorage { get; set; }
-        /// <summary> Total Capacity. </summary>
-        public int? VmFileSystemStorageTotalSizeInGbs
-        {
-            get => VmFileSystemStorage is null ? default(int?) : VmFileSystemStorage.TotalSizeInGbs;
-            set
-            {
-                VmFileSystemStorage = value.HasValue ? new ExadbVmClusterStorageDetails(value.Value) : null;
-            }
-        }
 
         /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
-        /// <summary> The FQDN of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. </summary>
+
+        /// <summary> The FQDN of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. . </summary>
         public string ScanDnsName { get; }
+
         /// <summary> The Single Client Access Name (SCAN) IP addresses associated with the Exadata VM cluster on Exascale Infrastructure. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </summary>
-        public IReadOnlyList<string> ScanIPIds { get; }
+        public IReadOnlyList<string> ScanIpIds { get; }
+
         /// <summary> The OCID of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. </summary>
         public string ScanDnsRecordId { get; }
+
         /// <summary> Snapshot filesystem storage details. </summary>
         internal ExadbVmClusterStorageDetails SnapshotFileSystemStorage { get; }
-        /// <summary> Total Capacity. </summary>
-        public int? SnapshotFileSystemStorageTotalSizeInGbs
-        {
-            get => SnapshotFileSystemStorage?.TotalSizeInGbs;
-        }
 
         /// <summary> Total file system storage details. </summary>
         internal ExadbVmClusterStorageDetails TotalFileSystemStorage { get; }
-        /// <summary> Total Capacity. </summary>
-        public int? TotalSizeInGbs
-        {
-            get => TotalFileSystemStorage?.TotalSizeInGbs;
-        }
 
         /// <summary> The virtual IP (VIP) addresses associated with the Exadata VM cluster on Exascale Infrastructure. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </summary>
         public IReadOnlyList<string> VipIds { get; }
+
         /// <summary> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </summary>
         public Uri OciUri { get; }
+
         /// <summary> iormConfigCache details for Exadata VM cluster on Exascale Infrastructure. </summary>
         public ExadataIormConfig IormConfigCache { get; }
+
         /// <summary> Cluster backup subnet ocid. </summary>
         public string BackupSubnetOcid { get; }
+
         /// <summary> Cluster subnet ocid. </summary>
         public string SubnetOcid { get; }
+
+        /// <summary> The type of Exascale storage used for Exadata VM cluster. </summary>
+        public ShapeAttribute? ShapeAttribute { get; set; }
+
+        /// <summary> Total Capacity. </summary>
+        public int? VmFileSystemStorageTotalSizeInGbs
+        {
+            get
+            {
+                return VmFileSystemStorage is null ? default : VmFileSystemStorage.TotalSizeInGbs;
+            }
+            set
+            {
+                VmFileSystemStorage = value.HasValue ? new ExadbVmClusterStorageDetails(value.Value) : default;
+            }
+        }
+
+        /// <summary> Total Capacity. </summary>
+        public int? SnapshotFileSystemStorageTotalSizeInGbs
+        {
+            get
+            {
+                return SnapshotFileSystemStorage.TotalSizeInGbs;
+            }
+        }
+
+        /// <summary> Total Capacity. </summary>
+        public int? TotalSizeInGbs
+        {
+            get
+            {
+                return TotalFileSystemStorage.TotalSizeInGbs;
+            }
+        }
     }
 }

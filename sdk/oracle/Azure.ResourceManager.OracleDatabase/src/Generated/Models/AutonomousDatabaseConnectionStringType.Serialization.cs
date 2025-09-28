@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class AutonomousDatabaseConnectionStringType : IUtf8JsonSerializable, IJsonModel<AutonomousDatabaseConnectionStringType>
+    /// <summary> The connection string profile to allow clients to group, filter and select connection string values based on structured metadata. </summary>
+    public partial class AutonomousDatabaseConnectionStringType : IJsonModel<AutonomousDatabaseConnectionStringType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutonomousDatabaseConnectionStringType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutonomousDatabaseConnectionStringType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStringType>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStringType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutonomousDatabaseConnectionStringType)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(High))
             {
                 writer.WritePropertyName("high"u8);
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("medium"u8);
                 writer.WriteStringValue(Medium);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +66,27 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        AutonomousDatabaseConnectionStringType IJsonModel<AutonomousDatabaseConnectionStringType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutonomousDatabaseConnectionStringType IJsonModel<AutonomousDatabaseConnectionStringType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutonomousDatabaseConnectionStringType JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStringType>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStringType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutonomousDatabaseConnectionStringType)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutonomousDatabaseConnectionStringType(document.RootElement, options);
         }
 
-        internal static AutonomousDatabaseConnectionStringType DeserializeAutonomousDatabaseConnectionStringType(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AutonomousDatabaseConnectionStringType DeserializeAutonomousDatabaseConnectionStringType(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,38 +94,39 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string high = default;
             string low = default;
             string medium = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("high"u8))
+                if (prop.NameEquals("high"u8))
                 {
-                    high = property.Value.GetString();
+                    high = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("low"u8))
+                if (prop.NameEquals("low"u8))
                 {
-                    low = property.Value.GetString();
+                    low = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("medium"u8))
+                if (prop.NameEquals("medium"u8))
                 {
-                    medium = property.Value.GetString();
+                    medium = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AutonomousDatabaseConnectionStringType(high, low, medium, serializedAdditionalRawData);
+            return new AutonomousDatabaseConnectionStringType(high, low, medium, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AutonomousDatabaseConnectionStringType>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStringType>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutonomousDatabaseConnectionStringType>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStringType>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -130,15 +136,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        AutonomousDatabaseConnectionStringType IPersistableModel<AutonomousDatabaseConnectionStringType>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStringType>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutonomousDatabaseConnectionStringType IPersistableModel<AutonomousDatabaseConnectionStringType>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutonomousDatabaseConnectionStringType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStringType>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutonomousDatabaseConnectionStringType(document.RootElement, options);
                     }
                 default:
@@ -146,6 +157,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutonomousDatabaseConnectionStringType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

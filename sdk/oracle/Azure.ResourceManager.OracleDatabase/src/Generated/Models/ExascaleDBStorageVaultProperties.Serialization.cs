@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class ExascaleDBStorageVaultProperties : IUtf8JsonSerializable, IJsonModel<ExascaleDBStorageVaultProperties>
+    /// <summary> ExascaleDbStorageVault resource model. </summary>
+    public partial class ExascaleDBStorageVaultProperties : IJsonModel<ExascaleDBStorageVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExascaleDBStorageVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultProperties"/> for deserialization. </summary>
+        internal ExascaleDBStorageVaultProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExascaleDBStorageVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExascaleDBStorageVaultProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AdditionalFlashCacheInPercent))
             {
                 writer.WritePropertyName("additionalFlashCacheInPercent"u8);
@@ -88,15 +94,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("ociUrl"u8);
                 writer.WriteStringValue(OciUri.AbsoluteUri);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(ExadataInfrastructureId))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("exadataInfrastructureId"u8);
+                writer.WriteStringValue(ExadataInfrastructureId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedShapeAttributes))
+            {
+                writer.WritePropertyName("attachedShapeAttributes"u8);
+                writer.WriteStartArray();
+                foreach (ShapeAttribute item in AttachedShapeAttributes)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -105,22 +126,27 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        ExascaleDBStorageVaultProperties IJsonModel<ExascaleDBStorageVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExascaleDBStorageVaultProperties IJsonModel<ExascaleDBStorageVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExascaleDBStorageVaultProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExascaleDBStorageVaultProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExascaleDBStorageVaultProperties(document.RootElement, options);
         }
 
-        internal static ExascaleDBStorageVaultProperties DeserializeExascaleDBStorageVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExascaleDBStorageVaultProperties DeserializeExascaleDBStorageVaultProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,101 +162,124 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string lifecycleDetails = default;
             int? vmClusterCount = default;
             string ocid = default;
-            Uri ociUrl = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            Uri ociUri = default;
+            ResourceIdentifier exadataInfrastructureId = default;
+            IReadOnlyList<ShapeAttribute> attachedShapeAttributes = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("additionalFlashCacheInPercent"u8))
+                if (prop.NameEquals("additionalFlashCacheInPercent"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    additionalFlashCacheInPercent = property.Value.GetInt32();
+                    additionalFlashCacheInPercent = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("highCapacityDatabaseStorageInput"u8))
+                if (prop.NameEquals("highCapacityDatabaseStorageInput"u8))
                 {
-                    highCapacityDatabaseStorageInput = ExascaleDBStorageInputDetails.DeserializeExascaleDBStorageInputDetails(property.Value, options);
+                    highCapacityDatabaseStorageInput = ExascaleDBStorageInputDetails.DeserializeExascaleDBStorageInputDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("highCapacityDatabaseStorage"u8))
+                if (prop.NameEquals("highCapacityDatabaseStorage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    highCapacityDatabaseStorage = ExascaleDBStorageDetails.DeserializeExascaleDBStorageDetails(property.Value, options);
+                    highCapacityDatabaseStorage = ExascaleDBStorageDetails.DeserializeExascaleDBStorageDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("timeZone"u8))
+                if (prop.NameEquals("timeZone"u8))
                 {
-                    timeZone = property.Value.GetString();
+                    timeZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
+                    provisioningState = new OracleDatabaseProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lifecycleState"u8))
+                if (prop.NameEquals("lifecycleState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lifecycleState = new ExascaleDBStorageVaultLifecycleState(property.Value.GetString());
+                    lifecycleState = new ExascaleDBStorageVaultLifecycleState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lifecycleDetails"u8))
+                if (prop.NameEquals("lifecycleDetails"u8))
                 {
-                    lifecycleDetails = property.Value.GetString();
+                    lifecycleDetails = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmClusterCount"u8))
+                if (prop.NameEquals("vmClusterCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmClusterCount = property.Value.GetInt32();
+                    vmClusterCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ocid"u8))
+                if (prop.NameEquals("ocid"u8))
                 {
-                    ocid = property.Value.GetString();
+                    ocid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ociUrl"u8))
+                if (prop.NameEquals("ociUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ociUrl = new Uri(property.Value.GetString());
+                    ociUri = new Uri(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("exadataInfrastructureId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exadataInfrastructureId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("attachedShapeAttributes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ShapeAttribute> array = new List<ShapeAttribute>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new ShapeAttribute(item.GetString()));
+                    }
+                    attachedShapeAttributes = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExascaleDBStorageVaultProperties(
                 additionalFlashCacheInPercent,
                 description,
@@ -243,14 +292,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 vmClusterCount,
                 ocid,
-                ociUrl,
-                serializedAdditionalRawData);
+                ociUri,
+                exadataInfrastructureId,
+                attachedShapeAttributes ?? new ChangeTrackingList<ShapeAttribute>(),
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ExascaleDBStorageVaultProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExascaleDBStorageVaultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -260,15 +314,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        ExascaleDBStorageVaultProperties IPersistableModel<ExascaleDBStorageVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExascaleDBStorageVaultProperties IPersistableModel<ExascaleDBStorageVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExascaleDBStorageVaultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExascaleDBStorageVaultProperties(document.RootElement, options);
                     }
                 default:
@@ -276,6 +335,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExascaleDBStorageVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

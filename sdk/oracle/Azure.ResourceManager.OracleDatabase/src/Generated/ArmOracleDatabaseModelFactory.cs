@@ -7,44 +7,45 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmOracleDatabaseModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.CloudExadataInfrastructureData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> CloudExadataInfrastructure resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="zones"> CloudExadataInfrastructure zones. </param>
         /// <returns> A new <see cref="OracleDatabase.CloudExadataInfrastructureData"/> instance for mocking. </returns>
-        public static CloudExadataInfrastructureData CloudExadataInfrastructureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CloudExadataInfrastructureProperties properties = null, IEnumerable<string> zones = null)
+        public static CloudExadataInfrastructureData CloudExadataInfrastructureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CloudExadataInfrastructureProperties properties = default, IEnumerable<string> zones = default)
         {
-            tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
 
             return new CloudExadataInfrastructureData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                zones?.ToList(),
-                serializedAdditionalRawData: null);
+                zones.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudExadataInfrastructureProperties"/>. </summary>
+        /// <summary> CloudExadataInfrastructure resource model. </summary>
         /// <param name="definedFileSystemConfiguration"> Defined file system configurations. </param>
         /// <param name="exadataInfraOcid"> Exadata infra ocid. </param>
         /// <param name="computeCount"> The number of compute servers for the cloud Exadata infrastructure. </param>
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="maintenanceWindow"> maintenanceWindow property. </param>
         /// <param name="estimatedPatchingTime"> The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching). </param>
-        /// <param name="customerContacts"> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </param>
+        /// <param name="customerContacts"> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. . </param>
         /// <param name="provisioningState"> CloudExadataInfrastructure provisioning state. </param>
         /// <param name="lifecycleState"> CloudExadataInfrastructure lifecycle state. </param>
         /// <param name="shape"> The model name of the cloud Exadata infrastructure resource. </param>
@@ -80,14 +81,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="databaseServerType"> The database server model type of the cloud Exadata infrastructure resource. </param>
         /// <param name="storageServerType"> The storage server model type of the cloud Exadata infrastructure resource. </param>
         /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
+        /// <param name="exascaleConfig"> The exascale config details for the cloud Exadata infrastructure. </param>
         /// <returns> A new <see cref="Models.CloudExadataInfrastructureProperties"/> instance for mocking. </returns>
-        public static CloudExadataInfrastructureProperties CloudExadataInfrastructureProperties(IEnumerable<DefinedFileSystemConfiguration> definedFileSystemConfiguration = null, string exadataInfraOcid = null, int? computeCount = null, int? storageCount = null, int? totalStorageSizeInGbs = null, int? availableStorageSizeInGbs = null, DateTimeOffset? createdOn = null, string lifecycleDetails = null, OracleDatabaseMaintenanceWindow maintenanceWindow = null, EstimatedPatchingTime estimatedPatchingTime = null, IEnumerable<OracleCustomerContact> customerContacts = null, OracleDatabaseProvisioningState? provisioningState = null, CloudExadataInfrastructureLifecycleState? lifecycleState = null, string shape = null, Uri ociUri = null, int? cpuCount = null, int? maxCpuCount = null, int? memorySizeInGbs = null, int? maxMemoryInGbs = null, int? dbNodeStorageSizeInGbs = null, int? maxDBNodeStorageSizeInGbs = null, double? dataStorageSizeInTbs = null, double? maxDataStorageInTbs = null, string dbServerVersion = null, string storageServerVersion = null, int? activatedStorageCount = null, int? additionalStorageCount = null, string displayName = null, string lastMaintenanceRunOcid = null, string nextMaintenanceRunOcid = null, string monthlyDBServerVersion = null, string monthlyStorageServerVersion = null, string databaseServerType = null, string storageServerType = null, OracleDatabaseComputeModel? computeModel = null)
+        public static CloudExadataInfrastructureProperties CloudExadataInfrastructureProperties(IEnumerable<DefinedFileSystemConfiguration> definedFileSystemConfiguration = default, string exadataInfraOcid = default, int? computeCount = default, int? storageCount = default, int? totalStorageSizeInGbs = default, int? availableStorageSizeInGbs = default, DateTimeOffset? createdOn = default, string lifecycleDetails = default, OracleDatabaseMaintenanceWindow maintenanceWindow = default, EstimatedPatchingTime estimatedPatchingTime = default, IEnumerable<OracleCustomerContact> customerContacts = default, OracleDatabaseProvisioningState? provisioningState = default, CloudExadataInfrastructureLifecycleState? lifecycleState = default, string shape = default, Uri ociUri = default, int? cpuCount = default, int? maxCpuCount = default, int? memorySizeInGbs = default, int? maxMemoryInGbs = default, int? dbNodeStorageSizeInGbs = default, int? maxDBNodeStorageSizeInGbs = default, double? dataStorageSizeInTbs = default, double? maxDataStorageInTbs = default, string dbServerVersion = default, string storageServerVersion = default, int? activatedStorageCount = default, int? additionalStorageCount = default, string displayName = default, string lastMaintenanceRunOcid = default, string nextMaintenanceRunOcid = default, string monthlyDBServerVersion = default, string monthlyStorageServerVersion = default, string databaseServerType = default, string storageServerType = default, OracleDatabaseComputeModel? computeModel = default, ExascaleConfigDetails exascaleConfig = default)
         {
-            definedFileSystemConfiguration ??= new List<DefinedFileSystemConfiguration>();
-            customerContacts ??= new List<OracleCustomerContact>();
+            definedFileSystemConfiguration ??= new ChangeTrackingList<DefinedFileSystemConfiguration>();
+            customerContacts ??= new ChangeTrackingList<OracleCustomerContact>();
 
             return new CloudExadataInfrastructureProperties(
-                definedFileSystemConfiguration?.ToList(),
+                definedFileSystemConfiguration.ToList(),
                 exadataInfraOcid,
                 computeCount,
                 storageCount,
@@ -97,7 +99,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 maintenanceWindow,
                 estimatedPatchingTime,
-                customerContacts?.ToList(),
+                customerContacts.ToList(),
                 provisioningState,
                 lifecycleState,
                 shape,
@@ -122,50 +124,134 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseServerType,
                 storageServerType,
                 computeModel,
-                serializedAdditionalRawData: null);
+                exascaleConfig,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DefinedFileSystemConfiguration"/>. </summary>
+        /// <summary> Predefined configurations for the file system. </summary>
         /// <param name="isBackupPartition"> Checks if the data can be backed up. </param>
         /// <param name="isResizable"> Checks if the mount path is resizable. </param>
         /// <param name="minSizeGb"> Minimum size of mount path in Gb. </param>
         /// <param name="mountPoint"> Mount path for the file system. </param>
         /// <returns> A new <see cref="Models.DefinedFileSystemConfiguration"/> instance for mocking. </returns>
-        public static DefinedFileSystemConfiguration DefinedFileSystemConfiguration(bool? isBackupPartition = null, bool? isResizable = null, int? minSizeGb = null, string mountPoint = null)
+        public static DefinedFileSystemConfiguration DefinedFileSystemConfiguration(bool? isBackupPartition = default, bool? isResizable = default, int? minSizeGb = default, string mountPoint = default)
         {
-            return new DefinedFileSystemConfiguration(isBackupPartition, isResizable, minSizeGb, mountPoint, serializedAdditionalRawData: null);
+            return new DefinedFileSystemConfiguration(isBackupPartition, isResizable, minSizeGb, mountPoint, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EstimatedPatchingTime"/>. </summary>
+        /// <summary> MaintenanceWindow resource properties. </summary>
+        /// <param name="preference"> The maintenance window scheduling preference. </param>
+        /// <param name="months"> Months during the year when maintenance should be performed. </param>
+        /// <param name="weeksOfMonth"> Weeks during the month when maintenance should be performed. Weeks start on the 1st, 8th, 15th, and 22nd days of the month, and have a duration of 7 days. Weeks start and end based on calendar dates, not days of the week. For example, to allow maintenance during the 2nd week of the month (from the 8th day to the 14th day of the month), use the value 2. Maintenance cannot be scheduled for the fifth week of months that contain more than 28 days. Note that this parameter works in conjunction with the  daysOfWeek and hoursOfDay parameters to allow you to specify specific days of the week and hours that maintenance will be performed. . </param>
+        /// <param name="daysOfWeek"> Days during the week when maintenance should be performed. </param>
+        /// <param name="hoursOfDay"> The window of hours during the day when maintenance should be performed. The window is a 4 hour slot. Valid values are - 0 - represents time slot 0:00 - 3:59 UTC - 4 - represents time slot 4:00 - 7:59 UTC - 8 - represents time slot 8:00 - 11:59 UTC - 12 - represents time slot 12:00 - 15:59 UTC - 16 - represents time slot 16:00 - 19:59 UTC - 20 - represents time slot 20:00 - 23:59 UTC. </param>
+        /// <param name="leadTimeInWeeks"> Lead time window allows user to set a lead time to prepare for a down time. The lead time is in weeks and valid value is between 1 to 4. . </param>
+        /// <param name="patchingMode"> Cloud Exadata infrastructure node patching method. </param>
+        /// <param name="customActionTimeoutInMins"> Determines the amount of time the system will wait before the start of each database server patching operation. Custom action timeout is in minutes and valid value is between 15 to 120 (inclusive). </param>
+        /// <param name="isCustomActionTimeoutEnabled"> If true, enables the configuration of a custom action timeout (waiting period) between database server patching operations. </param>
+        /// <param name="isMonthlyPatchingEnabled"> is Monthly Patching Enabled. </param>
+        /// <returns> A new <see cref="Models.OracleDatabaseMaintenanceWindow"/> instance for mocking. </returns>
+        public static OracleDatabaseMaintenanceWindow OracleDatabaseMaintenanceWindow(MaintenancePreference? preference = default, IEnumerable<MaintenanceMonth> months = default, IEnumerable<int> weeksOfMonth = default, IEnumerable<OracleDatabaseDayOfWeek> daysOfWeek = default, IEnumerable<int> hoursOfDay = default, int? leadTimeInWeeks = default, MaintenancePatchingMode? patchingMode = default, int? customActionTimeoutInMins = default, bool? isCustomActionTimeoutEnabled = default, bool? isMonthlyPatchingEnabled = default)
+        {
+            months ??= new ChangeTrackingList<MaintenanceMonth>();
+            weeksOfMonth ??= new ChangeTrackingList<int>();
+            daysOfWeek ??= new ChangeTrackingList<OracleDatabaseDayOfWeek>();
+            hoursOfDay ??= new ChangeTrackingList<int>();
+
+            return new OracleDatabaseMaintenanceWindow(
+                preference,
+                months.ToList(),
+                weeksOfMonth.ToList(),
+                daysOfWeek.ToList(),
+                hoursOfDay.ToList(),
+                leadTimeInWeeks,
+                patchingMode,
+                customActionTimeoutInMins,
+                isCustomActionTimeoutEnabled,
+                isMonthlyPatchingEnabled,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching). </summary>
         /// <param name="estimatedDBServerPatchingTime"> The estimated time required in minutes for database server patching. </param>
         /// <param name="estimatedNetworkSwitchesPatchingTime"> The estimated time required in minutes for network switch patching. </param>
         /// <param name="estimatedStorageServerPatchingTime"> The estimated time required in minutes for storage server patching. </param>
         /// <param name="totalEstimatedPatchingTime"> The estimated total time required in minutes for all patching operations. </param>
         /// <returns> A new <see cref="Models.EstimatedPatchingTime"/> instance for mocking. </returns>
-        public static EstimatedPatchingTime EstimatedPatchingTime(int? estimatedDBServerPatchingTime = null, int? estimatedNetworkSwitchesPatchingTime = null, int? estimatedStorageServerPatchingTime = null, int? totalEstimatedPatchingTime = null)
+        public static EstimatedPatchingTime EstimatedPatchingTime(int? estimatedDBServerPatchingTime = default, int? estimatedNetworkSwitchesPatchingTime = default, int? estimatedStorageServerPatchingTime = default, int? totalEstimatedPatchingTime = default)
         {
-            return new EstimatedPatchingTime(estimatedDBServerPatchingTime, estimatedNetworkSwitchesPatchingTime, estimatedStorageServerPatchingTime, totalEstimatedPatchingTime, serializedAdditionalRawData: null);
+            return new EstimatedPatchingTime(estimatedDBServerPatchingTime, estimatedNetworkSwitchesPatchingTime, estimatedStorageServerPatchingTime, totalEstimatedPatchingTime, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleDBServerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The exascale config response details for the cloud Exadata infrastructure. </summary>
+        /// <param name="totalStorageInGbs"> Storage size needed for Exascale in GBs. </param>
+        /// <param name="availableStorageInGbs"> Available storage size for Exascale in GBs. </param>
+        /// <returns> A new <see cref="Models.ExascaleConfigDetails"/> instance for mocking. </returns>
+        public static ExascaleConfigDetails ExascaleConfigDetails(int totalStorageInGbs = default, int? availableStorageInGbs = default)
+        {
+            return new ExascaleConfigDetails(totalStorageInGbs, availableStorageInGbs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the CloudExadataInfrastructure. </summary>
+        /// <param name="zones"> CloudExadataInfrastructure zones. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.CloudExadataInfrastructurePatch"/> instance for mocking. </returns>
+        public static CloudExadataInfrastructurePatch CloudExadataInfrastructurePatch(IEnumerable<string> zones = default, IDictionary<string, string> tags = default, CloudExadataInfrastructureUpdateProperties properties = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CloudExadataInfrastructurePatch(zones.ToList(), tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The updatable properties of the CloudExadataInfrastructure. </summary>
+        /// <param name="computeCount"> The number of compute servers for the cloud Exadata infrastructure. </param>
+        /// <param name="storageCount"> The number of storage servers for the cloud Exadata infrastructure. </param>
+        /// <param name="maintenanceWindow"> maintenanceWindow property. </param>
+        /// <param name="customerContacts"> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. . </param>
+        /// <param name="displayName"> The name for the Exadata infrastructure. </param>
+        /// <returns> A new <see cref="Models.CloudExadataInfrastructureUpdateProperties"/> instance for mocking. </returns>
+        public static CloudExadataInfrastructureUpdateProperties CloudExadataInfrastructureUpdateProperties(int? computeCount = default, int? storageCount = default, OracleDatabaseMaintenanceWindow maintenanceWindow = default, IEnumerable<OracleCustomerContact> customerContacts = default, string displayName = default)
+        {
+            customerContacts ??= new ChangeTrackingList<OracleCustomerContact>();
+
+            return new CloudExadataInfrastructureUpdateProperties(
+                computeCount,
+                storageCount,
+                maintenanceWindow,
+                customerContacts.ToList(),
+                displayName,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The exascale config request details for the Cloud Exadata infrastructure. </summary>
+        /// <param name="totalStorageInGbs"> Storage size needed for Exascale in GBs. </param>
+        /// <returns> A new <see cref="Models.ConfigureExascaleCloudExadataInfrastructureDetails"/> instance for mocking. </returns>
+        public static ConfigureExascaleCloudExadataInfrastructureDetails ConfigureExascaleCloudExadataInfrastructureDetails(int totalStorageInGbs = default)
+        {
+            return new ConfigureExascaleCloudExadataInfrastructureDetails(totalStorageInGbs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> DbServer resource model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.OracleDBServerData"/> instance for mocking. </returns>
-        public static OracleDBServerData OracleDBServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OracleDBServerProperties properties = null)
+        public static OracleDBServerData OracleDBServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDBServerProperties properties = default)
         {
             return new OracleDBServerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OracleDBServerProperties"/>. </summary>
+        /// <summary> DbServer resource properties. </summary>
         /// <param name="dbServerOcid"> Db server name. </param>
         /// <param name="displayName"> The name for the Db Server. </param>
         /// <param name="compartmentOcid"> The OCID of the compartment. </param>
@@ -188,12 +274,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
         /// <returns> A new <see cref="Models.OracleDBServerProperties"/> instance for mocking. </returns>
-        public static OracleDBServerProperties OracleDBServerProperties(string dbServerOcid = null, string displayName = null, string compartmentOcid = null, ResourceIdentifier exadataInfrastructureOcid = null, int? cpuCoreCount = null, DBServerPatchingDetails dbServerPatchingDetails = null, int? maxMemoryInGbs = null, int? dbNodeStorageSizeInGbs = null, IEnumerable<string> vmClusterOcids = null, IEnumerable<string> dbNodeOcids = null, string lifecycleDetails = null, DBServerProvisioningState? lifecycleState = null, int? maxCpuCount = null, IEnumerable<string> autonomousVmClusterOcids = null, IEnumerable<string> autonomousVirtualMachineOcids = null, int? maxDBNodeStorageInGbs = null, int? memorySizeInGbs = null, string shape = null, DateTimeOffset? createdOn = null, OracleDatabaseResourceProvisioningState? provisioningState = null, OracleDatabaseComputeModel? computeModel = null)
+        public static OracleDBServerProperties OracleDBServerProperties(string dbServerOcid = default, string displayName = default, string compartmentOcid = default, ResourceIdentifier exadataInfrastructureOcid = default, int? cpuCoreCount = default, DBServerPatchingDetails dbServerPatchingDetails = default, int? maxMemoryInGbs = default, int? dbNodeStorageSizeInGbs = default, IEnumerable<string> vmClusterOcids = default, IEnumerable<string> dbNodeOcids = default, string lifecycleDetails = default, DBServerProvisioningState? lifecycleState = default, int? maxCpuCount = default, IEnumerable<string> autonomousVmClusterOcids = default, IEnumerable<string> autonomousVirtualMachineOcids = default, int? maxDBNodeStorageInGbs = default, int? memorySizeInGbs = default, string shape = default, DateTimeOffset? createdOn = default, OracleDatabaseResourceProvisioningState? provisioningState = default, OracleDatabaseComputeModel? computeModel = default)
         {
-            vmClusterOcids ??= new List<string>();
-            dbNodeOcids ??= new List<string>();
-            autonomousVmClusterOcids ??= new List<string>();
-            autonomousVirtualMachineOcids ??= new List<string>();
+            vmClusterOcids ??= new ChangeTrackingList<string>();
+            dbNodeOcids ??= new ChangeTrackingList<string>();
+            autonomousVmClusterOcids ??= new ChangeTrackingList<string>();
+            autonomousVirtualMachineOcids ??= new ChangeTrackingList<string>();
 
             return new OracleDBServerProperties(
                 dbServerOcid,
@@ -204,61 +290,61 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 dbServerPatchingDetails,
                 maxMemoryInGbs,
                 dbNodeStorageSizeInGbs,
-                vmClusterOcids?.ToList(),
-                dbNodeOcids?.ToList(),
+                vmClusterOcids.ToList(),
+                dbNodeOcids.ToList(),
                 lifecycleDetails,
                 lifecycleState,
                 maxCpuCount,
-                autonomousVmClusterOcids?.ToList(),
-                autonomousVirtualMachineOcids?.ToList(),
+                autonomousVmClusterOcids.ToList(),
+                autonomousVirtualMachineOcids.ToList(),
                 maxDBNodeStorageInGbs,
                 memorySizeInGbs,
                 shape,
                 createdOn,
                 provisioningState,
                 computeModel,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DBServerPatchingDetails"/>. </summary>
+        /// <summary> DbServer Patching Properties. </summary>
         /// <param name="estimatedPatchDuration"> Estimated Patch Duration. </param>
         /// <param name="patchingStatus"> Patching Status. </param>
         /// <param name="patchingEndedOn"> Time Patching Ended. </param>
         /// <param name="patchingStartedOn"> Time Patching Started. </param>
         /// <returns> A new <see cref="Models.DBServerPatchingDetails"/> instance for mocking. </returns>
-        public static DBServerPatchingDetails DBServerPatchingDetails(int? estimatedPatchDuration = null, DBServerPatchingStatus? patchingStatus = null, DateTimeOffset? patchingEndedOn = null, DateTimeOffset? patchingStartedOn = null)
+        public static DBServerPatchingDetails DBServerPatchingDetails(int? estimatedPatchDuration = default, DBServerPatchingStatus? patchingStatus = default, DateTimeOffset? patchingEndedOn = default, DateTimeOffset? patchingStartedOn = default)
         {
-            return new DBServerPatchingDetails(estimatedPatchDuration, patchingStatus, patchingEndedOn, patchingStartedOn, serializedAdditionalRawData: null);
+            return new DBServerPatchingDetails(estimatedPatchDuration, patchingStatus, patchingEndedOn, patchingStartedOn, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.CloudVmClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> CloudVmCluster resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.CloudVmClusterData"/> instance for mocking. </returns>
-        public static CloudVmClusterData CloudVmClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CloudVmClusterProperties properties = null)
+        public static CloudVmClusterData CloudVmClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CloudVmClusterProperties properties = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CloudVmClusterData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties,
-                serializedAdditionalRawData: null);
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudVmClusterProperties"/>. </summary>
+        /// <summary> CloudVmCluster resource model. </summary>
         /// <param name="cloudVmClusterOcid"> Cloud VM Cluster ocid. </param>
         /// <param name="listenerPort"> The port number configured for the listener on the cloud VM cluster. </param>
-        /// <param name="nodeCount"> The number of nodes in the cloud VM cluster. </param>
+        /// <param name="nodeCount"> The number of nodes in the cloud VM cluster. . </param>
         /// <param name="storageSizeInGbs"> The data disk group size to be allocated in GBs per VM. </param>
         /// <param name="fileSystemConfigurationDetails"> Array of mount path and size. </param>
         /// <param name="dataStorageSizeInTbs"> The data disk group size to be allocated in TBs. </param>
@@ -272,18 +358,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="domain"> The domain name for the cloud VM cluster. </param>
         /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
         /// <param name="ocpuCount"> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </param>
-        /// <param name="clusterName"> The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </param>
-        /// <param name="dataStoragePercentage"> The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Accepted values are 35, 40, 60 and 80. The default is 80 percent assigned to DATA storage. See [Storage Configuration](/Content/Database/Concepts/exaoverview.htm#Exadata) in the Exadata documentation for details on the impact of the configuration settings on storage. </param>
-        /// <param name="isLocalBackupEnabled"> If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster. </param>
+        /// <param name="clusterName"> The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. . </param>
+        /// <param name="dataStoragePercentage"> The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Accepted values are 35, 40, 60 and 80. The default is 80 percent assigned to DATA storage. See [Storage Configuration](/Content/Database/Concepts/exaoverview.htm#Exadata) in the Exadata documentation for details on the impact of the configuration settings on storage. . </param>
+        /// <param name="isLocalBackupEnabled"> If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster. . </param>
         /// <param name="cloudExadataInfrastructureId"> Cloud Exadata Infrastructure ID. </param>
-        /// <param name="isSparseDiskgroupEnabled"> If true, sparse disk group is configured for the cloud VM cluster. If false, sparse disk group is not created. </param>
+        /// <param name="isSparseDiskgroupEnabled"> If true, sparse disk group is configured for the cloud VM cluster. If false, sparse disk group is not created. . </param>
         /// <param name="systemVersion"> Operating system version of the image. </param>
         /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
-        /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </param>
-        /// <param name="diskRedundancy"> The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </param>
-        /// <param name="scanIPIds"> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. . </param>
+        /// <param name="diskRedundancy"> The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. . </param>
+        /// <param name="scanIpIds"> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
         /// <param name="vipIds"> The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
-        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. . </param>
         /// <param name="scanListenerPortTcp"> The TCP Single Client Access Name (SCAN) port. The default port is 1521. </param>
         /// <param name="scanListenerPortTcpSsl"> The TCPS Single Client Access Name (SCAN) port. The default port is 2484. </param>
         /// <param name="scanDnsRecordOcid"> The OCID of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. </param>
@@ -306,23 +392,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="compartmentOcid"> Cluster compartmentId. </param>
         /// <param name="clusterSubnetOcid"> Cluster subnet ocid. </param>
         /// <param name="computeModel"> The compute model of the VM Cluster. </param>
+        /// <param name="exascaleDbStorageVaultId"> Exadata Database Storage Vault ID. </param>
+        /// <param name="storageManagementType"> Specifies whether the type of storage management for the VM cluster is ASM or Exascale. </param>
         /// <returns> A new <see cref="Models.CloudVmClusterProperties"/> instance for mocking. </returns>
-        public static CloudVmClusterProperties CloudVmClusterProperties(string cloudVmClusterOcid = null, long? listenerPort = null, int? nodeCount = null, int? storageSizeInGbs = null, IEnumerable<FileSystemConfigurationDetails> fileSystemConfigurationDetails = null, double? dataStorageSizeInTbs = null, int? dbNodeStorageSizeInGbs = null, int? memorySizeInGbs = null, DateTimeOffset? createdOn = null, string lifecycleDetails = null, string timeZone = null, string zoneOcid = null, string hostname = null, string domain = null, int cpuCoreCount = default, float? ocpuCount = null, string clusterName = null, int? dataStoragePercentage = null, bool? isLocalBackupEnabled = null, ResourceIdentifier cloudExadataInfrastructureId = null, bool? isSparseDiskgroupEnabled = null, string systemVersion = null, IEnumerable<string> sshPublicKeys = null, OracleLicenseModel? licenseModel = null, CloudVmClusterDiskRedundancy? diskRedundancy = null, IEnumerable<string> scanIPIds = null, IEnumerable<string> vipIds = null, string scanDnsName = null, int? scanListenerPortTcp = null, int? scanListenerPortTcpSsl = null, string scanDnsRecordOcid = null, string shape = null, OracleDatabaseProvisioningState? provisioningState = null, CloudVmClusterLifecycleState? lifecycleState = null, ResourceIdentifier vnetId = null, string giVersion = null, Uri ociUri = null, Uri nsgUri = null, ResourceIdentifier subnetId = null, string backupSubnetCidr = null, IEnumerable<CloudVmClusterNsgCidr> nsgCidrs = null, DiagnosticCollectionConfig dataCollectionOptions = null, string displayName = null, IEnumerable<string> computeNodeOcids = null, ExadataIormConfig iormConfigCache = null, string lastUpdateHistoryEntryOcid = null, IEnumerable<string> dbServerOcids = null, string compartmentOcid = null, string clusterSubnetOcid = null, OracleDatabaseComputeModel? computeModel = null)
+        public static CloudVmClusterProperties CloudVmClusterProperties(string cloudVmClusterOcid = default, long? listenerPort = default, int? nodeCount = default, int? storageSizeInGbs = default, IEnumerable<FileSystemConfigurationDetails> fileSystemConfigurationDetails = default, double? dataStorageSizeInTbs = default, int? dbNodeStorageSizeInGbs = default, int? memorySizeInGbs = default, DateTimeOffset? createdOn = default, string lifecycleDetails = default, string timeZone = default, string zoneOcid = default, string hostname = default, string domain = default, int cpuCoreCount = default, float? ocpuCount = default, string clusterName = default, int? dataStoragePercentage = default, bool? isLocalBackupEnabled = default, ResourceIdentifier cloudExadataInfrastructureId = default, bool? isSparseDiskgroupEnabled = default, string systemVersion = default, IEnumerable<string> sshPublicKeys = default, OracleLicenseModel? licenseModel = default, CloudVmClusterDiskRedundancy? diskRedundancy = default, IEnumerable<string> scanIpIds = default, IEnumerable<string> vipIds = default, string scanDnsName = default, int? scanListenerPortTcp = default, int? scanListenerPortTcpSsl = default, string scanDnsRecordOcid = default, string shape = default, OracleDatabaseProvisioningState? provisioningState = default, CloudVmClusterLifecycleState? lifecycleState = default, ResourceIdentifier vnetId = default, string giVersion = default, Uri ociUri = default, Uri nsgUri = default, ResourceIdentifier subnetId = default, string backupSubnetCidr = default, IEnumerable<CloudVmClusterNsgCidr> nsgCidrs = default, DiagnosticCollectionConfig dataCollectionOptions = default, string displayName = default, IEnumerable<string> computeNodeOcids = default, ExadataIormConfig iormConfigCache = default, string lastUpdateHistoryEntryOcid = default, IEnumerable<string> dbServerOcids = default, string compartmentOcid = default, string clusterSubnetOcid = default, OracleDatabaseComputeModel? computeModel = default, ResourceIdentifier exascaleDbStorageVaultId = default, ExadataVmClusterStorageManagementType? storageManagementType = default)
         {
-            fileSystemConfigurationDetails ??= new List<FileSystemConfigurationDetails>();
-            sshPublicKeys ??= new List<string>();
-            scanIPIds ??= new List<string>();
-            vipIds ??= new List<string>();
-            nsgCidrs ??= new List<CloudVmClusterNsgCidr>();
-            computeNodeOcids ??= new List<string>();
-            dbServerOcids ??= new List<string>();
+            fileSystemConfigurationDetails ??= new ChangeTrackingList<FileSystemConfigurationDetails>();
+            sshPublicKeys ??= new ChangeTrackingList<string>();
+            scanIpIds ??= new ChangeTrackingList<string>();
+            vipIds ??= new ChangeTrackingList<string>();
+            nsgCidrs ??= new ChangeTrackingList<CloudVmClusterNsgCidr>();
+            computeNodeOcids ??= new ChangeTrackingList<string>();
+            dbServerOcids ??= new ChangeTrackingList<string>();
 
             return new CloudVmClusterProperties(
                 cloudVmClusterOcid,
                 listenerPort,
                 nodeCount,
                 storageSizeInGbs,
-                fileSystemConfigurationDetails?.ToList(),
+                fileSystemConfigurationDetails.ToList(),
                 dataStorageSizeInTbs,
                 dbNodeStorageSizeInGbs,
                 memorySizeInGbs,
@@ -340,11 +428,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 cloudExadataInfrastructureId,
                 isSparseDiskgroupEnabled,
                 systemVersion,
-                sshPublicKeys?.ToList(),
+                sshPublicKeys.ToList(),
                 licenseModel,
                 diskRedundancy,
-                scanIPIds?.ToList(),
-                vipIds?.ToList(),
+                scanIpIds.ToList(),
+                vipIds.ToList(),
                 scanDnsName,
                 scanListenerPortTcp,
                 scanListenerPortTcpSsl,
@@ -358,50 +446,118 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 nsgUri,
                 subnetId,
                 backupSubnetCidr,
-                nsgCidrs?.ToList(),
+                nsgCidrs.ToList(),
                 dataCollectionOptions,
                 displayName,
-                computeNodeOcids?.ToList(),
+                computeNodeOcids.ToList(),
                 iormConfigCache,
                 lastUpdateHistoryEntryOcid,
-                dbServerOcids?.ToList(),
+                dbServerOcids.ToList(),
                 compartmentOcid,
                 clusterSubnetOcid,
                 computeModel,
-                serializedAdditionalRawData: null);
+                exascaleDbStorageVaultId,
+                storageManagementType,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExadataIormConfig"/>. </summary>
+        /// <summary> ExadataIormConfig for cloud vm cluster. </summary>
         /// <param name="dbPlans"> An array of IORM settings for all the database in the Exadata DB system. </param>
         /// <param name="lifecycleDetails"> Additional information about the current lifecycleState. </param>
         /// <param name="lifecycleState"> The current state of IORM configuration for the Exadata DB system. </param>
         /// <param name="objective"> The current value for the IORM objective. The default is AUTO. </param>
         /// <returns> A new <see cref="Models.ExadataIormConfig"/> instance for mocking. </returns>
-        public static ExadataIormConfig ExadataIormConfig(IEnumerable<DBIormConfig> dbPlans = null, string lifecycleDetails = null, IormLifecycleState? lifecycleState = null, IormObjective? objective = null)
+        public static ExadataIormConfig ExadataIormConfig(IEnumerable<DBIormConfig> dbPlans = default, string lifecycleDetails = default, IormLifecycleState? lifecycleState = default, IormObjective? objective = default)
         {
-            dbPlans ??= new List<DBIormConfig>();
+            dbPlans ??= new ChangeTrackingList<DBIormConfig>();
 
-            return new ExadataIormConfig(dbPlans?.ToList(), lifecycleDetails, lifecycleState, objective, serializedAdditionalRawData: null);
+            return new ExadataIormConfig(dbPlans.ToList(), lifecycleDetails, lifecycleState, objective, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DBIormConfig"/>. </summary>
+        /// <summary> DbIormConfig for cloud vm cluster. </summary>
         /// <param name="dbName"> The database name. For the default DbPlan, the dbName is default. </param>
         /// <param name="flashCacheLimit"> The flash cache limit for this database. This value is internally configured based on the share value assigned to the database. </param>
         /// <param name="share"> The relative priority of this database. </param>
         /// <returns> A new <see cref="Models.DBIormConfig"/> instance for mocking. </returns>
-        public static DBIormConfig DBIormConfig(string dbName = null, string flashCacheLimit = null, int? share = null)
+        public static DBIormConfig DBIormConfig(string dbName = default, string flashCacheLimit = default, int? share = default)
         {
-            return new DBIormConfig(dbName, flashCacheLimit, share, serializedAdditionalRawData: null);
+            return new DBIormConfig(dbName, flashCacheLimit, share, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateIPAddressResult"/>. </summary>
+        /// <summary> The type used for update operations of the CloudVmCluster. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.CloudVmClusterPatch"/> instance for mocking. </returns>
+        public static CloudVmClusterPatch CloudVmClusterPatch(IDictionary<string, string> tags = default, CloudVmClusterUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CloudVmClusterPatch(tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The updatable properties of the CloudVmCluster. </summary>
+        /// <param name="storageSizeInGbs"> The data disk group size to be allocated in GBs per VM. </param>
+        /// <param name="fileSystemConfigurationDetails"> Array of mount path and size. </param>
+        /// <param name="dataStorageSizeInTbs"> The data disk group size to be allocated in TBs. </param>
+        /// <param name="dbNodeStorageSizeInGbs"> The local node storage to be allocated in GBs. </param>
+        /// <param name="memorySizeInGbs"> The memory to be allocated in GBs. </param>
+        /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
+        /// <param name="ocpuCount"> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. . </param>
+        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
+        /// <param name="displayName"> Display Name. </param>
+        /// <param name="computeNodeOcids"> The list of compute servers to be added to the cloud VM cluster. </param>
+        /// <returns> A new <see cref="Models.CloudVmClusterUpdateProperties"/> instance for mocking. </returns>
+        public static CloudVmClusterUpdateProperties CloudVmClusterUpdateProperties(int? storageSizeInGbs = default, IEnumerable<FileSystemConfigurationDetails> fileSystemConfigurationDetails = default, double? dataStorageSizeInTbs = default, int? dbNodeStorageSizeInGbs = default, int? memorySizeInGbs = default, int? cpuCoreCount = default, float? ocpuCount = default, IEnumerable<string> sshPublicKeys = default, OracleLicenseModel? licenseModel = default, DiagnosticCollectionConfig dataCollectionOptions = default, string displayName = default, IEnumerable<string> computeNodeOcids = default)
+        {
+            fileSystemConfigurationDetails ??= new ChangeTrackingList<FileSystemConfigurationDetails>();
+            sshPublicKeys ??= new ChangeTrackingList<string>();
+            computeNodeOcids ??= new ChangeTrackingList<string>();
+
+            return new CloudVmClusterUpdateProperties(
+                storageSizeInGbs,
+                fileSystemConfigurationDetails.ToList(),
+                dataStorageSizeInTbs,
+                dbNodeStorageSizeInGbs,
+                memorySizeInGbs,
+                cpuCoreCount,
+                ocpuCount,
+                sshPublicKeys.ToList(),
+                licenseModel,
+                dataCollectionOptions,
+                displayName,
+                computeNodeOcids.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Add/Remove (Virtual Machine) DbNode model. </summary>
+        /// <param name="dbServerOcids"> Db servers ocids. </param>
+        /// <returns> A new <see cref="Models.CloudVmClusterDBNodeContent"/> instance for mocking. </returns>
+        public static CloudVmClusterDBNodeContent CloudVmClusterDBNodeContent(IEnumerable<string> dbServerOcids = default)
+        {
+            dbServerOcids ??= new ChangeTrackingList<string>();
+
+            return new CloudVmClusterDBNodeContent(dbServerOcids.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Private Ip Addresses filter. </summary>
+        /// <param name="subnetOcid"> Subnet OCID. </param>
+        /// <param name="vnicOcid"> VCN OCID. </param>
+        /// <returns> A new <see cref="Models.PrivateIPAddressesContent"/> instance for mocking. </returns>
+        public static PrivateIPAddressesContent PrivateIPAddressesContent(string subnetOcid = default, string vnicOcid = default)
+        {
+            return new PrivateIPAddressesContent(subnetOcid, vnicOcid, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> PrivateIpAddress resource properties. </summary>
         /// <param name="displayName"> PrivateIpAddresses displayName. </param>
         /// <param name="hostnameLabel"> PrivateIpAddresses hostnameLabel. </param>
         /// <param name="privateIPAddressesOcid"> PrivateIpAddresses Id. </param>
         /// <param name="ipAddress"> PrivateIpAddresses ipAddress. </param>
         /// <param name="subnetOcid"> PrivateIpAddresses subnetId. </param>
         /// <returns> A new <see cref="Models.PrivateIPAddressResult"/> instance for mocking. </returns>
-        public static PrivateIPAddressResult PrivateIPAddressResult(string displayName = null, string hostnameLabel = null, string privateIPAddressesOcid = null, string ipAddress = null, string subnetOcid = null)
+        public static PrivateIPAddressResult PrivateIPAddressResult(string displayName = default, string hostnameLabel = default, string privateIPAddressesOcid = default, string ipAddress = default, string subnetOcid = default)
         {
             return new PrivateIPAddressResult(
                 displayName,
@@ -409,28 +565,28 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 privateIPAddressesOcid,
                 ipAddress,
                 subnetOcid,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.CloudVmClusterVirtualNetworkAddressData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Virtual IP resource belonging to a vm cluster resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.CloudVmClusterVirtualNetworkAddressData"/> instance for mocking. </returns>
-        public static CloudVmClusterVirtualNetworkAddressData CloudVmClusterVirtualNetworkAddressData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CloudVmClusterVirtualNetworkAddressProperties properties = null)
+        public static CloudVmClusterVirtualNetworkAddressData CloudVmClusterVirtualNetworkAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CloudVmClusterVirtualNetworkAddressProperties properties = default)
         {
             return new CloudVmClusterVirtualNetworkAddressData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudVmClusterVirtualNetworkAddressProperties"/>. </summary>
+        /// <summary> virtualNetworkAddress resource properties. </summary>
         /// <param name="ipAddress"> Virtual network Address address. </param>
         /// <param name="vipVmOcid"> Virtual Machine OCID. </param>
         /// <param name="vipOcid"> Application VIP OCID. </param>
@@ -440,7 +596,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleState"> virtual network address lifecycle state. </param>
         /// <param name="assignedOn"> The date and time when the create operation for the application virtual IP (VIP) address completed. </param>
         /// <returns> A new <see cref="Models.CloudVmClusterVirtualNetworkAddressProperties"/> instance for mocking. </returns>
-        public static CloudVmClusterVirtualNetworkAddressProperties CloudVmClusterVirtualNetworkAddressProperties(string ipAddress = null, string vipVmOcid = null, string vipOcid = null, string domain = null, string lifecycleDetails = null, OracleDatabaseProvisioningState? provisioningState = null, VirtualNetworkAddressLifecycleState? lifecycleState = null, DateTimeOffset? assignedOn = null)
+        public static CloudVmClusterVirtualNetworkAddressProperties CloudVmClusterVirtualNetworkAddressProperties(string ipAddress = default, string vipVmOcid = default, string vipOcid = default, string domain = default, string lifecycleDetails = default, OracleDatabaseProvisioningState? provisioningState = default, VirtualNetworkAddressLifecycleState? lifecycleState = default, DateTimeOffset? assignedOn = default)
         {
             return new CloudVmClusterVirtualNetworkAddressProperties(
                 ipAddress,
@@ -451,48 +607,47 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 provisioningState,
                 lifecycleState,
                 assignedOn,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleSystemVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="oracleSystemVersion"> The resource-specific properties for this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="oracleSystemVersion"> A valid Oracle System Version. </param>
         /// <returns> A new <see cref="OracleDatabase.OracleSystemVersionData"/> instance for mocking. </returns>
-        public static OracleSystemVersionData OracleSystemVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string oracleSystemVersion = null)
+        public static OracleSystemVersionData OracleSystemVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string oracleSystemVersion = default)
         {
             return new OracleSystemVersionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                oracleSystemVersion != null ? new OracleSystemVersionProperties(oracleSystemVersion, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                oracleSystemVersion is null ? default : new OracleSystemVersionProperties(oracleSystemVersion, new Dictionary<string, BinaryData>()));
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleSubscriptionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> OracleSubscription resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="OracleDatabase.OracleSubscriptionData"/> instance for mocking. </returns>
-        public static OracleSubscriptionData OracleSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OracleSubscriptionProperties properties = null, ArmPlan plan = null)
+        public static OracleSubscriptionData OracleSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleSubscriptionProperties properties = default, OracleDatabasePlan plan = default)
         {
             return new OracleSubscriptionData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 properties,
-                plan,
-                serializedAdditionalRawData: null);
+                plan);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OracleSubscriptionProperties"/>. </summary>
+        /// <summary> Oracle Subscription resource model. </summary>
         /// <param name="provisioningState"> OracleSubscriptionProvisioningState provisioning state. </param>
         /// <param name="saasSubscriptionId"> SAAS subscription ID generated by Marketplace. </param>
         /// <param name="cloudAccountOcid"> Cloud Account Id. </param>
@@ -504,9 +659,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="addSubscriptionOperationState"> State of the add Azure subscription operation on Oracle subscription. </param>
         /// <param name="lastOperationStatusDetail"> Status details of the last operation on Oracle subscription. </param>
         /// <returns> A new <see cref="Models.OracleSubscriptionProperties"/> instance for mocking. </returns>
-        public static OracleSubscriptionProperties OracleSubscriptionProperties(OracleSubscriptionProvisioningState? provisioningState = null, string saasSubscriptionId = null, string cloudAccountOcid = null, CloudAccountProvisioningState? cloudAccountState = null, string termUnit = null, string productCode = null, OracleSubscriptionUpdateIntent? intent = null, IEnumerable<string> azureSubscriptionIds = null, AddSubscriptionOperationState? addSubscriptionOperationState = null, string lastOperationStatusDetail = null)
+        public static OracleSubscriptionProperties OracleSubscriptionProperties(OracleSubscriptionProvisioningState? provisioningState = default, string saasSubscriptionId = default, string cloudAccountOcid = default, CloudAccountProvisioningState? cloudAccountState = default, string termUnit = default, string productCode = default, OracleSubscriptionUpdateIntent? intent = default, IEnumerable<string> azureSubscriptionIds = default, AddSubscriptionOperationState? addSubscriptionOperationState = default, string lastOperationStatusDetail = default)
         {
-            azureSubscriptionIds ??= new List<string>();
+            azureSubscriptionIds ??= new ChangeTrackingList<string>();
 
             return new OracleSubscriptionProperties(
                 provisioningState,
@@ -516,22 +671,22 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 termUnit,
                 productCode,
                 intent,
-                azureSubscriptionIds?.ToList(),
+                azureSubscriptionIds.ToList(),
                 addSubscriptionOperationState,
                 lastOperationStatusDetail,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudAccountDetails"/>. </summary>
+        /// <summary> Cloud Account Details model. </summary>
         /// <param name="cloudAccountName"> Cloud Account name. </param>
         /// <param name="cloudAccountHomeRegion"> Cloud Account Home region. </param>
         /// <returns> A new <see cref="Models.CloudAccountDetails"/> instance for mocking. </returns>
-        public static CloudAccountDetails CloudAccountDetails(string cloudAccountName = null, string cloudAccountHomeRegion = null)
+        public static CloudAccountDetails CloudAccountDetails(string cloudAccountName = default, string cloudAccountHomeRegion = default)
         {
-            return new CloudAccountDetails(cloudAccountName, cloudAccountHomeRegion, serializedAdditionalRawData: null);
+            return new CloudAccountDetails(cloudAccountName, cloudAccountHomeRegion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SaasSubscriptionDetails"/>. </summary>
+        /// <summary> SaaS Subscription Details model. </summary>
         /// <param name="id"> Purchased SaaS subscription ID. </param>
         /// <param name="subscriptionName"> SaaS subscription name. </param>
         /// <param name="createdOn"> Creation Date and Time. </param>
@@ -545,7 +700,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="isAutoRenew"> AutoRenew flag. </param>
         /// <param name="isFreeTrial"> FreeTrial flag. </param>
         /// <returns> A new <see cref="Models.SaasSubscriptionDetails"/> instance for mocking. </returns>
-        public static SaasSubscriptionDetails SaasSubscriptionDetails(string id = null, string subscriptionName = null, DateTimeOffset? createdOn = null, string offerId = null, string planId = null, string saasSubscriptionStatus = null, string publisherId = null, string purchaserEmailId = null, string purchaserTenantId = null, string termUnit = null, bool? isAutoRenew = null, bool? isFreeTrial = null)
+        public static SaasSubscriptionDetails SaasSubscriptionDetails(string id = default, string subscriptionName = default, DateTimeOffset? createdOn = default, string offerId = default, string planId = default, string saasSubscriptionStatus = default, string publisherId = default, string purchaserEmailId = default, string purchaserTenantId = default, string termUnit = default, bool? isAutoRenew = default, bool? isFreeTrial = default)
         {
             return new SaasSubscriptionDetails(
                 id,
@@ -560,37 +715,47 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 termUnit,
                 isAutoRenew,
                 isFreeTrial,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudAccountActivationLinks"/>. </summary>
+        /// <summary> Activation Links model. </summary>
         /// <param name="newCloudAccountActivationLink"> New Cloud Account Activation Link. </param>
         /// <param name="existingCloudAccountActivationLink"> Existing Cloud Account Activation Link. </param>
         /// <returns> A new <see cref="Models.CloudAccountActivationLinks"/> instance for mocking. </returns>
-        public static CloudAccountActivationLinks CloudAccountActivationLinks(string newCloudAccountActivationLink = null, string existingCloudAccountActivationLink = null)
+        public static CloudAccountActivationLinks CloudAccountActivationLinks(string newCloudAccountActivationLink = default, string existingCloudAccountActivationLink = default)
         {
-            return new CloudAccountActivationLinks(newCloudAccountActivationLink, existingCloudAccountActivationLink, serializedAdditionalRawData: null);
+            return new CloudAccountActivationLinks(newCloudAccountActivationLink, existingCloudAccountActivationLink, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.CloudVmClusterDBNodeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Azure Subscriptions model. </summary>
+        /// <param name="azureSubscriptionIds"> Azure Subscription Ids to be updated. </param>
+        /// <returns> A new <see cref="Models.OracleAzureSubscriptionsContent"/> instance for mocking. </returns>
+        public static OracleAzureSubscriptionsContent OracleAzureSubscriptionsContent(IEnumerable<string> azureSubscriptionIds = default)
+        {
+            azureSubscriptionIds ??= new ChangeTrackingList<string>();
+
+            return new OracleAzureSubscriptionsContent(azureSubscriptionIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The DbNode resource belonging to vmCluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.CloudVmClusterDBNodeData"/> instance for mocking. </returns>
-        public static CloudVmClusterDBNodeData CloudVmClusterDBNodeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CloudVmClusterDBNodeProperties properties = null)
+        public static CloudVmClusterDBNodeData CloudVmClusterDBNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CloudVmClusterDBNodeProperties properties = default)
         {
             return new CloudVmClusterDBNodeData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudVmClusterDBNodeProperties"/>. </summary>
+        /// <summary> The properties of DbNodeResource. </summary>
         /// <param name="dbNodeOcid"> DbNode OCID. </param>
         /// <param name="additionalDetails"> Additional information about the planned maintenance. </param>
         /// <param name="backupIPOcid"> The OCID of the backup IP address associated with the database node. </param>
@@ -615,7 +780,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="vnicOcid"> The OCID of the VNIC. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.CloudVmClusterDBNodeProperties"/> instance for mocking. </returns>
-        public static CloudVmClusterDBNodeProperties CloudVmClusterDBNodeProperties(string dbNodeOcid = null, string additionalDetails = null, string backupIPOcid = null, string backupVnic2Ocid = null, string backupVnicOcid = null, int? cpuCoreCount = null, int? dbNodeStorageSizeInGbs = null, string dbServerOcid = null, string dbSystemOcid = null, string faultDomain = null, string hostIPOcid = null, string hostname = null, DBNodeProvisioningState dbNodeLifecycleState = default, string lifecycleDetails = null, DBNodeMaintenanceType? maintenanceType = null, int? memorySizeInGbs = null, int? softwareStorageSizeInGb = null, DateTimeOffset createdOn = default, DateTimeOffset? timeMaintenanceWindowEnd = null, DateTimeOffset? timeMaintenanceWindowStart = null, string vnic2Ocid = null, string vnicOcid = null, OracleDatabaseResourceProvisioningState? provisioningState = null)
+        public static CloudVmClusterDBNodeProperties CloudVmClusterDBNodeProperties(string dbNodeOcid = default, string additionalDetails = default, string backupIPOcid = default, string backupVnic2Ocid = default, string backupVnicOcid = default, int? cpuCoreCount = default, int? dbNodeStorageSizeInGbs = default, string dbServerOcid = default, string dbSystemOcid = default, string faultDomain = default, string hostIPOcid = default, string hostname = default, DBNodeProvisioningState dbNodeLifecycleState = default, string lifecycleDetails = default, DBNodeMaintenanceType? maintenanceType = default, int? memorySizeInGbs = default, int? softwareStorageSizeInGb = default, DateTimeOffset createdOn = default, DateTimeOffset? timeMaintenanceWindowEnd = default, DateTimeOffset? timeMaintenanceWindowStart = default, string vnic2Ocid = default, string vnicOcid = default, OracleDatabaseResourceProvisioningState? provisioningState = default)
         {
             return new CloudVmClusterDBNodeProperties(
                 dbNodeOcid,
@@ -641,73 +806,80 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 vnic2Ocid,
                 vnicOcid,
                 provisioningState,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleGIVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="oracleGIVersion"> The resource-specific properties for this resource. </param>
+        /// <summary> DbNode action object. </summary>
+        /// <param name="action"> Db action. </param>
+        /// <returns> A new <see cref="Models.DBNodeAction"/> instance for mocking. </returns>
+        public static DBNodeAction DBNodeAction(DBNodeActionType action = default)
+        {
+            return new DBNodeAction(action, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="oracleGIVersion"> A valid Oracle Grid Infrastructure (GI) software version. </param>
         /// <returns> A new <see cref="OracleDatabase.OracleGIVersionData"/> instance for mocking. </returns>
-        public static OracleGIVersionData OracleGIVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string oracleGIVersion = null)
+        public static OracleGIVersionData OracleGIVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string oracleGIVersion = default)
         {
             return new OracleGIVersionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                oracleGIVersion != null ? new OracleGIVersionProperties(oracleGIVersion, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                oracleGIVersion is null ? default : new OracleGIVersionProperties(oracleGIVersion, new Dictionary<string, BinaryData>()));
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleGIMinorVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The Oracle Grid Infrastructure (GI) minor version resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.OracleGIMinorVersionData"/> instance for mocking. </returns>
-        public static OracleGIMinorVersionData OracleGIMinorVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OracleGIMinorVersionProperties properties = null)
+        public static OracleGIMinorVersionData OracleGIMinorVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleGIMinorVersionProperties properties = default)
         {
             return new OracleGIMinorVersionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OracleGIMinorVersionProperties"/>. </summary>
+        /// <summary> The Oracle Grid Infrastructure (GI) minor version properties. </summary>
         /// <param name="version"> A valid Oracle Grid Infrastructure (GI) software version. </param>
         /// <param name="gridImageOcid"> Grid Infrastructure Image Id. </param>
         /// <returns> A new <see cref="Models.OracleGIMinorVersionProperties"/> instance for mocking. </returns>
-        public static OracleGIMinorVersionProperties OracleGIMinorVersionProperties(string version = null, string gridImageOcid = null)
+        public static OracleGIMinorVersionProperties OracleGIMinorVersionProperties(string version = default, string gridImageOcid = default)
         {
-            return new OracleGIMinorVersionProperties(version, gridImageOcid, serializedAdditionalRawData: null);
+            return new OracleGIMinorVersionProperties(version, gridImageOcid, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleDBSystemShapeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> DbSystemShape resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.OracleDBSystemShapeData"/> instance for mocking. </returns>
-        public static OracleDBSystemShapeData OracleDBSystemShapeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OracleDBSystemShapeProperties properties = null)
+        public static OracleDBSystemShapeData OracleDBSystemShapeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDBSystemShapeProperties properties = default)
         {
             return new OracleDBSystemShapeData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OracleDBSystemShapeProperties"/>. </summary>
+        /// <summary> DbSystemShape resource model. </summary>
         /// <param name="shapeFamily"> The family of the shape used for the DB system. </param>
         /// <param name="shapeName"> The shape used for the DB system. </param>
         /// <param name="availableCoreCount"> The maximum number of CPU cores that can be enabled on the DB system for this shape. </param>
@@ -732,9 +904,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
         /// <param name="areServerTypesSupported"> Indicates if the shape supports database and storage server types. </param>
         /// <param name="displayName"> The display name of the shape used for the DB system. </param>
+        /// <param name="shapeAttributes"> The shapeAttributes of the DB system shape.. </param>
         /// <returns> A new <see cref="Models.OracleDBSystemShapeProperties"/> instance for mocking. </returns>
-        public static OracleDBSystemShapeProperties OracleDBSystemShapeProperties(string shapeFamily = null, string shapeName = null, int availableCoreCount = default, int? minimumCoreCount = null, int? runtimeMinimumCoreCount = null, int? coreCountIncrement = null, int? minStorageCount = null, int? maxStorageCount = null, double? availableDataStoragePerServerInTbs = null, int? availableMemoryPerNodeInGbs = null, int? availableDBNodePerNodeInGbs = null, int? minCoreCountPerNode = null, int? availableMemoryInGbs = null, int? minMemoryPerNodeInGbs = null, int? availableDBNodeStorageInGbs = null, int? minDBNodeStoragePerNodeInGbs = null, int? availableDataStorageInTbs = null, int? minDataStorageInTbs = null, int? minimumNodeCount = null, int? maximumNodeCount = null, int? availableCoreCountPerNode = null, OracleDatabaseComputeModel? computeModel = null, bool? areServerTypesSupported = null, string displayName = null)
+        public static OracleDBSystemShapeProperties OracleDBSystemShapeProperties(string shapeFamily = default, string shapeName = default, int availableCoreCount = default, int? minimumCoreCount = default, int? runtimeMinimumCoreCount = default, int? coreCountIncrement = default, int? minStorageCount = default, int? maxStorageCount = default, double? availableDataStoragePerServerInTbs = default, int? availableMemoryPerNodeInGbs = default, int? availableDBNodePerNodeInGbs = default, int? minCoreCountPerNode = default, int? availableMemoryInGbs = default, int? minMemoryPerNodeInGbs = default, int? availableDBNodeStorageInGbs = default, int? minDBNodeStoragePerNodeInGbs = default, int? availableDataStorageInTbs = default, int? minDataStorageInTbs = default, int? minimumNodeCount = default, int? maximumNodeCount = default, int? availableCoreCountPerNode = default, OracleDatabaseComputeModel? computeModel = default, bool? areServerTypesSupported = default, string displayName = default, IEnumerable<string> shapeAttributes = default)
         {
+            shapeAttributes ??= new ChangeTrackingList<string>();
+
             return new OracleDBSystemShapeProperties(
                 shapeFamily,
                 shapeName,
@@ -760,28 +935,29 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeModel,
                 areServerTypesSupported,
                 displayName,
-                serializedAdditionalRawData: null);
+                shapeAttributes.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleDnsPrivateViewData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> DnsPrivateView resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.OracleDnsPrivateViewData"/> instance for mocking. </returns>
-        public static OracleDnsPrivateViewData OracleDnsPrivateViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OracleDnsPrivateViewProperties properties = null)
+        public static OracleDnsPrivateViewData OracleDnsPrivateViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDnsPrivateViewProperties properties = default)
         {
             return new OracleDnsPrivateViewData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OracleDnsPrivateViewProperties"/>. </summary>
+        /// <summary> Views resource model. </summary>
         /// <param name="dnsPrivateViewOcid"> The OCID of the view. </param>
         /// <param name="displayName"> The display name of the view resource. </param>
         /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
@@ -791,7 +967,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="updatedOn"> views timeCreated. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.OracleDnsPrivateViewProperties"/> instance for mocking. </returns>
-        public static OracleDnsPrivateViewProperties OracleDnsPrivateViewProperties(string dnsPrivateViewOcid = null, string displayName = null, bool isProtected = default, DnsPrivateViewsLifecycleState dnsPrivateViewLifecycleState = default, string self = null, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, OracleDatabaseResourceProvisioningState? provisioningState = null)
+        public static OracleDnsPrivateViewProperties OracleDnsPrivateViewProperties(string dnsPrivateViewOcid = default, string displayName = default, bool isProtected = default, DnsPrivateViewsLifecycleState dnsPrivateViewLifecycleState = default, string self = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, OracleDatabaseResourceProvisioningState? provisioningState = default)
         {
             return new OracleDnsPrivateViewProperties(
                 dnsPrivateViewOcid,
@@ -802,28 +978,28 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 createdOn,
                 updatedOn,
                 provisioningState,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleDnsPrivateZoneData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> DnsPrivateZone resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.OracleDnsPrivateZoneData"/> instance for mocking. </returns>
-        public static OracleDnsPrivateZoneData OracleDnsPrivateZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OracleDnsPrivateZoneProperties properties = null)
+        public static OracleDnsPrivateZoneData OracleDnsPrivateZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDnsPrivateZoneProperties properties = default)
         {
             return new OracleDnsPrivateZoneData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OracleDnsPrivateZoneProperties"/>. </summary>
+        /// <summary> Zones resource model. </summary>
         /// <param name="zoneOcid"> The OCID of the Zone. </param>
         /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
         /// <param name="dnsPrivateZoneLifecycleState"> Zones lifecycleState. </param>
@@ -835,7 +1011,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="createdOn"> Zones timeCreated. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.OracleDnsPrivateZoneProperties"/> instance for mocking. </returns>
-        public static OracleDnsPrivateZoneProperties OracleDnsPrivateZoneProperties(string zoneOcid = null, bool isProtected = default, DnsPrivateZonesLifecycleState dnsPrivateZoneLifecycleState = default, string self = null, int serial = default, string version = null, string viewOcid = null, OracleDnsPrivateZoneType zoneType = default, DateTimeOffset createdOn = default, OracleDatabaseResourceProvisioningState? provisioningState = null)
+        public static OracleDnsPrivateZoneProperties OracleDnsPrivateZoneProperties(string zoneOcid = default, bool isProtected = default, DnsPrivateZonesLifecycleState dnsPrivateZoneLifecycleState = default, string self = default, int serial = default, string version = default, string viewOcid = default, OracleDnsPrivateZoneType zoneType = default, DateTimeOffset createdOn = default, OracleDatabaseResourceProvisioningState? provisioningState = default)
         {
             return new OracleDnsPrivateZoneProperties(
                 zoneOcid,
@@ -848,28 +1024,28 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 zoneType,
                 createdOn,
                 provisioningState,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.OracleFlexComponentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> FlexComponent Resource Definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.OracleFlexComponentData"/> instance for mocking. </returns>
-        public static OracleFlexComponentData OracleFlexComponentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OracleFlexComponentProperties properties = null)
+        public static OracleFlexComponentData OracleFlexComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleFlexComponentProperties properties = default)
         {
             return new OracleFlexComponentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OracleFlexComponentProperties"/>. </summary>
+        /// <summary> FlexComponent resource model. </summary>
         /// <param name="minimumCoreCount"> The minimum number of CPU cores that can be enabled on the DB Server for this Flex Component. </param>
         /// <param name="availableCoreCount"> The maximum number of CPU cores that can be enabled on the DB Server for this Flex Component. </param>
         /// <param name="availableDBStorageInGbs"> The maximum storage that can be enabled on the Storage Server for this Flex Component. </param>
@@ -881,7 +1057,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="hardwareType"> The hardware type of the DB (Compute) or Storage (Cell) Server for this Flex Component. </param>
         /// <param name="descriptionSummary"> The description summary for this Flex Component. </param>
         /// <returns> A new <see cref="Models.OracleFlexComponentProperties"/> instance for mocking. </returns>
-        public static OracleFlexComponentProperties OracleFlexComponentProperties(int? minimumCoreCount = null, int? availableCoreCount = null, int? availableDBStorageInGbs = null, int? runtimeMinimumCoreCount = null, string shape = null, int? availableMemoryInGbs = null, int? availableLocalStorageInGbs = null, string computeModel = null, FlexComponentHardwareType? hardwareType = null, string descriptionSummary = null)
+        public static OracleFlexComponentProperties OracleFlexComponentProperties(int? minimumCoreCount = default, int? availableCoreCount = default, int? availableDBStorageInGbs = default, int? runtimeMinimumCoreCount = default, string shape = default, int? availableMemoryInGbs = default, int? availableLocalStorageInGbs = default, string computeModel = default, FlexComponentHardwareType? hardwareType = default, string descriptionSummary = default)
         {
             return new OracleFlexComponentProperties(
                 minimumCoreCount,
@@ -894,38 +1070,37 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeModel,
                 hardwareType,
                 descriptionSummary,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.AutonomousDatabaseData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Please note <see cref="Models.AutonomousDatabaseBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AutonomousDatabaseCloneProperties"/>, <see cref="Models.AutonomousDatabaseFromBackupTimestampProperties"/>, <see cref="Models.AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/> and <see cref="Models.AutonomousDatabaseProperties"/>.
-        /// </param>
+        /// <summary> Autonomous Database resource model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.AutonomousDatabaseData"/> instance for mocking. </returns>
-        public static AutonomousDatabaseData AutonomousDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AutonomousDatabaseBaseProperties properties = null)
+        public static AutonomousDatabaseData AutonomousDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AutonomousDatabaseBaseProperties properties = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AutonomousDatabaseData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties,
-                serializedAdditionalRawData: null);
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseBaseProperties"/>. </summary>
+        /// <summary>
+        /// Autonomous Database base resource model.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutonomousDatabaseProperties"/>, <see cref="AutonomousDatabaseCloneProperties"/>, <see cref="AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/>, and <see cref="AutonomousDatabaseFromBackupTimestampProperties"/>.
+        /// </summary>
         /// <param name="adminPassword"> Admin password. </param>
         /// <param name="dataBaseType"> Database type to be created. </param>
         /// <param name="autonomousMaintenanceScheduleType"> The maintenance schedule type of the Autonomous Database Serverless. </param>
@@ -957,8 +1132,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="lifecycleState"> Views lifecycleState. </param>
-        /// <param name="scheduledOperations"> The list of scheduled operations. </param>
-        /// <param name="privateEndpointIP"> The private endpoint Ip address for the resource. </param>
+        /// <param name="scheduledOperationsList"> The list of scheduled operations. </param>
+        /// <param name="privateEndpointIp"> The private endpoint Ip address for the resource. </param>
         /// <param name="privateEndpointLabel"> The resource's private endpoint label. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="subnetId"> Client subnet. </param>
@@ -971,7 +1146,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="apexDetails"> Information about Oracle APEX Application Development. </param>
         /// <param name="availableUpgradeVersions"> List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty. </param>
         /// <param name="connectionStrings"> The connection string used to connect to the Autonomous Database. </param>
-        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </param>
+        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. . </param>
         /// <param name="dataSafeStatus"> Status of the Data Safe registration for this Autonomous Database. </param>
         /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
         /// <param name="autonomousDatabaseId"> Autonomous Database ID. </param>
@@ -1002,26 +1177,27 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="usedDataStorageSizeInTbs"> The amount of storage that has been used, in terabytes. </param>
         /// <param name="databaseOcid"> Database ocid. </param>
         /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
-        /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <param name="whitelistedIps"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseBaseProperties"/> instance for mocking. </returns>
-        public static AutonomousDatabaseBaseProperties AutonomousDatabaseBaseProperties(string adminPassword = null, string dataBaseType = null, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = null, string characterSet = null, float? computeCount = null, OracleDatabaseComputeModel? databaseComputeModel = null, int? cpuCoreCount = null, IEnumerable<OracleCustomerContact> customerContacts = null, int? dataStorageSizeInTbs = null, int? dataStorageSizeInGbs = null, string dbVersion = null, AutonomousDatabaseWorkloadType? dbWorkload = null, string displayName = null, bool? isAutoScalingEnabled = null, bool? isAutoScalingForStorageEnabled = null, IEnumerable<string> peerDBIds = null, string peerDBId = null, bool? isLocalDataGuardEnabled = null, bool? isRemoteDataGuardEnabled = null, DisasterRecoveryType? localDisasterRecoveryType = null, DateTimeOffset? disasterRecoveryRoleChangedOn = null, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = null, AutonomousDatabaseStandbySummary localStandbyDB = null, int? failedDataRecoveryInSeconds = null, bool? isMtlsConnectionRequired = null, bool? isPreviewVersionWithServiceTermsAccepted = null, OracleLicenseModel? licenseModel = null, string ncharacterSet = null, string lifecycleDetails = null, OracleDatabaseProvisioningState? provisioningState = null, AutonomousDatabaseLifecycleState? lifecycleState = null, ScheduledOperationsType scheduledOperations = null, string privateEndpointIP = null, string privateEndpointLabel = null, Uri ociUri = null, ResourceIdentifier subnetId = null, ResourceIdentifier vnetId = null, DateTimeOffset? createdOn = null, DateTimeOffset? maintenanceBeginOn = null, DateTimeOffset? maintenanceEndOn = null, double? actualUsedDataStorageSizeInTbs = null, double? allocatedStorageSizeInTbs = null, OracleApexDetailsType apexDetails = null, IEnumerable<string> availableUpgradeVersions = null, AutonomousDatabaseConnectionStrings connectionStrings = null, AutonomousDatabaseConnectionUrls connectionUrls = null, DataSafeStatusType? dataSafeStatus = null, OracleDatabaseEditionType? databaseEdition = null, ResourceIdentifier autonomousDatabaseId = null, int? inMemoryAreaInGbs = null, DateTimeOffset? nextLongTermBackupCreatedOn = null, LongTermBackUpScheduleDetails longTermBackupSchedule = null, bool? isPreview = null, int? localAdgAutoFailoverMaxDataLossLimit = null, int? memoryPerOracleComputeUnitInGbs = null, AutonomousDatabaseModeType? openMode = null, OperationsInsightsStatusType? operationsInsightsStatus = null, AutonomousDatabasePermissionLevelType? permissionLevel = null, string privateEndpoint = null, IEnumerable<int> provisionableCpus = null, DataGuardRoleType? role = null, Uri serviceConsoleUri = null, Uri sqlWebDeveloperUri = null, IEnumerable<string> supportedRegionsToCloneTo = null, DateTimeOffset? dataGuardRoleChangedOn = null, DateTimeOffset? freeAutonomousDatabaseDeletedOn = null, string timeLocalDataGuardEnabled = null, DateTimeOffset? lastFailoverHappenedOn = null, DateTimeOffset? lastRefreshHappenedOn = null, DateTimeOffset? lastRefreshPointTimestamp = null, DateTimeOffset? lastSwitchoverHappenedOn = null, DateTimeOffset? freeAutonomousDatabaseStoppedOn = null, int? usedDataStorageSizeInGbs = null, int? usedDataStorageSizeInTbs = null, string databaseOcid = null, int? backupRetentionPeriodInDays = null, IEnumerable<string> whitelistedIPs = null)
+        public static AutonomousDatabaseBaseProperties AutonomousDatabaseBaseProperties(string adminPassword = default, string dataBaseType = default, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default, string characterSet = default, float? computeCount = default, OracleDatabaseComputeModel? databaseComputeModel = default, int? cpuCoreCount = default, IEnumerable<OracleCustomerContact> customerContacts = default, int? dataStorageSizeInTbs = default, int? dataStorageSizeInGbs = default, string dbVersion = default, AutonomousDatabaseWorkloadType? dbWorkload = default, string displayName = default, bool? isAutoScalingEnabled = default, bool? isAutoScalingForStorageEnabled = default, IEnumerable<string> peerDBIds = default, string peerDBId = default, bool? isLocalDataGuardEnabled = default, bool? isRemoteDataGuardEnabled = default, DisasterRecoveryType? localDisasterRecoveryType = default, DateTimeOffset? disasterRecoveryRoleChangedOn = default, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = default, AutonomousDatabaseStandbySummary localStandbyDB = default, int? failedDataRecoveryInSeconds = default, bool? isMtlsConnectionRequired = default, bool? isPreviewVersionWithServiceTermsAccepted = default, OracleLicenseModel? licenseModel = default, string ncharacterSet = default, string lifecycleDetails = default, OracleDatabaseProvisioningState? provisioningState = default, AutonomousDatabaseLifecycleState? lifecycleState = default, IEnumerable<ScheduledOperationsType> scheduledOperationsList = default, string privateEndpointIp = default, string privateEndpointLabel = default, Uri ociUri = default, ResourceIdentifier subnetId = default, ResourceIdentifier vnetId = default, DateTimeOffset? createdOn = default, DateTimeOffset? maintenanceBeginOn = default, DateTimeOffset? maintenanceEndOn = default, double? actualUsedDataStorageSizeInTbs = default, double? allocatedStorageSizeInTbs = default, OracleApexDetailsType apexDetails = default, IEnumerable<string> availableUpgradeVersions = default, AutonomousDatabaseConnectionStrings connectionStrings = default, AutonomousDatabaseConnectionUrls connectionUrls = default, DataSafeStatusType? dataSafeStatus = default, OracleDatabaseEditionType? databaseEdition = default, ResourceIdentifier autonomousDatabaseId = default, int? inMemoryAreaInGbs = default, DateTimeOffset? nextLongTermBackupCreatedOn = default, LongTermBackUpScheduleDetails longTermBackupSchedule = default, bool? isPreview = default, int? localAdgAutoFailoverMaxDataLossLimit = default, int? memoryPerOracleComputeUnitInGbs = default, AutonomousDatabaseModeType? openMode = default, OperationsInsightsStatusType? operationsInsightsStatus = default, AutonomousDatabasePermissionLevelType? permissionLevel = default, string privateEndpoint = default, IEnumerable<int> provisionableCpus = default, DataGuardRoleType? role = default, Uri serviceConsoleUri = default, Uri sqlWebDeveloperUri = default, IEnumerable<string> supportedRegionsToCloneTo = default, DateTimeOffset? dataGuardRoleChangedOn = default, DateTimeOffset? freeAutonomousDatabaseDeletedOn = default, string timeLocalDataGuardEnabled = default, DateTimeOffset? lastFailoverHappenedOn = default, DateTimeOffset? lastRefreshHappenedOn = default, DateTimeOffset? lastRefreshPointTimestamp = default, DateTimeOffset? lastSwitchoverHappenedOn = default, DateTimeOffset? freeAutonomousDatabaseStoppedOn = default, int? usedDataStorageSizeInGbs = default, int? usedDataStorageSizeInTbs = default, string databaseOcid = default, int? backupRetentionPeriodInDays = default, IEnumerable<string> whitelistedIps = default)
         {
-            customerContacts ??= new List<OracleCustomerContact>();
-            peerDBIds ??= new List<string>();
-            availableUpgradeVersions ??= new List<string>();
-            provisionableCpus ??= new List<int>();
-            supportedRegionsToCloneTo ??= new List<string>();
-            whitelistedIPs ??= new List<string>();
+            customerContacts ??= new ChangeTrackingList<OracleCustomerContact>();
+            peerDBIds ??= new ChangeTrackingList<string>();
+            scheduledOperationsList ??= new ChangeTrackingList<ScheduledOperationsType>();
+            availableUpgradeVersions ??= new ChangeTrackingList<string>();
+            provisionableCpus ??= new ChangeTrackingList<int>();
+            supportedRegionsToCloneTo ??= new ChangeTrackingList<string>();
+            whitelistedIps ??= new ChangeTrackingList<string>();
 
             return new UnknownAutonomousDatabaseBaseProperties(
                 adminPassword,
-                dataBaseType == null ? default : new OracleDataBaseType(dataBaseType),
+                new OracleDataBaseType(dataBaseType),
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
                 databaseComputeModel,
                 cpuCoreCount,
-                customerContacts?.ToList(),
+                customerContacts.ToList(),
                 dataStorageSizeInTbs,
                 dataStorageSizeInGbs,
                 dbVersion,
@@ -1029,7 +1205,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBIds?.ToList(),
+                peerDBIds.ToList(),
                 peerDBId,
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
@@ -1045,8 +1221,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 provisioningState,
                 lifecycleState,
-                scheduledOperations,
-                privateEndpointIP,
+                scheduledOperationsList.ToList(),
+                privateEndpointIp,
                 privateEndpointLabel,
                 ociUri,
                 subnetId,
@@ -1057,7 +1233,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 actualUsedDataStorageSizeInTbs,
                 allocatedStorageSizeInTbs,
                 apexDetails,
-                availableUpgradeVersions?.ToList(),
+                availableUpgradeVersions.ToList(),
                 connectionStrings,
                 connectionUrls,
                 dataSafeStatus,
@@ -1073,11 +1249,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 operationsInsightsStatus,
                 permissionLevel,
                 privateEndpoint,
-                provisionableCpus?.ToList(),
+                provisionableCpus.ToList(),
                 role,
                 serviceConsoleUri,
                 sqlWebDeveloperUri,
-                supportedRegionsToCloneTo?.ToList(),
+                supportedRegionsToCloneTo.ToList(),
                 dataGuardRoleChangedOn,
                 freeAutonomousDatabaseDeletedOn,
                 timeLocalDataGuardEnabled,
@@ -1090,18 +1266,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 usedDataStorageSizeInTbs,
                 databaseOcid,
                 backupRetentionPeriodInDays,
-                whitelistedIPs?.ToList(),
-                serializedAdditionalRawData: null);
+                whitelistedIps.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseStandbySummary"/>. </summary>
+        /// <summary> Autonomous Disaster Recovery standby database details. </summary>
         /// <param name="lagTimeInSeconds"> The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover. </param>
         /// <param name="lifecycleState"> The current state of the Autonomous Database. </param>
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="dataGuardRoleChangedOn"> The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database. </param>
         /// <param name="disasterRecoveryRoleChangedOn"> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseStandbySummary"/> instance for mocking. </returns>
-        public static AutonomousDatabaseStandbySummary AutonomousDatabaseStandbySummary(int? lagTimeInSeconds = null, AutonomousDatabaseLifecycleState? lifecycleState = null, string lifecycleDetails = null, DateTimeOffset? dataGuardRoleChangedOn = null, DateTimeOffset? disasterRecoveryRoleChangedOn = null)
+        public static AutonomousDatabaseStandbySummary AutonomousDatabaseStandbySummary(int? lagTimeInSeconds = default, AutonomousDatabaseLifecycleState? lifecycleState = default, string lifecycleDetails = default, DateTimeOffset? dataGuardRoleChangedOn = default, DateTimeOffset? disasterRecoveryRoleChangedOn = default)
         {
             return new AutonomousDatabaseStandbySummary(
                 lagTimeInSeconds,
@@ -1109,19 +1285,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 dataGuardRoleChangedOn,
                 disasterRecoveryRoleChangedOn,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OracleApexDetailsType"/>. </summary>
+        /// <summary> Information about Oracle APEX Application Development. </summary>
         /// <param name="apexVersion"> The Oracle APEX Application Development version. </param>
         /// <param name="ordsVersion"> The Oracle REST Data Services (ORDS) version. </param>
         /// <returns> A new <see cref="Models.OracleApexDetailsType"/> instance for mocking. </returns>
-        public static OracleApexDetailsType OracleApexDetailsType(string apexVersion = null, string ordsVersion = null)
+        public static OracleApexDetailsType OracleApexDetailsType(string apexVersion = default, string ordsVersion = default)
         {
-            return new OracleApexDetailsType(apexVersion, ordsVersion, serializedAdditionalRawData: null);
+            return new OracleApexDetailsType(apexVersion, ordsVersion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseConnectionStrings"/>. </summary>
+        /// <summary> Connection strings to connect to an Oracle Autonomous Database. </summary>
         /// <param name="allConnectionStrings"> Returns all connection strings that can be used to connect to the Autonomous Database. </param>
         /// <param name="dedicated"> The database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </param>
         /// <param name="high"> The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements. </param>
@@ -1129,9 +1305,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="medium"> The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements. </param>
         /// <param name="profiles"> A list of connection string profiles to allow clients to group, filter and select connection string values based on structured metadata. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseConnectionStrings"/> instance for mocking. </returns>
-        public static AutonomousDatabaseConnectionStrings AutonomousDatabaseConnectionStrings(AutonomousDatabaseConnectionStringType allConnectionStrings = null, string dedicated = null, string high = null, string low = null, string medium = null, IEnumerable<AutonomousDatabaseConnectionStringProfile> profiles = null)
+        public static AutonomousDatabaseConnectionStrings AutonomousDatabaseConnectionStrings(AutonomousDatabaseConnectionStringType allConnectionStrings = default, string dedicated = default, string high = default, string low = default, string medium = default, IEnumerable<AutonomousDatabaseConnectionStringProfile> profiles = default)
         {
-            profiles ??= new List<AutonomousDatabaseConnectionStringProfile>();
+            profiles ??= new ChangeTrackingList<AutonomousDatabaseConnectionStringProfile>();
 
             return new AutonomousDatabaseConnectionStrings(
                 allConnectionStrings,
@@ -1139,21 +1315,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 high,
                 low,
                 medium,
-                profiles?.ToList(),
-                serializedAdditionalRawData: null);
+                profiles.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseConnectionStringType"/>. </summary>
+        /// <summary> The connection string profile to allow clients to group, filter and select connection string values based on structured metadata. </summary>
         /// <param name="high"> The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements. </param>
         /// <param name="low"> The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </param>
         /// <param name="medium"> The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseConnectionStringType"/> instance for mocking. </returns>
-        public static AutonomousDatabaseConnectionStringType AutonomousDatabaseConnectionStringType(string high = null, string low = null, string medium = null)
+        public static AutonomousDatabaseConnectionStringType AutonomousDatabaseConnectionStringType(string high = default, string low = default, string medium = default)
         {
-            return new AutonomousDatabaseConnectionStringType(high, low, medium, serializedAdditionalRawData: null);
+            return new AutonomousDatabaseConnectionStringType(high, low, medium, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseConnectionStringProfile"/>. </summary>
+        /// <summary> The connection string profile to allow clients to group, filter and select connection string values based on structured metadata. </summary>
         /// <param name="consumerGroup"> Consumer group used by the connection. </param>
         /// <param name="displayName"> A user-friendly name for the connection. </param>
         /// <param name="hostFormat"> Host format used in connection string. </param>
@@ -1164,7 +1340,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="tlsAuthentication"> Specifies whether the TLS handshake is using one-way (SERVER) or mutual (MUTUAL) authentication. </param>
         /// <param name="value"> Connection string value. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseConnectionStringProfile"/> instance for mocking. </returns>
-        public static AutonomousDatabaseConnectionStringProfile AutonomousDatabaseConnectionStringProfile(ConnectionConsumerGroup? consumerGroup = null, string displayName = null, ConnectionHostFormatType hostFormat = default, bool? isRegional = null, ConnectionProtocolType protocol = default, ConnectionSessionModeType sessionMode = default, SyntaxFormatType syntaxFormat = default, ConnectionTlsAuthenticationType? tlsAuthentication = null, string value = null)
+        public static AutonomousDatabaseConnectionStringProfile AutonomousDatabaseConnectionStringProfile(ConnectionConsumerGroup? consumerGroup = default, string displayName = default, ConnectionHostFormatType hostFormat = default, bool? isRegional = default, ConnectionProtocolType protocol = default, ConnectionSessionModeType sessionMode = default, SyntaxFormatType syntaxFormat = default, ConnectionTlsAuthenticationType? tlsAuthentication = default, string value = default)
         {
             return new AutonomousDatabaseConnectionStringProfile(
                 consumerGroup,
@@ -1176,10 +1352,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 syntaxFormat,
                 tlsAuthentication,
                 value,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseConnectionUrls"/>. </summary>
+        /// <summary> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </summary>
         /// <param name="apexUri"> Oracle Application Express (APEX) URL. </param>
         /// <param name="databaseTransformsUri"> The URL of the Database Transforms for the Autonomous Database. </param>
         /// <param name="graphStudioUri"> The URL of the Graph Studio for the Autonomous Database. </param>
@@ -1188,7 +1364,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="ordsUri"> The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database. </param>
         /// <param name="sqlDevWebUri"> Oracle SQL Developer Web URL. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseConnectionUrls"/> instance for mocking. </returns>
-        public static AutonomousDatabaseConnectionUrls AutonomousDatabaseConnectionUrls(Uri apexUri = null, Uri databaseTransformsUri = null, Uri graphStudioUri = null, Uri machineLearningNotebookUri = null, Uri mongoDBUri = null, Uri ordsUri = null, Uri sqlDevWebUri = null)
+        public static AutonomousDatabaseConnectionUrls AutonomousDatabaseConnectionUrls(Uri apexUri = default, Uri databaseTransformsUri = default, Uri graphStudioUri = default, Uri machineLearningNotebookUri = default, Uri mongoDBUri = default, Uri ordsUri = default, Uri sqlDevWebUri = default)
         {
             return new AutonomousDatabaseConnectionUrls(
                 apexUri,
@@ -1198,10 +1374,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 mongoDBUri,
                 ordsUri,
                 sqlDevWebUri,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseProperties"/>. </summary>
+        /// <summary> Autonomous Database resource model. </summary>
         /// <param name="adminPassword"> Admin password. </param>
         /// <param name="autonomousMaintenanceScheduleType"> The maintenance schedule type of the Autonomous Database Serverless. </param>
         /// <param name="characterSet"> The character set for the autonomous database. </param>
@@ -1232,8 +1408,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="lifecycleState"> Views lifecycleState. </param>
-        /// <param name="scheduledOperations"> The list of scheduled operations. </param>
-        /// <param name="privateEndpointIP"> The private endpoint Ip address for the resource. </param>
+        /// <param name="scheduledOperationsList"> The list of scheduled operations. </param>
+        /// <param name="privateEndpointIp"> The private endpoint Ip address for the resource. </param>
         /// <param name="privateEndpointLabel"> The resource's private endpoint label. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="subnetId"> Client subnet. </param>
@@ -1246,7 +1422,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="apexDetails"> Information about Oracle APEX Application Development. </param>
         /// <param name="availableUpgradeVersions"> List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty. </param>
         /// <param name="connectionStrings"> The connection string used to connect to the Autonomous Database. </param>
-        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </param>
+        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. . </param>
         /// <param name="dataSafeStatus"> Status of the Data Safe registration for this Autonomous Database. </param>
         /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
         /// <param name="autonomousDatabaseId"> Autonomous Database ID. </param>
@@ -1277,16 +1453,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="usedDataStorageSizeInTbs"> The amount of storage that has been used, in terabytes. </param>
         /// <param name="databaseOcid"> Database ocid. </param>
         /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
-        /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <param name="whitelistedIps"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseProperties"/> instance for mocking. </returns>
-        public static AutonomousDatabaseProperties AutonomousDatabaseProperties(string adminPassword = null, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = null, string characterSet = null, float? computeCount = null, OracleDatabaseComputeModel? databaseComputeModel = null, int? cpuCoreCount = null, IEnumerable<OracleCustomerContact> customerContacts = null, int? dataStorageSizeInTbs = null, int? dataStorageSizeInGbs = null, string dbVersion = null, AutonomousDatabaseWorkloadType? dbWorkload = null, string displayName = null, bool? isAutoScalingEnabled = null, bool? isAutoScalingForStorageEnabled = null, IEnumerable<string> peerDBIds = null, string peerDBId = null, bool? isLocalDataGuardEnabled = null, bool? isRemoteDataGuardEnabled = null, DisasterRecoveryType? localDisasterRecoveryType = null, DateTimeOffset? disasterRecoveryRoleChangedOn = null, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = null, AutonomousDatabaseStandbySummary localStandbyDB = null, int? failedDataRecoveryInSeconds = null, bool? isMtlsConnectionRequired = null, bool? isPreviewVersionWithServiceTermsAccepted = null, OracleLicenseModel? licenseModel = null, string ncharacterSet = null, string lifecycleDetails = null, OracleDatabaseProvisioningState? provisioningState = null, AutonomousDatabaseLifecycleState? lifecycleState = null, ScheduledOperationsType scheduledOperations = null, string privateEndpointIP = null, string privateEndpointLabel = null, Uri ociUri = null, ResourceIdentifier subnetId = null, ResourceIdentifier vnetId = null, DateTimeOffset? createdOn = null, DateTimeOffset? maintenanceBeginOn = null, DateTimeOffset? maintenanceEndOn = null, double? actualUsedDataStorageSizeInTbs = null, double? allocatedStorageSizeInTbs = null, OracleApexDetailsType apexDetails = null, IEnumerable<string> availableUpgradeVersions = null, AutonomousDatabaseConnectionStrings connectionStrings = null, AutonomousDatabaseConnectionUrls connectionUrls = null, DataSafeStatusType? dataSafeStatus = null, OracleDatabaseEditionType? databaseEdition = null, ResourceIdentifier autonomousDatabaseId = null, int? inMemoryAreaInGbs = null, DateTimeOffset? nextLongTermBackupCreatedOn = null, LongTermBackUpScheduleDetails longTermBackupSchedule = null, bool? isPreview = null, int? localAdgAutoFailoverMaxDataLossLimit = null, int? memoryPerOracleComputeUnitInGbs = null, AutonomousDatabaseModeType? openMode = null, OperationsInsightsStatusType? operationsInsightsStatus = null, AutonomousDatabasePermissionLevelType? permissionLevel = null, string privateEndpoint = null, IEnumerable<int> provisionableCpus = null, DataGuardRoleType? role = null, Uri serviceConsoleUri = null, Uri sqlWebDeveloperUri = null, IEnumerable<string> supportedRegionsToCloneTo = null, DateTimeOffset? dataGuardRoleChangedOn = null, DateTimeOffset? freeAutonomousDatabaseDeletedOn = null, string timeLocalDataGuardEnabled = null, DateTimeOffset? lastFailoverHappenedOn = null, DateTimeOffset? lastRefreshHappenedOn = null, DateTimeOffset? lastRefreshPointTimestamp = null, DateTimeOffset? lastSwitchoverHappenedOn = null, DateTimeOffset? freeAutonomousDatabaseStoppedOn = null, int? usedDataStorageSizeInGbs = null, int? usedDataStorageSizeInTbs = null, string databaseOcid = null, int? backupRetentionPeriodInDays = null, IEnumerable<string> whitelistedIPs = null)
+        public static AutonomousDatabaseProperties AutonomousDatabaseProperties(string adminPassword = default, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default, string characterSet = default, float? computeCount = default, OracleDatabaseComputeModel? databaseComputeModel = default, int? cpuCoreCount = default, IEnumerable<OracleCustomerContact> customerContacts = default, int? dataStorageSizeInTbs = default, int? dataStorageSizeInGbs = default, string dbVersion = default, AutonomousDatabaseWorkloadType? dbWorkload = default, string displayName = default, bool? isAutoScalingEnabled = default, bool? isAutoScalingForStorageEnabled = default, IEnumerable<string> peerDBIds = default, string peerDBId = default, bool? isLocalDataGuardEnabled = default, bool? isRemoteDataGuardEnabled = default, DisasterRecoveryType? localDisasterRecoveryType = default, DateTimeOffset? disasterRecoveryRoleChangedOn = default, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = default, AutonomousDatabaseStandbySummary localStandbyDB = default, int? failedDataRecoveryInSeconds = default, bool? isMtlsConnectionRequired = default, bool? isPreviewVersionWithServiceTermsAccepted = default, OracleLicenseModel? licenseModel = default, string ncharacterSet = default, string lifecycleDetails = default, OracleDatabaseProvisioningState? provisioningState = default, AutonomousDatabaseLifecycleState? lifecycleState = default, IEnumerable<ScheduledOperationsType> scheduledOperationsList = default, string privateEndpointIp = default, string privateEndpointLabel = default, Uri ociUri = default, ResourceIdentifier subnetId = default, ResourceIdentifier vnetId = default, DateTimeOffset? createdOn = default, DateTimeOffset? maintenanceBeginOn = default, DateTimeOffset? maintenanceEndOn = default, double? actualUsedDataStorageSizeInTbs = default, double? allocatedStorageSizeInTbs = default, OracleApexDetailsType apexDetails = default, IEnumerable<string> availableUpgradeVersions = default, AutonomousDatabaseConnectionStrings connectionStrings = default, AutonomousDatabaseConnectionUrls connectionUrls = default, DataSafeStatusType? dataSafeStatus = default, OracleDatabaseEditionType? databaseEdition = default, ResourceIdentifier autonomousDatabaseId = default, int? inMemoryAreaInGbs = default, DateTimeOffset? nextLongTermBackupCreatedOn = default, LongTermBackUpScheduleDetails longTermBackupSchedule = default, bool? isPreview = default, int? localAdgAutoFailoverMaxDataLossLimit = default, int? memoryPerOracleComputeUnitInGbs = default, AutonomousDatabaseModeType? openMode = default, OperationsInsightsStatusType? operationsInsightsStatus = default, AutonomousDatabasePermissionLevelType? permissionLevel = default, string privateEndpoint = default, IEnumerable<int> provisionableCpus = default, DataGuardRoleType? role = default, Uri serviceConsoleUri = default, Uri sqlWebDeveloperUri = default, IEnumerable<string> supportedRegionsToCloneTo = default, DateTimeOffset? dataGuardRoleChangedOn = default, DateTimeOffset? freeAutonomousDatabaseDeletedOn = default, string timeLocalDataGuardEnabled = default, DateTimeOffset? lastFailoverHappenedOn = default, DateTimeOffset? lastRefreshHappenedOn = default, DateTimeOffset? lastRefreshPointTimestamp = default, DateTimeOffset? lastSwitchoverHappenedOn = default, DateTimeOffset? freeAutonomousDatabaseStoppedOn = default, int? usedDataStorageSizeInGbs = default, int? usedDataStorageSizeInTbs = default, string databaseOcid = default, int? backupRetentionPeriodInDays = default, IEnumerable<string> whitelistedIps = default)
         {
-            customerContacts ??= new List<OracleCustomerContact>();
-            peerDBIds ??= new List<string>();
-            availableUpgradeVersions ??= new List<string>();
-            provisionableCpus ??= new List<int>();
-            supportedRegionsToCloneTo ??= new List<string>();
-            whitelistedIPs ??= new List<string>();
+            customerContacts ??= new ChangeTrackingList<OracleCustomerContact>();
+            peerDBIds ??= new ChangeTrackingList<string>();
+            scheduledOperationsList ??= new ChangeTrackingList<ScheduledOperationsType>();
+            availableUpgradeVersions ??= new ChangeTrackingList<string>();
+            provisionableCpus ??= new ChangeTrackingList<int>();
+            supportedRegionsToCloneTo ??= new ChangeTrackingList<string>();
+            whitelistedIps ??= new ChangeTrackingList<string>();
 
             return new AutonomousDatabaseProperties(
                 adminPassword,
@@ -1296,7 +1473,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeCount,
                 databaseComputeModel,
                 cpuCoreCount,
-                customerContacts?.ToList(),
+                customerContacts.ToList(),
                 dataStorageSizeInTbs,
                 dataStorageSizeInGbs,
                 dbVersion,
@@ -1304,7 +1481,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBIds?.ToList(),
+                peerDBIds.ToList(),
                 peerDBId,
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
@@ -1320,8 +1497,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 provisioningState,
                 lifecycleState,
-                scheduledOperations,
-                privateEndpointIP,
+                scheduledOperationsList.ToList(),
+                privateEndpointIp,
                 privateEndpointLabel,
                 ociUri,
                 subnetId,
@@ -1332,7 +1509,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 actualUsedDataStorageSizeInTbs,
                 allocatedStorageSizeInTbs,
                 apexDetails,
-                availableUpgradeVersions?.ToList(),
+                availableUpgradeVersions.ToList(),
                 connectionStrings,
                 connectionUrls,
                 dataSafeStatus,
@@ -1348,11 +1525,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 operationsInsightsStatus,
                 permissionLevel,
                 privateEndpoint,
-                provisionableCpus?.ToList(),
+                provisionableCpus.ToList(),
                 role,
                 serviceConsoleUri,
                 sqlWebDeveloperUri,
-                supportedRegionsToCloneTo?.ToList(),
+                supportedRegionsToCloneTo.ToList(),
                 dataGuardRoleChangedOn,
                 freeAutonomousDatabaseDeletedOn,
                 timeLocalDataGuardEnabled,
@@ -1365,11 +1542,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 usedDataStorageSizeInTbs,
                 databaseOcid,
                 backupRetentionPeriodInDays,
-                whitelistedIPs?.ToList(),
-                serializedAdditionalRawData: null);
+                whitelistedIps.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseCloneProperties"/>. </summary>
+        /// <summary> Autonomous Database clone resource model. </summary>
         /// <param name="adminPassword"> Admin password. </param>
         /// <param name="autonomousMaintenanceScheduleType"> The maintenance schedule type of the Autonomous Database Serverless. </param>
         /// <param name="characterSet"> The character set for the autonomous database. </param>
@@ -1400,8 +1577,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="lifecycleState"> Views lifecycleState. </param>
-        /// <param name="scheduledOperations"> The list of scheduled operations. </param>
-        /// <param name="privateEndpointIP"> The private endpoint Ip address for the resource. </param>
+        /// <param name="scheduledOperationsList"> The list of scheduled operations. </param>
+        /// <param name="privateEndpointIp"> The private endpoint Ip address for the resource. </param>
         /// <param name="privateEndpointLabel"> The resource's private endpoint label. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="subnetId"> Client subnet. </param>
@@ -1414,7 +1591,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="apexDetails"> Information about Oracle APEX Application Development. </param>
         /// <param name="availableUpgradeVersions"> List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty. </param>
         /// <param name="connectionStrings"> The connection string used to connect to the Autonomous Database. </param>
-        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </param>
+        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. . </param>
         /// <param name="dataSafeStatus"> Status of the Data Safe registration for this Autonomous Database. </param>
         /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
         /// <param name="autonomousDatabaseId"> Autonomous Database ID. </param>
@@ -1445,7 +1622,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="usedDataStorageSizeInTbs"> The amount of storage that has been used, in terabytes. </param>
         /// <param name="databaseOcid"> Database ocid. </param>
         /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
-        /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <param name="whitelistedIps"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
         /// <param name="source"> The source of the database. </param>
         /// <param name="sourceId"> The Azure resource ID of the Autonomous Database that was cloned to create the current Autonomous Database. </param>
         /// <param name="cloneType"> The Autonomous Database clone type. </param>
@@ -1455,14 +1632,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="refreshableStatus"> The refresh status of the clone. </param>
         /// <param name="reconnectCloneEnabledOn"> The time and date as an RFC3339 formatted string, e.g., 2022-01-01T12:00:00.000Z, to set the limit for a refreshable clone to be reconnected to its source database. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseCloneProperties"/> instance for mocking. </returns>
-        public static AutonomousDatabaseCloneProperties AutonomousDatabaseCloneProperties(string adminPassword = null, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = null, string characterSet = null, float? computeCount = null, OracleDatabaseComputeModel? databaseComputeModel = null, int? cpuCoreCount = null, IEnumerable<OracleCustomerContact> customerContacts = null, int? dataStorageSizeInTbs = null, int? dataStorageSizeInGbs = null, string dbVersion = null, AutonomousDatabaseWorkloadType? dbWorkload = null, string displayName = null, bool? isAutoScalingEnabled = null, bool? isAutoScalingForStorageEnabled = null, IEnumerable<string> peerDBIds = null, string peerDBId = null, bool? isLocalDataGuardEnabled = null, bool? isRemoteDataGuardEnabled = null, DisasterRecoveryType? localDisasterRecoveryType = null, DateTimeOffset? disasterRecoveryRoleChangedOn = null, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = null, AutonomousDatabaseStandbySummary localStandbyDB = null, int? failedDataRecoveryInSeconds = null, bool? isMtlsConnectionRequired = null, bool? isPreviewVersionWithServiceTermsAccepted = null, OracleLicenseModel? licenseModel = null, string ncharacterSet = null, string lifecycleDetails = null, OracleDatabaseProvisioningState? provisioningState = null, AutonomousDatabaseLifecycleState? lifecycleState = null, ScheduledOperationsType scheduledOperations = null, string privateEndpointIP = null, string privateEndpointLabel = null, Uri ociUri = null, ResourceIdentifier subnetId = null, ResourceIdentifier vnetId = null, DateTimeOffset? createdOn = null, DateTimeOffset? maintenanceBeginOn = null, DateTimeOffset? maintenanceEndOn = null, double? actualUsedDataStorageSizeInTbs = null, double? allocatedStorageSizeInTbs = null, OracleApexDetailsType apexDetails = null, IEnumerable<string> availableUpgradeVersions = null, AutonomousDatabaseConnectionStrings connectionStrings = null, AutonomousDatabaseConnectionUrls connectionUrls = null, DataSafeStatusType? dataSafeStatus = null, OracleDatabaseEditionType? databaseEdition = null, ResourceIdentifier autonomousDatabaseId = null, int? inMemoryAreaInGbs = null, DateTimeOffset? nextLongTermBackupCreatedOn = null, LongTermBackUpScheduleDetails longTermBackupSchedule = null, bool? isPreview = null, int? localAdgAutoFailoverMaxDataLossLimit = null, int? memoryPerOracleComputeUnitInGbs = null, AutonomousDatabaseModeType? openMode = null, OperationsInsightsStatusType? operationsInsightsStatus = null, AutonomousDatabasePermissionLevelType? permissionLevel = null, string privateEndpoint = null, IEnumerable<int> provisionableCpus = null, DataGuardRoleType? role = null, Uri serviceConsoleUri = null, Uri sqlWebDeveloperUri = null, IEnumerable<string> supportedRegionsToCloneTo = null, DateTimeOffset? dataGuardRoleChangedOn = null, DateTimeOffset? freeAutonomousDatabaseDeletedOn = null, string timeLocalDataGuardEnabled = null, DateTimeOffset? lastFailoverHappenedOn = null, DateTimeOffset? lastRefreshHappenedOn = null, DateTimeOffset? lastRefreshPointTimestamp = null, DateTimeOffset? lastSwitchoverHappenedOn = null, DateTimeOffset? freeAutonomousDatabaseStoppedOn = null, int? usedDataStorageSizeInGbs = null, int? usedDataStorageSizeInTbs = null, string databaseOcid = null, int? backupRetentionPeriodInDays = null, IEnumerable<string> whitelistedIPs = null, AutonomousDatabaseSourceType? source = null, ResourceIdentifier sourceId = null, AutonomousDatabaseCloneType cloneType = default, bool? isReconnectCloneEnabled = null, bool? isRefreshableClone = null, RefreshableModelType? refreshableModel = null, RefreshableStatusType? refreshableStatus = null, DateTimeOffset? reconnectCloneEnabledOn = null)
+        public static AutonomousDatabaseCloneProperties AutonomousDatabaseCloneProperties(string adminPassword = default, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default, string characterSet = default, float? computeCount = default, OracleDatabaseComputeModel? databaseComputeModel = default, int? cpuCoreCount = default, IEnumerable<OracleCustomerContact> customerContacts = default, int? dataStorageSizeInTbs = default, int? dataStorageSizeInGbs = default, string dbVersion = default, AutonomousDatabaseWorkloadType? dbWorkload = default, string displayName = default, bool? isAutoScalingEnabled = default, bool? isAutoScalingForStorageEnabled = default, IEnumerable<string> peerDBIds = default, string peerDBId = default, bool? isLocalDataGuardEnabled = default, bool? isRemoteDataGuardEnabled = default, DisasterRecoveryType? localDisasterRecoveryType = default, DateTimeOffset? disasterRecoveryRoleChangedOn = default, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = default, AutonomousDatabaseStandbySummary localStandbyDB = default, int? failedDataRecoveryInSeconds = default, bool? isMtlsConnectionRequired = default, bool? isPreviewVersionWithServiceTermsAccepted = default, OracleLicenseModel? licenseModel = default, string ncharacterSet = default, string lifecycleDetails = default, OracleDatabaseProvisioningState? provisioningState = default, AutonomousDatabaseLifecycleState? lifecycleState = default, IEnumerable<ScheduledOperationsType> scheduledOperationsList = default, string privateEndpointIp = default, string privateEndpointLabel = default, Uri ociUri = default, ResourceIdentifier subnetId = default, ResourceIdentifier vnetId = default, DateTimeOffset? createdOn = default, DateTimeOffset? maintenanceBeginOn = default, DateTimeOffset? maintenanceEndOn = default, double? actualUsedDataStorageSizeInTbs = default, double? allocatedStorageSizeInTbs = default, OracleApexDetailsType apexDetails = default, IEnumerable<string> availableUpgradeVersions = default, AutonomousDatabaseConnectionStrings connectionStrings = default, AutonomousDatabaseConnectionUrls connectionUrls = default, DataSafeStatusType? dataSafeStatus = default, OracleDatabaseEditionType? databaseEdition = default, ResourceIdentifier autonomousDatabaseId = default, int? inMemoryAreaInGbs = default, DateTimeOffset? nextLongTermBackupCreatedOn = default, LongTermBackUpScheduleDetails longTermBackupSchedule = default, bool? isPreview = default, int? localAdgAutoFailoverMaxDataLossLimit = default, int? memoryPerOracleComputeUnitInGbs = default, AutonomousDatabaseModeType? openMode = default, OperationsInsightsStatusType? operationsInsightsStatus = default, AutonomousDatabasePermissionLevelType? permissionLevel = default, string privateEndpoint = default, IEnumerable<int> provisionableCpus = default, DataGuardRoleType? role = default, Uri serviceConsoleUri = default, Uri sqlWebDeveloperUri = default, IEnumerable<string> supportedRegionsToCloneTo = default, DateTimeOffset? dataGuardRoleChangedOn = default, DateTimeOffset? freeAutonomousDatabaseDeletedOn = default, string timeLocalDataGuardEnabled = default, DateTimeOffset? lastFailoverHappenedOn = default, DateTimeOffset? lastRefreshHappenedOn = default, DateTimeOffset? lastRefreshPointTimestamp = default, DateTimeOffset? lastSwitchoverHappenedOn = default, DateTimeOffset? freeAutonomousDatabaseStoppedOn = default, int? usedDataStorageSizeInGbs = default, int? usedDataStorageSizeInTbs = default, string databaseOcid = default, int? backupRetentionPeriodInDays = default, IEnumerable<string> whitelistedIps = default, AutonomousDatabaseSourceType? source = default, ResourceIdentifier sourceId = default, AutonomousDatabaseCloneType cloneType = default, bool? isReconnectCloneEnabled = default, bool? isRefreshableClone = default, RefreshableModelType? refreshableModel = default, RefreshableStatusType? refreshableStatus = default, DateTimeOffset? reconnectCloneEnabledOn = default)
         {
-            customerContacts ??= new List<OracleCustomerContact>();
-            peerDBIds ??= new List<string>();
-            availableUpgradeVersions ??= new List<string>();
-            provisionableCpus ??= new List<int>();
-            supportedRegionsToCloneTo ??= new List<string>();
-            whitelistedIPs ??= new List<string>();
+            customerContacts ??= new ChangeTrackingList<OracleCustomerContact>();
+            peerDBIds ??= new ChangeTrackingList<string>();
+            scheduledOperationsList ??= new ChangeTrackingList<ScheduledOperationsType>();
+            availableUpgradeVersions ??= new ChangeTrackingList<string>();
+            provisionableCpus ??= new ChangeTrackingList<int>();
+            supportedRegionsToCloneTo ??= new ChangeTrackingList<string>();
+            whitelistedIps ??= new ChangeTrackingList<string>();
 
             return new AutonomousDatabaseCloneProperties(
                 adminPassword,
@@ -1472,7 +1650,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeCount,
                 databaseComputeModel,
                 cpuCoreCount,
-                customerContacts?.ToList(),
+                customerContacts.ToList(),
                 dataStorageSizeInTbs,
                 dataStorageSizeInGbs,
                 dbVersion,
@@ -1480,7 +1658,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBIds?.ToList(),
+                peerDBIds.ToList(),
                 peerDBId,
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
@@ -1496,8 +1674,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 provisioningState,
                 lifecycleState,
-                scheduledOperations,
-                privateEndpointIP,
+                scheduledOperationsList.ToList(),
+                privateEndpointIp,
                 privateEndpointLabel,
                 ociUri,
                 subnetId,
@@ -1508,7 +1686,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 actualUsedDataStorageSizeInTbs,
                 allocatedStorageSizeInTbs,
                 apexDetails,
-                availableUpgradeVersions?.ToList(),
+                availableUpgradeVersions.ToList(),
                 connectionStrings,
                 connectionUrls,
                 dataSafeStatus,
@@ -1524,11 +1702,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 operationsInsightsStatus,
                 permissionLevel,
                 privateEndpoint,
-                provisionableCpus?.ToList(),
+                provisionableCpus.ToList(),
                 role,
                 serviceConsoleUri,
                 sqlWebDeveloperUri,
-                supportedRegionsToCloneTo?.ToList(),
+                supportedRegionsToCloneTo.ToList(),
                 dataGuardRoleChangedOn,
                 freeAutonomousDatabaseDeletedOn,
                 timeLocalDataGuardEnabled,
@@ -1541,8 +1719,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 usedDataStorageSizeInTbs,
                 databaseOcid,
                 backupRetentionPeriodInDays,
-                whitelistedIPs?.ToList(),
-                serializedAdditionalRawData: null,
+                whitelistedIps.ToList(),
+                additionalBinaryDataProperties: null,
                 source,
                 sourceId,
                 cloneType,
@@ -1553,7 +1731,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 reconnectCloneEnabledOn);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/>. </summary>
+        /// <summary> Autonomous Database Cross Region Disaster Recovery resource model. </summary>
         /// <param name="adminPassword"> Admin password. </param>
         /// <param name="autonomousMaintenanceScheduleType"> The maintenance schedule type of the Autonomous Database Serverless. </param>
         /// <param name="characterSet"> The character set for the autonomous database. </param>
@@ -1584,8 +1762,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="lifecycleState"> Views lifecycleState. </param>
-        /// <param name="scheduledOperations"> The list of scheduled operations. </param>
-        /// <param name="privateEndpointIP"> The private endpoint Ip address for the resource. </param>
+        /// <param name="scheduledOperationsList"> The list of scheduled operations. </param>
+        /// <param name="privateEndpointIp"> The private endpoint Ip address for the resource. </param>
         /// <param name="privateEndpointLabel"> The resource's private endpoint label. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="subnetId"> Client subnet. </param>
@@ -1598,7 +1776,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="apexDetails"> Information about Oracle APEX Application Development. </param>
         /// <param name="availableUpgradeVersions"> List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty. </param>
         /// <param name="connectionStrings"> The connection string used to connect to the Autonomous Database. </param>
-        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </param>
+        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. . </param>
         /// <param name="dataSafeStatus"> Status of the Data Safe registration for this Autonomous Database. </param>
         /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
         /// <param name="autonomousDatabaseId"> Autonomous Database ID. </param>
@@ -1629,7 +1807,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="usedDataStorageSizeInTbs"> The amount of storage that has been used, in terabytes. </param>
         /// <param name="databaseOcid"> Database ocid. </param>
         /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
-        /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <param name="whitelistedIps"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
         /// <param name="source"> The source of the database. </param>
         /// <param name="sourceId"> The Azure ID of the source Autonomous Database that will be used to create a new peer database for the DR association. </param>
         /// <param name="sourceLocation"> The name of the region where source Autonomous Database exists. </param>
@@ -1637,14 +1815,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="remoteDisasterRecoveryType"> Indicates the cross-region disaster recovery (DR) type of the standby Autonomous Database Serverless instance. Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover. Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover. </param>
         /// <param name="isReplicateAutomaticBackups"> If true, 7 days worth of backups are replicated across regions for Cross-Region ADB or Backup-Based DR between Primary and Standby. If false, the backups taken on the Primary are not replicated to the Standby database. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/> instance for mocking. </returns>
-        public static AutonomousDatabaseCrossRegionDisasterRecoveryProperties AutonomousDatabaseCrossRegionDisasterRecoveryProperties(string adminPassword = null, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = null, string characterSet = null, float? computeCount = null, OracleDatabaseComputeModel? databaseComputeModel = null, int? cpuCoreCount = null, IEnumerable<OracleCustomerContact> customerContacts = null, int? dataStorageSizeInTbs = null, int? dataStorageSizeInGbs = null, string dbVersion = null, AutonomousDatabaseWorkloadType? dbWorkload = null, string displayName = null, bool? isAutoScalingEnabled = null, bool? isAutoScalingForStorageEnabled = null, IEnumerable<string> peerDBIds = null, string peerDBId = null, bool? isLocalDataGuardEnabled = null, bool? isRemoteDataGuardEnabled = null, DisasterRecoveryType? localDisasterRecoveryType = null, DateTimeOffset? disasterRecoveryRoleChangedOn = null, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = null, AutonomousDatabaseStandbySummary localStandbyDB = null, int? failedDataRecoveryInSeconds = null, bool? isMtlsConnectionRequired = null, bool? isPreviewVersionWithServiceTermsAccepted = null, OracleLicenseModel? licenseModel = null, string ncharacterSet = null, string lifecycleDetails = null, OracleDatabaseProvisioningState? provisioningState = null, AutonomousDatabaseLifecycleState? lifecycleState = null, ScheduledOperationsType scheduledOperations = null, string privateEndpointIP = null, string privateEndpointLabel = null, Uri ociUri = null, ResourceIdentifier subnetId = null, ResourceIdentifier vnetId = null, DateTimeOffset? createdOn = null, DateTimeOffset? maintenanceBeginOn = null, DateTimeOffset? maintenanceEndOn = null, double? actualUsedDataStorageSizeInTbs = null, double? allocatedStorageSizeInTbs = null, OracleApexDetailsType apexDetails = null, IEnumerable<string> availableUpgradeVersions = null, AutonomousDatabaseConnectionStrings connectionStrings = null, AutonomousDatabaseConnectionUrls connectionUrls = null, DataSafeStatusType? dataSafeStatus = null, OracleDatabaseEditionType? databaseEdition = null, ResourceIdentifier autonomousDatabaseId = null, int? inMemoryAreaInGbs = null, DateTimeOffset? nextLongTermBackupCreatedOn = null, LongTermBackUpScheduleDetails longTermBackupSchedule = null, bool? isPreview = null, int? localAdgAutoFailoverMaxDataLossLimit = null, int? memoryPerOracleComputeUnitInGbs = null, AutonomousDatabaseModeType? openMode = null, OperationsInsightsStatusType? operationsInsightsStatus = null, AutonomousDatabasePermissionLevelType? permissionLevel = null, string privateEndpoint = null, IEnumerable<int> provisionableCpus = null, DataGuardRoleType? role = null, Uri serviceConsoleUri = null, Uri sqlWebDeveloperUri = null, IEnumerable<string> supportedRegionsToCloneTo = null, DateTimeOffset? dataGuardRoleChangedOn = null, DateTimeOffset? freeAutonomousDatabaseDeletedOn = null, string timeLocalDataGuardEnabled = null, DateTimeOffset? lastFailoverHappenedOn = null, DateTimeOffset? lastRefreshHappenedOn = null, DateTimeOffset? lastRefreshPointTimestamp = null, DateTimeOffset? lastSwitchoverHappenedOn = null, DateTimeOffset? freeAutonomousDatabaseStoppedOn = null, int? usedDataStorageSizeInGbs = null, int? usedDataStorageSizeInTbs = null, string databaseOcid = null, int? backupRetentionPeriodInDays = null, IEnumerable<string> whitelistedIPs = null, AutonomousDatabaseSourceType source = default, ResourceIdentifier sourceId = null, string sourceLocation = null, string sourceOcid = null, DisasterRecoveryType remoteDisasterRecoveryType = default, bool? isReplicateAutomaticBackups = null)
+        public static AutonomousDatabaseCrossRegionDisasterRecoveryProperties AutonomousDatabaseCrossRegionDisasterRecoveryProperties(string adminPassword = default, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default, string characterSet = default, float? computeCount = default, OracleDatabaseComputeModel? databaseComputeModel = default, int? cpuCoreCount = default, IEnumerable<OracleCustomerContact> customerContacts = default, int? dataStorageSizeInTbs = default, int? dataStorageSizeInGbs = default, string dbVersion = default, AutonomousDatabaseWorkloadType? dbWorkload = default, string displayName = default, bool? isAutoScalingEnabled = default, bool? isAutoScalingForStorageEnabled = default, IEnumerable<string> peerDBIds = default, string peerDBId = default, bool? isLocalDataGuardEnabled = default, bool? isRemoteDataGuardEnabled = default, DisasterRecoveryType? localDisasterRecoveryType = default, DateTimeOffset? disasterRecoveryRoleChangedOn = default, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = default, AutonomousDatabaseStandbySummary localStandbyDB = default, int? failedDataRecoveryInSeconds = default, bool? isMtlsConnectionRequired = default, bool? isPreviewVersionWithServiceTermsAccepted = default, OracleLicenseModel? licenseModel = default, string ncharacterSet = default, string lifecycleDetails = default, OracleDatabaseProvisioningState? provisioningState = default, AutonomousDatabaseLifecycleState? lifecycleState = default, IEnumerable<ScheduledOperationsType> scheduledOperationsList = default, string privateEndpointIp = default, string privateEndpointLabel = default, Uri ociUri = default, ResourceIdentifier subnetId = default, ResourceIdentifier vnetId = default, DateTimeOffset? createdOn = default, DateTimeOffset? maintenanceBeginOn = default, DateTimeOffset? maintenanceEndOn = default, double? actualUsedDataStorageSizeInTbs = default, double? allocatedStorageSizeInTbs = default, OracleApexDetailsType apexDetails = default, IEnumerable<string> availableUpgradeVersions = default, AutonomousDatabaseConnectionStrings connectionStrings = default, AutonomousDatabaseConnectionUrls connectionUrls = default, DataSafeStatusType? dataSafeStatus = default, OracleDatabaseEditionType? databaseEdition = default, ResourceIdentifier autonomousDatabaseId = default, int? inMemoryAreaInGbs = default, DateTimeOffset? nextLongTermBackupCreatedOn = default, LongTermBackUpScheduleDetails longTermBackupSchedule = default, bool? isPreview = default, int? localAdgAutoFailoverMaxDataLossLimit = default, int? memoryPerOracleComputeUnitInGbs = default, AutonomousDatabaseModeType? openMode = default, OperationsInsightsStatusType? operationsInsightsStatus = default, AutonomousDatabasePermissionLevelType? permissionLevel = default, string privateEndpoint = default, IEnumerable<int> provisionableCpus = default, DataGuardRoleType? role = default, Uri serviceConsoleUri = default, Uri sqlWebDeveloperUri = default, IEnumerable<string> supportedRegionsToCloneTo = default, DateTimeOffset? dataGuardRoleChangedOn = default, DateTimeOffset? freeAutonomousDatabaseDeletedOn = default, string timeLocalDataGuardEnabled = default, DateTimeOffset? lastFailoverHappenedOn = default, DateTimeOffset? lastRefreshHappenedOn = default, DateTimeOffset? lastRefreshPointTimestamp = default, DateTimeOffset? lastSwitchoverHappenedOn = default, DateTimeOffset? freeAutonomousDatabaseStoppedOn = default, int? usedDataStorageSizeInGbs = default, int? usedDataStorageSizeInTbs = default, string databaseOcid = default, int? backupRetentionPeriodInDays = default, IEnumerable<string> whitelistedIps = default, AutonomousDatabaseSourceType source = default, ResourceIdentifier sourceId = default, string sourceLocation = default, string sourceOcid = default, DisasterRecoveryType remoteDisasterRecoveryType = default, bool? isReplicateAutomaticBackups = default)
         {
-            customerContacts ??= new List<OracleCustomerContact>();
-            peerDBIds ??= new List<string>();
-            availableUpgradeVersions ??= new List<string>();
-            provisionableCpus ??= new List<int>();
-            supportedRegionsToCloneTo ??= new List<string>();
-            whitelistedIPs ??= new List<string>();
+            customerContacts ??= new ChangeTrackingList<OracleCustomerContact>();
+            peerDBIds ??= new ChangeTrackingList<string>();
+            scheduledOperationsList ??= new ChangeTrackingList<ScheduledOperationsType>();
+            availableUpgradeVersions ??= new ChangeTrackingList<string>();
+            provisionableCpus ??= new ChangeTrackingList<int>();
+            supportedRegionsToCloneTo ??= new ChangeTrackingList<string>();
+            whitelistedIps ??= new ChangeTrackingList<string>();
 
             return new AutonomousDatabaseCrossRegionDisasterRecoveryProperties(
                 adminPassword,
@@ -1654,7 +1833,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeCount,
                 databaseComputeModel,
                 cpuCoreCount,
-                customerContacts?.ToList(),
+                customerContacts.ToList(),
                 dataStorageSizeInTbs,
                 dataStorageSizeInGbs,
                 dbVersion,
@@ -1662,7 +1841,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBIds?.ToList(),
+                peerDBIds.ToList(),
                 peerDBId,
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
@@ -1678,8 +1857,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 provisioningState,
                 lifecycleState,
-                scheduledOperations,
-                privateEndpointIP,
+                scheduledOperationsList.ToList(),
+                privateEndpointIp,
                 privateEndpointLabel,
                 ociUri,
                 subnetId,
@@ -1690,7 +1869,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 actualUsedDataStorageSizeInTbs,
                 allocatedStorageSizeInTbs,
                 apexDetails,
-                availableUpgradeVersions?.ToList(),
+                availableUpgradeVersions.ToList(),
                 connectionStrings,
                 connectionUrls,
                 dataSafeStatus,
@@ -1706,11 +1885,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 operationsInsightsStatus,
                 permissionLevel,
                 privateEndpoint,
-                provisionableCpus?.ToList(),
+                provisionableCpus.ToList(),
                 role,
                 serviceConsoleUri,
                 sqlWebDeveloperUri,
-                supportedRegionsToCloneTo?.ToList(),
+                supportedRegionsToCloneTo.ToList(),
                 dataGuardRoleChangedOn,
                 freeAutonomousDatabaseDeletedOn,
                 timeLocalDataGuardEnabled,
@@ -1723,8 +1902,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 usedDataStorageSizeInTbs,
                 databaseOcid,
                 backupRetentionPeriodInDays,
-                whitelistedIPs?.ToList(),
-                serializedAdditionalRawData: null,
+                whitelistedIps.ToList(),
+                additionalBinaryDataProperties: null,
                 source,
                 sourceId,
                 sourceLocation,
@@ -1733,7 +1912,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 isReplicateAutomaticBackups);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseFromBackupTimestampProperties"/>. </summary>
+        /// <summary> Autonomous Database From Backup Timestamp resource model. </summary>
         /// <param name="adminPassword"> Admin password. </param>
         /// <param name="autonomousMaintenanceScheduleType"> The maintenance schedule type of the Autonomous Database Serverless. </param>
         /// <param name="characterSet"> The character set for the autonomous database. </param>
@@ -1764,8 +1943,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="lifecycleState"> Views lifecycleState. </param>
-        /// <param name="scheduledOperations"> The list of scheduled operations. </param>
-        /// <param name="privateEndpointIP"> The private endpoint Ip address for the resource. </param>
+        /// <param name="scheduledOperationsList"> The list of scheduled operations. </param>
+        /// <param name="privateEndpointIp"> The private endpoint Ip address for the resource. </param>
         /// <param name="privateEndpointLabel"> The resource's private endpoint label. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="subnetId"> Client subnet. </param>
@@ -1778,7 +1957,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="apexDetails"> Information about Oracle APEX Application Development. </param>
         /// <param name="availableUpgradeVersions"> List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty. </param>
         /// <param name="connectionStrings"> The connection string used to connect to the Autonomous Database. </param>
-        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </param>
+        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. . </param>
         /// <param name="dataSafeStatus"> Status of the Data Safe registration for this Autonomous Database. </param>
         /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
         /// <param name="autonomousDatabaseId"> Autonomous Database ID. </param>
@@ -1809,21 +1988,22 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="usedDataStorageSizeInTbs"> The amount of storage that has been used, in terabytes. </param>
         /// <param name="databaseOcid"> Database ocid. </param>
         /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
-        /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <param name="whitelistedIps"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
         /// <param name="source"> The source of the database. </param>
         /// <param name="sourceId"> The ID of the source Autonomous Database that you will clone to create a new Autonomous Database. </param>
         /// <param name="cloneType"> The Autonomous Database clone type. </param>
         /// <param name="timestamp"> The timestamp specified for the point-in-time clone of the source Autonomous Database. The timestamp must be in the past. </param>
         /// <param name="useLatestAvailableBackupTimeStamp"> Clone from latest available backup timestamp. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseFromBackupTimestampProperties"/> instance for mocking. </returns>
-        public static AutonomousDatabaseFromBackupTimestampProperties AutonomousDatabaseFromBackupTimestampProperties(string adminPassword = null, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = null, string characterSet = null, float? computeCount = null, OracleDatabaseComputeModel? databaseComputeModel = null, int? cpuCoreCount = null, IEnumerable<OracleCustomerContact> customerContacts = null, int? dataStorageSizeInTbs = null, int? dataStorageSizeInGbs = null, string dbVersion = null, AutonomousDatabaseWorkloadType? dbWorkload = null, string displayName = null, bool? isAutoScalingEnabled = null, bool? isAutoScalingForStorageEnabled = null, IEnumerable<string> peerDBIds = null, string peerDBId = null, bool? isLocalDataGuardEnabled = null, bool? isRemoteDataGuardEnabled = null, DisasterRecoveryType? localDisasterRecoveryType = null, DateTimeOffset? disasterRecoveryRoleChangedOn = null, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = null, AutonomousDatabaseStandbySummary localStandbyDB = null, int? failedDataRecoveryInSeconds = null, bool? isMtlsConnectionRequired = null, bool? isPreviewVersionWithServiceTermsAccepted = null, OracleLicenseModel? licenseModel = null, string ncharacterSet = null, string lifecycleDetails = null, OracleDatabaseProvisioningState? provisioningState = null, AutonomousDatabaseLifecycleState? lifecycleState = null, ScheduledOperationsType scheduledOperations = null, string privateEndpointIP = null, string privateEndpointLabel = null, Uri ociUri = null, ResourceIdentifier subnetId = null, ResourceIdentifier vnetId = null, DateTimeOffset? createdOn = null, DateTimeOffset? maintenanceBeginOn = null, DateTimeOffset? maintenanceEndOn = null, double? actualUsedDataStorageSizeInTbs = null, double? allocatedStorageSizeInTbs = null, OracleApexDetailsType apexDetails = null, IEnumerable<string> availableUpgradeVersions = null, AutonomousDatabaseConnectionStrings connectionStrings = null, AutonomousDatabaseConnectionUrls connectionUrls = null, DataSafeStatusType? dataSafeStatus = null, OracleDatabaseEditionType? databaseEdition = null, ResourceIdentifier autonomousDatabaseId = null, int? inMemoryAreaInGbs = null, DateTimeOffset? nextLongTermBackupCreatedOn = null, LongTermBackUpScheduleDetails longTermBackupSchedule = null, bool? isPreview = null, int? localAdgAutoFailoverMaxDataLossLimit = null, int? memoryPerOracleComputeUnitInGbs = null, AutonomousDatabaseModeType? openMode = null, OperationsInsightsStatusType? operationsInsightsStatus = null, AutonomousDatabasePermissionLevelType? permissionLevel = null, string privateEndpoint = null, IEnumerable<int> provisionableCpus = null, DataGuardRoleType? role = null, Uri serviceConsoleUri = null, Uri sqlWebDeveloperUri = null, IEnumerable<string> supportedRegionsToCloneTo = null, DateTimeOffset? dataGuardRoleChangedOn = null, DateTimeOffset? freeAutonomousDatabaseDeletedOn = null, string timeLocalDataGuardEnabled = null, DateTimeOffset? lastFailoverHappenedOn = null, DateTimeOffset? lastRefreshHappenedOn = null, DateTimeOffset? lastRefreshPointTimestamp = null, DateTimeOffset? lastSwitchoverHappenedOn = null, DateTimeOffset? freeAutonomousDatabaseStoppedOn = null, int? usedDataStorageSizeInGbs = null, int? usedDataStorageSizeInTbs = null, string databaseOcid = null, int? backupRetentionPeriodInDays = null, IEnumerable<string> whitelistedIPs = null, AutonomousDatabaseSourceType source = default, ResourceIdentifier sourceId = null, AutonomousDatabaseCloneType cloneType = default, DateTimeOffset? timestamp = null, bool? useLatestAvailableBackupTimeStamp = null)
+        public static AutonomousDatabaseFromBackupTimestampProperties AutonomousDatabaseFromBackupTimestampProperties(string adminPassword = default, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default, string characterSet = default, float? computeCount = default, OracleDatabaseComputeModel? databaseComputeModel = default, int? cpuCoreCount = default, IEnumerable<OracleCustomerContact> customerContacts = default, int? dataStorageSizeInTbs = default, int? dataStorageSizeInGbs = default, string dbVersion = default, AutonomousDatabaseWorkloadType? dbWorkload = default, string displayName = default, bool? isAutoScalingEnabled = default, bool? isAutoScalingForStorageEnabled = default, IEnumerable<string> peerDBIds = default, string peerDBId = default, bool? isLocalDataGuardEnabled = default, bool? isRemoteDataGuardEnabled = default, DisasterRecoveryType? localDisasterRecoveryType = default, DateTimeOffset? disasterRecoveryRoleChangedOn = default, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = default, AutonomousDatabaseStandbySummary localStandbyDB = default, int? failedDataRecoveryInSeconds = default, bool? isMtlsConnectionRequired = default, bool? isPreviewVersionWithServiceTermsAccepted = default, OracleLicenseModel? licenseModel = default, string ncharacterSet = default, string lifecycleDetails = default, OracleDatabaseProvisioningState? provisioningState = default, AutonomousDatabaseLifecycleState? lifecycleState = default, IEnumerable<ScheduledOperationsType> scheduledOperationsList = default, string privateEndpointIp = default, string privateEndpointLabel = default, Uri ociUri = default, ResourceIdentifier subnetId = default, ResourceIdentifier vnetId = default, DateTimeOffset? createdOn = default, DateTimeOffset? maintenanceBeginOn = default, DateTimeOffset? maintenanceEndOn = default, double? actualUsedDataStorageSizeInTbs = default, double? allocatedStorageSizeInTbs = default, OracleApexDetailsType apexDetails = default, IEnumerable<string> availableUpgradeVersions = default, AutonomousDatabaseConnectionStrings connectionStrings = default, AutonomousDatabaseConnectionUrls connectionUrls = default, DataSafeStatusType? dataSafeStatus = default, OracleDatabaseEditionType? databaseEdition = default, ResourceIdentifier autonomousDatabaseId = default, int? inMemoryAreaInGbs = default, DateTimeOffset? nextLongTermBackupCreatedOn = default, LongTermBackUpScheduleDetails longTermBackupSchedule = default, bool? isPreview = default, int? localAdgAutoFailoverMaxDataLossLimit = default, int? memoryPerOracleComputeUnitInGbs = default, AutonomousDatabaseModeType? openMode = default, OperationsInsightsStatusType? operationsInsightsStatus = default, AutonomousDatabasePermissionLevelType? permissionLevel = default, string privateEndpoint = default, IEnumerable<int> provisionableCpus = default, DataGuardRoleType? role = default, Uri serviceConsoleUri = default, Uri sqlWebDeveloperUri = default, IEnumerable<string> supportedRegionsToCloneTo = default, DateTimeOffset? dataGuardRoleChangedOn = default, DateTimeOffset? freeAutonomousDatabaseDeletedOn = default, string timeLocalDataGuardEnabled = default, DateTimeOffset? lastFailoverHappenedOn = default, DateTimeOffset? lastRefreshHappenedOn = default, DateTimeOffset? lastRefreshPointTimestamp = default, DateTimeOffset? lastSwitchoverHappenedOn = default, DateTimeOffset? freeAutonomousDatabaseStoppedOn = default, int? usedDataStorageSizeInGbs = default, int? usedDataStorageSizeInTbs = default, string databaseOcid = default, int? backupRetentionPeriodInDays = default, IEnumerable<string> whitelistedIps = default, AutonomousDatabaseSourceType source = default, ResourceIdentifier sourceId = default, AutonomousDatabaseCloneType cloneType = default, DateTimeOffset? timestamp = default, bool? useLatestAvailableBackupTimeStamp = default)
         {
-            customerContacts ??= new List<OracleCustomerContact>();
-            peerDBIds ??= new List<string>();
-            availableUpgradeVersions ??= new List<string>();
-            provisionableCpus ??= new List<int>();
-            supportedRegionsToCloneTo ??= new List<string>();
-            whitelistedIPs ??= new List<string>();
+            customerContacts ??= new ChangeTrackingList<OracleCustomerContact>();
+            peerDBIds ??= new ChangeTrackingList<string>();
+            scheduledOperationsList ??= new ChangeTrackingList<ScheduledOperationsType>();
+            availableUpgradeVersions ??= new ChangeTrackingList<string>();
+            provisionableCpus ??= new ChangeTrackingList<int>();
+            supportedRegionsToCloneTo ??= new ChangeTrackingList<string>();
+            whitelistedIps ??= new ChangeTrackingList<string>();
 
             return new AutonomousDatabaseFromBackupTimestampProperties(
                 adminPassword,
@@ -1833,7 +2013,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeCount,
                 databaseComputeModel,
                 cpuCoreCount,
-                customerContacts?.ToList(),
+                customerContacts.ToList(),
                 dataStorageSizeInTbs,
                 dataStorageSizeInGbs,
                 dbVersion,
@@ -1841,7 +2021,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBIds?.ToList(),
+                peerDBIds.ToList(),
                 peerDBId,
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
@@ -1857,8 +2037,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 provisioningState,
                 lifecycleState,
-                scheduledOperations,
-                privateEndpointIP,
+                scheduledOperationsList.ToList(),
+                privateEndpointIp,
                 privateEndpointLabel,
                 ociUri,
                 subnetId,
@@ -1869,7 +2049,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 actualUsedDataStorageSizeInTbs,
                 allocatedStorageSizeInTbs,
                 apexDetails,
-                availableUpgradeVersions?.ToList(),
+                availableUpgradeVersions.ToList(),
                 connectionStrings,
                 connectionUrls,
                 dataSafeStatus,
@@ -1885,11 +2065,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 operationsInsightsStatus,
                 permissionLevel,
                 privateEndpoint,
-                provisionableCpus?.ToList(),
+                provisionableCpus.ToList(),
                 role,
                 serviceConsoleUri,
                 sqlWebDeveloperUri,
-                supportedRegionsToCloneTo?.ToList(),
+                supportedRegionsToCloneTo.ToList(),
                 dataGuardRoleChangedOn,
                 freeAutonomousDatabaseDeletedOn,
                 timeLocalDataGuardEnabled,
@@ -1902,8 +2082,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 usedDataStorageSizeInTbs,
                 databaseOcid,
                 backupRetentionPeriodInDays,
-                whitelistedIPs?.ToList(),
-                serializedAdditionalRawData: null,
+                whitelistedIps.ToList(),
+                additionalBinaryDataProperties: null,
                 source,
                 sourceId,
                 cloneType,
@@ -1911,43 +2091,128 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 useLatestAvailableBackupTimeStamp);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GenerateAutonomousDatabaseWalletDetails"/>. </summary>
+        /// <summary> The type used for update operations of the AutonomousDatabase. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.AutonomousDatabasePatch"/> instance for mocking. </returns>
+        public static AutonomousDatabasePatch AutonomousDatabasePatch(IDictionary<string, string> tags = default, AutonomousDatabaseUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AutonomousDatabasePatch(tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The updatable properties of the AutonomousDatabase. </summary>
+        /// <param name="adminPassword"> Admin password. </param>
+        /// <param name="autonomousMaintenanceScheduleType"> The maintenance schedule type of the Autonomous Database Serverless. </param>
+        /// <param name="computeCount"> The compute amount (CPUs) available to the database. </param>
+        /// <param name="cpuCoreCount"> The number of CPU cores to be made available to the database. </param>
+        /// <param name="customerContacts"> Customer Contacts. </param>
+        /// <param name="dataStorageSizeInTbs"> The quantity of data in the database, in terabytes. </param>
+        /// <param name="dataStorageSizeInGbs"> The size, in gigabytes, of the data volume that will be created and attached to the database. </param>
+        /// <param name="displayName"> The user-friendly name for the Autonomous Database. </param>
+        /// <param name="isAutoScalingEnabled"> Indicates if auto scaling is enabled for the Autonomous Database CPU core count. </param>
+        /// <param name="isAutoScalingForStorageEnabled"> Indicates if auto scaling is enabled for the Autonomous Database storage. </param>
+        /// <param name="peerDBId"> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
+        /// <param name="isLocalDataGuardEnabled"> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </param>
+        /// <param name="isMtlsConnectionRequired"> Specifies if the Autonomous Database requires mTLS connections. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </param>
+        /// <param name="scheduledOperationsList"> The list of scheduled operations. </param>
+        /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
+        /// <param name="longTermBackupSchedule"> Details for the long-term backup schedule. </param>
+        /// <param name="localAdgAutoFailoverMaxDataLossLimit"> Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard. </param>
+        /// <param name="openMode"> Indicates the Autonomous Database mode. </param>
+        /// <param name="permissionLevel"> The Autonomous Database permission level. </param>
+        /// <param name="role"> The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled. </param>
+        /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
+        /// <param name="whitelistedIps"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <returns> A new <see cref="Models.AutonomousDatabaseUpdateProperties"/> instance for mocking. </returns>
+        public static AutonomousDatabaseUpdateProperties AutonomousDatabaseUpdateProperties(string adminPassword = default, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default, float? computeCount = default, int? cpuCoreCount = default, IEnumerable<OracleCustomerContact> customerContacts = default, int? dataStorageSizeInTbs = default, int? dataStorageSizeInGbs = default, string displayName = default, bool? isAutoScalingEnabled = default, bool? isAutoScalingForStorageEnabled = default, string peerDBId = default, bool? isLocalDataGuardEnabled = default, bool? isMtlsConnectionRequired = default, OracleLicenseModel? licenseModel = default, IEnumerable<ScheduledOperationsTypeUpdate> scheduledOperationsList = default, OracleDatabaseEditionType? databaseEdition = default, LongTermBackUpScheduleDetails longTermBackupSchedule = default, int? localAdgAutoFailoverMaxDataLossLimit = default, AutonomousDatabaseModeType? openMode = default, AutonomousDatabasePermissionLevelType? permissionLevel = default, DataGuardRoleType? role = default, int? backupRetentionPeriodInDays = default, IEnumerable<string> whitelistedIps = default)
+        {
+            customerContacts ??= new ChangeTrackingList<OracleCustomerContact>();
+            scheduledOperationsList ??= new ChangeTrackingList<ScheduledOperationsTypeUpdate>();
+            whitelistedIps ??= new ChangeTrackingList<string>();
+
+            return new AutonomousDatabaseUpdateProperties(
+                adminPassword,
+                autonomousMaintenanceScheduleType,
+                computeCount,
+                cpuCoreCount,
+                customerContacts.ToList(),
+                dataStorageSizeInTbs,
+                dataStorageSizeInGbs,
+                displayName,
+                isAutoScalingEnabled,
+                isAutoScalingForStorageEnabled,
+                peerDBId,
+                isLocalDataGuardEnabled,
+                isMtlsConnectionRequired,
+                licenseModel,
+                scheduledOperationsList.ToList(),
+                databaseEdition,
+                longTermBackupSchedule,
+                localAdgAutoFailoverMaxDataLossLimit,
+                openMode,
+                permissionLevel,
+                role,
+                backupRetentionPeriodInDays,
+                whitelistedIps.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Autonomous Database Generate Wallet resource model. </summary>
         /// <param name="generateType"> The type of wallet to generate. </param>
         /// <param name="isRegional"> True when requesting regional connection strings in PDB connect info, applicable to cross-region DG only. </param>
         /// <param name="password"> The password to encrypt the keys inside the wallet. </param>
         /// <returns> A new <see cref="Models.GenerateAutonomousDatabaseWalletDetails"/> instance for mocking. </returns>
-        public static GenerateAutonomousDatabaseWalletDetails GenerateAutonomousDatabaseWalletDetails(WalletGenerateType? generateType = null, bool? isRegional = null, string password = null)
+        public static GenerateAutonomousDatabaseWalletDetails GenerateAutonomousDatabaseWalletDetails(WalletGenerateType? generateType = default, bool? isRegional = default, string password = default)
         {
-            return new GenerateAutonomousDatabaseWalletDetails(generateType, isRegional, password, serializedAdditionalRawData: null);
+            return new GenerateAutonomousDatabaseWalletDetails(generateType, isRegional, password, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseWalletFile"/>. </summary>
+        /// <summary> Autonomous Database Wallet File resource model. </summary>
         /// <param name="walletFiles"> The base64 encoded wallet files. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseWalletFile"/> instance for mocking. </returns>
-        public static AutonomousDatabaseWalletFile AutonomousDatabaseWalletFile(string walletFiles = null)
+        public static AutonomousDatabaseWalletFile AutonomousDatabaseWalletFile(string walletFiles = default)
         {
-            return new AutonomousDatabaseWalletFile(walletFiles, serializedAdditionalRawData: null);
+            return new AutonomousDatabaseWalletFile(walletFiles, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.AutonomousDatabaseBackupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Details to restore an Oracle Autonomous Database. </summary>
+        /// <param name="timestamp"> The time to restore the database to. </param>
+        /// <returns> A new <see cref="Models.RestoreAutonomousDatabaseDetails"/> instance for mocking. </returns>
+        public static RestoreAutonomousDatabaseDetails RestoreAutonomousDatabaseDetails(DateTimeOffset timestamp = default)
+        {
+            return new RestoreAutonomousDatabaseDetails(timestamp, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Autonomous Database Action Object. </summary>
+        /// <param name="action"> Autonomous Database lifecycle action. </param>
+        /// <returns> A new <see cref="Models.AutonomousDatabaseLifecycleAction"/> instance for mocking. </returns>
+        public static AutonomousDatabaseLifecycleAction AutonomousDatabaseLifecycleAction(AutonomousDatabaseLifecycleActionEnum action = default)
+        {
+            return new AutonomousDatabaseLifecycleAction(action, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> AutonomousDatabaseBackup resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.AutonomousDatabaseBackupData"/> instance for mocking. </returns>
-        public static AutonomousDatabaseBackupData AutonomousDatabaseBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AutonomousDatabaseBackupProperties properties = null)
+        public static AutonomousDatabaseBackupData AutonomousDatabaseBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AutonomousDatabaseBackupProperties properties = default)
         {
             return new AutonomousDatabaseBackupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseBackupProperties"/>. </summary>
+        /// <summary> AutonomousDatabaseBackup resource model. </summary>
         /// <param name="databaseOcid"> The OCID of the Autonomous Database. </param>
         /// <param name="databaseSizeInTbs"> The size of the database in terabytes at the time the backup was taken. </param>
         /// <param name="dbVersion"> A valid Oracle Database version for Autonomous Database. </param>
@@ -1965,7 +2230,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="backupType"> The type of backup. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.AutonomousDatabaseBackupProperties"/> instance for mocking. </returns>
-        public static AutonomousDatabaseBackupProperties AutonomousDatabaseBackupProperties(string databaseOcid = null, double? databaseSizeInTbs = null, string dbVersion = null, string displayName = null, string databaseBackupOcid = null, bool? isAutomatic = null, bool? isRestorable = null, string lifecycleDetails = null, AutonomousDatabaseBackupLifecycleState? lifecycleState = null, int? retentionPeriodInDays = null, double? sizeInTbs = null, DateTimeOffset? timeAvailableTil = null, string timeStarted = null, string timeEnded = null, AutonomousDatabaseBackupType? backupType = null, OracleDatabaseProvisioningState? provisioningState = null)
+        public static AutonomousDatabaseBackupProperties AutonomousDatabaseBackupProperties(string databaseOcid = default, double? databaseSizeInTbs = default, string dbVersion = default, string displayName = default, string databaseBackupOcid = default, bool? isAutomatic = default, bool? isRestorable = default, string lifecycleDetails = default, AutonomousDatabaseBackupLifecycleState? lifecycleState = default, int? retentionPeriodInDays = default, double? sizeInTbs = default, DateTimeOffset? timeAvailableTil = default, string timeStarted = default, string timeEnded = default, AutonomousDatabaseBackupType? backupType = default, OracleDatabaseProvisioningState? provisioningState = default)
         {
             return new AutonomousDatabaseBackupProperties(
                 databaseOcid,
@@ -1984,91 +2249,108 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 timeEnded,
                 backupType,
                 provisioningState,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.AutonomousDatabaseCharacterSetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="autonomousDatabaseCharacterSet"> The resource-specific properties for this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="autonomousDatabaseCharacterSet"> The Oracle Autonomous Database supported character sets. </param>
         /// <returns> A new <see cref="OracleDatabase.AutonomousDatabaseCharacterSetData"/> instance for mocking. </returns>
-        public static AutonomousDatabaseCharacterSetData AutonomousDatabaseCharacterSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string autonomousDatabaseCharacterSet = null)
+        public static AutonomousDatabaseCharacterSetData AutonomousDatabaseCharacterSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string autonomousDatabaseCharacterSet = default)
         {
             return new AutonomousDatabaseCharacterSetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                autonomousDatabaseCharacterSet != null ? new AutonomousDatabaseCharacterSetProperties(autonomousDatabaseCharacterSet, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                autonomousDatabaseCharacterSet is null ? default : new AutonomousDatabaseCharacterSetProperties(autonomousDatabaseCharacterSet, new Dictionary<string, BinaryData>()));
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.AutonomousDatabaseNationalCharacterSetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="autonomousDatabaseNationalCharacterSet"> The resource-specific properties for this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="autonomousDatabaseNationalCharacterSet"> The Oracle Autonomous Database supported national character sets. </param>
         /// <returns> A new <see cref="OracleDatabase.AutonomousDatabaseNationalCharacterSetData"/> instance for mocking. </returns>
-        public static AutonomousDatabaseNationalCharacterSetData AutonomousDatabaseNationalCharacterSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string autonomousDatabaseNationalCharacterSet = null)
+        public static AutonomousDatabaseNationalCharacterSetData AutonomousDatabaseNationalCharacterSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string autonomousDatabaseNationalCharacterSet = default)
         {
             return new AutonomousDatabaseNationalCharacterSetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                autonomousDatabaseNationalCharacterSet != null ? new AutonomousDatabaseNationalCharacterSetProperties(autonomousDatabaseNationalCharacterSet, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                autonomousDatabaseNationalCharacterSet is null ? default : new AutonomousDatabaseNationalCharacterSetProperties(autonomousDatabaseNationalCharacterSet, new Dictionary<string, BinaryData>()));
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.AutonomousDBVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> AutonomousDbVersion resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.AutonomousDBVersionData"/> instance for mocking. </returns>
-        public static AutonomousDBVersionData AutonomousDBVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AutonomousDBVersionProperties properties = null)
+        public static AutonomousDBVersionData AutonomousDBVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AutonomousDBVersionProperties properties = default)
         {
             return new AutonomousDBVersionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.ExadbVmClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> AutonomousDbVersion resource model. </summary>
+        /// <param name="version"> Supported Autonomous Db versions. </param>
+        /// <param name="dbWorkload"> The Autonomous Database workload type. </param>
+        /// <param name="isDefaultForFree"> True if this version of the Oracle Database software's default is free. </param>
+        /// <param name="isDefaultForPaid"> True if this version of the Oracle Database software's default is paid. </param>
+        /// <param name="isFreeTierEnabled"> True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases. </param>
+        /// <param name="isPaidEnabled"> True if this version of the Oracle Database software has payments enabled. </param>
+        /// <returns> A new <see cref="Models.AutonomousDBVersionProperties"/> instance for mocking. </returns>
+        public static AutonomousDBVersionProperties AutonomousDBVersionProperties(string version = default, AutonomousDatabaseWorkloadType? dbWorkload = default, bool? isDefaultForFree = default, bool? isDefaultForPaid = default, bool? isFreeTierEnabled = default, bool? isPaidEnabled = default)
+        {
+            return new AutonomousDBVersionProperties(
+                version,
+                dbWorkload,
+                isDefaultForFree,
+                isDefaultForPaid,
+                isFreeTierEnabled,
+                isPaidEnabled,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> ExadbVmCluster resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="OracleDatabase.ExadbVmClusterData"/> instance for mocking. </returns>
-        public static ExadbVmClusterData ExadbVmClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExadbVmClusterProperties properties = null, IEnumerable<string> zones = null)
+        public static ExadbVmClusterData ExadbVmClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExadbVmClusterProperties properties = default, IEnumerable<string> zones = default)
         {
-            tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
 
             return new ExadbVmClusterData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                zones?.ToList(),
-                serializedAdditionalRawData: null);
+                zones.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExadbVmClusterProperties"/>. </summary>
         /// <param name="ocid"> ExadbVmCluster ocid. </param>
         /// <param name="clusterName"> The cluster name for Exadata VM cluster on Exascale Infrastructure. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </param>
         /// <param name="backupSubnetCidr"> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </param>
@@ -2086,7 +2368,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="gridImageType"> The type of Grid Image. </param>
         /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
         /// <param name="hostname"> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </param>
-        /// <param name="licenseModel"> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. . </param>
         /// <param name="memorySizeInGbs"> The memory that you want to be allocated in GBs. Memory is calculated based on 11 GB per VM core reserved. </param>
         /// <param name="nodeCount"> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="nsgCidrs"> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </param>
@@ -2100,25 +2382,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="systemVersion"> Operating system version of the image. </param>
         /// <param name="timeZone"> The time zone of the Exadata VM cluster on Exascale Infrastructure. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </param>
         /// <param name="totalEcpuCount"> The number of Total ECPUs for an Exadata VM cluster on Exascale Infrastructure. </param>
-        /// <param name="vmFileSystemStorageTotalSizeInGbs"> Filesystem storage details. </param>
+        /// <param name="vmFileSystemStorageTotalSizeInGbs"> Total Capacity. </param>
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
-        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. </param>
-        /// <param name="scanIPIds"> The Single Client Access Name (SCAN) IP addresses associated with the Exadata VM cluster on Exascale Infrastructure. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. . </param>
+        /// <param name="scanIpIds"> The Single Client Access Name (SCAN) IP addresses associated with the Exadata VM cluster on Exascale Infrastructure. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
         /// <param name="scanDnsRecordId"> The OCID of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. </param>
-        /// <param name="snapshotFileSystemStorageTotalSizeInGbs"> Snapshot filesystem storage details. </param>
-        /// <param name="totalSizeInGbs"> Total file system storage details. </param>
+        /// <param name="snapshotFileSystemStorageTotalSizeInGbs"> Total Capacity. </param>
+        /// <param name="totalSizeInGbs"> Total Capacity. </param>
         /// <param name="vipIds"> The virtual IP (VIP) addresses associated with the Exadata VM cluster on Exascale Infrastructure. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="iormConfigCache"> iormConfigCache details for Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="backupSubnetOcid"> Cluster backup subnet ocid. </param>
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
+        /// <param name="shapeAttribute"> The type of Exascale storage used for Exadata VM cluster. </param>
         /// <returns> A new <see cref="Models.ExadbVmClusterProperties"/> instance for mocking. </returns>
-        public static ExadbVmClusterProperties ExadbVmClusterProperties(string ocid = null, string clusterName = null, string backupSubnetCidr = null, Uri nsgUri = null, OracleDatabaseProvisioningState? provisioningState = null, ExadbVmClusterLifecycleState? lifecycleState = null, ResourceIdentifier vnetId = null, ResourceIdentifier subnetId = null, DiagnosticCollectionConfig dataCollectionOptions = null, string displayName = null, string domain = null, int enabledEcpuCount = default, ResourceIdentifier exascaleDBStorageVaultId = null, string gridImageOcid = null, GridImageType? gridImageType = null, string giVersion = null, string hostname = null, OracleLicenseModel? licenseModel = null, int? memorySizeInGbs = null, int nodeCount = default, IEnumerable<CloudVmClusterNsgCidr> nsgCidrs = null, string zoneOcid = null, string privateZoneOcid = null, int? scanListenerPortTcp = null, int? scanListenerPortTcpSsl = null, int? listenerPort = null, string shape = null, IEnumerable<string> sshPublicKeys = null, string systemVersion = null, string timeZone = null, int totalEcpuCount = default, int? vmFileSystemStorageTotalSizeInGbs = null, string lifecycleDetails = null, string scanDnsName = null, IEnumerable<string> scanIPIds = null, string scanDnsRecordId = null, int? snapshotFileSystemStorageTotalSizeInGbs = null, int? totalSizeInGbs = null, IEnumerable<string> vipIds = null, Uri ociUri = null, ExadataIormConfig iormConfigCache = null, string backupSubnetOcid = null, string subnetOcid = null)
+        public static ExadbVmClusterProperties ExadbVmClusterProperties(string ocid = default, string clusterName = default, string backupSubnetCidr = default, Uri nsgUri = default, OracleDatabaseProvisioningState? provisioningState = default, ExadbVmClusterLifecycleState? lifecycleState = default, ResourceIdentifier vnetId = default, ResourceIdentifier subnetId = default, DiagnosticCollectionConfig dataCollectionOptions = default, string displayName = default, string domain = default, int enabledEcpuCount = default, ResourceIdentifier exascaleDBStorageVaultId = default, string gridImageOcid = default, GridImageType? gridImageType = default, string giVersion = default, string hostname = default, OracleLicenseModel? licenseModel = default, int? memorySizeInGbs = default, int nodeCount = default, IEnumerable<CloudVmClusterNsgCidr> nsgCidrs = default, string zoneOcid = default, string privateZoneOcid = default, int? scanListenerPortTcp = default, int? scanListenerPortTcpSsl = default, int? listenerPort = default, string shape = default, IEnumerable<string> sshPublicKeys = default, string systemVersion = default, string timeZone = default, int totalEcpuCount = default, int? vmFileSystemStorageTotalSizeInGbs = default, string lifecycleDetails = default, string scanDnsName = default, IEnumerable<string> scanIpIds = default, string scanDnsRecordId = default, int? snapshotFileSystemStorageTotalSizeInGbs = default, int? totalSizeInGbs = default, IEnumerable<string> vipIds = default, Uri ociUri = default, ExadataIormConfig iormConfigCache = default, string backupSubnetOcid = default, string subnetOcid = default, ShapeAttribute? shapeAttribute = default)
         {
-            nsgCidrs ??= new List<CloudVmClusterNsgCidr>();
-            sshPublicKeys ??= new List<string>();
-            scanIPIds ??= new List<string>();
-            vipIds ??= new List<string>();
+            nsgCidrs ??= new ChangeTrackingList<CloudVmClusterNsgCidr>();
+            sshPublicKeys ??= new ChangeTrackingList<string>();
+            scanIpIds ??= new ChangeTrackingList<string>();
+            vipIds ??= new ChangeTrackingList<string>();
 
             return new ExadbVmClusterProperties(
                 ocid,
@@ -2141,51 +2424,82 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 licenseModel,
                 memorySizeInGbs,
                 nodeCount,
-                nsgCidrs?.ToList(),
+                nsgCidrs.ToList(),
                 zoneOcid,
                 privateZoneOcid,
                 scanListenerPortTcp,
                 scanListenerPortTcpSsl,
                 listenerPort,
                 shape,
-                sshPublicKeys?.ToList(),
+                sshPublicKeys.ToList(),
                 systemVersion,
                 timeZone,
                 totalEcpuCount,
-                vmFileSystemStorageTotalSizeInGbs.HasValue ? new ExadbVmClusterStorageDetails(vmFileSystemStorageTotalSizeInGbs.Value, serializedAdditionalRawData: null) : null,
+                vmFileSystemStorageTotalSizeInGbs is null ? default : new ExadbVmClusterStorageDetails(vmFileSystemStorageTotalSizeInGbs.Value, new Dictionary<string, BinaryData>()),
                 lifecycleDetails,
                 scanDnsName,
-                scanIPIds?.ToList(),
+                scanIpIds.ToList(),
                 scanDnsRecordId,
-                snapshotFileSystemStorageTotalSizeInGbs.HasValue ? new ExadbVmClusterStorageDetails(snapshotFileSystemStorageTotalSizeInGbs.Value, serializedAdditionalRawData: null) : null,
-                totalSizeInGbs.HasValue ? new ExadbVmClusterStorageDetails(totalSizeInGbs.Value, serializedAdditionalRawData: null) : null,
-                vipIds?.ToList(),
+                snapshotFileSystemStorageTotalSizeInGbs is null ? default : new ExadbVmClusterStorageDetails(snapshotFileSystemStorageTotalSizeInGbs.Value, new Dictionary<string, BinaryData>()),
+                totalSizeInGbs is null ? default : new ExadbVmClusterStorageDetails(totalSizeInGbs.Value, new Dictionary<string, BinaryData>()),
+                vipIds.ToList(),
                 ociUri,
                 iormConfigCache,
                 backupSubnetOcid,
                 subnetOcid,
-                serializedAdditionalRawData: null);
+                shapeAttribute,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.ExascaleDBNodeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="exadbVmClusterUpdateNodeCount"> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <returns> A new <see cref="Models.ExadbVmClusterPatch"/> instance for mocking. </returns>
+        public static ExadbVmClusterPatch ExadbVmClusterPatch(IEnumerable<string> zones = default, IDictionary<string, string> tags = default, int? exadbVmClusterUpdateNodeCount = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExadbVmClusterPatch(zones.ToList(), tags, exadbVmClusterUpdateNodeCount is null ? default : new ExadbVmClusterUpdateProperties(exadbVmClusterUpdateNodeCount, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of removing Virtual Machines from the Exadata VM cluster on Exascale Infrastructure. Applies to Exadata Database Service on Exascale Infrastructure only. </summary>
+        /// <param name="dbNodes"> The list of ExaCS DB nodes for the Exadata VM cluster on Exascale Infrastructure to be removed. </param>
+        /// <returns> A new <see cref="Models.RemoveVirtualMachineFromExadbVmClusterDetails"/> instance for mocking. </returns>
+        public static RemoveVirtualMachineFromExadbVmClusterDetails RemoveVirtualMachineFromExadbVmClusterDetails(IEnumerable<DBNodeDetails> dbNodes = default)
+        {
+            dbNodes ??= new ChangeTrackingList<DBNodeDetails>();
+
+            return new RemoveVirtualMachineFromExadbVmClusterDetails(dbNodes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of the ExaCS Db node. Applies to Exadata Database Service on Exascale Infrastructure only. </summary>
+        /// <param name="dbNodeId"> Exascale DbNode Azure Resource ID. </param>
+        /// <returns> A new <see cref="Models.DBNodeDetails"/> instance for mocking. </returns>
+        public static DBNodeDetails DBNodeDetails(ResourceIdentifier dbNodeId = default)
+        {
+            return new DBNodeDetails(dbNodeId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The DbNode resource belonging to ExadbVmCluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="OracleDatabase.ExascaleDBNodeData"/> instance for mocking. </returns>
-        public static ExascaleDBNodeData ExascaleDBNodeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExascaleDBNodeProperties properties = null)
+        public static ExascaleDBNodeData ExascaleDBNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExascaleDBNodeProperties properties = default)
         {
             return new ExascaleDBNodeData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExascaleDBNodeProperties"/>. </summary>
+        /// <summary> The properties of DbNodeResource. </summary>
         /// <param name="ocid"> DbNode OCID. </param>
         /// <param name="additionalDetails"> Additional information about the planned maintenance. </param>
         /// <param name="cpuCoreCount"> The number of CPU cores enabled on the Db node. </param>
@@ -2200,7 +2514,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="maintenanceWindowStartOn"> Start date and time of maintenance window. </param>
         /// <param name="totalCpuCoreCount"> The total number of CPU cores reserved on the Db node. </param>
         /// <returns> A new <see cref="Models.ExascaleDBNodeProperties"/> instance for mocking. </returns>
-        public static ExascaleDBNodeProperties ExascaleDBNodeProperties(string ocid = null, string additionalDetails = null, int? cpuCoreCount = null, int? dbNodeStorageSizeInGbs = null, string faultDomain = null, string hostname = null, DBNodeProvisioningState? lifecycleState = null, string maintenanceType = null, int? memorySizeInGbs = null, int? softwareStorageSizeInGb = null, DateTimeOffset? maintenanceWindowEndOn = null, DateTimeOffset? maintenanceWindowStartOn = null, int? totalCpuCoreCount = null)
+        public static ExascaleDBNodeProperties ExascaleDBNodeProperties(string ocid = default, string additionalDetails = default, int? cpuCoreCount = default, int? dbNodeStorageSizeInGbs = default, string faultDomain = default, string hostname = default, DBNodeProvisioningState? lifecycleState = default, string maintenanceType = default, int? memorySizeInGbs = default, int? softwareStorageSizeInGb = default, DateTimeOffset? maintenanceWindowEndOn = default, DateTimeOffset? maintenanceWindowStartOn = default, int? totalCpuCoreCount = default)
         {
             return new ExascaleDBNodeProperties(
                 ocid,
@@ -2216,49 +2530,40 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 maintenanceWindowEndOn,
                 maintenanceWindowStartOn,
                 totalCpuCoreCount,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExascaleDBNodeActionResult"/>. </summary>
-        /// <param name="provisioningState"> ExascaleDbNode provisioning state. </param>
-        /// <returns> A new <see cref="Models.ExascaleDBNodeActionResult"/> instance for mocking. </returns>
-        public static ExascaleDBNodeActionResult ExascaleDBNodeActionResult(OracleDatabaseProvisioningState? provisioningState = null)
-        {
-            return new ExascaleDBNodeActionResult(provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OracleDatabase.ExascaleDBStorageVaultData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> ExascaleDbStorageVault resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="OracleDatabase.ExascaleDBStorageVaultData"/> instance for mocking. </returns>
-        public static ExascaleDBStorageVaultData ExascaleDBStorageVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExascaleDBStorageVaultProperties properties = null, IEnumerable<string> zones = null)
+        public static ExascaleDBStorageVaultData ExascaleDBStorageVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExascaleDBStorageVaultProperties properties = default, IEnumerable<string> zones = default)
         {
-            tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
 
             return new ExascaleDBStorageVaultData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                zones?.ToList(),
-                serializedAdditionalRawData: null);
+                zones.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExascaleDBStorageVaultProperties"/>. </summary>
         /// <param name="additionalFlashCacheInPercent"> The size of additional Flash Cache in percentage of High Capacity database storage. </param>
         /// <param name="description"> Exadata Database Storage Vault description. </param>
         /// <param name="displayName"> The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique. </param>
-        /// <param name="highCapacityDatabaseStorageInputTotalSizeInGbs"> Create exadata Database Storage Details. </param>
+        /// <param name="highCapacityDatabaseStorageInputTotalSizeInGbs"> Total Capacity. </param>
         /// <param name="highCapacityDatabaseStorage"> Response exadata Database Storage Details. </param>
         /// <param name="timeZone"> The time zone that you want to use for the Exadata Database Storage Vault. </param>
         /// <param name="provisioningState"> Exadata Database Storage Vault provisioning state. </param>
@@ -2267,14 +2572,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="vmClusterCount"> The number of Exadata VM clusters used the Exadata Database Storage Vault. </param>
         /// <param name="ocid"> The OCID of the Exadata Database Storage Vault. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="exadataInfrastructureId"> Cloud Exadata infrastructure ID. </param>
+        /// <param name="attachedShapeAttributes"> The shapeAttribute of the Exadata VM cluster(s) associated with the Exadata Database Storage Vault. </param>
         /// <returns> A new <see cref="Models.ExascaleDBStorageVaultProperties"/> instance for mocking. </returns>
-        public static ExascaleDBStorageVaultProperties ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent = null, string description = null, string displayName = null, int? highCapacityDatabaseStorageInputTotalSizeInGbs = null, ExascaleDBStorageDetails highCapacityDatabaseStorage = null, string timeZone = null, OracleDatabaseProvisioningState? provisioningState = null, ExascaleDBStorageVaultLifecycleState? lifecycleState = null, string lifecycleDetails = null, int? vmClusterCount = null, string ocid = null, Uri ociUri = null)
+        public static ExascaleDBStorageVaultProperties ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent = default, string description = default, string displayName = default, int? highCapacityDatabaseStorageInputTotalSizeInGbs = default, ExascaleDBStorageDetails highCapacityDatabaseStorage = default, string timeZone = default, OracleDatabaseProvisioningState? provisioningState = default, ExascaleDBStorageVaultLifecycleState? lifecycleState = default, string lifecycleDetails = default, int? vmClusterCount = default, string ocid = default, Uri ociUri = default, ResourceIdentifier exadataInfrastructureId = default, IEnumerable<ShapeAttribute> attachedShapeAttributes = default)
         {
+            attachedShapeAttributes ??= new ChangeTrackingList<ShapeAttribute>();
+
             return new ExascaleDBStorageVaultProperties(
                 additionalFlashCacheInPercent,
                 description,
                 displayName,
-                highCapacityDatabaseStorageInputTotalSizeInGbs.HasValue ? new ExascaleDBStorageInputDetails(highCapacityDatabaseStorageInputTotalSizeInGbs.Value, serializedAdditionalRawData: null) : null,
+                highCapacityDatabaseStorageInputTotalSizeInGbs is null ? default : new ExascaleDBStorageInputDetails(highCapacityDatabaseStorageInputTotalSizeInGbs.Value, new Dictionary<string, BinaryData>()),
                 highCapacityDatabaseStorage,
                 timeZone,
                 provisioningState,
@@ -2283,16 +2592,382 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 vmClusterCount,
                 ocid,
                 ociUri,
-                serializedAdditionalRawData: null);
+                exadataInfrastructureId,
+                attachedShapeAttributes.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExascaleDBStorageDetails"/>. </summary>
+        /// <summary> Exadata Database Storage Details. </summary>
         /// <param name="availableSizeInGbs"> Available Capacity. </param>
         /// <param name="totalSizeInGbs"> Total Capacity. </param>
         /// <returns> A new <see cref="Models.ExascaleDBStorageDetails"/> instance for mocking. </returns>
-        public static ExascaleDBStorageDetails ExascaleDBStorageDetails(int? availableSizeInGbs = null, int? totalSizeInGbs = null)
+        public static ExascaleDBStorageDetails ExascaleDBStorageDetails(int? availableSizeInGbs = default, int? totalSizeInGbs = default)
         {
-            return new ExascaleDBStorageDetails(availableSizeInGbs, totalSizeInGbs, serializedAdditionalRawData: null);
+            return new ExascaleDBStorageDetails(availableSizeInGbs, totalSizeInGbs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for updating tags in ExascaleDbStorageVault resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ExascaleDBStorageVaultPatch"/> instance for mocking. </returns>
+        public static ExascaleDBStorageVaultPatch ExascaleDBStorageVaultPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExascaleDBStorageVaultPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network Anchor resource model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="OracleDatabase.NetworkAnchorData"/> instance for mocking. </returns>
+        public static NetworkAnchorData NetworkAnchorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkAnchorProperties properties = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new NetworkAnchorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                zones.ToList());
+        }
+
+        /// <summary> Network Anchor properties. </summary>
+        /// <param name="resourceAnchorId"> Corresponding resource anchor Azure ID. </param>
+        /// <param name="provisioningState"> NetworkAnchor provisioning state. </param>
+        /// <param name="vnetId"> VNET for network connectivity. </param>
+        /// <param name="subnetId"> Client subnet. </param>
+        /// <param name="cidrBlock"> Delegated Azure subnet cidr block. </param>
+        /// <param name="ociVcnId"> Oracle Cloud Infrastructure VCN OCID. </param>
+        /// <param name="ociVcnDnsLabel"> OCI DNS label. This is optional if DNS config is provided. </param>
+        /// <param name="ociSubnetId"> Oracle Cloud Infrastructure subnet OCID. </param>
+        /// <param name="ociBackupCidrBlock"> OCI backup subnet cidr block. </param>
+        /// <param name="isOracleToAzureDnsZoneSyncEnabled"> Indicates whether DNS zone sync from OCI to Azure is enabled. </param>
+        /// <param name="isOracleDnsListeningEndpointEnabled"> Indicates whether the Oracle DNS listening endpoint is enabled. </param>
+        /// <param name="isOracleDnsForwardingEndpointEnabled"> Indicates whether the Oracle DNS forwarding endpoint is enabled. </param>
+        /// <param name="dnsForwardingRules"> DNS forwarding rules. </param>
+        /// <param name="dnsListeningEndpointAllowedCidrs"> Comma-separated list of CIDRs that are allowed to send requests to the DNS listening endpoint. </param>
+        /// <param name="dnsListeningEndpointIpAddress"> DNS listening endpoint IP address. </param>
+        /// <param name="dnsForwardingEndpointIpAddress"> DNS forwarding endpoint IP address. </param>
+        /// <param name="dnsForwardingRulesUri"> Deep link to OCI console DNS Forwarding rules page. </param>
+        /// <param name="dnsListeningEndpointNsgRulesUri"> Deep link to OCI console DNS Listening endpoint NSG rules. </param>
+        /// <param name="dnsForwardingEndpointNsgRulesUri"> Deep link to OCI console DNS Forwarding endpoint NSG rules. </param>
+        /// <returns> A new <see cref="Models.NetworkAnchorProperties"/> instance for mocking. </returns>
+        public static NetworkAnchorProperties NetworkAnchorProperties(string resourceAnchorId = default, OracleDatabaseProvisioningState? provisioningState = default, ResourceIdentifier vnetId = default, ResourceIdentifier subnetId = default, string cidrBlock = default, string ociVcnId = default, string ociVcnDnsLabel = default, string ociSubnetId = default, string ociBackupCidrBlock = default, bool? isOracleToAzureDnsZoneSyncEnabled = default, bool? isOracleDnsListeningEndpointEnabled = default, bool? isOracleDnsForwardingEndpointEnabled = default, IEnumerable<DnsForwardingRule> dnsForwardingRules = default, string dnsListeningEndpointAllowedCidrs = default, string dnsListeningEndpointIpAddress = default, string dnsForwardingEndpointIpAddress = default, string dnsForwardingRulesUri = default, string dnsListeningEndpointNsgRulesUri = default, string dnsForwardingEndpointNsgRulesUri = default)
+        {
+            dnsForwardingRules ??= new ChangeTrackingList<DnsForwardingRule>();
+
+            return new NetworkAnchorProperties(
+                resourceAnchorId,
+                provisioningState,
+                vnetId,
+                subnetId,
+                cidrBlock,
+                ociVcnId,
+                ociVcnDnsLabel,
+                ociSubnetId,
+                ociBackupCidrBlock,
+                isOracleToAzureDnsZoneSyncEnabled,
+                isOracleDnsListeningEndpointEnabled,
+                isOracleDnsForwardingEndpointEnabled,
+                dnsForwardingRules.ToList(),
+                dnsListeningEndpointAllowedCidrs,
+                dnsListeningEndpointIpAddress,
+                dnsForwardingEndpointIpAddress,
+                dnsForwardingRulesUri,
+                dnsListeningEndpointNsgRulesUri,
+                dnsForwardingEndpointNsgRulesUri,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the NetworkAnchor. </summary>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.NetworkAnchorPatch"/> instance for mocking. </returns>
+        public static NetworkAnchorPatch NetworkAnchorPatch(IEnumerable<string> zones = default, IDictionary<string, string> tags = default, NetworkAnchorUpdateProperties properties = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkAnchorPatch(zones.ToList(), tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Resource Anchor model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OracleDatabase.ResourceAnchorData"/> instance for mocking. </returns>
+        public static ResourceAnchorData ResourceAnchorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceAnchorProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceAnchorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> Resource Anchor properties. </summary>
+        /// <param name="provisioningState"> ResourceAnchor provisioning state. </param>
+        /// <param name="linkedCompartmentId"> Oracle Cloud Infrastructure compartment Id (ocid) which was created or linked by customer with resource anchor. This compartmentId is different from where resource Anchor lives. </param>
+        /// <returns> A new <see cref="Models.ResourceAnchorProperties"/> instance for mocking. </returns>
+        public static ResourceAnchorProperties ResourceAnchorProperties(OracleDatabaseProvisioningState? provisioningState = default, string linkedCompartmentId = default)
+        {
+            return new ResourceAnchorProperties(provisioningState, linkedCompartmentId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the ResourceAnchor. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ResourceAnchorPatch"/> instance for mocking. </returns>
+        public static ResourceAnchorPatch ResourceAnchorPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceAnchorPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> DbSystem resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="OracleDatabase.DbSystemData"/> instance for mocking. </returns>
+        public static DbSystemData DbSystemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DbSystemProperties properties = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new DbSystemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                zones.ToList());
+        }
+
+        /// <summary> DbSystem resource model. </summary>
+        /// <param name="provisioningState"> dbSystem provisioning state. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="resourceAnchorId"> Azure Resource Anchor ID. </param>
+        /// <param name="networkAnchorId"> Azure Network Anchor ID. </param>
+        /// <param name="clusterName"> The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </param>
+        /// <param name="displayName"> The user-friendly name for the DB system. The name does not have to be unique. </param>
+        /// <param name="initialDataStorageSizeInGb"> Size in GB of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume. </param>
+        /// <param name="dataStorageSizeInGbs"> The data storage size, in gigabytes, that is currently available to the DB system. Applies only for virtual machine DB systems. </param>
+        /// <param name="dbSystemOptions"> The DB system options. </param>
+        /// <param name="diskRedundancy"> The type of redundancy configured for the DB system. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </param>
+        /// <param name="domainV2"> The domain name for the DB system. </param>
+        /// <param name="gridImageOcid"> The OCID of a grid infrastructure software image. This is a database software image of the type GRID_IMAGE. </param>
+        /// <param name="hostname"> The hostname for the DB system. </param>
+        /// <param name="ocid"> The OCID of the DB system. </param>
+        /// <param name="licenseModelV2"> The Oracle license model that applies to all the databases on the DB system. The default is LicenseIncluded. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="lifecycleState"> The current state of the DB system. </param>
+        /// <param name="listenerPort"> The port number configured for the listener on the DB system. </param>
+        /// <param name="memorySizeInGbs"> Memory allocated to the DB system, in gigabytes. </param>
+        /// <param name="nodeCount"> The number of nodes in the DB system. For RAC DB systems, the value is greater than 1. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the DB system. </param>
+        /// <param name="scanIps"> The list of Single Client Access Name (SCAN) IP addresses associated with the DB system. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. Note: For a single-node DB system, this list is empty. </param>
+        /// <param name="shape"> The shape of the DB system. The shape determines resources to allocate to the DB system. For virtual machine shapes, the number of CPU cores and memory. For bare metal and Exadata shapes, the number of CPU cores, storage, and memory. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the DB system. </param>
+        /// <param name="storageVolumePerformanceMode"> The block storage volume performance level. Valid values are Balanced and HighPerformance. See [Block Volume Performance](/Content/Block/Concepts/blockvolumeperformance.htm) for more information. </param>
+        /// <param name="timeZone"> The time zone of the DB system, e.g., UTC, to set the timeZone as UTC. </param>
+        /// <param name="version"> The Oracle Database version of the DB system. </param>
+        /// <param name="computeModel"> The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy. </param>
+        /// <param name="computeCount"> The number of compute servers for the DB system. </param>
+        /// <param name="databaseEdition"> The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require EnterpriseEditionExtremePerformance. </param>
+        /// <param name="adminPassword"> A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -. </param>
+        /// <param name="dbVersion"> A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation. </param>
+        /// <param name="pdbName"> The name of the pluggable database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name. </param>
+        /// <returns> A new <see cref="Models.DbSystemProperties"/> instance for mocking. </returns>
+        public static DbSystemProperties DbSystemProperties(OracleDatabaseProvisioningState? provisioningState = default, Uri ociUri = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string clusterName = default, string displayName = default, int? initialDataStorageSizeInGb = default, int? dataStorageSizeInGbs = default, DbSystemOptions dbSystemOptions = default, DiskRedundancyType? diskRedundancy = default, string domainV2 = default, string gridImageOcid = default, string hostname = default, string ocid = default, OracleLicenseModel? licenseModelV2 = default, string lifecycleDetails = default, DbSystemLifecycleState? lifecycleState = default, int? listenerPort = default, int? memorySizeInGbs = default, int? nodeCount = default, string scanDnsName = default, IEnumerable<string> scanIps = default, string shape = default, IEnumerable<string> sshPublicKeys = default, StorageVolumePerformanceMode? storageVolumePerformanceMode = default, string timeZone = default, string version = default, OracleDatabaseComputeModel? computeModel = default, int? computeCount = default, DbSystemDatabaseEditionType databaseEdition = default, string adminPassword = default, string dbVersion = default, string pdbName = default)
+        {
+            scanIps ??= new ChangeTrackingList<string>();
+            sshPublicKeys ??= new ChangeTrackingList<string>();
+
+            return new DbSystemProperties(
+                Models.DbSystemSourceType?.None,
+                provisioningState,
+                ociUri,
+                resourceAnchorId,
+                networkAnchorId,
+                clusterName,
+                displayName,
+                initialDataStorageSizeInGb,
+                dataStorageSizeInGbs,
+                dbSystemOptions,
+                diskRedundancy,
+                domainV2,
+                gridImageOcid,
+                hostname,
+                ocid,
+                licenseModelV2,
+                lifecycleDetails,
+                lifecycleState,
+                listenerPort,
+                memorySizeInGbs,
+                nodeCount,
+                scanDnsName,
+                scanIps.ToList(),
+                shape,
+                sshPublicKeys.ToList(),
+                storageVolumePerformanceMode,
+                timeZone,
+                version,
+                computeModel,
+                computeCount,
+                additionalBinaryDataProperties: null,
+                databaseEdition,
+                adminPassword,
+                dbVersion,
+                pdbName);
+        }
+
+        /// <param name="source"> The source of the database: Use `None` for creating a new database. The default is `None`. </param>
+        /// <param name="provisioningState"> dbSystem provisioning state. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="resourceAnchorId"> Azure Resource Anchor ID. </param>
+        /// <param name="networkAnchorId"> Azure Network Anchor ID. </param>
+        /// <param name="clusterName"> The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </param>
+        /// <param name="displayName"> The user-friendly name for the DB system. The name does not have to be unique. </param>
+        /// <param name="initialDataStorageSizeInGb"> Size in GB of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume. </param>
+        /// <param name="dataStorageSizeInGbs"> The data storage size, in gigabytes, that is currently available to the DB system. Applies only for virtual machine DB systems. </param>
+        /// <param name="dbSystemOptionsStorageManagement"> The storage option used in DB system. ASM - Automatic storage management, LVM - Logical Volume management. </param>
+        /// <param name="diskRedundancy"> The type of redundancy configured for the DB system. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </param>
+        /// <param name="domainV2"> The domain name for the DB system. </param>
+        /// <param name="gridImageOcid"> The OCID of a grid infrastructure software image. This is a database software image of the type GRID_IMAGE. </param>
+        /// <param name="hostname"> The hostname for the DB system. </param>
+        /// <param name="ocid"> The OCID of the DB system. </param>
+        /// <param name="licenseModelV2"> The Oracle license model that applies to all the databases on the DB system. The default is LicenseIncluded. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="lifecycleState"> The current state of the DB system. </param>
+        /// <param name="listenerPort"> The port number configured for the listener on the DB system. </param>
+        /// <param name="memorySizeInGbs"> Memory allocated to the DB system, in gigabytes. </param>
+        /// <param name="nodeCount"> The number of nodes in the DB system. For RAC DB systems, the value is greater than 1. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the DB system. </param>
+        /// <param name="scanIps"> The list of Single Client Access Name (SCAN) IP addresses associated with the DB system. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. Note: For a single-node DB system, this list is empty. </param>
+        /// <param name="shape"> The shape of the DB system. The shape determines resources to allocate to the DB system. For virtual machine shapes, the number of CPU cores and memory. For bare metal and Exadata shapes, the number of CPU cores, storage, and memory. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the DB system. </param>
+        /// <param name="storageVolumePerformanceMode"> The block storage volume performance level. Valid values are Balanced and HighPerformance. See [Block Volume Performance](/Content/Block/Concepts/blockvolumeperformance.htm) for more information. </param>
+        /// <param name="timeZone"> The time zone of the DB system, e.g., UTC, to set the timeZone as UTC. </param>
+        /// <param name="version"> The Oracle Database version of the DB system. </param>
+        /// <param name="computeModel"> The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy. </param>
+        /// <param name="computeCount"> The number of compute servers for the DB system. </param>
+        /// <returns> A new <see cref="Models.DbSystemBaseProperties"/> instance for mocking. </returns>
+        public static DbSystemBaseProperties DbSystemBaseProperties(string source = default, OracleDatabaseProvisioningState? provisioningState = default, Uri ociUri = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string clusterName = default, string displayName = default, int? initialDataStorageSizeInGb = default, int? dataStorageSizeInGbs = default, StorageManagementType? dbSystemOptionsStorageManagement = default, DiskRedundancyType? diskRedundancy = default, string domainV2 = default, string gridImageOcid = default, string hostname = default, string ocid = default, OracleLicenseModel? licenseModelV2 = default, string lifecycleDetails = default, DbSystemLifecycleState? lifecycleState = default, int? listenerPort = default, int? memorySizeInGbs = default, int? nodeCount = default, string scanDnsName = default, IEnumerable<string> scanIps = default, string shape = default, IEnumerable<string> sshPublicKeys = default, StorageVolumePerformanceMode? storageVolumePerformanceMode = default, string timeZone = default, string version = default, OracleDatabaseComputeModel? computeModel = default, int? computeCount = default)
+        {
+            scanIps ??= new ChangeTrackingList<string>();
+            sshPublicKeys ??= new ChangeTrackingList<string>();
+
+            return new UnknownDbSystemBaseProperties(
+                new DbSystemSourceType(source),
+                provisioningState,
+                ociUri,
+                resourceAnchorId,
+                networkAnchorId,
+                clusterName,
+                displayName,
+                initialDataStorageSizeInGb,
+                dataStorageSizeInGbs,
+                dbSystemOptionsStorageManagement is null ? default : new DbSystemOptions(dbSystemOptionsStorageManagement, new Dictionary<string, BinaryData>()),
+                diskRedundancy,
+                domainV2,
+                gridImageOcid,
+                hostname,
+                ocid,
+                licenseModelV2,
+                lifecycleDetails,
+                lifecycleState,
+                listenerPort,
+                memorySizeInGbs,
+                nodeCount,
+                scanDnsName,
+                scanIps.ToList(),
+                shape,
+                sshPublicKeys.ToList(),
+                storageVolumePerformanceMode,
+                timeZone,
+                version,
+                computeModel,
+                computeCount,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="dbSystemUpdateSource"> The source of the database for creating a new database. </param>
+        /// <returns> A new <see cref="Models.DbSystemPatch"/> instance for mocking. </returns>
+        public static DbSystemPatch DbSystemPatch(IEnumerable<string> zones = default, IDictionary<string, string> tags = default, DbSystemSourceType? dbSystemUpdateSource = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DbSystemPatch(zones.ToList(), tags, dbSystemUpdateSource is null ? default : new DbSystemUpdateProperties(dbSystemUpdateSource, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Oracle Database DbVersion resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OracleDatabase.DbVersionData"/> instance for mocking. </returns>
+        public static DbVersionData DbVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DbVersionProperties properties = default)
+        {
+            return new DbVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> DbVersion resource model. </summary>
+        /// <param name="version"> A valid Oracle Database version. </param>
+        /// <param name="isLatestForMajorVersion"> True if this version of the Oracle Database software is the latest version for a release. </param>
+        /// <param name="isPreviewDbVersion"> True if this version of the Oracle Database software is the preview version. </param>
+        /// <param name="isUpgradeSupported"> True if this version of the Oracle Database software is supported for Upgrade. </param>
+        /// <param name="supportsPdb"> True if this version of the Oracle Database software supports pluggable databases. </param>
+        /// <returns> A new <see cref="Models.DbVersionProperties"/> instance for mocking. </returns>
+        public static DbVersionProperties DbVersionProperties(string version = default, bool? isLatestForMajorVersion = default, bool? isPreviewDbVersion = default, bool? isUpgradeSupported = default, bool? supportsPdb = default)
+        {
+            return new DbVersionProperties(
+                version,
+                isLatestForMajorVersion,
+                isPreviewDbVersion,
+                isUpgradeSupported,
+                supportsPdb,
+                additionalBinaryDataProperties: null);
         }
     }
 }

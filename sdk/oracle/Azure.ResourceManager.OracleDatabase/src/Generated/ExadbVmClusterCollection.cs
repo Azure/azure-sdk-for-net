@@ -8,90 +8,86 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// A class representing a collection of <see cref="ExadbVmClusterResource"/> and their operations.
-    /// Each <see cref="ExadbVmClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="ExadbVmClusterCollection"/> instance call the GetExadbVmClusters method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="ExadbVmClusterResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="ExadbVmClusterCollection"/> instance call the GetExadbVmClusters method from an instance of the parent resource.
     /// </summary>
     public partial class ExadbVmClusterCollection : ArmCollection, IEnumerable<ExadbVmClusterResource>, IAsyncEnumerable<ExadbVmClusterResource>
     {
-        private readonly ClientDiagnostics _exadbVmClusterClientDiagnostics;
-        private readonly ExadbVmClustersRestOperations _exadbVmClusterRestClient;
+        private readonly ClientDiagnostics _exadbVmClustersClientDiagnostics;
+        private readonly ExadbVmClusters _exadbVmClustersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ExadbVmClusterCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ExadbVmClusterCollection for mocking. </summary>
         protected ExadbVmClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ExadbVmClusterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExadbVmClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExadbVmClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _exadbVmClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExadbVmClusterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ExadbVmClusterResource.ResourceType, out string exadbVmClusterApiVersion);
-            _exadbVmClusterRestClient = new ExadbVmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, exadbVmClusterApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _exadbVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExadbVmClusterResource.ResourceType.Namespace, Diagnostics);
+            _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Create a ExadbVmCluster
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a ExadbVmCluster. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exadbVmClusterName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ExadbVmClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string exadbVmClusterName, ExadbVmClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _exadbVmClusterClientDiagnostics.CreateScope("ExadbVmClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _exadbVmClustersClientDiagnostics.CreateScope("ExadbVmClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _exadbVmClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(new ExadbVmClusterOperationSource(Client), _exadbVmClusterClientDiagnostics, Pipeline, _exadbVmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exadbVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, ExadbVmClusterData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
+                    new ExadbVmClusterOperationSource(Client),
+                    _exadbVmClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -101,46 +97,39 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Create a ExadbVmCluster
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a ExadbVmCluster. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exadbVmClusterName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ExadbVmClusterResource> CreateOrUpdate(WaitUntil waitUntil, string exadbVmClusterName, ExadbVmClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _exadbVmClusterClientDiagnostics.CreateScope("ExadbVmClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _exadbVmClustersClientDiagnostics.CreateScope("ExadbVmClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _exadbVmClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, data, cancellationToken);
-                var operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(new ExadbVmClusterOperationSource(Client), _exadbVmClusterClientDiagnostics, Pipeline, _exadbVmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exadbVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, ExadbVmClusterData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
+                    new ExadbVmClusterOperationSource(Client),
+                    _exadbVmClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,42 +139,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Get a ExadbVmCluster
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a ExadbVmCluster. </summary>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exadbVmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ExadbVmClusterResource>> GetAsync(string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
 
-            using var scope = _exadbVmClusterClientDiagnostics.CreateScope("ExadbVmClusterCollection.Get");
+            using DiagnosticScope scope = _exadbVmClustersClientDiagnostics.CreateScope("ExadbVmClusterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _exadbVmClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exadbVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExadbVmClusterData> response = Response.FromValue(ExadbVmClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExadbVmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,42 +172,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Get a ExadbVmCluster
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a ExadbVmCluster. </summary>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exadbVmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ExadbVmClusterResource> Get(string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
 
-            using var scope = _exadbVmClusterClientDiagnostics.CreateScope("ExadbVmClusterCollection.Get");
+            using DiagnosticScope scope = _exadbVmClustersClientDiagnostics.CreateScope("ExadbVmClusterCollection.Get");
             scope.Start();
             try
             {
-                var response = _exadbVmClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exadbVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExadbVmClusterData> response = Response.FromValue(ExadbVmClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExadbVmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +205,50 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// List ExadbVmCluster resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List ExadbVmCluster resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExadbVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExadbVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExadbVmClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _exadbVmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _exadbVmClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExadbVmClusterResource(Client, ExadbVmClusterData.DeserializeExadbVmClusterData(e)), _exadbVmClusterClientDiagnostics, Pipeline, "ExadbVmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupAsyncCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExadbVmClusterResource(Client, data));
         }
 
-        /// <summary>
-        /// List ExadbVmCluster resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List ExadbVmCluster resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExadbVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExadbVmClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _exadbVmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _exadbVmClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExadbVmClusterResource(Client, ExadbVmClusterData.DeserializeExadbVmClusterData(e)), _exadbVmClusterClientDiagnostics, Pipeline, "ExadbVmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExadbVmClusterResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exadbVmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
 
-            using var scope = _exadbVmClusterClientDiagnostics.CreateScope("ExadbVmClusterCollection.Exists");
+            using DiagnosticScope scope = _exadbVmClustersClientDiagnostics.CreateScope("ExadbVmClusterCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _exadbVmClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exadbVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExadbVmClusterData> response = Response.FromValue(ExadbVmClusterData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,40 +258,26 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exadbVmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
 
-            using var scope = _exadbVmClusterClientDiagnostics.CreateScope("ExadbVmClusterCollection.Exists");
+            using DiagnosticScope scope = _exadbVmClustersClientDiagnostics.CreateScope("ExadbVmClusterCollection.Exists");
             scope.Start();
             try
             {
-                var response = _exadbVmClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exadbVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExadbVmClusterData> response = Response.FromValue(ExadbVmClusterData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,42 +287,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exadbVmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ExadbVmClusterResource>> GetIfExistsAsync(string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
 
-            using var scope = _exadbVmClusterClientDiagnostics.CreateScope("ExadbVmClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _exadbVmClustersClientDiagnostics.CreateScope("ExadbVmClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _exadbVmClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exadbVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExadbVmClusterData> response = Response.FromValue(ExadbVmClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ExadbVmClusterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExadbVmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,42 +320,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exadbVmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ExadbVmClusterResource> GetIfExists(string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
 
-            using var scope = _exadbVmClusterClientDiagnostics.CreateScope("ExadbVmClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _exadbVmClustersClientDiagnostics.CreateScope("ExadbVmClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _exadbVmClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, exadbVmClusterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exadbVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExadbVmClusterData> response = Response.FromValue(ExadbVmClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ExadbVmClusterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExadbVmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +363,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ExadbVmClusterResource> IAsyncEnumerable<ExadbVmClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

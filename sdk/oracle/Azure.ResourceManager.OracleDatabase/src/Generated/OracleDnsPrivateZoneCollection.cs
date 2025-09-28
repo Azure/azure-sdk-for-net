@@ -8,89 +8,81 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// A class representing a collection of <see cref="OracleDnsPrivateZoneResource"/> and their operations.
-    /// Each <see cref="OracleDnsPrivateZoneResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="OracleDnsPrivateZoneCollection"/> instance call the GetOracleDnsPrivateZones method from an instance of <see cref="SubscriptionResource"/>.
+    /// Each <see cref="OracleDnsPrivateZoneResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="OracleDnsPrivateZoneCollection"/> instance call the GetOracleDnsPrivateZones method from an instance of the parent resource.
     /// </summary>
     public partial class OracleDnsPrivateZoneCollection : ArmCollection, IEnumerable<OracleDnsPrivateZoneResource>, IAsyncEnumerable<OracleDnsPrivateZoneResource>
     {
-        private readonly ClientDiagnostics _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics;
-        private readonly DnsPrivateZonesRestOperations _oracleDnsPrivateZoneDnsPrivateZonesRestClient;
+        private readonly ClientDiagnostics _dnsPrivateZonesClientDiagnostics;
+        private readonly DnsPrivateZones _dnsPrivateZonesRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="OracleDnsPrivateZoneCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OracleDnsPrivateZoneCollection for mocking. </summary>
         protected OracleDnsPrivateZoneCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OracleDnsPrivateZoneCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDnsPrivateZoneCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal OracleDnsPrivateZoneCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
+            TryGetApiVersion(OracleDnsPrivateZoneResource.ResourceType, out string oracleDnsPrivateZoneApiVersion);
             _location = location;
-            _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDnsPrivateZoneResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OracleDnsPrivateZoneResource.ResourceType, out string oracleDnsPrivateZoneDnsPrivateZonesApiVersion);
-            _oracleDnsPrivateZoneDnsPrivateZonesRestClient = new DnsPrivateZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDnsPrivateZoneDnsPrivateZonesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _dnsPrivateZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDnsPrivateZoneResource.ResourceType.Namespace, Diagnostics);
+            _dnsPrivateZonesRestClient = new DnsPrivateZones(_dnsPrivateZonesClientDiagnostics, Pipeline, Endpoint, oracleDnsPrivateZoneApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get a DnsPrivateZone
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a DnsPrivateZone. </summary>
         /// <param name="dnsprivatezonename"> DnsPrivateZone name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivatezonename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OracleDnsPrivateZoneResource>> GetAsync(string dnsprivatezonename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsprivatezonename, nameof(dnsprivatezonename));
 
-            using var scope = _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.Get");
+            using DiagnosticScope scope = _dnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oracleDnsPrivateZoneDnsPrivateZonesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), dnsprivatezonename, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivatezonename, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleDnsPrivateZoneData> response = Response.FromValue(OracleDnsPrivateZoneData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleDnsPrivateZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,42 +92,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Get a DnsPrivateZone
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a DnsPrivateZone. </summary>
         /// <param name="dnsprivatezonename"> DnsPrivateZone name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivatezonename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OracleDnsPrivateZoneResource> Get(string dnsprivatezonename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsprivatezonename, nameof(dnsprivatezonename));
 
-            using var scope = _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.Get");
+            using DiagnosticScope scope = _dnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.Get");
             scope.Start();
             try
             {
-                var response = _oracleDnsPrivateZoneDnsPrivateZonesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), dnsprivatezonename, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivatezonename, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleDnsPrivateZoneData> response = Response.FromValue(OracleDnsPrivateZoneData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleDnsPrivateZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,100 +125,50 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// List DnsPrivateZone resources by SubscriptionLocationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List DnsPrivateZone resources by SubscriptionLocationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleDnsPrivateZoneResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OracleDnsPrivateZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleDnsPrivateZoneResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDnsPrivateZoneDnsPrivateZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDnsPrivateZoneDnsPrivateZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleDnsPrivateZoneResource(Client, OracleDnsPrivateZoneData.DeserializeOracleDnsPrivateZoneData(e)), _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics, Pipeline, "OracleDnsPrivateZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleDnsPrivateZoneData, OracleDnsPrivateZoneResource>(new DnsPrivateZonesGetByLocationAsyncCollectionResultOfT(_dnsPrivateZonesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleDnsPrivateZoneResource(Client, data));
         }
 
-        /// <summary>
-        /// List DnsPrivateZone resources by SubscriptionLocationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List DnsPrivateZone resources by SubscriptionLocationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleDnsPrivateZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleDnsPrivateZoneResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDnsPrivateZoneDnsPrivateZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDnsPrivateZoneDnsPrivateZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleDnsPrivateZoneResource(Client, OracleDnsPrivateZoneData.DeserializeOracleDnsPrivateZoneData(e)), _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics, Pipeline, "OracleDnsPrivateZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleDnsPrivateZoneData, OracleDnsPrivateZoneResource>(new DnsPrivateZonesGetByLocationCollectionResultOfT(_dnsPrivateZonesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleDnsPrivateZoneResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="dnsprivatezonename"> DnsPrivateZone name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivatezonename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dnsprivatezonename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsprivatezonename, nameof(dnsprivatezonename));
 
-            using var scope = _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.Exists");
+            using DiagnosticScope scope = _dnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _oracleDnsPrivateZoneDnsPrivateZonesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), dnsprivatezonename, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivatezonename, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleDnsPrivateZoneData> response = Response.FromValue(OracleDnsPrivateZoneData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,40 +178,26 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="dnsprivatezonename"> DnsPrivateZone name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivatezonename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string dnsprivatezonename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsprivatezonename, nameof(dnsprivatezonename));
 
-            using var scope = _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.Exists");
+            using DiagnosticScope scope = _dnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.Exists");
             scope.Start();
             try
             {
-                var response = _oracleDnsPrivateZoneDnsPrivateZonesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), dnsprivatezonename, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivatezonename, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleDnsPrivateZoneData> response = Response.FromValue(OracleDnsPrivateZoneData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,42 +207,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="dnsprivatezonename"> DnsPrivateZone name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivatezonename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OracleDnsPrivateZoneResource>> GetIfExistsAsync(string dnsprivatezonename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsprivatezonename, nameof(dnsprivatezonename));
 
-            using var scope = _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.GetIfExists");
+            using DiagnosticScope scope = _dnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oracleDnsPrivateZoneDnsPrivateZonesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), dnsprivatezonename, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivatezonename, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleDnsPrivateZoneData> response = Response.FromValue(OracleDnsPrivateZoneData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleDnsPrivateZoneResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleDnsPrivateZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,42 +240,30 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="dnsprivatezonename"> DnsPrivateZone name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivatezonename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsprivatezonename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OracleDnsPrivateZoneResource> GetIfExists(string dnsprivatezonename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsprivatezonename, nameof(dnsprivatezonename));
 
-            using var scope = _oracleDnsPrivateZoneDnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.GetIfExists");
+            using DiagnosticScope scope = _dnsPrivateZonesClientDiagnostics.CreateScope("OracleDnsPrivateZoneCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oracleDnsPrivateZoneDnsPrivateZonesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), dnsprivatezonename, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivatezonename, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleDnsPrivateZoneData> response = Response.FromValue(OracleDnsPrivateZoneData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleDnsPrivateZoneResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleDnsPrivateZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,6 +283,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OracleDnsPrivateZoneResource> IAsyncEnumerable<OracleDnsPrivateZoneResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
