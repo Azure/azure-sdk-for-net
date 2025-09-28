@@ -1,3 +1,4 @@
 directory: specification/workloads/Workloads.SAPVirtualInstance.Management
-commit: a3f8a42ba3d15b424ffd19ba1e3e4a61a1ba38c5
+commit: b0cf30c8a9bf54a8d44adfa1ff3711c9bf9ccc44
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

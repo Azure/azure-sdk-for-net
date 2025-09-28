@@ -11,20 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> Specifies Windows operating system settings on the virtual machine. </summary>
-    public partial class SapWindowsConfiguration : SapOSConfiguration
+    internal partial class SapWindowsConfiguration : SapOSConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="SapWindowsConfiguration"/>. </summary>
-        public SapWindowsConfiguration()
+        public SapWindowsConfiguration() : base(SapOSType.Windows)
         {
-            OSType = SapOSType.Windows;
         }
 
         /// <summary> Initializes a new instance of <see cref="SapWindowsConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapWindowsConfiguration(SapOSType osType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(osType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapWindowsConfiguration(SapOSType osType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(osType, additionalBinaryDataProperties)
         {
-            OSType = osType;
         }
     }
 }
