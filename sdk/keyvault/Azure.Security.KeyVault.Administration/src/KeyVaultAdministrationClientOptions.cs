@@ -14,6 +14,8 @@ namespace Azure.Security.KeyVault.Administration
     {
         internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";
 
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_07_01;
+
         /// <summary>
         /// Gets the <see cref="KeyVaultAdministrationClientOptions.ServiceVersion"/> of the service API used when
         /// making requests. For more information, see
