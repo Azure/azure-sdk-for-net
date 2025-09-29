@@ -678,10 +678,24 @@ namespace Azure.Storage.DataMovement.Tests
         }
         #endregion
 
+        /// <summary>
+        /// For usage, please dispose of the TransferManager after use.
+        /// </summary>
+        /// <param name="concurrency">Concurrency to set in TransferManagerOptions.</param>
+        /// <returns>Valid TransferManager that needs to be disposed after use.</returns>
+        private TransferManager CreateTransferManager(int concurrency = default)
+        {
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = concurrency,
+            };
+            return new TransferManager(managerOptions);
+        }
+
         private async Task<TransferOperation> CreateStartTransfer(
             TSourceContainerClient sourceContainer,
             TDestinationContainerClient destinationContainer,
-            int concurrency,
+            TransferManager transferManager,
             bool createFailedCondition = false,
             TransferOptions options = default,
             int size = DataMovementTestConstants.KB)
@@ -705,13 +719,6 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
             StorageResourceItem destinationResource = GetDestinationStorageResourceItem(destinationClient);
 
-            // Create Transfer Manager with single threaded operation
-            TransferManagerOptions managerOptions = new TransferManagerOptions()
-            {
-                MaximumConcurrency = concurrency,
-            };
-            TransferManager transferManager = new TransferManager(managerOptions);
-
             // Start transfer and await for completion.
             return await transferManager.StartTransferAsync(
                 sourceResource,
@@ -725,6 +732,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
 
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
@@ -733,7 +741,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = await CreateStartTransfer(
                 source.Container,
                 destination.Container,
-                concurrency: 1,
+                transferManager,
                 options: options);
 
             // Act
@@ -756,6 +764,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
 
             TransferOptions options = new TransferOptions()
             {
@@ -767,7 +776,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = await CreateStartTransfer(
                 source.Container,
                 destination.Container,
-                concurrency: 1,
+                transferManager,
                 createFailedCondition: true,
                 options: options);
 
@@ -801,6 +810,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
 
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
@@ -813,7 +823,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = await CreateStartTransfer(
                 source.Container,
                 destination.Container,
-                concurrency: 1,
+                transferManager,
                 createFailedCondition: true,
                 options: options);
 
@@ -860,7 +870,7 @@ namespace Azure.Storage.DataMovement.Tests
                 MaximumTransferChunkSize = chunkSize,
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            TransferManager transferManager = new TransferManager();
+            await using TransferManager transferManager = new TransferManager();
 
             // Act - Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
