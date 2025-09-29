@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A class representing the DevCenterNetworkConnection data model.
-    /// Network related settings
+    /// Network related settings.
     /// </summary>
     public partial class DevCenterNetworkConnectionData : TrackedResourceData
     {

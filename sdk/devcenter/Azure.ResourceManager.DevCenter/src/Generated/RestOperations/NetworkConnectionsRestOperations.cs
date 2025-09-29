@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2025-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists network connections in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists network connections in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists network connections in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists network connections in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a network connection resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a network connection resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates a Network Connections resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="data"> Represents network connection. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates a Network Connections resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="data"> Represents network connection. </param>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates a Network Connection. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="patch"> Represents network connection. </param>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates a Network Connection. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="patch"> Represents network connection. </param>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes a Network Connections resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -551,7 +551,6 @@ namespace Azure.ResourceManager.DevCenter
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -561,7 +560,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes a Network Connections resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -577,7 +576,6 @@ namespace Azure.ResourceManager.DevCenter
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -631,7 +629,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists health check status details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -661,7 +659,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists health check status details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -727,7 +725,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets health check status details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -758,7 +756,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets health check status details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -783,92 +781,6 @@ namespace Azure.ResourceManager.DevCenter
                     }
                 case 404:
                     return Response.FromValue((HealthCheckStatusDetailData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateRunHealthChecksRequestUri(string subscriptionId, string resourceGroupName, string networkConnectionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
-            uri.AppendPath(networkConnectionName, true);
-            uri.AppendPath("/runHealthChecks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateRunHealthChecksRequest(string subscriptionId, string resourceGroupName, string networkConnectionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
-            uri.AppendPath(networkConnectionName, true);
-            uri.AppendPath("/runHealthChecks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Triggers a new health check run. The execution and health check result can be tracked via the network Connection health check details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RunHealthChecksAsync(string subscriptionId, string resourceGroupName, string networkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
-
-            using var message = CreateRunHealthChecksRequest(subscriptionId, resourceGroupName, networkConnectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Triggers a new health check run. The execution and health check result can be tracked via the network Connection health check details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RunHealthChecks(string subscriptionId, string resourceGroupName, string networkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
-
-            using var message = CreateRunHealthChecksRequest(subscriptionId, resourceGroupName, networkConnectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -919,7 +831,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists the endpoints that agents may call as part of Dev Box service administration. These FQDNs should be allowed for outbound access in order for the Dev Box service to function. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -949,7 +861,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists the endpoints that agents may call as part of Dev Box service administration. These FQDNs should be allowed for outbound access in order for the Dev Box service to function. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -973,6 +885,90 @@ namespace Azure.ResourceManager.DevCenter
                         value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateRunHealthChecksRequestUri(string subscriptionId, string resourceGroupName, string networkConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
+            uri.AppendPath(networkConnectionName, true);
+            uri.AppendPath("/runHealthChecks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateRunHealthChecksRequest(string subscriptionId, string resourceGroupName, string networkConnectionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
+            uri.AppendPath(networkConnectionName, true);
+            uri.AppendPath("/runHealthChecks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Triggers a new health check run. The execution and health check result can be tracked via the network Connection health check details. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> RunHealthChecksAsync(string subscriptionId, string resourceGroupName, string networkConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
+
+            using var message = CreateRunHealthChecksRequest(subscriptionId, resourceGroupName, networkConnectionName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Triggers a new health check run. The execution and health check result can be tracked via the network Connection health check details. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response RunHealthChecks(string subscriptionId, string resourceGroupName, string networkConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
+
+            using var message = CreateRunHealthChecksRequest(subscriptionId, resourceGroupName, networkConnectionName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1002,7 +998,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists network connections in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -1030,7 +1026,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists network connections in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -1080,7 +1076,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists network connections in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1110,7 +1106,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists network connections in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1162,7 +1158,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists health check status details. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -1194,7 +1190,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists health check status details. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -1248,7 +1244,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists the endpoints that agents may call as part of Dev Box service administration. These FQDNs should be allowed for outbound access in order for the Dev Box service to function. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -1280,7 +1276,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists the endpoints that agents may call as part of Dev Box service administration. These FQDNs should be allowed for outbound access in order for the Dev Box service to function. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>

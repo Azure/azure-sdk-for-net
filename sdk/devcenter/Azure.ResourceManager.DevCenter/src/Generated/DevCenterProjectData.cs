@@ -64,17 +64,33 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed identity properties. </param>
         /// <param name="devCenterId"> Resource Id of an associated DevCenter. </param>
         /// <param name="description"> Description of the project. </param>
         /// <param name="maxDevBoxesPerUser"> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </param>
+        /// <param name="displayName"> The display name of the project. </param>
+        /// <param name="catalogSettings"> Settings to be used when associating a project with a catalog. </param>
+        /// <param name="customizationSettings"> Settings to be used for customizations. </param>
+        /// <param name="devBoxAutoDeleteSettings"> Dev Box Auto Delete settings. </param>
+        /// <param name="azureAiServicesSettings"> Indicates whether Azure AI services are enabled for a project. </param>
+        /// <param name="serverlessGpuSessionsSettings"> Settings to be used for serverless GPU. </param>
+        /// <param name="workspaceStorageSettings"> Settings to be used for workspace storage. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="devCenterUri"> The URI of the Dev Center resource this project is associated with. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, DevCenterProvisioningState? provisioningState, Uri devCenterUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, string displayName, ProjectCatalogSettings catalogSettings, ProjectCustomizationSettings customizationSettings, DevBoxAutoDeleteSettings devBoxAutoDeleteSettings, AzureAiServicesSettings azureAiServicesSettings, ServerlessGpuSessionsSettings serverlessGpuSessionsSettings, WorkspaceStorageSettings workspaceStorageSettings, DevCenterProvisioningState? provisioningState, Uri devCenterUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             DevCenterId = devCenterId;
             Description = description;
             MaxDevBoxesPerUser = maxDevBoxesPerUser;
+            DisplayName = displayName;
+            CatalogSettings = catalogSettings;
+            CustomizationSettings = customizationSettings;
+            DevBoxAutoDeleteSettings = devBoxAutoDeleteSettings;
+            AzureAiServicesSettings = azureAiServicesSettings;
+            ServerlessGpuSessionsSettings = serverlessGpuSessionsSettings;
+            WorkspaceStorageSettings = workspaceStorageSettings;
             ProvisioningState = provisioningState;
             DevCenterUri = devCenterUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -85,12 +101,63 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
+        /// <summary> Managed identity properties. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource Id of an associated DevCenter. </summary>
         public ResourceIdentifier DevCenterId { get; set; }
         /// <summary> Description of the project. </summary>
         public string Description { get; set; }
         /// <summary> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </summary>
         public int? MaxDevBoxesPerUser { get; set; }
+        /// <summary> The display name of the project. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> Settings to be used when associating a project with a catalog. </summary>
+        internal ProjectCatalogSettings CatalogSettings { get; set; }
+        /// <summary> Indicates catalog item types that can be synced. </summary>
+        public IList<CatalogItemType> CatalogItemSyncTypes
+        {
+            get
+            {
+                if (CatalogSettings is null)
+                    CatalogSettings = new ProjectCatalogSettings();
+                return CatalogSettings.CatalogItemSyncTypes;
+            }
+        }
+
+        /// <summary> Settings to be used for customizations. </summary>
+        public ProjectCustomizationSettings CustomizationSettings { get; set; }
+        /// <summary> Dev Box Auto Delete settings. </summary>
+        public DevBoxAutoDeleteSettings DevBoxAutoDeleteSettings { get; set; }
+        /// <summary> Indicates whether Azure AI services are enabled for a project. </summary>
+        internal AzureAiServicesSettings AzureAiServicesSettings { get; set; }
+        /// <summary> The property indicates whether Azure AI services is enabled. </summary>
+        public AzureAiServicesMode? AzureAiServicesMode
+        {
+            get => AzureAiServicesSettings is null ? default : AzureAiServicesSettings.AzureAiServicesMode;
+            set
+            {
+                if (AzureAiServicesSettings is null)
+                    AzureAiServicesSettings = new AzureAiServicesSettings();
+                AzureAiServicesSettings.AzureAiServicesMode = value;
+            }
+        }
+
+        /// <summary> Settings to be used for serverless GPU. </summary>
+        public ServerlessGpuSessionsSettings ServerlessGpuSessionsSettings { get; set; }
+        /// <summary> Settings to be used for workspace storage. </summary>
+        internal WorkspaceStorageSettings WorkspaceStorageSettings { get; set; }
+        /// <summary> Indicates whether workspace storage is enabled. </summary>
+        public WorkspaceStorageMode? WorkspaceStorageMode
+        {
+            get => WorkspaceStorageSettings is null ? default : WorkspaceStorageSettings.WorkspaceStorageMode;
+            set
+            {
+                if (WorkspaceStorageSettings is null)
+                    WorkspaceStorageSettings = new WorkspaceStorageSettings();
+                WorkspaceStorageSettings.WorkspaceStorageMode = value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
         public DevCenterProvisioningState? ProvisioningState { get; }
         /// <summary> The URI of the Dev Center resource this project is associated with. </summary>
