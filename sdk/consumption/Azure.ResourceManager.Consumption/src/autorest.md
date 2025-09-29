@@ -222,6 +222,7 @@ rename-mapping:
   OperationStatusType: ConsumptionOperationStatusType
   OperationStatus: ConsumptionOperationStatus
   ModernReservationRecommendationProperties.resourceType: -|resource-type
+  ReservationDetail: ConsumptionReservationDetail
 
 directive:
   - from: openapi.json
@@ -254,7 +255,6 @@ directive:
   - from: openapi.json
     where: $.definitions
     transform: >
-      $.ReservationDetail['x-ms-client-name'] = 'ConsumptionReservationDetail';
       $.ReservationDetailProperties.properties.usageDate['x-ms-client-name'] = 'ConsumptionOccurredOn';
       $.ReservationDetailProperties.properties.instanceId['x-ms-format'] = 'arm-id';
     reason: avoid duplicated schema issue in partial resource generation process.
