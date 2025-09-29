@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> Patchable Properties of the Informatica Organization resource. </summary>
     public partial class InformaticaOrganizationPropertiesUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InformaticaOrganizationPropertiesUpdate"/>. </summary>
         public InformaticaOrganizationPropertiesUpdate()
@@ -57,25 +28,29 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="userDetails"> User details. </param>
         /// <param name="companyDetails"> Company Details. </param>
         /// <param name="existingResourceId"> Existing Resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaOrganizationPropertiesUpdate(InformaticaOrganizationPatch informaticaOrganizationProperties, InformaticaMarketplaceDetailsUpdate marketplaceDetails, InformaticaUserDetailsUpdate userDetails, InformaticaCompanyDetailsUpdate companyDetails, ResourceIdentifier existingResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InformaticaOrganizationPropertiesUpdate(InformaticaOrganizationPatch informaticaOrganizationProperties, InformaticaMarketplaceDetailsUpdate marketplaceDetails, InformaticaUserDetailsUpdate userDetails, InformaticaCompanyDetailsUpdate companyDetails, ResourceIdentifier existingResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InformaticaOrganizationProperties = informaticaOrganizationProperties;
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;
             CompanyDetails = companyDetails;
             ExistingResourceId = existingResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Informatica Organization properties. </summary>
         public InformaticaOrganizationPatch InformaticaOrganizationProperties { get; set; }
+
         /// <summary> Marketplace details. </summary>
         public InformaticaMarketplaceDetailsUpdate MarketplaceDetails { get; set; }
+
         /// <summary> User details. </summary>
         public InformaticaUserDetailsUpdate UserDetails { get; set; }
+
         /// <summary> Company Details. </summary>
         public InformaticaCompanyDetailsUpdate CompanyDetails { get; set; }
+
         /// <summary> Existing Resource Id. </summary>
         public ResourceIdentifier ExistingResourceId { get; set; }
     }
