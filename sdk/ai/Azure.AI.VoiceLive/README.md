@@ -70,7 +70,7 @@ You have the flexibility to explicitly select a supported service API version wh
 ```C# Snippet:CreateVoiceLiveClientForSpecificApiVersion
 Uri endpoint = new Uri("https://your-resource.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-VoiceLiveClientOptions options = new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_05_01_Preview);
+VoiceLiveClientOptions options = new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01);
 VoiceLiveClient client = new VoiceLiveClient(endpoint, credential, options);
 ```
 
@@ -163,8 +163,8 @@ VoiceLiveSessionOptions sessionOptions = new()
 
 // Ensure modalities include audio
 sessionOptions.Modalities.Clear();
-sessionOptions.Modalities.Add(InputModality.Text);
-sessionOptions.Modalities.Add(InputModality.Audio);
+sessionOptions.Modalities.Add(InteractionModality.Text);
+sessionOptions.Modalities.Add(InteractionModality.Audio);
 
 await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 
@@ -206,8 +206,8 @@ VoiceLiveSessionOptions sessionOptions = new()
 
 // Ensure modalities include audio
 sessionOptions.Modalities.Clear();
-sessionOptions.Modalities.Add(InputModality.Text);
-sessionOptions.Modalities.Add(InputModality.Audio);
+sessionOptions.Modalities.Add(InteractionModality.Text);
+sessionOptions.Modalities.Add(InteractionModality.Audio);
 
 await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 ```
@@ -232,7 +232,6 @@ var getCurrentWeatherFunction = new VoiceLiveFunctionDefinition("get_current_wea
         }
         """)
 };
-
 VoiceLiveSessionOptions sessionOptions = new()
 {
     Model = model,
@@ -247,10 +246,44 @@ sessionOptions.Tools.Add(getCurrentWeatherFunction);
 
 // Ensure modalities include audio
 sessionOptions.Modalities.Clear();
-sessionOptions.Modalities.Add(InputModality.Text);
-sessionOptions.Modalities.Add(InputModality.Audio);
+sessionOptions.Modalities.Add(InteractionModality.Text);
+sessionOptions.Modalities.Add(InteractionModality.Audio);
 
 await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
+```
+### Function Response Handling
+```C# Snippet:FunctionCallResponseExample
+// Process events from the session
+await foreach (SessionUpdate serverEvent in session.GetUpdatesAsync().ConfigureAwait(false))
+{
+    if (serverEvent is SessionUpdateResponseFunctionCallArgumentsDone functionCall)
+    {
+        if (functionCall.Name == "get_current_weather")
+        {
+            // Extract parameters from the function call
+            var parametersString = functionCall.Arguments;
+            var parameters = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(parametersString);
+
+            string location = parameters != null ? parameters["location"] : string.Empty;
+
+            // Call your external weather service here and get the result
+            string weatherInfo = $"The current weather in {location} is sunny with a temperature of 75�F.";
+
+            // Send the function response back to the session
+            await session.AddItemAsync(new FunctionCallOutputItem(functionCall.CallId, weatherInfo)).ConfigureAwait(false);
+
+            // Start the next response.
+            await session.StartResponseAsync().ConfigureAwait(false);
+        }
+    }
+}
+```
+### Adding a user text message
+```C# Snippet:AddUserMessageExample
+// Add a user message to the session
+await session.AddItemAsync(new UserMessageItem("Hello, can you help me with my account?")).ConfigureAwait(false);
+// Start the response from the assistant
+await session.StartResponseAsync().ConfigureAwait(false);
 ```
 
 ## Troubleshooting

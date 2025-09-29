@@ -129,7 +129,7 @@ namespace Azure.AI.VoiceLive
                 yield break;
             }
 
-            SessionUpdate serverEvent = null;
+            SessionUpdate sessionUpdate = null;
             try
             {
                 // Try to parse as JSON first
@@ -137,7 +137,7 @@ namespace Azure.AI.VoiceLive
                 JsonElement root = document.RootElement;
 
                 // Deserialize as a server event
-                serverEvent = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
+                sessionUpdate = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
             }
             catch (JsonException)
             {
@@ -150,9 +150,9 @@ namespace Azure.AI.VoiceLive
                 yield break;
             }
 
-            if (serverEvent != null)
+            if (sessionUpdate != null)
             {
-                yield return serverEvent;
+                yield return sessionUpdate;
             }
         }
     }

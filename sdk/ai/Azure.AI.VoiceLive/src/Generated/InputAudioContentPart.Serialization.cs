@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The InputAudioContentPart. </summary>
-    public partial class InputAudioContentPart : UserContentPart, IJsonModel<InputAudioContentPart>
+    /// <summary> Input audio content part. </summary>
+    public partial class InputAudioContentPart : MessageContentPart, IJsonModel<InputAudioContentPart>
     {
         /// <summary> Initializes a new instance of <see cref="InputAudioContentPart"/> for deserialization. </summary>
         internal InputAudioContentPart()
@@ -54,7 +54,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UserContentPart JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MessageContentPart JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InputAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -124,7 +124,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UserContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MessageContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InputAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

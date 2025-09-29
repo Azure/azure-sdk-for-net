@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageDiscovery;
 
 namespace Azure.ResourceManager.StorageDiscovery.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableStorageDiscoveryResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageDiscoveryResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableStorageDiscoveryResourceGroupResource for mocking. </summary>
         protected MockableStorageDiscoveryResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageDiscoveryResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableStorageDiscoveryResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableStorageDiscoveryResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of StorageDiscoveryWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StorageDiscoveryWorkspaceResources and their operations over a StorageDiscoveryWorkspaceResource. </returns>
+        /// <summary> Gets a collection of StorageDiscoveryWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of StorageDiscoveryWorkspaces and their operations over a StorageDiscoveryWorkspaceResource. </returns>
         public virtual StorageDiscoveryWorkspaceCollection GetStorageDiscoveryWorkspaces()
         {
             return GetCachedClient(client => new StorageDiscoveryWorkspaceCollection(client, Id));
@@ -68,6 +66,8 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageDiscoveryWorkspaceResource>> GetStorageDiscoveryWorkspaceAsync(string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
+
             return await GetStorageDiscoveryWorkspaces().GetAsync(storageDiscoveryWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -99,6 +99,8 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
         [ForwardsClientCalls]
         public virtual Response<StorageDiscoveryWorkspaceResource> GetStorageDiscoveryWorkspace(string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
+
             return GetStorageDiscoveryWorkspaces().Get(storageDiscoveryWorkspaceName, cancellationToken);
         }
     }

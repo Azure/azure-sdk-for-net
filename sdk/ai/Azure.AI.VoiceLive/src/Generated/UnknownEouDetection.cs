@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="UnknownEouDetection"/>. </summary>
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEouDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(model, additionalBinaryDataProperties)
+        internal UnknownEouDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(model != default ? model : "unknown", additionalBinaryDataProperties)
         {
         }
     }

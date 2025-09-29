@@ -26,13 +26,17 @@ namespace Azure.AI.VoiceLive
         /// <param name="codec"> Codec to use for encoding. Currently only 'h264' is supported. </param>
         /// <param name="crop"> Optional cropping settings for the video stream. </param>
         /// <param name="resolution"> Optional resolution settings for the video stream. </param>
+        /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
+        /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VideoParams(int? bitrate, string codec, VideoCrop crop, VideoResolution resolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VideoParams(int? bitrate, string codec, VideoCrop crop, VideoResolution resolution, VideoBackground background, int? gopSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bitrate = bitrate;
             Codec = codec;
             Crop = crop;
             Resolution = resolution;
+            Background = background;
+            GopSize = gopSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,5 +51,11 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Optional resolution settings for the video stream. </summary>
         public VideoResolution Resolution { get; set; }
+
+        /// <summary> Optional background settings for the video. Allows specifying either a solid color or an image URL. </summary>
+        public VideoBackground Background { get; set; }
+
+        /// <summary> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </summary>
+        public int? GopSize { get; set; }
     }
 }

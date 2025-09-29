@@ -33,6 +33,12 @@ model FooProperties {
 
   prop1: string[];
   prop2?: int32[];
+
+  nestedProperty: NestedFooModel;
+}
+
+model NestedFooModel {
+  properties: FooProperties;
 }
 
 @armResourceOperations

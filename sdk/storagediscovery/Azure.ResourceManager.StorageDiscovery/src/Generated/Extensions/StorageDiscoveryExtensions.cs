@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageDiscovery.Mocking;
 
@@ -17,30 +19,26 @@ namespace Azure.ResourceManager.StorageDiscovery
     /// <summary> A class to add extension methods to Azure.ResourceManager.StorageDiscovery. </summary>
     public static partial class StorageDiscoveryExtensions
     {
+        /// <param name="client"></param>
         private static MockableStorageDiscoveryArmClient GetMockableStorageDiscoveryArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableStorageDiscoveryArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableStorageDiscoveryArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableStorageDiscoveryResourceGroupResource GetMockableStorageDiscoveryResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableStorageDiscoveryResourceGroupResource GetMockableStorageDiscoveryResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableStorageDiscoveryResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableStorageDiscoveryResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableStorageDiscoverySubscriptionResource GetMockableStorageDiscoverySubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableStorageDiscoverySubscriptionResource GetMockableStorageDiscoverySubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableStorageDiscoverySubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableStorageDiscoverySubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageDiscoveryWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageDiscoveryWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="StorageDiscoveryWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStorageDiscoveryArmClient.GetStorageDiscoveryWorkspaceResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <summary> Gets an object representing a <see cref="StorageDiscoveryWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="StorageDiscoveryWorkspaceResource"/> object. </returns>
@@ -51,16 +49,10 @@ namespace Azure.ResourceManager.StorageDiscovery
             return GetMockableStorageDiscoveryArmClient(client).GetStorageDiscoveryWorkspaceResource(id);
         }
 
-        /// <summary>
-        /// Gets a collection of StorageDiscoveryWorkspaceResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStorageDiscoveryResourceGroupResource.GetStorageDiscoveryWorkspaces()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of StorageDiscoveryWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of StorageDiscoveryWorkspaceResources and their operations over a StorageDiscoveryWorkspaceResource. </returns>
+        /// <returns> An object representing collection of StorageDiscoveryWorkspaces and their operations over a StorageDiscoveryWorkspaceResource. </returns>
         public static StorageDiscoveryWorkspaceCollection GetStorageDiscoveryWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -96,8 +88,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<StorageDiscoveryWorkspaceResource>> GetStorageDiscoveryWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +125,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<StorageDiscoveryWorkspaceResource> GetStorageDiscoveryWorkspace(this ResourceGroupResource resourceGroupResource, string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
@@ -172,7 +162,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageDiscoveryWorkspaceResource> GetStorageDiscoveryWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

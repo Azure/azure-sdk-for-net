@@ -56,6 +56,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(JobResourceData))]
     [ModelReaderWriterBuildable(typeof(JobResourcePatch))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(NestedFooModel))]
     [ModelReaderWriterBuildable(typeof(OptionalFlattenPropertyType))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaData))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaListResult))]

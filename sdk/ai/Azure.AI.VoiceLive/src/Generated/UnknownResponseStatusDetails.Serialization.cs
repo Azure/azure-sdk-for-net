@@ -65,13 +65,13 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            VoiceLiveResponseStatus @type = default;
+            SessionResponseStatus @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new VoiceLiveResponseStatus(prop.Value.GetString());
+                    @type = new SessionResponseStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

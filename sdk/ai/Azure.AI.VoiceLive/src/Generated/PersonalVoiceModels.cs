@@ -14,8 +14,11 @@ namespace Azure.AI.VoiceLive
     public readonly partial struct PersonalVoiceModels : IEquatable<PersonalVoiceModels>
     {
         private readonly string _value;
+        /// <summary> Use the latest Dragon model. </summary>
         private const string DragonLatestNeuralValue = "DragonLatestNeural";
+        /// <summary> Use the latest Phoenix model. </summary>
         private const string PhoenixLatestNeuralValue = "PhoenixLatestNeural";
+        /// <summary> Use the Phoenix V2 model. </summary>
         private const string PhoenixV2NeuralValue = "PhoenixV2Neural";
 
         /// <summary> Initializes a new instance of <see cref="PersonalVoiceModels"/>. </summary>
@@ -28,13 +31,13 @@ namespace Azure.AI.VoiceLive
             _value = value;
         }
 
-        /// <summary> Gets the DragonLatestNeural. </summary>
+        /// <summary> Use the latest Dragon model. </summary>
         public static PersonalVoiceModels DragonLatestNeural { get; } = new PersonalVoiceModels(DragonLatestNeuralValue);
 
-        /// <summary> Gets the PhoenixLatestNeural. </summary>
+        /// <summary> Use the latest Phoenix model. </summary>
         public static PersonalVoiceModels PhoenixLatestNeural { get; } = new PersonalVoiceModels(PhoenixLatestNeuralValue);
 
-        /// <summary> Gets the PhoenixV2Neural. </summary>
+        /// <summary> Use the Phoenix V2 model. </summary>
         public static PersonalVoiceModels PhoenixV2Neural { get; } = new PersonalVoiceModels(PhoenixV2NeuralValue);
 
         /// <summary> Determines if two <see cref="PersonalVoiceModels"/> values are the same. </summary>

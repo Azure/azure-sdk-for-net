@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The MessageItem. </summary>
+    /// <summary> A message item within a conversation. </summary>
     public partial class MessageItem : ConversationRequestItem, IJsonModel<MessageItem>
     {
         /// <summary> Initializes a new instance of <see cref="MessageItem"/> for deserialization. </summary>
@@ -39,11 +39,18 @@ namespace Azure.AI.VoiceLive
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("role"u8);
-            writer.WriteStringValue(Role);
+            writer.WriteStringValue(Role.ToString());
+            writer.WritePropertyName("content"u8);
+            writer.WriteStartArray();
+            foreach (MessageContentPart item in Content)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
         }
 
