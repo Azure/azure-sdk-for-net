@@ -7,6 +7,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -17,6 +18,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -150,7 +152,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _isFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, _isFakeLongRunningOperation);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -178,8 +180,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
             };
+
             // Populate arguments for the REST client method call
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
+            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
@@ -199,7 +202,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new TryExpression(tryStatements);
         }
 
-        private IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
+        protected virtual IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
@@ -220,6 +223,84 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     contextVariable,
                     _isAsync,
                     out responseVariable);
+            }
+        }
+
+        /// <summary>
+        /// Builds client pipeline handling with status code switch logic for exists/get-if-exists operations.
+        /// Handles 200 (success) and 404 (not found) status codes specifically.
+        /// </summary>
+        protected IReadOnlyList<MethodBodyStatement> BuildExistsOperationPipelineProcessing(
+            VariableExpression messageVariable,
+            VariableExpression contextVariable,
+            out ScopedApi<Response> responseVariable)
+        {
+            var statements = new List<MethodBodyStatement>();
+
+            var sendMethod = _isAsync ? "SendAsync" : "Send";
+            var sendArguments = new ValueExpression[] { messageVariable, contextVariable.Property(nameof(RequestContext.CancellationToken)) };
+
+            var sendStatement = _isAsync
+                ? This.Property("Pipeline").Invoke(sendMethod, sendArguments, null, _isAsync).Terminate()
+                : This.Property("Pipeline").Invoke(sendMethod, sendArguments).Terminate();
+            statements.Add(sendStatement);
+
+            var resultDeclaration = Declare(
+                "result",
+                typeof(Response),
+                messageVariable.Property("Response"),
+                out var resultVariable);
+            statements.Add(resultDeclaration);
+
+            var responseDeclaration = Declare(
+                "response",
+                new CSharpType(typeof(Response<>), _originalBodyType!),
+                Default,
+                out var responseVar);
+            responseVariable = responseVar.As<Response>();
+            statements.Add(responseDeclaration);
+
+            var switchStatement = new SwitchStatement(resultVariable.Property("Status"));
+
+            // Case 200: response = Response.FromValue(FooData.FromResponse(result), result);
+            var case200Body = CreateSwitchCaseBody(
+                responseVar,
+                Static(_originalBodyType!).Invoke(SerializationVisitor.FromResponseMethodName, new ValueExpression[] { resultVariable }),
+                resultVariable);
+            var case200 = new SwitchCaseStatement(new ValueExpression[] { Literal(200) }, case200Body);
+            switchStatement.Add(case200);
+
+            // Case 404: response = Response.FromValue((FooData)null, result);
+            var case404Body = CreateSwitchCaseBody(
+                responseVar,
+                Null.CastTo(_originalBodyType!),
+                resultVariable);
+            var case404 = new SwitchCaseStatement(new ValueExpression[] { Literal(404) }, case404Body);
+            switchStatement.Add(case404);
+
+            // Default case: throw new RequestFailedException(result);
+            var defaultBody = new List<MethodBodyStatement>
+            {
+                Throw(New.Instance(typeof(RequestFailedException), resultVariable))
+            };
+            var defaultCase = new SwitchCaseStatement(new ValueExpression[0], defaultBody);
+            switchStatement.Add(defaultCase);
+
+            statements.Add(switchStatement);
+
+            return statements;
+
+            // Helper method to create switch case body
+            static List<MethodBodyStatement> CreateSwitchCaseBody(VariableExpression responseVar, ValueExpression valueExpression, VariableExpression resultVariable)
+            {
+                return new List<MethodBodyStatement>
+                {
+                    responseVar.Assign(
+                        Static(typeof(Response)).Invoke(
+                            nameof(Response.FromValue),
+                            new ValueExpression[] { valueExpression, resultVariable })).Terminate(),
+                    Break
+                };
             }
         }
 
@@ -340,15 +421,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                         responseVariable.GetRawResponse()))).Terminate()
             };
 
-            List<MethodBodyStatement> statements = [nullCheckStatement];
+            // if the return type is Response with no content, no need to check null.
+            List<MethodBodyStatement> statements =
+                CheckIfReturnTypeIsResponseWithNoContent()
+                ? []
+                : [nullCheckStatement];
 
             // If the return type has been wrapped by a resource client, we need to return the resource client type.
             if (_returnBodyResourceClient != null)
             {
                 var returnValueExpression = New.Instance(
-                    _returnBodyResourceClient.Type,
-                    This.As<ArmResource>().Client(),
-                    responseVariable.Value());
+                        _returnBodyResourceClient.Type,
+                        This.As<ArmResource>().Client(),
+                        responseVariable.Value());
                 var returnStatement = Return(
                     ResponseSnippets.FromValue(
                         returnValueExpression,
@@ -361,6 +446,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
 
             return statements;
+
+            bool CheckIfReturnTypeIsResponseWithNoContent()
+            {
+                var returnType = signature.ReturnType;
+                return returnType != null && (returnType.Equals(typeof(Response)) || returnType.Equals(typeof(Task<Response>)));
+            }
         }
     }
 }

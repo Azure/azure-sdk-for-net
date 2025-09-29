@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all Router Job events. </summary>
     [JsonConverter(typeof(AcsRouterJobEventDataConverter))]
-    public partial class AcsRouterJobEventData : IJsonModel<AcsRouterJobEventData>
+    public partial class AcsRouterJobEventData : AcsRouterEventData, IJsonModel<AcsRouterJobEventData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

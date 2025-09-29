@@ -119,21 +119,23 @@ namespace Azure.Generator
         public override ValueExpression DeserializeJsonValue(
             Type valueType,
             ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
             ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
             SerializationFormat format)
         {
-            var expression = DeserializeJsonValueCore(valueType, element, mrwOptionsParameter, format);
-            return expression ?? base.DeserializeJsonValue(valueType, element, mrwOptionsParameter, format);
+            var expression = DeserializeJsonValueCore(valueType, element, data, mrwOptionsParameter, format);
+            return expression ?? base.DeserializeJsonValue(valueType, element, data, mrwOptionsParameter, format);
         }
 
         private ValueExpression? DeserializeJsonValueCore(
             Type valueType,
             ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
             ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
             SerializationFormat format)
         {
             return KnownAzureTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression) ?
-                deserializationExpression(valueType, element, mrwOptionsParameter, format) :
+                deserializationExpression(valueType, element, data, mrwOptionsParameter, format) :
                 null;
         }
 

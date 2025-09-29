@@ -137,5 +137,85 @@ namespace MgmtTypeSpec.Mocking
 
             return await GetEndpointResources(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
+
+        /// <summary> Gets an object representing a <see cref="SelfHelpResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SelfHelpResource"/> object. </returns>
+        public virtual SelfHelpResource GetSelfHelpResource(ResourceIdentifier id)
+        {
+            SelfHelpResource.ValidateResourceId(id);
+            return new SelfHelpResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SelfHelpResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SelfHelpResource"/> objects. </returns>
+        public virtual SelfHelpResourceCollection GetSelfHelpResources(ResourceIdentifier scope)
+        {
+            return new SelfHelpResourceCollection(Client, scope);
+        }
+
+        /// <summary> Get a SelfHelpResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="selfHelpName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="selfHelpName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SelfHelpResource> GetSelfHelpResource(ResourceIdentifier scope, string selfHelpName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(selfHelpName, nameof(selfHelpName));
+
+            return GetSelfHelpResources(scope).Get(selfHelpName, cancellationToken);
+        }
+
+        /// <summary> Get a SelfHelpResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="selfHelpName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="selfHelpName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SelfHelpResource>> GetSelfHelpResourceAsync(ResourceIdentifier scope, string selfHelpName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(selfHelpName, nameof(selfHelpName));
+
+            return await GetSelfHelpResources(scope).GetAsync(selfHelpName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PlaywrightQuotaResource"/> object. </returns>
+        public virtual PlaywrightQuotaResource GetPlaywrightQuotaResource(ResourceIdentifier id)
+        {
+            PlaywrightQuotaResource.ValidateResourceId(id);
+            return new PlaywrightQuotaResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
+        public virtual JobResource GetJobResource(ResourceIdentifier id)
+        {
+            JobResource.ValidateResourceId(id);
+            return new JobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
+        public virtual HciVmInstanceResource GetHciVmInstanceResource(ResourceIdentifier id)
+        {
+            HciVmInstanceResource.ValidateResourceId(id);
+            return new HciVmInstanceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
+        public virtual HciVmInstanceResource GetHciVmInstance(ResourceIdentifier scope)
+        {
+            return new HciVmInstanceResource(Client, scope.AppendProviderResource("MgmtTypeSpec", "virtualMachineInstances", "default"));
+        }
     }
 }

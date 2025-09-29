@@ -57,9 +57,10 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="diskBackedMessageBuffer"> Settings of Disk Backed Message Buffer. </param>
         /// <param name="generateResourceLimits"> This setting controls whether Kubernetes CPU resource limits are requested. Increasing the number of replicas or workers proportionally increases the amount of CPU resources requested. If this setting is enabled and there are insufficient CPU resources, an error will be emitted. </param>
         /// <param name="memoryProfile"> Memory profile of Broker. </param>
+        /// <param name="persistence"> The persistence settings of the Broker. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, GenerateResourceLimits generateResourceLimits, BrokerMemoryProfile? memoryProfile, IotOperationsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, GenerateResourceLimits generateResourceLimits, BrokerMemoryProfile? memoryProfile, BrokerPersistence persistence, IotOperationsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Advanced = advanced;
             Cardinality = cardinality;
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             DiskBackedMessageBuffer = diskBackedMessageBuffer;
             GenerateResourceLimits = generateResourceLimits;
             MemoryProfile = memoryProfile;
+            Persistence = persistence;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -95,6 +97,8 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Memory profile of Broker. </summary>
         public BrokerMemoryProfile? MemoryProfile { get; set; }
+        /// <summary> The persistence settings of the Broker. </summary>
+        public BrokerPersistence Persistence { get; set; }
         /// <summary> The status of the last operation. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }
     }

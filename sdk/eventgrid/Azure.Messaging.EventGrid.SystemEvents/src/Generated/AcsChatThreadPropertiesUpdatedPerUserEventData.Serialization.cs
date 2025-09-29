@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser event. </summary>
     [JsonConverter(typeof(AcsChatThreadPropertiesUpdatedPerUserEventDataConverter))]
-    public partial class AcsChatThreadPropertiesUpdatedPerUserEventData : IJsonModel<AcsChatThreadPropertiesUpdatedPerUserEventData>
+    public partial class AcsChatThreadPropertiesUpdatedPerUserEventData : AcsChatThreadEventBaseProperties, IJsonModel<AcsChatThreadPropertiesUpdatedPerUserEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedPerUserEventData"/> for deserialization. </summary>
         internal AcsChatThreadPropertiesUpdatedPerUserEventData()

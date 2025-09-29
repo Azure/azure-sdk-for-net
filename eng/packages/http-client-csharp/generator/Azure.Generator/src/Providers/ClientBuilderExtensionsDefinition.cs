@@ -157,7 +157,7 @@ namespace Azure.Generator.Providers
                 [.. constructorSignature.Parameters];
 
             return new FuncExpression(
-                isTokenCredential ? [options.AsExpression().Declaration, token.Declaration] : [options.AsExpression().Declaration],
+                isTokenCredential ? [options.AsVariable().Declaration, token.Declaration] : [options.AsVariable().Declaration],
                 New.Instance(client.Type, ctorArgs));
         }
 

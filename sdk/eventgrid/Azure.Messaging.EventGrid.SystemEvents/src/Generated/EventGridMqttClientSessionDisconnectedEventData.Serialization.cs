@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientSessionDisconnected event. </summary>
     [JsonConverter(typeof(EventGridMqttClientSessionDisconnectedEventDataConverter))]
-    public partial class EventGridMqttClientSessionDisconnectedEventData : IJsonModel<EventGridMqttClientSessionDisconnectedEventData>
+    public partial class EventGridMqttClientSessionDisconnectedEventData : EventGridMqttClientEventData, IJsonModel<EventGridMqttClientSessionDisconnectedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionDisconnectedEventData"/> for deserialization. </summary>
         internal EventGridMqttClientSessionDisconnectedEventData()

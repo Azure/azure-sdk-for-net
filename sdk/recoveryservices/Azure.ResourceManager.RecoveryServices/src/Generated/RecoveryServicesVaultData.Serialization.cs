@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.RecoveryServices
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             RecoveryServicesVaultProperties properties = default;
+            ManagedServiceIdentity identity = default;
             RecoveryServicesSku sku = default;
             ETag? etag = default;
             IDictionary<string, string> tags = default;
@@ -94,15 +94,6 @@ namespace Azure.ResourceManager.RecoveryServices
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRecoveryServicesContext.Default);
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -110,6 +101,15 @@ namespace Azure.ResourceManager.RecoveryServices
                         continue;
                     }
                     properties = RecoveryServicesVaultProperties.DeserializeRecoveryServicesVaultProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRecoveryServicesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -186,8 +186,8 @@ namespace Azure.ResourceManager.RecoveryServices
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
                 properties,
+                identity,
                 sku,
                 etag,
                 serializedAdditionalRawData);
