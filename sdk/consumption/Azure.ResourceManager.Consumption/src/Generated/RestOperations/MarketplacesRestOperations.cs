@@ -32,34 +32,34 @@ namespace Azure.ResourceManager.Consumption
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-01";
+            _apiVersion = apiVersion ?? "2024-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string scope, string filter, int? top, string skipToken)
+        internal RequestUriBuilder CreateListRequestUri(string scope, string skipToken, int? top, string skiptoken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Consumption/marketplaces", false);
-            if (filter != null)
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
             {
-                uri.AppendQuery("$filter", filter, true);
+                uri.AppendQuery("$filter", skipToken, true);
             }
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            if (skipToken != null)
+            if (skiptoken != null)
             {
-                uri.AppendQuery("$skiptoken", skipToken, true);
+                uri.AppendQuery("$skiptoken", skiptoken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string scope, string filter, int? top, string skipToken)
+        internal HttpMessage CreateListRequest(string scope, string skipToken, int? top, string skiptoken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Consumption/marketplaces", false);
-            if (filter != null)
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
             {
-                uri.AppendQuery("$filter", filter, true);
+                uri.AppendQuery("$filter", skipToken, true);
             }
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            if (skipToken != null)
+            if (skiptoken != null)
             {
-                uri.AppendQuery("$skiptoken", skipToken, true);
+                uri.AppendQuery("$skiptoken", skiptoken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Lists the marketplaces for a scope at the defined scope. Marketplaces are available via this API only for May 1, 2014 or later. </summary>
-        /// <param name="scope"> The scope associated with marketplace operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope and '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope. For subscription, billing account, department, enrollment account and ManagementGroup, you can also add billing period to the scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify billing period at department scope use '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. </param>
-        /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="skipToken"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<MarketplacesListResult>> ListAsync(string scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MarketplacesListResult>> ListAsync(string scope, string skipToken = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListRequest(scope, filter, top, skipToken);
+            using var message = CreateListRequest(scope, skipToken, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -118,17 +118,17 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Lists the marketplaces for a scope at the defined scope. Marketplaces are available via this API only for May 1, 2014 or later. </summary>
-        /// <param name="scope"> The scope associated with marketplace operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope and '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope. For subscription, billing account, department, enrollment account and ManagementGroup, you can also add billing period to the scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify billing period at department scope use '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. </param>
-        /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="skipToken"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<MarketplacesListResult> List(string scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<MarketplacesListResult> List(string scope, string skipToken = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListRequest(scope, filter, top, skipToken);
+            using var message = CreateListRequest(scope, skipToken, top, skiptoken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope, string filter, int? top, string skipToken)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope, string skipToken, int? top, string skiptoken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Consumption
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string filter, int? top, string skipToken)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string skipToken, int? top, string skiptoken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -170,18 +170,18 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary> Lists the marketplaces for a scope at the defined scope. Marketplaces are available via this API only for May 1, 2014 or later. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope associated with marketplace operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope and '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope. For subscription, billing account, department, enrollment account and ManagementGroup, you can also add billing period to the scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify billing period at department scope use '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. </param>
-        /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="skipToken"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<MarketplacesListResult>> ListNextPageAsync(string nextLink, string scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MarketplacesListResult>> ListNextPageAsync(string nextLink, string scope, string skipToken = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListNextPageRequest(nextLink, scope, filter, top, skipToken);
+            using var message = CreateListNextPageRequest(nextLink, scope, skipToken, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -201,18 +201,18 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary> Lists the marketplaces for a scope at the defined scope. Marketplaces are available via this API only for May 1, 2014 or later. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope associated with marketplace operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope and '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope. For subscription, billing account, department, enrollment account and ManagementGroup, you can also add billing period to the scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify billing period at department scope use '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. </param>
-        /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="skipToken"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<MarketplacesListResult> ListNextPage(string nextLink, string scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<MarketplacesListResult> ListNextPage(string nextLink, string scope, string skipToken = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListNextPageRequest(nextLink, scope, filter, top, skipToken);
+            using var message = CreateListNextPageRequest(nextLink, scope, skipToken, top, skiptoken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

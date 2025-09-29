@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the ManagementGroupBillingPeriodResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="ManagementGroupBillingPeriodConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingPeriods.
+    /// You can only construct a <see cref="ManagementGroupBillingPeriodConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of microsoft.Billing/billingPeriods.
     /// </summary>
     public partial class ManagementGroupBillingPeriodConsumptionResource : ArmResource
     {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingPeriodName"> The billingPeriodName. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string billingPeriodName)
         {
-            var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}";
+            var resourceId = $"/providers/microsoft.Management/managementGroups/{managementGroupId}/providers/microsoft.Billing/billingPeriods/{billingPeriodName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingPeriods";
+        public static readonly ResourceType ResourceType = "microsoft.Billing/billingPeriods";
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
+        /// <description>/providers/microsoft.Management/managementGroups/{managementGroupId}/providers/microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
+        /// <description>/providers/microsoft.Management/managementGroups/{managementGroupId}/providers/microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>

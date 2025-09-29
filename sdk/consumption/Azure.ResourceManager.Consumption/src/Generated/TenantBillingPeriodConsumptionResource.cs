@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the TenantBillingPeriodResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="TenantBillingPeriodConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingAccounts/billingPeriods.
+    /// You can only construct a <see cref="TenantBillingPeriodConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of microsoft.Billing/billingAccounts/billingPeriods.
     /// </summary>
     public partial class TenantBillingPeriodConsumptionResource : ArmResource
     {
@@ -26,12 +26,14 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingPeriodName"> The billingPeriodName. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string billingAccountId, string billingPeriodName)
         {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}";
+            var resourceId = $"/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}";
             return new ResourceIdentifier(resourceId);
         }
 
         private readonly ClientDiagnostics _balancesClientDiagnostics;
         private readonly BalancesRestOperations _balancesRestClient;
+        private readonly ClientDiagnostics _priceSheetClientDiagnostics;
+        private readonly PriceSheetRestOperations _priceSheetRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantBillingPeriodConsumptionResource"/> class for mocking. </summary>
         protected TenantBillingPeriodConsumptionResource()
@@ -45,13 +47,15 @@ namespace Azure.ResourceManager.Consumption
         {
             _balancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _balancesRestClient = new BalancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _priceSheetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _priceSheetRestClient = new PriceSheetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingPeriods";
+        public static readonly ResourceType ResourceType = "microsoft.Billing/billingAccounts/billingPeriods";
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,6 +123,82 @@ namespace Azure.ResourceManager.Consumption
             {
                 var response = _balancesRestClient.GetForBillingPeriodByBillingAccount(Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the pricesheet for the provided billing period asynchronously based on the enrollment id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_DownloadByBillingAccountPeriod</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ConsumptionOperationStatus>> DownloadByBillingAccountPeriodPriceSheetAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _priceSheetClientDiagnostics.CreateScope("TenantBillingPeriodConsumptionResource.DownloadByBillingAccountPeriodPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = await _priceSheetRestClient.DownloadByBillingAccountPeriodAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ConsumptionArmOperation<ConsumptionOperationStatus>(new ConsumptionOperationStatusOperationSource(), _priceSheetClientDiagnostics, Pipeline, _priceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the pricesheet for the provided billing period asynchronously based on the enrollment id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_DownloadByBillingAccountPeriod</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ConsumptionOperationStatus> DownloadByBillingAccountPeriodPriceSheet(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _priceSheetClientDiagnostics.CreateScope("TenantBillingPeriodConsumptionResource.DownloadByBillingAccountPeriodPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = _priceSheetRestClient.DownloadByBillingAccountPeriod(Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ConsumptionArmOperation<ConsumptionOperationStatus>(new ConsumptionOperationStatusOperationSource(), _priceSheetClientDiagnostics, Pipeline, _priceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

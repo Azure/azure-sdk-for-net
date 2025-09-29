@@ -40,7 +40,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="invoiceSectionId"> Invoice Section Id. </param>
         /// <param name="customerId"> Customer Id. </param>
         /// <param name="isInvoiced"> Is charge Invoiced. </param>
-        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="subscriptionId"> Subscription guid. </param>
+        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced, string subscriptionId) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             BillingPeriodId = billingPeriodId;
             UsageStart = usageStart;
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Consumption.Models
             InvoiceSectionId = invoiceSectionId;
             CustomerId = customerId;
             IsInvoiced = isInvoiced;
+            SubscriptionId = subscriptionId;
             Kind = kind;
         }
 
@@ -78,5 +80,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public string CustomerId { get; }
         /// <summary> Is charge Invoiced. </summary>
         public bool? IsInvoiced { get; }
+        /// <summary> Subscription guid. </summary>
+        public string SubscriptionId { get; }
     }
 }

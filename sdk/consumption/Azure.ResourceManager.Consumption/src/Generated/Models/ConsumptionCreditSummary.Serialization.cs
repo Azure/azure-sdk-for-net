@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("reseller"u8);
                 writer.WriteObjectValue(Reseller, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsEstimatedBalance))
+            {
+                writer.WritePropertyName("isEstimatedBalance"u8);
+                writer.WriteBooleanValue(IsEstimatedBalance.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -114,6 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string creditCurrency = default;
             string billingCurrency = default;
             ConsumptionReseller reseller = default;
+            bool? isEstimatedBalance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,6 +221,15 @@ namespace Azure.ResourceManager.Consumption.Models
                             reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("isEstimatedBalance"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isEstimatedBalance = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -236,6 +251,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 creditCurrency,
                 billingCurrency,
                 reseller,
+                isEstimatedBalance,
                 etag,
                 serializedAdditionalRawData);
         }

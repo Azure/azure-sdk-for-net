@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("isInvoiced"u8);
                 writer.WriteBooleanValue(IsInvoiced.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
             writer.WriteEndObject();
         }
 
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string invoiceSectionId = default;
             string customerId = default;
             bool? isInvoiced = default;
+            string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,6 +262,11 @@ namespace Azure.ResourceManager.Consumption.Models
                             isInvoiced = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("subscriptionId"u8))
+                        {
+                            subscriptionId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -283,7 +294,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 billingProfileId,
                 invoiceSectionId,
                 customerId,
-                isInvoiced);
+                isInvoiced,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<ConsumptionModernChargeSummary>.Write(ModelReaderWriterOptions options)

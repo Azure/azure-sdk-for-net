@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("chargesBilledSeparately"u8);
                 writer.WriteNumberValue(ChargesBilledSeparately.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
+            if (options.Format != "W" && Optional.IsDefined(AzureMarketplaceCharges))
             {
-                writer.WritePropertyName("marketplaceCharges"u8);
-                writer.WriteNumberValue(MarketplaceCharges.Value);
+                writer.WritePropertyName("azureMarketplaceCharges"u8);
+                writer.WriteNumberValue(AzureMarketplaceCharges.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Currency))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string usageEnd = default;
             decimal? azureCharges = default;
             decimal? chargesBilledSeparately = default;
-            decimal? marketplaceCharges = default;
+            decimal? azureMarketplaceCharges = default;
             string currency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -194,13 +194,13 @@ namespace Azure.ResourceManager.Consumption.Models
                             chargesBilledSeparately = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("marketplaceCharges"u8))
+                        if (property0.NameEquals("azureMarketplaceCharges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            marketplaceCharges = property0.Value.GetDecimal();
+                            azureMarketplaceCharges = property0.Value.GetDecimal();
                             continue;
                         }
                         if (property0.NameEquals("currency"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 usageEnd,
                 azureCharges,
                 chargesBilledSeparately,
-                marketplaceCharges,
+                azureMarketplaceCharges,
                 currency);
         }
 

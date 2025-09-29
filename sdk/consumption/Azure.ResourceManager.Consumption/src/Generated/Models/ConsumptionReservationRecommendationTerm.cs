@@ -22,9 +22,12 @@ namespace Azure.ResourceManager.Consumption.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string P1MValue = "P1M";
         private const string P1YValue = "P1Y";
         private const string P3YValue = "P3Y";
 
+        /// <summary> 1 month reservation term. </summary>
+        public static ConsumptionReservationRecommendationTerm P1M { get; } = new ConsumptionReservationRecommendationTerm(P1MValue);
         /// <summary> 1 year reservation term. </summary>
         public static ConsumptionReservationRecommendationTerm P1Y { get; } = new ConsumptionReservationRecommendationTerm(P1YValue);
         /// <summary> 3 year reservation term. </summary>

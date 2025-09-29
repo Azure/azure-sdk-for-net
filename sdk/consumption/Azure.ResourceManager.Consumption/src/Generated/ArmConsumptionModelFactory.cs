@@ -16,27 +16,77 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmConsumptionModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionUsageDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Consumption.ConsumptionBudgetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Specifies the kind of usage details. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ConsumptionUsageDetail"/> instance for mocking. </returns>
-        public static ConsumptionUsageDetail ConsumptionUsageDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <param name="category"> The category of the budget, whether the budget tracks cost or usage. </param>
+        /// <param name="amount"> The total amount of cost to track with the budget. </param>
+        /// <param name="timeGrain"> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </param>
+        /// <param name="timePeriod"> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </param>
+        /// <param name="filter"> May be used to filter budgets by user-specified dimensions and/or tags. </param>
+        /// <param name="currentSpend"> The current amount of cost which is being tracked for a budget. </param>
+        /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
+        /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Consumption.ConsumptionBudgetData"/> instance for mocking. </returns>
+        public static ConsumptionBudgetData ConsumptionBudgetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BudgetCategory? category = null, decimal? amount = null, BudgetTimeGrainType? timeGrain = null, BudgetTimePeriod timePeriod = null, ConsumptionBudgetFilter filter = null, BudgetCurrentSpend currentSpend = null, IDictionary<string, BudgetAssociatedNotification> notifications = null, BudgetForecastSpend forecastSpend = null, ETag? etag = null)
         {
-            tags ??= new Dictionary<string, string>();
+            notifications ??= new Dictionary<string, BudgetAssociatedNotification>();
 
-            return new UnknownUsageDetail(
+            return new ConsumptionBudgetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind == null ? default : new UsageDetailsKind(kind),
+                category,
+                amount,
+                timeGrain,
+                timePeriod,
+                filter,
+                currentSpend,
+                notifications,
+                forecastSpend,
                 etag,
-                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BudgetCurrentSpend"/>. </summary>
+        /// <param name="amount"> The total amount of cost which is being tracked by the budget. </param>
+        /// <param name="unit"> The unit of measure for the budget amount. </param>
+        /// <returns> A new <see cref="Models.BudgetCurrentSpend"/> instance for mocking. </returns>
+        public static BudgetCurrentSpend BudgetCurrentSpend(decimal? amount = null, string unit = null)
+        {
+            return new BudgetCurrentSpend(amount, unit, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BudgetForecastSpend"/>. </summary>
+        /// <param name="amount"> The forecasted cost for the total time period which is being tracked by the budget. This value is only provided if the budget contains a forecast alert type. </param>
+        /// <param name="unit"> The unit of measure for the budget amount. </param>
+        /// <returns> A new <see cref="Models.BudgetForecastSpend"/> instance for mocking. </returns>
+        public static BudgetForecastSpend BudgetForecastSpend(decimal? amount = null, string unit = null)
+        {
+            return new BudgetForecastSpend(amount, unit, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionChargeSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Specifies the kind of charge summary. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Models.ConsumptionChargeSummary"/> instance for mocking. </returns>
+        public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        {
+            return new UnknownChargeSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new ChargeSummaryKind(kind),
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -114,176 +164,200 @@ namespace Azure.ResourceManager.Consumption.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Consumption.ConsumptionBudgetData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="category"> The category of the budget, whether the budget tracks cost or usage. </param>
-        /// <param name="amount"> The total amount of cost to track with the budget. </param>
-        /// <param name="timeGrain"> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </param>
-        /// <param name="timePeriod"> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </param>
-        /// <param name="filter"> May be used to filter budgets by user-specified dimensions and/or tags. </param>
-        /// <param name="currentSpend"> The current amount of cost which is being tracked for a budget. </param>
-        /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
-        /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="Consumption.ConsumptionBudgetData"/> instance for mocking. </returns>
-        public static ConsumptionBudgetData ConsumptionBudgetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BudgetCategory? category = null, decimal? amount = null, BudgetTimeGrainType? timeGrain = null, BudgetTimePeriod timePeriod = null, ConsumptionBudgetFilter filter = null, BudgetCurrentSpend currentSpend = null, IDictionary<string, BudgetAssociatedNotification> notifications = null, BudgetForecastSpend forecastSpend = null, ETag? etag = null)
-        {
-            notifications ??= new Dictionary<string, BudgetAssociatedNotification>();
-
-            return new ConsumptionBudgetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                category,
-                amount,
-                timeGrain,
-                timePeriod,
-                filter,
-                currentSpend,
-                notifications,
-                forecastSpend,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BudgetCurrentSpend"/>. </summary>
-        /// <param name="amount"> The total amount of cost which is being tracked by the budget. </param>
-        /// <param name="unit"> The unit of measure for the budget amount. </param>
-        /// <returns> A new <see cref="Models.BudgetCurrentSpend"/> instance for mocking. </returns>
-        public static BudgetCurrentSpend BudgetCurrentSpend(decimal? amount = null, string unit = null)
-        {
-            return new BudgetCurrentSpend(amount, unit, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BudgetForecastSpend"/>. </summary>
-        /// <param name="amount"> The forecasted cost for the total time period which is being tracked by the budget. This value is only provided if the budget contains a forecast alert type. </param>
-        /// <param name="unit"> The unit of measure for the budget amount. </param>
-        /// <returns> A new <see cref="Models.BudgetForecastSpend"/> instance for mocking. </returns>
-        public static BudgetForecastSpend BudgetForecastSpend(decimal? amount = null, string unit = null)
-        {
-            return new BudgetForecastSpend(amount, unit, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionTagsResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> A list of Tag. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        /// <param name="previousLink"> The link (url) to the previous page of results. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="Models.ConsumptionTagsResult"/> instance for mocking. </returns>
-        public static ConsumptionTagsResult ConsumptionTagsResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ConsumptionTag> tags = null, string nextLink = null, string previousLink = null, ETag? etag = null)
-        {
-            tags ??= new List<ConsumptionTag>();
-
-            return new ConsumptionTagsResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags?.ToList(),
-                nextLink,
-                previousLink,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionChargeSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Specifies the kind of charge summary. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="Models.ConsumptionChargeSummary"/> instance for mocking. </returns>
-        public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
-        {
-            return new UnknownChargeSummary(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind == null ? default : new ChargeSummaryKind(kind),
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
-        /// <param name="beginningBalance"> The beginning balance for the billing period. </param>
-        /// <param name="endingBalance"> The ending balance for the billing period (for open periods this will be updated daily). </param>
-        /// <param name="newPurchases"> Total new purchase amount. </param>
-        /// <param name="adjustments"> Total adjustment amount. </param>
-        /// <param name="utilized"> Total Commitment usage. </param>
-        /// <param name="serviceOverage"> Overage for Azure services. </param>
-        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
-        /// <param name="totalOverage"> serviceOverage + chargesBilledSeparately. </param>
-        /// <param name="totalUsage"> Azure service commitment + total Overage. </param>
-        /// <param name="azureMarketplaceServiceCharges"> Total charges for Azure Marketplace. </param>
-        /// <param name="billingFrequency"> The billing frequency. </param>
-        /// <param name="isPriceHidden"> Price is hidden or not. </param>
-        /// <param name="newPurchasesDetails"> List of new purchases. </param>
-        /// <param name="adjustmentDetails"> List of Adjustments (Promo credit, SIE credit etc.). </param>
+        /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
+        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
+        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
+        /// <param name="reservationId"> The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit scope and also specifies the number of instances to which the reservation benefit can be applied to. </param>
+        /// <param name="skuName"> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </param>
+        /// <param name="reservedHours"> This is the total hours reserved for the day. E.g. if reservation for 1 instance was made on 1 PM, this will be 11 hours for that day and 24 hours from subsequent days. </param>
+        /// <param name="consumptionOccurredOn"> The date on which consumption occurred. </param>
+        /// <param name="usedHours"> This is the total hours used by the instance. </param>
+        /// <param name="instanceId"> This identifier is the name of the resource or the fully qualified Resource ID. </param>
+        /// <param name="totalReservedQuantity"> This is the total count of instances that are reserved for the reservationId. </param>
+        /// <param name="kind"> The reservation kind. </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ConsumptionBalanceResult"/> instance for mocking. </returns>
-        public static ConsumptionBalanceResult ConsumptionBalanceResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string currency = null, decimal? beginningBalance = null, decimal? endingBalance = null, decimal? newPurchases = null, decimal? adjustments = null, decimal? utilized = null, decimal? serviceOverage = null, decimal? chargesBilledSeparately = null, decimal? totalOverage = null, decimal? totalUsage = null, decimal? azureMarketplaceServiceCharges = null, ConsumptionBillingFrequency? billingFrequency = null, bool? isPriceHidden = null, IEnumerable<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = null, IEnumerable<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="Models.ConsumptionReservationDetail"/> instance for mocking. </returns>
+        public static ConsumptionReservationDetail ConsumptionReservationDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string reservationOrderId = null, string instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string reservationId = null, string skuName = null, decimal? reservedHours = null, DateTimeOffset? consumptionOccurredOn = null, decimal? usedHours = null, ResourceIdentifier instanceId = null, decimal? totalReservedQuantity = null, string kind = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            newPurchasesDetails ??= new List<ConsumptionBalanceNewPurchasesDetail>();
-            adjustmentDetails ??= new List<ConsumptionBalanceAdjustmentDetail>();
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionBalanceResult(
+            return new ConsumptionReservationDetail(
                 id,
                 name,
                 resourceType,
                 systemData,
-                currency,
-                beginningBalance,
-                endingBalance,
-                newPurchases,
-                adjustments,
-                utilized,
-                serviceOverage,
-                chargesBilledSeparately,
-                totalOverage,
-                totalUsage,
-                azureMarketplaceServiceCharges,
-                billingFrequency,
-                isPriceHidden,
-                newPurchasesDetails?.ToList(),
-                adjustmentDetails?.ToList(),
+                reservationOrderId,
+                instanceFlexibilityRatio,
+                instanceFlexibilityGroup,
+                reservationId,
+                skuName,
+                reservedHours,
+                consumptionOccurredOn,
+                usedHours,
+                instanceId,
+                totalReservedQuantity,
+                kind,
                 etag,
                 tags,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/>. </summary>
-        /// <param name="name"> the name of new purchase. </param>
-        /// <param name="value"> the value of new purchase. </param>
-        /// <returns> A new <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/> instance for mocking. </returns>
-        public static ConsumptionBalanceNewPurchasesDetail ConsumptionBalanceNewPurchasesDetail(string name = null, decimal? value = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendationDetails"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Resource Location. </param>
+        /// <param name="sku"> Resource sku. </param>
+        /// <param name="currency"> An ISO 4217 currency code identifier for the costs and savings. </param>
+        /// <param name="properties"> Resource specific properties. </param>
+        /// <param name="resourceGroup"> Resource Group. </param>
+        /// <param name="savings"> Savings information for the recommendation. </param>
+        /// <param name="scope"> Scope of the reservation, ex: Single or Shared. </param>
+        /// <param name="usage"> Historical usage details used to calculate the estimated savings. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ConsumptionReservationRecommendationDetails"/> instance for mocking. </returns>
+        public static ConsumptionReservationRecommendationDetails ConsumptionReservationRecommendationDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string sku = null, string currency = null, ConsumptionResourceProperties properties = null, string resourceGroup = null, ConsumptionSavingsProperties savings = null, string scope = null, ConsumptionUsageProperties usage = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            return new ConsumptionBalanceNewPurchasesDetail(name, value, serializedAdditionalRawData: null);
+            tags ??= new Dictionary<string, string>();
+
+            return new ConsumptionReservationRecommendationDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                sku,
+                currency,
+                properties,
+                resourceGroup,
+                savings,
+                scope,
+                usage,
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceAdjustmentDetail"/>. </summary>
-        /// <param name="name"> the name of new adjustment. </param>
-        /// <param name="value"> the value of new adjustment. </param>
-        /// <returns> A new <see cref="Models.ConsumptionBalanceAdjustmentDetail"/> instance for mocking. </returns>
-        public static ConsumptionBalanceAdjustmentDetail ConsumptionBalanceAdjustmentDetail(string name = null, decimal? value = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionResourceProperties"/>. </summary>
+        /// <param name="appliedScopes"> List of subscriptions for which the reservation is applied. </param>
+        /// <param name="onDemandRate"> On-demand rate of the resource. Most resources use hourly rates, except for BlockBlob, ManagedDisk, Backup, and Azure Files, which use monthly rates. Only hardware rates are included; software rates are excluded.  Note: there could be new resources that use hourly rates in the future. </param>
+        /// <param name="product"> Azure product ex: Standard_E8s_v3 etc. </param>
+        /// <param name="region"> Azure resource region ex:EastUS, WestUS etc. </param>
+        /// <param name="reservationRate"> Hourly reservation rate of the resource. Varies based on the term. </param>
+        /// <param name="resourceType"> The azure resource type. </param>
+        /// <returns> A new <see cref="Models.ConsumptionResourceProperties"/> instance for mocking. </returns>
+        public static ConsumptionResourceProperties ConsumptionResourceProperties(IEnumerable<string> appliedScopes = null, float? onDemandRate = null, string product = null, string region = null, float? reservationRate = null, string resourceType = null)
         {
-            return new ConsumptionBalanceAdjustmentDetail(name, value, serializedAdditionalRawData: null);
+            appliedScopes ??= new List<string>();
+
+            return new ConsumptionResourceProperties(
+                appliedScopes?.ToList(),
+                onDemandRate,
+                product,
+                region,
+                reservationRate,
+                resourceType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSavingsProperties"/>. </summary>
+        /// <param name="calculatedSavings"> List of calculated savings. </param>
+        /// <param name="lookBackPeriod"> Number of days of usage to look back used for computing the recommendation. </param>
+        /// <param name="recommendedQuantity"> Number of recommended units of the resource. </param>
+        /// <param name="reservationOrderTerm"> Term period of the reservation. ex: P1M, P1Y or P3Y. </param>
+        /// <param name="savingsType"> Type of savings, ex: instance. </param>
+        /// <param name="unitOfMeasure"> Measurement unit ex: hour etc. </param>
+        /// <returns> A new <see cref="Models.ConsumptionSavingsProperties"/> instance for mocking. </returns>
+        public static ConsumptionSavingsProperties ConsumptionSavingsProperties(IEnumerable<ConsumptionCalculatedSavingsProperties> calculatedSavings = null, int? lookBackPeriod = null, float? recommendedQuantity = null, string reservationOrderTerm = null, string savingsType = null, string unitOfMeasure = null)
+        {
+            calculatedSavings ??= new List<ConsumptionCalculatedSavingsProperties>();
+
+            return new ConsumptionSavingsProperties(
+                calculatedSavings?.ToList(),
+                lookBackPeriod,
+                recommendedQuantity,
+                reservationOrderTerm,
+                savingsType,
+                unitOfMeasure,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionCalculatedSavingsProperties"/>. </summary>
+        /// <param name="onDemandCost"> The cost without reservation. Includes hardware and software cost. </param>
+        /// <param name="overageCost"> The estimated cost for resource meters that are not covered by the reservation and are billed at pay-as-you-go rates. </param>
+        /// <param name="quantity"> The quantity for calculated savings. </param>
+        /// <param name="reservationCost"> Hardware cost of the resources covered by the reservation. </param>
+        /// <param name="totalReservationCost"> Reservation cost + software cost of the resources covered by the reservation + overage cost. </param>
+        /// <param name="reservedUnitCount"> The number of reserved units used to calculate savings. Always 1 for virtual machines. </param>
+        /// <param name="savings"> The amount saved by purchasing the recommended quantity of reservation. This is equal to onDemandCost - totalReservationCost. </param>
+        /// <returns> A new <see cref="Models.ConsumptionCalculatedSavingsProperties"/> instance for mocking. </returns>
+        public static ConsumptionCalculatedSavingsProperties ConsumptionCalculatedSavingsProperties(float? onDemandCost = null, float? overageCost = null, float? quantity = null, float? reservationCost = null, float? totalReservationCost = null, float? reservedUnitCount = null, float? savings = null)
+        {
+            return new ConsumptionCalculatedSavingsProperties(
+                onDemandCost,
+                overageCost,
+                quantity,
+                reservationCost,
+                totalReservationCost,
+                reservedUnitCount,
+                savings,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionUsageProperties"/>. </summary>
+        /// <param name="firstConsumptionDate"> The first usage date used for looking back for computing the recommendation. </param>
+        /// <param name="lastConsumptionDate"> The last usage date used for looking back for computing the recommendation. </param>
+        /// <param name="lookBackUnitType"> What the usage data values represent ex: virtual machine instance. </param>
+        /// <param name="usageData"> The breakdown of historical resource usage.  The values are in the order of usage between the firstConsumptionDate and the lastConsumptionDate. </param>
+        /// <param name="usageGrain"> The grain of the values represented in the usage data ex: hourly. </param>
+        /// <returns> A new <see cref="Models.ConsumptionUsageProperties"/> instance for mocking. </returns>
+        public static ConsumptionUsageProperties ConsumptionUsageProperties(string firstConsumptionDate = null, string lastConsumptionDate = null, string lookBackUnitType = null, IEnumerable<float> usageData = null, string usageGrain = null)
+        {
+            usageData ??= new List<float>();
+
+            return new ConsumptionUsageProperties(
+                firstConsumptionDate,
+                lastConsumptionDate,
+                lookBackUnitType,
+                usageData?.ToList(),
+                usageGrain,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendation"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="sku"> Resource sku. </param>
+        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
+        /// <returns> A new <see cref="Models.ConsumptionReservationRecommendation"/> instance for mocking. </returns>
+        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null, string kind = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new UnknownReservationRecommendation(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                tags,
+                location,
+                sku,
+                kind == null ? default : new ReservationRecommendationKind(kind),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationSummary"/>. </summary>
@@ -338,199 +412,388 @@ namespace Azure.ResourceManager.Consumption.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionTagsResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
-        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
-        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
-        /// <param name="reservationId"> The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit scope and also specifies the number of instances to which the reservation benefit can be applied to. </param>
-        /// <param name="skuName"> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </param>
-        /// <param name="reservedHours"> This is the total hours reserved for the day. E.g. if reservation for 1 instance was made on 1 PM, this will be 11 hours for that day and 24 hours from subsequent days. </param>
-        /// <param name="consumptionOccurredOn"> The date on which consumption occurred. </param>
-        /// <param name="usedHours"> This is the total hours used by the instance. </param>
-        /// <param name="instanceId"> This identifier is the name of the resource or the fully qualified Resource ID. </param>
-        /// <param name="totalReservedQuantity"> This is the total count of instances that are reserved for the reservationId. </param>
-        /// <param name="kind"> The reservation kind. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ConsumptionReservationDetail"/> instance for mocking. </returns>
-        public static ConsumptionReservationDetail ConsumptionReservationDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string reservationOrderId = null, string instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string reservationId = null, string skuName = null, decimal? reservedHours = null, DateTimeOffset? consumptionOccurredOn = null, decimal? usedHours = null, ResourceIdentifier instanceId = null, decimal? totalReservedQuantity = null, string kind = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <param name="tags"> A list of Tag. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="previousLink"> The link (url) to the previous page of results. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Models.ConsumptionTagsResult"/> instance for mocking. </returns>
+        public static ConsumptionTagsResult ConsumptionTagsResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ConsumptionTag> tags = null, string nextLink = null, string previousLink = null, ETag? etag = null)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new List<ConsumptionTag>();
 
-            return new ConsumptionReservationDetail(
+            return new ConsumptionTagsResult(
                 id,
                 name,
                 resourceType,
                 systemData,
-                reservationOrderId,
-                instanceFlexibilityRatio,
-                instanceFlexibilityGroup,
-                reservationId,
-                skuName,
-                reservedHours,
-                consumptionOccurredOn,
-                usedHours,
-                instanceId,
-                totalReservedQuantity,
-                kind,
+                tags?.ToList(),
+                nextLink,
+                previousLink,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionUsageDetail"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Specifies the kind of usage details. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ConsumptionUsageDetail"/> instance for mocking. </returns>
+        public static ConsumptionUsageDetail ConsumptionUsageDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new UnknownUsageDetail(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new UsageDetailsKind(kind),
                 etag,
                 tags,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionCreditSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="sku"> Resource sku. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ConsumptionReservationRecommendation"/> instance for mocking. </returns>
-        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string sku = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <param name="balanceSummary"> Summary of balances associated with this credit summary. </param>
+        /// <param name="pendingCreditAdjustments"> Pending credit adjustments. </param>
+        /// <param name="expiredCredit"> Expired credit. </param>
+        /// <param name="pendingEligibleCharges"> Pending eligible charges. </param>
+        /// <param name="creditCurrency"> The credit currency. </param>
+        /// <param name="billingCurrency"> The billing currency. </param>
+        /// <param name="reseller"> Credit's reseller. </param>
+        /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Models.ConsumptionCreditSummary"/> instance for mocking. </returns>
+        public static ConsumptionCreditSummary ConsumptionCreditSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CreditBalanceSummary balanceSummary = null, ConsumptionAmount pendingCreditAdjustments = null, ConsumptionAmount expiredCredit = null, ConsumptionAmount pendingEligibleCharges = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, bool? isEstimatedBalance = null, ETag? etag = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new UnknownReservationRecommendation(
+            return new ConsumptionCreditSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind == null ? default : new ReservationRecommendationKind(kind),
-                location,
-                sku,
+                balanceSummary,
+                pendingCreditAdjustments,
+                expiredCredit,
+                pendingEligibleCharges,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                isEstimatedBalance,
                 etag,
-                tags,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CreditBalanceSummary"/>. </summary>
+        /// <param name="estimatedBalance"> Estimated balance. </param>
+        /// <param name="currentBalance"> Current balance. </param>
+        /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>
+        /// <returns> A new <see cref="Models.CreditBalanceSummary"/> instance for mocking. </returns>
+        public static CreditBalanceSummary CreditBalanceSummary(ConsumptionAmount estimatedBalance = null, ConsumptionAmount currentBalance = null, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency = null)
+        {
+            return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAmount"/>. </summary>
+        /// <param name="currency"> Amount currency. </param>
+        /// <param name="value"> Amount. </param>
+        /// <returns> A new <see cref="Models.ConsumptionAmount"/> instance for mocking. </returns>
+        public static ConsumptionAmount ConsumptionAmount(string currency = null, decimal? value = null)
+        {
+            return new ConsumptionAmount(currency, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAmountWithExchangeRate"/>. </summary>
+        /// <param name="currency"> Amount currency. </param>
+        /// <param name="value"> Amount. </param>
+        /// <param name="exchangeRate"> The exchange rate. </param>
+        /// <param name="exchangeRateMonth"> The exchange rate month. </param>
+        /// <returns> A new <see cref="Models.ConsumptionAmountWithExchangeRate"/> instance for mocking. </returns>
+        public static ConsumptionAmountWithExchangeRate ConsumptionAmountWithExchangeRate(string currency = null, decimal? value = null, decimal? exchangeRate = null, int? exchangeRateMonth = null)
+        {
+            return new ConsumptionAmountWithExchangeRate(currency, value, serializedAdditionalRawData: null, exchangeRate, exchangeRateMonth);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReseller"/>. </summary>
+        /// <param name="resellerId"> The reseller property ID. </param>
+        /// <param name="resellerDescription"> The reseller property description. </param>
+        /// <returns> A new <see cref="Models.ConsumptionReseller"/> instance for mocking. </returns>
+        public static ConsumptionReseller ConsumptionReseller(ResourceIdentifier resellerId = null, string resellerDescription = null)
+        {
+            return new ConsumptionReseller(resellerId, resellerDescription, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource Location. </param>
-        /// <param name="sku"> Resource sku. </param>
-        /// <param name="currency"> An ISO 4217 currency code identifier for the costs and savings. </param>
-        /// <param name="properties"> Resource specific properties. </param>
-        /// <param name="resourceGroup"> Resource Group. </param>
-        /// <param name="savings"> Savings information for the recommendation. </param>
-        /// <param name="scope"> Scope of the reservation, ex: Single or Shared. </param>
-        /// <param name="usage"> Historical usage details used to calculate the estimated savings. </param>
+        /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
+        /// <param name="beginningBalance"> The beginning balance for the billing period. </param>
+        /// <param name="endingBalance"> The ending balance for the billing period (for open periods this will be updated daily). </param>
+        /// <param name="newPurchases"> Total new purchase amount. </param>
+        /// <param name="adjustments"> Total adjustment amount. </param>
+        /// <param name="utilized"> Total Commitment usage. </param>
+        /// <param name="serviceOverage"> Overage for Azure services. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
+        /// <param name="totalOverage"> serviceOverage + chargesBilledSeparately. </param>
+        /// <param name="totalUsage"> Azure service commitment + total Overage. </param>
+        /// <param name="azureMarketplaceServiceCharges"> Total charges for Azure Marketplace. </param>
+        /// <param name="billingFrequency"> The billing frequency. </param>
+        /// <param name="isPriceHidden"> Price is hidden or not. </param>
+        /// <param name="overageRefund"> Overage Refunds. </param>
+        /// <param name="newPurchasesDetails"> List of new purchases. </param>
+        /// <param name="adjustmentDetails"> List of Adjustments (Promo credit, SIE credit etc.). </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ConsumptionReservationRecommendationDetails"/> instance for mocking. </returns>
-        public static ConsumptionReservationRecommendationDetails ConsumptionReservationRecommendationDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string sku = null, string currency = null, ConsumptionResourceProperties properties = null, string resourceGroup = null, ConsumptionSavingsProperties savings = null, string scope = null, ConsumptionUsageProperties usage = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="Models.ConsumptionBalanceResult"/> instance for mocking. </returns>
+        public static ConsumptionBalanceResult ConsumptionBalanceResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string currency = null, decimal? beginningBalance = null, decimal? endingBalance = null, decimal? newPurchases = null, decimal? adjustments = null, decimal? utilized = null, decimal? serviceOverage = null, decimal? chargesBilledSeparately = null, decimal? totalOverage = null, decimal? totalUsage = null, decimal? azureMarketplaceServiceCharges = null, ConsumptionBillingFrequency? billingFrequency = null, bool? isPriceHidden = null, decimal? overageRefund = null, IEnumerable<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = null, IEnumerable<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
         {
+            newPurchasesDetails ??= new List<ConsumptionBalanceNewPurchasesDetail>();
+            adjustmentDetails ??= new List<ConsumptionBalanceAdjustmentDetail>();
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionReservationRecommendationDetails(
+            return new ConsumptionBalanceResult(
                 id,
                 name,
                 resourceType,
                 systemData,
-                location,
-                sku,
                 currency,
-                properties,
-                resourceGroup,
-                savings,
-                scope,
-                usage,
+                beginningBalance,
+                endingBalance,
+                newPurchases,
+                adjustments,
+                utilized,
+                serviceOverage,
+                chargesBilledSeparately,
+                totalOverage,
+                totalUsage,
+                azureMarketplaceServiceCharges,
+                billingFrequency,
+                isPriceHidden,
+                overageRefund,
+                newPurchasesDetails?.ToList(),
+                adjustmentDetails?.ToList(),
                 etag,
                 tags,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionResourceProperties"/>. </summary>
-        /// <param name="appliedScopes"> List of subscriptions for which the reservation is applied. </param>
-        /// <param name="onDemandRate"> On demand rate of the resource. </param>
-        /// <param name="product"> Azure product ex: Standard_E8s_v3 etc. </param>
-        /// <param name="region"> Azure resource region ex:EastUS, WestUS etc. </param>
-        /// <param name="reservationRate"> Reservation rate of the resource. </param>
-        /// <param name="resourceType"> The azure resource type. </param>
-        /// <returns> A new <see cref="Models.ConsumptionResourceProperties"/> instance for mocking. </returns>
-        public static ConsumptionResourceProperties ConsumptionResourceProperties(IEnumerable<string> appliedScopes = null, float? onDemandRate = null, string product = null, string region = null, float? reservationRate = null, string resourceType = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/>. </summary>
+        /// <param name="name"> the name of new purchase. </param>
+        /// <param name="value"> the value of new purchase. </param>
+        /// <returns> A new <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/> instance for mocking. </returns>
+        public static ConsumptionBalanceNewPurchasesDetail ConsumptionBalanceNewPurchasesDetail(string name = null, decimal? value = null)
         {
-            appliedScopes ??= new List<string>();
+            return new ConsumptionBalanceNewPurchasesDetail(name, value, serializedAdditionalRawData: null);
+        }
 
-            return new ConsumptionResourceProperties(
-                appliedScopes?.ToList(),
-                onDemandRate,
-                product,
-                region,
-                reservationRate,
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceAdjustmentDetail"/>. </summary>
+        /// <param name="name"> the name of new adjustment. </param>
+        /// <param name="value"> the value of new adjustment. </param>
+        /// <returns> A new <see cref="Models.ConsumptionBalanceAdjustmentDetail"/> instance for mocking. </returns>
+        public static ConsumptionBalanceAdjustmentDetail ConsumptionBalanceAdjustmentDetail(string name = null, decimal? value = null)
+        {
+            return new ConsumptionBalanceAdjustmentDetail(name, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionOperationStatus"/>. </summary>
+        /// <param name="status"> The status of the long running operation. </param>
+        /// <param name="downloadUri"> The link (url) to download the pricesheet. </param>
+        /// <param name="validTill"> Download link validity. </param>
+        /// <returns> A new <see cref="Models.ConsumptionOperationStatus"/> instance for mocking. </returns>
+        public static ConsumptionOperationStatus ConsumptionOperationStatus(ConsumptionOperationStatusType? status = null, Uri downloadUri = null, DateTimeOffset? validTill = null)
+        {
+            return new ConsumptionOperationStatus(status, downloadUri, validTill, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEventSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="transactOn"> The date of the event. </param>
+        /// <param name="description"> The description of the event. </param>
+        /// <param name="newCredit"> The amount of new credit or commitment for NewCredit or SettleCharges event. </param>
+        /// <param name="adjustments"> The amount of balance adjustment. The property is not available for ConsumptionCommitment lots. </param>
+        /// <param name="creditExpired"> The amount of expired credit or commitment for NewCredit or SettleCharges event. </param>
+        /// <param name="charges"> The amount of charges for events of type SettleCharges and PendingEligibleCharges. </param>
+        /// <param name="closedBalance"> The balance after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
+        /// <param name="billingAccountId"> Identifier of the billing account. </param>
+        /// <param name="billingAccountDisplayName"> Name of the billing account. </param>
+        /// <param name="eventType"> Identifies the type of the event. </param>
+        /// <param name="invoiceNumber"> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </param>
+        /// <param name="billingProfileId"> The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
+        /// <param name="billingProfileDisplayName"> The display name of the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
+        /// <param name="lotId"> The ID that uniquely identifies the lot for which the event happened. </param>
+        /// <param name="lotSource"> Identifies the source of the lot for which the event happened. </param>
+        /// <param name="canceledCredit"> Amount of canceled credit. </param>
+        /// <param name="creditCurrency"> The credit currency of the event. </param>
+        /// <param name="billingCurrency"> The billing currency of the event. </param>
+        /// <param name="reseller"> The reseller of the event. </param>
+        /// <param name="creditExpiredInBillingCurrency"> The amount of expired credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
+        /// <param name="newCreditInBillingCurrency"> The amount of new credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
+        /// <param name="adjustmentsInBillingCurrency"> The amount of balance adjustment in billing currency. </param>
+        /// <param name="chargesInBillingCurrency"> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </param>
+        /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
+        /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Models.ConsumptionEventSummary"/> instance for mocking. </returns>
+        public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? transactOn = null, string description = null, ConsumptionAmount newCredit = null, ConsumptionAmount adjustments = null, ConsumptionAmount creditExpired = null, ConsumptionAmount charges = null, ConsumptionAmount closedBalance = null, string billingAccountId = null, string billingAccountDisplayName = null, ConsumptionEventType? eventType = null, string invoiceNumber = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier lotId = null, string lotSource = null, ConsumptionAmount canceledCredit = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = null, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = null, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = null, ConsumptionAmountWithExchangeRate chargesInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, bool? isEstimatedBalance = null, ETag? etag = null)
+        {
+            return new ConsumptionEventSummary(
+                id,
+                name,
                 resourceType,
+                systemData,
+                transactOn,
+                description,
+                newCredit,
+                adjustments,
+                creditExpired,
+                charges,
+                closedBalance,
+                billingAccountId,
+                billingAccountDisplayName,
+                eventType,
+                invoiceNumber,
+                billingProfileId,
+                billingProfileDisplayName,
+                lotId,
+                lotSource,
+                canceledCredit,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                creditExpiredInBillingCurrency,
+                newCreditInBillingCurrency,
+                adjustmentsInBillingCurrency,
+                chargesInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                isEstimatedBalance,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSavingsProperties"/>. </summary>
-        /// <param name="calculatedSavings"> List of calculated savings. </param>
-        /// <param name="lookBackPeriod"> Number of days of usage to look back used for computing the recommendation. </param>
-        /// <param name="recommendedQuantity"> Number of recommended units of the resource. </param>
-        /// <param name="reservationOrderTerm"> Term period of the reservation, ex: P1Y or P3Y. </param>
-        /// <param name="savingsType"> Type of savings, ex: instance. </param>
-        /// <param name="unitOfMeasure"> Measurement unit ex: hour etc. </param>
-        /// <returns> A new <see cref="Models.ConsumptionSavingsProperties"/> instance for mocking. </returns>
-        public static ConsumptionSavingsProperties ConsumptionSavingsProperties(IEnumerable<ConsumptionCalculatedSavingsProperties> calculatedSavings = null, int? lookBackPeriod = null, float? recommendedQuantity = null, string reservationOrderTerm = null, string savingsType = null, string unitOfMeasure = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLotSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="originalAmount"> The original amount of a lot, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
+        /// <param name="closedBalance"> The balance as of the last invoice. </param>
+        /// <param name="source"> The source of the lot. </param>
+        /// <param name="startOn"> The date when the lot became effective. </param>
+        /// <param name="expireOn"> The expiration date of a lot. </param>
+        /// <param name="poNumber"> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </param>
+        /// <param name="purchasedOn"> The date when the lot was added. </param>
+        /// <param name="status"> The status of the lot. </param>
+        /// <param name="creditCurrency"> The currency of the lot. </param>
+        /// <param name="billingCurrency"> The billing currency of the lot. </param>
+        /// <param name="originalAmountInBillingCurrency"> The original amount of a lot in billing currency,  Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
+        /// <param name="closedBalanceInBillingCurrency"> The balance as of the last invoice in billing currency. </param>
+        /// <param name="reseller"> The reseller of the lot. </param>
+        /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
+        /// <param name="organizationType"> The organization type of the lot. </param>
+        /// <param name="usedAmount"> Amount consumed from the commitment. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Models.ConsumptionLotSummary"/> instance for mocking. </returns>
+        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConsumptionAmount originalAmount = null, ConsumptionAmount closedBalance = null, ConsumptionLotSource? source = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, string poNumber = null, DateTimeOffset? purchasedOn = null, ConsumptionLotStatus? status = null, string creditCurrency = null, string billingCurrency = null, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, ConsumptionReseller reseller = null, bool? isEstimatedBalance = null, ConsumptionOrganizationType? organizationType = null, ConsumptionAmount usedAmount = null, ETag? etag = null)
         {
-            calculatedSavings ??= new List<ConsumptionCalculatedSavingsProperties>();
-
-            return new ConsumptionSavingsProperties(
-                calculatedSavings?.ToList(),
-                lookBackPeriod,
-                recommendedQuantity,
-                reservationOrderTerm,
-                savingsType,
-                unitOfMeasure,
+            return new ConsumptionLotSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                originalAmount,
+                closedBalance,
+                source,
+                startOn,
+                expireOn,
+                poNumber,
+                purchasedOn,
+                status,
+                creditCurrency,
+                billingCurrency,
+                originalAmountInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                reseller,
+                isEstimatedBalance,
+                organizationType,
+                usedAmount,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionCalculatedSavingsProperties"/>. </summary>
-        /// <param name="onDemandCost"> The cost without reservation. </param>
-        /// <param name="overageCost"> The difference between total reservation cost and reservation cost. </param>
-        /// <param name="quantity"> The quantity for calculated savings. </param>
-        /// <param name="reservationCost"> The exact cost of the estimated usage using reservation. </param>
-        /// <param name="totalReservationCost"> The cost of the suggested quantity. </param>
-        /// <param name="reservedUnitCount"> The number of reserved units used to calculate savings. Always 1 for virtual machines. </param>
-        /// <param name="savings"> The amount saved by purchasing the recommended quantity of reservation. </param>
-        /// <returns> A new <see cref="Models.ConsumptionCalculatedSavingsProperties"/> instance for mocking. </returns>
-        public static ConsumptionCalculatedSavingsProperties ConsumptionCalculatedSavingsProperties(float? onDemandCost = null, float? overageCost = null, float? quantity = null, float? reservationCost = null, float? totalReservationCost = null, float? reservedUnitCount = null, float? savings = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationTransaction"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="amount"> The charge of the transaction. </param>
+        /// <param name="armSkuName"> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </param>
+        /// <param name="billingFrequency"> The billing frequency, which can be either one-time or recurring. </param>
+        /// <param name="billingProfileId"> Billing profile Id. </param>
+        /// <param name="billingProfileName"> Billing profile name. </param>
+        /// <param name="currency"> The ISO currency in which the transaction is charged, for example, USD. </param>
+        /// <param name="description"> The description of the transaction. </param>
+        /// <param name="transactOn"> The date of the transaction. </param>
+        /// <param name="eventType"> The type of the transaction (Purchase, Cancel or Refund). </param>
+        /// <param name="invoice"> Invoice Number. </param>
+        /// <param name="invoiceId"> Invoice Id as on the invoice where the specific transaction appears. </param>
+        /// <param name="invoiceSectionId"> Invoice Section Id. </param>
+        /// <param name="invoiceSectionName"> Invoice Section Name. </param>
+        /// <param name="purchasingSubscriptionGuid"> The subscription guid that makes the transaction. </param>
+        /// <param name="purchasingSubscriptionName"> The subscription name that makes the transaction. </param>
+        /// <param name="quantity"> The quantity of the transaction. </param>
+        /// <param name="region"> The region of the transaction. </param>
+        /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
+        /// <param name="reservationOrderName"> The name of the reservation order. </param>
+        /// <param name="term"> This is the term of the transaction. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ConsumptionModernReservationTransaction"/> instance for mocking. </returns>
+        public static ConsumptionModernReservationTransaction ConsumptionModernReservationTransaction(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, decimal? amount = null, string armSkuName = null, string billingFrequency = null, ResourceIdentifier billingProfileId = null, string billingProfileName = null, string currency = null, string description = null, DateTimeOffset? transactOn = null, string eventType = null, string invoice = null, ResourceIdentifier invoiceId = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionName = null, Guid? purchasingSubscriptionGuid = null, string purchasingSubscriptionName = null, decimal? quantity = null, string region = null, string reservationOrderId = null, string reservationOrderName = null, string term = null, IEnumerable<string> tags = null)
         {
-            return new ConsumptionCalculatedSavingsProperties(
-                onDemandCost,
-                overageCost,
+            tags ??= new List<string>();
+
+            return new ConsumptionModernReservationTransaction(
+                id,
+                name,
+                resourceType,
+                systemData,
+                amount,
+                armSkuName,
+                billingFrequency,
+                billingProfileId,
+                billingProfileName,
+                currency,
+                description,
+                transactOn,
+                eventType,
+                invoice,
+                invoiceId,
+                invoiceSectionId,
+                invoiceSectionName,
+                purchasingSubscriptionGuid,
+                purchasingSubscriptionName,
                 quantity,
-                reservationCost,
-                totalReservationCost,
-                reservedUnitCount,
-                savings,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionUsageProperties"/>. </summary>
-        /// <param name="firstConsumptionDate"> The first usage date used for looking back for computing the recommendation. </param>
-        /// <param name="lastConsumptionDate"> The last usage date used for looking back for computing the recommendation. </param>
-        /// <param name="lookBackUnitType"> What the usage data values represent ex: virtual machine instance. </param>
-        /// <param name="usageData"> The breakdown of historical resource usage.  The values are in the order of usage between the firstConsumptionDate and the lastConsumptionDate. </param>
-        /// <param name="usageGrain"> The grain of the values represented in the usage data ex: hourly. </param>
-        /// <returns> A new <see cref="Models.ConsumptionUsageProperties"/> instance for mocking. </returns>
-        public static ConsumptionUsageProperties ConsumptionUsageProperties(string firstConsumptionDate = null, string lastConsumptionDate = null, string lookBackUnitType = null, IEnumerable<float> usageData = null, string usageGrain = null)
-        {
-            usageData ??= new List<float>();
-
-            return new ConsumptionUsageProperties(
-                firstConsumptionDate,
-                lastConsumptionDate,
-                lookBackUnitType,
-                usageData?.ToList(),
-                usageGrain,
+                region,
+                reservationOrderId,
+                reservationOrderName,
+                term,
+                tags?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -600,147 +863,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationTransaction"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="amount"> The charge of the transaction. </param>
-        /// <param name="armSkuName"> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </param>
-        /// <param name="billingFrequency"> The billing frequency, which can be either one-time or recurring. </param>
-        /// <param name="billingProfileId"> Billing profile Id. </param>
-        /// <param name="billingProfileName"> Billing profile name. </param>
-        /// <param name="currency"> The ISO currency in which the transaction is charged, for example, USD. </param>
-        /// <param name="description"> The description of the transaction. </param>
-        /// <param name="transactOn"> The date of the transaction. </param>
-        /// <param name="eventType"> The type of the transaction (Purchase, Cancel or Refund). </param>
-        /// <param name="invoice"> Invoice Number. </param>
-        /// <param name="invoiceId"> Invoice Id as on the invoice where the specific transaction appears. </param>
-        /// <param name="invoiceSectionId"> Invoice Section Id. </param>
-        /// <param name="invoiceSectionName"> Invoice Section Name. </param>
-        /// <param name="purchasingSubscriptionGuid"> The subscription guid that makes the transaction. </param>
-        /// <param name="purchasingSubscriptionName"> The subscription name that makes the transaction. </param>
-        /// <param name="quantity"> The quantity of the transaction. </param>
-        /// <param name="region"> The region of the transaction. </param>
-        /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
-        /// <param name="reservationOrderName"> The name of the reservation order. </param>
-        /// <param name="term"> This is the term of the transaction. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ConsumptionModernReservationTransaction"/> instance for mocking. </returns>
-        public static ConsumptionModernReservationTransaction ConsumptionModernReservationTransaction(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, decimal? amount = null, string armSkuName = null, string billingFrequency = null, ResourceIdentifier billingProfileId = null, string billingProfileName = null, string currency = null, string description = null, DateTimeOffset? transactOn = null, string eventType = null, string invoice = null, ResourceIdentifier invoiceId = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionName = null, Guid? purchasingSubscriptionGuid = null, string purchasingSubscriptionName = null, decimal? quantity = null, string region = null, string reservationOrderId = null, string reservationOrderName = null, string term = null, IEnumerable<string> tags = null)
-        {
-            tags ??= new List<string>();
-
-            return new ConsumptionModernReservationTransaction(
-                id,
-                name,
-                resourceType,
-                systemData,
-                amount,
-                armSkuName,
-                billingFrequency,
-                billingProfileId,
-                billingProfileName,
-                currency,
-                description,
-                transactOn,
-                eventType,
-                invoice,
-                invoiceId,
-                invoiceSectionId,
-                invoiceSectionName,
-                purchasingSubscriptionGuid,
-                purchasingSubscriptionName,
-                quantity,
-                region,
-                reservationOrderId,
-                reservationOrderName,
-                term,
-                tags?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PriceSheetResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="pricesheets"> Price sheet. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        /// <param name="download"> Pricesheet download details. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.PriceSheetResult"/> instance for mocking. </returns>
-        public static PriceSheetResult PriceSheetResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<PriceSheetProperties> pricesheets = null, string nextLink = null, ConsumptionMeterDetails download = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
-        {
-            pricesheets ??= new List<PriceSheetProperties>();
-            tags ??= new Dictionary<string, string>();
-
-            return new PriceSheetResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                pricesheets?.ToList(),
-                nextLink,
-                download,
-                etag,
-                tags,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PriceSheetProperties"/>. </summary>
-        /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
-        /// <param name="meterId"> The meter id (GUID). </param>
-        /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
-        /// <param name="unitOfMeasure"> Unit of measure. </param>
-        /// <param name="includedQuantity"> Included quality for an offer. </param>
-        /// <param name="partNumber"> Part Number. </param>
-        /// <param name="unitPrice"> Unit Price. </param>
-        /// <param name="currencyCode"> Currency Code. </param>
-        /// <param name="offerId"> Offer Id. </param>
-        /// <returns> A new <see cref="Models.PriceSheetProperties"/> instance for mocking. </returns>
-        public static PriceSheetProperties PriceSheetProperties(ResourceIdentifier billingPeriodId = null, Guid? meterId = null, ConsumptionMeterDetails meterDetails = null, string unitOfMeasure = null, decimal? includedQuantity = null, string partNumber = null, decimal? unitPrice = null, string currencyCode = null, string offerId = null)
-        {
-            return new PriceSheetProperties(
-                billingPeriodId,
-                meterId,
-                meterDetails,
-                unitOfMeasure,
-                includedQuantity,
-                partNumber,
-                unitPrice,
-                currencyCode,
-                offerId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMeterDetails"/>. </summary>
-        /// <param name="meterName"> The name of the meter, within the given meter category. </param>
-        /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
-        /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
-        /// <param name="unit"> The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc. </param>
-        /// <param name="meterLocation"> The location in which the Azure service is available. </param>
-        /// <param name="totalIncludedQuantity"> The total included quantity associated with the offer. </param>
-        /// <param name="pretaxStandardRate"> The pretax listing price. </param>
-        /// <param name="serviceName"> The name of the service. </param>
-        /// <param name="serviceTier"> The service tier. </param>
-        /// <returns> A new <see cref="Models.ConsumptionMeterDetails"/> instance for mocking. </returns>
-        public static ConsumptionMeterDetails ConsumptionMeterDetails(string meterName = null, string meterCategory = null, string meterSubCategory = null, string unit = null, string meterLocation = null, decimal? totalIncludedQuantity = null, decimal? pretaxStandardRate = null, string serviceName = null, string serviceTier = null)
-        {
-            return new ConsumptionMeterDetails(
-                meterName,
-                meterCategory,
-                meterSubCategory,
-                unit,
-                meterLocation,
-                totalIncludedQuantity,
-                pretaxStandardRate,
-                serviceName,
-                serviceTier,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAggregatedCostResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -786,181 +908,139 @@ namespace Azure.ResourceManager.Consumption.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEventSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PriceSheetResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="transactOn"> The date of the event. </param>
-        /// <param name="description"> The description of the event. </param>
-        /// <param name="newCredit"> The amount of new credit or commitment for NewCredit or SettleCharges event. </param>
-        /// <param name="adjustments"> The amount of balance adjustment. The property is not available for ConsumptionCommitment lots. </param>
-        /// <param name="creditExpired"> The amount of expired credit or commitment for NewCredit or SettleCharges event. </param>
-        /// <param name="charges"> The amount of charges for events of type SettleCharges and PendingEligibleCharges. </param>
-        /// <param name="closedBalance"> The balance after the event. </param>
-        /// <param name="eventType"> Identifies the type of the event. </param>
-        /// <param name="invoiceNumber"> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </param>
-        /// <param name="billingProfileId"> The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
-        /// <param name="billingProfileDisplayName"> The display name of the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
-        /// <param name="lotId"> The ID that uniquely identifies the lot for which the event happened. </param>
-        /// <param name="lotSource"> Identifies the source of the lot for which the event happened. </param>
-        /// <param name="canceledCredit"> Amount of canceled credit. </param>
-        /// <param name="creditCurrency"> The credit currency of the event. </param>
-        /// <param name="billingCurrency"> The billing currency of the event. </param>
-        /// <param name="reseller"> The reseller of the event. </param>
-        /// <param name="creditExpiredInBillingCurrency"> The amount of expired credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
-        /// <param name="newCreditInBillingCurrency"> The amount of new credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
-        /// <param name="adjustmentsInBillingCurrency"> The amount of balance adjustment in billing currency. </param>
-        /// <param name="chargesInBillingCurrency"> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </param>
-        /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="Models.ConsumptionEventSummary"/> instance for mocking. </returns>
-        public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? transactOn = null, string description = null, ConsumptionAmount newCredit = null, ConsumptionAmount adjustments = null, ConsumptionAmount creditExpired = null, ConsumptionAmount charges = null, ConsumptionAmount closedBalance = null, ConsumptionEventType? eventType = null, string invoiceNumber = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier lotId = null, string lotSource = null, ConsumptionAmount canceledCredit = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = null, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = null, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = null, ConsumptionAmountWithExchangeRate chargesInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, ETag? etag = null)
+        /// <param name="pricesheets"> Price sheet. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="download"> Pricesheet download details. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.PriceSheetResult"/> instance for mocking. </returns>
+        public static PriceSheetResult PriceSheetResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<PriceSheetProperties> pricesheets = null, string nextLink = null, ConsumptionMeterDetails download = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            return new ConsumptionEventSummary(
+            pricesheets ??= new List<PriceSheetProperties>();
+            tags ??= new Dictionary<string, string>();
+
+            return new PriceSheetResult(
                 id,
                 name,
                 resourceType,
                 systemData,
-                transactOn,
-                description,
-                newCredit,
-                adjustments,
-                creditExpired,
-                charges,
-                closedBalance,
-                eventType,
-                invoiceNumber,
-                billingProfileId,
-                billingProfileDisplayName,
-                lotId,
-                lotSource,
-                canceledCredit,
-                creditCurrency,
-                billingCurrency,
-                reseller,
-                creditExpiredInBillingCurrency,
-                newCreditInBillingCurrency,
-                adjustmentsInBillingCurrency,
-                chargesInBillingCurrency,
-                closedBalanceInBillingCurrency,
+                pricesheets?.ToList(),
+                nextLink,
+                download,
                 etag,
+                tags,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAmount"/>. </summary>
-        /// <param name="currency"> Amount currency. </param>
-        /// <param name="value"> Amount. </param>
-        /// <returns> A new <see cref="Models.ConsumptionAmount"/> instance for mocking. </returns>
-        public static ConsumptionAmount ConsumptionAmount(string currency = null, decimal? value = null)
+        /// <summary> Initializes a new instance of <see cref="Models.PriceSheetProperties"/>. </summary>
+        /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
+        /// <param name="meterId"> The meter id (GUID). </param>
+        /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
+        /// <param name="unitOfMeasure"> Unit of measure. </param>
+        /// <param name="includedQuantity"> Included quality for an offer. </param>
+        /// <param name="partNumber"> Part Number. </param>
+        /// <param name="unitPrice"> Unit Price. </param>
+        /// <param name="currencyCode"> Currency Code. </param>
+        /// <param name="offerId"> Offer Id. </param>
+        /// <param name="savingsPlan"> SavingsPlan Details. </param>
+        /// <returns> A new <see cref="Models.PriceSheetProperties"/> instance for mocking. </returns>
+        public static PriceSheetProperties PriceSheetProperties(ResourceIdentifier billingPeriodId = null, Guid? meterId = null, ConsumptionMeterDetails meterDetails = null, string unitOfMeasure = null, decimal? includedQuantity = null, string partNumber = null, decimal? unitPrice = null, string currencyCode = null, string offerId = null, ConsumptionSavingsPlan savingsPlan = null)
         {
-            return new ConsumptionAmount(currency, value, serializedAdditionalRawData: null);
+            return new PriceSheetProperties(
+                billingPeriodId,
+                meterId,
+                meterDetails,
+                unitOfMeasure,
+                includedQuantity,
+                partNumber,
+                unitPrice,
+                currencyCode,
+                offerId,
+                savingsPlan,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReseller"/>. </summary>
-        /// <param name="resellerId"> The reseller property ID. </param>
-        /// <param name="resellerDescription"> The reseller property description. </param>
-        /// <returns> A new <see cref="Models.ConsumptionReseller"/> instance for mocking. </returns>
-        public static ConsumptionReseller ConsumptionReseller(ResourceIdentifier resellerId = null, string resellerDescription = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMeterDetails"/>. </summary>
+        /// <param name="meterName"> The name of the meter, within the given meter category. </param>
+        /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
+        /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
+        /// <param name="unit"> The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc. </param>
+        /// <param name="meterLocation"> The location in which the Azure service is available. </param>
+        /// <param name="totalIncludedQuantity"> The total included quantity associated with the offer. </param>
+        /// <param name="pretaxStandardRate"> The pretax listing price. </param>
+        /// <param name="serviceName"> The name of the service. </param>
+        /// <param name="serviceTier"> The service tier. </param>
+        /// <returns> A new <see cref="Models.ConsumptionMeterDetails"/> instance for mocking. </returns>
+        public static ConsumptionMeterDetails ConsumptionMeterDetails(string meterName = null, string meterCategory = null, string meterSubCategory = null, string unit = null, string meterLocation = null, decimal? totalIncludedQuantity = null, decimal? pretaxStandardRate = null, string serviceName = null, string serviceTier = null)
         {
-            return new ConsumptionReseller(resellerId, resellerDescription, serializedAdditionalRawData: null);
+            return new ConsumptionMeterDetails(
+                meterName,
+                meterCategory,
+                meterSubCategory,
+                unit,
+                meterLocation,
+                totalIncludedQuantity,
+                pretaxStandardRate,
+                serviceName,
+                serviceTier,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAmountWithExchangeRate"/>. </summary>
-        /// <param name="currency"> Amount currency. </param>
-        /// <param name="value"> Amount. </param>
-        /// <param name="exchangeRate"> The exchange rate. </param>
-        /// <param name="exchangeRateMonth"> The exchange rate month. </param>
-        /// <returns> A new <see cref="Models.ConsumptionAmountWithExchangeRate"/> instance for mocking. </returns>
-        public static ConsumptionAmountWithExchangeRate ConsumptionAmountWithExchangeRate(string currency = null, decimal? value = null, decimal? exchangeRate = null, int? exchangeRateMonth = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSavingsPlan"/>. </summary>
+        /// <param name="term"> SavingsPlan term. </param>
+        /// <param name="marketPrice"> SavingsPlan Market Price. </param>
+        /// <param name="effectivePrice"> SavingsPlan Effective Price. </param>
+        /// <returns> A new <see cref="Models.ConsumptionSavingsPlan"/> instance for mocking. </returns>
+        public static ConsumptionSavingsPlan ConsumptionSavingsPlan(string term = null, decimal? marketPrice = null, decimal? effectivePrice = null)
         {
-            return new ConsumptionAmountWithExchangeRate(currency, value, serializedAdditionalRawData: null, exchangeRate, exchangeRateMonth);
+            return new ConsumptionSavingsPlan(term, marketPrice, effectivePrice, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLotSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="originalAmount"> The original amount of a lot. </param>
-        /// <param name="closedBalance"> The balance as of the last invoice. </param>
-        /// <param name="source"> The source of the lot. </param>
-        /// <param name="startOn"> The date when the lot became effective. </param>
-        /// <param name="expireOn"> The expiration date of a lot. </param>
-        /// <param name="poNumber"> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </param>
-        /// <param name="purchasedOn"> The date when the lot was added. </param>
-        /// <param name="status"> The status of the lot. </param>
-        /// <param name="creditCurrency"> The currency of the lot. </param>
-        /// <param name="billingCurrency"> The billing currency of the lot. </param>
-        /// <param name="originalAmountInBillingCurrency"> The original amount of a lot in billing currency. </param>
-        /// <param name="closedBalanceInBillingCurrency"> The balance as of the last invoice in billing currency. </param>
-        /// <param name="reseller"> The reseller of the lot. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="Models.ConsumptionLotSummary"/> instance for mocking. </returns>
-        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConsumptionAmount originalAmount = null, ConsumptionAmount closedBalance = null, ConsumptionLotSource? source = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, string poNumber = null, DateTimeOffset? purchasedOn = null, ConsumptionLotStatus? status = null, string creditCurrency = null, string billingCurrency = null, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, ConsumptionReseller reseller = null, ETag? etag = null)
+        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
+        /// <param name="usageStart"> Usage start date. </param>
+        /// <param name="usageEnd"> Usage end date. </param>
+        /// <param name="azureCharges"> Azure Charges. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
+        /// <param name="azureMarketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="currency"> Currency Code. </param>
+        /// <returns> A new <see cref="Models.ConsumptionLegacyChargeSummary"/> instance for mocking. </returns>
+        public static ConsumptionLegacyChargeSummary ConsumptionLegacyChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string billingPeriodId = null, string usageStart = null, string usageEnd = null, decimal? azureCharges = null, decimal? chargesBilledSeparately = null, decimal? azureMarketplaceCharges = null, string currency = null)
         {
-            return new ConsumptionLotSummary(
+            return new ConsumptionLegacyChargeSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
-                originalAmount,
-                closedBalance,
-                source,
-                startOn,
-                expireOn,
-                poNumber,
-                purchasedOn,
-                status,
-                creditCurrency,
-                billingCurrency,
-                originalAmountInBillingCurrency,
-                closedBalanceInBillingCurrency,
-                reseller,
+                ChargeSummaryKind.Legacy,
                 etag,
-                serializedAdditionalRawData: null);
+                serializedAdditionalRawData: null,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                chargesBilledSeparately,
+                azureMarketplaceCharges,
+                currency);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionCreditSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="balanceSummary"> Summary of balances associated with this credit summary. </param>
-        /// <param name="pendingCreditAdjustments"> Pending credit adjustments. </param>
-        /// <param name="expiredCredit"> Expired credit. </param>
-        /// <param name="pendingEligibleCharges"> Pending eligible charges. </param>
-        /// <param name="creditCurrency"> The credit currency. </param>
-        /// <param name="billingCurrency"> The billing currency. </param>
-        /// <param name="reseller"> Credit's reseller. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="Models.ConsumptionCreditSummary"/> instance for mocking. </returns>
-        public static ConsumptionCreditSummary ConsumptionCreditSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CreditBalanceSummary balanceSummary = null, ConsumptionAmount pendingCreditAdjustments = null, ConsumptionAmount expiredCredit = null, ConsumptionAmount pendingEligibleCharges = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, ETag? etag = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSkuProperty"/>. </summary>
+        /// <param name="name"> The name of sku property. </param>
+        /// <param name="value"> The value of sku property. </param>
+        /// <returns> A new <see cref="Models.ConsumptionSkuProperty"/> instance for mocking. </returns>
+        public static ConsumptionSkuProperty ConsumptionSkuProperty(string name = null, string value = null)
         {
-            return new ConsumptionCreditSummary(
-                id,
-                name,
-                resourceType,
-                systemData,
-                balanceSummary,
-                pendingCreditAdjustments,
-                expiredCredit,
-                pendingEligibleCharges,
-                creditCurrency,
-                billingCurrency,
-                reseller,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CreditBalanceSummary"/>. </summary>
-        /// <param name="estimatedBalance"> Estimated balance. </param>
-        /// <param name="currentBalance"> Current balance. </param>
-        /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>
-        /// <returns> A new <see cref="Models.CreditBalanceSummary"/> instance for mocking. </returns>
-        public static CreditBalanceSummary CreditBalanceSummary(ConsumptionAmount estimatedBalance = null, ConsumptionAmount currentBalance = null, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency = null)
-        {
-            return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency, serializedAdditionalRawData: null);
+            return new ConsumptionSkuProperty(name, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyUsageDetail"/>. </summary>
@@ -1094,6 +1174,49 @@ namespace Azure.ResourceManager.Consumption.Models
                 unitOfMeasure,
                 serviceFamily,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernChargeSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
+        /// <param name="usageStart"> Usage start date. </param>
+        /// <param name="usageEnd"> Usage end date. </param>
+        /// <param name="azureCharges"> Azure Charges. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
+        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="billingAccountId"> Billing Account Id. </param>
+        /// <param name="billingProfileId"> Billing Profile Id. </param>
+        /// <param name="invoiceSectionId"> Invoice Section Id. </param>
+        /// <param name="customerId"> Customer Id. </param>
+        /// <param name="isInvoiced"> Is charge Invoiced. </param>
+        /// <param name="subscriptionId"> Subscription guid. </param>
+        /// <returns> A new <see cref="Models.ConsumptionModernChargeSummary"/> instance for mocking. </returns>
+        public static ConsumptionModernChargeSummary ConsumptionModernChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string billingPeriodId = null, string usageStart = null, string usageEnd = null, ConsumptionAmount azureCharges = null, ConsumptionAmount chargesBilledSeparately = null, ConsumptionAmount marketplaceCharges = null, string billingAccountId = null, string billingProfileId = null, string invoiceSectionId = null, string customerId = null, bool? isInvoiced = null, string subscriptionId = null)
+        {
+            return new ConsumptionModernChargeSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ChargeSummaryKind.Modern,
+                etag,
+                serializedAdditionalRawData: null,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                chargesBilledSeparately,
+                marketplaceCharges,
+                billingAccountId,
+                billingProfileId,
+                invoiceSectionId,
+                customerId,
+                isInvoiced,
+                subscriptionId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernUsageDetail"/>. </summary>
@@ -1261,149 +1384,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 benefitName,
                 provider,
                 costAllocationRuleName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSkuProperty"/>. </summary>
-        /// <param name="name"> The name of sku property. </param>
-        /// <param name="value"> The value of sku property. </param>
-        /// <returns> A new <see cref="Models.ConsumptionSkuProperty"/> instance for mocking. </returns>
-        public static ConsumptionSkuProperty ConsumptionSkuProperty(string name = null, string value = null)
-        {
-            return new ConsumptionSkuProperty(name, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationRecommendation"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="sku"> Resource sku. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="locationPropertiesLocation"> Resource Location. </param>
-        /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
-        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
-        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
-        /// <param name="normalizedSize"> The normalized Size. </param>
-        /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
-        /// <param name="meterId"> The meter id (GUID). </param>
-        /// <param name="term"> RI recommendations in one or three year terms. </param>
-        /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
-        /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
-        /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
-        /// <param name="netSavings"> Total estimated savings with reserved instances. </param>
-        /// <param name="firstUsageOn"> The usage date for looking back. </param>
-        /// <param name="scope"> Shared or single recommendation. </param>
-        /// <param name="skuProperties"> List of sku properties. </param>
-        /// <param name="skuName"> This is the ARM Sku name. </param>
-        /// <returns> A new <see cref="Models.ConsumptionModernReservationRecommendation"/> instance for mocking. </returns>
-        public static ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string sku = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, string locationPropertiesLocation = null, int? lookBackPeriod = null, float? instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = null, Guid? meterId = null, string term = null, ConsumptionAmount costWithNoReservedInstances = null, decimal? recommendedQuantity = null, ConsumptionAmount totalCostWithReservedInstances = null, ConsumptionAmount netSavings = null, DateTimeOffset? firstUsageOn = null, string scope = null, IEnumerable<ConsumptionSkuProperty> skuProperties = null, string skuName = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            skuProperties ??= new List<ConsumptionSkuProperty>();
-
-            return new ConsumptionModernReservationRecommendation(
-                id,
-                name,
-                resourceType,
-                systemData,
-                ReservationRecommendationKind.Modern,
-                location,
-                sku,
-                etag,
-                tags,
-                serializedAdditionalRawData: null,
-                locationPropertiesLocation,
-                lookBackPeriod,
-                instanceFlexibilityRatio,
-                instanceFlexibilityGroup,
-                normalizedSize,
-                recommendedQuantityNormalized,
-                meterId,
-                term,
-                costWithNoReservedInstances,
-                recommendedQuantity,
-                totalCostWithReservedInstances,
-                netSavings,
-                firstUsageOn,
-                scope,
-                skuProperties?.ToList(),
-                skuName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyChargeSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
-        /// <param name="usageStart"> Usage start date. </param>
-        /// <param name="usageEnd"> Usage end date. </param>
-        /// <param name="azureCharges"> Azure Charges. </param>
-        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
-        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
-        /// <param name="currency"> Currency Code. </param>
-        /// <returns> A new <see cref="Models.ConsumptionLegacyChargeSummary"/> instance for mocking. </returns>
-        public static ConsumptionLegacyChargeSummary ConsumptionLegacyChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string billingPeriodId = null, string usageStart = null, string usageEnd = null, decimal? azureCharges = null, decimal? chargesBilledSeparately = null, decimal? marketplaceCharges = null, string currency = null)
-        {
-            return new ConsumptionLegacyChargeSummary(
-                id,
-                name,
-                resourceType,
-                systemData,
-                ChargeSummaryKind.Legacy,
-                etag,
-                serializedAdditionalRawData: null,
-                billingPeriodId,
-                usageStart,
-                usageEnd,
-                azureCharges,
-                chargesBilledSeparately,
-                marketplaceCharges,
-                currency);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernChargeSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
-        /// <param name="usageStart"> Usage start date. </param>
-        /// <param name="usageEnd"> Usage end date. </param>
-        /// <param name="azureCharges"> Azure Charges. </param>
-        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
-        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
-        /// <param name="billingAccountId"> Billing Account Id. </param>
-        /// <param name="billingProfileId"> Billing Profile Id. </param>
-        /// <param name="invoiceSectionId"> Invoice Section Id. </param>
-        /// <param name="customerId"> Customer Id. </param>
-        /// <param name="isInvoiced"> Is charge Invoiced. </param>
-        /// <returns> A new <see cref="Models.ConsumptionModernChargeSummary"/> instance for mocking. </returns>
-        public static ConsumptionModernChargeSummary ConsumptionModernChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string billingPeriodId = null, string usageStart = null, string usageEnd = null, ConsumptionAmount azureCharges = null, ConsumptionAmount chargesBilledSeparately = null, ConsumptionAmount marketplaceCharges = null, string billingAccountId = null, string billingProfileId = null, string invoiceSectionId = null, string customerId = null, bool? isInvoiced = null)
-        {
-            return new ConsumptionModernChargeSummary(
-                id,
-                name,
-                resourceType,
-                systemData,
-                ChargeSummaryKind.Modern,
-                etag,
-                serializedAdditionalRawData: null,
-                billingPeriodId,
-                usageStart,
-                usageEnd,
-                azureCharges,
-                chargesBilledSeparately,
-                marketplaceCharges,
-                billingAccountId,
-                billingProfileId,
-                invoiceSectionId,
-                customerId,
-                isInvoiced);
         }
     }
 }

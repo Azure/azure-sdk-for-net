@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Details of estimated savings. </summary>
+    /// <summary> Details of estimated savings. The costs and savings are estimated for the term. </summary>
     public partial class ConsumptionCalculatedSavingsProperties
     {
         /// <summary>
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionCalculatedSavingsProperties"/>. </summary>
-        /// <param name="onDemandCost"> The cost without reservation. </param>
-        /// <param name="overageCost"> The difference between total reservation cost and reservation cost. </param>
+        /// <param name="onDemandCost"> The cost without reservation. Includes hardware and software cost. </param>
+        /// <param name="overageCost"> The estimated cost for resource meters that are not covered by the reservation and are billed at pay-as-you-go rates. </param>
         /// <param name="quantity"> The quantity for calculated savings. </param>
-        /// <param name="reservationCost"> The exact cost of the estimated usage using reservation. </param>
-        /// <param name="totalReservationCost"> The cost of the suggested quantity. </param>
+        /// <param name="reservationCost"> Hardware cost of the resources covered by the reservation. </param>
+        /// <param name="totalReservationCost"> Reservation cost + software cost of the resources covered by the reservation + overage cost. </param>
         /// <param name="reservedUnitCount"> The number of reserved units used to calculate savings. Always 1 for virtual machines. </param>
-        /// <param name="savings"> The amount saved by purchasing the recommended quantity of reservation. </param>
+        /// <param name="savings"> The amount saved by purchasing the recommended quantity of reservation. This is equal to onDemandCost - totalReservationCost. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConsumptionCalculatedSavingsProperties(float? onDemandCost, float? overageCost, float? quantity, float? reservationCost, float? totalReservationCost, float? reservedUnitCount, float? savings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Consumption.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The cost without reservation. </summary>
+        /// <summary> The cost without reservation. Includes hardware and software cost. </summary>
         public float? OnDemandCost { get; }
-        /// <summary> The difference between total reservation cost and reservation cost. </summary>
+        /// <summary> The estimated cost for resource meters that are not covered by the reservation and are billed at pay-as-you-go rates. </summary>
         public float? OverageCost { get; }
         /// <summary> The quantity for calculated savings. </summary>
         public float? Quantity { get; }
-        /// <summary> The exact cost of the estimated usage using reservation. </summary>
+        /// <summary> Hardware cost of the resources covered by the reservation. </summary>
         public float? ReservationCost { get; }
-        /// <summary> The cost of the suggested quantity. </summary>
+        /// <summary> Reservation cost + software cost of the resources covered by the reservation + overage cost. </summary>
         public float? TotalReservationCost { get; }
         /// <summary> The number of reserved units used to calculate savings. Always 1 for virtual machines. </summary>
         public float? ReservedUnitCount { get; }
-        /// <summary> The amount saved by purchasing the recommended quantity of reservation. </summary>
+        /// <summary> The amount saved by purchasing the recommended quantity of reservation. This is equal to onDemandCost - totalReservationCost. </summary>
         public float? Savings { get; }
     }
 }
