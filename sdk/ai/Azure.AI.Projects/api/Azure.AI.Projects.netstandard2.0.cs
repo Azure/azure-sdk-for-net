@@ -35,7 +35,6 @@ namespace Azure.AI.Projects
     public partial class AIProjectClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
         public AIProjectClientOptions(Azure.AI.Projects.AIProjectClientOptions.ServiceVersion version = Azure.AI.Projects.AIProjectClientOptions.ServiceVersion.V1) { }
-        public int ClientCacheSize { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2025_05_01 = 1,
