@@ -83,6 +83,58 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expected, leftResource != rightResource);
         }
 
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(false, "Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets2")]
+        [TestCase(true, "Microsoft.ClassicStorage/storageAccounts", "Microsoft.Network/VirtualNetworks2/subnets1")]
+        public void LessThanOpResourceTypeToResourceType(bool expected, string left, string right)
+        {
+            ResourceType leftResource = left;
+            ResourceType rightResource = right;
+            Assert.AreEqual(expected, leftResource < rightResource);
+        }
+
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets2")]
+        [TestCase(true, "Microsoft.ClassicStorage/storageAccounts", "Microsoft.Network/VirtualNetworks2/subnets1")]
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        public void LessThanOrEqualOpResourceTypeToResourceType(bool expected, string left, string right)
+        {
+            ResourceType leftResource = left;
+            ResourceType rightResource = right;
+            Assert.AreEqual(expected, leftResource <= rightResource);
+        }
+
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(false, "Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network/VirtualNetworks2/subnets1", "Microsoft.ClassicStorage/storageAccounts")]
+        public void GreaterThanOpResourceTypeToResourceType(bool expected, string left, string right)
+        {
+            ResourceType leftResource = left;
+            ResourceType rightResource = right;
+            Assert.AreEqual(expected, leftResource > rightResource);
+        }
+
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network/VirtualNetworks2/subnets1", "Microsoft.ClassicStorage/storageAccounts")]
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets2")]
+        public void GreaterThanOrEqualOpResourceTypeToResourceType(bool expected, string left, string right)
+        {
+            ResourceType leftResource = left;
+            ResourceType rightResource = right;
+            Assert.AreEqual(expected, leftResource >= rightResource);
+        }
+
         [TestCase]
         public void ParseArgumentException()
         {

@@ -113,6 +113,50 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Compares two <see cref="ResourceType"/> objects.
+        /// </summary>
+        /// <param name="left"> First <see cref="ResourceType"/> object. </param>
+        /// <param name="right"> Second <see cref="ResourceType"/> object. </param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
+        public static bool operator <(ResourceType left, ResourceType right)
+        {
+            return left.CompareTo(right) < 0;
+        }
+
+        /// <summary>
+        /// Compares two <see cref="ResourceType"/> objects.
+        /// </summary>
+        /// <param name="left"> First <see cref="ResourceType"/> object. </param>
+        /// <param name="right"> Second <see cref="ResourceType"/> object. </param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
+        public static bool operator <=(ResourceType left, ResourceType right)
+        {
+            return left.CompareTo(right) <= 0;
+        }
+
+        /// <summary>
+        /// Compares two <see cref="ResourceType"/> objects.
+        /// </summary>
+        /// <param name="left"> First <see cref="ResourceType"/> object. </param>
+        /// <param name="right"> Second <see cref="ResourceType"/> object. </param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
+        public static bool operator >(ResourceType left, ResourceType right)
+        {
+            return left.CompareTo(right) > 0;
+        }
+
+        /// <summary>
+        /// Compares two <see cref="ResourceType"/> objects.
+        /// </summary>
+        /// <param name="left"> First <see cref="ResourceType"/> object. </param>
+        /// <param name="right"> Second <see cref="ResourceType"/> object. </param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
+        public static bool operator >=(ResourceType left, ResourceType right)
+        {
+            return left.CompareTo(right) >= 0;
+        }
+
+        /// <summary>
         /// Compares this <see cref="ResourceType"/> instance with another object and determines if they are equals.
         /// </summary>
         /// <param name="other"> <see cref="ResourceType"/> object to compare. </param>
