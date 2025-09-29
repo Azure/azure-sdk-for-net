@@ -32,23 +32,153 @@ namespace Azure.ResourceManager.Consumption
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-01";
+            _apiVersion = apiVersion ?? "2024-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("grain", grain.ToString(), true);
+            if (startDate != null)
+            {
+                uri.AppendQuery("startDate", startDate, true);
+            }
+            if (endDate != null)
+            {
+                uri.AppendQuery("endDate", endDate, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (reservationId != null)
+            {
+                uri.AppendQuery("reservationId", reservationId, true);
+            }
+            if (reservationOrderId != null)
+            {
+                uri.AppendQuery("reservationOrderId", reservationOrderId, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("grain", grain.ToString(), true);
+            if (startDate != null)
+            {
+                uri.AppendQuery("startDate", startDate, true);
+            }
+            if (endDate != null)
+            {
+                uri.AppendQuery("endDate", endDate, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (reservationId != null)
+            {
+                uri.AppendQuery("reservationId", reservationId, true);
+            }
+            if (reservationOrderId != null)
+            {
+                uri.AppendQuery("reservationOrderId", reservationOrderId, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
+        /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
+        /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
+        /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
+        public async Task<Response<ReservationSummariesListResult>> ListAsync(string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+
+            using var message = CreateListRequest(resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ReservationSummariesListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ReservationSummariesListResult.DeserializeReservationSummariesListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
+        /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
+        /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
+        /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
+        public Response<ReservationSummariesListResult> List(string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+
+            using var message = CreateListRequest(resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ReservationSummariesListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ReservationSummariesListResult.DeserializeReservationSummariesListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateListByReservationOrderRequestUri(string reservationOrderId, ReservationSummaryDataGrain grain, string filter)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath("/providers/microsoft.Capacity/reservationorders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("grain", grain.ToString(), true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -59,22 +189,22 @@ namespace Azure.ResourceManager.Consumption
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath("/providers/microsoft.Capacity/reservationorders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("grain", grain.ToString(), true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
+        /// <summary> Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
@@ -101,7 +231,7 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
-        /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
+        /// <summary> Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
@@ -132,17 +262,17 @@ namespace Azure.ResourceManager.Consumption
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath("/providers/microsoft.Capacity/reservationorders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("grain", grain.ToString(), true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -153,24 +283,24 @@ namespace Azure.ResourceManager.Consumption
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath("/providers/microsoft.Capacity/reservationorders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("grain", grain.ToString(), true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
+        /// <summary> Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
@@ -199,7 +329,7 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
-        /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
+        /// <summary> Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
@@ -228,78 +358,31 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceScope, false);
-            uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
-            uri.AppendQuery("grain", grain.ToString(), true);
-            if (startDate != null)
-            {
-                uri.AppendQuery("startDate", startDate, true);
-            }
-            if (endDate != null)
-            {
-                uri.AppendQuery("endDate", endDate, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (reservationId != null)
-            {
-                uri.AppendQuery("reservationId", reservationId, true);
-            }
-            if (reservationOrderId != null)
-            {
-                uri.AppendQuery("reservationOrderId", reservationOrderId, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendRawNextLink(nextLink, false);
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceScope, false);
-            uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
-            uri.AppendQuery("grain", grain.ToString(), true);
-            if (startDate != null)
-            {
-                uri.AppendQuery("startDate", startDate, true);
-            }
-            if (endDate != null)
-            {
-                uri.AppendQuery("endDate", endDate, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (reservationId != null)
-            {
-                uri.AppendQuery("reservationId", reservationId, true);
-            }
-            if (reservationOrderId != null)
-            {
-                uri.AppendQuery("reservationOrderId", reservationOrderId, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. </summary>
-        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope (legacy), and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope (modern). </param>
+        /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
         /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
@@ -307,12 +390,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
-        public async Task<Response<ReservationSummariesListResult>> ListAsync(string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
+        public async Task<Response<ReservationSummariesListResult>> ListNextPageAsync(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
-            using var message = CreateListRequest(resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
+            using var message = CreateListNextPageRequest(nextLink, resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -328,8 +412,9 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
-        /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. </summary>
-        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope (legacy), and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope (modern). </param>
+        /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
         /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
@@ -337,12 +422,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
-        public Response<ReservationSummariesListResult> List(string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
+        public Response<ReservationSummariesListResult> ListNextPage(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
-            using var message = CreateListRequest(resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
+            using var message = CreateListNextPageRequest(nextLink, resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -380,7 +466,7 @@ namespace Azure.ResourceManager.Consumption
             return message;
         }
 
-        /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
+        /// <summary> Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
@@ -409,7 +495,7 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
-        /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
+        /// <summary> Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
@@ -460,7 +546,7 @@ namespace Azure.ResourceManager.Consumption
             return message;
         }
 
-        /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
+        /// <summary> Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation. </param>
@@ -491,7 +577,7 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
-        /// <summary> Lists the reservations summaries for daily or monthly grain. </summary>
+        /// <summary> Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation. </param>
@@ -507,92 +593,6 @@ namespace Azure.ResourceManager.Consumption
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
             using var message = CreateListByReservationOrderAndReservationNextPageRequest(nextLink, reservationOrderId, reservationId, grain, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationSummariesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationSummariesListResult.DeserializeReservationSummariesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope (legacy), and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope (modern). </param>
-        /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
-        /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
-        /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
-        /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
-        public async Task<Response<ReservationSummariesListResult>> ListNextPageAsync(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
-
-            using var message = CreateListNextPageRequest(nextLink, resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationSummariesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationSummariesListResult.DeserializeReservationSummariesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the reservations summaries for the defined scope daily or monthly grain. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope (legacy), and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope (modern). </param>
-        /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
-        /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
-        /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
-        /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
-        public Response<ReservationSummariesListResult> ListNextPage(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
-
-            using var message = CreateListNextPageRequest(nextLink, resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

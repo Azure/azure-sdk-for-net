@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="usageEnd"> Usage end date. </param>
         /// <param name="azureCharges"> Azure Charges. </param>
         /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
-        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="azureMarketplaceCharges"> Marketplace Charges. </param>
         /// <param name="currency"> Currency Code. </param>
-        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? marketplaceCharges, string currency) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? azureMarketplaceCharges, string currency) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             BillingPeriodId = billingPeriodId;
             UsageStart = usageStart;
             UsageEnd = usageEnd;
             AzureCharges = azureCharges;
             ChargesBilledSeparately = chargesBilledSeparately;
-            MarketplaceCharges = marketplaceCharges;
+            AzureMarketplaceCharges = azureMarketplaceCharges;
             Currency = currency;
             Kind = kind;
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Charges Billed separately. </summary>
         public decimal? ChargesBilledSeparately { get; }
         /// <summary> Marketplace Charges. </summary>
-        public decimal? MarketplaceCharges { get; }
+        public decimal? AzureMarketplaceCharges { get; }
         /// <summary> Currency Code. </summary>
         public string Currency { get; }
     }

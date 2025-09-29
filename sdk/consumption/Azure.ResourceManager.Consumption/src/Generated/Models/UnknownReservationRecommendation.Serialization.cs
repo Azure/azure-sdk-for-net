@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            ReservationRecommendationKind kind = "Unknown";
-            AzureLocation? location = default;
-            string sku = default;
             ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            string sku = default;
+            ReservationRecommendationKind kind = "Unknown";
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -72,25 +72,6 @@ namespace Azure.ResourceManager.Consumption.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new ReservationRecommendationKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("sku"u8))
-                {
-                    sku = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -112,6 +93,25 @@ namespace Azure.ResourceManager.Consumption.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    sku = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new ReservationRecommendationKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
-                kind,
-                location,
-                sku,
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind,
                 serializedAdditionalRawData);
         }
 

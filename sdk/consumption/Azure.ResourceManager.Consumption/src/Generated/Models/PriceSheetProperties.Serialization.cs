@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
+            if (options.Format != "W" && Optional.IsDefined(SavingsPlan))
+            {
+                writer.WritePropertyName("savingsPlan"u8);
+                writer.WriteObjectValue(SavingsPlan, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -125,6 +130,7 @@ namespace Azure.ResourceManager.Consumption.Models
             decimal? unitPrice = default;
             string currencyCode = default;
             string offerId = default;
+            ConsumptionSavingsPlan savingsPlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,6 +200,15 @@ namespace Azure.ResourceManager.Consumption.Models
                     offerId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("savingsPlan"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    savingsPlan = ConsumptionSavingsPlan.DeserializeConsumptionSavingsPlan(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -210,6 +225,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 unitPrice,
                 currencyCode,
                 offerId,
+                savingsPlan,
                 serializedAdditionalRawData);
         }
 

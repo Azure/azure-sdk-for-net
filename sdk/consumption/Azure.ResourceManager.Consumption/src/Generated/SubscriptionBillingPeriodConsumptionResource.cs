@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>

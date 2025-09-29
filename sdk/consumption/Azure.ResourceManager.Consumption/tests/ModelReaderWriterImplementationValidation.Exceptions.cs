@@ -9,7 +9,8 @@ namespace Azure.ResourceManager.TestFramework
         {
             ExceptionList = new[]
             {
-                "Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationsSummariesOptions"
+                "Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationsSummariesOptions",
+                "Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationRecommendationDetailsOptions"
             };
         }
     }

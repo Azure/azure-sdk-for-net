@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the BillingAccountResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="BillingAccountConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingAccounts.
+    /// You can only construct a <see cref="BillingAccountConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of microsoft.Billing/billingAccounts.
     /// </summary>
     public partial class BillingAccountConsumptionResource : ArmResource
     {
@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> The billingAccountId. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string billingAccountId)
         {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}";
+            var resourceId = $"/providers/microsoft.Billing/billingAccounts/{billingAccountId}";
             return new ResourceIdentifier(resourceId);
         }
 
         private readonly ClientDiagnostics _balancesClientDiagnostics;
         private readonly BalancesRestOperations _balancesRestClient;
-        private readonly ClientDiagnostics _reservationTransactionsClientDiagnostics;
-        private readonly ReservationTransactionsRestOperations _reservationTransactionsRestClient;
         private readonly ClientDiagnostics _eventsClientDiagnostics;
         private readonly EventsRestOperations _eventsRestClient;
         private readonly ClientDiagnostics _lotsClientDiagnostics;
         private readonly LotsRestOperations _lotsRestClient;
+        private readonly ClientDiagnostics _reservationTransactionsClientDiagnostics;
+        private readonly ReservationTransactionsRestOperations _reservationTransactionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="BillingAccountConsumptionResource"/> class for mocking. </summary>
         protected BillingAccountConsumptionResource()
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Consumption
         {
             _balancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _balancesRestClient = new BalancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _reservationTransactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _reservationTransactionsRestClient = new ReservationTransactionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _eventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _eventsRestClient = new EventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _lotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _lotsRestClient = new LotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _reservationTransactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _reservationTransactionsRestClient = new ReservationTransactionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts";
+        public static readonly ResourceType ResourceType = "microsoft.Billing/billingAccounts";
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,65 +140,11 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary>
-        /// List of transactions for reserved instances on billing account scope. Note: The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationTransactions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and  'ge'. Note: API returns data for the entire start date's and end date's billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConsumptionReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionReservationTransaction> GetReservationTransactionsAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationTransactionsRestClient.CreateListRequest(Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationTransactionsRestClient.CreateListNextPageRequest(nextLink, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationTransaction.DeserializeConsumptionReservationTransaction(e), _reservationTransactionsClientDiagnostics, Pipeline, "BillingAccountConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List of transactions for reserved instances on billing account scope. Note: The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationTransactions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and  'ge'. Note: API returns data for the entire start date's and end date's billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConsumptionReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionReservationTransaction> GetReservationTransactions(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationTransactionsRestClient.CreateListRequest(Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationTransactionsRestClient.CreateListNextPageRequest(nextLink, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationTransaction.DeserializeConsumptionReservationTransaction(e), _reservationTransactionsClientDiagnostics, Pipeline, "BillingAccountConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Lists the events that decrements Azure credits or Microsoft Azure consumption commitment for a billing account or a billing profile for a given start and end date.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -206,7 +152,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,7 +171,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -233,7 +179,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,7 +198,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -260,7 +206,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +225,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -287,7 +233,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +245,64 @@ namespace Azure.ResourceManager.Consumption
             HttpMessage FirstPageRequest(int? pageSizeHint) => _lotsRestClient.CreateListByBillingAccountRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _lotsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionLotSummary.DeserializeConsumptionLotSummary(e), _lotsClientDiagnostics, Pipeline, "BillingAccountConsumptionResource.GetLots", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of transactions for reserved instances on billing account scope. Note: The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationTransactions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and  'ge'. Note: API returns data for the entire start date's and end date's billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
+        /// <param name="useMarkupIfPartner"> Applies mark up to the transactions if the caller is a partner. </param>
+        /// <param name="previewMarkupPercentage"> Preview markup percentage to be applied. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationTransaction> GetReservationTransactionsAsync(string filter = null, bool? useMarkupIfPartner = null, decimal? previewMarkupPercentage = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationTransactionsRestClient.CreateListRequest(Id.Name, filter, useMarkupIfPartner, previewMarkupPercentage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationTransactionsRestClient.CreateListNextPageRequest(nextLink, Id.Name, filter, useMarkupIfPartner, previewMarkupPercentage);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationTransaction.DeserializeConsumptionReservationTransaction(e), _reservationTransactionsClientDiagnostics, Pipeline, "BillingAccountConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of transactions for reserved instances on billing account scope. Note: The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationTransactions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and  'ge'. Note: API returns data for the entire start date's and end date's billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
+        /// <param name="useMarkupIfPartner"> Applies mark up to the transactions if the caller is a partner. </param>
+        /// <param name="previewMarkupPercentage"> Preview markup percentage to be applied. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationTransaction> GetReservationTransactions(string filter = null, bool? useMarkupIfPartner = null, decimal? previewMarkupPercentage = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationTransactionsRestClient.CreateListRequest(Id.Name, filter, useMarkupIfPartner, previewMarkupPercentage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationTransactionsRestClient.CreateListNextPageRequest(nextLink, Id.Name, filter, useMarkupIfPartner, previewMarkupPercentage);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationTransaction.DeserializeConsumptionReservationTransaction(e), _reservationTransactionsClientDiagnostics, Pipeline, "BillingAccountConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
         }
     }
 }

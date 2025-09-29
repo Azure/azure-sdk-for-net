@@ -63,7 +63,9 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="adjustments"> The amount of balance adjustment. The property is not available for ConsumptionCommitment lots. </param>
         /// <param name="creditExpired"> The amount of expired credit or commitment for NewCredit or SettleCharges event. </param>
         /// <param name="charges"> The amount of charges for events of type SettleCharges and PendingEligibleCharges. </param>
-        /// <param name="closedBalance"> The balance after the event. </param>
+        /// <param name="closedBalance"> The balance after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
+        /// <param name="billingAccountId"> Identifier of the billing account. </param>
+        /// <param name="billingAccountDisplayName"> Name of the billing account. </param>
         /// <param name="eventType"> Identifies the type of the event. </param>
         /// <param name="invoiceNumber"> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </param>
         /// <param name="billingProfileId"> The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
@@ -78,10 +80,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="newCreditInBillingCurrency"> The amount of new credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
         /// <param name="adjustmentsInBillingCurrency"> The amount of balance adjustment in billing currency. </param>
         /// <param name="chargesInBillingCurrency"> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </param>
-        /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event. </param>
+        /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
+        /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, string billingAccountId, string billingAccountDisplayName, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, bool? isEstimatedBalance, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TransactOn = transactOn;
             Description = description;
@@ -90,6 +93,8 @@ namespace Azure.ResourceManager.Consumption.Models
             CreditExpired = creditExpired;
             Charges = charges;
             ClosedBalance = closedBalance;
+            BillingAccountId = billingAccountId;
+            BillingAccountDisplayName = billingAccountDisplayName;
             EventType = eventType;
             InvoiceNumber = invoiceNumber;
             BillingProfileId = billingProfileId;
@@ -105,6 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
             AdjustmentsInBillingCurrency = adjustmentsInBillingCurrency;
             ChargesInBillingCurrency = chargesInBillingCurrency;
             ClosedBalanceInBillingCurrency = closedBalanceInBillingCurrency;
+            IsEstimatedBalance = isEstimatedBalance;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -121,8 +127,12 @@ namespace Azure.ResourceManager.Consumption.Models
         public ConsumptionAmount CreditExpired { get; }
         /// <summary> The amount of charges for events of type SettleCharges and PendingEligibleCharges. </summary>
         public ConsumptionAmount Charges { get; }
-        /// <summary> The balance after the event. </summary>
+        /// <summary> The balance after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </summary>
         public ConsumptionAmount ClosedBalance { get; }
+        /// <summary> Identifier of the billing account. </summary>
+        public string BillingAccountId { get; }
+        /// <summary> Name of the billing account. </summary>
+        public string BillingAccountDisplayName { get; }
         /// <summary> Identifies the type of the event. </summary>
         public ConsumptionEventType? EventType { get; set; }
         /// <summary> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </summary>
@@ -151,8 +161,10 @@ namespace Azure.ResourceManager.Consumption.Models
         public ConsumptionAmountWithExchangeRate AdjustmentsInBillingCurrency { get; }
         /// <summary> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </summary>
         public ConsumptionAmountWithExchangeRate ChargesInBillingCurrency { get; }
-        /// <summary> The balance in billing currency after the event. </summary>
+        /// <summary> The balance in billing currency after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </summary>
         public ConsumptionAmountWithExchangeRate ClosedBalanceInBillingCurrency { get; }
+        /// <summary> If true, the listed details are based on an estimation and it will be subjected to change. </summary>
+        public bool? IsEstimatedBalance { get; }
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
     }

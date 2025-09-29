@@ -111,6 +111,16 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(LastUsageOn))
+            {
+                writer.WritePropertyName("lastUsageDate"u8);
+                writer.WriteStringValue(LastUsageOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalHours))
+            {
+                writer.WritePropertyName("totalHours"u8);
+                writer.WriteNumberValue(TotalHours.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -134,11 +144,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            ReservationRecommendationKind kind = default;
-            AzureLocation? location = default;
-            string sku = default;
             ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            string sku = default;
+            ReservationRecommendationKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -157,29 +167,12 @@ namespace Azure.ResourceManager.Consumption.Models
             DateTimeOffset? firstUsageDate = default;
             string scope = default;
             IReadOnlyList<ConsumptionSkuProperty> skuProperties = default;
+            DateTimeOffset? lastUsageDate = default;
+            int? totalHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new ReservationRecommendationKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("sku"u8))
-                {
-                    sku = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -201,6 +194,25 @@ namespace Azure.ResourceManager.Consumption.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    sku = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new ReservationRecommendationKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -347,6 +359,24 @@ namespace Azure.ResourceManager.Consumption.Models
                             skuProperties = array;
                             continue;
                         }
+                        if (property0.NameEquals("lastUsageDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            lastUsageDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("totalHours"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            totalHours = property0.Value.GetInt32();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -361,11 +391,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
-                kind,
-                location,
-                sku,
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind,
                 serializedAdditionalRawData,
                 lookBackPeriod,
                 instanceFlexibilityRatio,
@@ -380,7 +410,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 netSavings,
                 firstUsageDate,
                 scope,
-                skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>());
+                skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>(),
+                lastUsageDate,
+                totalHours);
         }
 
         BinaryData IPersistableModel<ConsumptionLegacyReservationRecommendation>.Write(ModelReaderWriterOptions options)
