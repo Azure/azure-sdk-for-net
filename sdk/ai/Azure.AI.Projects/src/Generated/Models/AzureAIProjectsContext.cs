@@ -27,8 +27,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(AzureAISearchIndex))]
     [ModelReaderWriterBuildable(typeof(BlobReferenceSasCredential))]
     [ModelReaderWriterBuildable(typeof(DatasetCredential))]
-    [ModelReaderWriterBuildable(typeof(SASCredentials))]
-    [ModelReaderWriterBuildable(typeof(DatasetCredential))]
     [ModelReaderWriterBuildable(typeof(EmbeddingConfiguration))]
     [ModelReaderWriterBuildable(typeof(FileDataset))]
     [ModelReaderWriterBuildable(typeof(FolderDataset))]
