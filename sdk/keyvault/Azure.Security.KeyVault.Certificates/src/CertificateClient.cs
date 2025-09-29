@@ -434,11 +434,10 @@ namespace Azure.Security.KeyVault.Certificates
                 {
                     var requestUri = _pipeline.CreateUriWithQueryParams(certificate.SecretId, ("outContentType", options.OutContentType.ToString()));
                     secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), requestUri, appendApiVersion: false, cancellationToken).ConfigureAwait(false);
-                    ;
                 }
                 else
                 {
-                    secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, appendApiVersion: true, cancellationToken).ConfigureAwait(false);;
+                    secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, appendApiVersion: true, cancellationToken).ConfigureAwait(false);
                 }
 
                 KeyVaultSecret secret = secretResponse.Value;
