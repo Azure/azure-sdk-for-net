@@ -115,16 +115,16 @@ steps:
   - ${{ else }}:
     - pwsh: >
         ./eng/scripts/runwithdevopslogging.ps1
-          dotnet pack eng/service.proj -warnaserror
-            /p:ValidateRunApiCompat=true
-            /p:SDKType=${{ parameters.SDKType }}
-            /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-            /p:IncludeTests=false
-            /p:PublicSign=false $(VersioningProperties)
-            /p:Configuration=Release
-            /p:CommitSHA=$(Build.SourceVersion)
-            /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
-            $(DiagnosticArguments)
+        dotnet pack eng/service.proj -warnaserror
+        /p:ValidateRunApiCompat=true
+        /p:SDKType=${{ parameters.SDKType }}
+        /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+        /p:IncludeTests=false
+        /p:PublicSign=false $(VersioningProperties)
+        /p:Configuration=Release
+        /p:CommitSHA=$(Build.SourceVersion)
+        /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+        $(DiagnosticArguments)
       displayName: "Build and Package Service Directory"
 
   # save package properties again, this time honoring the dev version number
