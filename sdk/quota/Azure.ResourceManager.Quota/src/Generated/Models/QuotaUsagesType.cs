@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Quota.Models
     public readonly partial struct QuotaUsagesType : IEquatable<QuotaUsagesType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="QuotaUsagesType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public QuotaUsagesType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IndividualValue = "Individual";
         private const string CombinedValue = "Combined";
 
-        /// <summary> Individual. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsagesType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public QuotaUsagesType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Individual. </summary>
         public static QuotaUsagesType Individual { get; } = new QuotaUsagesType(IndividualValue);
-        /// <summary> Combined. </summary>
+
+        /// <summary> Gets the Combined. </summary>
         public static QuotaUsagesType Combined { get; } = new QuotaUsagesType(CombinedValue);
+
         /// <summary> Determines if two <see cref="QuotaUsagesType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QuotaUsagesType left, QuotaUsagesType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QuotaUsagesType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QuotaUsagesType left, QuotaUsagesType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QuotaUsagesType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QuotaUsagesType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QuotaUsagesType(string value) => new QuotaUsagesType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QuotaUsagesType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QuotaUsagesType?(string value) => value == null ? null : new QuotaUsagesType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QuotaUsagesType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QuotaUsagesType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,16 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class QuotaRequestResourceName : IUtf8JsonSerializable, IJsonModel<QuotaRequestResourceName>
+    /// <summary> Name of the resource provided by the resource Provider. When requesting quota, use this property name. </summary>
+    public partial class QuotaRequestResourceName : IJsonModel<QuotaRequestResourceName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaRequestResourceName>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuotaRequestResourceName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +29,11 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaRequestResourceName>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestResourceName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QuotaRequestResourceName)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -45,15 +44,15 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WritePropertyName("localizedValue"u8);
                 writer.WriteStringValue(LocalizedValue);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,136 +61,84 @@ namespace Azure.ResourceManager.Quota.Models
             }
         }
 
-        QuotaRequestResourceName IJsonModel<QuotaRequestResourceName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QuotaRequestResourceName IJsonModel<QuotaRequestResourceName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QuotaRequestResourceName JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaRequestResourceName>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestResourceName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QuotaRequestResourceName)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeQuotaRequestResourceName(document.RootElement, options);
         }
 
-        internal static QuotaRequestResourceName DeserializeQuotaRequestResourceName(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static QuotaRequestResourceName DeserializeQuotaRequestResourceName(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string value = default;
             string localizedValue = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    value = property.Value.GetString();
+                    value = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("localizedValue"u8))
+                if (prop.NameEquals("localizedValue"u8))
                 {
-                    localizedValue = property.Value.GetString();
+                    localizedValue = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new QuotaRequestResourceName(value, localizedValue, serializedAdditionalRawData);
+            return new QuotaRequestResourceName(value, localizedValue, additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QuotaRequestResourceName>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  value: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Value))
-                {
-                    builder.Append("  value: ");
-                    if (Value.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Value}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Value}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalizedValue), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  localizedValue: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LocalizedValue))
-                {
-                    builder.Append("  localizedValue: ");
-                    if (LocalizedValue.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LocalizedValue}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LocalizedValue}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<QuotaRequestResourceName>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaRequestResourceName>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestResourceName>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(QuotaRequestResourceName)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QuotaRequestResourceName IPersistableModel<QuotaRequestResourceName>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaRequestResourceName>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QuotaRequestResourceName IPersistableModel<QuotaRequestResourceName>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QuotaRequestResourceName PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestResourceName>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeQuotaRequestResourceName(document.RootElement, options);
                     }
                 default:
@@ -199,6 +146,7 @@ namespace Azure.ResourceManager.Quota.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QuotaRequestResourceName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

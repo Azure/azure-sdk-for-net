@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The GroupQuotaRequestStatusProperties. </summary>
     public partial class GroupQuotaRequestStatusProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaRequestStatusProperties"/>. </summary>
         public GroupQuotaRequestStatusProperties()
@@ -55,27 +26,26 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="requestSubmittedOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="faultCode"> Details of the failure. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaRequestStatusProperties(GroupQuotaRequestBase requestedResource, DateTimeOffset? requestSubmittedOn, QuotaRequestStatus? provisioningState, string faultCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GroupQuotaRequestStatusProperties(GroupQuotaRequestBase requestedResource, DateTimeOffset? requestSubmittedOn, QuotaRequestStatus? provisioningState, string faultCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestedResource = requestedResource;
             RequestSubmittedOn = requestSubmittedOn;
             ProvisioningState = provisioningState;
             FaultCode = faultCode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Requested Resource. </summary>
-        [WirePath("requestedResource")]
         public GroupQuotaRequestBase RequestedResource { get; set; }
+
         /// <summary> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
-        [WirePath("requestSubmitTime")]
         public DateTimeOffset? RequestSubmittedOn { get; }
+
         /// <summary> Request status. </summary>
-        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
+
         /// <summary> Details of the failure. </summary>
-        [WirePath("faultCode")]
         public string FaultCode { get; }
     }
 }

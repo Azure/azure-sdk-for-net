@@ -6,62 +6,53 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="CurrentUsagesBaseResource"/> and their operations.
-    /// Each <see cref="CurrentUsagesBaseResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="CurrentUsagesBaseCollection"/> instance call the GetCurrentUsagesBases method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="CurrentUsagesBaseResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="CurrentUsagesBaseCollection"/> instance call the GetCurrentUsagesBases method from an instance of the parent resource.
     /// </summary>
-    public partial class CurrentUsagesBaseCollection : ArmCollection, IEnumerable<CurrentUsagesBaseResource>, IAsyncEnumerable<CurrentUsagesBaseResource>
+    public partial class CurrentUsagesBaseCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _currentUsagesBaseCurrentUsagesBasesClientDiagnostics;
-        private readonly CurrentUsagesBasesRestOperations _currentUsagesBaseCurrentUsagesBasesRestClient;
+        private readonly ClientDiagnostics _currentUsagesBasesClientDiagnostics;
+        private readonly CurrentUsagesBases _currentUsagesBasesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CurrentUsagesBaseCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CurrentUsagesBaseCollection for mocking. </summary>
         protected CurrentUsagesBaseCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CurrentUsagesBaseCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrentUsagesBaseCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CurrentUsagesBaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _currentUsagesBaseCurrentUsagesBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentUsagesBaseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CurrentUsagesBaseResource.ResourceType, out string currentUsagesBaseCurrentUsagesBasesApiVersion);
-            _currentUsagesBaseCurrentUsagesBasesRestClient = new CurrentUsagesBasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentUsagesBaseCurrentUsagesBasesApiVersion);
+            TryGetApiVersion(CurrentUsagesBaseResource.ResourceType, out string currentUsagesBaseApiVersion);
+            _currentUsagesBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentUsagesBaseResource.ResourceType.Namespace, Diagnostics);
+            _currentUsagesBasesRestClient = new CurrentUsagesBases(_currentUsagesBasesClientDiagnostics, Pipeline, Endpoint, currentUsagesBaseApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
-        /// <summary>
-        /// Get the current usage of a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentUsagesBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentUsagesBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != CurrentUsagesBaseResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CurrentUsagesBaseResource.ResourceType), id);
+            }
+        }
+
+        /// <summary> Get the current usage of a resource. </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -69,19 +60,27 @@ namespace Azure.ResourceManager.Quota
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CurrentUsagesBaseResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
+            using DiagnosticScope scope = _currentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
             scope.Start();
             try
             {
-                var response = await _currentUsagesBaseCurrentUsagesBasesRestClient.GetAsync(Id, resourceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -91,27 +90,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Get the current usage of a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentUsagesBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentUsagesBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the current usage of a resource. </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -119,19 +98,27 @@ namespace Azure.ResourceManager.Quota
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CurrentUsagesBaseResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
+            using DiagnosticScope scope = _currentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
             scope.Start();
             try
             {
-                var response = _currentUsagesBaseCurrentUsagesBasesRestClient.Get(Id, resourceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -141,87 +128,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Get a list of current usage for all resources for the scope specified.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentUsagesBase_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentUsagesBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CurrentUsagesBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CurrentUsagesBaseResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseCurrentUsagesBasesRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseCurrentUsagesBasesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseCurrentUsagesBasesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of current usage for all resources for the scope specified.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentUsagesBase_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentUsagesBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CurrentUsagesBaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CurrentUsagesBaseResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseCurrentUsagesBasesRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseCurrentUsagesBasesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseCurrentUsagesBasesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentUsagesBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentUsagesBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -229,17 +136,35 @@ namespace Azure.ResourceManager.Quota
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
+            using DiagnosticScope scope = _currentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _currentUsagesBaseCurrentUsagesBasesRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CurrentUsagesBaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CurrentUsagesBaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,27 +174,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentUsagesBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentUsagesBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -277,17 +182,35 @@ namespace Azure.ResourceManager.Quota
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
+            using DiagnosticScope scope = _currentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = _currentUsagesBaseCurrentUsagesBasesRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CurrentUsagesBaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CurrentUsagesBaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,27 +220,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentUsagesBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentUsagesBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -325,19 +228,39 @@ namespace Azure.ResourceManager.Quota
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<CurrentUsagesBaseResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
+            using DiagnosticScope scope = _currentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _currentUsagesBaseCurrentUsagesBasesRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CurrentUsagesBaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CurrentUsagesBaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CurrentUsagesBaseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,27 +270,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentUsagesBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentUsagesBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -375,19 +278,39 @@ namespace Azure.ResourceManager.Quota
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<CurrentUsagesBaseResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
+            using DiagnosticScope scope = _currentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _currentUsagesBaseCurrentUsagesBasesRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CurrentUsagesBaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CurrentUsagesBaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CurrentUsagesBaseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,21 +318,6 @@ namespace Azure.ResourceManager.Quota
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<CurrentUsagesBaseResource> IEnumerable<CurrentUsagesBaseResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<CurrentUsagesBaseResource> IAsyncEnumerable<CurrentUsagesBaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

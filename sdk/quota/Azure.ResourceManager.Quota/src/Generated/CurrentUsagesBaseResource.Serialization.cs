@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Quota
 {
+    /// <summary></summary>
     public partial class CurrentUsagesBaseResource : IJsonModel<CurrentUsagesBaseData>
     {
-        private static CurrentUsagesBaseData s_dataDeserializationInstance;
-        private static CurrentUsagesBaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CurrentUsagesBaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CurrentUsagesBaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CurrentUsagesBaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CurrentUsagesBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CurrentUsagesBaseData>)Data).Write(writer, options);
 
-        CurrentUsagesBaseData IJsonModel<CurrentUsagesBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CurrentUsagesBaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CurrentUsagesBaseData IJsonModel<CurrentUsagesBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CurrentUsagesBaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CurrentUsagesBaseData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CurrentUsagesBaseData IPersistableModel<CurrentUsagesBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CurrentUsagesBaseData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<CurrentUsagesBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CurrentUsagesBaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CurrentUsagesBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

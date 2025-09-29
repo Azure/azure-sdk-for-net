@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Request property. </summary>
     public partial class QuotaSubRequestDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuotaSubRequestDetail"/>. </summary>
         internal QuotaSubRequestDetail()
@@ -57,13 +28,9 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User-friendly status message. </param>
         /// <param name="subRequestId"> Quota request ID. </param>
-        /// <param name="limit">
-        /// Resource quota limit properties.
-        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="QuotaLimitObject"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaSubRequestDetail(QuotaRequestResourceName name, string resourceTypeName, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId, QuotaLimitJsonObject limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="limit"> Resource quota limit properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaSubRequestDetail(QuotaRequestResourceName name, string resourceTypeName, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId, QuotaLimitJsonObject limit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ResourceTypeName = resourceTypeName;
@@ -72,33 +39,37 @@ namespace Azure.ResourceManager.Quota.Models
             Message = message;
             SubRequestId = subRequestId;
             Limit = limit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource name. </summary>
-        [WirePath("name")]
         public QuotaRequestResourceName Name { get; }
+
         /// <summary> Resource type for which the quota properties were requested. </summary>
-        [WirePath("resourceType")]
         public string ResourceTypeName { get; }
+
         /// <summary> Quota limit units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
-        [WirePath("unit")]
         public string Unit { get; }
+
         /// <summary> The quota request status. </summary>
-        [WirePath("provisioningState")]
         public QuotaRequestState? ProvisioningState { get; }
+
         /// <summary> User-friendly status message. </summary>
-        [WirePath("message")]
         public string Message { get; }
+
         /// <summary> Quota request ID. </summary>
-        [WirePath("subRequestId")]
         public Guid? SubRequestId { get; }
-        /// <summary>
-        /// Resource quota limit properties.
-        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="QuotaLimitObject"/>.
-        /// </summary>
-        [WirePath("limit")]
-        public QuotaLimitJsonObject Limit { get; }
+
+        /// <summary> Resource quota limit properties. </summary>
+        internal QuotaLimitJsonObject Limit { get; }
+
+        /// <summary> The limit object type. </summary>
+        internal LimitType? LimitObjectType
+        {
+            get
+            {
+                return Limit.LimitObjectType;
+            }
+        }
     }
 }

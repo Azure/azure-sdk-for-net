@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Resource details with usages and GroupQuota. </summary>
     public partial class GroupQuotaUsagesBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaUsagesBase"/>. </summary>
         internal GroupQuotaUsagesBase()
@@ -51,36 +22,48 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaUsagesBase"/>. </summary>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
+        /// <param name="name"> Name of the resource provided by the resource provider. This property is already included in the request URI, so it is a readonly property returned in the response. </param>
         /// <param name="limit"> Quota/limits for the resource. </param>
         /// <param name="usages"> Usages for the resource. </param>
         /// <param name="unit"> Representing the units of the usage quota. Possible values are: Count, Bytes, Seconds, Percent, CountPerSecond, BytesPerSecond. Based on - https://armwiki.azurewebsites.net/api_contracts/UsagesAPIContract.html?q=usages . Different RPs may have different units, Count, type as int64 should work for most of the integer values. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaUsagesBase(string value, string localizedValue, long? limit, long? usages, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GroupQuotaUsagesBase(GroupQuotaUsagesBaseName name, long? limit, long? usages, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Value = value;
-            LocalizedValue = localizedValue;
+            Name = name;
             Limit = limit;
             Usages = usages;
             Unit = unit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Resource name. </summary>
-        [WirePath("name.value")]
-        public string Value { get; }
-        /// <summary> Resource display name. </summary>
-        [WirePath("name.localizedValue")]
-        public string LocalizedValue { get; }
+        /// <summary> Name of the resource provided by the resource provider. This property is already included in the request URI, so it is a readonly property returned in the response. </summary>
+        internal GroupQuotaUsagesBaseName Name { get; }
+
         /// <summary> Quota/limits for the resource. </summary>
-        [WirePath("limit")]
         public long? Limit { get; }
+
         /// <summary> Usages for the resource. </summary>
-        [WirePath("usages")]
         public long? Usages { get; }
+
         /// <summary> Representing the units of the usage quota. Possible values are: Count, Bytes, Seconds, Percent, CountPerSecond, BytesPerSecond. Based on - https://armwiki.azurewebsites.net/api_contracts/UsagesAPIContract.html?q=usages . Different RPs may have different units, Count, type as int64 should work for most of the integer values. </summary>
-        [WirePath("unit")]
         public string Unit { get; }
+
+        /// <summary> Resource name. </summary>
+        public string Value
+        {
+            get
+            {
+                return Name.Value;
+            }
+        }
+
+        /// <summary> Resource display name. </summary>
+        public string LocalizedValue
+        {
+            get
+            {
+                return Name.LocalizedValue;
+            }
+        }
     }
 }

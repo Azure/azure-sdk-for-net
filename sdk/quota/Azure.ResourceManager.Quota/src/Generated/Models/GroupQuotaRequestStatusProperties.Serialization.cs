@@ -8,16 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class GroupQuotaRequestStatusProperties : IUtf8JsonSerializable, IJsonModel<GroupQuotaRequestStatusProperties>
+    /// <summary> The GroupQuotaRequestStatusProperties. </summary>
+    public partial class GroupQuotaRequestStatusProperties : IJsonModel<GroupQuotaRequestStatusProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupQuotaRequestStatusProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GroupQuotaRequestStatusProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +29,11 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GroupQuotaRequestStatusProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(RequestedResource))
             {
                 writer.WritePropertyName("requestedResource"u8);
@@ -55,15 +54,15 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WritePropertyName("faultCode"u8);
                 writer.WriteStringValue(FaultCode);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,183 +71,108 @@ namespace Azure.ResourceManager.Quota.Models
             }
         }
 
-        GroupQuotaRequestStatusProperties IJsonModel<GroupQuotaRequestStatusProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GroupQuotaRequestStatusProperties IJsonModel<GroupQuotaRequestStatusProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GroupQuotaRequestStatusProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GroupQuotaRequestStatusProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGroupQuotaRequestStatusProperties(document.RootElement, options);
         }
 
-        internal static GroupQuotaRequestStatusProperties DeserializeGroupQuotaRequestStatusProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GroupQuotaRequestStatusProperties DeserializeGroupQuotaRequestStatusProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             GroupQuotaRequestBase requestedResource = default;
-            DateTimeOffset? requestSubmitTime = default;
+            DateTimeOffset? requestSubmittedOn = default;
             QuotaRequestStatus? provisioningState = default;
             string faultCode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("requestedResource"u8))
+                if (prop.NameEquals("requestedResource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requestedResource = GroupQuotaRequestBase.DeserializeGroupQuotaRequestBase(property.Value, options);
+                    requestedResource = GroupQuotaRequestBase.DeserializeGroupQuotaRequestBase(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("requestSubmitTime"u8))
+                if (prop.NameEquals("requestSubmitTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requestSubmitTime = property.Value.GetDateTimeOffset("O");
+                    requestSubmittedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new QuotaRequestStatus(property.Value.GetString());
+                    provisioningState = new QuotaRequestStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("faultCode"u8))
+                if (prop.NameEquals("faultCode"u8))
                 {
-                    faultCode = property.Value.GetString();
+                    faultCode = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GroupQuotaRequestStatusProperties(requestedResource, requestSubmitTime, provisioningState, faultCode, serializedAdditionalRawData);
+            return new GroupQuotaRequestStatusProperties(requestedResource, requestSubmittedOn, provisioningState, faultCode, additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GroupQuotaRequestStatusProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedResource), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestedResource: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestedResource))
-                {
-                    builder.Append("  requestedResource: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RequestedResource, options, 2, false, "  requestedResource: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestSubmittedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestSubmitTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestSubmittedOn))
-                {
-                    builder.Append("  requestSubmitTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(RequestSubmittedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FaultCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  faultCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FaultCode))
-                {
-                    builder.Append("  faultCode: ");
-                    if (FaultCode.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FaultCode}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FaultCode}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<GroupQuotaRequestStatusProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GroupQuotaRequestStatusProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GroupQuotaRequestStatusProperties IPersistableModel<GroupQuotaRequestStatusProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GroupQuotaRequestStatusProperties IPersistableModel<GroupQuotaRequestStatusProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GroupQuotaRequestStatusProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGroupQuotaRequestStatusProperties(document.RootElement, options);
                     }
                 default:
@@ -256,6 +180,7 @@ namespace Azure.ResourceManager.Quota.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GroupQuotaRequestStatusProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,38 +11,30 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> The resource quota limit value. </summary>
-    public partial class QuotaLimitObject : QuotaLimitJsonObject
+    internal partial class QuotaLimitObject : QuotaLimitJsonObject
     {
         /// <summary> Initializes a new instance of <see cref="QuotaLimitObject"/>. </summary>
         /// <param name="value"> The quota/limit value. </param>
-        public QuotaLimitObject(int value)
+        public QuotaLimitObject(int value) : base(Models.LimitType.LimitValue)
         {
             Value = value;
-            LimitObjectType = Models.LimitType.LimitValue;
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaLimitObject"/>. </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The quota/limit value. </param>
         /// <param name="limitType"> The quota or usages limit types. </param>
-        internal QuotaLimitObject(LimitType limitObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, int value, QuotaLimitType? limitType) : base(limitObjectType, serializedAdditionalRawData)
+        internal QuotaLimitObject(LimitType limitObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int value, QuotaLimitTypes? limitType) : base(limitObjectType, additionalBinaryDataProperties)
         {
             Value = value;
             LimitType = limitType;
-            LimitObjectType = limitObjectType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="QuotaLimitObject"/> for deserialization. </summary>
-        internal QuotaLimitObject()
-        {
         }
 
         /// <summary> The quota/limit value. </summary>
-        [WirePath("value")]
         public int Value { get; set; }
+
         /// <summary> The quota or usages limit types. </summary>
-        [WirePath("limitType")]
-        public QuotaLimitType? LimitType { get; set; }
+        public QuotaLimitTypes? LimitType { get; set; }
     }
 }

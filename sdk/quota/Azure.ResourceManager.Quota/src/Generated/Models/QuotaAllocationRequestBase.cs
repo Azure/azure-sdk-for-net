@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The new quota request allocated to subscription. </summary>
     public partial class QuotaAllocationRequestBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestBase"/>. </summary>
         public QuotaAllocationRequestBase()
@@ -51,31 +22,67 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestBase"/>. </summary>
-        /// <param name="limit"> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
-        /// <param name="region"> The location for which the subscription is allocated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaAllocationRequestBase(long? limit, string value, string localizedValue, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaAllocationRequestBase(QuotaAllocationRequestBaseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Limit = limit;
-            Value = value;
-            LocalizedValue = localizedValue;
-            Region = region;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the Properties. </summary>
+        internal QuotaAllocationRequestBaseProperties Properties { get; set; }
+
         /// <summary> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </summary>
-        [WirePath("properties.limit")]
-        public long? Limit { get; set; }
-        /// <summary> Resource name. </summary>
-        [WirePath("properties.value")]
-        public string Value { get; }
-        /// <summary> Resource display name. </summary>
-        [WirePath("properties.localizedValue")]
-        public string LocalizedValue { get; }
+        public long? Limit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Limit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaAllocationRequestBaseProperties();
+                }
+                Properties.Limit = value.Value;
+            }
+        }
+
         /// <summary> The location for which the subscription is allocated. </summary>
-        [WirePath("properties.region")]
-        public string Region { get; set; }
+        public string Region
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Region;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaAllocationRequestBaseProperties();
+                }
+                Properties.Region = value;
+            }
+        }
+
+        /// <summary> Resource name. </summary>
+        public string Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+        }
+
+        /// <summary> Resource display name. </summary>
+        public string LocalizedValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalizedValue;
+            }
+        }
     }
 }

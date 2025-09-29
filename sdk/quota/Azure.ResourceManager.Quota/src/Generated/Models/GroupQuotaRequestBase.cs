@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The new GroupQuota limit requested. </summary>
     public partial class GroupQuotaRequestBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaRequestBase"/>. </summary>
         public GroupQuotaRequestBase()
@@ -51,36 +22,84 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaRequestBase"/>. </summary>
-        /// <param name="limit"> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
-        /// <param name="region"> Location/Azure region for the quota requested for resource. </param>
-        /// <param name="comments"> GroupQuota Request comments and details for request. This is optional paramter to provide more details related to the requested resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaRequestBase(long? limit, string value, string localizedValue, string region, string comments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GroupQuotaRequestBase(GroupQuotaRequestBaseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Limit = limit;
-            Value = value;
-            LocalizedValue = localizedValue;
-            Region = region;
-            Comments = comments;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the Properties. </summary>
+        internal GroupQuotaRequestBaseProperties Properties { get; set; }
+
         /// <summary> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </summary>
-        [WirePath("properties.limit")]
-        public long? Limit { get; set; }
-        /// <summary> Resource name. </summary>
-        [WirePath("properties.value")]
-        public string Value { get; }
-        /// <summary> Resource display name. </summary>
-        [WirePath("properties.localizedValue")]
-        public string LocalizedValue { get; }
+        public long? Limit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Limit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupQuotaRequestBaseProperties();
+                }
+                Properties.Limit = value.Value;
+            }
+        }
+
         /// <summary> Location/Azure region for the quota requested for resource. </summary>
-        [WirePath("properties.region")]
-        public string Region { get; set; }
+        public string Region
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Region;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupQuotaRequestBaseProperties();
+                }
+                Properties.Region = value;
+            }
+        }
+
         /// <summary> GroupQuota Request comments and details for request. This is optional paramter to provide more details related to the requested resource. </summary>
-        [WirePath("properties.comments")]
-        public string Comments { get; set; }
+        public string Comments
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Comments;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupQuotaRequestBaseProperties();
+                }
+                Properties.Comments = value;
+            }
+        }
+
+        /// <summary> Resource name. </summary>
+        public string Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+        }
+
+        /// <summary> Resource display name. </summary>
+        public string LocalizedValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalizedValue;
+            }
+        }
     }
 }

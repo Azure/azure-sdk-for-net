@@ -6,97 +6,95 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="QuotaAllocationRequestStatusResource"/> and their operations.
-    /// Each <see cref="QuotaAllocationRequestStatusResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
-    /// To get a <see cref="QuotaAllocationRequestStatusCollection"/> instance call the GetQuotaAllocationRequestStatuses method from an instance of <see cref="ManagementGroupResource"/>.
+    /// Each <see cref="QuotaAllocationRequestStatusResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="QuotaAllocationRequestStatusCollection"/> instance call the GetQuotaAllocationRequestStatuses method from an instance of the parent resource.
     /// </summary>
-    public partial class QuotaAllocationRequestStatusCollection : ArmCollection
+    public partial class QuotaAllocationRequestStatusCollection : ArmCollection, IEnumerable<QuotaAllocationRequestStatusResource>, IAsyncEnumerable<QuotaAllocationRequestStatusResource>
     {
-        private readonly ClientDiagnostics _quotaAllocationRequestStatusClientDiagnostics;
-        private readonly QuotaAllocationRequestStatusesRestOperations _quotaAllocationRequestStatusRestClient;
+        private readonly ClientDiagnostics _quotaAllocationRequestStatusesClientDiagnostics;
+        private readonly QuotaAllocationRequestStatuses _quotaAllocationRequestStatusesRestClient;
+        /// <summary> The managementGroupId. </summary>
+        private readonly string _managementGroupId;
+        /// <summary> The subscriptionId. </summary>
         private readonly string _subscriptionId;
+        /// <summary> The groupQuotaName. </summary>
         private readonly string _groupQuotaName;
+        /// <summary> The resourceProviderName. </summary>
         private readonly string _resourceProviderName;
 
-        /// <summary> Initializes a new instance of the <see cref="QuotaAllocationRequestStatusCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of QuotaAllocationRequestStatusCollection for mocking. </summary>
         protected QuotaAllocationRequestStatusCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="QuotaAllocationRequestStatusCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestStatusCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal QuotaAllocationRequestStatusCollection(ArmClient client, ResourceIdentifier id, string subscriptionId, string groupQuotaName, string resourceProviderName) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        internal QuotaAllocationRequestStatusCollection(ArmClient client, ResourceIdentifier id, string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName) : base(client, id)
         {
+            TryGetApiVersion(QuotaAllocationRequestStatusResource.ResourceType, out string quotaAllocationRequestStatusApiVersion);
+            _managementGroupId = managementGroupId;
             _subscriptionId = subscriptionId;
             _groupQuotaName = groupQuotaName;
             _resourceProviderName = resourceProviderName;
-            _quotaAllocationRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaAllocationRequestStatusResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(QuotaAllocationRequestStatusResource.ResourceType, out string quotaAllocationRequestStatusApiVersion);
-            _quotaAllocationRequestStatusRestClient = new QuotaAllocationRequestStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, quotaAllocationRequestStatusApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _quotaAllocationRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaAllocationRequestStatusResource.ResourceType.Namespace, Diagnostics);
+            _quotaAllocationRequestStatusesRestClient = new QuotaAllocationRequestStatuses(_quotaAllocationRequestStatusesClientDiagnostics, Pipeline, Endpoint, quotaAllocationRequestStatusApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagementGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != TenantResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get the quota allocation request status for the subscriptionId by allocationId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaAllocationRequestStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetAsync(string allocationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Get");
+            using DiagnosticScope scope = _quotaAllocationRequestStatusesClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Get");
             scope.Start();
             try
             {
-                var response = await _quotaAllocationRequestStatusRestClient.GetAsync(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<QuotaAllocationRequestStatusData> response = Response.FromValue(QuotaAllocationRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -106,42 +104,30 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Get the quota allocation request status for the subscriptionId by allocationId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaAllocationRequestStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<QuotaAllocationRequestStatusResource> Get(string allocationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Get");
+            using DiagnosticScope scope = _quotaAllocationRequestStatusesClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Get");
             scope.Start();
             try
             {
-                var response = _quotaAllocationRequestStatusRestClient.Get(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<QuotaAllocationRequestStatusData> response = Response.FromValue(QuotaAllocationRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -151,120 +137,98 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaAllocationRequestStatus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required. </summary>
         /// <param name="filter">
         /// | Field | Supported operators
         /// |---------------------|------------------------
-        ///
+        /// 
         /// location eq {location}
         /// Example: $filter=location eq eastus
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="QuotaAllocationRequestStatusResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="QuotaAllocationRequestStatusResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaAllocationRequestStatusResource> GetAllAsync(string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaAllocationRequestStatusRestClient.CreateListRequest(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaAllocationRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaAllocationRequestStatusResource(Client, QuotaAllocationRequestStatusData.DeserializeQuotaAllocationRequestStatusData(e)), _quotaAllocationRequestStatusClientDiagnostics, Pipeline, "QuotaAllocationRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<QuotaAllocationRequestStatusData, QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT(
+                _quotaAllocationRequestStatusesRestClient,
+                _managementGroupId,
+                _subscriptionId,
+                _groupQuotaName,
+                _resourceProviderName,
+                filter,
+                context), data => new QuotaAllocationRequestStatusResource(Client, data));
         }
 
-        /// <summary>
-        /// Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaAllocationRequestStatus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required. </summary>
         /// <param name="filter">
         /// | Field | Supported operators
         /// |---------------------|------------------------
-        ///
+        /// 
         /// location eq {location}
         /// Example: $filter=location eq eastus
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="QuotaAllocationRequestStatusResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaAllocationRequestStatusResource> GetAll(string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaAllocationRequestStatusRestClient.CreateListRequest(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaAllocationRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaAllocationRequestStatusResource(Client, QuotaAllocationRequestStatusData.DeserializeQuotaAllocationRequestStatusData(e)), _quotaAllocationRequestStatusClientDiagnostics, Pipeline, "QuotaAllocationRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<QuotaAllocationRequestStatusData, QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusesGetAllCollectionResultOfT(
+                _quotaAllocationRequestStatusesRestClient,
+                _managementGroupId,
+                _subscriptionId,
+                _groupQuotaName,
+                _resourceProviderName,
+                filter,
+                context), data => new QuotaAllocationRequestStatusResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaAllocationRequestStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string allocationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Exists");
+            using DiagnosticScope scope = _quotaAllocationRequestStatusesClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _quotaAllocationRequestStatusRestClient.GetAsync(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<QuotaAllocationRequestStatusData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(QuotaAllocationRequestStatusData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((QuotaAllocationRequestStatusData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -274,40 +238,38 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaAllocationRequestStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string allocationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Exists");
+            using DiagnosticScope scope = _quotaAllocationRequestStatusesClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.Exists");
             scope.Start();
             try
             {
-                var response = _quotaAllocationRequestStatusRestClient.Get(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<QuotaAllocationRequestStatusData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(QuotaAllocationRequestStatusData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((QuotaAllocationRequestStatusData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -317,42 +279,42 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaAllocationRequestStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<QuotaAllocationRequestStatusResource>> GetIfExistsAsync(string allocationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetIfExists");
+            using DiagnosticScope scope = _quotaAllocationRequestStatusesClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _quotaAllocationRequestStatusRestClient.GetAsync(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<QuotaAllocationRequestStatusData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(QuotaAllocationRequestStatusData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((QuotaAllocationRequestStatusData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<QuotaAllocationRequestStatusResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -362,42 +324,42 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaAllocationRequestStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<QuotaAllocationRequestStatusResource> GetIfExists(string allocationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
 
-            using var scope = _quotaAllocationRequestStatusClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetIfExists");
+            using DiagnosticScope scope = _quotaAllocationRequestStatusesClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _quotaAllocationRequestStatusRestClient.Get(Id.Name, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<QuotaAllocationRequestStatusData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(QuotaAllocationRequestStatusData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((QuotaAllocationRequestStatusData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<QuotaAllocationRequestStatusResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -405,6 +367,22 @@ namespace Azure.ResourceManager.Quota
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<QuotaAllocationRequestStatusResource> IEnumerable<QuotaAllocationRequestStatusResource>.GetEnumerator()
+        {
+            return this.GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<QuotaAllocationRequestStatusResource> IAsyncEnumerable<QuotaAllocationRequestStatusResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

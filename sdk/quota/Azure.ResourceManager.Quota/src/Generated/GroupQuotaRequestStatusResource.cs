@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
-    /// A Class representing a GroupQuotaRequestStatus along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GroupQuotaRequestStatusResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetGroupQuotaRequestStatusResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GroupQuotaEntityResource"/> using the GetGroupQuotaRequestStatus method.
+    /// A class representing a GroupQuotaRequestStatus along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GroupQuotaRequestStatusResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GroupQuotaEntityResource"/> using the GetGroupQuotaRequestStatuses method.
     /// </summary>
     public partial class GroupQuotaRequestStatusResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="GroupQuotaRequestStatusResource"/> instance. </summary>
-        /// <param name="managementGroupId"> The managementGroupId. </param>
-        /// <param name="groupQuotaName"> The groupQuotaName. </param>
-        /// <param name="requestId"> The requestId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string groupQuotaName, string requestId)
-        {
-            var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics;
-        private readonly SubmittedResourceRequestStatusesRestOperations _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient;
+        private readonly ClientDiagnostics _submittedResourceRequestStatusesClientDiagnostics;
+        private readonly SubmittedResourceRequestStatuses _submittedResourceRequestStatusesRestClient;
         private readonly GroupQuotaRequestStatusData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Quota/groupQuotas/groupQuotaRequests";
 
-        /// <summary> Initializes a new instance of the <see cref="GroupQuotaRequestStatusResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GroupQuotaRequestStatusResource for mocking. </summary>
         protected GroupQuotaRequestStatusResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GroupQuotaRequestStatusResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaRequestStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GroupQuotaRequestStatusResource(ArmClient client, GroupQuotaRequestStatusData data) : this(client, data.Id)
@@ -53,71 +43,72 @@ namespace Azure.ResourceManager.Quota
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GroupQuotaRequestStatusResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaRequestStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GroupQuotaRequestStatusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string groupQuotaRequestStatusSubmittedResourceRequestStatusesApiVersion);
-            _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient = new SubmittedResourceRequestStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaRequestStatusSubmittedResourceRequestStatusesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string groupQuotaRequestStatusApiVersion);
+            _submittedResourceRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
+            _submittedResourceRequestStatusesRestClient = new SubmittedResourceRequestStatuses(_submittedResourceRequestStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotaRequestStatusApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual GroupQuotaRequestStatusData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="managementGroupId"> The managementGroupId. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName. </param>
+        /// <param name="requestId"> The requestId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string groupQuotaName, string requestId)
+        {
+            string resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get API to check the status of a GroupQuota request by requestId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubmittedResourceRequestStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GroupQuotaRequestStatusResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusResource.Get");
+            using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusResource.Get");
             scope.Start();
             try
             {
-                var response = await _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GroupQuotaRequestStatusData> response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GroupQuotaRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,37 +118,25 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Get API to check the status of a GroupQuota request by requestId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubmittedResourceRequestStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GroupQuotaRequestStatusResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusResource.Get");
+            using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusResource.Get");
             scope.Start();
             try
             {
-                var response = _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GroupQuotaRequestStatusData> response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GroupQuotaRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
