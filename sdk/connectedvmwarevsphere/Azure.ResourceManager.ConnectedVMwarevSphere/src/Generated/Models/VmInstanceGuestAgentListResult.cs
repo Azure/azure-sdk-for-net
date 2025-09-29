@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VmInstanceGuestAgentListResult"/>. </summary>
-        /// <param name="value"> Array of GuestAgent. </param>
+        /// <param name="value"> The GuestAgent items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VmInstanceGuestAgentListResult(IEnumerable<VmInstanceGuestAgentData> value)
         {
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VmInstanceGuestAgentListResult"/>. </summary>
-        /// <param name="nextLink"> Url to follow for getting next page of GuestAgent. </param>
-        /// <param name="value"> Array of GuestAgent. </param>
+        /// <param name="value"> The GuestAgent items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmInstanceGuestAgentListResult(string nextLink, IReadOnlyList<VmInstanceGuestAgentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VmInstanceGuestAgentListResult(IReadOnlyList<VmInstanceGuestAgentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
         }
 
-        /// <summary> Url to follow for getting next page of GuestAgent. </summary>
-        public string NextLink { get; }
-        /// <summary> Array of GuestAgent. </summary>
+        /// <summary> The GuestAgent items on this page. </summary>
         public IReadOnlyList<VmInstanceGuestAgentData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
