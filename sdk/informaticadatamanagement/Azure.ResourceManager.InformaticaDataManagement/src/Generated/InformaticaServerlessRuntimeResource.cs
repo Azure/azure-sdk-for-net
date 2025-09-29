@@ -340,10 +340,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 };
                 HttpMessage message = _serverlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
                 return response;
             }
             catch (Exception e)
@@ -367,10 +363,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 };
                 HttpMessage message = _serverlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
                 return response;
             }
             catch (Exception e)
