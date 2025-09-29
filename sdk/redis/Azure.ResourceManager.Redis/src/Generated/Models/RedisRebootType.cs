@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Redis.Models
         private const string SecondaryNodeValue = "SecondaryNode";
         private const string AllNodesValue = "AllNodes";
 
-        /// <summary> PrimaryNode. </summary>
+        /// <summary> Reboot the primary nodes used for redis write operations. (This may trigger role changes.) *. </summary>
         public static RedisRebootType PrimaryNode { get; } = new RedisRebootType(PrimaryNodeValue);
-        /// <summary> SecondaryNode. </summary>
+        /// <summary> Reboot only the secondary or replica nodes *. </summary>
         public static RedisRebootType SecondaryNode { get; } = new RedisRebootType(SecondaryNodeValue);
-        /// <summary> AllNodes. </summary>
+        /// <summary> Reboot all nodes, not guaranteed to happen simultaneously. *. </summary>
         public static RedisRebootType AllNodes { get; } = new RedisRebootType(AllNodesValue);
         /// <summary> Determines if two <see cref="RedisRebootType"/> values are the same. </summary>
         public static bool operator ==(RedisRebootType left, RedisRebootType right) => left.Equals(right);
