@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="distributionVersion"> The Kubernetes distribution version on this connected cluster. </param>
         /// <param name="infrastructure"> The infrastructure on which the Kubernetes cluster represented by this connected cluster is running on. </param>
         /// <param name="offering"> Connected cluster offering. </param>
-        /// <param name="managedIdentityCertificateExpirationTime"> Expiration time of the managed identity certificate. </param>
-        /// <param name="lastConnectivityTime"> Time representing the last instance when heart beat was received from the cluster. </param>
+        /// <param name="managedIdentityCertificateExpirationOn"> Expiration time of the managed identity certificate. </param>
+        /// <param name="lastConnectivityOn"> Time representing the last instance when heart beat was received from the cluster. </param>
         /// <param name="connectivityStatus"> Represents the connectivity status of the connected cluster. </param>
         /// <param name="privateLinkState"> Property which describes the state of private link on a connected cluster resource. </param>
         /// <param name="privateLinkScopeResourceId"> This is populated only if privateLinkState is enabled. The resource id of the private link scope this connected cluster is assigned to, if any. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationTime, DateTimeOffset? lastConnectivityTime, ConnectivityStatus? connectivityStatus, PrivateLinkState? privateLinkState, string privateLinkScopeResourceId, AzureHybridBenefit? azureHybridBenefit, AadProfile aadProfile, ArcAgentProfile arcAgentProfile, SecurityProfile securityProfile, OidcIssuerProfile oidcIssuerProfile, Gateway gateway, IList<ArcAgentryConfigurations> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectivityStatus? connectivityStatus, PrivateLinkState? privateLinkState, string privateLinkScopeResourceId, AzureHybridBenefit? azureHybridBenefit, AadProfile aadProfile, ArcAgentProfile arcAgentProfile, SecurityProfile securityProfile, OidcIssuerProfile oidcIssuerProfile, Gateway gateway, IList<ArcAgentryConfigurations> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
             KubernetesVersion = kubernetesVersion;
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
             DistributionVersion = distributionVersion;
             Infrastructure = infrastructure;
             Offering = offering;
-            ManagedIdentityCertificateExpirationTime = managedIdentityCertificateExpirationTime;
-            LastConnectivityTime = lastConnectivityTime;
+            ManagedIdentityCertificateExpirationOn = managedIdentityCertificateExpirationOn;
+            LastConnectivityOn = lastConnectivityOn;
             ConnectivityStatus = connectivityStatus;
             PrivateLinkState = privateLinkState;
             PrivateLinkScopeResourceId = privateLinkScopeResourceId;
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public string Offering { get; }
 
         /// <summary> Expiration time of the managed identity certificate. </summary>
-        public DateTimeOffset? ManagedIdentityCertificateExpirationTime { get; }
+        public DateTimeOffset? ManagedIdentityCertificateExpirationOn { get; }
 
         /// <summary> Time representing the last instance when heart beat was received from the cluster. </summary>
-        public DateTimeOffset? LastConnectivityTime { get; }
+        public DateTimeOffset? LastConnectivityOn { get; }
 
         /// <summary> Represents the connectivity status of the connected cluster. </summary>
         public ConnectivityStatus? ConnectivityStatus { get; }
