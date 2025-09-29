@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/path",
-                FileSystemUser = new FileSystemUser
+                FileSystemUser = new BucketFileSystemUser
                 {
-                    NfsUser = new NfsUser
+                    NfsUser = new BucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/path",
-                FileSystemUser = new FileSystemUser
+                FileSystemUser = new BucketFileSystemUser
                 {
-                    NfsUser = new NfsUser
+                    NfsUser = new BucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data2 = new NetAppBucketData
             {
                 Path = "/path2",
-                FileSystemUser = new FileSystemUser
+                FileSystemUser = new BucketFileSystemUser
                 {
-                    NfsUser = new NfsUser
+                    NfsUser = new BucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
@@ -207,9 +207,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/path",
-                FileSystemUser = new FileSystemUser
+                FileSystemUser = new BucketFileSystemUser
                 {
-                    NfsUser = new NfsUser
+                    NfsUser = new BucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/path",
-                FileSystemUser = new FileSystemUser
+                FileSystemUser = new BucketFileSystemUser
                 {
-                    NfsUser = new NfsUser
+                    NfsUser = new BucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
