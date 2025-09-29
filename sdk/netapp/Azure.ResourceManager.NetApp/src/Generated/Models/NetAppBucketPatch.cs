@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Serialized Name: BucketPatch.properties.permissions
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBucketPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, FileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, NetAppBucketServerPatchProperties server, NetAppBucketPatchPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppBucketPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, BucketFileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, NetAppBucketServerPatchProperties server, NetAppBucketPatchPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             FileSystemUser = fileSystemUser;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both.
         /// Serialized Name: BucketPatch.properties.fileSystemUser
         /// </summary>
-        public FileSystemUser FileSystemUser { get; set; }
+        public BucketFileSystemUser FileSystemUser { get; set; }
         /// <summary>
         /// Provisioning state of the resource
         /// Serialized Name: BucketPatch.properties.provisioningState

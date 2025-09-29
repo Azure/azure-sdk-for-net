@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.NetApp
             ResourceType type = default;
             SystemData systemData = default;
             string path = default;
-            FileSystemUser fileSystemUser = default;
+            BucketFileSystemUser fileSystemUser = default;
             NetAppProvisioningState? provisioningState = default;
-            CredentialsStatus? status = default;
+            BucketCredentialStatus? status = default;
             NetAppBucketServerProperties server = default;
             NetAppBucketPermission? permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            fileSystemUser = FileSystemUser.DeserializeFileSystemUser(property0.Value, options);
+                            fileSystemUser = BucketFileSystemUser.DeserializeBucketFileSystemUser(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            status = new CredentialsStatus(property0.Value.GetString());
+                            status = new BucketCredentialStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("server"u8))

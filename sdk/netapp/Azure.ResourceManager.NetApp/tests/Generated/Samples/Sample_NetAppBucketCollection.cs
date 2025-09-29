@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/path",
-                FileSystemUser = new FileSystemUser
+                FileSystemUser = new BucketFileSystemUser
                 {
-                    NfsUser = new NfsUser
+                    NfsUser = new BucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,

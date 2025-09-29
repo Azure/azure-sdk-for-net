@@ -271,6 +271,9 @@ rename-mapping:
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
   QuotaItem: NetAppSubscriptionQuotaItem
+  NfsUser: BucketNfsUser
+  FileSystemUser: BucketFileSystemUser
+  CredentialsStatus: BucketCredentialStatus
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

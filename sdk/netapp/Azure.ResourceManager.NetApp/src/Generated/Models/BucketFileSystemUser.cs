@@ -11,10 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary>
-    /// The effective NFS User ID and Group ID when accessing the volume data.
-    /// Serialized Name: NfsUser
+    /// File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both.
+    /// Serialized Name: FileSystemUser
     /// </summary>
-    public partial class NfsUser
+    public partial class BucketFileSystemUser
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,37 +48,51 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NfsUser"/>. </summary>
-        public NfsUser()
+        /// <summary> Initializes a new instance of <see cref="BucketFileSystemUser"/>. </summary>
+        public BucketFileSystemUser()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NfsUser"/>. </summary>
-        /// <param name="userId">
-        /// The NFS user's UID
-        /// Serialized Name: NfsUser.userId
+        /// <summary> Initializes a new instance of <see cref="BucketFileSystemUser"/>. </summary>
+        /// <param name="nfsUser">
+        /// The effective NFS User ID and Group ID when accessing the volume data.
+        /// Serialized Name: FileSystemUser.nfsUser
         /// </param>
-        /// <param name="groupId">
-        /// The NFS user's GID
-        /// Serialized Name: NfsUser.groupId
+        /// <param name="cifsUser">
+        /// The effective CIFS username when accessing the volume data.
+        /// Serialized Name: FileSystemUser.cifsUser
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NfsUser(long? userId, long? groupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BucketFileSystemUser(BucketNfsUser nfsUser, CifsUser cifsUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UserId = userId;
-            GroupId = groupId;
+            NfsUser = nfsUser;
+            CifsUser = cifsUser;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        /// The NFS user's UID
-        /// Serialized Name: NfsUser.userId
+        /// The effective NFS User ID and Group ID when accessing the volume data.
+        /// Serialized Name: FileSystemUser.nfsUser
         /// </summary>
-        public long? UserId { get; set; }
+        public BucketNfsUser NfsUser { get; set; }
         /// <summary>
-        /// The NFS user's GID
-        /// Serialized Name: NfsUser.groupId
+        /// The effective CIFS username when accessing the volume data.
+        /// Serialized Name: FileSystemUser.cifsUser
         /// </summary>
-        public long? GroupId { get; set; }
+        internal CifsUser CifsUser { get; set; }
+        /// <summary>
+        /// The CIFS user's username
+        /// Serialized Name: CifsUser.username
+        /// </summary>
+        public string CifsUserUsername
+        {
+            get => CifsUser is null ? default : CifsUser.Username;
+            set
+            {
+                if (CifsUser is null)
+                    CifsUser = new CifsUser();
+                CifsUser.Username = value;
+            }
+        }
     }
 }

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// "Active": The certificate has been installed and credentials are unexpired.
     /// Serialized Name: CredentialsStatus
     /// </summary>
-    public readonly partial struct CredentialsStatus : IEquatable<CredentialsStatus>
+    public readonly partial struct BucketCredentialStatus : IEquatable<BucketCredentialStatus>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="CredentialsStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BucketCredentialStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CredentialsStatus(string value)
+        public BucketCredentialStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -37,29 +37,29 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Access and Secret key pair have not been generated.
         /// Serialized Name: CredentialsStatus.NoCredentialsSet
         /// </summary>
-        public static CredentialsStatus NoCredentialsSet { get; } = new CredentialsStatus(NoCredentialsSetValue);
+        public static BucketCredentialStatus NoCredentialsSet { get; } = new BucketCredentialStatus(NoCredentialsSetValue);
         /// <summary>
         /// Access and Secret key pair have expired.
         /// Serialized Name: CredentialsStatus.CredentialsExpired
         /// </summary>
-        public static CredentialsStatus CredentialsExpired { get; } = new CredentialsStatus(CredentialsExpiredValue);
+        public static BucketCredentialStatus CredentialsExpired { get; } = new BucketCredentialStatus(CredentialsExpiredValue);
         /// <summary>
         /// The certificate has been installed on the bucket server and the bucket credentials are unexpired.
         /// Serialized Name: CredentialsStatus.Active
         /// </summary>
-        public static CredentialsStatus Active { get; } = new CredentialsStatus(ActiveValue);
-        /// <summary> Determines if two <see cref="CredentialsStatus"/> values are the same. </summary>
-        public static bool operator ==(CredentialsStatus left, CredentialsStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CredentialsStatus"/> values are not the same. </summary>
-        public static bool operator !=(CredentialsStatus left, CredentialsStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CredentialsStatus"/>. </summary>
-        public static implicit operator CredentialsStatus(string value) => new CredentialsStatus(value);
+        public static BucketCredentialStatus Active { get; } = new BucketCredentialStatus(ActiveValue);
+        /// <summary> Determines if two <see cref="BucketCredentialStatus"/> values are the same. </summary>
+        public static bool operator ==(BucketCredentialStatus left, BucketCredentialStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="BucketCredentialStatus"/> values are not the same. </summary>
+        public static bool operator !=(BucketCredentialStatus left, BucketCredentialStatus right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BucketCredentialStatus"/>. </summary>
+        public static implicit operator BucketCredentialStatus(string value) => new BucketCredentialStatus(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CredentialsStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is BucketCredentialStatus other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(CredentialsStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BucketCredentialStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp
         /// Serialized Name: Bucket.properties.permissions
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBucketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, FileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, CredentialsStatus? status, NetAppBucketServerProperties server, NetAppBucketPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppBucketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, BucketFileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, BucketCredentialStatus? status, NetAppBucketServerProperties server, NetAppBucketPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             FileSystemUser = fileSystemUser;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp
         /// File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both.
         /// Serialized Name: Bucket.properties.fileSystemUser
         /// </summary>
-        public FileSystemUser FileSystemUser { get; set; }
+        public BucketFileSystemUser FileSystemUser { get; set; }
         /// <summary>
         /// Provisioning state of the resource
         /// Serialized Name: Bucket.properties.provisioningState
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp
         /// "Active": The certificate has been installed and credentials are unexpired.
         /// Serialized Name: Bucket.properties.status
         /// </summary>
-        public CredentialsStatus? Status { get; }
+        public BucketCredentialStatus? Status { get; }
         /// <summary>
         /// Properties of the server managing the lifecycle of volume buckets
         /// Serialized Name: Bucket.properties.server

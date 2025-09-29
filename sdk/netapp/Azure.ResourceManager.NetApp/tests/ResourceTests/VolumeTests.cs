@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.NetApp.Tests
     {
         private string _pool1Name = "pool1";
         private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts();}
+        internal NetAppVolumeResource _volumeResource;
+
         public VolumeTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -40,7 +42,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
             _volumeCollection = _capacityPool.GetNetAppVolumes();
-
+            await CreateVirtualNetwork();
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
             Console.WriteLine("VolumeTEST Setup create vnet");
         }
 
@@ -650,6 +654,18 @@ namespace Azure.ResourceManager.NetApp.Tests
             GetGroupIdListForLdapUserContent parameters = new("fakeUser");
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource1.GetGetGroupIdListForLdapUserAsync(WaitUntil.Completed, parameters); });
             Assert.AreEqual(400, exception.Status);
+        }
+
+        [RecordedTest]
+        public async Task ListQuotaReport()
+        {
+            //Check filePathAvailability, should be unavailable after volume creation
+            NetAppVolumeResource netAppVolume = Client.GetNetAppVolumeResource(_volumeResource.Id);
+            // invoke the operation
+            ArmOperation<NetAppVolumeQuotaReportListResult> lro = await netAppVolume.GetQuotaReportAsync(WaitUntil.Completed);
+            NetAppVolumeQuotaReportListResult result = lro.Value;
+            result.Should().NotBeNull();
+            result.Value.Should().BeEmpty();
         }
 
         private async Task WaitForReplicationStatus(NetAppVolumeResource volumeResource, NetAppMirrorState mirrorState)

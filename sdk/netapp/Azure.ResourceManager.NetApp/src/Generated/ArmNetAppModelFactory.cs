@@ -2632,7 +2632,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Serialized Name: Bucket.properties.permissions
         /// </param>
         /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
-        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, FileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, CredentialsStatus? status = null, NetAppBucketServerProperties server = null, NetAppBucketPermission? permissions = null)
+        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, BucketFileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, BucketCredentialStatus? status = null, NetAppBucketServerProperties server = null, NetAppBucketPermission? permissions = null)
         {
             return new NetAppBucketData(
                 id,
@@ -2707,7 +2707,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Serialized Name: BucketPatch.properties.permissions
         /// </param>
         /// <returns> A new <see cref="Models.NetAppBucketPatch"/> instance for mocking. </returns>
-        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, FileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, NetAppBucketServerPatchProperties server = null, NetAppBucketPatchPermission? permissions = null)
+        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, BucketFileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, NetAppBucketServerPatchProperties server = null, NetAppBucketPatchPermission? permissions = null)
         {
             return new NetAppBucketPatch(
                 id,
