@@ -18,6 +18,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -420,15 +421,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                         responseVariable.GetRawResponse()))).Terminate()
             };
 
-            List<MethodBodyStatement> statements = [nullCheckStatement];
+            // if the return type is Response with no content, no need to check null.
+            List<MethodBodyStatement> statements =
+                CheckIfReturnTypeIsResponseWithNoContent()
+                ? []
+                : [nullCheckStatement];
 
             // If the return type has been wrapped by a resource client, we need to return the resource client type.
             if (_returnBodyResourceClient != null)
             {
                 var returnValueExpression = New.Instance(
-                    _returnBodyResourceClient.Type,
-                    This.As<ArmResource>().Client(),
-                    responseVariable.Value());
+                        _returnBodyResourceClient.Type,
+                        This.As<ArmResource>().Client(),
+                        responseVariable.Value());
                 var returnStatement = Return(
                     ResponseSnippets.FromValue(
                         returnValueExpression,
@@ -441,6 +446,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
 
             return statements;
+
+            bool CheckIfReturnTypeIsResponseWithNoContent()
+            {
+                var returnType = signature.ReturnType;
+                return returnType != null && (returnType.Equals(typeof(Response)) || returnType.Equals(typeof(Task<Response>)));
+            }
         }
     }
 }
