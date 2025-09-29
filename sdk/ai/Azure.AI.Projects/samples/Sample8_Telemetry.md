@@ -13,7 +13,7 @@ This sample demonstrates how to enable various tracing methods
 
 You can add an Application Insights Azure resource to your Azure AI Foundry project. See the Tracing tab in your AI Foundry project. If one was enabled, you use the Application Insights connection string, configure your Project, and observe the full execution path through Azure Monitor.
 
-This sample shows the basics of enabling OpenTelemetry support in your application, using the Application Insights resource associated with your account. For full details on monitoring using Azure Monitor/OpenTelemetry, please refer to the corresponding [Azure documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-enable?tabs=net).
+This sample shows the basics of enabling OpenTelemetry support in your application, using the Application Insights resource associated with your account. For full details on monitoring using Azure Monitor/OpenTelemetry, please refer to the corresponding [Azure documentation](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=net).
 
 #### Tracing to Azure Monitor
 
@@ -57,4 +57,4 @@ var loggerFactory = LoggerFactory.Create(builder =>
 });
 ```
 
-For more details and full configuration options, please refer to the corresponding [Azure documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-enable?tabs=net).
+For more details and full configuration options, please refer to the corresponding [Azure documentation](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=net).
