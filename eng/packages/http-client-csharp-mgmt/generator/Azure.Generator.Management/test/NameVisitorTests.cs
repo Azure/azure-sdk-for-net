@@ -12,12 +12,12 @@ namespace Azure.Generator.Mgmt.Tests
     internal class NameVisitorTests
     {
         private const string TestClientName = "TestClient";
-        private const string TestModelName = "TestModelUrl";
-        private const string TestProtyName = "TestPropertyUrl";
 
         [Test]
         public void TestTransformUrlToUri()
         {
+            const string TestModelName = "TestModelUrl";
+            const string TestProtyName = "TestPropertyUrl";
             var modelProperty = InputFactory.Property(TestProtyName, InputPrimitiveType.String, serializedName: "testName", isRequired: true);
             var model = InputFactory.Model(TestModelName, properties: [modelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
@@ -36,6 +36,30 @@ namespace Azure.Generator.Mgmt.Tests
             var type = plugin.Object.TypeFactory.CreateModel(model);
             Assert.That(type?.Name, Is.EqualTo(TestModelName.Replace("Url", "Uri")));
             Assert.That(type?.Properties[0].Name, Is.EqualTo(TestProtyName.Replace("Url", "Uri")));
+        }
+
+        [Test]
+        public void TestTransformTimePropertyName()
+        {
+            const string TestModelName = "TestModel";
+            const string TestProtyName = "StartTime";
+            var modelProperty = InputFactory.Property(TestProtyName, InputPrimitiveType.PlainDate, serializedName: "testName", isRequired: true);
+            var model = InputFactory.Model(TestModelName, properties: [modelProperty]);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
+
+            // PreVisitModel is called during the model creation
+            var type = plugin.Object.TypeFactory.CreateModel(model);
+            Assert.That(type?.Properties[0].Name, Is.EqualTo(TestProtyName.Replace("Time", "On")));
         }
 
         [Test]

@@ -115,6 +115,7 @@ internal class NameVisitor : ScmLibraryVisitor
     {
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
+        DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
@@ -145,6 +146,53 @@ internal class NameVisitor : ScmLibraryVisitor
         if (propertyProvider != null && TryTransformUrlToUri(propertyProvider.Name, out var newPropertyName))
         {
             propertyProvider.Update(name: newPropertyName);
+        }
+    }
+
+    // Change the property name from XxxTime, XxxDate, XxxDateTime, XxxAt to XxxOn
+    private static readonly Dictionary<string, string> _nounToVerbDicts = new()
+        {
+            {"Creation", "Created"},
+            {"Deletion", "Deleted"},
+            {"Expiration", "Expire"},
+            {"Modification", "Modified"},
+        };
+    private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && propertyProvider.Type.Equals(typeof(DateTimeOffset)))
+        {
+            var propertyName = propertyProvider.Name;
+            // Skip properties that are not following the pattern we want to change
+            if (propertyName.StartsWith("From", StringComparison.Ordinal) ||
+                propertyName.StartsWith("To", StringComparison.Ordinal) ||
+                propertyName.EndsWith("PointInTime", StringComparison.Ordinal))
+            {
+                return;
+            }
+
+            var lengthToCut = 0;
+            if (propertyName.Length > 8 &&
+                propertyName.EndsWith("DateTime", StringComparison.Ordinal))
+            {
+                lengthToCut = 8;
+            }
+            else if (propertyName.Length > 4 &&
+                propertyName.EndsWith("Time", StringComparison.Ordinal) ||
+                propertyName.EndsWith("Date", StringComparison.Ordinal))
+            {
+                lengthToCut = 4;
+            }
+            else if (propertyName.Length > 2 &&
+                propertyName.EndsWith("At", StringComparison.Ordinal))
+            {
+                lengthToCut = 2;
+            }
+            if (lengthToCut > 0)
+            {
+                var prefix = propertyName.Substring(0, propertyName.Length - lengthToCut);
+                var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
+                propertyProvider.Update(name: newPropertyName);
+            }
         }
     }
 
