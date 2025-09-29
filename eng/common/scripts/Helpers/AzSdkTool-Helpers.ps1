@@ -105,6 +105,19 @@ function isNewVersion(
     return $true
 }
 
+function Get-GitHubApiHeaders {
+    $token = $env:GITHUB_TOKEN
+    if ($token)
+    {
+        Write-Host "Using authenticated GitHub API requests to install MCP server."
+        $headers = @{
+            Authorization = "bearer $token"
+        }
+        return $headers
+    }
+    return @{}
+}
+
 <#
 .SYNOPSIS
 Installs a standalone version of an engsys tool.
@@ -135,11 +148,12 @@ function Install-Standalone-Tool (
     }
 
     $tag = "${Package}_${Version}"
+    $headers = Get-GitHubApiHeaders
 
     if (!$Version -or $Version -eq "*") {
         Write-Host "Attempting to find latest version for package '$Package'"
         $releasesUrl = "https://api.github.com/repos/$Repository/releases"
-        $releases = Invoke-RestMethod -Uri $releasesUrl
+        $releases = Invoke-RestMethod -Uri $releasesUrl -Headers $headers
         $found = $false
         foreach ($release in $releases) {
             if ($release.tag_name -like "$Package*") {
@@ -163,7 +177,7 @@ function Install-Standalone-Tool (
 
     if (isNewVersion $version $downloadFolder) {
         Write-Host "Installing '$Package' '$Version' to '$downloadFolder' from $downloadUrl"
-        Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation
+        Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation -Headers $headers
 
         if ($downloadFile -like "*.zip") {
             Expand-Archive -Path $downloadLocation -DestinationPath $downloadFolder -Force
