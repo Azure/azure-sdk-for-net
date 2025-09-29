@@ -22,6 +22,7 @@ namespace Azure.Storage.Blobs
 
         public static RequestFailedException InvalidRangeWithNonEmptyBlob(RequestFailedException ex) =>
             new RequestFailedException("Invalid range exception during ranged download despite non-empty blob", ex);
+
         internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)
         {
             if (customerProvidedKey.HasValue && !string.Equals(uri.Scheme, Constants.Https, StringComparison.OrdinalIgnoreCase))

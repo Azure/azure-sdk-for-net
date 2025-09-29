@@ -54,17 +54,20 @@ namespace Azure.Search.Documents.Agents.Models
             Argument.AssertNotNull(messages, nameof(messages));
 
             Messages = messages.ToList();
-            TargetIndexParams = new ChangeTrackingList<KnowledgeAgentIndexParams>();
+            KnowledgeSourceParams = new ChangeTrackingList<KnowledgeSourceParams>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentRetrievalRequest"/>. </summary>
         /// <param name="messages"></param>
-        /// <param name="targetIndexParams"></param>
+        /// <param name="knowledgeSourceParams">
+        /// Please note <see cref="Models.KnowledgeSourceParams"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SearchIndexKnowledgeSourceParams"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeAgentRetrievalRequest(IList<KnowledgeAgentMessage> messages, IList<KnowledgeAgentIndexParams> targetIndexParams, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KnowledgeAgentRetrievalRequest(IList<KnowledgeAgentMessage> messages, IList<KnowledgeSourceParams> knowledgeSourceParams, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
-            TargetIndexParams = targetIndexParams;
+            KnowledgeSourceParams = knowledgeSourceParams;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,7 +78,11 @@ namespace Azure.Search.Documents.Agents.Models
 
         /// <summary> Gets the messages. </summary>
         public IList<KnowledgeAgentMessage> Messages { get; }
-        /// <summary> Gets the target index params. </summary>
-        public IList<KnowledgeAgentIndexParams> TargetIndexParams { get; }
+        /// <summary>
+        /// Gets the knowledge source params
+        /// Please note <see cref="Models.KnowledgeSourceParams"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SearchIndexKnowledgeSourceParams"/>.
+        /// </summary>
+        public IList<KnowledgeSourceParams> KnowledgeSourceParams { get; }
     }
 }

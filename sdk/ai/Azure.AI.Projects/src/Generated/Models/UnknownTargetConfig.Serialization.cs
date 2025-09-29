@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownTargetConfig : IJsonModel<TargetConfig>
+    internal partial class UnknownTargetConfig : TargetConfig, IJsonModel<TargetConfig>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTargetConfig"/> for deserialization. </summary>
         internal UnknownTargetConfig()

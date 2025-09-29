@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The language name, for example Python. </summary>
+        [WirePath("properties.language")]
         public SandboxCustomImageLanguage? Language { get; set; }
         /// <summary> The version of the language. Either this property or baseImageName should be specified. </summary>
+        [WirePath("properties.languageVersion")]
         public string LanguageVersion { get; set; }
         /// <summary> The base image name on which the custom image is built on top of. It can be one of the LanguageExtensionImageName (e.g.: 'Python3_10_8', 'Python3_10_8_DL') or the name of an existing custom image. Either this property or languageVersion should be specified. </summary>
+        [WirePath("properties.baseImageName")]
         public string BaseImageName { get; set; }
         /// <summary> The requirements file content. </summary>
+        [WirePath("properties.requirementsFileContent")]
         public string RequirementsFileContent { get; set; }
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
     }
 }

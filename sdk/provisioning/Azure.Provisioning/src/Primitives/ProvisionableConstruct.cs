@@ -130,18 +130,7 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
                 }
                 else if (pair.Value is ProvisionableConstruct construct)
                 {
-                    IList<BicepStatement> statements = [.. construct.Compile()];
-                    // TODO -- this is a workaround until https://github.com/Azure/azure-sdk-for-net/issues/52277 is resolved
-                    if (statements[0] is ResourceStatement resource)
-                    {
-                        // handle the case when we are using a resource as property of other resources
-                        statements[0] = new ExpressionStatement(resource.Body);
-                    }
-                    if (statements.Count != 1 || statements[0] is not ExpressionStatement expr)
-                    {
-                        throw new InvalidOperationException($"Expected a single expression statement for {pair.Key}.");
-                    }
-                    bicep[pair.Key] = expr.Expression;
+                    bicep[pair.Key] = construct.CompileProperties();
                 }
                 else
                 {
@@ -210,7 +199,6 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     /// <inheritdoc />
     bool IBicepValue.IsEmpty =>
         _kind == BicepValueKind.Unset ||
-        _kind == BicepValueKind.Expression ||
         _kind == BicepValueKind.Literal && ProvisionableProperties.All(p => p.Value.IsEmpty);
 
     /// <inheritdoc />

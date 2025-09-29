@@ -82,20 +82,28 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> List of tables to include in the follower database. </summary>
+        [WirePath("tablesToInclude")]
         public IList<string> TablesToInclude { get; }
         /// <summary> List of tables to exclude from the follower database. </summary>
+        [WirePath("tablesToExclude")]
         public IList<string> TablesToExclude { get; }
         /// <summary> List of external tables to include in the follower database. </summary>
+        [WirePath("externalTablesToInclude")]
         public IList<string> ExternalTablesToInclude { get; }
         /// <summary> List of external tables to exclude from the follower database. </summary>
+        [WirePath("externalTablesToExclude")]
         public IList<string> ExternalTablesToExclude { get; }
         /// <summary> List of materialized views to include in the follower database. </summary>
+        [WirePath("materializedViewsToInclude")]
         public IList<string> MaterializedViewsToInclude { get; }
         /// <summary> List of materialized views to exclude from the follower database. </summary>
+        [WirePath("materializedViewsToExclude")]
         public IList<string> MaterializedViewsToExclude { get; }
         /// <summary> List of functions to include in the follower database. </summary>
+        [WirePath("functionsToInclude")]
         public IList<string> FunctionsToInclude { get; }
         /// <summary> List of functions to exclude from the follower database. </summary>
+        [WirePath("functionsToExclude")]
         public IList<string> FunctionsToExclude { get; }
     }
 }

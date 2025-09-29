@@ -6,15 +6,15 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Payload.MultiPart
 {
-    internal partial class MultiPartFormDataBinaryContent : BinaryContent
+    internal partial class MultiPartFormDataBinaryContent : RequestContent
     {
         public MultiPartFormDataBinaryContent() => throw null;
 

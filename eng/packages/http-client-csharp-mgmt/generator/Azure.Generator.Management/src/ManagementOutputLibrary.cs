@@ -6,6 +6,7 @@ using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -51,6 +52,13 @@ namespace Azure.Generator.Management
 
         // our initialization process should guarantee that here we never get a KeyNotFoundException
         internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourcesByScopeDict)[scope];
+
+        private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>>? _outputFlattenPropertyMap;
+        internal IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> OutputFlattenPropertyMap => _outputFlattenPropertyMap ??= BuildOutputFlattenPropertyMap();
+        private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> BuildOutputFlattenPropertyMap()
+            => ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap.ToDictionary(
+                kv => ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!,
+                kv => kv.Value.Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!)!).ToHashSet());
 
         private T GetValue<T>(ref T? field) where T : class
         {

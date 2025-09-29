@@ -86,6 +86,8 @@ namespace Azure.Generator.Management.Providers
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
+        public RequestPathPattern ContextualPath => _contextualPath;
+
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 
         protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
@@ -302,7 +304,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         // TODO -- this is temporary. We should change this to find the corresponding parameters in ContextualParameters after it is refactored to consume parent resources.
-        private CSharpType GetPathParameterType(string parameterName)
+        public CSharpType GetPathParameterType(string parameterName)
         {
             foreach (var resourceMethod in _resourceServiceMethods)
             {

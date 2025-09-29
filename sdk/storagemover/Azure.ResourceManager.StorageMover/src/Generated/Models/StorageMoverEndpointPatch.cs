@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -54,20 +55,24 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="properties">
         /// The Endpoint resource, which contains information about file sources and targets.
         /// Please note <see cref="EndpointBaseUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/> and <see cref="SmbMountEndpointUpdateProperties"/>.
+        /// The available derived classes include <see cref="AzureMultiCloudConnectorEndpointUpdateProperties"/>, <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageNfsFileShareEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/> and <see cref="SmbMountEndpointUpdateProperties"/>.
         /// </param>
+        /// <param name="identity"> The managed system identity assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMoverEndpointPatch(EndpointBaseUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageMoverEndpointPatch(EndpointBaseUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
         /// The Endpoint resource, which contains information about file sources and targets.
         /// Please note <see cref="EndpointBaseUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/> and <see cref="SmbMountEndpointUpdateProperties"/>.
+        /// The available derived classes include <see cref="AzureMultiCloudConnectorEndpointUpdateProperties"/>, <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageNfsFileShareEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/> and <see cref="SmbMountEndpointUpdateProperties"/>.
         /// </summary>
         public EndpointBaseUpdateProperties Properties { get; set; }
+        /// <summary> The managed system identity assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

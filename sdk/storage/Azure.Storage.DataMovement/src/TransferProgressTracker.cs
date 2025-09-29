@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -12,7 +13,7 @@ namespace Azure.Storage.DataMovement
     /// Internal class for tracking progress of transfers and reporting back to
     /// user's progress handler.
     /// </summary>
-    internal class TransferProgressTracker : IAsyncDisposable
+    internal class TransferProgressTracker
     {
         internal class ProgressEventArgs
         {
@@ -48,10 +49,10 @@ namespace Azure.Storage.DataMovement
             _progressProcessor.Process = ProcessProgressEvent;
         }
 
-        public async ValueTask DisposeAsync()
+        public async Task CleanUpAsync()
         {
             // This will close the channel and block on all pending items being processed
-            await _progressProcessor.DisposeAsync().ConfigureAwait(false);
+            await _progressProcessor.CleanUpAsync().ConfigureAwait(false);
         }
 
         public async ValueTask IncrementCompletedFilesAsync(CancellationToken cancellationToken)
@@ -128,7 +129,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private Task ProcessProgressEvent(ProgressEventArgs args, CancellationToken cancellationToken = default)
+        private Task ProcessProgressEvent(ProgressEventArgs args)
         {
             // Only ever one thread processing at a time so its safe to update these
             // Changes can be negative

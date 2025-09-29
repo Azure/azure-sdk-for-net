@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using MgmtTypeSpec.Models;
@@ -18,7 +17,10 @@ namespace MgmtTypeSpec
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BarData))]
+    [ModelReaderWriterBuildable(typeof(BarDeeplyNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarListResult))]
+    [ModelReaderWriterBuildable(typeof(BarMiddleNestedQuotaProperties))]
+    [ModelReaderWriterBuildable(typeof(BarNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarProperties))]
     [ModelReaderWriterBuildable(typeof(BarQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarQuotaResource))]
@@ -46,8 +48,23 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(FooSettingsPropertiesMetaData))]
     [ModelReaderWriterBuildable(typeof(FooSettingsResource))]
     [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(HciVmInstanceData))]
+    [ModelReaderWriterBuildable(typeof(HciVmInstanceProperties))]
+    [ModelReaderWriterBuildable(typeof(HciVmInstanceResource))]
+    [ModelReaderWriterBuildable(typeof(JobProperties))]
+    [ModelReaderWriterBuildable(typeof(JobResource))]
+    [ModelReaderWriterBuildable(typeof(JobResourceData))]
+    [ModelReaderWriterBuildable(typeof(JobResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(NestedFooModel))]
+    [ModelReaderWriterBuildable(typeof(OptionalFlattenPropertyType))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaData))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaListResult))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(SelfHelpResource))]
+    [ModelReaderWriterBuildable(typeof(SelfHelpResourceData))]
+    [ModelReaderWriterBuildable(typeof(SelfHelpResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
