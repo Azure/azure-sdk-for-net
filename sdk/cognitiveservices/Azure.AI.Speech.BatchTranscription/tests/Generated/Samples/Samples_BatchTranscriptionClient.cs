@@ -293,12 +293,12 @@ namespace Azure.AI.Speech.BatchTranscription.Samples
                 WordLevelTimestampsEnabled = true,
                 DisplayFormWordLevelTimestampsEnabled = true,
                 Channels = { 1234 },
-                DestinationContainer = new Uri("http://localhost:3000"),
+                DestinationContainerUrl = new Uri("http://localhost:3000"),
                 PunctuationMode = PunctuationMode.None,
                 ProfanityFilterMode = ProfanityFilterMode.None,
                 Error = new EntityError(),
                 Diarization = new DiarizationProperties(true, 1234),
-                LanguageIdentificationProperties = new LanguageIdentificationProperties(new string[] { "<candidateLocales>" })
+                LanguageIdentification = new LanguageIdentificationProperties(new string[] { "<candidateLocales>" })
                 {
                     Mode = LanguageIdentificationMode.Continuous,
                     SpeechModelMapping =
@@ -310,8 +310,8 @@ namespace Azure.AI.Speech.BatchTranscription.Samples
             {
                 Model = default,
                 Dataset = default,
-                Contents = { new Uri("http://localhost:3000") },
-                SourceContainer = new Uri("http://localhost:3000"),
+                ContentUrls = { new Uri("http://localhost:3000") },
+                ContentContainerUrl = new Uri("http://localhost:3000"),
                 Description = "<description>",
                 CustomProperties =
 {
@@ -334,12 +334,12 @@ namespace Azure.AI.Speech.BatchTranscription.Samples
                 WordLevelTimestampsEnabled = true,
                 DisplayFormWordLevelTimestampsEnabled = true,
                 Channels = { 1234 },
-                DestinationContainer = new Uri("http://localhost:3000"),
+                DestinationContainerUrl = new Uri("http://localhost:3000"),
                 PunctuationMode = PunctuationMode.None,
                 ProfanityFilterMode = ProfanityFilterMode.None,
                 Error = new EntityError(),
                 Diarization = new DiarizationProperties(true, 1234),
-                LanguageIdentificationProperties = new LanguageIdentificationProperties(new string[] { "<candidateLocales>" })
+                LanguageIdentification = new LanguageIdentificationProperties(new string[] { "<candidateLocales>" })
                 {
                     Mode = LanguageIdentificationMode.Continuous,
                     SpeechModelMapping =
@@ -351,8 +351,8 @@ namespace Azure.AI.Speech.BatchTranscription.Samples
             {
                 Model = default,
                 Dataset = default,
-                Contents = { new Uri("http://localhost:3000") },
-                SourceContainer = new Uri("http://localhost:3000"),
+                ContentUrls = { new Uri("http://localhost:3000") },
+                ContentContainerUrl = new Uri("http://localhost:3000"),
                 Description = "<description>",
                 CustomProperties =
 {

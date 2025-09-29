@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Azure.AI.Speech.Transcription
+namespace Azure.Ai.Speech.Transcription.Models
 {
     /// <summary> The TranscribeRequest. </summary>
     public partial class TranscribeRequest

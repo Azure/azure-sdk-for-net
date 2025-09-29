@@ -46,7 +46,7 @@ namespace Azure.AI.Speech.Transcription
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PhraseListProperties"/>. </summary>
-        internal PhraseListProperties()
+        public PhraseListProperties()
         {
             Phrases = new ChangeTrackingList<string>();
         }
@@ -55,7 +55,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="phrases"> List of phrases for recognition. </param>
         /// <param name="biasingWeight"> Biasing weight for phrase list (1.0 to 20.0). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PhraseListProperties(IReadOnlyList<string> phrases, float? biasingWeight, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PhraseListProperties(IList<string> phrases, float? biasingWeight, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Phrases = phrases;
             BiasingWeight = biasingWeight;
@@ -63,8 +63,8 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <summary> List of phrases for recognition. </summary>
-        public IReadOnlyList<string> Phrases { get; }
+        public IList<string> Phrases { get; }
         /// <summary> Biasing weight for phrase list (1.0 to 20.0). </summary>
-        public float? BiasingWeight { get; }
+        public float? BiasingWeight { get; set; }
     }
 }

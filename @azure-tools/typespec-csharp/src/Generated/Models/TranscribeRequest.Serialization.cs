@@ -12,7 +12,7 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Speech.Transcription
+namespace Azure.Ai.Speech.Transcription.Models
 {
     public partial class TranscribeRequest : IUtf8JsonSerializable, IJsonModel<TranscribeRequest>
     {
@@ -154,7 +154,7 @@ namespace Azure.AI.Speech.Transcription
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAiSpeechTranscriptionContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

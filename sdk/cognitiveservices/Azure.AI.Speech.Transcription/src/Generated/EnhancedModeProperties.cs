@@ -46,7 +46,7 @@ namespace Azure.AI.Speech.Transcription
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EnhancedModeProperties"/>. </summary>
-        internal EnhancedModeProperties()
+        public EnhancedModeProperties()
         {
             Prompt = new ChangeTrackingList<string>();
         }
@@ -57,7 +57,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="targetLanguage"> Target language for enhanced mode. </param>
         /// <param name="prompt"> A list of user prompts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnhancedModeProperties(bool? enabled, string task, string targetLanguage, IReadOnlyList<string> prompt, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnhancedModeProperties(bool? enabled, string task, string targetLanguage, IList<string> prompt, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Task = task;
@@ -67,12 +67,12 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <summary> Enable enhanced mode for transcription. </summary>
-        public bool? Enabled { get; }
+        public bool? Enabled { get; set; }
         /// <summary> Task type for enhanced mode. </summary>
-        public string Task { get; }
+        public string Task { get; set; }
         /// <summary> Target language for enhanced mode. </summary>
-        public string TargetLanguage { get; }
+        public string TargetLanguage { get; set; }
         /// <summary> A list of user prompts. </summary>
-        public IReadOnlyList<string> Prompt { get; }
+        public IList<string> Prompt { get; }
     }
 }

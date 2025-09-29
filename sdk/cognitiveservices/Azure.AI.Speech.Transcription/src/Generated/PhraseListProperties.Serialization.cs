@@ -86,7 +86,7 @@ namespace Azure.AI.Speech.Transcription
             {
                 return null;
             }
-            IReadOnlyList<string> phrases = default;
+            IList<string> phrases = default;
             float? biasingWeight = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

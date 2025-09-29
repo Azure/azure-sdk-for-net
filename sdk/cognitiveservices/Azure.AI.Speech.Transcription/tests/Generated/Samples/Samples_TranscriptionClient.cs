@@ -65,7 +65,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscribeRequest body = new TranscribeRequest();
+            TranscribeRequestContent body = new TranscribeRequestContent();
             Response<TranscriptionResult> response = client.Transcribe(body);
         }
 
@@ -77,7 +77,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscribeRequest body = new TranscribeRequest();
+            TranscribeRequestContent body = new TranscribeRequestContent();
             Response<TranscriptionResult> response = await client.TranscribeAsync(body);
         }
 
@@ -91,7 +91,46 @@ namespace Azure.AI.Speech.Transcription.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                definition = "<definition>",
+                definition = new
+                {
+                    audioUrl = "http://localhost:3000",
+                    locales = new object[]
+            {
+"<locales>"
+            },
+                    models = new
+                    {
+                        key = "http://localhost:3000",
+                    },
+                    profanityFilterMode = "None",
+                    diarization = new
+                    {
+                        enabled = true,
+                        maxSpeakers = 1234,
+                    },
+                    channels = new object[]
+            {
+1234
+            },
+                    enhancedMode = new
+                    {
+                        enabled = true,
+                        task = "<task>",
+                        targetLanguage = "<targetLanguage>",
+                        prompt = new object[]
+            {
+"<prompt>"
+            },
+                    },
+                    phraseList = new
+                    {
+                        phrases = new object[]
+            {
+"<phrases>"
+            },
+                        biasingWeight = 123.45F,
+                    },
+                },
                 audio = File.OpenRead("<filePath>"),
             });
             Response response = client.Transcribe(content, "multipart/form-data");
@@ -122,7 +161,46 @@ namespace Azure.AI.Speech.Transcription.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                definition = "<definition>",
+                definition = new
+                {
+                    audioUrl = "http://localhost:3000",
+                    locales = new object[]
+            {
+"<locales>"
+            },
+                    models = new
+                    {
+                        key = "http://localhost:3000",
+                    },
+                    profanityFilterMode = "None",
+                    diarization = new
+                    {
+                        enabled = true,
+                        maxSpeakers = 1234,
+                    },
+                    channels = new object[]
+            {
+1234
+            },
+                    enhancedMode = new
+                    {
+                        enabled = true,
+                        task = "<task>",
+                        targetLanguage = "<targetLanguage>",
+                        prompt = new object[]
+            {
+"<prompt>"
+            },
+                    },
+                    phraseList = new
+                    {
+                        phrases = new object[]
+            {
+"<phrases>"
+            },
+                        biasingWeight = 123.45F,
+                    },
+                },
                 audio = File.OpenRead("<filePath>"),
             });
             Response response = await client.TranscribeAsync(content, "multipart/form-data");
@@ -151,9 +229,36 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscribeRequest body = new TranscribeRequest
+            TranscribeRequestContent body = new TranscribeRequestContent
             {
-                Definition = "<definition>",
+                Options = new TranscriptionOptions
+                {
+                    AudioUrl = new Uri("http://localhost:3000"),
+                    Locales = { "<locales>" },
+                    Models =
+{
+["key"] = new Uri("http://localhost:3000")
+},
+                    ProfanityFilterMode = ProfanityFilterMode.None,
+                    Diarization = new TranscriptionDiarizationOptions
+                    {
+                        Enabled = true,
+                        MaxSpeakers = 1234,
+                    },
+                    Channels = { 1234 },
+                    EnhancedMode = new EnhancedModeProperties
+                    {
+                        Enabled = true,
+                        Task = "<task>",
+                        TargetLanguage = "<targetLanguage>",
+                        Prompt = { "<prompt>" },
+                    },
+                    PhraseList = new PhraseListProperties
+                    {
+                        Phrases = { "<phrases>" },
+                        BiasingWeight = 123.45F,
+                    },
+                },
                 Audio = null,
             };
             Response<TranscriptionResult> response = client.Transcribe(body);
@@ -167,136 +272,39 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscribeRequest body = new TranscribeRequest
+            TranscribeRequestContent body = new TranscribeRequestContent
             {
-                Definition = "<definition>",
+                Options = new TranscriptionOptions
+                {
+                    AudioUrl = new Uri("http://localhost:3000"),
+                    Locales = { "<locales>" },
+                    Models =
+{
+["key"] = new Uri("http://localhost:3000")
+},
+                    ProfanityFilterMode = ProfanityFilterMode.None,
+                    Diarization = new TranscriptionDiarizationOptions
+                    {
+                        Enabled = true,
+                        MaxSpeakers = 1234,
+                    },
+                    Channels = { 1234 },
+                    EnhancedMode = new EnhancedModeProperties
+                    {
+                        Enabled = true,
+                        Task = "<task>",
+                        TargetLanguage = "<targetLanguage>",
+                        Prompt = { "<prompt>" },
+                    },
+                    PhraseList = new PhraseListProperties
+                    {
+                        Phrases = { "<phrases>" },
+                        BiasingWeight = 123.45F,
+                    },
+                },
                 Audio = null,
             };
             Response<TranscriptionResult> response = await client.TranscribeAsync(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Transcription_GetTranscriptionOptionsSchema_ShortVersion()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-
-            Response response = client.GetTranscriptionOptionsSchema(null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Transcription_GetTranscriptionOptionsSchema_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-
-            Response response = await client.GetTranscriptionOptionsSchemaAsync(null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Transcription_GetTranscriptionOptionsSchema_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-
-            Response<TranscriptionOptions> response = client.GetTranscriptionOptionsSchema();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Transcription_GetTranscriptionOptionsSchema_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-
-            Response<TranscriptionOptions> response = await client.GetTranscriptionOptionsSchemaAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Transcription_GetTranscriptionOptionsSchema_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-
-            Response response = client.GetTranscriptionOptionsSchema("<definition>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("audioUrl").ToString());
-            Console.WriteLine(result.GetProperty("locales")[0].ToString());
-            Console.WriteLine(result.GetProperty("models").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("profanityFilterMode").ToString());
-            Console.WriteLine(result.GetProperty("diarization").GetProperty("enabled").ToString());
-            Console.WriteLine(result.GetProperty("diarization").GetProperty("maxSpeakers").ToString());
-            Console.WriteLine(result.GetProperty("channels")[0].ToString());
-            Console.WriteLine(result.GetProperty("enhancedMode").GetProperty("enabled").ToString());
-            Console.WriteLine(result.GetProperty("enhancedMode").GetProperty("task").ToString());
-            Console.WriteLine(result.GetProperty("enhancedMode").GetProperty("targetLanguage").ToString());
-            Console.WriteLine(result.GetProperty("enhancedMode").GetProperty("prompt")[0].ToString());
-            Console.WriteLine(result.GetProperty("phraseList").GetProperty("phrases")[0].ToString());
-            Console.WriteLine(result.GetProperty("phraseList").GetProperty("biasingWeight").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Transcription_GetTranscriptionOptionsSchema_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-
-            Response response = await client.GetTranscriptionOptionsSchemaAsync("<definition>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("audioUrl").ToString());
-            Console.WriteLine(result.GetProperty("locales")[0].ToString());
-            Console.WriteLine(result.GetProperty("models").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("profanityFilterMode").ToString());
-            Console.WriteLine(result.GetProperty("diarization").GetProperty("enabled").ToString());
-            Console.WriteLine(result.GetProperty("diarization").GetProperty("maxSpeakers").ToString());
-            Console.WriteLine(result.GetProperty("channels")[0].ToString());
-            Console.WriteLine(result.GetProperty("enhancedMode").GetProperty("enabled").ToString());
-            Console.WriteLine(result.GetProperty("enhancedMode").GetProperty("task").ToString());
-            Console.WriteLine(result.GetProperty("enhancedMode").GetProperty("targetLanguage").ToString());
-            Console.WriteLine(result.GetProperty("enhancedMode").GetProperty("prompt")[0].ToString());
-            Console.WriteLine(result.GetProperty("phraseList").GetProperty("phrases")[0].ToString());
-            Console.WriteLine(result.GetProperty("phraseList").GetProperty("biasingWeight").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Transcription_GetTranscriptionOptionsSchema_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-
-            Response<TranscriptionOptions> response = client.GetTranscriptionOptionsSchema(definition: "<definition>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Transcription_GetTranscriptionOptionsSchema_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-
-            Response<TranscriptionOptions> response = await client.GetTranscriptionOptionsSchemaAsync(definition: "<definition>");
         }
     }
 }
