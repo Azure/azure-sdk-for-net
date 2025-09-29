@@ -17,8 +17,8 @@ namespace Azure.Generator.Mgmt.Tests
         public void TestTransformUrlToUri()
         {
             const string testModelName = "TestModelUrl";
-            const string testProtyName = "TestPropertyUrl";
-            var modelProperty = InputFactory.Property(testProtyName, InputPrimitiveType.String, serializedName: "testName", isRequired: true);
+            const string testPropertyName = "TestPropertyUrl";
+            var modelProperty = InputFactory.Property(testPropertyName, InputPrimitiveType.String, serializedName: "testName", isRequired: true);
             var model = InputFactory.Model(testModelName, properties: [modelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
             var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
@@ -35,15 +35,15 @@ namespace Azure.Generator.Mgmt.Tests
             // PreVisitModel is called during the model creation
             var type = plugin.Object.TypeFactory.CreateModel(model);
             Assert.That(type?.Name, Is.EqualTo(testModelName.Replace("Url", "Uri")));
-            Assert.That(type?.Properties[0].Name, Is.EqualTo(testProtyName.Replace("Url", "Uri")));
+            Assert.That(type?.Properties[0].Name, Is.EqualTo(testPropertyName.Replace("Url", "Uri")));
         }
 
         [Test]
         public void TestTransformTimePropertyName()
         {
             const string testModelName = "TestModel";
-            const string testProtyName = "StartTime";
-            var modelProperty = InputFactory.Property(testProtyName, InputPrimitiveType.PlainDate, serializedName: "testName", isRequired: true);
+            const string testPropertyName = "StartTime";
+            var modelProperty = InputFactory.Property(testPropertyName, InputPrimitiveType.PlainDate, serializedName: "testName", isRequired: true);
             var model = InputFactory.Model(testModelName, properties: [modelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
             var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
@@ -59,7 +59,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             // PreVisitModel is called during the model creation
             var type = plugin.Object.TypeFactory.CreateModel(model);
-            Assert.That(type?.Properties[0].Name, Is.EqualTo(testProtyName.Replace("Time", "On")));
+            Assert.That(type?.Properties[0].Name, Is.EqualTo(testPropertyName.Replace("Time", "On")));
         }
 
         [Test]

@@ -177,8 +177,8 @@ internal class NameVisitor : ScmLibraryVisitor
                 lengthToCut = 8;
             }
             else if (propertyName.Length > 4 &&
-                propertyName.EndsWith("Time", StringComparison.Ordinal) ||
-                propertyName.EndsWith("Date", StringComparison.Ordinal))
+                (propertyName.EndsWith("Time", StringComparison.Ordinal) ||
+                propertyName.EndsWith("Date", StringComparison.Ordinal)))
             {
                 lengthToCut = 4;
             }
