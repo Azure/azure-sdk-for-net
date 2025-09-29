@@ -171,23 +171,23 @@ jobs:
               [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}TENANT_ID", $account.Tenants);
 
               ./eng/scripts/runwithdevopslogging.ps1
-                dotnet test eng/service.proj
-                  --framework $(TestTargetFramework)
-                  --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
-                  --logger "trx"
-                  --logger:"console;verbosity=normal"
-                  --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
-                  /p:SDKType=${{ parameters.SDKType }}
-                  /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-                  /p:Project=${{ parameters.Project }}
-                  /p:IncludeSrc=false
-                  /p:IncludeSamples=false
-                  /p:IncludePerf=false
-                  /p:IncludeStress=false
-                  /p:BuildInParallel=${{ parameters.BuildInParallel }}
-                  /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
-                  /p:EnableSourceLink=false
-                  $(AdditionalTestArguments);
+              dotnet test eng/service.proj
+              --framework $(TestTargetFramework)
+              --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
+              --logger "trx"
+              --logger:"console;verbosity=normal"
+              --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
+              /p:SDKType=${{ parameters.SDKType }}
+              /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+              /p:Project=${{ parameters.Project }}
+              /p:IncludeSrc=false
+              /p:IncludeSamples=false
+              /p:IncludePerf=false
+              /p:IncludeStress=false
+              /p:BuildInParallel=${{ parameters.BuildInParallel }}
+              /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+              /p:EnableSourceLink=false
+              $(AdditionalTestArguments);
 
               Write-Host "Last exit code: $LASTEXITCODE";
               exit $LASTEXITCODE;
@@ -202,23 +202,23 @@ jobs:
       - ${{ else }}:
         - psws: >
             ./eng/scripts/runwithdevopslogging.ps1
-              dotnet test eng/service.proj
-                --framework $(TestTargetFramework)
-                --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
-                --logger "trx"
-                --logger:"console;verbosity=normal"
-                --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
-                /p:SDKType=${{ parameters.SDKType }}
-                /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-                /p:Project=${{ parameters.Project }}
-                /p:IncludeSrc=false
-                /p:IncludeSamples=false
-                /p:IncludePerf=false
-                /p:IncludeStress=false
-                /p:BuildInParallel=${{ parameters.BuildInParallel }}
-                /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
-                /p:EnableSourceLink=false
-                $(AdditionalTestArguments)
+            dotnet test eng/service.proj
+            --framework $(TestTargetFramework)
+            --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
+            --logger "trx"
+            --logger:"console;verbosity=normal"
+            --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
+            /p:SDKType=${{ parameters.SDKType }}
+            /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+            /p:Project=${{ parameters.Project }}
+            /p:IncludeSrc=false
+            /p:IncludeSamples=false
+            /p:IncludePerf=false
+            /p:IncludeStress=false
+            /p:BuildInParallel=${{ parameters.BuildInParallel }}
+            /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+            /p:EnableSourceLink=false
+            $(AdditionalTestArguments)
           displayName: "Build & Test (all tests for $(TestTargetFramework)) - Client Secret Auth"
           env:
             AZURE_TEST_MODE: $(TestMode)
