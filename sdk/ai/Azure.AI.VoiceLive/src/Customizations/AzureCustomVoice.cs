@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Data;
 using System.IO;
+using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {

@@ -60,7 +60,6 @@ namespace Azure.Generator.Management.Visitors
             var parameterMap = new Dictionary<ParameterProvider, ParameterProvider>();
             var updatedParameters = new List<ParameterProvider>(method.Signature.Parameters.Count);
             var updated = false;
-            var parameterShouldBeNullable = false; // if the previous method parameter is nullable, we need to ensure that the current parameter is also set with default value
             foreach (var parameter in method.Signature.Parameters)
             {
                 if (propertyNameMap.TryGetValue(parameter.Name, out var value))
@@ -70,35 +69,24 @@ namespace Azure.Generator.Management.Visitors
                     {
                         // If the flattened property is a value type, we need to ensure that we handle the nullability correctly.
                         var propertyParameter = flattenedProperty.AsParameter;
-                        if (parameterShouldBeNullable || flattenedProperty.Type.IsNullable)
-                        {
-                            // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
-                            var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type, propertyParameter.DefaultValue,
-                                propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
-                                propertyParameter.Field, propertyParameter.InitializationValue, propertyParameter.Location, propertyParameter.WireInfo, propertyParameter.Validation);
 
-                            if (isOverriddenValueType)
-                            {
-                                updatedParameter.Update(type: updatedParameter.Type.WithNullable(true));
-                            }
-                            parameterShouldBeNullable = true;
-                            updatedParameter.DefaultValue = Default; // Ensure that the default value is set to null for nullable types
+                        // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
+                        var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type, propertyParameter.DefaultValue,
+                            propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
+                            propertyParameter.Field, propertyParameter.InitializationValue, propertyParameter.Location, propertyParameter.WireInfo, propertyParameter.Validation);
 
-                            parameterMap.Add(propertyParameter, updatedParameter);
-                            updatedParameters.Add(updatedParameter);
-                        }
-                        else
+                        if (isOverriddenValueType)
                         {
-                            updatedParameters.Add(propertyParameter);
+                            updatedParameter.Update(type: updatedParameter.Type.WithNullable(true));
                         }
+                        updatedParameter.DefaultValue = Default; // Ensure that the default value is set to null for nullable types
+
+                        parameterMap.Add(propertyParameter, updatedParameter);
+                        updatedParameters.Add(updatedParameter);
                     }
                 }
                 else
                 {
-                    if (parameter.Type.IsNullable)
-                    {
-                        parameterShouldBeNullable = true;
-                    }
                     updatedParameters.Add(parameter);
                 }
             }
@@ -251,9 +239,16 @@ namespace Azure.Generator.Management.Visitors
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, (Dictionary<string, List<FlattenPropertyInfo>>, Dictionary<CSharpType, List<FlattenPropertyInfo>>)> _flattenedModelTypes = new(new CSharpTypeNameComparer());
-
+        private readonly HashSet<CSharpType> _visitedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
+            if (_visitedModelTypes.Contains(model.Type))
+            {
+                // already visiting this model type, we have a cycle, return
+                return;
+            }
+            _visitedModelTypes.Add(model.Type);
+
             var isFlattenProperty = false;
             var isSafeFlatten = false;
             var propertyMap = new Dictionary<PropertyProvider, List<FlattenPropertyInfo>>();

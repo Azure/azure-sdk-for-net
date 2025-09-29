@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
 
             VoiceLiveSession session = _keyCredential != null ? new(this, webSocketEndpoint, _keyCredential) : new(this, webSocketEndpoint, _tokenCredential);
 
-            await session.ConnectAsync(cancellationToken).ConfigureAwait(false);
+            await session.ConnectAsync(_options.Headers, cancellationToken).ConfigureAwait(false);
 
             return session;
         }

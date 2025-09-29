@@ -118,7 +118,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "azure-standard";
+            AzureVoiceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             float? temperature = default;
@@ -133,7 +133,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new AzureVoiceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

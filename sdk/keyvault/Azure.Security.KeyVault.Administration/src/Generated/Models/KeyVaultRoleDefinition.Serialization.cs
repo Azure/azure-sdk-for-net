@@ -184,8 +184,7 @@ namespace Azure.Security.KeyVault.Administration
         public static explicit operator KeyVaultRoleDefinition(Response result)
         {
             using Response response = result;
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeKeyVaultRoleDefinition(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

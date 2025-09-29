@@ -44,7 +44,7 @@ namespace Azure.AI.VoiceLive
                 writer.WriteStartArray();
                 foreach (AnimationOutputType item in Outputs)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.AI.VoiceLive
                     List<AnimationOutputType> array = new List<AnimationOutputType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToAnimationOutputType());
+                        array.Add(new AnimationOutputType(item.GetString()));
                     }
                     outputs = array;
                     continue;

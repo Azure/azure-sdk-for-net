@@ -68,7 +68,8 @@ namespace Azure.AI.VoiceLive
             ItemType @type = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string role = "unknown";
+            ResponseMessageRole role = default;
+            IList<MessageContentPart> content = default;
             ItemParamStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -84,7 +85,17 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("role"u8))
                 {
-                    role = prop.Value.GetString();
+                    role = new ResponseMessageRole(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("content"u8))
+                {
+                    List<MessageContentPart> array = new List<MessageContentPart>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MessageContentPart.DeserializeMessageContentPart(item, options));
+                    }
+                    content = array;
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -93,7 +104,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemParamStatus();
+                    status = new ItemParamStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,7 +112,13 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownMessageItem(@type, id, additionalBinaryDataProperties, role, status);
+            return new UnknownMessageItem(
+                @type,
+                id,
+                additionalBinaryDataProperties,
+                role,
+                content,
+                status);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
