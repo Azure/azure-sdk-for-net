@@ -70,16 +70,16 @@ namespace Azure.AI.Speech.Transcription
                 writer.WritePropertyName("profanityFilterMode"u8);
                 writer.WriteStringValue(ProfanityFilterMode.Value.ToString());
             }
-            if (Optional.IsDefined(DiarizationOptions))
+            if (Optional.IsDefined(Diarization))
             {
                 writer.WritePropertyName("diarization"u8);
-                writer.WriteObjectValue(DiarizationOptions, options);
+                writer.WriteObjectValue(Diarization, options);
             }
-            if (Optional.IsCollectionDefined(ActiveChannels))
+            if (Optional.IsCollectionDefined(Channels))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStartArray();
-                foreach (var item in ActiveChannels)
+                foreach (var item in Channels)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -133,11 +133,11 @@ namespace Azure.AI.Speech.Transcription
                 return null;
             }
             Uri audioUrl = default;
-            IReadOnlyList<string> locales = default;
-            IReadOnlyDictionary<string, Uri> models = default;
+            IList<string> locales = default;
+            IDictionary<string, Uri> models = default;
             ProfanityFilterMode? profanityFilterMode = default;
             TranscriptionDiarizationOptions diarization = default;
-            IReadOnlyList<int> channels = default;
+            IList<int> channels = default;
             EnhancedModeProperties enhancedMode = default;
             PhraseListProperties phraseList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

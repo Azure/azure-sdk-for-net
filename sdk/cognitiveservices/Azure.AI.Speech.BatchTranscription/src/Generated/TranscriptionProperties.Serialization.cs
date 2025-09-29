@@ -59,10 +59,10 @@ namespace Azure.AI.Speech.BatchTranscription
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DestinationContainer))
+            if (Optional.IsDefined(DestinationContainerUrl))
             {
                 writer.WritePropertyName("destinationContainerUrl"u8);
-                writer.WriteStringValue(DestinationContainer.AbsoluteUri);
+                writer.WriteStringValue(DestinationContainerUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(PunctuationMode))
             {
@@ -86,10 +86,10 @@ namespace Azure.AI.Speech.BatchTranscription
                 writer.WritePropertyName("diarization"u8);
                 writer.WriteObjectValue(Diarization, options);
             }
-            if (Optional.IsDefined(LanguageIdentificationProperties))
+            if (Optional.IsDefined(LanguageIdentification))
             {
                 writer.WritePropertyName("languageIdentification"u8);
-                writer.WriteObjectValue(LanguageIdentificationProperties, options);
+                writer.WriteObjectValue(LanguageIdentification, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

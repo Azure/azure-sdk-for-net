@@ -46,7 +46,7 @@ namespace Azure.AI.Speech.Transcription
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionDiarizationOptions"/>. </summary>
-        internal TranscriptionDiarizationOptions()
+        public TranscriptionDiarizationOptions()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <summary> Gets or sets a value indicating whether speaker diarization is enabled. </summary>
-        public bool? Enabled { get; }
+        public bool? Enabled { get; set; }
         /// <summary> Gets or sets a hint for the maximum number of speakers for diarization. Must be greater than 1 and less than 36. </summary>
-        public int? MaxSpeakers { get; }
+        public int? MaxSpeakers { get; set; }
     }
 }

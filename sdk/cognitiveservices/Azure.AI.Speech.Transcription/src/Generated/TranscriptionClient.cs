@@ -64,8 +64,8 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="body"> The body of the multipart request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='TranscribeAsync(TranscribeRequest,CancellationToken)']/*" />
-        public virtual async Task<Response<TranscriptionResult>> TranscribeAsync(TranscribeRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='TranscribeAsync(TranscribeRequestContent,CancellationToken)']/*" />
+        public virtual async Task<Response<TranscriptionResult>> TranscribeAsync(TranscribeRequestContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -79,8 +79,8 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="body"> The body of the multipart request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='Transcribe(TranscribeRequest,CancellationToken)']/*" />
-        public virtual Response<TranscriptionResult> Transcribe(TranscribeRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='Transcribe(TranscribeRequestContent,CancellationToken)']/*" />
+        public virtual Response<TranscriptionResult> Transcribe(TranscribeRequestContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -100,7 +100,7 @@ namespace Azure.AI.Speech.Transcription
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TranscribeAsync(TranscribeRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TranscribeAsync(TranscribeRequestContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -140,7 +140,7 @@ namespace Azure.AI.Speech.Transcription
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Transcribe(TranscribeRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Transcribe(TranscribeRequestContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -170,102 +170,6 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
-        /// <summary> Schema definitions (internal use only). </summary>
-        /// <param name="definition"> Returns the TranscriptionOptions schema definition for reference. See the TranscriptionOptions model in the OpenAPI specification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Internal documentation endpoint - provides schema definitions for TranscriptionOptions model. </remarks>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionOptionsSchemaAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TranscriptionOptions>> GetTranscriptionOptionsSchemaAsync(string definition = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTranscriptionOptionsSchemaAsync(definition, context).ConfigureAwait(false);
-            return Response.FromValue(TranscriptionOptions.FromResponse(response), response);
-        }
-
-        /// <summary> Schema definitions (internal use only). </summary>
-        /// <param name="definition"> Returns the TranscriptionOptions schema definition for reference. See the TranscriptionOptions model in the OpenAPI specification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Internal documentation endpoint - provides schema definitions for TranscriptionOptions model. </remarks>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionOptionsSchema(string,CancellationToken)']/*" />
-        public virtual Response<TranscriptionOptions> GetTranscriptionOptionsSchema(string definition = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTranscriptionOptionsSchema(definition, context);
-            return Response.FromValue(TranscriptionOptions.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Schema definitions (internal use only)
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTranscriptionOptionsSchemaAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="definition"> Returns the TranscriptionOptions schema definition for reference. See the TranscriptionOptions model in the OpenAPI specification. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionOptionsSchemaAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTranscriptionOptionsSchemaAsync(string definition, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("TranscriptionClient.GetTranscriptionOptionsSchema");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTranscriptionOptionsSchemaRequest(definition, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Schema definitions (internal use only)
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTranscriptionOptionsSchema(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="definition"> Returns the TranscriptionOptions schema definition for reference. See the TranscriptionOptions model in the OpenAPI specification. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionOptionsSchema(string,RequestContext)']/*" />
-        public virtual Response GetTranscriptionOptionsSchema(string definition, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("TranscriptionClient.GetTranscriptionOptionsSchema");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTranscriptionOptionsSchemaRequest(definition, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         internal HttpMessage CreateTranscribeRequest(RequestContent content, string contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -280,25 +184,6 @@ namespace Azure.AI.Speech.Transcription
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", contentType);
             request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetTranscriptionOptionsSchemaRequest(string definition, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/speechtotext", false);
-            uri.AppendPath("/internal/schemas/transcription-options", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (definition != null)
-            {
-                uri.AppendQuery("definition", definition, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

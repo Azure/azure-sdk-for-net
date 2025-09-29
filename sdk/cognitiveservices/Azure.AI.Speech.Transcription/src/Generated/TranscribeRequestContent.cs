@@ -11,8 +11,8 @@ using System.IO;
 
 namespace Azure.AI.Speech.Transcription
 {
-    /// <summary> The TranscribeRequest. </summary>
-    public partial class TranscribeRequest
+    /// <summary> Request model for transcription operation. </summary>
+    public partial class TranscribeRequestContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,24 +46,24 @@ namespace Azure.AI.Speech.Transcription
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TranscribeRequest"/>. </summary>
-        public TranscribeRequest()
+        /// <summary> Initializes a new instance of <see cref="TranscribeRequestContent"/>. </summary>
+        public TranscribeRequestContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscribeRequest"/>. </summary>
-        /// <param name="definition"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
+        /// <summary> Initializes a new instance of <see cref="TranscribeRequestContent"/>. </summary>
+        /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
         /// <param name="audio"> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscribeRequest(string definition, Stream audio, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranscribeRequestContent(TranscriptionOptions options, Stream audio, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Definition = definition;
+            Options = options;
             Audio = audio;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </summary>
-        public string Definition { get; set; }
+        public TranscriptionOptions Options { get; set; }
         /// <summary> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition. </summary>
         public Stream Audio { get; set; }
     }

@@ -46,11 +46,11 @@ namespace Azure.AI.Speech.Transcription
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
-        internal TranscriptionOptions()
+        public TranscriptionOptions()
         {
             Locales = new ChangeTrackingList<string>();
             Models = new ChangeTrackingDictionary<string, Uri>();
-            ActiveChannels = new ChangeTrackingList<int>();
+            Channels = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
@@ -58,39 +58,39 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="locales"> A list of possible locales for the transcription. If not specified, the locale of the speech in the audio is detected automatically from all supported locales. </param>
         /// <param name="models"> Maps some or all candidate locales to a model URI to be used for transcription. If no mapping is given, the default model for the locale is used. </param>
         /// <param name="profanityFilterMode"> Mode of profanity filtering. </param>
-        /// <param name="diarizationOptions"> Mode of diarization. </param>
-        /// <param name="activeChannels"> The 0-based indices of the channels to be transcribed separately. If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported. </param>
+        /// <param name="diarization"> Mode of diarization. </param>
+        /// <param name="channels"> The 0-based indices of the channels to be transcribed separately. If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported. </param>
         /// <param name="enhancedMode"> Enhanced mode properties. </param>
         /// <param name="phraseList"> Phrase list properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionOptions(Uri audioUrl, IReadOnlyList<string> locales, IReadOnlyDictionary<string, Uri> models, ProfanityFilterMode? profanityFilterMode, TranscriptionDiarizationOptions diarizationOptions, IReadOnlyList<int> activeChannels, EnhancedModeProperties enhancedMode, PhraseListProperties phraseList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranscriptionOptions(Uri audioUrl, IList<string> locales, IDictionary<string, Uri> models, ProfanityFilterMode? profanityFilterMode, TranscriptionDiarizationOptions diarization, IList<int> channels, EnhancedModeProperties enhancedMode, PhraseListProperties phraseList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AudioUrl = audioUrl;
             Locales = locales;
             Models = models;
             ProfanityFilterMode = profanityFilterMode;
-            DiarizationOptions = diarizationOptions;
-            ActiveChannels = activeChannels;
+            Diarization = diarization;
+            Channels = channels;
             EnhancedMode = enhancedMode;
             PhraseList = phraseList;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL of the audio to be transcribed. The audio must be shorter than 2 hours in audio duration and smaller than 250 MB in size. If both Audio and AudioUrl are provided, Audio is used. </summary>
-        public Uri AudioUrl { get; }
+        public Uri AudioUrl { get; set; }
         /// <summary> A list of possible locales for the transcription. If not specified, the locale of the speech in the audio is detected automatically from all supported locales. </summary>
-        public IReadOnlyList<string> Locales { get; }
+        public IList<string> Locales { get; }
         /// <summary> Maps some or all candidate locales to a model URI to be used for transcription. If no mapping is given, the default model for the locale is used. </summary>
-        public IReadOnlyDictionary<string, Uri> Models { get; }
+        public IDictionary<string, Uri> Models { get; }
         /// <summary> Mode of profanity filtering. </summary>
-        public ProfanityFilterMode? ProfanityFilterMode { get; }
+        public ProfanityFilterMode? ProfanityFilterMode { get; set; }
         /// <summary> Mode of diarization. </summary>
-        public TranscriptionDiarizationOptions DiarizationOptions { get; }
+        public TranscriptionDiarizationOptions Diarization { get; set; }
         /// <summary> The 0-based indices of the channels to be transcribed separately. If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported. </summary>
-        public IReadOnlyList<int> ActiveChannels { get; }
+        public IList<int> Channels { get; }
         /// <summary> Enhanced mode properties. </summary>
-        public EnhancedModeProperties EnhancedMode { get; }
+        public EnhancedModeProperties EnhancedMode { get; set; }
         /// <summary> Phrase list properties. </summary>
-        public PhraseListProperties PhraseList { get; }
+        public PhraseListProperties PhraseList { get; set; }
     }
 }
