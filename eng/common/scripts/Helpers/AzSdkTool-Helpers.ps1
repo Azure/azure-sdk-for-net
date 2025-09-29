@@ -109,9 +109,9 @@ function Get-GitHubApiHeaders {
     $token = $env:GITHUB_TOKEN
     if ($token)
     {
-        Write-Host "Using authenticated GitHub API requests to install MCP server."
+        Write-Host "Using authenticated GitHub API requests."
         $headers = @{
-            Authorization = "bearer $token"
+            Authorization = "Bearer $token"
         }
         return $headers
     }
