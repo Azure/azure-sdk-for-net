@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _frontDoorRuleClientDiagnostics;
-        private readonly FrontDoorRulesRestOperations _frontDoorRuleRestClient;
+        private readonly ClientDiagnostics _frontDoorRuleRulesClientDiagnostics;
+        private readonly RulesRestOperations _frontDoorRuleRulesRestClient;
         private readonly FrontDoorRuleData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorRuleApiVersion);
-            _frontDoorRuleRestClient = new FrontDoorRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRuleApiVersion);
+            _frontDoorRuleRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorRuleRulesApiVersion);
+            _frontDoorRuleRulesRestClient = new RulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRuleRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRules_Get</description>
+        /// <description>Rules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleResource.Get");
+            using var scope = _frontDoorRuleRulesClientDiagnostics.CreateScope("FrontDoorRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorRuleRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRuleResource(Client, response.Value), response.GetRawResponse());
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRules_Get</description>
+        /// <description>Rules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleResource.Get");
+            using var scope = _frontDoorRuleRulesClientDiagnostics.CreateScope("FrontDoorRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _frontDoorRuleRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRuleResource(Client, response.Value), response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRules_Delete</description>
+        /// <description>Rules_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleResource.Delete");
+            using var scope = _frontDoorRuleRulesClientDiagnostics.CreateScope("FrontDoorRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorRuleClientDiagnostics, Pipeline, _frontDoorRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorRuleRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorRuleRulesClientDiagnostics, Pipeline, _frontDoorRuleRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRules_Delete</description>
+        /// <description>Rules_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleResource.Delete");
+            using var scope = _frontDoorRuleRulesClientDiagnostics.CreateScope("FrontDoorRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorRuleClientDiagnostics, Pipeline, _frontDoorRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorRuleRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorRuleRulesClientDiagnostics, Pipeline, _frontDoorRuleRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRules_Update</description>
+        /// <description>Rules_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleResource.Update");
+            using var scope = _frontDoorRuleRulesClientDiagnostics.CreateScope("FrontDoorRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorRuleResource>(new FrontDoorRuleOperationSource(Client), _frontDoorRuleClientDiagnostics, Pipeline, _frontDoorRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorRuleRulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorRuleResource>(new FrontDoorRuleOperationSource(Client), _frontDoorRuleRulesClientDiagnostics, Pipeline, _frontDoorRuleRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRules_Update</description>
+        /// <description>Rules_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleResource.Update");
+            using var scope = _frontDoorRuleRulesClientDiagnostics.CreateScope("FrontDoorRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorRuleResource>(new FrontDoorRuleOperationSource(Client), _frontDoorRuleClientDiagnostics, Pipeline, _frontDoorRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorRuleRulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorRuleResource>(new FrontDoorRuleOperationSource(Client), _frontDoorRuleRulesClientDiagnostics, Pipeline, _frontDoorRuleRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

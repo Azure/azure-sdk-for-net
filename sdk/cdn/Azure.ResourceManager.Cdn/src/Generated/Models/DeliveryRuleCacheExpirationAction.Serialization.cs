@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             CacheExpirationActionProperties parameters = default;
-            DeliveryRuleActionType name = default;
+            DeliveryRuleActionName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = new DeliveryRuleActionType(property.Value.GetString());
+                    name = new DeliveryRuleActionName(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
