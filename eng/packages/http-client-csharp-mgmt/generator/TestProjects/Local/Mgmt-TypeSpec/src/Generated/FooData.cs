@@ -151,5 +151,22 @@ namespace MgmtTypeSpec
                 return Properties is null ? default : Properties.Prop2;
             }
         }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        public FooProperties NestedPropertyProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NestedPropertyProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.NestedPropertyProperties = value;
+            }
+        }
     }
 }

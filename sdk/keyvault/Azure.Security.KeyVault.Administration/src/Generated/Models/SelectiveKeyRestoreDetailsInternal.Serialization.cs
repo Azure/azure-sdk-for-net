@@ -222,8 +222,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         public static explicit operator SelectiveKeyRestoreDetailsInternal(Response result)
         {
             using Response response = result;
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

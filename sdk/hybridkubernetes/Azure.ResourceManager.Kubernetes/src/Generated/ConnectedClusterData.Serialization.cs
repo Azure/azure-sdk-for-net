@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Kubernetes
 {
     /// <summary> Represents a connected cluster. </summary>
-    public partial class ConnectedClusterData : IJsonModel<ConnectedClusterData>
+    public partial class ConnectedClusterData : TrackedResourceData, IJsonModel<ConnectedClusterData>
     {
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/> for deserialization. </summary>
         internal ConnectedClusterData()

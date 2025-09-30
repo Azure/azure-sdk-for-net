@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The FunctionCallOutputItem. </summary>
+    /// <summary> A function call output item within a conversation. </summary>
     public partial class FunctionCallOutputItem : ConversationRequestItem, IJsonModel<FunctionCallOutputItem>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionCallOutputItem"/> for deserialization. </summary>
@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemParamStatus();
+                    status = new ItemParamStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

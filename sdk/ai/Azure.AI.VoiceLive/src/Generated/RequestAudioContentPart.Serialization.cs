@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The RequestAudioContentPart. </summary>
+    /// <summary> An audio content part for a request. </summary>
     public partial class RequestAudioContentPart : VoiceLiveContentPart, IJsonModel<RequestAudioContentPart>
     {
         /// <param name="writer"> The JSON writer. </param>

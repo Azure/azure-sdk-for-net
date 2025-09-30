@@ -19,7 +19,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class FooData : IJsonModel<FooData>
+    public partial class FooData : TrackedResourceData, IJsonModel<FooData>
     {
         /// <summary> Initializes a new instance of <see cref="FooData"/> for deserialization. </summary>
         internal FooData()

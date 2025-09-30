@@ -10,12 +10,15 @@ using System.ComponentModel;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary></summary>
+    /// <summary> Input audio format types supported. </summary>
     public readonly partial struct InputAudioFormat : IEquatable<InputAudioFormat>
     {
         private readonly string _value;
+        /// <summary> 16-bit PCM audio format at default sampling rate (24kHz). </summary>
         private const string Pcm16Value = "pcm16";
+        /// <summary> G.711 μ-law (mu-law) audio format at 8kHz sampling rate. </summary>
         private const string G711UlawValue = "g711_ulaw";
+        /// <summary> G.711 A-law audio format at 8kHz sampling rate. </summary>
         private const string G711AlawValue = "g711_alaw";
 
         /// <summary> Initializes a new instance of <see cref="InputAudioFormat"/>. </summary>
@@ -28,13 +31,13 @@ namespace Azure.AI.VoiceLive
             _value = value;
         }
 
-        /// <summary> Gets the Pcm16. </summary>
+        /// <summary> 16-bit PCM audio format at default sampling rate (24kHz). </summary>
         public static InputAudioFormat Pcm16 { get; } = new InputAudioFormat(Pcm16Value);
 
-        /// <summary> Gets the G711Ulaw. </summary>
+        /// <summary> G.711 μ-law (mu-law) audio format at 8kHz sampling rate. </summary>
         public static InputAudioFormat G711Ulaw { get; } = new InputAudioFormat(G711UlawValue);
 
-        /// <summary> Gets the G711Alaw. </summary>
+        /// <summary> G.711 A-law audio format at 8kHz sampling rate. </summary>
         public static InputAudioFormat G711Alaw { get; } = new InputAudioFormat(G711AlawValue);
 
         /// <summary> Determines if two <see cref="InputAudioFormat"/> values are the same. </summary>

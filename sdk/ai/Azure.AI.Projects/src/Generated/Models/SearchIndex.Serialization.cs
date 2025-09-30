@@ -178,8 +178,7 @@ namespace Azure.AI.Projects
         public static explicit operator SearchIndex(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeSearchIndex(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

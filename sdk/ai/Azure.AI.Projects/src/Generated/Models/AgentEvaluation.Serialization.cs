@@ -185,8 +185,7 @@ namespace Azure.AI.Projects
         public static explicit operator AgentEvaluation(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeAgentEvaluation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

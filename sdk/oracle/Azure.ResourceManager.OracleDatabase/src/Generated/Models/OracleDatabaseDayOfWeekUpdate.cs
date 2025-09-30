@@ -46,10 +46,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OracleDatabaseDayOfWeekUpdate"/>. </summary>
-        /// <param name="name"> Name of the day of the week. </param>
-        public OracleDatabaseDayOfWeekUpdate(OracleDatabaseDayOfWeekName name)
+        public OracleDatabaseDayOfWeekUpdate()
         {
-            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleDatabaseDayOfWeekUpdate"/>. </summary>
@@ -60,13 +58,5 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Initializes a new instance of <see cref="OracleDatabaseDayOfWeekUpdate"/> for deserialization. </summary>
-        internal OracleDatabaseDayOfWeekUpdate()
-        {
-        }
-
-        /// <summary> Name of the day of the week. </summary>
-        public OracleDatabaseDayOfWeekName Name { get; set; }
     }
 }

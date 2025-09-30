@@ -18,7 +18,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Concrete extension resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class SelfHelpResourceData : IJsonModel<SelfHelpResourceData>
+    public partial class SelfHelpResourceData : ResourceData, IJsonModel<SelfHelpResourceData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
