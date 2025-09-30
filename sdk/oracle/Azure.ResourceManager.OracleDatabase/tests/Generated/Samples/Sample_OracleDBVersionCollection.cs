@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleDBVersionCollection collection = subscriptionResource.GetOracleDBVersions(location);
 
             // invoke the operation and iterate over the result
-            OracleDBVersionCollectionGetAllOptions options = new OracleDBVersionCollectionGetAllOptions { DbSystemShape = OracleBaseDbSystemShape.VmStandardX86, DbSystemId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Oracle.Database/dbSystems/dbsystem1"), StorageManagement = StorageManagementType.Lvm, IsUpgradeSupported = true, IsDatabaseSoftwareImageSupported = true, ShapeFamily = ShapeFamilyType.VirtualMachine };
+            ListDBVersionBySubscriptionLocationContent options = new ListDBVersionBySubscriptionLocationContent { DbSystemShape = OracleBaseDbSystemShape.VmStandardX86, DbSystemId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Oracle.Database/dbSystems/dbsystem1"), StorageManagement = StorageManagementType.Lvm, IsUpgradeSupported = true, IsDatabaseSoftwareImageSupported = true, ShapeFamily = ShapeFamilyType.VirtualMachine };
             await foreach (OracleDBVersionResource item in collection.GetAllAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well

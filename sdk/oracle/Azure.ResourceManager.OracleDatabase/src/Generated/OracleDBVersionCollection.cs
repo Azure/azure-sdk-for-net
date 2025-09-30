@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OracleDBVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleDBVersionResource> GetAllAsync(OracleDBVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleDBVersionResource> GetAllAsync(ListDBVersionBySubscriptionLocationContent options, CancellationToken cancellationToken = default)
         {
-            options ??= new OracleDBVersionCollectionGetAllOptions();
+            options ??= new ListDBVersionBySubscriptionLocationContent();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBVersionDbVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), options.DbSystemShape, options.DbSystemId, options.StorageManagement, options.IsUpgradeSupported, options.IsDatabaseSoftwareImageSupported, options.ShapeFamily);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBVersionDbVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), options.DbSystemShape, options.DbSystemId, options.StorageManagement, options.IsUpgradeSupported, options.IsDatabaseSoftwareImageSupported, options.ShapeFamily);
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleDBVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleDBVersionResource> GetAll(OracleDBVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<OracleDBVersionResource> GetAll(ListDBVersionBySubscriptionLocationContent options, CancellationToken cancellationToken = default)
         {
-            options ??= new OracleDBVersionCollectionGetAllOptions();
+            options ??= new ListDBVersionBySubscriptionLocationContent();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBVersionDbVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), options.DbSystemShape, options.DbSystemId, options.StorageManagement, options.IsUpgradeSupported, options.IsDatabaseSoftwareImageSupported, options.ShapeFamily);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBVersionDbVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), options.DbSystemShape, options.DbSystemId, options.StorageManagement, options.IsUpgradeSupported, options.IsDatabaseSoftwareImageSupported, options.ShapeFamily);

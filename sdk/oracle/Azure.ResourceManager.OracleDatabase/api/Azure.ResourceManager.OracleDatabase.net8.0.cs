@@ -867,8 +867,8 @@ namespace Azure.ResourceManager.OracleDatabase
         public virtual Azure.Response<bool> Exists(string dbversionsname, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string dbversionsname, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OracleDatabase.OracleDBVersionResource> Get(string dbversionsname, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.OracleDatabase.OracleDBVersionResource> GetAll(Azure.ResourceManager.OracleDatabase.Models.OracleDBVersionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.OracleDatabase.OracleDBVersionResource> GetAllAsync(Azure.ResourceManager.OracleDatabase.Models.OracleDBVersionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.OracleDatabase.OracleDBVersionResource> GetAll(Azure.ResourceManager.OracleDatabase.Models.ListDBVersionBySubscriptionLocationContent options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OracleDatabase.OracleDBVersionResource> GetAllAsync(Azure.ResourceManager.OracleDatabase.Models.ListDBVersionBySubscriptionLocationContent options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OracleDatabase.OracleDBVersionResource>> GetAsync(string dbversionsname, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.OracleDatabase.OracleDBVersionResource> GetIfExists(string dbversionsname, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.OracleDatabase.OracleDBVersionResource>> GetIfExistsAsync(string dbversionsname, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3520,6 +3520,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator !=(Azure.ResourceManager.OracleDatabase.Models.IormObjective left, Azure.ResourceManager.OracleDatabase.Models.IormObjective right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ListDBVersionBySubscriptionLocationContent
+    {
+        public ListDBVersionBySubscriptionLocationContent() { }
+        public Azure.Core.ResourceIdentifier DbSystemId { get { throw null; } set { } }
+        public Azure.ResourceManager.OracleDatabase.Models.OracleBaseDbSystemShape? DbSystemShape { get { throw null; } set { } }
+        public bool? IsDatabaseSoftwareImageSupported { get { throw null; } set { } }
+        public bool? IsUpgradeSupported { get { throw null; } set { } }
+        public Azure.ResourceManager.OracleDatabase.Models.ShapeFamilyType? ShapeFamily { get { throw null; } set { } }
+        public Azure.ResourceManager.OracleDatabase.Models.StorageManagementType? StorageManagement { get { throw null; } set { } }
+    }
     public partial class LongTermBackUpScheduleDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.LongTermBackUpScheduleDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.LongTermBackUpScheduleDetails>
     {
         public LongTermBackUpScheduleDetails() { }
@@ -3764,7 +3774,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public OracleDatabaseDayOfWeekUpdate() { }
         public OracleDatabaseDayOfWeekUpdate(Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName name) { }
-        public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName? Name { get { throw null; } set { } }
+        public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName Name { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4021,16 +4031,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OracleDBVersionCollectionGetAllOptions
-    {
-        public OracleDBVersionCollectionGetAllOptions() { }
-        public Azure.Core.ResourceIdentifier DbSystemId { get { throw null; } set { } }
-        public Azure.ResourceManager.OracleDatabase.Models.OracleBaseDbSystemShape? DbSystemShape { get { throw null; } set { } }
-        public bool? IsDatabaseSoftwareImageSupported { get { throw null; } set { } }
-        public bool? IsUpgradeSupported { get { throw null; } set { } }
-        public Azure.ResourceManager.OracleDatabase.Models.ShapeFamilyType? ShapeFamily { get { throw null; } set { } }
-        public Azure.ResourceManager.OracleDatabase.Models.StorageManagementType? StorageManagement { get { throw null; } set { } }
     }
     public partial class OracleDBVersionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBVersionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDBVersionProperties>
     {

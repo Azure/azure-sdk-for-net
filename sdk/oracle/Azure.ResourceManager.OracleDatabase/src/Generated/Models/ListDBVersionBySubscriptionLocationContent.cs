@@ -10,10 +10,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> The OracleDBVersionCollectionGetAllOptions. </summary>
-    public partial class OracleDBVersionCollectionGetAllOptions
+    public partial class ListDBVersionBySubscriptionLocationContent
     {
-        /// <summary> Initializes a new instance of <see cref="OracleDBVersionCollectionGetAllOptions"/>. </summary>
-        public OracleDBVersionCollectionGetAllOptions()
+        /// <summary> Initializes a new instance of <see cref="ListDBVersionBySubscriptionLocationContent"/>. </summary>
+        public ListDBVersionBySubscriptionLocationContent()
         {
         }
 
