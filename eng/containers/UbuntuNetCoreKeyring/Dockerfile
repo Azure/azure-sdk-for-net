@@ -10,6 +10,7 @@ ENV \
     # SDK versions
     DOTNET_SDK_VERSION_9_0=9.0.305\
     DOTNET_SDK_VERSION_8_0=8.0.405\
+    DOTNET_SDK_VERSION_3_1=3.1.426\
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -60,7 +61,7 @@ RUN curl -fSL --output dotnet.tar.gz https://download.visualstudio.microsoft.com
 
 # Below adapted from https://hub.docker.com/_/microsoft-dotnet-sdk
 # https://github.com/dotnet/dotnet-docker/blob/b20c03e0644b42167d66a85fe6077ec2428a47fa/src/sdk/3.1/focal/amd64/Dockerfile
-RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/3.1.426/dotnet-sdk-3.1.426-linux-x64.tar.gz \
+RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/$DOTNET_SDK_VERSION_3_1/dotnet-sdk-$DOTNET_SDK_VERSION_3_1-linux-x64.tar.gz \
     && dotnet_sha512='6c3f9541557feb5d5b93f5c10b28264878948e8540f2b8bb7fb966c32bd38191e6b310dcb5f87a4a8f7c67a7046fa932cde3cce9dc8341c1365ae6c9fcc481ec' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
