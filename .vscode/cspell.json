@@ -454,6 +454,7 @@
     {
       "filename": "**/sdk/containerapps/**/*",
       "words": [
+        "agentic",
         "dapr",
         "grpc",
         "proto"
