@@ -55,8 +55,7 @@ namespace Azure.Generator.Primitives
             "DiagnosticScopeFactory.cs",
             "DiagnosticScope.cs",
             "HttpMessageSanitizer.cs",
-            "TrimmingAttribute.cs",
-            "TaskExtensions.cs"
+            "TrimmingAttribute.cs"
         ];
 
         private static readonly IReadOnlyList<string> _lroSharedFiles =
@@ -74,7 +73,8 @@ namespace Azure.Generator.Primitives
             "ProtocolOperation.cs",
             "ProtocolOperationHelpers.cs",
             "SequentialDelayStrategy.cs",
-            "VoidValue.cs"
+            "VoidValue.cs",
+            "TaskExtensions.cs"
         ];
 
         private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
@@ -171,6 +171,12 @@ namespace Azure.Generator.Primitives
                 {
                     compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file), SharedSourceLinkBase));
                 }
+            }
+
+            // Add TaskExtensions if there are multipart form data operations and it hasn't already been added for LRO
+            if (!hasLongRunningOperation && AzureClientGenerator.Instance.InputLibrary.HasMultipartFormDataOperation)
+            {
+                compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("TaskExtensions.cs"), SharedSourceLinkBase));
             }
 
             return compileIncludes;
