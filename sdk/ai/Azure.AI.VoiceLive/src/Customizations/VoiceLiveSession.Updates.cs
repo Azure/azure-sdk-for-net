@@ -116,25 +116,13 @@ namespace Azure.AI.VoiceLive
             }
 
             SessionUpdate sessionUpdate = null;
-            try
-            {
-                // Try to parse as JSON first
-                using JsonDocument document = JsonDocument.Parse(message);
-                JsonElement root = document.RootElement;
 
-                // Deserialize as a server event
-                sessionUpdate = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
-            }
-            catch (JsonException)
-            {
-                // If JSON parsing fails, ignore the message
-                yield break;
-            }
-            catch (Exception)
-            {
-                // If deserialization fails completely, ignore the message
-                yield break;
-            }
+            // Try to parse as JSON first
+            using JsonDocument document = JsonDocument.Parse(message);
+            JsonElement root = document.RootElement;
+
+            // Deserialize as a server event
+            sessionUpdate = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
 
             if (sessionUpdate != null)
             {
