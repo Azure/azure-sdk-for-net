@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
 {
@@ -25,6 +26,8 @@ namespace Azure.Generator.Visitors
                             instanceReference: innerInvoke.InstanceReference,
                             methodName: nameof(TaskExtensions.EnsureCompleted),
                             extensionType: typeof(TaskExtensions));
+                        return new SuppressionStatement(statement, Literal("AZC0107"),
+                            "Public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.");
                     }
                 }
             }
