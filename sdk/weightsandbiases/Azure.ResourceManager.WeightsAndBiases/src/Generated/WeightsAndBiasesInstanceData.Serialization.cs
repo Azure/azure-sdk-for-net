@@ -18,7 +18,7 @@ using Azure.ResourceManager.WeightsAndBiases.Models;
 namespace Azure.ResourceManager.WeightsAndBiases
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class WeightsAndBiasesInstanceData : IJsonModel<WeightsAndBiasesInstanceData>
+    public partial class WeightsAndBiasesInstanceData : TrackedResourceData, IJsonModel<WeightsAndBiasesInstanceData>
     {
         /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesInstanceData"/> for deserialization. </summary>
         internal WeightsAndBiasesInstanceData()
