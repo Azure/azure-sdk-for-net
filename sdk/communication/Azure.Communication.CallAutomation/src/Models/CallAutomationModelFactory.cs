@@ -24,6 +24,86 @@ namespace Azure.Communication.CallAutomation
     [CodeGenModel("CommunicationCallAutomationModelFactory")]
     public static partial class CallAutomationModelFactory
     {
+        /// <summary>
+        /// Initializes a new instance of audio data.
+        /// </summary>
+        public static AudioData AudioData(
+            string data,
+            DateTime timestamp,
+            string participantId,
+            bool silent)
+        {
+            return new AudioData(data, timestamp, participantId, silent);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of audio meta data.
+        /// </summary>
+        public static AudioMetadata AudioMetadata(
+            string mediaSubscriptionId,
+            string encoding,
+            int sampleRate,
+            int channels,
+            int length)
+        {
+            var internalObject = new AudioMetadataInternal
+            {
+                MediaSubscriptionId = mediaSubscriptionId,
+                Encoding = encoding,
+                SampleRate = sampleRate,
+                Channels = channels,
+                Length = length
+            };
+            return new AudioMetadata(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of transcription data.
+        /// </summary>
+        public static TranscriptionData TranscriptionData(
+            string text,
+            string format,
+            double confidence,
+            long offset,
+            long duration,
+            IEnumerable<WordData> words,
+            string participantRawID,
+            TranscriptionResultState resultState)
+        {
+            IEnumerable<WordDataInternal> wordDataInternalList = words.Select(w => new WordDataInternal { Text = w.Text, Offset = w.Offset.Ticks, Duration = w.Duration.Ticks });
+            return new TranscriptionData
+            (
+                text,
+                format,
+                confidence,
+                offset,
+                duration,
+                wordDataInternalList,
+                participantRawID,
+                resultState
+            );
+        }
+
+        /// <summary>
+        /// Initializes a new instance of word data.
+        /// </summary>
+        public static WordData WordData(
+            string text,
+            long offset,
+            long duration)
+        {
+            return new WordData(text, offset, duration);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of out streaming data.
+        /// </summary>
+        public static OutStreamingData OutStreamingData(
+            MediaKind kind)
+        {
+            return new OutStreamingData(kind);
+        }
+
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
         /// <param name="participant"> Participant of the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
