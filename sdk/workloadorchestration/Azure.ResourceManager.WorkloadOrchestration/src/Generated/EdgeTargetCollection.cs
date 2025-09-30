@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeTargetTargetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, targetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, targetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, targetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation,skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeTargetTargetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, targetName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, targetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, targetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation,skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

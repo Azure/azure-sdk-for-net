@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeSolutionTemplateSolutionTemplatesRestClient.CreateVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionTemplateVersionResource>(new EdgeSolutionTemplateVersionOperationSource(Client), _edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateCreateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionTemplateVersionResource>(new EdgeSolutionTemplateVersionOperationSource(Client), _edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateCreateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeSolutionTemplateSolutionTemplatesRestClient.CreateVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionTemplateVersionResource>(new EdgeSolutionTemplateVersionOperationSource(Client), _edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateCreateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionTemplateVersionResource>(new EdgeSolutionTemplateVersionOperationSource(Client), _edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateCreateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
