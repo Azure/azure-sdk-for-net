@@ -9,15 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class HyperVToAzStackHciNicInput : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciNicInput>
+    /// <summary> HyperVToAzStackHCI NIC properties. </summary>
+    public partial class HyperVToAzStackHCINicInput : IJsonModel<HyperVToAzStackHCINicInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciNicInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHCINicInput"/> for deserialization. </summary>
+        internal HyperVToAzStackHCINicInput()
+        {
+        }
 
-        void IJsonModel<HyperVToAzStackHciNicInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<HyperVToAzStackHCINicInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCINicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHCINicInput)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("nicId"u8);
             writer.WriteStringValue(NicId);
             if (options.Format != "W" && Optional.IsDefined(NetworkName))
@@ -53,25 +58,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("selectionTypeForFailover"u8);
             writer.WriteStringValue(SelectionTypeForFailover.ToString());
-            if (Optional.IsDefined(IsStaticIPMigrationEnabled))
+            if (Optional.IsDefined(IsStaticIpMigrationEnabled))
             {
                 writer.WritePropertyName("isStaticIpMigrationEnabled"u8);
-                writer.WriteBooleanValue(IsStaticIPMigrationEnabled.Value);
+                writer.WriteBooleanValue(IsStaticIpMigrationEnabled.Value);
             }
             if (Optional.IsDefined(IsMacMigrationEnabled))
             {
                 writer.WritePropertyName("isMacMigrationEnabled"u8);
                 writer.WriteBooleanValue(IsMacMigrationEnabled.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -80,22 +85,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        HyperVToAzStackHciNicInput IJsonModel<HyperVToAzStackHciNicInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVToAzStackHCINicInput IJsonModel<HyperVToAzStackHCINicInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HyperVToAzStackHCINicInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCINicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHCINicInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHyperVToAzStackHciNicInput(document.RootElement, options);
+            return DeserializeHyperVToAzStackHCINicInput(document.RootElement, options);
         }
 
-        internal static HyperVToAzStackHciNicInput DeserializeHyperVToAzStackHciNicInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVToAzStackHCINicInput DeserializeHyperVToAzStackHCINicInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,102 +114,109 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string networkName = default;
             string targetNetworkId = default;
             string testNetworkId = default;
-            VmNicSelection selectionTypeForFailover = default;
-            bool? isStaticIPMigrationEnabled = default;
+            VMNicSelection selectionTypeForFailover = default;
+            bool? isStaticIpMigrationEnabled = default;
             bool? isMacMigrationEnabled = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nicId"u8))
+                if (prop.NameEquals("nicId"u8))
                 {
-                    nicId = property.Value.GetString();
+                    nicId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkName"u8))
+                if (prop.NameEquals("networkName"u8))
                 {
-                    networkName = property.Value.GetString();
+                    networkName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetNetworkId"u8))
+                if (prop.NameEquals("targetNetworkId"u8))
                 {
-                    targetNetworkId = property.Value.GetString();
+                    targetNetworkId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testNetworkId"u8))
+                if (prop.NameEquals("testNetworkId"u8))
                 {
-                    testNetworkId = property.Value.GetString();
+                    testNetworkId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("selectionTypeForFailover"u8))
+                if (prop.NameEquals("selectionTypeForFailover"u8))
                 {
-                    selectionTypeForFailover = new VmNicSelection(property.Value.GetString());
+                    selectionTypeForFailover = new VMNicSelection(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isStaticIpMigrationEnabled"u8))
+                if (prop.NameEquals("isStaticIpMigrationEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isStaticIPMigrationEnabled = property.Value.GetBoolean();
+                    isStaticIpMigrationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isMacMigrationEnabled"u8))
+                if (prop.NameEquals("isMacMigrationEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isMacMigrationEnabled = property.Value.GetBoolean();
+                    isMacMigrationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HyperVToAzStackHciNicInput(
+            return new HyperVToAzStackHCINicInput(
                 nicId,
                 networkName,
                 targetNetworkId,
                 testNetworkId,
                 selectionTypeForFailover,
-                isStaticIPMigrationEnabled,
+                isStaticIpMigrationEnabled,
                 isMacMigrationEnabled,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<HyperVToAzStackHciNicInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVToAzStackHCINicInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCINicInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHCINicInput)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HyperVToAzStackHciNicInput IPersistableModel<HyperVToAzStackHciNicInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVToAzStackHCINicInput IPersistableModel<HyperVToAzStackHCINicInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HyperVToAzStackHCINicInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCINicInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHyperVToAzStackHciNicInput(document.RootElement, options);
+                        return DeserializeHyperVToAzStackHCINicInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHCINicInput)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HyperVToAzStackHciNicInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HyperVToAzStackHCINicInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

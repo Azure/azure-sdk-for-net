@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class HyperVToAzStackHciProtectedItemCustomPropertiesUpdate : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>
+    /// <summary> HyperV to AzStackHCI Protected item model custom properties. </summary>
+    internal partial class HyperVToAzStackHciProtectedItemCustomPropertiesUpdate : IJsonModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +29,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemCustomPropertiesUpdate)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(NicsToInclude))
             {
                 writer.WritePropertyName("nicsToInclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in NicsToInclude)
+                foreach (HyperVToAzStackHCINicInput item in NicsToInclude)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -65,114 +65,117 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("targetMemoryInMegaBytes"u8);
                 writer.WriteNumberValue(TargetMemoryInMegaBytes.Value);
             }
-            if (Optional.IsDefined(OSType))
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType);
+                writer.WriteStringValue(OsType);
             }
         }
 
-        HyperVToAzStackHciProtectedItemCustomPropertiesUpdate IJsonModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVToAzStackHciProtectedItemCustomPropertiesUpdate IJsonModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVToAzStackHciProtectedItemCustomPropertiesUpdate)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReplicationProtectedItemCustomPropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemCustomPropertiesUpdate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVToAzStackHciProtectedItemCustomPropertiesUpdate(document.RootElement, options);
         }
 
-        internal static HyperVToAzStackHciProtectedItemCustomPropertiesUpdate DeserializeHyperVToAzStackHciProtectedItemCustomPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVToAzStackHciProtectedItemCustomPropertiesUpdate DeserializeHyperVToAzStackHciProtectedItemCustomPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<HyperVToAzStackHciNicInput> nicsToInclude = default;
+            string instanceType = "HyperVToAzStackHCI";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<HyperVToAzStackHCINicInput> nicsToInclude = default;
             int? targetCpuCores = default;
             bool? isDynamicRam = default;
             ProtectedItemDynamicMemoryConfig dynamicMemoryConfig = default;
             int? targetMemoryInMegaBytes = default;
             string osType = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nicsToInclude"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("nicsToInclude"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<HyperVToAzStackHciNicInput> array = new List<HyperVToAzStackHciNicInput>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<HyperVToAzStackHCINicInput> array = new List<HyperVToAzStackHCINicInput>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HyperVToAzStackHciNicInput.DeserializeHyperVToAzStackHciNicInput(item, options));
+                        array.Add(HyperVToAzStackHCINicInput.DeserializeHyperVToAzStackHCINicInput(item, options));
                     }
                     nicsToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("targetCpuCores"u8))
+                if (prop.NameEquals("targetCpuCores"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetCpuCores = property.Value.GetInt32();
+                    targetCpuCores = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isDynamicRam"u8))
+                if (prop.NameEquals("isDynamicRam"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDynamicRam = property.Value.GetBoolean();
+                    isDynamicRam = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dynamicMemoryConfig"u8))
+                if (prop.NameEquals("dynamicMemoryConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dynamicMemoryConfig = ProtectedItemDynamicMemoryConfig.DeserializeProtectedItemDynamicMemoryConfig(property.Value, options);
+                    dynamicMemoryConfig = ProtectedItemDynamicMemoryConfig.DeserializeProtectedItemDynamicMemoryConfig(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetMemoryInMegaBytes"u8))
+                if (prop.NameEquals("targetMemoryInMegaBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetMemoryInMegaBytes = property.Value.GetInt32();
+                    targetMemoryInMegaBytes = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    osType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
+                    osType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVToAzStackHciProtectedItemCustomPropertiesUpdate(
                 instanceType,
-                serializedAdditionalRawData,
-                nicsToInclude ?? new ChangeTrackingList<HyperVToAzStackHciNicInput>(),
+                additionalBinaryDataProperties,
+                nicsToInclude ?? new ChangeTrackingList<HyperVToAzStackHCINicInput>(),
                 targetCpuCores,
                 isDynamicRam,
                 dynamicMemoryConfig,
@@ -180,10 +183,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 osType);
         }
 
-        BinaryData IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -193,15 +199,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        HyperVToAzStackHciProtectedItemCustomPropertiesUpdate IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVToAzStackHciProtectedItemCustomPropertiesUpdate IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVToAzStackHciProtectedItemCustomPropertiesUpdate)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReplicationProtectedItemCustomPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHyperVToAzStackHciProtectedItemCustomPropertiesUpdate(document.RootElement, options);
                     }
                 default:
@@ -209,6 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HyperVToAzStackHciProtectedItemCustomPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
