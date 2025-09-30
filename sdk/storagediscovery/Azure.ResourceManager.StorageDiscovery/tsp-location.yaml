@@ -1,4 +1,6 @@
 directory: specification/storagediscovery/Microsoft.StorageDiscovery.Management
-commit: 930e8030f5058d947fea4e2640725baab8a4561a
+commit: c55f9f1458e736f79703a72ee5c9a4caf242a85b
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
