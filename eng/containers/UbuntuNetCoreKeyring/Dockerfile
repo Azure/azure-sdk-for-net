@@ -39,7 +39,7 @@ RUN apt-add-repository ppa:git-core/ppa \
 
 # https://builds.dotnet.microsoft.com/dotnet/release-metadata/8.0/releases.json
 
-RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.305/dotnet-sdk-9.0.305-linux-x64.tar.gz \
+RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/$DOTNET_SDK_VERSION_9_0/dotnet-sdk-$DOTNET_SDK_VERSION_9_0-linux-x64.tar.gz \
     && dotnet_sha512='f9140e141d731d37de9b6e1eab0b25726f0b9de24d2888a4200649880e9e43671ebb3897a249f4324c214d56eb3e7f0ef0cfa56b32850a9c03811b21e6377bca' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
