@@ -14,7 +14,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The HciVmInstanceProperties. </summary>
-    internal partial class HciVmInstanceProperties : IJsonModel<HciVmInstanceProperties>
+    public partial class HciVmInstanceProperties : IJsonModel<HciVmInstanceProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceProperties"/> for deserialization. </summary>
         internal HciVmInstanceProperties()
@@ -41,6 +41,18 @@ namespace MgmtTypeSpec.Models
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku);
+            writer.WritePropertyName("arrayProperty"u8);
+            writer.WriteStartArray();
+            foreach (string item in ArrayProperty)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -84,6 +96,7 @@ namespace MgmtTypeSpec.Models
                 return null;
             }
             string sku = default;
+            IList<string> arrayProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -92,12 +105,29 @@ namespace MgmtTypeSpec.Models
                     sku = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("arrayProperty"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    arrayProperty = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmInstanceProperties(sku, additionalBinaryDataProperties);
+            return new HciVmInstanceProperties(sku, arrayProperty, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

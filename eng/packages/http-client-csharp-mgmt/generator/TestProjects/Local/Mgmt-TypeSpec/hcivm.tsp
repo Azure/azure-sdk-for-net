@@ -19,6 +19,7 @@ model HciVmInstance
 
 model HciVmInstanceProperties {
     sku: string;
+    arrayProperty: string[];
 }
 
 @armResourceOperations

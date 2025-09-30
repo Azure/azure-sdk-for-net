@@ -38,15 +38,6 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal HciVmInstanceProperties Properties { get; }
-
-        /// <summary> Gets the Sku. </summary>
-        public string HciVmInstanceSku
-        {
-            get
-            {
-                return Properties.Sku;
-            }
-        }
+        public HciVmInstanceProperties Properties { get; }
     }
 }

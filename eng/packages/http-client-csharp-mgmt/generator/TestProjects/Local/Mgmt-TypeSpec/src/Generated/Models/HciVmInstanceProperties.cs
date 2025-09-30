@@ -7,32 +7,40 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The HciVmInstanceProperties. </summary>
-    internal partial class HciVmInstanceProperties
+    public partial class HciVmInstanceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceProperties"/>. </summary>
         /// <param name="sku"></param>
-        internal HciVmInstanceProperties(string sku)
+        /// <param name="arrayProperty"></param>
+        internal HciVmInstanceProperties(string sku, IEnumerable<string> arrayProperty)
         {
             Sku = sku;
+            ArrayProperty = arrayProperty.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceProperties"/>. </summary>
         /// <param name="sku"></param>
+        /// <param name="arrayProperty"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceProperties(string sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstanceProperties(string sku, IList<string> arrayProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
+            ArrayProperty = arrayProperty;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Sku. </summary>
         public string Sku { get; }
+
+        /// <summary> Gets the ArrayProperty. </summary>
+        public IList<string> ArrayProperty { get; }
     }
 }

@@ -369,13 +369,14 @@ namespace MgmtTypeSpec.Models
             return new JobResourcePatch(jobName is null ? default : new JobProperties(jobName, new Dictionary<string, BinaryData>()), tags, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The virtual machine instance resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="hciVmInstanceSku"> Gets the Sku. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.HciVmInstanceData"/> instance for mocking. </returns>
-        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hciVmInstanceSku = default)
+        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmInstanceProperties properties = default)
         {
             return new HciVmInstanceData(
                 id,
@@ -383,7 +384,18 @@ namespace MgmtTypeSpec.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                hciVmInstanceSku is null ? default : new HciVmInstanceProperties(hciVmInstanceSku, new Dictionary<string, BinaryData>()));
+                properties);
+        }
+
+        /// <summary> The HciVmInstanceProperties. </summary>
+        /// <param name="sku"></param>
+        /// <param name="arrayProperty"></param>
+        /// <returns> A new <see cref="Models.HciVmInstanceProperties"/> instance for mocking. </returns>
+        public static HciVmInstanceProperties HciVmInstanceProperties(string sku = default, IEnumerable<string> arrayProperty = default)
+        {
+            arrayProperty ??= new ChangeTrackingList<string>();
+
+            return new HciVmInstanceProperties(sku, arrayProperty.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>
