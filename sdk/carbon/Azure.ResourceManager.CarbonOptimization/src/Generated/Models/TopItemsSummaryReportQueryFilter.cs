@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="categoryType"> Specifies the category type for which to retrieve top-emitting items. See supported values defined in CategoryTypeEnum. </param>
         /// <param name="topItems"> The number of top items to return, based on emissions. This value must be between 1 and 10. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/>, <paramref name="subscriptionList"/> or <paramref name="carbonScopeList"/> is null. </exception>
-        public TopItemsSummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<CarbonEmissionScope> carbonScopeList, CarbonEmissionCategoryType categoryType, int topItems) : base(dateRange, subscriptionList, carbonScopeList)
+        public TopItemsSummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<CarbonEmissionScope> carbonScopeList, CarbonEmissionCategoryType categoryType, int topItems) : base(CarbonEmissionQueryReportType.TopItemsSummaryReport, dateRange, subscriptionList, carbonScopeList)
         {
             Argument.AssertNotNull(dateRange, nameof(dateRange));
             Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
@@ -29,7 +30,6 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
             CategoryType = categoryType;
             TopItems = topItems;
-            ReportType = CarbonEmissionQueryReportType.TopItemsSummaryReport;
         }
 
         /// <summary> Initializes a new instance of <see cref="TopItemsSummaryReportQueryFilter"/>. </summary>
@@ -40,23 +40,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceTypeList"> List of resource types for carbon emissions data. Optional. Each resource type should be specified in lowercase, following the format 'microsoft.{service}/{resourceType}', e.g., 'microsoft.storage/storageaccounts'. </param>
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="categoryType"> Specifies the category type for which to retrieve top-emitting items. See supported values defined in CategoryTypeEnum. </param>
         /// <param name="topItems"> The number of top items to return, based on emissions. This value must be between 1 and 10. </param>
-        internal TopItemsSummaryReportQueryFilter(CarbonEmissionQueryReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<ResourceType> resourceTypeList, IList<AzureLocation> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData, CarbonEmissionCategoryType categoryType, int topItems) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
+        internal TopItemsSummaryReportQueryFilter(CarbonEmissionQueryReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<ResourceType> resourceTypeList, IList<AzureLocation> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> additionalBinaryDataProperties, CarbonEmissionCategoryType categoryType, int topItems) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, additionalBinaryDataProperties)
         {
             CategoryType = categoryType;
             TopItems = topItems;
-            ReportType = reportType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TopItemsSummaryReportQueryFilter"/> for deserialization. </summary>
-        internal TopItemsSummaryReportQueryFilter()
-        {
         }
 
         /// <summary> Specifies the category type for which to retrieve top-emitting items. See supported values defined in CategoryTypeEnum. </summary>
         public CarbonEmissionCategoryType CategoryType { get; }
+
         /// <summary> The number of top items to return, based on emissions. This value must be between 1 and 10. </summary>
         public int TopItems { get; }
     }
