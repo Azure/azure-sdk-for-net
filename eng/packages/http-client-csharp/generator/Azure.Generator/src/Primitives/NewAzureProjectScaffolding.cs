@@ -55,7 +55,8 @@ namespace Azure.Generator.Primitives
             "DiagnosticScopeFactory.cs",
             "DiagnosticScope.cs",
             "HttpMessageSanitizer.cs",
-            "TrimmingAttribute.cs"
+            "TrimmingAttribute.cs",
+            "TaskExtensions.cs"
         ];
 
         private static readonly IReadOnlyList<string> _lroSharedFiles =
@@ -73,7 +74,6 @@ namespace Azure.Generator.Primitives
             "ProtocolOperation.cs",
             "ProtocolOperationHelpers.cs",
             "SequentialDelayStrategy.cs",
-            "TaskExtensions.cs",
             "VoidValue.cs"
         ];
 
