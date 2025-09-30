@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.StorageCache.Models;
-using Castle.Components.DictionaryAdapter.Xml;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Tests.Scenario
@@ -34,6 +33,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task CreateOrUpdate()
         {
             string name = Recording.GenerateAssetName("testautoexportjob");
@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Get()
         {
             string job = "testautoexportjob";
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Exists()
         {
             string name = Recording.GenerateAssetName("testAutoExportJob");
@@ -124,6 +126,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task GetAll()
         {
             var autoExportJobs = DefaultAmlFS.GetAutoExportJobs().GetAllAsync();

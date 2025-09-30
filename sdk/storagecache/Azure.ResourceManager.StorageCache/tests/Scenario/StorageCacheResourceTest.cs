@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.StorageCache.Models;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 {
@@ -19,6 +18,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Delete()
         {
             await AzureResourceTestHelper.TestDelete<StorageCacheResource>(
@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Update()
         {
             StorageCacheResource scr = await this.CreateOrUpdateStorageCache();
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task UpdateSpaceAllocation()
         {
             StorageCacheResource scr = await this.CreateOrUpdateStorageCache();
@@ -78,6 +80,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task OtherCacheOperations()
         {
             StorageCacheResource scr = await this.CreateOrUpdateStorageCache();
