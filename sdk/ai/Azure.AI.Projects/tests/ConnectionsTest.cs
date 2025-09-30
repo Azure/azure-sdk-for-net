@@ -25,8 +25,8 @@ namespace Azure.AI.Projects.Tests
         [RecordedTest]
         public async Task ConnectionsBasicTest()
         {
-            var connectionName = TestEnvironment.CONNECTIONNAME;
-            var connectionType = TestEnvironment.CONNECTIONTYPE;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
+            var connectionType = TestEnvironment.STORAGECONNECTIONTYPE;
 
             AIProjectClient projectClient = GetTestClient();
             if (IsAsync)

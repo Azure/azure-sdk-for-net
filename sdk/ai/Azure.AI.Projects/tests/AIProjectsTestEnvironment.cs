@@ -18,8 +18,8 @@ namespace Azure.AI.Projects.Tests
         public string INDEXVERSION => GetRecordedVariable("INDEX_VERSION");
         public string AISEARCHCONNECTIONNAME => GetRecordedVariable("AI_SEARCH_CONNECTION_NAME");
         public string AISEARCHINDEXNAME => GetRecordedVariable("AI_SEARCH_INDEX_NAME");
-        public string CONNECTIONNAME => GetRecordedVariable("CONNECTION_NAME");
-        public string CONNECTIONTYPE => GetRecordedVariable("CONNECTION_TYPE");
+        public string STORAGECONNECTIONNAME => GetRecordedVariable("STORAGE_CONNECTION_NAME");
+        public string STORAGECONNECTIONTYPE => GetRecordedVariable("STORAGE_CONNECTION_TYPE");
         public string AOAICONNECTIONNAME => GetRecordedVariable("AOAI_CONNECTION_NAME");
         public string TESTIMAGEPNGINPUTPATH => GetRecordedVariable("TEST_IMAGE_PNG_INPUT_PATH");
         public string SAMPLEFILEPATH => GetRecordedVariable("SAMPLE_FILE_PATH");

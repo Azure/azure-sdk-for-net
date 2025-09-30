@@ -85,7 +85,7 @@ namespace Azure.AI.Projects.Tests
             AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
             var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
             var filePath = TestEnvironment.SAMPLEFILEPATH;
             var folderPath = TestEnvironment.SAMPLEFOLDERPATH;
@@ -194,7 +194,7 @@ namespace Azure.AI.Projects.Tests
             AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
             var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
             var filePath = TestEnvironment.SAMPLEFILEPATH;
             var folderPath = TestEnvironment.SAMPLEFOLDERPATH;

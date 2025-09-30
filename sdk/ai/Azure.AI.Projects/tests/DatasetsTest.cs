@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Tests
         [Ignore("Calls to Azure.Storage.Blobs are not recorded with SCM structure")]
         public async Task DatasetsFileTest()
         {
-            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
             var datasetName = string.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
             var filePath = TestEnvironment.SAMPLEFILEPATH;
             var datasetVersion = TestEnvironment.DATASETVERSION1;

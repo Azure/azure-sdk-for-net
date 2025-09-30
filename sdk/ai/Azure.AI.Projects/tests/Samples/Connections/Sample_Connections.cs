@@ -22,7 +22,7 @@ namespace Azure.AI.Projects.Tests
             var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
 #endif
             AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
@@ -67,7 +67,7 @@ namespace Azure.AI.Projects.Tests
             var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
 #endif
             AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
