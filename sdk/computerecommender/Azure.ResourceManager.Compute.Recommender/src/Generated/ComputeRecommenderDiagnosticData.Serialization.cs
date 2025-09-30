@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Recommender
 {
     /// <summary> Contains metadata of a diagnostic type. </summary>
-    public partial class ComputeRecommenderDiagnosticData : IJsonModel<ComputeRecommenderDiagnosticData>
+    public partial class ComputeRecommenderDiagnosticData : ResourceData, IJsonModel<ComputeRecommenderDiagnosticData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -958,11 +958,6 @@ namespace Azure.AI.VoiceLive
         public static bool operator !=(Azure.AI.VoiceLive.ResponseMessageRole left, Azure.AI.VoiceLive.ResponseMessageRole right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResponseSession
-    {
-        public ResponseSession() { }
-        public Azure.AI.VoiceLive.VoiceProvider Voice { get { throw null; } }
-    }
     public abstract partial class ResponseStatusDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ResponseStatusDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ResponseStatusDetails>
     {
         internal ResponseStatusDetails() { }

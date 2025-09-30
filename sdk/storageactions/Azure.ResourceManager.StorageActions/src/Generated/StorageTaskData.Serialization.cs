@@ -18,7 +18,7 @@ using Azure.ResourceManager.StorageActions.Models;
 namespace Azure.ResourceManager.StorageActions
 {
     /// <summary> Represents Storage Task. </summary>
-    public partial class StorageTaskData : IJsonModel<StorageTaskData>
+    public partial class StorageTaskData : TrackedResourceData, IJsonModel<StorageTaskData>
     {
         /// <summary> Initializes a new instance of <see cref="StorageTaskData"/> for deserialization. </summary>
         internal StorageTaskData()
