@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRouteProvisioningErrors"/>. </summary>
-        /// <param name="errorOccuredOn"> Timestamp error occured at. </param>
+        /// <param name="errorOccurredOn"> Timestamp error occured at. </param>
         /// <param name="message"> Description or error message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppHttpRouteProvisioningErrors(DateTimeOffset? errorOccuredOn, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppHttpRouteProvisioningErrors(DateTimeOffset? errorOccurredOn, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ErrorOccuredOn = errorOccuredOn;
+            ErrorOccurredOn = errorOccurredOn;
             Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Timestamp error occured at. </summary>
         [WirePath("timestamp")]
-        public DateTimeOffset? ErrorOccuredOn { get; }
+        public DateTimeOffset? ErrorOccurredOn { get; }
         /// <summary> Description or error message. </summary>
         [WirePath("message")]
         public string Message { get; }

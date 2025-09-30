@@ -161,7 +161,7 @@ rename-mapping:
   HttpRouteMatch: ContainerAppHttpRouteMatch
   HttpRouteMatch.caseSensitive: IsCaseSensitive
   HttpRouteProvisioningErrors: ContainerAppHttpRouteProvisioningErrors
-  HttpRouteProvisioningErrors.timestamp: ErrorOccuredOn
+  HttpRouteProvisioningErrors.timestamp: ErrorOccurredOn
   HttpRouteProvisioningState: ContainerAppHttpRouteProvisioningState
   HttpRouteRule: ContainerAppHttpRouteRule
   HttpRouteTarget: ContainerAppHttpRouteTarget

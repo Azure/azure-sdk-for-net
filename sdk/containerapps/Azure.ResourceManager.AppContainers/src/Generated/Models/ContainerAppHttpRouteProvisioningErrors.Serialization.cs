@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 throw new FormatException($"The model {nameof(ContainerAppHttpRouteProvisioningErrors)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(ErrorOccuredOn))
+            if (options.Format != "W" && Optional.IsDefined(ErrorOccurredOn))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(ErrorOccuredOn.Value, "O");
+                writer.WriteStringValue(ErrorOccurredOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorOccuredOn), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorOccurredOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  timestamp: ");
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             else
             {
-                if (Optional.IsDefined(ErrorOccuredOn))
+                if (Optional.IsDefined(ErrorOccurredOn))
                 {
                     builder.Append("  timestamp: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ErrorOccuredOn.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(ErrorOccurredOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }

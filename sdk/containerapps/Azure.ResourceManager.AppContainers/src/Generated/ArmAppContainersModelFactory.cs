@@ -1027,12 +1027,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppHttpRouteProvisioningErrors"/>. </summary>
-        /// <param name="errorOccuredOn"> Timestamp error occured at. </param>
+        /// <param name="errorOccurredOn"> Timestamp error occured at. </param>
         /// <param name="message"> Description or error message. </param>
         /// <returns> A new <see cref="Models.ContainerAppHttpRouteProvisioningErrors"/> instance for mocking. </returns>
-        public static ContainerAppHttpRouteProvisioningErrors ContainerAppHttpRouteProvisioningErrors(DateTimeOffset? errorOccuredOn = null, string message = null)
+        public static ContainerAppHttpRouteProvisioningErrors ContainerAppHttpRouteProvisioningErrors(DateTimeOffset? errorOccurredOn = null, string message = null)
         {
-            return new ContainerAppHttpRouteProvisioningErrors(errorOccuredOn, message, serializedAdditionalRawData: null);
+            return new ContainerAppHttpRouteProvisioningErrors(errorOccurredOn, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppMaintenanceConfigurationData"/>. </summary>
