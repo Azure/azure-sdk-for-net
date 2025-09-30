@@ -26,7 +26,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
@@ -70,7 +70,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {

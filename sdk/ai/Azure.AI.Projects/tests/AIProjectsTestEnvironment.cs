@@ -13,6 +13,7 @@ namespace Azure.AI.Projects.Tests
         public string DATASETVERSION2 => GetRecordedVariable("DATASET_VERSION_2");
         public string MODELDEPLOYMENTNAME => GetRecordedVariable("MODEL_DEPLOYMENT_NAME");
         public string EMBEDDINGSMODELDEPLOYMENTNAME => GetRecordedVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
+        public string TEXTEMBEDDINGSMODELDEPLOYMENTNAME => GetRecordedVariable("TEXT_EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
         public string MODELPUBLISHER => GetRecordedVariable("MODEL_PUBLISHER");
         public string INDEXNAME => GetRecordedVariable("INDEX_NAME");
         public string INDEXVERSION => GetRecordedVariable("INDEX_VERSION");
