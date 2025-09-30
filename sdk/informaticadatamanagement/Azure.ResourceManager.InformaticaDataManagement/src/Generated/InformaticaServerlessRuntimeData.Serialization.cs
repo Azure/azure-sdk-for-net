@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
     /// <summary> A Serverless Runtime environment  resource by Informatica. </summary>
-    public partial class InformaticaServerlessRuntimeData : IJsonModel<InformaticaServerlessRuntimeData>
+    public partial class InformaticaServerlessRuntimeData : ResourceData, IJsonModel<InformaticaServerlessRuntimeData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

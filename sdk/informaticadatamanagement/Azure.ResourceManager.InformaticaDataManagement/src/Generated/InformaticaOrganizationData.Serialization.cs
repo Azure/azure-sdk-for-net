@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
     /// <summary> An Organization Resource by Informatica. </summary>
-    public partial class InformaticaOrganizationData : IJsonModel<InformaticaOrganizationData>
+    public partial class InformaticaOrganizationData : TrackedResourceData, IJsonModel<InformaticaOrganizationData>
     {
         /// <summary> Initializes a new instance of <see cref="InformaticaOrganizationData"/> for deserialization. </summary>
         internal InformaticaOrganizationData()
