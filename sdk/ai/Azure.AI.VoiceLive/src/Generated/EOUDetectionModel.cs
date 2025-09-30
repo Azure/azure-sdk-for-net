@@ -11,17 +11,17 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    internal readonly partial struct EOUDetectionModel : IEquatable<EOUDetectionModel>
+    internal readonly partial struct EouDetectionModel : IEquatable<EouDetectionModel>
     {
         private readonly string _value;
         private const string SemanticDetectionV1Value = "semantic_detection_v1";
         private const string SemanticDetectionV1EnValue = "semantic_detection_v1_en";
         private const string SemanticDetectionV1MultilingualValue = "semantic_detection_v1_multilingual";
 
-        /// <summary> Initializes a new instance of <see cref="EOUDetectionModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EouDetectionModel"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EOUDetectionModel(string value)
+        public EouDetectionModel(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,38 +29,38 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Gets the SemanticDetectionV1. </summary>
-        public static EOUDetectionModel SemanticDetectionV1 { get; } = new EOUDetectionModel(SemanticDetectionV1Value);
+        public static EouDetectionModel SemanticDetectionV1 { get; } = new EouDetectionModel(SemanticDetectionV1Value);
 
         /// <summary> Gets the SemanticDetectionV1En. </summary>
-        public static EOUDetectionModel SemanticDetectionV1En { get; } = new EOUDetectionModel(SemanticDetectionV1EnValue);
+        public static EouDetectionModel SemanticDetectionV1En { get; } = new EouDetectionModel(SemanticDetectionV1EnValue);
 
         /// <summary> Gets the SemanticDetectionV1Multilingual. </summary>
-        public static EOUDetectionModel SemanticDetectionV1Multilingual { get; } = new EOUDetectionModel(SemanticDetectionV1MultilingualValue);
+        public static EouDetectionModel SemanticDetectionV1Multilingual { get; } = new EouDetectionModel(SemanticDetectionV1MultilingualValue);
 
-        /// <summary> Determines if two <see cref="EOUDetectionModel"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EouDetectionModel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EOUDetectionModel left, EOUDetectionModel right) => left.Equals(right);
+        public static bool operator ==(EouDetectionModel left, EouDetectionModel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EOUDetectionModel"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EouDetectionModel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EOUDetectionModel left, EOUDetectionModel right) => !left.Equals(right);
+        public static bool operator !=(EouDetectionModel left, EouDetectionModel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EOUDetectionModel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EouDetectionModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EOUDetectionModel(string value) => new EOUDetectionModel(value);
+        public static implicit operator EouDetectionModel(string value) => new EouDetectionModel(value);
 
-        /// <summary> Converts a string to a <see cref="EOUDetectionModel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EouDetectionModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EOUDetectionModel?(string value) => value == null ? null : new EOUDetectionModel(value);
+        public static implicit operator EouDetectionModel?(string value) => value == null ? null : new EouDetectionModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EOUDetectionModel other && Equals(other);
+        public override bool Equals(object obj) => obj is EouDetectionModel other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EOUDetectionModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EouDetectionModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

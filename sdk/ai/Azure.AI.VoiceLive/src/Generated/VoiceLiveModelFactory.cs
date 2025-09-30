@@ -347,7 +347,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.MessageContentPart"/> instance for mocking. </returns>
         public static MessageContentPart MessageContentPart(string @type = default)
         {
-            return new UnknownMessageContentPart(@type, additionalBinaryDataProperties: null);
+            return new UnknownMessageContentPart(new ContentPartType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input text content part. </summary>
@@ -355,7 +355,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.InputTextContentPart"/> instance for mocking. </returns>
         public static InputTextContentPart InputTextContentPart(string text = default)
         {
-            return new InputTextContentPart("input_text", additionalBinaryDataProperties: null, text);
+            return new InputTextContentPart(ContentPartType.InputText, additionalBinaryDataProperties: null, text);
         }
 
         /// <summary> Input audio content part. </summary>
@@ -364,7 +364,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.InputAudioContentPart"/> instance for mocking. </returns>
         public static InputAudioContentPart InputAudioContentPart(string audio = default, string transcript = default)
         {
-            return new InputAudioContentPart("input_audio", additionalBinaryDataProperties: null, audio, transcript);
+            return new InputAudioContentPart(ContentPartType.InputAudio, additionalBinaryDataProperties: null, audio, transcript);
         }
 
         /// <summary> Output text content part. </summary>
@@ -372,7 +372,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.OutputTextContentPart"/> instance for mocking. </returns>
         public static OutputTextContentPart OutputTextContentPart(string text = default)
         {
-            return new OutputTextContentPart("text", additionalBinaryDataProperties: null, text);
+            return new OutputTextContentPart(ContentPartType.Text, additionalBinaryDataProperties: null, text);
         }
 
         /// <summary> A system message item within a conversation. </summary>
@@ -507,7 +507,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.EouDetection"/> instance for mocking. </returns>
         public static EouDetection EouDetection(string model = default)
         {
-            return new UnknownEouDetection(new EOUDetectionModel(model), additionalBinaryDataProperties: null);
+            return new UnknownEouDetection(new EouDetectionModel(model), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Azure semantic end-of-utterance detection (default). </summary>
@@ -516,7 +516,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.AzureSemanticEouDetection"/> instance for mocking. </returns>
         public static AzureSemanticEouDetection AzureSemanticEouDetection(EouThresholdLevel? thresholdLevel = default, float? timeoutMs = default)
         {
-            return new AzureSemanticEouDetection(EOUDetectionModel.SemanticDetectionV1, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
+            return new AzureSemanticEouDetection(EouDetectionModel.SemanticDetectionV1, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
         }
 
         /// <summary> Azure semantic end-of-utterance detection (English-optimized). </summary>
@@ -525,7 +525,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.AzureSemanticEouDetectionEn"/> instance for mocking. </returns>
         public static AzureSemanticEouDetectionEn AzureSemanticEouDetectionEn(EouThresholdLevel? thresholdLevel = default, float? timeoutMs = default)
         {
-            return new AzureSemanticEouDetectionEn(EOUDetectionModel.SemanticDetectionV1En, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
+            return new AzureSemanticEouDetectionEn(EouDetectionModel.SemanticDetectionV1En, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
         }
 
         /// <summary> Azure semantic end-of-utterance detection (multilingual). </summary>
@@ -534,7 +534,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.AzureSemanticEouDetectionMultilingual"/> instance for mocking. </returns>
         public static AzureSemanticEouDetectionMultilingual AzureSemanticEouDetectionMultilingual(EouThresholdLevel? thresholdLevel = default, float? timeoutMs = default)
         {
-            return new AzureSemanticEouDetectionMultilingual(EOUDetectionModel.SemanticDetectionV1Multilingual, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
+            return new AzureSemanticEouDetectionMultilingual(EouDetectionModel.SemanticDetectionV1Multilingual, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
         }
 
         /// <summary> Server Speech Detection (Azure semantic VAD, default variant). </summary>
