@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
                 {
                     return null;
                 }
-                else if ("null" == tdAsString.ToLower(System.Globalization.CultureInfo.InvariantCulture))
+                else if (string.Equals(tdAsString, "null", StringComparison.OrdinalIgnoreCase))
                 {
                     return new NoTurnDetection();
                 }
