@@ -51,7 +51,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $isAotCompatible = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
@@ -60,34 +60,45 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
+    $pkgProp.IsAotCompatible = ($isAotCompatible -eq 'true')
     $pkgProp.ArtifactName = $pkgName
-    $pkgProp.IncludedForValidation =    $ciProps = $pkgProp.GetCIYmlForArtifact()
+    $pkgProp.IncludedForValidation = $false
+    $pkgProp.DirectoryPath = ($pkgProp.DirectoryPath)
+
+    $ciProps = $pkgProp.GetCIYmlForArtifact()
 
     if ($ciProps) {
-      # CheckAOTCompat is opt _in_, so we should default to false if not specified
+      # CheckAOTCompat logic: if set in CI.yml, respect that value; otherwise use IsAotCompatible from csproj
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
       if ($null -ne $shouldAot) {
+        # Value is explicitly set in CI.yml, respect that
         $parsedBool = $null
         if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
-          $pkgProp.CIParameters["CheckAOTCompat"] = $parsed # when AOTCompat is true, there is an additional parameter we need to retrieve
+          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
+        }
+      }
+      else {
+        # Value not set in CI.yml, use IsAotCompatible from csproj
+        $pkgProp.CIParameters["CheckAOTCompat"] = $pkgProp.IsAotCompatible
+      }
+
+      # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
+      if ($pkgProp.CIParameters["CheckAOTCompat"]) {
         $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
         if ($aotArtifacts) {
           $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
           $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
         }
+        else {
+          $pkgProp.CIParameters["AOTTestInputs"] = "None"
+        }
       }
       else {
-        $pkgProp.CIParameters["CheckAOTCompat"] = $false
         $pkgProp.CIParameters["AOTTestInputs"] = @()
-meters["AOTTestInputs"] = $aotArtifacts
-TTestInputs"] = @()
-.ArtifactName -eq $pkgProp.ArtifactName }
-        $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
       }
 
       # BuildSnippets is opt _out_, so we should default to true if not specified
-      $sho
-       Write-Host "using is aot compatible from $csprojPath = $isAotCompatible " uldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
+      $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
       if ($null -ne $shouldSnippet) {
         $parsedBool = $null
         if ([bool]::TryParse($shouldSnippet, [ref]$parsedBool)) {
@@ -101,8 +112,17 @@ TTestInputs"] = @()
     # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
     # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
     else {
-      $pkgProp.CIParameters["CheckAOTCompat"] = $false
-      $pkgProp.CIParameters["AOTTestInputs"] = @()
+      # No CI.yml found, use IsAotCompatible from csproj for CheckAOTCompat
+      $pkgProp.CIParameters["CheckAOTCompat"] = $pkgProp.IsAotCompatible
+      
+      # If CheckAOTCompat is true but no CI.yml exists, set AOTTestInputs to "None"
+      if ($pkgProp.CIParameters["CheckAOTCompat"]) {
+        $pkgProp.CIParameters["AOTTestInputs"] = "None"
+      }
+      else {
+        $pkgProp.CIParameters["AOTTestInputs"] = @()
+      }
+      
       $pkgProp.CIParameters["BuildSnippets"] = $true
     }
 
