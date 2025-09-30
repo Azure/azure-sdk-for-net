@@ -73,8 +73,8 @@ namespace Azure.Generator.Primitives
             "ProtocolOperation.cs",
             "ProtocolOperationHelpers.cs",
             "SequentialDelayStrategy.cs",
-            "VoidValue.cs",
-            "TaskExtensions.cs"
+            "TaskExtensions.cs",
+            "VoidValue.cs"
         ];
 
         private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
