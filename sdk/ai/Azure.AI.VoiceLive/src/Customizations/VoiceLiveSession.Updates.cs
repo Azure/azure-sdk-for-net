@@ -69,20 +69,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Gets all server events from the VoiceLive service synchronously.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>An enumerable of VoiceLive server events.</returns>
-        /// <remarks>
-        /// This method provides synchronous access to all server events from the service.
-        /// For better performance and resource utilization, consider using <see cref="GetUpdatesAsync(CancellationToken)"/> instead.
-        /// </remarks>
-        public IEnumerable<SessionUpdate> GetUpdates(CancellationToken cancellationToken = default)
-        {
-            return GetUpdatesAsync(cancellationToken).ToBlockingEnumerable(cancellationToken);
-        }
-
-        /// <summary>
         /// Gets server events of a specific type from the VoiceLive service.
         /// </summary>
         /// <typeparam name="T">The specific type of server event to filter for.</typeparam>
@@ -130,25 +116,13 @@ namespace Azure.AI.VoiceLive
             }
 
             SessionUpdate sessionUpdate = null;
-            try
-            {
-                // Try to parse as JSON first
-                using JsonDocument document = JsonDocument.Parse(message);
-                JsonElement root = document.RootElement;
 
-                // Deserialize as a server event
-                sessionUpdate = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
-            }
-            catch (JsonException)
-            {
-                // If JSON parsing fails, ignore the message
-                yield break;
-            }
-            catch (Exception)
-            {
-                // If deserialization fails completely, ignore the message
-                yield break;
-            }
+            // Try to parse as JSON first
+            using JsonDocument document = JsonDocument.Parse(message);
+            JsonElement root = document.RootElement;
+
+            // Deserialize as a server event
+            sessionUpdate = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
 
             if (sessionUpdate != null)
             {

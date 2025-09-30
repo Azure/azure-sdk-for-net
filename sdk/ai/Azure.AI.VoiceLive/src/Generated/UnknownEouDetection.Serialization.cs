@@ -65,13 +65,13 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            EOUDetectionModel model = default;
+            EouDetectionModel model = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("model"u8))
                 {
-                    model = new EOUDetectionModel(prop.Value.GetString());
+                    model = new EouDetectionModel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

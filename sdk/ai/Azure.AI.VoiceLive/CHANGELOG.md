@@ -1,14 +1,33 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.4 (2025-09-30)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed all synchronous methods from `VoiceLiveClient` and `VoiceLiveSession` classes.
+  - `VoiceLiveClient.StartSession()` - use `StartSessionAsync()` instead
+  - `VoiceLiveSession.AddItem()` - use `AddItemAsync()` instead
+  - `VoiceLiveSession.AppendAudioToTurn()` - use `AppendAudioToTurnAsync()` instead
+  - `VoiceLiveSession.CancelAudioTurn()` - use `CancelAudioTurnAsync()` instead
+  - `VoiceLiveSession.CancelResponse()` - use `CancelResponseAsync()` instead
+  - `VoiceLiveSession.ClearInputAudio()` - use `ClearInputAudioAsync()` instead
+  - `VoiceLiveSession.ClearStreamingAudio()` - use `ClearStreamingAudioAsync()` instead
+  - `VoiceLiveSession.Close()` - use `CloseAsync()` instead
+  - `VoiceLiveSession.CommitInputAudio()` - use `CommitInputAudioAsync()` instead
+  - `VoiceLiveSession.ConfigureSession()` - use `ConfigureSessionAsync()` instead
+  - `VoiceLiveSession.Connect()` - use `ConnectAsync()` instead
+  - `VoiceLiveSession.ConnectAvatar()` - use `ConnectAvatarAsync()` instead
+  - `VoiceLiveSession.DeleteItem()` - use `DeleteItemAsync()` instead
+  - `VoiceLiveSession.EndAudioTurn()` - use `EndAudioTurnAsync()` instead
+  - `VoiceLiveSession.GetUpdates()` - use `GetUpdatesAsync()` instead
+  - `VoiceLiveSession.ReceiveUpdates()` - use `ReceiveUpdatesAsync()` instead
+  - `VoiceLiveSession.RequestItemRetrieval()` - use `RequestItemRetrievalAsync()` instead
+  - `VoiceLiveSession.SendCommand()` - use `SendCommandAsync()` instead
+  - `VoiceLiveSession.SendInputAudio()` - use `SendInputAudioAsync()` instead
+  - `VoiceLiveSession.StartAudioTurn()` - use `StartAudioTurnAsync()` instead
+  - `VoiceLiveSession.StartResponse()` - use `StartResponseAsync()` instead
+  - `VoiceLiveSession.TruncateConversation()` - use `TruncateConversationAsync()` instead
+- Removed `RespondingAgentOptions` and associated property usage.
 
 ## 1.0.0-beta.3 (2025-09-26)
 

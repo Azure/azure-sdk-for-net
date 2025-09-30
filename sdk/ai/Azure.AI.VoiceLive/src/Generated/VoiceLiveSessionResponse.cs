@@ -50,9 +50,6 @@ namespace Azure.AI.VoiceLive
             Id = id;
         }
 
-        /// <summary> The agent configuration for the session, if applicable. </summary>
-        public RespondingAgentOptions Agent { get; }
-
         /// <summary> The unique identifier for the session. </summary>
         public string Id { get; }
     }

@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="InputAudioContentPart"/>. </summary>
         /// <param name="audio"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
-        public InputAudioContentPart(string audio) : base("input_audio")
+        public InputAudioContentPart(string audio) : base(ContentPartType.InputAudio)
         {
             Argument.AssertNotNull(audio, nameof(audio));
 
@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="audio"></param>
         /// <param name="transcript"></param>
-        internal InputAudioContentPart(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string audio, string transcript) : base(@type, additionalBinaryDataProperties)
+        internal InputAudioContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string audio, string transcript) : base(@type, additionalBinaryDataProperties)
         {
             Audio = audio;
             Transcript = transcript;
