@@ -18,7 +18,7 @@ using Azure.ResourceManager.PlanetaryComputer.Models;
 namespace Azure.ResourceManager.PlanetaryComputer
 {
     /// <summary> A Microsoft Planetary Computer Pro GeoCatalog resource. </summary>
-    public partial class PlanetaryComputerGeoCatalogData : IJsonModel<PlanetaryComputerGeoCatalogData>
+    public partial class PlanetaryComputerGeoCatalogData : TrackedResourceData, IJsonModel<PlanetaryComputerGeoCatalogData>
     {
         /// <summary> Initializes a new instance of <see cref="PlanetaryComputerGeoCatalogData"/> for deserialization. </summary>
         internal PlanetaryComputerGeoCatalogData()
