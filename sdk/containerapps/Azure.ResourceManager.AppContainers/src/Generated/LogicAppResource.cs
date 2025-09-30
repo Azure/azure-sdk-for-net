@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.AppContainers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of WorkflowEnvelopeResources in the LogicApp. </summary>
-        /// <returns> An object representing collection of WorkflowEnvelopeResources and their operations over a WorkflowEnvelopeResource. </returns>
-        public virtual WorkflowEnvelopeCollection GetWorkflowEnvelopes()
+        /// <summary> Gets a collection of LogicAppWorkflowEnvelopeResources in the LogicApp. </summary>
+        /// <returns> An object representing collection of LogicAppWorkflowEnvelopeResources and their operations over a LogicAppWorkflowEnvelopeResource. </returns>
+        public virtual LogicAppWorkflowEnvelopeCollection GetLogicAppWorkflowEnvelopes()
         {
-            return GetCachedClient(client => new WorkflowEnvelopeCollection(client, Id));
+            return GetCachedClient(client => new LogicAppWorkflowEnvelopeCollection(client, Id));
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WorkflowEnvelopeResource"/></description>
+        /// <description><see cref="LogicAppWorkflowEnvelopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkflowEnvelopeResource>> GetWorkflowEnvelopeAsync(string workflowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogicAppWorkflowEnvelopeResource>> GetLogicAppWorkflowEnvelopeAsync(string workflowName, CancellationToken cancellationToken = default)
         {
-            return await GetWorkflowEnvelopes().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+            return await GetLogicAppWorkflowEnvelopes().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WorkflowEnvelopeResource"/></description>
+        /// <description><see cref="LogicAppWorkflowEnvelopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkflowEnvelopeResource> GetWorkflowEnvelope(string workflowName, CancellationToken cancellationToken = default)
+        public virtual Response<LogicAppWorkflowEnvelopeResource> GetLogicAppWorkflowEnvelope(string workflowName, CancellationToken cancellationToken = default)
         {
-            return GetWorkflowEnvelopes().Get(workflowName, cancellationToken);
+            return GetLogicAppWorkflowEnvelopes().Get(workflowName, cancellationToken);
         }
 
         /// <summary>
@@ -443,14 +443,14 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WorkflowEnvelopeResource>> GetWorkflowsConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogicAppWorkflowEnvelopeResource>> GetWorkflowsConnectionsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.GetWorkflowsConnections");
             scope.Start();
             try
             {
                 var response = await _logicAppRestClient.ListWorkflowsConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new WorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicAppWorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -481,14 +481,14 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WorkflowEnvelopeResource> GetWorkflowsConnections(CancellationToken cancellationToken = default)
+        public virtual Response<LogicAppWorkflowEnvelopeResource> GetWorkflowsConnections(CancellationToken cancellationToken = default)
         {
             using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.GetWorkflowsConnections");
             scope.Start();
             try
             {
                 var response = _logicAppRestClient.ListWorkflowsConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new WorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicAppWorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -524,11 +524,11 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HttpRouteConfigResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of HttpRouteConfigResources and their operations over a HttpRouteConfigResource. </returns>
-        public virtual HttpRouteConfigCollection GetHttpRouteConfigs()
+        /// <summary> Gets a collection of ContainerAppHttpRouteConfigResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ContainerAppHttpRouteConfigResources and their operations over a ContainerAppHttpRouteConfigResource. </returns>
+        public virtual ContainerAppHttpRouteConfigCollection GetContainerAppHttpRouteConfigs()
         {
-            return GetCachedClient(client => new HttpRouteConfigCollection(client, Id));
+            return GetCachedClient(client => new ContainerAppHttpRouteConfigCollection(client, Id));
         }
 
         /// <summary>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HttpRouteConfigResource"/></description>
+        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -557,9 +557,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HttpRouteConfigResource>> GetHttpRouteConfigAsync(string httpRouteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppHttpRouteConfigResource>> GetContainerAppHttpRouteConfigAsync(string httpRouteName, CancellationToken cancellationToken = default)
         {
-            return await GetHttpRouteConfigs().GetAsync(httpRouteName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppHttpRouteConfigs().GetAsync(httpRouteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HttpRouteConfigResource"/></description>
+        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -588,47 +588,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HttpRouteConfigResource> GetHttpRouteConfig(string httpRouteName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppHttpRouteConfigResource> GetContainerAppHttpRouteConfig(string httpRouteName, CancellationToken cancellationToken = default)
         {
-            return GetHttpRouteConfigs().Get(httpRouteName, cancellationToken);
+            return GetContainerAppHttpRouteConfigs().Get(httpRouteName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MaintenanceConfigurationResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of MaintenanceConfigurationResources and their operations over a MaintenanceConfigurationResource. </returns>
-        public virtual MaintenanceConfigurationResourceCollection GetMaintenanceConfigurationResources()
+        /// <summary> Gets a collection of ContainerAppMaintenanceConfigurationResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ContainerAppMaintenanceConfigurationResources and their operations over a ContainerAppMaintenanceConfigurationResource. </returns>
+        public virtual ContainerAppMaintenanceConfigurationCollection GetContainerAppMaintenanceConfigurations()
         {
-            return GetCachedClient(client => new MaintenanceConfigurationResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the maintenance configuration of a ManagedEnvironment .
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/maintenanceConfigurations/{configName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MaintenanceConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configName"> The name of the maintenance configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceConfigurationResource>> GetMaintenanceConfigurationResourceAsync(string configName, CancellationToken cancellationToken = default)
-        {
-            return await GetMaintenanceConfigurationResources().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ContainerAppMaintenanceConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -648,7 +617,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceConfigurationResource"/></description>
+        /// <description><see cref="ContainerAppMaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -657,9 +626,40 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceConfigurationResource> GetMaintenanceConfigurationResource(string configName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppMaintenanceConfigurationResource>> GetContainerAppMaintenanceConfigurationAsync(string configName, CancellationToken cancellationToken = default)
         {
-            return GetMaintenanceConfigurationResources().Get(configName, cancellationToken);
+            return await GetContainerAppMaintenanceConfigurations().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the maintenance configuration of a ManagedEnvironment .
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/maintenanceConfigurations/{configName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppMaintenanceConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppMaintenanceConfigurationResource> GetContainerAppMaintenanceConfiguration(string configName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerAppMaintenanceConfigurations().Get(configName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentStorageResources in the ContainerAppManagedEnvironment. </summary>

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string configName, MaintenanceConfigurationResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string configName, ContainerAppMaintenanceConfigurationData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppContainers
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string environmentName, string configName, MaintenanceConfigurationResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string environmentName, string configName, ContainerAppMaintenanceConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceConfigurationResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string configName, MaintenanceConfigurationResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppMaintenanceConfigurationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string configName, ContainerAppMaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                 case 201:
                     {
-                        MaintenanceConfigurationResourceData value = default;
+                        ContainerAppMaintenanceConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceConfigurationResourceData.DeserializeMaintenanceConfigurationResourceData(document.RootElement);
+                        value = ContainerAppMaintenanceConfigurationData.DeserializeContainerAppMaintenanceConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceConfigurationResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, string configName, MaintenanceConfigurationResourceData data, CancellationToken cancellationToken = default)
+        public Response<ContainerAppMaintenanceConfigurationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, string configName, ContainerAppMaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -230,9 +230,9 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                 case 201:
                     {
-                        MaintenanceConfigurationResourceData value = default;
+                        ContainerAppMaintenanceConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MaintenanceConfigurationResourceData.DeserializeMaintenanceConfigurationResourceData(document.RootElement);
+                        value = ContainerAppMaintenanceConfigurationData.DeserializeContainerAppMaintenanceConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="configName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceConfigurationResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string environmentName, string configName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppMaintenanceConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string environmentName, string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -391,13 +391,13 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        MaintenanceConfigurationResourceData value = default;
+                        ContainerAppMaintenanceConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceConfigurationResourceData.DeserializeMaintenanceConfigurationResourceData(document.RootElement);
+                        value = ContainerAppMaintenanceConfigurationData.DeserializeContainerAppMaintenanceConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MaintenanceConfigurationResourceData)null, message.Response);
+                    return Response.FromValue((ContainerAppMaintenanceConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="configName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceConfigurationResourceData> Get(string subscriptionId, string resourceGroupName, string environmentName, string configName, CancellationToken cancellationToken = default)
+        public Response<ContainerAppMaintenanceConfigurationData> Get(string subscriptionId, string resourceGroupName, string environmentName, string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -424,13 +424,13 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        MaintenanceConfigurationResourceData value = default;
+                        ContainerAppMaintenanceConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MaintenanceConfigurationResourceData.DeserializeMaintenanceConfigurationResourceData(document.RootElement);
+                        value = ContainerAppMaintenanceConfigurationData.DeserializeContainerAppMaintenanceConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MaintenanceConfigurationResourceData)null, message.Response);
+                    return Response.FromValue((ContainerAppMaintenanceConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

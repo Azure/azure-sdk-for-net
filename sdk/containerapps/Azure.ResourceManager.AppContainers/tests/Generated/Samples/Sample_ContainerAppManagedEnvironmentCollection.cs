@@ -158,7 +158,7 @@ MaximumNodeCount = 6,
 }, new ContainerAppWorkloadProfile("My-consumption-01", "Consumption")},
                 IsMtlsEnabled = true,
                 IsEnabled = true,
-                IngressConfiguration = new IngressConfiguration
+                IngressConfiguration = new ManagedEnvironmentIngressConfiguration
                 {
                     WorkloadProfileName = "My-CO-01",
                     TerminationGracePeriodSeconds = 3600,

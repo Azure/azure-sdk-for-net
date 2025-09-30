@@ -471,41 +471,41 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HttpRouteConfigResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HttpRouteConfigResource.CreateResourceIdentifier" /> to create a <see cref="HttpRouteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppHttpRouteConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppHttpRouteConfigResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppHttpRouteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetHttpRouteConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppHttpRouteConfigResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HttpRouteConfigResource"/> object. </returns>
-        public static HttpRouteConfigResource GetHttpRouteConfigResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppHttpRouteConfigResource"/> object. </returns>
+        public static ContainerAppHttpRouteConfigResource GetContainerAppHttpRouteConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetHttpRouteConfigResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppHttpRouteConfigResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppMaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppMaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppMaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetMaintenanceConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppMaintenanceConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationResource"/> object. </returns>
-        public static MaintenanceConfigurationResource GetMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppMaintenanceConfigurationResource"/> object. </returns>
+        public static ContainerAppMaintenanceConfigurationResource GetContainerAppMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetMaintenanceConfigurationResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppMaintenanceConfigurationResource(id);
         }
 
         /// <summary>
@@ -585,22 +585,22 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowEnvelopeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowEnvelopeResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowEnvelopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowEnvelopeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowEnvelopeResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowEnvelopeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetWorkflowEnvelopeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetLogicAppWorkflowEnvelopeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkflowEnvelopeResource"/> object. </returns>
-        public static WorkflowEnvelopeResource GetWorkflowEnvelopeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowEnvelopeResource"/> object. </returns>
+        public static LogicAppWorkflowEnvelopeResource GetLogicAppWorkflowEnvelopeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetWorkflowEnvelopeResource(id);
+            return GetMockableAppContainersArmClient(client).GetLogicAppWorkflowEnvelopeResource(id);
         }
 
         /// <summary>

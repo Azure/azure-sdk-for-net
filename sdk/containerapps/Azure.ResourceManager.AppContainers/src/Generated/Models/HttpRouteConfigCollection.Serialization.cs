@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IReadOnlyList<HttpRouteConfigData> value = default;
+            IReadOnlyList<ContainerAppHttpRouteConfigData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<HttpRouteConfigData> array = new List<HttpRouteConfigData>();
+                    List<ContainerAppHttpRouteConfigData> array = new List<ContainerAppHttpRouteConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpRouteConfigData.DeserializeHttpRouteConfigData(item, options));
+                        array.Add(ContainerAppHttpRouteConfigData.DeserializeContainerAppHttpRouteConfigData(item, options));
                     }
                     value = array;
                     continue;

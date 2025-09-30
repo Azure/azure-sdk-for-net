@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IReadOnlyList<MaintenanceConfigurationResourceData> value = default;
+            IReadOnlyList<ContainerAppMaintenanceConfigurationData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<MaintenanceConfigurationResourceData> array = new List<MaintenanceConfigurationResourceData>();
+                    List<ContainerAppMaintenanceConfigurationData> array = new List<ContainerAppMaintenanceConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationResourceData.DeserializeMaintenanceConfigurationResourceData(item, options));
+                        array.Add(ContainerAppMaintenanceConfigurationData.DeserializeContainerAppMaintenanceConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MaintenanceConfigurationCollection(value ?? new ChangeTrackingList<MaintenanceConfigurationResourceData>(), nextLink, serializedAdditionalRawData);
+            return new MaintenanceConfigurationCollection(value ?? new ChangeTrackingList<ContainerAppMaintenanceConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

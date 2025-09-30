@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string accountName = default;
             string accountKey = default;
-            SecretKeyVaultProperties accountKeyVaultProperties = default;
+            ContainerAppSecretKeyVaultProperties accountKeyVaultProperties = default;
             ContainerAppAccessMode? accessMode = default;
             string shareName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    accountKeyVaultProperties = SecretKeyVaultProperties.DeserializeSecretKeyVaultProperties(property.Value, options);
+                    accountKeyVaultProperties = ContainerAppSecretKeyVaultProperties.DeserializeContainerAppSecretKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accessMode"u8))

@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCollection"/>. </summary>
         internal MaintenanceConfigurationCollection()
         {
-            Value = new ChangeTrackingList<MaintenanceConfigurationResourceData>();
+            Value = new ChangeTrackingList<ContainerAppMaintenanceConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCollection"/>. </summary>
         /// <param name="value"> Results of the list maintenance configuration resources. </param>
         /// <param name="nextLink"> Link for next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceConfigurationCollection(IReadOnlyList<MaintenanceConfigurationResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MaintenanceConfigurationCollection(IReadOnlyList<ContainerAppMaintenanceConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Results of the list maintenance configuration resources. </summary>
-        public IReadOnlyList<MaintenanceConfigurationResourceData> Value { get; }
+        public IReadOnlyList<ContainerAppMaintenanceConfigurationData> Value { get; }
         /// <summary> Link for next page of results. </summary>
         public string NextLink { get; }
     }

@@ -210,9 +210,9 @@ namespace Azure.ResourceManager.AppContainers
             string infrastructureResourceGroup = default;
             ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
             ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration = default;
-            IngressConfiguration ingressConfiguration = default;
+            ManagedEnvironmentIngressConfiguration ingressConfiguration = default;
             IReadOnlyList<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            ContainerAppPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            ingressConfiguration = IngressConfiguration.DeserializeIngressConfiguration(property0.Value, options);
+                            ingressConfiguration = ManagedEnvironmentIngressConfiguration.DeserializeManagedEnvironmentIngressConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new ContainerAppPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }

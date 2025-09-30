@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled'. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppManagedEnvironmentData"/> instance for mocking. </returns>
-        public static ContainerAppManagedEnvironmentData ContainerAppManagedEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ManagedServiceIdentity identity = null, ContainerAppEnvironmentProvisioningState? provisioningState = null, string daprAIInstrumentationKey = null, string daprAIConnectionString = null, ContainerAppVnetConfiguration vnetConfiguration = null, string deploymentErrors = null, string defaultDomain = null, IPAddress staticIP = null, ContainerAppLogsConfiguration appLogsConfiguration = null, bool? isZoneRedundant = null, ContainerAppCustomDomainConfiguration customDomainConfiguration = null, string eventStreamEndpoint = null, IEnumerable<ContainerAppWorkloadProfile> workloadProfiles = null, string kedaVersion = null, string daprVersion = null, string infrastructureResourceGroup = null, bool? isMtlsEnabled = null, bool? isEnabled = null, IngressConfiguration ingressConfiguration = null, IEnumerable<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections = null, PublicNetworkAccess? publicNetworkAccess = null)
+        public static ContainerAppManagedEnvironmentData ContainerAppManagedEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ManagedServiceIdentity identity = null, ContainerAppEnvironmentProvisioningState? provisioningState = null, string daprAIInstrumentationKey = null, string daprAIConnectionString = null, ContainerAppVnetConfiguration vnetConfiguration = null, string deploymentErrors = null, string defaultDomain = null, IPAddress staticIP = null, ContainerAppLogsConfiguration appLogsConfiguration = null, bool? isZoneRedundant = null, ContainerAppCustomDomainConfiguration customDomainConfiguration = null, string eventStreamEndpoint = null, IEnumerable<ContainerAppWorkloadProfile> workloadProfiles = null, string kedaVersion = null, string daprVersion = null, string infrastructureResourceGroup = null, bool? isMtlsEnabled = null, bool? isEnabled = null, ManagedEnvironmentIngressConfiguration ingressConfiguration = null, IEnumerable<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections = null, ContainerAppPublicNetworkAccess? publicNetworkAccess = null)
         {
             tags ??= new Dictionary<string, string>();
             workloadProfiles ??= new List<ContainerAppWorkloadProfile>();
@@ -986,16 +986,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppContainers.HttpRouteConfigData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppHttpRouteConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Http Route Config properties. </param>
-        /// <returns> A new <see cref="AppContainers.HttpRouteConfigData"/> instance for mocking. </returns>
-        public static HttpRouteConfigData HttpRouteConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HttpRouteConfigProperties properties = null)
+        /// <returns> A new <see cref="AppContainers.ContainerAppHttpRouteConfigData"/> instance for mocking. </returns>
+        public static ContainerAppHttpRouteConfigData ContainerAppHttpRouteConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerAppHttpRouteConfigProperties properties = null)
         {
-            return new HttpRouteConfigData(
+            return new ContainerAppHttpRouteConfigData(
                 id,
                 name,
                 resourceType,
@@ -1004,20 +1004,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HttpRouteConfigProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppHttpRouteConfigProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the Http Route Config. </param>
         /// <param name="provisioningErrors"> List of errors when trying to reconcile http routes. </param>
         /// <param name="fqdn"> FQDN of the route resource. </param>
         /// <param name="customDomains"> Custom domain bindings for Http Routes' hostnames. </param>
         /// <param name="rules"> Routing Rules for the Http Route resource. </param>
-        /// <returns> A new <see cref="Models.HttpRouteConfigProperties"/> instance for mocking. </returns>
-        public static HttpRouteConfigProperties HttpRouteConfigProperties(HttpRouteProvisioningState? provisioningState = null, IEnumerable<HttpRouteProvisioningErrors> provisioningErrors = null, string fqdn = null, IEnumerable<ContainerAppCustomDomain> customDomains = null, IEnumerable<HttpRouteRule> rules = null)
+        /// <returns> A new <see cref="Models.ContainerAppHttpRouteConfigProperties"/> instance for mocking. </returns>
+        public static ContainerAppHttpRouteConfigProperties ContainerAppHttpRouteConfigProperties(ContainerAppHttpRouteProvisioningState? provisioningState = null, IEnumerable<ContainerAppHttpRouteProvisioningErrors> provisioningErrors = null, string fqdn = null, IEnumerable<ContainerAppCustomDomain> customDomains = null, IEnumerable<ContainerAppHttpRouteRule> rules = null)
         {
-            provisioningErrors ??= new List<HttpRouteProvisioningErrors>();
+            provisioningErrors ??= new List<ContainerAppHttpRouteProvisioningErrors>();
             customDomains ??= new List<ContainerAppCustomDomain>();
-            rules ??= new List<HttpRouteRule>();
+            rules ??= new List<ContainerAppHttpRouteRule>();
 
-            return new HttpRouteConfigProperties(
+            return new ContainerAppHttpRouteConfigProperties(
                 provisioningState,
                 provisioningErrors?.ToList(),
                 fqdn,
@@ -1026,27 +1026,27 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HttpRouteProvisioningErrors"/>. </summary>
-        /// <param name="timestamp"> Timestamp error occured at. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppHttpRouteProvisioningErrors"/>. </summary>
+        /// <param name="errorOccuredOn"> Timestamp error occured at. </param>
         /// <param name="message"> Description or error message. </param>
-        /// <returns> A new <see cref="Models.HttpRouteProvisioningErrors"/> instance for mocking. </returns>
-        public static HttpRouteProvisioningErrors HttpRouteProvisioningErrors(DateTimeOffset? timestamp = null, string message = null)
+        /// <returns> A new <see cref="Models.ContainerAppHttpRouteProvisioningErrors"/> instance for mocking. </returns>
+        public static ContainerAppHttpRouteProvisioningErrors ContainerAppHttpRouteProvisioningErrors(DateTimeOffset? errorOccuredOn = null, string message = null)
         {
-            return new HttpRouteProvisioningErrors(timestamp, message, serializedAdditionalRawData: null);
+            return new ContainerAppHttpRouteProvisioningErrors(errorOccuredOn, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppContainers.MaintenanceConfigurationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppMaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="scheduledEntries"> List of maintenance schedules for a managed environment. </param>
-        /// <returns> A new <see cref="AppContainers.MaintenanceConfigurationResourceData"/> instance for mocking. </returns>
-        public static MaintenanceConfigurationResourceData MaintenanceConfigurationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ScheduledEntry> scheduledEntries = null)
+        /// <returns> A new <see cref="AppContainers.ContainerAppMaintenanceConfigurationData"/> instance for mocking. </returns>
+        public static ContainerAppMaintenanceConfigurationData ContainerAppMaintenanceConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ManagedEnvironmentScheduledEntry> scheduledEntries = null)
         {
-            scheduledEntries ??= new List<ScheduledEntry>();
+            scheduledEntries ??= new List<ManagedEnvironmentScheduledEntry>();
 
-            return new MaintenanceConfigurationResourceData(
+            return new ContainerAppMaintenanceConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -1182,17 +1182,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new LogicAppData(id, name, resourceType, systemData, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppContainers.WorkflowEnvelopeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.LogicAppWorkflowEnvelopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Gets the logic app hybrid workflow kind. </param>
         /// <param name="properties"> Additional workflow properties. </param>
-        /// <returns> A new <see cref="AppContainers.WorkflowEnvelopeData"/> instance for mocking. </returns>
-        public static WorkflowEnvelopeData WorkflowEnvelopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowKind? kind = null, WorkflowEnvelopeProperties properties = null)
+        /// <returns> A new <see cref="AppContainers.LogicAppWorkflowEnvelopeData"/> instance for mocking. </returns>
+        public static LogicAppWorkflowEnvelopeData LogicAppWorkflowEnvelopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LogicAppWorkflowKind? kind = null, LogicAppWorkflowEnvelopeProperties properties = null)
         {
-            return new WorkflowEnvelopeData(
+            return new LogicAppWorkflowEnvelopeData(
                 id,
                 name,
                 resourceType,

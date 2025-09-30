@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="accessMode"> Access mode for storage. </param>
         /// <param name="shareName"> Azure file share name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppAzureFileProperties(string accountName, string accountKey, SecretKeyVaultProperties accountKeyVaultProperties, ContainerAppAccessMode? accessMode, string shareName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppAzureFileProperties(string accountName, string accountKey, ContainerAppSecretKeyVaultProperties accountKeyVaultProperties, ContainerAppAccessMode? accessMode, string shareName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountName = accountName;
             AccountKey = accountKey;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string AccountKey { get; set; }
         /// <summary> Storage account key stored as an Azure Key Vault secret. </summary>
         [WirePath("accountKeyVaultProperties")]
-        public SecretKeyVaultProperties AccountKeyVaultProperties { get; set; }
+        public ContainerAppSecretKeyVaultProperties AccountKeyVaultProperties { get; set; }
         /// <summary> Access mode for storage. </summary>
         [WirePath("accessMode")]
         public ContainerAppAccessMode? AccessMode { get; set; }

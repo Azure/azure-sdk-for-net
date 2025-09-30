@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Connected environment patch properties. </summary>
-    public partial class ContainerAppConnectedEnvironmentPatch : ResourceTags
+    public partial class ContainerAppConnectedEnvironmentPatch : ContainerAppResourceTags
     {
         /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentPatch"/>. </summary>
         public ContainerAppConnectedEnvironmentPatch()

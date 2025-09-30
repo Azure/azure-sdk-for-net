@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ManagedServiceIdentity identity, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication, ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration, IngressConfiguration ingressConfiguration, IReadOnlyList<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ManagedServiceIdentity identity, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication, ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration, ManagedEnvironmentIngressConfiguration ingressConfiguration, IReadOnlyList<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections, ContainerAppPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Ingress configuration for the Managed Environment. </summary>
         [WirePath("properties.ingressConfiguration")]
-        public IngressConfiguration IngressConfiguration { get; set; }
+        public ManagedEnvironmentIngressConfiguration IngressConfiguration { get; set; }
         /// <summary> Private endpoint connections to the resource. </summary>
         [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<ContainerAppPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled'. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public ContainerAppPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

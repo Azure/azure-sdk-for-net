@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.AppContainers.Samples
             LogicAppResource logicApp = client.GetLogicAppResource(logicAppResourceId);
 
             // invoke the operation
-            WorkflowEnvelopeResource result = await logicApp.GetWorkflowsConnectionsAsync();
+            LogicAppWorkflowEnvelopeResource result = await logicApp.GetWorkflowsConnectionsAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkflowEnvelopeData resourceData = result.Data;
+            LogicAppWorkflowEnvelopeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

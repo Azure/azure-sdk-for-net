@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HttpRouteConfigData>> GetAsync(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppHttpRouteConfigData>> GetAsync(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        HttpRouteConfigData value = default;
+                        ContainerAppHttpRouteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = HttpRouteConfigData.DeserializeHttpRouteConfigData(document.RootElement);
+                        value = ContainerAppHttpRouteConfigData.DeserializeContainerAppHttpRouteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HttpRouteConfigData)null, message.Response);
+                    return Response.FromValue((ContainerAppHttpRouteConfigData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HttpRouteConfigData> Get(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, CancellationToken cancellationToken = default)
+        public Response<ContainerAppHttpRouteConfigData> Get(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        HttpRouteConfigData value = default;
+                        ContainerAppHttpRouteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = HttpRouteConfigData.DeserializeHttpRouteConfigData(document.RootElement);
+                        value = ContainerAppHttpRouteConfigData.DeserializeContainerAppHttpRouteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HttpRouteConfigData)null, message.Response);
+                    return Response.FromValue((ContainerAppHttpRouteConfigData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, HttpRouteConfigData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, ContainerAppHttpRouteConfigData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppContainers
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, HttpRouteConfigData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, ContainerAppHttpRouteConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="httpRouteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HttpRouteConfigData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, HttpRouteConfigData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppHttpRouteConfigData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, ContainerAppHttpRouteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                 case 201:
                     {
-                        HttpRouteConfigData value = default;
+                        ContainerAppHttpRouteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = HttpRouteConfigData.DeserializeHttpRouteConfigData(document.RootElement);
+                        value = ContainerAppHttpRouteConfigData.DeserializeContainerAppHttpRouteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="httpRouteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HttpRouteConfigData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, HttpRouteConfigData data, CancellationToken cancellationToken = default)
+        public Response<ContainerAppHttpRouteConfigData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, ContainerAppHttpRouteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                 case 201:
                     {
-                        HttpRouteConfigData value = default;
+                        ContainerAppHttpRouteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = HttpRouteConfigData.DeserializeHttpRouteConfigData(document.RootElement);
+                        value = ContainerAppHttpRouteConfigData.DeserializeContainerAppHttpRouteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, HttpRouteConfigData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, ContainerAppHttpRouteConfigData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.AppContainers
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, HttpRouteConfigData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, ContainerAppHttpRouteConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="httpRouteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HttpRouteConfigData>> UpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, HttpRouteConfigData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppHttpRouteConfigData>> UpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, ContainerAppHttpRouteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -315,9 +315,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        HttpRouteConfigData value = default;
+                        ContainerAppHttpRouteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = HttpRouteConfigData.DeserializeHttpRouteConfigData(document.RootElement);
+                        value = ContainerAppHttpRouteConfigData.DeserializeContainerAppHttpRouteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="httpRouteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HttpRouteConfigData> Update(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, HttpRouteConfigData data, CancellationToken cancellationToken = default)
+        public Response<ContainerAppHttpRouteConfigData> Update(string subscriptionId, string resourceGroupName, string environmentName, string httpRouteName, ContainerAppHttpRouteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -348,9 +348,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        HttpRouteConfigData value = default;
+                        ContainerAppHttpRouteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = HttpRouteConfigData.DeserializeHttpRouteConfigData(document.RootElement);
+                        value = ContainerAppHttpRouteConfigData.DeserializeContainerAppHttpRouteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.HttpRouteConfigCollection>> ListAsync(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<HttpRouteConfigCollection>> ListAsync(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -505,9 +505,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        Models.HttpRouteConfigCollection value = default;
+                        HttpRouteConfigCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.HttpRouteConfigCollection.DeserializeHttpRouteConfigCollection(document.RootElement);
+                        value = HttpRouteConfigCollection.DeserializeHttpRouteConfigCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.HttpRouteConfigCollection> List(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
+        public Response<HttpRouteConfigCollection> List(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -534,9 +534,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        Models.HttpRouteConfigCollection value = default;
+                        HttpRouteConfigCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.HttpRouteConfigCollection.DeserializeHttpRouteConfigCollection(document.RootElement);
+                        value = HttpRouteConfigCollection.DeserializeHttpRouteConfigCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.HttpRouteConfigCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<HttpRouteConfigCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -587,9 +587,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        Models.HttpRouteConfigCollection value = default;
+                        HttpRouteConfigCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.HttpRouteConfigCollection.DeserializeHttpRouteConfigCollection(document.RootElement);
+                        value = HttpRouteConfigCollection.DeserializeHttpRouteConfigCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.HttpRouteConfigCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
+        public Response<HttpRouteConfigCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -618,9 +618,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        Models.HttpRouteConfigCollection value = default;
+                        HttpRouteConfigCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.HttpRouteConfigCollection.DeserializeHttpRouteConfigCollection(document.RootElement);
+                        value = HttpRouteConfigCollection.DeserializeHttpRouteConfigCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
