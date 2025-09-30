@@ -14,6 +14,34 @@ namespace Azure.AI.VoiceLive
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class VoiceLiveModelFactory
     {
+        /// <summary> Error object returned in case of API failure. </summary>
+        /// <param name="code"> Error code, or null if unspecified. </param>
+        /// <param name="message"> Human-readable error message. </param>
+        /// <param name="param"> Parameter name related to the error, if applicable. </param>
+        /// <param name="type"> Type or category of the error. </param>
+        /// <param name="eventId"> Event id of the error. </param>
+        /// <returns> A new <see cref="VoiceLive.VoiceLiveErrorDetails"/> instance for mocking. </returns>
+        public static VoiceLiveErrorDetails VoiceLiveErrorDetails(string code = default, string message = default, string @param = default, string @type = default, string eventId = default)
+        {
+            return new VoiceLiveErrorDetails(
+                code,
+                message,
+                @param,
+                @type,
+                eventId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A single log probability entry for a token. </summary>
+        /// <param name="token"> The token that was used to generate the log probability. </param>
+        /// <param name="logprob"> The log probability of the token. </param>
+        /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
+        /// <returns> A new <see cref="VoiceLive.LogProbProperties"/> instance for mocking. </returns>
+        public static LogProbProperties LogProbProperties(string token = default, float logprob = default, BinaryData bytes = default)
+        {
+            return new LogProbProperties(token, logprob, bytes, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Base for session configuration shared between request and response. </summary>
         /// <param name="model"> The model for the session. </param>
         /// <param name="modalities"> The modalities to be used in the session. </param>
@@ -1091,24 +1119,6 @@ namespace Azure.AI.VoiceLive
                 error);
         }
 
-        /// <summary> Error object returned in case of API failure. </summary>
-        /// <param name="code"> Error code, or null if unspecified. </param>
-        /// <param name="message"> Human-readable error message. </param>
-        /// <param name="param"> Parameter name related to the error, if applicable. </param>
-        /// <param name="type"> Type or category of the error. </param>
-        /// <param name="eventId"> Event id of the error. </param>
-        /// <returns> A new <see cref="VoiceLive.VoiceLiveErrorDetails"/> instance for mocking. </returns>
-        public static VoiceLiveErrorDetails VoiceLiveErrorDetails(string code = default, string message = default, string @param = default, string @type = default, string eventId = default)
-        {
-            return new VoiceLiveErrorDetails(
-                code,
-                message,
-                @param,
-                @type,
-                eventId,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// Returned when an earlier assistant audio message item is truncated by the
         /// client with a `conversation.item.truncate` event. This event is used to
@@ -1537,16 +1547,6 @@ namespace Azure.AI.VoiceLive
                 contentIndex,
                 delta,
                 logprobs.ToList());
-        }
-
-        /// <summary> A single log probability entry for a token. </summary>
-        /// <param name="token"> The token that was used to generate the log probability. </param>
-        /// <param name="logprob"> The log probability of the token. </param>
-        /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
-        /// <returns> A new <see cref="VoiceLive.LogProbProperties"/> instance for mocking. </returns>
-        public static LogProbProperties LogProbProperties(string token = default, float logprob = default, BinaryData bytes = default)
-        {
-            return new LogProbProperties(token, logprob, bytes, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
