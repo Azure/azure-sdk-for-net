@@ -69,20 +69,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Gets all server events from the VoiceLive service synchronously.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>An enumerable of VoiceLive server events.</returns>
-        /// <remarks>
-        /// This method provides synchronous access to all server events from the service.
-        /// For better performance and resource utilization, consider using <see cref="GetUpdatesAsync(CancellationToken)"/> instead.
-        /// </remarks>
-        public IEnumerable<SessionUpdate> GetUpdates(CancellationToken cancellationToken = default)
-        {
-            return GetUpdatesAsync(cancellationToken).ToBlockingEnumerable(cancellationToken);
-        }
-
-        /// <summary>
         /// Gets server events of a specific type from the VoiceLive service.
         /// </summary>
         /// <typeparam name="T">The specific type of server event to filter for.</typeparam>

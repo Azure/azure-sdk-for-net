@@ -75,19 +75,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Initializes an underlying <see cref="WebSocket"/> instance for communication with the VoiceLive service and
-        /// then connects to the service using this socket.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <param name="headers">Headers to send.</param>
-        protected internal virtual void Connect(IDictionary<string, string> headers, CancellationToken cancellationToken = default)
-        {
-#pragma warning disable AZC0106
-            ConnectAsync(headers, cancellationToken).EnsureCompleted();
-#pragma warning restore AZC0106
-        }
-
-        /// <summary>
         /// Closes the WebSocket connection gracefully.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token to use.</param>
@@ -108,17 +95,6 @@ namespace Azure.AI.VoiceLive
                     // Ignore WebSocket exceptions during close
                 }
             }
-        }
-
-        /// <summary>
-        /// Closes the WebSocket connection gracefully.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual void Close(CancellationToken cancellationToken = default)
-        {
-#pragma warning disable AZC0107
-            CloseAsync(cancellationToken).EnsureCompleted();
-#pragma warning restore AZC0107
         }
 
         /// <summary>
