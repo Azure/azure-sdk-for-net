@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ContainerAppConnectedEnvironmentResource> Update(CancellationToken cancellationToken = default)
         {
-            throw new InvalidOperationException();
+            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<ContainerAppConnectedEnvironmentResource>> UpdateAsync(CancellationToken cancellationToken = default)
         {
-            throw new InvalidOperationException();
+            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
         }
     }
 }
