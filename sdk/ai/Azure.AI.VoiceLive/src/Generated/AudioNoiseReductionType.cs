@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    public enum AudioNoiseReductionType
+    public readonly partial struct AudioNoiseReductionType : IEquatable<AudioNoiseReductionType>
     {
-        /// <summary> AzureDeepNoiseSuppression. </summary>
-        AzureDeepNoiseSuppression,
-        /// <summary> NearField. </summary>
-        NearField,
-        /// <summary> FarField. </summary>
-        FarField
+        private readonly string _value;
+        private const string AzureDeepNoiseSuppressionValue = "azure_deep_noise_suppression";
+        private const string NearFieldValue = "near_field";
+        private const string FarFieldValue = "far_field";
+
+        /// <summary> Initializes a new instance of <see cref="AudioNoiseReductionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AudioNoiseReductionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AzureDeepNoiseSuppression. </summary>
+        public static AudioNoiseReductionType AzureDeepNoiseSuppression { get; } = new AudioNoiseReductionType(AzureDeepNoiseSuppressionValue);
+
+        /// <summary> Gets the NearField. </summary>
+        public static AudioNoiseReductionType NearField { get; } = new AudioNoiseReductionType(NearFieldValue);
+
+        /// <summary> Gets the FarField. </summary>
+        public static AudioNoiseReductionType FarField { get; } = new AudioNoiseReductionType(FarFieldValue);
+
+        /// <summary> Determines if two <see cref="AudioNoiseReductionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(AudioNoiseReductionType left, AudioNoiseReductionType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="AudioNoiseReductionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(AudioNoiseReductionType left, AudioNoiseReductionType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="AudioNoiseReductionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AudioNoiseReductionType(string value) => new AudioNoiseReductionType(value);
+
+        /// <summary> Converts a string to a <see cref="AudioNoiseReductionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AudioNoiseReductionType?(string value) => value == null ? null : new AudioNoiseReductionType(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is AudioNoiseReductionType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(AudioNoiseReductionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

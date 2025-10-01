@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="distributionVersion"> The Kubernetes distribution version on this connected cluster. </param>
         /// <param name="infrastructure"> The infrastructure on which the Kubernetes cluster represented by this connected cluster is running on. </param>
         /// <param name="offering"> Connected cluster offering. </param>
-        /// <param name="managedIdentityCertificateExpirationTime"> Expiration time of the managed identity certificate. </param>
-        /// <param name="lastConnectivityTime"> Time representing the last instance when heart beat was received from the cluster. </param>
+        /// <param name="managedIdentityCertificateExpirationOn"> Expiration time of the managed identity certificate. </param>
+        /// <param name="lastConnectivityOn"> Time representing the last instance when heart beat was received from the cluster. </param>
         /// <param name="connectivityStatus"> Represents the connectivity status of the connected cluster. </param>
         /// <param name="privateLinkState"> Property which describes the state of private link on a connected cluster resource. </param>
         /// <param name="privateLinkScopeResourceId"> This is populated only if privateLinkState is enabled. The resource id of the private link scope this connected cluster is assigned to, if any. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterProperties"/> instance for mocking. </returns>
-        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationTime = default, DateTimeOffset? lastConnectivityTime = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, SecurityProfile securityProfile = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
+        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, SecurityProfile securityProfile = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
         {
             arcAgentryConfigurations ??= new ChangeTrackingList<ArcAgentryConfigurations>();
             miscellaneousProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 distributionVersion,
                 infrastructure,
                 offering,
-                managedIdentityCertificateExpirationTime,
-                lastConnectivityTime,
+                managedIdentityCertificateExpirationOn,
+                lastConnectivityOn,
                 connectivityStatus,
                 privateLinkState,
                 privateLinkScopeResourceId,

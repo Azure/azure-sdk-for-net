@@ -337,8 +337,7 @@ namespace BasicTypeSpec
         public static explicit operator ThingModel(Response result)
         {
             using Response response = result;
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeThingModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

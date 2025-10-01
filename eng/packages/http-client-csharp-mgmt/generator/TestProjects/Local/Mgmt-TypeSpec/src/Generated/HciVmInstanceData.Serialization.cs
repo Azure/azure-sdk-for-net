@@ -18,7 +18,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> The virtual machine instance resource definition. </summary>
-    public partial class HciVmInstanceData : IJsonModel<HciVmInstanceData>
+    public partial class HciVmInstanceData : ResourceData, IJsonModel<HciVmInstanceData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -165,8 +165,7 @@ namespace BasicTypeSpec
         public static explicit operator ListWithContinuationTokenResponse(Response result)
         {
             using Response response = result;
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeListWithContinuationTokenResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

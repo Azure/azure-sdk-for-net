@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-01";
+            _apiVersion = apiVersion ?? "2025-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation location, string zone)
+        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation location, string zone, string shapeAttribute)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -144,10 +144,14 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 uri.AppendQuery("zone", zone, true);
             }
+            if (shapeAttribute != null)
+            {
+                uri.AppendQuery("shapeAttribute", shapeAttribute, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation location, string zone)
+        internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation location, string zone, string shapeAttribute)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -164,6 +168,10 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 uri.AppendQuery("zone", zone, true);
             }
+            if (shapeAttribute != null)
+            {
+                uri.AppendQuery("shapeAttribute", shapeAttribute, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -174,14 +182,15 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DbSystemShapeListResult>> ListByLocationAsync(string subscriptionId, AzureLocation location, string zone = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DbSystemShapeListResult>> ListByLocationAsync(string subscriptionId, AzureLocation location, string zone = null, string shapeAttribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListByLocationRequest(subscriptionId, location, zone);
+            using var message = CreateListByLocationRequest(subscriptionId, location, zone, shapeAttribute);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -201,14 +210,15 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DbSystemShapeListResult> ListByLocation(string subscriptionId, AzureLocation location, string zone = null, CancellationToken cancellationToken = default)
+        public Response<DbSystemShapeListResult> ListByLocation(string subscriptionId, AzureLocation location, string zone = null, string shapeAttribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListByLocationRequest(subscriptionId, location, zone);
+            using var message = CreateListByLocationRequest(subscriptionId, location, zone, shapeAttribute);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -224,7 +234,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, string zone)
+        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, string zone, string shapeAttribute)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -232,7 +242,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string zone)
+        internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string zone, string shapeAttribute)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -251,15 +261,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DbSystemShapeListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string zone = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DbSystemShapeListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string zone = null, string shapeAttribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, location, zone);
+            using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, location, zone, shapeAttribute);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -280,15 +291,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DbSystemShapeListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation location, string zone = null, CancellationToken cancellationToken = default)
+        public Response<DbSystemShapeListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation location, string zone = null, string shapeAttribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, location, zone);
+            using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, location, zone, shapeAttribute);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
