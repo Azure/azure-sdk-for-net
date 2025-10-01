@@ -77,6 +77,53 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             return blobs;
         }
 
+        public async Task<bool> HasBlobWritesAsync(CancellationToken cancellationToken, int hoursWindow = DefaultScanHoursWindow)
+        {
+            if (hoursWindow <= 0)
+            {
+                return false;
+            }
+
+            DateTime hourCursor = DateTime.UtcNow;
+            BlobContainerClient containerClient = _blobClient.GetBlobContainerClient(LogContainer);
+
+            int processedCount = 0;
+
+            for (int hourIndex = 0; hourIndex < hoursWindow; hourIndex++)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                string prefix = GetSearchPrefix("blob", hourCursor, hourCursor);
+
+                await foreach (var page in containerClient
+                    .GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: cancellationToken)
+                    .AsPages(pageSizeHint: 200)
+                    .ConfigureAwait(false))
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    foreach (BlobItem blob in page.Values)
+                    {
+                        // Increment only when we actually look at a blob item.
+                        processedCount++;
+
+                        // Examine metadata only if present.
+                        if (blob.Metadata is not null &&
+                            blob.Metadata.TryGetValue(LogType, out string logType) &&
+                            !string.IsNullOrEmpty(logType) &&
+                            logType.IndexOf("write", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                hourCursor = hourCursor.AddHours(-1);
+            }
+
+            return false;
+        }
+
         internal static IEnumerable<BlobPath> GetPathsForValidBlobWrites(IEnumerable<StorageAnalyticsLogEntry> entries)
         {
             IEnumerable<BlobPath> parsedBlobPaths = from entry in entries
