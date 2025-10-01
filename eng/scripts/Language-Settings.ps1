@@ -78,19 +78,20 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
       else {
         # Value not set in CI.yml, if not explicitly opted out of AOT compat, run the check
-        Write-Host "No CheckAOTCompat parameter found in CI.yml for $($pkgProp.Name), using IsAotCompatible from csproj - AotCompatOptOut: ($AotCompatOptOut)"
         $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -eq 'false'
+        Write-Host "Package $($pkgProp.ArtifactName) does not have CheckAOTCompat set in its CI.yml, defaulting to ! aot opt out ($($AotCompatOptOut)) from csproj: $($pkgProp.CIParameters["CheckAOTCompat"])"
       }
 
       # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
       if ($pkgProp.CIParameters["CheckAOTCompat"]) {
+        Write-Host "Package $($pkgProp.ArtifactName) has CheckAOTCompat set to true, looking for AOTTestInputs in its CI.yml"
         $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
         if ($aotArtifacts) {
           $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
           $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
         }
         else {
-          $pkgProp.CIParameters["AOTTestInputs"] = "None"
+          $pkgProp.CIParameters["AOTTestInputs"] = @()
         }
       }
       else {
@@ -114,15 +115,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     else {
       # No CI.yml found, use IsAotCompatible from csproj for CheckAOTCompat
       $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -eq 'false'
-      
-      # If CheckAOTCompat is true but no CI.yml exists, set AOTTestInputs to "None"
-      if ($pkgProp.CIParameters["CheckAOTCompat"]) {
-        $pkgProp.CIParameters["AOTTestInputs"] = "None"
-      }
-      else {
-        $pkgProp.CIParameters["AOTTestInputs"] = @()
-      }
-      
+      $pkgProp.CIParameters["AOTTestInputs"] = @()
       $pkgProp.CIParameters["BuildSnippets"] = $true
     }
 
