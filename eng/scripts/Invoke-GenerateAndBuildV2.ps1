@@ -129,10 +129,29 @@ if ($relatedTypeSpecProjectFolder) {
         }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
         Write-host "Start to call tsp-client to generate package:$packageName"
-        $tspclientCommand = "npx --package=@azure-tools/typespec-client-generator-cli --yes tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+        
+        # Install tsp-client dependencies from eng/common/tsp-client
+        $tspClientDir = Resolve-Path (Join-Path $PSScriptRoot "../common/tsp-client")
+        Push-Location $tspClientDir
+        try {
+            if (!(Test-Path "node_modules")) {
+                Write-Host "Installing tsp-client dependencies from $tspClientDir"
+                npm ci
+                if ($LASTEXITCODE) {
+                    Write-Error "Failed to install tsp-client dependencies"
+                    exit $LASTEXITCODE
+                }
+            }
+        }
+        finally {
+            Pop-Location
+        }
+        
+        $tspclientCommand = "Push-Location '$tspClientDir'; npm exec --no -- tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
         if ($swaggerDir) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
         }
+        $tspclientCommand += "; Pop-Location"
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
         if ($LASTEXITCODE) {
