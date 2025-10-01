@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NeonPostgres
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(Attributes))]
+    [ModelReaderWriterBuildable(typeof(AutoscalingSize))]
     [ModelReaderWriterBuildable(typeof(BranchListResult))]
     [ModelReaderWriterBuildable(typeof(ComputeListResult))]
     [ModelReaderWriterBuildable(typeof(ConnectionUriProperties))]
@@ -49,6 +50,8 @@ namespace Azure.ResourceManager.NeonPostgres
     [ModelReaderWriterBuildable(typeof(PartnerOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(PgVersion))]
     [ModelReaderWriterBuildable(typeof(PgVersionsResult))]
+    [ModelReaderWriterBuildable(typeof(PreflightCheckContent))]
+    [ModelReaderWriterBuildable(typeof(PreflightCheckResult))]
     [ModelReaderWriterBuildable(typeof(ProjectListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
