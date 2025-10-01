@@ -20,8 +20,6 @@
 ### Bugs Fixed
 * Properly handle secret key population for `AIProjectConnectionCustomCredential`, [see GitHub issue 52355](https://github.com/Azure/azure-sdk-for-net/issues/52355).
 
-### Other Changes
-
 ## 1.0.0-beta.11 (2025-08-20)
 
 ### Features Added
