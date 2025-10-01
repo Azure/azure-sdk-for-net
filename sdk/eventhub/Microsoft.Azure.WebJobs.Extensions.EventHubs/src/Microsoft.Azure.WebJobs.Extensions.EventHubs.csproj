@@ -5,7 +5,7 @@
     <Description>Microsoft Azure WebJobs SDK EventHubs Extension</Description>
     <Version>6.6.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>6.5.1</ApiCompatVersion>
+    <ApiCompatVersion>6.5.2</ApiCompatVersion>
     <NoWarn>$(NoWarn);CS1591;SA1636</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>

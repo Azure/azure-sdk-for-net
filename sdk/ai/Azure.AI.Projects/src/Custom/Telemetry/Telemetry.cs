@@ -4,19 +4,10 @@
 #nullable disable
 
 using System;
-using System.Linq;
-using Azure;
-using Azure.Core;
-using Azure.AI.Projects;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    public partial class AIProjectClient
-    {
-        private Telemetry _telemetry;
-        public Telemetry Telemetry => _telemetry ??= new Telemetry(this);
-    }
     /// <summary>
     /// Provides telemetry-related operations for the project.
     /// </summary>
@@ -40,12 +31,11 @@ namespace Azure.AI.Projects
         /// <returns>The Application Insights connection string if the resource was enabled for the Project.</returns>
         /// <exception cref="RequestFailedException">Thrown if an Application Insights connection does not exist for this project.</exception>
         /// <exception cref="InvalidOperationException">Thrown if the connection does not use API Key credentials or the API key is missing.</exception>
-        public string GetConnectionString()
+        public string GetApplicationInsightsConnectionString()
         {
             if (_connectionString == null)
             {
-                Connections connectionsClient = _outerInstance.GetConnectionsClient();
-                Connection connection = connectionsClient.GetDefault(ConnectionType.ApplicationInsights, includeCredentials: true);
+                ConnectionProperties connection = _outerInstance.Connections.GetDefaultConnection(ConnectionType.ApplicationInsights, includeCredentials: true);
                 if (connection == null)
                 {
                     throw new RequestFailedException("No Application Insights connection found.");
@@ -72,12 +62,11 @@ namespace Azure.AI.Projects
         /// <returns>The Application Insights connection string if the resource was enabled for the Project.</returns>
         /// <exception cref="RequestFailedException">Thrown if an Application Insights connection does not exist for this project.</exception>
         /// <exception cref="InvalidOperationException">Thrown if the connection does not use API Key credentials or the API key is missing.</exception>
-        public async Task<string> GetConnectionStringAsync()
+        public async Task<string> GetApplicationInsightsConnectionStringAsync()
         {
             if (_connectionString == null)
             {
-                Connections connectionsClient = _outerInstance.GetConnectionsClient();
-                Connection connection = await connectionsClient.GetDefaultAsync(ConnectionType.ApplicationInsights, includeCredentials: true).ConfigureAwait(false);
+                ConnectionProperties connection = await _outerInstance.Connections.GetDefaultConnectionAsync(ConnectionType.ApplicationInsights, includeCredentials: true).ConfigureAwait(false);
                 if (connection == null)
                 {
                     throw new RequestFailedException("No Application Insights connection found.");

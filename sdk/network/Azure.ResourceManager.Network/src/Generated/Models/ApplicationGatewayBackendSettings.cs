@@ -49,16 +49,21 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The destination port on the backend. </summary>
+        [WirePath("properties.port")]
         public int? Port { get; set; }
         /// <summary> The protocol used to communicate with the backend. </summary>
+        [WirePath("properties.protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
+        [WirePath("properties.timeout")]
         public int? TimeoutInSeconds { get; set; }
         /// <summary> Probe resource of an application gateway. </summary>
         internal WritableSubResource Probe { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.probe.id")]
         public ResourceIdentifier ProbeId
         {
             get => Probe is null ? default : Probe.Id;
@@ -71,12 +76,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
+        [WirePath("properties.trustedRootCertificates")]
         public IList<WritableSubResource> TrustedRootCertificates { get; }
         /// <summary> Server name indication to be sent to the backend servers for Tls protocol. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; set; }
         /// <summary> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </summary>
+        [WirePath("properties.pickHostNameFromBackendAddress")]
         public bool? PickHostNameFromBackendAddress { get; set; }
         /// <summary> The provisioning state of the backend HTTP settings resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

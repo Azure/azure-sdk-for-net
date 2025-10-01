@@ -4,9 +4,9 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Description>Azure Client SDK integration with Microsoft.Extensions libraries</Description>
     <AssemblyTitle>Azure Client SDK integration Microsoft.Extensions</AssemblyTitle>
-    <Version>1.12.0-beta.1</Version>
+    <Version>1.14.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.11.0</ApiCompatVersion>
+    <ApiCompatVersion>1.13.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline AspNetCore Extensions</PackageTags>
 
     <!-- Make sure that we don't pull in additional dependencies during build or package -->

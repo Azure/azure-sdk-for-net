@@ -22,3 +22,7 @@ extends:
     - name: Azure.ResourceManager.CognitiveServices
       safeName: AzureResourceManagerCognitiveServices
       directoryName: Azure.ResourceManager.CognitiveServices
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.CognitiveServices
+      ExpectedWarningsFilepath: None

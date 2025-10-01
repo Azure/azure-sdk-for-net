@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(renewLocksResult, ModelSerializationExtensions.WireOptions);
             return content;
         }

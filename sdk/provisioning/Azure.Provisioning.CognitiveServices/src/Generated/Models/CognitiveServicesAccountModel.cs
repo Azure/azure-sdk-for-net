@@ -5,6 +5,7 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
@@ -18,7 +19,7 @@ namespace Azure.Provisioning.CognitiveServices;
 public partial class CognitiveServicesAccountModel : CognitiveServicesAccountDeploymentModel
 {
     /// <summary>
-    /// Base Model Identifier.
+    /// Properties of Cognitive Services account deployment model.
     /// </summary>
     public CognitiveServicesAccountDeploymentModel BaseModel 
     {

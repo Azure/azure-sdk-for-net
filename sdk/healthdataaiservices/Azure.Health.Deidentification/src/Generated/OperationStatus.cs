@@ -14,47 +14,72 @@ namespace Azure.Health.Deidentification
     public readonly partial struct OperationStatus : IEquatable<OperationStatus>
     {
         private readonly string _value;
+        /// <summary> The operation has not started. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> The operation is in progress. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> The operation has completed successfully. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The operation has failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The operation has been canceled by the user. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string RunningValue = "Running";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> The operation has not started. </summary>
         public static OperationStatus NotStarted { get; } = new OperationStatus(NotStartedValue);
+
         /// <summary> The operation is in progress. </summary>
         public static OperationStatus Running { get; } = new OperationStatus(RunningValue);
+
         /// <summary> The operation has completed successfully. </summary>
         public static OperationStatus Succeeded { get; } = new OperationStatus(SucceededValue);
+
         /// <summary> The operation has failed. </summary>
         public static OperationStatus Failed { get; } = new OperationStatus(FailedValue);
+
         /// <summary> The operation has been canceled by the user. </summary>
         public static OperationStatus Canceled { get; } = new OperationStatus(CanceledValue);
+
         /// <summary> Determines if two <see cref="OperationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationStatus left, OperationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationStatus left, OperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationStatus(string value) => new OperationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationStatus?(string value) => value == null ? null : new OperationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

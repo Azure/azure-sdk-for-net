@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+Generate SDK from typespec for api `2025-02-01-preview`
+
 ## 1.2.1 (2025-03-11)
 
 ### Features Added

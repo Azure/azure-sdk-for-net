@@ -49,6 +49,16 @@ public partial class SqlServerJobAgent : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _databaseId;
 
     /// <summary>
+    /// The identity of the job agent.
+    /// </summary>
+    public JobAgentIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private JobAgentIdentity? _identity;
+
+    /// <summary>
     /// The name and tier of the SKU.
     /// </summary>
     public SqlSku Sku 
@@ -116,7 +126,7 @@ public partial class SqlServerJobAgent : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobAgent.</param>
     public SqlServerJobAgent(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -128,6 +138,7 @@ public partial class SqlServerJobAgent : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _databaseId = DefineProperty<ResourceIdentifier>("DatabaseId", ["properties", "databaseId"]);
+        _identity = DefineModelProperty<JobAgentIdentity>("Identity", ["identity"]);
         _sku = DefineModelProperty<SqlSku>("Sku", ["sku"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -141,6 +152,11 @@ public partial class SqlServerJobAgent : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

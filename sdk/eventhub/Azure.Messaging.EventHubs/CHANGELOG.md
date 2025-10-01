@@ -2,15 +2,21 @@
 
 ## 5.13.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.12.2 (2025-06-12)
+
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
-
-### Features Added
-
-### Breaking Changes
 
 ### Bugs Fixed
 
@@ -18,7 +24,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Other Changes
 
-- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.11, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes and adds support for AOT. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
 - Improved the performance of the Jenkins3 hash computation used for partition key resolution. Across various input sizes, the updated implementation achieves up to 39% faster hash calculation, with the most notable gains seen for smaller keys (8–32 bytes), and consistent improvements across all sizes. The new approach maintains the exact bit-for-bit hash output while reducing overhead.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 

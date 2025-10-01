@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Version>5.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.3.4</ApiCompatVersion>
+    <ApiCompatVersion>5.3.6</ApiCompatVersion>
     <Description>This extension adds bindings for Storage</Description>
     <!-- https://github.com/Azure/azure-sdk-for-net/issues/19222 -->
     <NoWarn>$(NoWarn);IDT002</NoWarn>

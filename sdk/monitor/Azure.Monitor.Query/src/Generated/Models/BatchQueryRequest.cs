@@ -13,6 +13,38 @@ namespace Azure.Monitor.Query.Models
     /// <summary> An single request in a batch. </summary>
     internal partial class BatchQueryRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/>. </summary>
         /// <param name="id"> Unique ID corresponding to each request in the batch. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
@@ -39,7 +71,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="path"> The query path of a single request in a batch, defaults to /query. </param>
         /// <param name="method"> The method of a single request in a batch, defaults to POST. </param>
         /// <param name="workspace"> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </param>
-        internal BatchQueryRequest(string id, IDictionary<string, string> headers, QueryBody body, string path, string method, string workspace)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchQueryRequest(string id, IDictionary<string, string> headers, QueryBody body, string path, string method, string workspace, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Headers = headers;
@@ -47,6 +80,12 @@ namespace Azure.Monitor.Query.Models
             Path = path;
             Method = method;
             Workspace = workspace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/> for deserialization. </summary>
+        internal BatchQueryRequest()
+        {
         }
 
         /// <summary> Unique ID corresponding to each request in the batch. </summary>

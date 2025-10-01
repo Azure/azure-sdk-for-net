@@ -101,7 +101,7 @@ public partial class TopicSpace : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the TopicSpace.</param>
     public TopicSpace(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -117,6 +117,17 @@ public partial class TopicSpace : ProvisionableResource
         _provisioningState = DefineProperty<TopicSpaceProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<EventGridNamespace>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported TopicSpace resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
     }
 
     /// <summary>

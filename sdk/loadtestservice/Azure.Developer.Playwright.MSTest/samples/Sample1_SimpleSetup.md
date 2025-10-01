@@ -1,6 +1,6 @@
 ## Getting started with Azure Playwright MSTest SDK
 
-Follow the steps listed in this [README]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.Playwright.MSTest/README.md)--> to integrate your existing Playwright test suite with Azure Playwright service.
+Follow the steps listed in this [README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.Playwright.MSTest/README.md) to integrate your existing Playwright test suite with Playwright Workspaces.
 This guide explains how to quickly get started with the Azure Playwright MSTest SDK.
 
 ### Minimal configuration

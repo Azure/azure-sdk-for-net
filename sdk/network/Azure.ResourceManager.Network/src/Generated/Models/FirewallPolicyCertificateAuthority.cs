@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </summary>
+        [WirePath("keyVaultSecretId")]
         public string KeyVaultSecretId { get; set; }
         /// <summary> Name of the CA certificate. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

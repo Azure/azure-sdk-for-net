@@ -2,13 +2,17 @@
   <PropertyGroup>
     <Description>This library can be used to publish events to Azure Event Grid and to consume events delivered by EventGrid. It also defines the event schemas for the events published to EventGrid by various Azure services.</Description>
     <AssemblyTitle>Microsoft Azure.Messaging.EventGrid client library</AssemblyTitle>
-    <Version>5.0.0-beta.2</Version>
+    <Version>5.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>4.31.0</ApiCompatVersion>
+    <ApiCompatVersion>5.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>
+      $(NoWarn);
+      AZC0034; <!-- Cannot reuse type names; expected due to system event type forwarding. -->
+    </NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

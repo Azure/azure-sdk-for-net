@@ -8,8 +8,7 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.Sql;
 
 /// <summary>
-/// Specifies the availability zone the pool&apos;s primary replica is pinned
-/// to.
+/// Specifies the availability zone the database is pinned to.
 /// </summary>
 public enum SqlAvailabilityZoneType
 {

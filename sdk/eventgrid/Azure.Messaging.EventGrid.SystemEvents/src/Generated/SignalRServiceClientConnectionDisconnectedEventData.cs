@@ -13,47 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.SignalRService.ClientConnectionDisconnected event. </summary>
     public partial class SignalRServiceClientConnectionDisconnectedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionDisconnectedEventData"/>. </summary>
         /// <param name="hubName"> The hub of connected client connection. </param>
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="connectionId"/> is null. </exception>
         internal SignalRServiceClientConnectionDisconnectedEventData(string hubName, string connectionId)
         {
-            Argument.AssertNotNull(hubName, nameof(hubName));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
-
             HubName = hubName;
             ConnectionId = connectionId;
         }
@@ -64,30 +31,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
         /// <param name="userId"> The user Id of connected client connection. </param>
         /// <param name="errorMessage"> The message of error that cause the client connection disconnected. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRServiceClientConnectionDisconnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRServiceClientConnectionDisconnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             HubName = hubName;
             ConnectionId = connectionId;
             UserId = userId;
             ErrorMessage = errorMessage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionDisconnectedEventData"/> for deserialization. </summary>
-        internal SignalRServiceClientConnectionDisconnectedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time at which the event occurred. </summary>
         public DateTimeOffset? Timestamp { get; }
+
         /// <summary> The hub of connected client connection. </summary>
         public string HubName { get; }
+
         /// <summary> The connection Id of connected client connection. </summary>
         public string ConnectionId { get; }
+
         /// <summary> The user Id of connected client connection. </summary>
         public string UserId { get; }
+
         /// <summary> The message of error that cause the client connection disconnected. </summary>
         public string ErrorMessage { get; }
     }

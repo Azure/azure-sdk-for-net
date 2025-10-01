@@ -37,23 +37,26 @@ namespace BasicTypeSpec
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             string nextPage = continuationToken ?? _token;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ListWithContinuationTokenResponse responseWithType = (ListWithContinuationTokenResponse)response;
+                ListWithContinuationTokenResponse result = (ListWithContinuationTokenResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in responseWithType.Things)
+                foreach (var item in result.Things)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = responseWithType.NextToken;
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
+                nextPage = result.NextToken;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (!string.IsNullOrEmpty(nextPage));
         }
 
         /// <summary> Get next page. </summary>
@@ -61,17 +64,12 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateListWithContinuationTokenRequest(continuationToken, _context);
+            HttpMessage message = _client.CreateGetWithContinuationTokenRequest(continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationToken");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceProjectTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceProjectTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceProjectTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataMigrationServiceTaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMigrationServiceTaskResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationServiceTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceProjectTaskResource"/> object. </returns>
-        public virtual ServiceProjectTaskResource GetServiceProjectTaskResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMigrationServiceTaskResource"/> object. </returns>
+        public virtual DataMigrationServiceTaskResource GetDataMigrationServiceTaskResource(ResourceIdentifier id)
         {
-            ServiceProjectTaskResource.ValidateResourceId(id);
-            return new ServiceProjectTaskResource(Client, id);
+            DataMigrationServiceTaskResource.ValidateResourceId(id);
+            return new DataMigrationServiceTaskResource(Client, id);
         }
 
         /// <summary>
@@ -119,27 +119,27 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataMigrationProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMigrationProjectResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
-        public virtual ProjectResource GetProjectResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMigrationProjectResource"/> object. </returns>
+        public virtual DataMigrationProjectResource GetDataMigrationProjectResource(ResourceIdentifier id)
         {
-            ProjectResource.ValidateResourceId(id);
-            return new ProjectResource(Client, id);
+            DataMigrationProjectResource.ValidateResourceId(id);
+            return new DataMigrationProjectResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectFileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectFileResource.CreateResourceIdentifier" /> to create a <see cref="ProjectFileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataMigrationProjectFileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMigrationProjectFileResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationProjectFileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectFileResource"/> object. </returns>
-        public virtual ProjectFileResource GetProjectFileResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMigrationProjectFileResource"/> object. </returns>
+        public virtual DataMigrationProjectFileResource GetDataMigrationProjectFileResource(ResourceIdentifier id)
         {
-            ProjectFileResource.ValidateResourceId(id);
-            return new ProjectFileResource(Client, id);
+            DataMigrationProjectFileResource.ValidateResourceId(id);
+            return new DataMigrationProjectFileResource(Client, id);
         }
     }
 }

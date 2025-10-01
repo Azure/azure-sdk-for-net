@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The overwrite option for SSIS object migration, only ignore and overwrite are supported in DMS now and future may add Reuse option for container object. </summary>
+    /// <summary> The overwrite option for SSIS object migration, only ignore and overwrite are supported in DMS (classic) now and future may add Reuse option for container object. </summary>
     public readonly partial struct SsisMigrationOverwriteOption : IEquatable<SsisMigrationOverwriteOption>
     {
         private readonly string _value;

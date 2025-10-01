@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
@@ -15,9 +17,15 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        internal UnknownVectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind) : base(vectorizerName, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownVectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(vectorizerName, kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchVectorizer"/> for deserialization. </summary>
+        internal UnknownVectorSearchVectorizer()
+        {
         }
     }
 }

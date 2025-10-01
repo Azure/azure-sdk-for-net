@@ -1,0 +1,4 @@
+directory: specification/hardwaresecuritymodules/HardwareSecurityModules.Management
+repo: Azure/azure-rest-api-specs
+commit: 23e7a3756f8886cba0f12a558020366acb69fe69
+additionalDirectories: []

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -39,6 +40,11 @@ namespace Azure.ResourceManager.StorageMover
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+            }
         }
 
         StorageMoverEndpointData IJsonModel<StorageMoverEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -62,6 +68,7 @@ namespace Azure.ResourceManager.StorageMover
                 return null;
             }
             EndpointBaseProperties properties = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -73,6 +80,15 @@ namespace Azure.ResourceManager.StorageMover
                 if (property.NameEquals("properties"u8))
                 {
                     properties = EndpointBaseProperties.DeserializeEndpointBaseProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerStorageMoverContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +112,7 @@ namespace Azure.ResourceManager.StorageMover
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,6 +127,7 @@ namespace Azure.ResourceManager.StorageMover
                 type,
                 systemData,
                 properties,
+                identity,
                 serializedAdditionalRawData);
         }
 

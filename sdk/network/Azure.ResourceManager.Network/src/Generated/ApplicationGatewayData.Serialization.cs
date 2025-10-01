@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -273,7 +275,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
-                JsonSerializer.Serialize(writer, FirewallPolicy);
+                ((IJsonModel<WritableSubResource>)FirewallPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(EnableHttp2))
             {
@@ -455,7 +457,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -821,7 +823,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            firewallPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("enableHttp2"u8))
@@ -1009,6 +1011,912 @@ namespace Azure.ResourceManager.Network
                 defaultPredefinedSslPolicy);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailabilityZones), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  zones: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AvailabilityZones))
+                {
+                    if (AvailabilityZones.Any())
+                    {
+                        builder.Append("  zones: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AvailabilityZones)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sku: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    builder.Append("    sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 4, false, "    sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SslPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sslPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SslPolicy))
+                {
+                    builder.Append("    sslPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SslPolicy, options, 4, false, "    sslPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationalState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operationalState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationalState))
+                {
+                    builder.Append("    operationalState: ");
+                    builder.AppendLine($"'{OperationalState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayIPConfigurations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    gatewayIPConfigurations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(GatewayIPConfigurations))
+                {
+                    if (GatewayIPConfigurations.Any())
+                    {
+                        builder.Append("    gatewayIPConfigurations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in GatewayIPConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    gatewayIPConfigurations: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authenticationCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AuthenticationCertificates))
+                {
+                    if (AuthenticationCertificates.Any())
+                    {
+                        builder.Append("    authenticationCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AuthenticationCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    authenticationCertificates: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustedRootCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    trustedRootCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TrustedRootCertificates))
+                {
+                    if (TrustedRootCertificates.Any())
+                    {
+                        builder.Append("    trustedRootCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TrustedRootCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    trustedRootCertificates: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustedClientCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    trustedClientCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TrustedClientCertificates))
+                {
+                    if (TrustedClientCertificates.Any())
+                    {
+                        builder.Append("    trustedClientCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TrustedClientCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    trustedClientCertificates: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SslCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sslCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SslCertificates))
+                {
+                    if (SslCertificates.Any())
+                    {
+                        builder.Append("    sslCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SslCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sslCertificates: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontendIPConfigurations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    frontendIPConfigurations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FrontendIPConfigurations))
+                {
+                    if (FrontendIPConfigurations.Any())
+                    {
+                        builder.Append("    frontendIPConfigurations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in FrontendIPConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    frontendIPConfigurations: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontendPorts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    frontendPorts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FrontendPorts))
+                {
+                    if (FrontendPorts.Any())
+                    {
+                        builder.Append("    frontendPorts: ");
+                        builder.AppendLine("[");
+                        foreach (var item in FrontendPorts)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    frontendPorts: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Probes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    probes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Probes))
+                {
+                    if (Probes.Any())
+                    {
+                        builder.Append("    probes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Probes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    probes: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendAddressPools), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    backendAddressPools: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BackendAddressPools))
+                {
+                    if (BackendAddressPools.Any())
+                    {
+                        builder.Append("    backendAddressPools: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BackendAddressPools)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    backendAddressPools: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendHttpSettingsCollection), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    backendHttpSettingsCollection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
+                {
+                    if (BackendHttpSettingsCollection.Any())
+                    {
+                        builder.Append("    backendHttpSettingsCollection: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BackendHttpSettingsCollection)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    backendHttpSettingsCollection: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendSettingsCollection), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    backendSettingsCollection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BackendSettingsCollection))
+                {
+                    if (BackendSettingsCollection.Any())
+                    {
+                        builder.Append("    backendSettingsCollection: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BackendSettingsCollection)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    backendSettingsCollection: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpListeners), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    httpListeners: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HttpListeners))
+                {
+                    if (HttpListeners.Any())
+                    {
+                        builder.Append("    httpListeners: ");
+                        builder.AppendLine("[");
+                        foreach (var item in HttpListeners)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    httpListeners: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Listeners), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    listeners: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Listeners))
+                {
+                    if (Listeners.Any())
+                    {
+                        builder.Append("    listeners: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Listeners)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    listeners: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SslProfiles), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sslProfiles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SslProfiles))
+                {
+                    if (SslProfiles.Any())
+                    {
+                        builder.Append("    sslProfiles: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SslProfiles)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sslProfiles: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UrlPathMaps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    urlPathMaps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UrlPathMaps))
+                {
+                    if (UrlPathMaps.Any())
+                    {
+                        builder.Append("    urlPathMaps: ");
+                        builder.AppendLine("[");
+                        foreach (var item in UrlPathMaps)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    urlPathMaps: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestRoutingRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestRoutingRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RequestRoutingRules))
+                {
+                    if (RequestRoutingRules.Any())
+                    {
+                        builder.Append("    requestRoutingRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RequestRoutingRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    requestRoutingRules: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    routingRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RoutingRules))
+                {
+                    if (RoutingRules.Any())
+                    {
+                        builder.Append("    routingRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RoutingRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    routingRules: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RewriteRuleSets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rewriteRuleSets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RewriteRuleSets))
+                {
+                    if (RewriteRuleSets.Any())
+                    {
+                        builder.Append("    rewriteRuleSets: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RewriteRuleSets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    rewriteRuleSets: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedirectConfigurations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    redirectConfigurations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RedirectConfigurations))
+                {
+                    if (RedirectConfigurations.Any())
+                    {
+                        builder.Append("    redirectConfigurations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RedirectConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    redirectConfigurations: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebApplicationFirewallConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    webApplicationFirewallConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WebApplicationFirewallConfiguration))
+                {
+                    builder.Append("    webApplicationFirewallConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, WebApplicationFirewallConfiguration, options, 4, false, "    webApplicationFirewallConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FirewallPolicyId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    firewallPolicy: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      firewallPolicy: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FirewallPolicy))
+                {
+                    builder.Append("    firewallPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FirewallPolicy, options, 4, false, "    firewallPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableHttp2), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableHttp2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableHttp2))
+                {
+                    builder.Append("    enableHttp2: ");
+                    var boolValue = EnableHttp2.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableFips), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableFips: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableFips))
+                {
+                    builder.Append("    enableFips: ");
+                    var boolValue = EnableFips.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoscaleConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    autoscaleConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoscaleConfiguration))
+                {
+                    builder.Append("    autoscaleConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AutoscaleConfiguration, options, 4, false, "    autoscaleConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkConfigurations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateLinkConfigurations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
+                {
+                    if (PrivateLinkConfigurations.Any())
+                    {
+                        builder.Append("    privateLinkConfigurations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateLinkConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateLinkConfigurations: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    if (PrivateEndpointConnections.Any())
+                    {
+                        builder.Append("    privateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGuid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceGuid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceGuid))
+                {
+                    builder.Append("    resourceGuid: ");
+                    builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomErrorConfigurations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    customErrorConfigurations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomErrorConfigurations))
+                {
+                    if (CustomErrorConfigurations.Any())
+                    {
+                        builder.Append("    customErrorConfigurations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CustomErrorConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    customErrorConfigurations: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForceFirewallPolicyAssociation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    forceFirewallPolicyAssociation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForceFirewallPolicyAssociation))
+                {
+                    builder.Append("    forceFirewallPolicyAssociation: ");
+                    var boolValue = ForceFirewallPolicyAssociation.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadDistributionPolicies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    loadDistributionPolicies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LoadDistributionPolicies))
+                {
+                    if (LoadDistributionPolicies.Any())
+                    {
+                        builder.Append("    loadDistributionPolicies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LoadDistributionPolicies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    loadDistributionPolicies: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GlobalConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    globalConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GlobalConfiguration))
+                {
+                    builder.Append("    globalConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GlobalConfiguration, options, 4, false, "    globalConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultPredefinedSslPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    defaultPredefinedSslPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultPredefinedSslPolicy))
+                {
+                    builder.Append("    defaultPredefinedSslPolicy: ");
+                    builder.AppendLine($"'{DefaultPredefinedSslPolicy.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayData>)this).GetFormatFromOptions(options) : options.Format;
@@ -1017,6 +1925,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayData)} does not support writing '{options.Format}' format.");
             }

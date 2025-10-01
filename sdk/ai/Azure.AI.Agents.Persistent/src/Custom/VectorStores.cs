@@ -39,14 +39,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual AsyncPageable<PersistentAgentsVectorStore> GetVectorStoresAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoresRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoresRequest(
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageableAsync<PersistentAgentsVectorStore>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgentsVectorStore.DeserializePersistentAgentsVectorStore(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
@@ -59,14 +65,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual Pageable<PersistentAgentsVectorStore> GetVectorStores(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoresRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoresRequest(
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageable<PersistentAgentsVectorStore>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgentsVectorStore.DeserializePersistentAgentsVectorStore(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
@@ -236,6 +248,56 @@ namespace Azure.AI.Agents.Persistent
         public virtual Response<VectorStoreFileBatch> CancelVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
             return _batchFileClient.CancelVectorStoreFileBatch(vectorStoreId: vectorStoreId, batchId: batchId, cancellationToken: cancellationToken);
+        }
+
+        /// <summary> Returns a list of vector store files in a batch. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="batchId"> Identifier of the file batch. </param>
+        /// <param name="filter"> Filter by file status. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<VectorStoreFile> GetVectorStoreFileBatchFilesAsync(string vectorStoreId, string batchId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            return _batchFileClient.GetVectorStoreFileBatchFilesAsync(
+                vectorStoreId: vectorStoreId,
+                batchId: batchId,
+                filter: filter,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                cancellationToken: cancellationToken
+            );
+        }
+
+        /// <summary> Returns a list of vector store files in a batch. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="batchId"> Identifier of the file batch. </param>
+        /// <param name="filter"> Filter by file status. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<VectorStoreFile> GetVectorStoreFileBatchFiles(string vectorStoreId, string batchId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            return _batchFileClient.GetVectorStoreFileBatchFiles(
+                vectorStoreId: vectorStoreId,
+                batchId: batchId,
+                filter: filter,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                cancellationToken: cancellationToken
+            );
         }
 
         ////////////////////////////////////////////////////////////////////////////

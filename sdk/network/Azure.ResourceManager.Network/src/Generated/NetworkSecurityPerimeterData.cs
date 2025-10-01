@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the scope assignment resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
         /// <summary> perimeter guid of the network security perimeter. </summary>
+        [WirePath("properties.perimeterGuid")]
         public Guid? PerimeterGuid { get; }
     }
 }

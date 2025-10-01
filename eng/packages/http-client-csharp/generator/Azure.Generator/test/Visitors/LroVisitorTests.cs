@@ -25,19 +25,16 @@ namespace Azure.Generator.Tests.Visitors
         public void UpdatesLroSignatureNoResponseBody()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
                 parameters: parameters);
             var lroServiceMethod = InputFactory.LongRunningServiceMethod("foo", lro, parameters: parameters);
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -74,12 +71,9 @@ namespace Azure.Generator.Tests.Visitors
         public void UpdatesLroSignatureWithResponseBody()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -90,7 +84,7 @@ namespace Azure.Generator.Tests.Visitors
                 lro, parameters: parameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -129,12 +123,9 @@ namespace Azure.Generator.Tests.Visitors
         public void UpdatesExplicitOperatorToUseResultSegment()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var responseModel = InputFactory.Model("foo");
             var lro = InputFactory.Operation(
@@ -151,7 +142,7 @@ namespace Azure.Generator.Tests.Visitors
                     finalResponse: InputFactory.OperationResponse(),
                     resultPath: "someResultPath"));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -169,19 +160,17 @@ namespace Azure.Generator.Tests.Visitors
 
             Assert.IsNotNull(explicitOperator);
             Assert.IsNotNull(explicitOperator!.BodyStatements);
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), explicitOperator!.BodyStatements!.ToDisplayString());
+            var result = explicitOperator!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
         }
 
         [Test]
         public void UpdatesConvenienceMethodBody()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -192,7 +181,7 @@ namespace Azure.Generator.Tests.Visitors
                 lro, parameters: parameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            var plugin = MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
             var outputLibrary = plugin.Object.OutputLibrary;
             visitor.InvokeVisitLibrary(outputLibrary);
 
@@ -212,10 +201,11 @@ namespace Azure.Generator.Tests.Visitors
             var visitor = new TestLroVisitor();
             List<InputParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.BodyParameter("p1", InputPrimitiveType.String)
+            ];
+            List<InputMethodParameter> methodParameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -223,10 +213,10 @@ namespace Azure.Generator.Tests.Visitors
             var responseModel = InputFactory.Model("foo");
             var lroServiceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
-                lro, parameters: parameters,
+                lro, parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            var plugin = MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
             var outputLibrary = plugin.Object.OutputLibrary;
             visitor.InvokeVisitLibrary(outputLibrary);
 

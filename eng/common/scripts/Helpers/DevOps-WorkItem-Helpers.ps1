@@ -1015,3 +1015,102 @@ function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $Pipeli
     Write-Host "[$($workItem.id)]$LanguageDisplayName - $pkgName($versionMajorMinor) - Updated"
     return $true
 }
+
+
+function Get-LanguageDevOpsName($LanguageShort)
+{
+    switch ($LanguageShort.ToLower()) 
+    {
+        "net" { return "Dotnet" }
+        "js" { return "JavaScript" }
+        "java" { return "Java" }
+        "go" { return "Go" }
+        "python" { return "Python" }
+        default { return $null }
+    }
+}
+
+function Get-ReleasePlanForPackage($packageName)
+{
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
+        return $null
+    }
+
+    $prStatusFieldName = "SDKPullRequestStatusFor$($devopsFieldLanguage)"
+    $packageNameFieldName = "$($devopsFieldLanguage) Package Name"
+    $fields = @()
+    $fields += "System.ID"
+    $fields += "System.State"
+    $fields += "System.AssignedTo"
+    $fields += "System.Parent"
+    $fields += "System.Tags"
+
+    $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+    $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [${packageNameFieldName}] = '${packageName}'"
+    $query += " AND [${prStatusFieldName}] = 'merged'"
+    $query += " AND [System.State] IN ('In Progress')"
+    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+    $workItems = Invoke-Query $fields $query
+    return $workItems
+}
+
+function Update-ReleaseStatusInReleasePlan($releasePlanWorkItemId, $status, $version)
+{  
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
+        return $null
+    }
+
+    $fields = @()
+    $fields += "`"ReleaseStatusFor$($devopsFieldLanguage)=$status`""
+    $fields += "`"ReleasedVersionFor$($devopsFieldLanguage)=$version`""
+
+    Write-Host "Updating Release Plan [$releasePlanWorkItemId] with status [$status] for language [$LanguageShort]."
+    $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
+    Write-Host "Updated release status for [$LanguageShort] in Release Plan [$releasePlanWorkItemId]"
+}
+
+function Update-PullRequestInReleasePlan($releasePlanWorkItemId, $pullRequestUrl, $status, $languageName)
+{
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $languageName
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to update release plan, language [$languageName]"
+        return $null
+    }
+
+    $fields = @()
+    if ($pullRequestUrl)
+    {
+        $fields += "`"SDKPullRequestFor$($devopsFieldLanguage)=$pullRequestUrl`""
+    }
+    $fields += "`"SDKPullRequestStatusFor$($devopsFieldLanguage)=$status`""
+
+    Write-Host "Updating release plan [$releasePlanWorkItemId] with pull request details for language [$languageName]."
+    $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
+    Write-Host "Updated pull request details for [$languageName] in release plan [$releasePlanWorkItemId]"
+}
+
+function Get-ReleasePlan-Link($releasePlanWorkItemId)
+{
+  $fields = @()
+  $fields += "System.Id"
+  $fields += "System.Title"
+  $fields += "Custom.ReleasePlanLink"
+  $fields += "Custom.ReleasePlanSubmittedby"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.Id] = $releasePlanWorkItemId"
+  $workItem = Invoke-Query $fields $query
+  if (!$workItem)
+  {
+      Write-Host "Release plan with ID $releasePlanWorkItemId not found."
+      return $null
+  }
+  return $workItem["fields"]
+}

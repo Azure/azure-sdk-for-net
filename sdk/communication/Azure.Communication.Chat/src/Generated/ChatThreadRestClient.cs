@@ -31,7 +31,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2024-03-07")
+        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2025-03-15")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -326,7 +326,7 @@ namespace Azure.Communication.Chat
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="chatThreadId"> The thread id of the message. </param>
         /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
-        /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="startTime"> The earliest point in time to get messages after. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
         public async Task<Response<ChatMessagesCollection>> ListChatMessagesAsync(string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
@@ -355,7 +355,7 @@ namespace Azure.Communication.Chat
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="chatThreadId"> The thread id of the message. </param>
         /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
-        /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="startTime"> The earliest point in time to get messages after. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
         public Response<ChatMessagesCollection> ListChatMessages(string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
@@ -876,7 +876,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic)
+        internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic, IDictionary<string, string> metadata, ChatRetentionPolicyInternal retentionPolicy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -889,10 +889,19 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var model = new UpdateChatThreadRequest()
+            UpdateChatThreadRequest updateChatThreadRequest = new UpdateChatThreadRequest()
             {
-                Topic = topic
+                Topic = topic,
+                RetentionPolicy = retentionPolicy
             };
+            if (metadata != null)
+            {
+                foreach (var value in metadata)
+                {
+                    updateChatThreadRequest.Metadata.Add(value);
+                }
+            }
+            var model = updateChatThreadRequest;
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -902,16 +911,18 @@ namespace Azure.Communication.Chat
         /// <summary> Updates a thread's properties. </summary>
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
+        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
+        /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, ChatRetentionPolicyInternal retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic);
+            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic, metadata, retentionPolicy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -925,16 +936,18 @@ namespace Azure.Communication.Chat
         /// <summary> Updates a thread's properties. </summary>
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
+        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
+        /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
+        public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, ChatRetentionPolicyInternal retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic);
+            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic, metadata, retentionPolicy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1182,7 +1195,7 @@ namespace Azure.Communication.Chat
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="chatThreadId"> The thread id of the message. </param>
         /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
-        /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="startTime"> The earliest point in time to get messages after. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
         public async Task<Response<ChatMessagesCollection>> ListChatMessagesNextPageAsync(string nextLink, string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
@@ -1216,7 +1229,7 @@ namespace Azure.Communication.Chat
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="chatThreadId"> The thread id of the message. </param>
         /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
-        /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="startTime"> The earliest point in time to get messages after. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
         public Response<ChatMessagesCollection> ListChatMessagesNextPage(string nextLink, string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)

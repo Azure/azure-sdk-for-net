@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
-        public MigrateMySqlAzureDBForMySqlOfflineTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases)
+        public MigrateMySqlAzureDBForMySqlOfflineTaskInput(DataMigrationMySqlConnectionInfo sourceConnectionInfo, DataMigrationMySqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceConnectionInfo"> Connection information for source MySQL. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="makeSourceServerReadOnly"> Setting to set the source server read only. </param>
+        /// <param name="shouldMakeSourceServerReadOnly"> Setting to set the source server read only. </param>
         /// <param name="startedOn"> Parameter to specify when the migration started. </param>
         /// <param name="optionalAgentSettings"> Optional parameters for fine tuning the data transfer rate during migration. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlConnectionInfo targetConnectionInfo, IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases, bool? makeSourceServerReadOnly, DateTimeOffset? startedOn, IDictionary<string, string> optionalAgentSettings, string encryptedKeyForSecureFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskInput(DataMigrationMySqlConnectionInfo sourceConnectionInfo, DataMigrationMySqlConnectionInfo targetConnectionInfo, IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases, bool? shouldMakeSourceServerReadOnly, DateTimeOffset? startedOn, IDictionary<string, string> optionalAgentSettings, string encryptedKeyForSecureFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             SelectedDatabases = selectedDatabases;
-            MakeSourceServerReadOnly = makeSourceServerReadOnly;
+            ShouldMakeSourceServerReadOnly = shouldMakeSourceServerReadOnly;
             StartedOn = startedOn;
             OptionalAgentSettings = optionalAgentSettings;
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for source MySQL. </summary>
-        public MySqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationMySqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Connection information for target Azure Database for MySQL. </summary>
-        public MySqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationMySqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Databases to migrate. </summary>
         public IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> SelectedDatabases { get; }
         /// <summary> Setting to set the source server read only. </summary>
-        public bool? MakeSourceServerReadOnly { get; set; }
+        public bool? ShouldMakeSourceServerReadOnly { get; set; }
         /// <summary> Parameter to specify when the migration started. </summary>
         public DateTimeOffset? StartedOn { get; set; }
         /// <summary> Optional parameters for fine tuning the data transfer rate during migration. </summary>

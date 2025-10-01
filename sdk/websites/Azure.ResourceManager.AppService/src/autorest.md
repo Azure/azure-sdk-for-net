@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/c9c3e8b9ec547d82c487f36f1126228f9eef0e79/specification/web/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6dcfdfb7f4da9ec8a0f04b2970ea0b3f95eefa6b/specification/web/resource-manager/readme.md
 #tag: package-2024-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -744,6 +744,7 @@ prepend-rp-prefix:
 models-to-treat-empty-string-as-null:
   - WebAppBackupData
   - WebSiteInstanceStatusData
+  - AppServiceApiDefinitionInfo
 
 directive:
 # operation removal - should be temporary

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="failedObjects"> List of failed table names of source and target pair. </param>
         /// <param name="validationErrors"> List of errors that happened while performing data integrity validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataIntegrityValidationResult(IReadOnlyDictionary<string, string> failedObjects, ValidationError validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataIntegrityValidationResult(IReadOnlyDictionary<string, string> failedObjects, MigrationValidationError validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FailedObjects = failedObjects;
             ValidationErrors = validationErrors;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> List of failed table names of source and target pair. </summary>
         public IReadOnlyDictionary<string, string> FailedObjects { get; }
         /// <summary> List of errors that happened while performing data integrity validation. </summary>
-        public ValidationError ValidationErrors { get; }
+        public MigrationValidationError ValidationErrors { get; }
     }
 }

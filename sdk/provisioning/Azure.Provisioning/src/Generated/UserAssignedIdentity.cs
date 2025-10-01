@@ -107,7 +107,7 @@ public partial class UserAssignedIdentity : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the UserAssignedIdentity.</param>
     public UserAssignedIdentity(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ManagedIdentity/userAssignedIdentities", resourceVersion ?? "2023-01-31")
+        : base(bicepIdentifier, "Microsoft.ManagedIdentity/userAssignedIdentities", resourceVersion ?? "2024-11-30")
     {
     }
 
@@ -116,6 +116,7 @@ public partial class UserAssignedIdentity : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
@@ -132,9 +133,9 @@ public partial class UserAssignedIdentity : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2023-07-31-PREVIEW.
+        /// 2024-11-30.
         /// </summary>
-        public static readonly string V2023_07_31_PREVIEW = "2023-07-31-PREVIEW";
+        public static readonly string V2024_11_30 = "2024-11-30";
 
         /// <summary>
         /// 2023-01-31.
@@ -142,23 +143,38 @@ public partial class UserAssignedIdentity : ProvisionableResource
         public static readonly string V2023_01_31 = "2023-01-31";
 
         /// <summary>
-        /// 2022-01-31-PREVIEW.
-        /// </summary>
-        public static readonly string V2022_01_31_PREVIEW = "2022-01-31-PREVIEW";
-
-        /// <summary>
-        /// 2021-09-30-PREVIEW.
-        /// </summary>
-        public static readonly string V2021_09_30_PREVIEW = "2021-09-30-PREVIEW";
-
-        /// <summary>
         /// 2018-11-30.
         /// </summary>
         public static readonly string V2018_11_30 = "2018-11-30";
 
         /// <summary>
+        /// 2025-01-31-PREVIEW.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2025_01_31_PREVIEW = "2025-01-31-PREVIEW";
+
+        /// <summary>
+        /// 2023-07-31-PREVIEW.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2023_07_31_PREVIEW = "2023-07-31-PREVIEW";
+
+        /// <summary>
+        /// 2022-01-31-PREVIEW.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2022_01_31_PREVIEW = "2022-01-31-PREVIEW";
+
+        /// <summary>
+        /// 2021-09-30-PREVIEW.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2021_09_30_PREVIEW = "2021-09-30-PREVIEW";
+
+        /// <summary>
         /// 2015-08-31-PREVIEW.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static readonly string V2015_08_31_PREVIEW = "2015-08-31-PREVIEW";
     }
 

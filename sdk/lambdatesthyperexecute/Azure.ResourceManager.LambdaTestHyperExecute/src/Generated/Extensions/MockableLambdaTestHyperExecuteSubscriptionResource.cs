@@ -5,98 +5,61 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.LambdaTestHyperExecute;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableLambdaTestHyperExecuteSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _lambdaTestHyperExecuteOrganizationOrganizationsRestClient;
+        private ClientDiagnostics _organizationsClientDiagnostics;
+        private Organizations _organizationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableLambdaTestHyperExecuteSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableLambdaTestHyperExecuteSubscriptionResource for mocking. </summary>
         protected MockableLambdaTestHyperExecuteSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableLambdaTestHyperExecuteSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableLambdaTestHyperExecuteSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableLambdaTestHyperExecuteSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics LambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics => _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LambdaTestHyperExecute", LambdaTestHyperExecuteOrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations LambdaTestHyperExecuteOrganizationOrganizationsRestClient => _lambdaTestHyperExecuteOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LambdaTestHyperExecuteOrganizationResource.ResourceType));
+        private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LambdaTestHyperExecute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
 
-        /// <summary>
-        /// List OrganizationResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/LambdaTest.HyperExecute/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List OrganizationResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LambdaTestHyperExecuteOrganizationResource> GetLambdaTestHyperExecuteOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LambdaTestHyperExecuteOrganizationResource(Client, LambdaTestHyperExecuteOrganizationData.DeserializeLambdaTestHyperExecuteOrganizationData(e)), LambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableLambdaTestHyperExecuteSubscriptionResource.GetLambdaTestHyperExecuteOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
         }
 
-        /// <summary>
-        /// List OrganizationResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/LambdaTest.HyperExecute/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List OrganizationResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LambdaTestHyperExecuteOrganizationResource> GetLambdaTestHyperExecuteOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LambdaTestHyperExecuteOrganizationResource(Client, LambdaTestHyperExecuteOrganizationData.DeserializeLambdaTestHyperExecuteOrganizationData(e)), LambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableLambdaTestHyperExecuteSubscriptionResource.GetLambdaTestHyperExecuteOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
         }
     }
 }

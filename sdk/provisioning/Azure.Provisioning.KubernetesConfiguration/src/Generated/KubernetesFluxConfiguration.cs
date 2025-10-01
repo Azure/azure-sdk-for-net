@@ -231,7 +231,7 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesFluxConfiguration.</param>
     public KubernetesFluxConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2023-05-01")
+        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -241,24 +241,24 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _azureBlob = DefineModelProperty<KubernetesAzureBlob>("AzureBlob", ["properties", "azureBlob"]);
-        _bucket = DefineModelProperty<KubernetesBucket>("Bucket", ["properties", "bucket"]);
-        _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);
-        _gitRepository = DefineModelProperty<KubernetesGitRepository>("GitRepository", ["properties", "gitRepository"]);
-        _isReconciliationSuspended = DefineProperty<bool>("IsReconciliationSuspended", ["properties", "suspend"]);
-        _kustomizations = DefineDictionaryProperty<Kustomization>("Kustomizations", ["properties", "kustomizations"]);
-        _namespace = DefineProperty<string>("Namespace", ["properties", "namespace"]);
-        _scope = DefineProperty<KubernetesConfigurationScope>("Scope", ["properties", "scope"]);
-        _sourceKind = DefineProperty<KubernetesConfigurationSourceKind>("SourceKind", ["properties", "sourceKind"]);
-        _complianceState = DefineProperty<KubernetesFluxComplianceState>("ComplianceState", ["properties", "complianceState"], isOutput: true);
-        _errorMessage = DefineProperty<string>("ErrorMessage", ["properties", "errorMessage"], isOutput: true);
+        _azureBlob = DefineModelProperty<KubernetesAzureBlob>("AzureBlob", ["AzureBlob"]);
+        _bucket = DefineModelProperty<KubernetesBucket>("Bucket", ["Bucket"]);
+        _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["ConfigurationProtectedSettings"]);
+        _gitRepository = DefineModelProperty<KubernetesGitRepository>("GitRepository", ["GitRepository"]);
+        _isReconciliationSuspended = DefineProperty<bool>("IsReconciliationSuspended", ["IsReconciliationSuspended"]);
+        _kustomizations = DefineDictionaryProperty<Kustomization>("Kustomizations", ["Kustomizations"]);
+        _namespace = DefineProperty<string>("Namespace", ["Namespace"]);
+        _scope = DefineProperty<KubernetesConfigurationScope>("Scope", ["Scope"]);
+        _sourceKind = DefineProperty<KubernetesConfigurationSourceKind>("SourceKind", ["SourceKind"]);
+        _complianceState = DefineProperty<KubernetesFluxComplianceState>("ComplianceState", ["ComplianceState"], isOutput: true);
+        _errorMessage = DefineProperty<string>("ErrorMessage", ["ErrorMessage"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _provisioningState = DefineProperty<KubernetesConfigurationProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _repositoryPublicKey = DefineProperty<string>("RepositoryPublicKey", ["properties", "repositoryPublicKey"], isOutput: true);
-        _sourceSyncedCommitId = DefineProperty<string>("SourceSyncedCommitId", ["properties", "sourceSyncedCommitId"], isOutput: true);
-        _sourceUpdatedOn = DefineProperty<DateTimeOffset>("SourceUpdatedOn", ["properties", "sourceUpdatedAt"], isOutput: true);
-        _statuses = DefineListProperty<KubernetesObjectStatus>("Statuses", ["properties", "statuses"], isOutput: true);
-        _statusUpdatedOn = DefineProperty<DateTimeOffset>("StatusUpdatedOn", ["properties", "statusUpdatedAt"], isOutput: true);
+        _provisioningState = DefineProperty<KubernetesConfigurationProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _repositoryPublicKey = DefineProperty<string>("RepositoryPublicKey", ["RepositoryPublicKey"], isOutput: true);
+        _sourceSyncedCommitId = DefineProperty<string>("SourceSyncedCommitId", ["SourceSyncedCommitId"], isOutput: true);
+        _sourceUpdatedOn = DefineProperty<DateTimeOffset>("SourceUpdatedOn", ["SourceUpdatedOn"], isOutput: true);
+        _statuses = DefineListProperty<KubernetesObjectStatus>("Statuses", ["Statuses"], isOutput: true);
+        _statusUpdatedOn = DefineProperty<DateTimeOffset>("StatusUpdatedOn", ["StatusUpdatedOn"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
@@ -267,6 +267,11 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2023-05-01.
         /// </summary>

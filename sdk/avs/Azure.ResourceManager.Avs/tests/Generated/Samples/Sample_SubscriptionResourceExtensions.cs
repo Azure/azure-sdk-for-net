@@ -19,35 +19,10 @@ namespace Azure.ResourceManager.Avs.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckAvsQuotaAvailability_LocationsCheckQuotaAvailability()
-        {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Locations_CheckQuotaAvailability.json
-            // this example is just showing the usage of "Locations_CheckQuotaAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("eastus");
-            AvsSubscriptionQuotaAvailabilityResult result = await subscriptionResource.CheckAvsQuotaAvailabilityAsync(location);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailability()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Locations_CheckTrialAvailability.json
-            // this example is just showing the usage of "Locations_CheckTrialAvailability" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Locations_CheckTrialAvailability.json
+            // this example is just showing the usage of "Locations_CheckAvsTrialAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -71,8 +46,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailabilityWithSku()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Locations_CheckTrialAvailabilityWithSku.json
-            // this example is just showing the usage of "Locations_CheckTrialAvailability" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Locations_CheckTrialAvailabilityWithSku.json
+            // this example is just showing the usage of "Locations_CheckAvsTrialAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,10 +70,35 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CheckAvsQuotaAvailability_LocationsCheckQuotaAvailability()
+        {
+            // Generated from example definition: 2024-09-01/Locations_CheckQuotaAvailability.json
+            // this example is just showing the usage of "Locations_CheckAvsQuotaAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("eastus");
+            AvsSubscriptionQuotaAvailabilityResult result = await subscriptionResource.CheckAvsQuotaAvailabilityAsync(location);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvsPrivateClouds_PrivateCloudsListInSubscription()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_ListInSubscription.json
-            // this example is just showing the usage of "PrivateClouds_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/PrivateClouds_ListInSubscription.json
+            // this example is just showing the usage of "PrivateCloud_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvsPrivateClouds_PrivateCloudsListInSubscriptionStretched()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_ListInSubscription_Stretched.json
-            // this example is just showing the usage of "PrivateClouds_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/PrivateClouds_ListInSubscription_Stretched.json
+            // this example is just showing the usage of "PrivateCloud_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -150,6 +150,33 @@ namespace Azure.ResourceManager.Avs.Samples
                 AvsPrivateCloudData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAvsSkus_SkusList()
+        {
+            // Generated from example definition: 2024-09-01/Skus_List.json
+            // this example is just showing the usage of "Skus_GetAvsSkus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (AvsResourceSku item in subscriptionResource.GetAvsSkusAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");

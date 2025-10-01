@@ -1,14 +1,22 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Implemented `IJsonModel` and `IPersistableModel` deserialization methods for events.
 
-### Bugs Fixed
+### Bug Fixes
 
 ### Other Changes
+
+## 1.0.0 (2025-06-23)
+
+### Features Added
+
+- General Availability release of `Azure.Messaging.EventGrid.SystemEvents`. Note this package
+should not be used with versions of `Azure.Messaging.EventGrid` prior to 5.0.0 as it will result in
+type conflicts. Version 5.0.0 and later of `Azure.Messaging.EventGrid` type forwards the system events to this package.
 
 ## 1.0.0-beta.5 (2025-06-04)
 

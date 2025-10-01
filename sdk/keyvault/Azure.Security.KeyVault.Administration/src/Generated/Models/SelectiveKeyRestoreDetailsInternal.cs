@@ -6,12 +6,15 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> Selective Key Restore operation. </summary>
     internal partial class SelectiveKeyRestoreDetailsInternal
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreDetailsInternal"/>. </summary>
         internal SelectiveKeyRestoreDetailsInternal()
         {
@@ -24,7 +27,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="jobId"> Identifier for the selective key restore operation. </param>
         /// <param name="startTime"> The start time of the restore operation. </param>
         /// <param name="endTime"> The end time of the restore operation. </param>
-        internal SelectiveKeyRestoreDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SelectiveKeyRestoreDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusDetails = statusDetails;
@@ -32,18 +36,24 @@ namespace Azure.Security.KeyVault.Administration.Models
             JobId = jobId;
             StartTime = startTime;
             EndTime = endTime;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Status of the restore operation. </summary>
         public OperationStatus? Status { get; }
+
         /// <summary> The status details of restore operation. </summary>
         public string StatusDetails { get; }
+
         /// <summary> Error encountered, if any, during the selective key restore operation. </summary>
         public KeyVaultServiceError Error { get; }
+
         /// <summary> Identifier for the selective key restore operation. </summary>
         public string JobId { get; }
+
         /// <summary> The start time of the restore operation. </summary>
         public DateTimeOffset? StartTime { get; }
+
         /// <summary> The end time of the restore operation. </summary>
         public DateTimeOffset? EndTime { get; }
     }

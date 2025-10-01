@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <Description>Azure.Provisioning.WebPubSub simplifies declarative resource provisioning in .NET.</Description>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
 

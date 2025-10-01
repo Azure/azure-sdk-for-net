@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.12.0 (2025-09-19)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-07-01' to 'package-2024-10-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cbfe154470792d8aea255885a4a96609603982cc/specification/network/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.47.3 to 1.48.0
+
+## 1.11.3 (2025-08-21)
+
+### Features Added
+
+- Added `WirePath` attributes to all properties in all models for provisioning library to consume.
+
+## 1.11.2 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Network` AOT-compatible
+
+### Bugs Fixed
+
+- Fixed an issue in `ManagedRuleSetRuleGroup` deserialization where rule IDs could be either strings or numbers in JSON, causing `InvalidOperationException` when parsing mixed-type arrays.
+
+## 1.11.1 (2025-07-01)
+
+### Bugs Fixed
+
+- Fixed an issue that if `LoadBalancingRuleData.FrontendIPConfigurationId` or other hidden properties on `LoadBalancingRuleData` class are assigned with values, the corresponding service operation would fail with `NullReferenceException` because the collection properties on `LoadBalancingRuleData` class are not initialized.
 
 ## 1.11.0 (2025-05-22)
 

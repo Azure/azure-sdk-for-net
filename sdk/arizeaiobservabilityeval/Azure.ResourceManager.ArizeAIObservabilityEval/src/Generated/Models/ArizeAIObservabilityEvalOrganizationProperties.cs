@@ -7,55 +7,30 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ArizeAIObservabilityEval;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
     /// <summary> Properties specific to Organization. </summary>
     public partial class ArizeAIObservabilityEvalOrganizationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user)
+        /// <param name="partnerProperties"> partner properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="user"/> or <paramref name="partnerProperties"/> is null. </exception>
+        public ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user, ArizeAIObservabilityEvalOfferPartnerProperties partnerProperties)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
+            Argument.AssertNotNull(partnerProperties, nameof(partnerProperties));
 
             Marketplace = marketplace;
             User = user;
+            PartnerProperties = partnerProperties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
@@ -64,38 +39,43 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user, ArizeAIObservabilityEvalOfferProvisioningState? provisioningState, ArizeAIObservabilityEvalOfferPartnerProperties partnerProperties, ArizeAIObservabilityEvalSingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user, ArizeAIObservabilityEvalOfferProvisioningState? provisioningState, ArizeAIObservabilityEvalOfferPartnerProperties partnerProperties, ArizeAIObservabilityEvalSingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Marketplace = marketplace;
             User = user;
             ProvisioningState = provisioningState;
             PartnerProperties = partnerProperties;
             SingleSignOnProperties = singleSignOnProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/> for deserialization. </summary>
-        internal ArizeAIObservabilityEvalOrganizationProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace details of the resource. </summary>
         public ArizeAIObservabilityEvalMarketplaceDetails Marketplace { get; set; }
+
         /// <summary> Details of the user. </summary>
         public ArizeAIObservabilityEvalUserDetails User { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public ArizeAIObservabilityEvalOfferProvisioningState? ProvisioningState { get; }
+
         /// <summary> partner properties. </summary>
         internal ArizeAIObservabilityEvalOfferPartnerProperties PartnerProperties { get; set; }
-        /// <summary> Description of the Organization's purpose. </summary>
-        public string PartnerDescription
-        {
-            get => PartnerProperties is null ? default : PartnerProperties.Description;
-            set => PartnerProperties = new ArizeAIObservabilityEvalOfferPartnerProperties(value);
-        }
 
         /// <summary> Single sign-on properties. </summary>
         public ArizeAIObservabilityEvalSingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
+
+        /// <summary> Description of the Organization's purpose. </summary>
+        public string PartnerDescription
+        {
+            get
+            {
+                return PartnerProperties is null ? default : PartnerProperties.Description;
+            }
+            set
+            {
+                PartnerProperties = new ArizeAIObservabilityEvalOfferPartnerProperties(value);
+            }
+        }
     }
 }

@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 namespace Azure.Compute.Batch
 {
     /// <summary>
-    /// The default implementation of <see cref="ICreateTaskResultHandler"/> for adding tasks to a Batch job.
+    /// The default implementation of <see cref="TaskResultHandler"/> for adding tasks to a Batch job.
     /// </summary>
     public class DefaultCreateTaskResultHandler
-        : ICreateTaskResultHandler
+        : TaskResultHandler
     {
         /// <summary>
         /// This handler treats success and 'TaskExists' errors as successful, retries server errors (HTTP 5xx), and throws
@@ -24,7 +24,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken">The cancellation token associated with the AddTaskCollection operation.</param>
         /// <returns>An <see cref="CreateTaskResultStatus"/> which indicates whether the <paramref name="addTaskResult"/>
         /// is classified as a success or as requiring a retry.</returns>
-        public CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken)
+        public override CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken)
         {
             if (addTaskResult == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch
                 {
                     status = CreateTaskResultStatus.Retry;
                 }
-                else if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && addTaskResult.BatchTaskResult.Error.Code == BatchErrorCodeStrings.TaskExists)
+                else if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && addTaskResult.BatchTaskResult.Error.Code == BatchErrorCode.TaskExists)
                 {
                     status = CreateTaskResultStatus.Success; //Count TaskExists as a success always
                 }

@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DesktopVirtualization
       safeName: AzureResourceManagerDesktopVirtualization
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.DesktopVirtualization
+      ExpectedWarningsFilepath: None

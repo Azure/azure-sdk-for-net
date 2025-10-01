@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -48,37 +49,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="priority"> The priority of the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType osType = default, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null)
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, ManagedServiceIdentity identity, string provisioningState, IEnumerable<ContainerInstanceContainer> containers, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType osType, IEnumerable<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupLogAnalytics diagnosticsLogAnalytics, IEnumerable<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IEnumerable<InitContainerDefinitionContent> initContainers, IEnumerable<DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, ContainerGroupPriority? priority)
         {
-            return ContainerGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                identity,
-                provisioningState,
-                containers,
-                imageRegistryCredentials,
-                restartPolicy,
-                ipAddress,
-                osType,
-                volumes,
-                instanceView,
-                diagnosticsLogAnalytics,
-                subnetIds,
-                dnsConfig,
-                sku,
-                encryptionProperties,
-                initContainers,
-                extensions,
-                confidentialComputeCcePolicy,
-                priority,
-                null,
-                null,
-                null,
-                zones);
+            return new ContainerGroupData(id, name, resourceType, systemData, tags, location, identity, provisioningState, null, containers.ToList(), imageRegistryCredentials.ToList(), restartPolicy, ipAddress, default, volumes.ToList(), instanceView, null, subnetIds.ToList(), dnsConfig, sku, encryptionProperties, initContainers.ToList(), extensions.ToList(), null, priority, null, null, null, null, zones.ToList(), null);
         }
     }
 }

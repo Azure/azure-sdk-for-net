@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Chaos.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
@@ -13,6 +15,54 @@ namespace Azure.ResourceManager.Chaos
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CapabilityListResult))]
+    [ModelReaderWriterBuildable(typeof(CapabilityTypeListResult))]
+    [ModelReaderWriterBuildable(typeof(ChaosCapabilityData))]
+    [ModelReaderWriterBuildable(typeof(ChaosCapabilityMetadataData))]
+    [ModelReaderWriterBuildable(typeof(ChaosCapabilityMetadataResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosCapabilityMetadataRuntimeProperties))]
+    [ModelReaderWriterBuildable(typeof(ChaosCapabilityResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosContinuousAction))]
+    [ModelReaderWriterBuildable(typeof(ChaosDelayAction))]
+    [ModelReaderWriterBuildable(typeof(ChaosDiscreteAction))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentAction))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentBranch))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentData))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentExecutionData))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentExecutionResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentPatch))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentRunActionStatus))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentRunBranchStatus))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentRunStepStatus))]
+    [ModelReaderWriterBuildable(typeof(ChaosExperimentStep))]
+    [ModelReaderWriterBuildable(typeof(ChaosKeyValuePair))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetData))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetFilter))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetListSelector))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetMetadataData))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetMetadataResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetQuerySelector))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetReference))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetSelector))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetSimpleFilter))]
+    [ModelReaderWriterBuildable(typeof(ChaosTargetSimpleFilterParameters))]
+    [ModelReaderWriterBuildable(typeof(ExperimentExecutionActionTargetDetailsError))]
+    [ModelReaderWriterBuildable(typeof(ExperimentExecutionActionTargetDetailsProperties))]
+    [ModelReaderWriterBuildable(typeof(ExperimentExecutionDetails))]
+    [ModelReaderWriterBuildable(typeof(ExperimentExecutionDetailsPropertiesRunInformation))]
+    [ModelReaderWriterBuildable(typeof(ExperimentExecutionListResult))]
+    [ModelReaderWriterBuildable(typeof(ExperimentListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TargetListResult))]
+    [ModelReaderWriterBuildable(typeof(TargetTypeListResult))]
+    [ModelReaderWriterBuildable(typeof(UnknownChaosExperimentAction))]
+    [ModelReaderWriterBuildable(typeof(UnknownChaosTargetFilter))]
+    [ModelReaderWriterBuildable(typeof(UnknownChaosTargetSelector))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerChaosContext : ModelReaderWriterContext
     {
     }

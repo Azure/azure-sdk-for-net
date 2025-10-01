@@ -46,34 +46,33 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsTypeUpdate"/>. </summary>
-        public ScheduledOperationsTypeUpdate()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScheduledOperationsTypeUpdate"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. </param>
         /// <param name="autoStartOn"> auto start time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="autoStopOn"> auto stop time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledOperationsTypeUpdate(DayOfWeekUpdate dayOfWeek, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledOperationsTypeUpdate(OracleDatabaseDayOfWeekUpdate dayOfWeek, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DayOfWeek = dayOfWeek;
             AutoStartOn = autoStartOn;
             AutoStopOn = autoStopOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Day of week. </summary>
-        internal DayOfWeekUpdate DayOfWeek { get; set; }
         /// <summary> Name of the day of the week. </summary>
         public OracleDatabaseDayOfWeekName? DayOfWeekName
         {
-            get => DayOfWeek is null ? default : DayOfWeek.Name;
+            get => DayOfWeek is null ? default(OracleDatabaseDayOfWeekName?) : DayOfWeek.Name;
             set
             {
-                if (DayOfWeek is null)
-                    DayOfWeek = new DayOfWeekUpdate();
-                DayOfWeek.Name = value;
+                if (value.HasValue)
+                {
+                    if (DayOfWeek is null)
+                        DayOfWeek = new OracleDatabaseDayOfWeekUpdate();
+                    DayOfWeek.Name = value.Value;
+                }
+                else
+                {
+                    DayOfWeek = null;
+                }
             }
         }
 

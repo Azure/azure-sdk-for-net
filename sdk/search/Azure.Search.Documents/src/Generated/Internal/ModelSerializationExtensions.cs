@@ -20,6 +20,8 @@ namespace Azure.Search.Documents
     {
         internal static readonly JsonDocumentOptions JsonDocumentOptions = new JsonDocumentOptions { MaxDepth = 256 };
         internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
+        internal static readonly ModelReaderWriterOptions WireV3Options = new ModelReaderWriterOptions("W|v3");
+        internal static readonly ModelReaderWriterOptions JsonV3Options = new ModelReaderWriterOptions("J|v3");
         internal static readonly BinaryData SentinelValue = BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray());
 
         public static object GetObject(this JsonElement element)
@@ -169,12 +171,15 @@ namespace Azure.Search.Documents
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = null)
         {
             switch (value)
             {
                 case null:
                     writer.WriteNullValue();
+                    break;
+                case IJsonModel<T> jsonModel:
+                    jsonModel.Write(writer, options ?? WireOptions);
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);
@@ -230,7 +235,7 @@ namespace Azure.Search.Documents
                     foreach (var pair in enumerable)
                     {
                         writer.WritePropertyName(pair.Key);
-                        writer.WriteObjectValue<object>(pair.Value);
+                        writer.WriteObjectValue<object>(pair.Value, options);
                     }
                     writer.WriteEndObject();
                     break;
@@ -238,7 +243,7 @@ namespace Azure.Search.Documents
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {
-                        writer.WriteObjectValue<object>(item);
+                        writer.WriteObjectValue<object>(item, options);
                     }
                     writer.WriteEndArray();
                     break;
@@ -250,9 +255,9 @@ namespace Azure.Search.Documents
             }
         }
 
-        public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
         {
-            writer.WriteObjectValue<object>(value);
+            writer.WriteObjectValue<object>(value, options);
         }
 
         internal static bool IsSentinelValue(BinaryData value)

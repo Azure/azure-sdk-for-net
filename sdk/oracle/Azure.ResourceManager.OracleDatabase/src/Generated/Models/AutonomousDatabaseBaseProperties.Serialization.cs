@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("computeCount"u8);
                 writer.WriteNumberValue(ComputeCount.Value);
             }
-            if (Optional.IsDefined(ComputeModel))
+            if (Optional.IsDefined(DatabaseComputeModel))
             {
                 writer.WritePropertyName("computeModel"u8);
-                writer.WriteStringValue(ComputeModel.Value.ToString());
+                writer.WriteStringValue(DatabaseComputeModel.Value.ToString());
             }
             if (Optional.IsDefined(CpuCoreCount))
             {
@@ -141,6 +141,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("localDisasterRecoveryType"u8);
                 writer.WriteStringValue(LocalDisasterRecoveryType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(DisasterRecoveryRoleChangedOn))
+            {
+                writer.WritePropertyName("timeDisasterRecoveryRoleChanged"u8);
+                writer.WriteStringValue(DisasterRecoveryRoleChangedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(RemoteDisasterRecoveryConfiguration))
+            {
+                writer.WritePropertyName("remoteDisasterRecoveryConfiguration"u8);
+                writer.WriteObjectValue(RemoteDisasterRecoveryConfiguration, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(LocalStandbyDB))
             {
                 writer.WritePropertyName("localStandbyDb"u8);
@@ -186,10 +196,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("lifecycleState"u8);
                 writer.WriteStringValue(LifecycleState.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduledOperations))
+            if (Optional.IsCollectionDefined(ScheduledOperationsList))
             {
-                writer.WritePropertyName("scheduledOperations"u8);
-                writer.WriteObjectValue(ScheduledOperations, options);
+                writer.WritePropertyName("scheduledOperationsList"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScheduledOperationsList)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(PrivateEndpointIP))
             {
@@ -416,10 +431,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("usedDataStorageSizeInTbs"u8);
                 writer.WriteNumberValue(UsedDataStorageSizeInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsDefined(DatabaseOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(DatabaseOcid);
             }
             if (Optional.IsDefined(BackupRetentionPeriodInDays))
             {
@@ -478,6 +493,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 switch (discriminator.GetString())
                 {
                     case "Clone": return AutonomousDatabaseCloneProperties.DeserializeAutonomousDatabaseCloneProperties(element, options);
+                    case "CloneFromBackupTimestamp": return AutonomousDatabaseFromBackupTimestampProperties.DeserializeAutonomousDatabaseFromBackupTimestampProperties(element, options);
+                    case "CrossRegionDisasterRecovery": return AutonomousDatabaseCrossRegionDisasterRecoveryProperties.DeserializeAutonomousDatabaseCrossRegionDisasterRecoveryProperties(element, options);
                     case "Regular": return AutonomousDatabaseProperties.DeserializeAutonomousDatabaseProperties(element, options);
                 }
             }

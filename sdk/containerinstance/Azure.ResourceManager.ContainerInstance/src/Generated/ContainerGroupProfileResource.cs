@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ContainerInstance
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _containerGroupProfileClientDiagnostics;
-        private readonly ContainerGroupProfilesRestOperations _containerGroupProfileRestClient;
+        private readonly ClientDiagnostics _containerGroupProfileCGProfileClientDiagnostics;
+        private readonly CGProfileRestOperations _containerGroupProfileCGProfileRestClient;
         private readonly ContainerGroupProfileData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerGroupProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerGroupProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string containerGroupProfileApiVersion);
-            _containerGroupProfileRestClient = new ContainerGroupProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupProfileApiVersion);
+            _containerGroupProfileCGProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerGroupProfileCGProfileApiVersion);
+            _containerGroupProfileCGProfileRestClient = new CGProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupProfileCGProfileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfile_GetByRevisionNumber</description>
+        /// <description>CGProfile_GetByRevisionNumber</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfile_GetByRevisionNumber</description>
+        /// <description>CGProfile_GetByRevisionNumber</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets the properties of the specified container group profile in the specified subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
+        /// Get the properties of the specified container group profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerGroupProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
             scope.Start();
             try
             {
-                var response = await _containerGroupProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerGroupProfileCGProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets the properties of the specified container group profile in the specified subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
+        /// Get the properties of the specified container group profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerGroupProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
             scope.Start();
             try
             {
-                var response = _containerGroupProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _containerGroupProfileCGProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Delete the specified container group profile in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes.
+        /// Deletes a container group profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Delete</description>
+        /// <description>CGProfile_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = await _containerGroupProfileRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _containerGroupProfileRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _containerGroupProfileCGProfileRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _containerGroupProfileCGProfileRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ContainerInstanceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Delete the specified container group profile in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes.
+        /// Deletes a container group profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -292,11 +292,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Delete</description>
+        /// <description>CGProfile_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = _containerGroupProfileRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var uri = _containerGroupProfileRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _containerGroupProfileCGProfileRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var uri = _containerGroupProfileCGProfileRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ContainerInstanceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Patches container group profile with specified properties.
+        /// Update a specified container group profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Patch</description>
+        /// <description>CGProfile_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
             scope.Start();
             try
             {
-                var response = await _containerGroupProfileRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _containerGroupProfileCGProfileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Patches container group profile with specified properties.
+        /// Update a specified container group profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Patch</description>
+        /// <description>CGProfile_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -397,11 +397,11 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
             scope.Start();
             try
             {
-                var response = _containerGroupProfileRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var response = _containerGroupProfileCGProfileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -420,11 +420,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
             scope.Start();
             try
             {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerGroupProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _containerGroupProfileCGProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ContainerGroupProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -482,11 +482,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
             scope.Start();
             try
             {
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerGroupProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _containerGroupProfileCGProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new ContainerGroupProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -544,11 +544,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
             scope.Start();
             try
             {
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerGroupProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _containerGroupProfileCGProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ContainerGroupProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -601,11 +601,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
             scope.Start();
             try
             {
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerGroupProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _containerGroupProfileCGProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new ContainerGroupProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -658,11 +658,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
             scope.Start();
             try
             {
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerGroupProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _containerGroupProfileCGProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ContainerGroupProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -718,11 +718,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _containerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
+            using var scope = _containerGroupProfileCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
             scope.Start();
             try
             {
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerGroupProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _containerGroupProfileCGProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new ContainerGroupProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

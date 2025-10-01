@@ -55,6 +55,7 @@ namespace FunctionProj
 
 In this code we define function input and output class: `Arguments` and `Response` respectively. These two data classes will be serialized in JSON. It is important that these both contain field `CorrelationId`, which is the same between input and output.
 
+**Note:** The Azure Function may be only used in standard agent setup. Please follow the [instruction](https://github.com/azure-ai-foundry/foundry-samples/tree/main/samples/microsoft/infrastructure-setup/41-standard-agent-setup) to deploy an agent, capable of calling Azure Functions.
 In our example the function will be stored in the storage account, created with the AI hub. For that we need to allow key access to that storage. In Azure portal go to Storage account > Settings > Configuration and set "Allow storage account key access" to Enabled. If it is not done, the error will be displayed "The remote server returned an error: (403) Forbidden." To create the function resource that will host our function, install [azure-cli](https://pypi.org/project/azure-cli/) python package and run the next command:
 
 ```shell
@@ -152,6 +153,7 @@ AzureFunctionToolDefinition azureFnTool = new(
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureFunctionsCreateAgentWithFunctionToolsSync
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
@@ -166,6 +168,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureFunctionsCreateAgentWithFunctionTools
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
@@ -286,12 +289,14 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureFunctionsCleanupSync
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 client.Threads.DeleteThread(thread.Id);
 client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureFunctionsCleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await client.Threads.DeleteThreadAsync(thread.Id);
 await client.Administration.DeleteAgentAsync(agent.Id);
 ```

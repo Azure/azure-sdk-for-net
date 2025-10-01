@@ -1747,6 +1747,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(StorageChecksumAlgorithm.StorageCrc64)]
+        [TestCase(StorageChecksumAlgorithm.MD5)]
+        public async Task DownloadToAsync_ZeroSizeBlob_ContentValidationEnabled(StorageChecksumAlgorithm alg)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(new byte[] { });
+            await blob.UploadAsync(stream);
+
+            // Act
+            using Stream resultStream = new MemoryStream();
+            BlobDownloadToOptions options = new();
+            options.TransferValidation = new DownloadTransferValidationOptions
+            {
+                ChecksumAlgorithm = alg,
+                AutoValidateChecksum = true
+            };
+            await blob.DownloadToAsync(resultStream, options);
+        }
+
+        [RecordedTest]
         [Ignore("Don't want to record 300 MB of data in the tests")]
         public async Task DownloadToAsync_LargeStream()
         {

@@ -198,7 +198,9 @@ public class Metrics
     public Metrics(string instrumentationKey)
     {
         var configuration = TelemetryConfiguration.CreateDefault();
+#pragma warning disable CS0618 // Type or member is obsolete
         configuration.InstrumentationKey = instrumentationKey;
+#pragma warning restore CS0618 // Type or member is obsolete
 
         Client = new TelemetryClient(configuration);
     }

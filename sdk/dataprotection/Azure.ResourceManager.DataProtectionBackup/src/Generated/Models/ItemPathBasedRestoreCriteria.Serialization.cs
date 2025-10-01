@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(RenameTo))
+            {
+                writer.WritePropertyName("renameTo"u8);
+                writer.WriteStringValue(RenameTo);
+            }
         }
 
         ItemPathBasedRestoreCriteria IJsonModel<ItemPathBasedRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,6 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string itemPath = default;
             bool isPathRelativeToBackupItem = default;
             IList<string> subItemPathPrefix = default;
+            string renameTo = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -103,6 +109,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     subItemPathPrefix = array;
                     continue;
                 }
+                if (property.NameEquals("renameTo"u8))
+                {
+                    renameTo = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
@@ -114,7 +125,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ItemPathBasedRestoreCriteria(objectType, serializedAdditionalRawData, itemPath, isPathRelativeToBackupItem, subItemPathPrefix ?? new ChangeTrackingList<string>());
+            return new ItemPathBasedRestoreCriteria(
+                objectType,
+                serializedAdditionalRawData,
+                itemPath,
+                isPathRelativeToBackupItem,
+                subItemPathPrefix ?? new ChangeTrackingList<string>(),
+                renameTo);
         }
 
         BinaryData IPersistableModel<ItemPathBasedRestoreCriteria>.Write(ModelReaderWriterOptions options)

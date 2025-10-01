@@ -19,7 +19,6 @@ namespace Azure.Communication.CallAutomation
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CallConnectionRestClient RestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
-        internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
@@ -27,12 +26,11 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, CallDialogRestClient callDialogRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
+        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
             CallMediaRestClient = callCallMediaRestClient;
-            CallDialogRestClient = callDialogRestClient;
             _clientDiagnostics = clientDiagnostics;
             EventProcessor = eventProcessor;
         }
@@ -172,10 +170,6 @@ namespace Azure.Communication.CallAutomation
             {
                 options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
             }
-            else if (targetParticipant is MicrosoftTeamsAppIdentifier)
-            {
-                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsAppIdentifier);
-            }
             else
             {
                 throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
@@ -280,14 +274,13 @@ namespace Azure.Communication.CallAutomation
 
         private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
         {
-            TransferToParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.Target))
+            TransferToParticipantRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.Target))
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails)),
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
+                Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer_2025_06_30.Serialize(options.Transferee),
                 OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 SourceCallerIdNumber = options.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerIdNumber.PhoneNumber)
             };
@@ -384,12 +377,11 @@ namespace Azure.Communication.CallAutomation
             // validate ParticipantToAdd is not null
             Argument.AssertNotNull(options.ParticipantToAdd, nameof(options.ParticipantToAdd));
 
-            AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToAdd.Target))
+            AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.ParticipantToAdd.Target))
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                     options.ParticipantToAdd.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                    CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.ParticipantToAdd.CustomCallingContext?.TeamsPhoneCallDetails)),
+                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()),
                 SourceCallerIdNumber = options.ParticipantToAdd.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
@@ -541,7 +533,7 @@ namespace Azure.Communication.CallAutomation
                 // validate RequestInitiator is not null or empty
                 Argument.AssertNotNull(options.ParticipantToRemove, nameof(options.ParticipantToRemove));
 
-                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.ParticipantToRemove));
 
                 request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
 
@@ -590,7 +582,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.ParticipantToRemove));
 
                 options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
 
@@ -625,22 +617,6 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Initializes a new instance of CallDialog. <see cref="CallDialog"/></summary>
-        public virtual CallDialog GetCallDialog()
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCallDialog)}");
-            scope.Start();
-            try
-            {
-                return new CallDialog(CallConnectionId, CallDialogRestClient, _clientDiagnostics, EventProcessor);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
         /// <summary>
         /// Mute participant from the call.
         /// Only Acs Users are currently supported.
@@ -656,7 +632,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(targetParticipant) });
+                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant) });
 
                 var response = RestClient.Mute(
                     CallConnectionId,
@@ -687,7 +663,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
+                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant) });
 
                 var response = RestClient.Mute(
                     CallConnectionId,
@@ -695,51 +671,6 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken);
 
                 return Response.FromValue(new MuteParticipantResult(response.Value.OperationContext), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unmute participant from the call.
-        /// Only Acs Users are currently supported.
-        /// </summary>
-        /// <param name="targetParticipant">Participant to unmute.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns></returns>
-        public virtual Response<UnmuteParticipantResult> UnmuteParticipant(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
-        {
-            var options = new UnmuteParticipantOptions(targetParticipant);
-
-            return UnmuteParticipant(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Unmute participants from the call.
-        /// Only Acs Users are currently supported.
-        /// </summary>
-        /// <param name="options">Options for the UnmuteParticipant operation.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns></returns>
-        public virtual Response<UnmuteParticipantResult> UnmuteParticipant(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipant)}");
-            scope.Start();
-            try
-            {
-                UnmuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
-
-                request.OperationContext = options.OperationContext;
-
-                return RestClient.Unmute(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -782,55 +713,11 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
+                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant) });
 
                 request.OperationContext = options.OperationContext;
 
                 return await RestClient.MuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unmute participants on the call.
-        /// Only Acs Users are currently supported.
-        /// </summary>
-        /// <param name="targetParticipant">Participant to unmute.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantResult>> UnmuteParticipantAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
-        {
-            var options = new UnmuteParticipantOptions(targetParticipant);
-
-            return await UnmuteParticipantAsync(options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Unmute participants from the call.
-        /// Only Acs Users are currently supported.
-        /// </summary>
-        /// <param name="options">Options for the UnmuteParticipant operation.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantResult>> UnmuteParticipantAsync(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipant)}");
-            scope.Start();
-            try
-            {
-                UnmuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
-
-                request.OperationContext = options.OperationContext;
-
-                return await RestClient.UnmuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

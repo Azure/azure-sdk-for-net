@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.DependencyMap.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DependencyMap
 {
@@ -13,6 +15,27 @@ namespace Azure.ResourceManager.DependencyMap
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DependencyMapData))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapDateTimeFilter))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapDiscoverySourceData))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapDiscoverySourcePatch))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapDiscoverySourceProperties))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapDiscoverySourceResource))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapPatch))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapProcessNameFilter))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapProperties))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapResource))]
+    [ModelReaderWriterBuildable(typeof(DependencyMapVisualizationFilter))]
+    [ModelReaderWriterBuildable(typeof(DiscoverySourceResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(ExportDependenciesContent))]
+    [ModelReaderWriterBuildable(typeof(GetConnectionsForProcessOnFocusedMachineContent))]
+    [ModelReaderWriterBuildable(typeof(GetConnectionsWithConnectedMachineForFocusedMachineContent))]
+    [ModelReaderWriterBuildable(typeof(GetDependencyViewForFocusedMachineContent))]
+    [ModelReaderWriterBuildable(typeof(MapsResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(OffAzureDiscoverySourceProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownDependencyMapDiscoverySourceProperties))]
     public partial class AzureResourceManagerDependencyMapContext : ModelReaderWriterContext
     {
     }

@@ -1,5 +1,27 @@
 # Release History
 
+## 1.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0 (2025-08-28)
+
+### Features Added
+- GA release of mobile number types
+
+## 1.5.0-beta.1 (2025-07-22)
+
+### Features Added
+- Adds support for mobile number types
+  - mobile numbers are location associated phone numbers with SMS capabilities
+- API version `2025-06-01` is the default.
+
 ## 1.4.0 (2025-06-20)
 
 ### Features Added

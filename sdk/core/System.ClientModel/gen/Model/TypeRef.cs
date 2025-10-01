@@ -10,9 +10,11 @@ internal sealed class TypeRef : IEquatable<TypeRef>
         string nameSpace,
         string assembly,
         string fullyQualifiedName,
+        TypeRef? containingContext,
         TypeRef? itemType = default,
         int arrayRank = 0,
-        ObsoleteLevel obsoleteLevel = ObsoleteLevel.None)
+        ObsoleteLevel obsoleteLevel = ObsoleteLevel.None,
+        string? experimentalDiagnosticId = null)
     {
         Name = name;
         Namespace = nameSpace;
@@ -21,6 +23,8 @@ internal sealed class TypeRef : IEquatable<TypeRef>
         ArrayRank = arrayRank;
         FullyQualifiedName = fullyQualifiedName;
         ObsoleteLevel = obsoleteLevel;
+        ExperimentalDiagnosticId = experimentalDiagnosticId;
+        ContainingContext = containingContext;
     }
 
     public string Name { get; }
@@ -30,6 +34,8 @@ internal sealed class TypeRef : IEquatable<TypeRef>
     public int ArrayRank { get; }
     public string FullyQualifiedName { get; }
     public ObsoleteLevel ObsoleteLevel { get; init; }
+    public string? ExperimentalDiagnosticId { get; }
+    public TypeRef? ContainingContext { get; }
 
     private string? _typeCaseName;
     public string TypeCaseName => _typeCaseName ??= Name.ToIdentifier(false);

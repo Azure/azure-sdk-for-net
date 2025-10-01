@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// A class representing the AutonomousDatabase data model.
-    /// Autonomous Database  resource model.
+    /// Autonomous Database resource model.
     /// </summary>
     public partial class AutonomousDatabaseData : TrackedResourceData
     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="properties">
         /// The resource-specific properties for this resource.
         /// Please note <see cref="AutonomousDatabaseBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutonomousDatabaseCloneProperties"/> and <see cref="AutonomousDatabaseProperties"/>.
+        /// The available derived classes include <see cref="AutonomousDatabaseCloneProperties"/>, <see cref="AutonomousDatabaseFromBackupTimestampProperties"/>, <see cref="AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/> and <see cref="AutonomousDatabaseProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutonomousDatabaseBaseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary>
         /// The resource-specific properties for this resource.
         /// Please note <see cref="AutonomousDatabaseBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutonomousDatabaseCloneProperties"/> and <see cref="AutonomousDatabaseProperties"/>.
+        /// The available derived classes include <see cref="AutonomousDatabaseCloneProperties"/>, <see cref="AutonomousDatabaseFromBackupTimestampProperties"/>, <see cref="AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/> and <see cref="AutonomousDatabaseProperties"/>.
         /// </summary>
         public AutonomousDatabaseBaseProperties Properties { get; set; }
     }

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Azure.AI.Agents.Persistent client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Agents.Persistent client library</AssemblyTitle>
-    <Version>1.1.0-beta.3</Version>
+    <Version>1.2.0-beta.6</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Agents.Persistent</PackageTags>
@@ -12,12 +12,13 @@
     <NoWarn>$(NoWarn);CS1591;AZC0012;SA1649;SA1402;</NoWarn>
     <LangVersion>latest</LangVersion>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="System.ClientModel" />
+    <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
+    <PackageReference Include="System.Net.ServerSentEvents" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

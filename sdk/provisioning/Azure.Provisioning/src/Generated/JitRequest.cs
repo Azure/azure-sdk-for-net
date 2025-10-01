@@ -160,6 +160,7 @@ public partial class JitRequest : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _applicationResourceId = DefineProperty<string>("ApplicationResourceId", ["properties", "applicationResourceId"]);

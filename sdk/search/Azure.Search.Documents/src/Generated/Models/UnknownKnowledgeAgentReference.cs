@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Agents.Models;
 
 namespace Azure.Search.Documents.Models
@@ -16,9 +18,17 @@ namespace Azure.Search.Documents.Models
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        internal UnknownKnowledgeAgentReference(string type, string id, int activitySource) : base(type, id, activitySource)
+        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="rerankerScore"> The reranker score for the document reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownKnowledgeAgentReference(string type, string id, int activitySource, IReadOnlyDictionary<string, object> sourceData, float? rerankerScore, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, id, activitySource, sourceData, rerankerScore, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeAgentReference"/> for deserialization. </summary>
+        internal UnknownKnowledgeAgentReference()
+        {
         }
     }
 }

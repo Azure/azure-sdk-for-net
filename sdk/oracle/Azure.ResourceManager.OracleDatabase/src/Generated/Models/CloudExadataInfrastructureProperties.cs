@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -55,13 +54,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Argument.AssertNotNull(shape, nameof(shape));
             Argument.AssertNotNull(displayName, nameof(displayName));
 
+            DefinedFileSystemConfiguration = new ChangeTrackingList<DefinedFileSystemConfiguration>();
             CustomerContacts = new ChangeTrackingList<OracleCustomerContact>();
             Shape = shape;
             DisplayName = displayName;
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureProperties"/>. </summary>
-        /// <param name="ocid"> Exadata infra ocid. </param>
+        /// <param name="definedFileSystemConfiguration"> Defined file system configurations. </param>
+        /// <param name="exadataInfraOcid"> Exadata infra ocid. </param>
         /// <param name="computeCount"> The number of compute servers for the cloud Exadata infrastructure. </param>
         /// <param name="storageCount"> The number of storage servers for the cloud Exadata infrastructure. </param>
         /// <param name="totalStorageSizeInGbs"> The total storage allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </param>
@@ -88,14 +89,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="activatedStorageCount"> The requested number of additional storage servers activated for the Exadata infrastructure. </param>
         /// <param name="additionalStorageCount"> The requested number of additional storage servers for the Exadata infrastructure. </param>
         /// <param name="displayName"> The name for the Exadata infrastructure. </param>
-        /// <param name="lastMaintenanceRunId"> The OCID of the last maintenance run. </param>
-        /// <param name="nextMaintenanceRunId"> The OCID of the next maintenance run. </param>
+        /// <param name="lastMaintenanceRunOcid"> The OCID of the last maintenance run. </param>
+        /// <param name="nextMaintenanceRunOcid"> The OCID of the next maintenance run. </param>
         /// <param name="monthlyDBServerVersion"> Monthly Db Server version. </param>
         /// <param name="monthlyStorageServerVersion"> Monthly Storage Server version. </param>
+        /// <param name="databaseServerType"> The database server model type of the cloud Exadata infrastructure resource. </param>
+        /// <param name="storageServerType"> The storage server model type of the cloud Exadata infrastructure resource. </param>
+        /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
+        /// <param name="exascaleConfig"> The exascale config details for the cloud Exadata infrastructure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructureProperties(ResourceIdentifier ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, OracleDatabaseMaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, ResourceIdentifier lastMaintenanceRunId, ResourceIdentifier nextMaintenanceRunId, string monthlyDBServerVersion, string monthlyStorageServerVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudExadataInfrastructureProperties(IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration, string exadataInfraOcid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, OracleDatabaseMaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunOcid, string nextMaintenanceRunOcid, string monthlyDBServerVersion, string monthlyStorageServerVersion, string databaseServerType, string storageServerType, OracleDatabaseComputeModel? computeModel, ExascaleConfigDetails exascaleConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Ocid = ocid;
+            DefinedFileSystemConfiguration = definedFileSystemConfiguration;
+            ExadataInfraOcid = exadataInfraOcid;
             ComputeCount = computeCount;
             StorageCount = storageCount;
             TotalStorageSizeInGbs = totalStorageSizeInGbs;
@@ -122,10 +128,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ActivatedStorageCount = activatedStorageCount;
             AdditionalStorageCount = additionalStorageCount;
             DisplayName = displayName;
-            LastMaintenanceRunId = lastMaintenanceRunId;
-            NextMaintenanceRunId = nextMaintenanceRunId;
+            LastMaintenanceRunOcid = lastMaintenanceRunOcid;
+            NextMaintenanceRunOcid = nextMaintenanceRunOcid;
             MonthlyDBServerVersion = monthlyDBServerVersion;
             MonthlyStorageServerVersion = monthlyStorageServerVersion;
+            DatabaseServerType = databaseServerType;
+            StorageServerType = storageServerType;
+            ComputeModel = computeModel;
+            ExascaleConfig = exascaleConfig;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -134,8 +144,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
+        /// <summary> Defined file system configurations. </summary>
+        public IReadOnlyList<DefinedFileSystemConfiguration> DefinedFileSystemConfiguration { get; }
         /// <summary> Exadata infra ocid. </summary>
-        public ResourceIdentifier Ocid { get; }
+        public string ExadataInfraOcid { get; }
         /// <summary> The number of compute servers for the cloud Exadata infrastructure. </summary>
         public int? ComputeCount { get; set; }
         /// <summary> The number of storage servers for the cloud Exadata infrastructure. </summary>
@@ -189,12 +201,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The name for the Exadata infrastructure. </summary>
         public string DisplayName { get; set; }
         /// <summary> The OCID of the last maintenance run. </summary>
-        public ResourceIdentifier LastMaintenanceRunId { get; }
+        public string LastMaintenanceRunOcid { get; }
         /// <summary> The OCID of the next maintenance run. </summary>
-        public ResourceIdentifier NextMaintenanceRunId { get; }
+        public string NextMaintenanceRunOcid { get; }
         /// <summary> Monthly Db Server version. </summary>
         public string MonthlyDBServerVersion { get; }
         /// <summary> Monthly Storage Server version. </summary>
         public string MonthlyStorageServerVersion { get; }
+        /// <summary> The database server model type of the cloud Exadata infrastructure resource. </summary>
+        public string DatabaseServerType { get; set; }
+        /// <summary> The storage server model type of the cloud Exadata infrastructure resource. </summary>
+        public string StorageServerType { get; set; }
+        /// <summary> The compute model of the Exadata Infrastructure. </summary>
+        public OracleDatabaseComputeModel? ComputeModel { get; }
+        /// <summary> The exascale config details for the cloud Exadata infrastructure. </summary>
+        public ExascaleConfigDetails ExascaleConfig { get; }
     }
 }

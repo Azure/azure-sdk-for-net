@@ -91,30 +91,43 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
+        [WirePath("vpnClientAddressPool")]
         public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
         /// <summary> VpnClientRootCertificate for virtual network gateway. </summary>
+        [WirePath("vpnClientRootCertificates")]
         public IList<VpnClientRootCertificate> VpnClientRootCertificates { get; }
         /// <summary> VpnClientRevokedCertificate for Virtual network gateway. </summary>
+        [WirePath("vpnClientRevokedCertificates")]
         public IList<VpnClientRevokedCertificate> VpnClientRevokedCertificates { get; }
         /// <summary> VpnClientProtocols for Virtual network gateway. </summary>
+        [WirePath("vpnClientProtocols")]
         public IList<VpnClientProtocol> VpnClientProtocols { get; }
         /// <summary> VPN authentication types for the virtual network gateway.. </summary>
+        [WirePath("vpnAuthenticationTypes")]
         public IList<VpnAuthenticationType> VpnAuthenticationTypes { get; }
         /// <summary> VpnClientIpsecPolicies for virtual network gateway P2S client. </summary>
+        [WirePath("vpnClientIpsecPolicies")]
         public IList<IPsecPolicy> VpnClientIPsecPolicies { get; }
         /// <summary> The radius server address property of the VirtualNetworkGateway resource for vpn client connection. </summary>
+        [WirePath("radiusServerAddress")]
         public string RadiusServerAddress { get; set; }
         /// <summary> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. </summary>
+        [WirePath("radiusServerSecret")]
         public string RadiusServerSecret { get; set; }
         /// <summary> The radiusServers property for multiple radius server configuration. </summary>
+        [WirePath("radiusServers")]
         public IList<RadiusServer> RadiusServers { get; }
         /// <summary> The AADTenant property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </summary>
+        [WirePath("aadTenant")]
         public string AadTenant { get; set; }
         /// <summary> The AADAudience property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </summary>
+        [WirePath("aadAudience")]
         public string AadAudience { get; set; }
         /// <summary> The AADIssuer property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </summary>
+        [WirePath("aadIssuer")]
         public string AadIssuer { get; set; }
         /// <summary> per ip address pool connection policy for virtual network gateway P2S client. </summary>
+        [WirePath("vngClientConnectionConfigurations")]
         public IList<VngClientConnectionConfiguration> VngClientConnectionConfigurations { get; }
     }
 }

@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Search.Models
 
         private const string EnabledValue = "enabled";
         private const string DisabledValue = "disabled";
+        private const string SecuredByPerimeterValue = "securedByPerimeter";
 
         /// <summary> The search service is accessible from traffic originating from the public internet. </summary>
         public static SearchServicePublicInternetAccess Enabled { get; } = new SearchServicePublicInternetAccess(EnabledValue);
         /// <summary> The search service is not accessible from traffic originating from the public internet. Access is only permitted over approved private endpoint connections. </summary>
         public static SearchServicePublicInternetAccess Disabled { get; } = new SearchServicePublicInternetAccess(DisabledValue);
+        /// <summary> The network security perimeter configuration rules allow or disallow public network access to the resource. Requires an associated network security perimeter. </summary>
+        public static SearchServicePublicInternetAccess SecuredByPerimeter { get; } = new SearchServicePublicInternetAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="SearchServicePublicInternetAccess"/> values are the same. </summary>
         public static bool operator ==(SearchServicePublicInternetAccess left, SearchServicePublicInternetAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchServicePublicInternetAccess"/> values are not the same. </summary>

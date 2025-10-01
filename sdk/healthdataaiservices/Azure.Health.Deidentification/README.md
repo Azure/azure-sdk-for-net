@@ -56,8 +56,15 @@ Given an input text, the de-identification service can perform three main operat
 - `Tag` returns the category and location within the text of detected PHI entities.
 - `Redact` returns output text where detected PHI entities are replaced with placeholder text. For example `John` replaced with `[name]`.
 - `Surrogate` returns output text where detected PHI entities are replaced with realistic replacement values. For example, `My name is John Smith` could become `My name is Tom Jones`.
+- `SurrogateOnly` returns output test where user-defined PHI entities are replaced with realistic replacement values.
 
 For more information about customizing the redaction format, see [Tutorial: Use a custom redaction format with the de-identification service][deid_redaction_format].
+
+### String Encoding
+When using the `Tag` operation, the service will return the locations of PHI entities in the input text. These locations will be represented as offsets and lengths, each of which is a [StringIndex][string_index] containing
+three properties corresponding to three different text encodings. **.NET applications should use the `Utf16` property.**
+
+For more on text encoding, see [Character encoding in .NET][character_encoding].
 
 ### De-identification Methods
 There are two methods of interacting with the de-identification service. You can send text directly, or you can create jobs
@@ -72,8 +79,33 @@ string outputString = result.Value.OutputText;
 Console.WriteLine(outputString); // Hello, Tom!
 ```
 
-To learn about prerequisites and configuration options for de-identifying documents in Azure Storage, see [Tutorial: Configure Azure Storage to de-identify documents][deid_configure_storage].
-Once you have configured your storage account, you can create a job to de-identify documents in a container.
+To de-identify documents in Azure Storage, you'll need a storage account with a container to which the
+de-identification service has been granted an appropriate role. See [Tutorial: Configure Azure Storage to de-identify documents][deid_configure_storage]
+for prerequisites and configuration options. You can upload the files in the [test data folder][test_data] as blobs, like: `https://<storageaccount>.blob.core.windows.net/<container>/example_patient_1/doctor_dictation.txt`.
+
+You can create jobs to de-identify documents in the source Azure Storage account and container with an optional input prefix. If there's no input prefix, all blobs in the container will be de-identified. Azure Storage blobs can use `/` in the blob name to emulate a folder or directory layout. For more on blob naming, see [Naming and Referencing Containers, Blobs, and Metadata][blob_names]. The files you've uploaded can be de-identified by providing `example_patient_1` as the input prefix:
+```
+<container>/
+├── example_patient_1/
+       └──doctor_dictation.txt
+       └──row-2-data.txt
+       └──visit-summary.txt
+```
+
+Your target Azure Storage account and container where documents will be written can be the same as the source, or a different account or container. In the examples below, the source and target account and container are the same. You can specify an output prefix to indicate where the job's output documents should be written (defaulting to `_output`). Each document processed by the job will have the same relative blob name with the input prefix replaced by the output prefix:
+```
+<container>/
+├── example_patient_1/
+       └──doctor_dictation.txt
+       └──row-2-data.txt
+       └──visit-summary.txt
+├── _output/
+       └──doctor_dictation.txt
+       └──row-2-data.txt
+       └──visit-summary.txt
+```
+
+Create a job to de-identify documents:
 ```C# Snippet:AzHealthDeidSample2_CreateJob
 DeidentificationJob job = new()
 {
@@ -137,6 +169,8 @@ additional questions or comments.
 [product_documentation]: https://learn.microsoft.com/azure/healthcare-apis/deidentification/
 [docs]: https://learn.microsoft.com/dotnet/api/azure.health.deidentification
 [deid_nuget]: https://www.nuget.org/packages/Azure.Health.Deidentification
+[string_index]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/StringIndex.cs
+[character_encoding]: https://learn.microsoft.com/dotnet/standard/base-types/character-encoding-introduction
 [deid_redaction_format]: https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format
 [azure_subscription]: https://azure.microsoft.com/free/
 [deid_quickstart]: https://learn.microsoft.com/azure/healthcare-apis/deidentification/quickstart
@@ -148,3 +182,5 @@ additional questions or comments.
 [azure_portal]: https://ms.portal.azure.com
 [github_issue_label]: https://github.com/Azure/azure-sdk-for-net/labels/Health%20Deidentification
 [samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthdataaiservices/Azure.Health.Deidentification/samples/README.md
+[blob_names]: https://learn.microsoft.com/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata#blob-names
+[test_data]: https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/healthdataaiservices/azure-health-deidentification/tests/data

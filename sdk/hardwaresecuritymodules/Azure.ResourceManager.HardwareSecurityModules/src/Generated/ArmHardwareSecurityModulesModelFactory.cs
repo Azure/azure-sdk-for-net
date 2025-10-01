@@ -112,37 +112,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             return new CloudHsmClusterPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudHsmClusterPrivateLinkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="Models.CloudHsmClusterPrivateLinkData"/> instance for mocking. </returns>
-        public static CloudHsmClusterPrivateLinkData CloudHsmClusterPrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CloudHsmClusterPrivateLinkResourceProperties properties = null)
-        {
-            return new CloudHsmClusterPrivateLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CloudHsmClusterPrivateLinkResourceProperties"/>. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.CloudHsmClusterPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static CloudHsmClusterPrivateLinkResourceProperties CloudHsmClusterPrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new CloudHsmClusterPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.CloudHsmClusterBackupContent"/>. </summary>
         /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the backup. </param>
         /// <param name="token"> The SAS token pointing to an Azure blob storage container. This property is reserved for Azure Backup Service. </param>
@@ -239,7 +208,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="skuName"> SKU details. </param>
-        /// <param name="zones"> The Dedicated Hsm zones. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="properties"> Properties of the dedicated HSM. </param>
         /// <returns> A new <see cref="HardwareSecurityModules.DedicatedHsmData"/> instance for mocking. </returns>
         public static DedicatedHsmData DedicatedHsmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DedicatedHsmSkuName? skuName = null, IEnumerable<string> zones = null, DedicatedHsmProperties properties = null)
@@ -318,6 +287,37 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static DedicatedHsmEndpointDetail DedicatedHsmEndpointDetail(string ipAddress = null, int? port = null, string protocol = null, string description = null)
         {
             return new DedicatedHsmEndpointDetail(ipAddress, port, protocol, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CloudHsmClusterPrivateLinkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <returns> A new <see cref="Models.CloudHsmClusterPrivateLinkData"/> instance for mocking. </returns>
+        public static CloudHsmClusterPrivateLinkData CloudHsmClusterPrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CloudHsmClusterPrivateLinkResourceProperties properties = null)
+        {
+            return new CloudHsmClusterPrivateLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CloudHsmClusterPrivateLinkResourceProperties"/>. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.CloudHsmClusterPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static CloudHsmClusterPrivateLinkResourceProperties CloudHsmClusterPrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        {
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+
+            return new CloudHsmClusterPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

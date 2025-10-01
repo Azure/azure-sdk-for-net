@@ -17,17 +17,13 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Dictionary of SIP headers. </summary>
         public IDictionary<string, string> SipHeaders { get; }
 
-        /// <summary> Teams Phone Call Details. </summary>
-        public TeamsPhoneCallDetails TeamsPhoneCallDetails { get; internal set; }
-
         /// <summary>
         /// Creates a new CustomCallingContext.
         /// </summary>
-        internal CustomCallingContext(IDictionary<string, string> voipHeaders, IDictionary<string, string> sipHeaders, TeamsPhoneCallDetails teamsPhoneCallDetails = null)
+        internal CustomCallingContext(IDictionary<string, string> voipHeaders, IDictionary<string, string> sipHeaders)
         {
             SipHeaders = sipHeaders ?? new ChangeTrackingDictionary<string, string>();
             VoipHeaders = voipHeaders ?? new ChangeTrackingDictionary<string, string>();
-            TeamsPhoneCallDetails = teamsPhoneCallDetails;
         }
 
         /// <summary>
@@ -48,14 +44,28 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="key">custom calling context sip X header's key.</param>
         /// <param name="value">custom calling context sip X header's value.</param>
-        /// <param name="prefix">prefix to be used for SIP X headers.</param>
-        public void AddSipX(string key, string value, SipHeaderPrefix prefix = SipHeaderPrefix.XMSCustom)
+        public void AddSipX(string key, string value)
         {
             if (SipHeaders == null)
             {
                 throw new InvalidOperationException("Cannot add sip X header, SipHeaders is null.");
             }
-            if (prefix == SipHeaderPrefix.XMSCustom)
+            SipHeaders.Add("X-MS-Custom-" + key, value);
+        }
+
+        /// <summary>
+        /// Add a custom calling context sip X header. The provided key is appended to such as 'X-{key}' or 'X-MS-Custom-{key}' depending on the prefix.
+        /// </summary>
+        /// <param name="key">custom calling context sip X header's key.</param>
+        /// <param name="value">custom calling context sip X header's value.</param>
+        /// <param name="prefix">prefix to be used for SIP X headers.</param>
+        public void AddSipX(string key, string value, SipHeaderPrefix prefix)
+        {
+            if (SipHeaders == null)
+            {
+                throw new InvalidOperationException("Cannot add sip X header, SipHeaders is null.");
+            }
+            if (prefix == SipHeaderPrefix.XmsCustom)
             {
                 SipHeaders.Add("X-MS-Custom-" + key, value);
             }
@@ -77,33 +87,6 @@ namespace Azure.Communication.CallAutomation
                 throw new InvalidOperationException("Cannot add voip header, VoipHeaders is null.");
             }
             VoipHeaders.Add(key, value);
-        }
-
-        /// <summary>
-        /// Sets Teams Phone Call Details for the custom calling context.
-        /// </summary>
-        /// <param name="teamsPhoneCallDetails">Teams Phone Call Details to set.</param>
-        /// <exception cref="ArgumentNullException"> <paramref name="teamsPhoneCallDetails"/> is null. </exception>
-        public void SetTeamsPhoneCallDetails(TeamsPhoneCallDetails teamsPhoneCallDetails)
-        {
-            Argument.AssertNotNull(teamsPhoneCallDetails, nameof(teamsPhoneCallDetails));
-            TeamsPhoneCallDetails = teamsPhoneCallDetails;
-        }
-
-        /// <summary>
-        /// Enum representing the prefix to be used for SIP X headers.
-        /// </summary>
-        public enum SipHeaderPrefix
-        {
-            /// <summary>
-            /// Use the legacy "X-MS-Custom-" prefix.
-            /// </summary>
-            XMSCustom = 0,
-
-            /// <summary>
-            /// Use the generic "X-" prefix.
-            /// </summary>
-            X = 1
         }
     }
 }

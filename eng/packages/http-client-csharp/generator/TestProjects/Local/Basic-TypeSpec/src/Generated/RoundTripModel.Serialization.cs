@@ -9,12 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure;
 using Azure.Core;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> this is a roundtrip model. </summary>
+    [JsonConverter(typeof(RoundTripModelConverter))]
     public partial class RoundTripModel : IJsonModel<RoundTripModel>
     {
         /// <summary> Initializes a new instance of <see cref="RoundTripModel"/> for deserialization. </summary>
@@ -653,7 +655,7 @@ namespace BasicTypeSpec
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(roundTripModel, ModelSerializationExtensions.WireOptions);
             return content;
         }
@@ -664,6 +666,28 @@ namespace BasicTypeSpec
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        internal partial class RoundTripModelConverter : JsonConverter<RoundTripModel>
+        {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, RoundTripModel model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<RoundTripModel>>(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override RoundTripModel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

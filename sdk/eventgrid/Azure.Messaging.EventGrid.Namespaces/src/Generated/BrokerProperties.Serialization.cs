@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> Properties of the Event Broker operation. </summary>
     public partial class BrokerProperties : IJsonModel<BrokerProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BrokerProperties"/> for deserialization. </summary>

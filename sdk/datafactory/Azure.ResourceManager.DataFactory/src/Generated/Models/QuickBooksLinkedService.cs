@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> QuickBooks server linked service. </summary>
+    /// <summary> QuickBooks server linked service. This linked service has supported version property. The Version 1.0 is scheduled for deprecation while your pipeline will continue to run after EOL but without any bug fix or new features. </summary>
     public partial class QuickBooksLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="QuickBooksLinkedService"/>. </summary>
@@ -31,13 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionProperties"> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="endpoint"> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </param>
         /// <param name="companyId"> The company ID of the QuickBooks company to authorize. </param>
-        /// <param name="consumerKey"> The consumer key for OAuth 1.0 authentication. </param>
-        /// <param name="consumerSecret"> The consumer secret for OAuth 1.0 authentication. </param>
-        /// <param name="accessToken"> The access token for OAuth 1.0 authentication. </param>
-        /// <param name="accessTokenSecret"> The access token secret for OAuth 1.0 authentication. </param>
-        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
+        /// <param name="consumerKey"> The consumer key for OAuth 2.0 authentication. </param>
+        /// <param name="consumerSecret"> The consumer secret for OAuth 2.0 authentication. </param>
+        /// <param name="accessToken"> The access token for OAuth 2.0 authentication. </param>
+        /// <param name="accessTokenSecret"> The access token secret is deprecated for OAuth 1.0 authentication. Only used for version 1.0. </param>
+        /// <param name="refreshToken"> The refresh token for OAuth 2.0 authentication. </param>
+        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Only used for version 1.0. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal QuickBooksLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> companyId, DataFactoryElement<string> consumerKey, DataFactorySecret consumerSecret, DataFactorySecret accessToken, DataFactorySecret accessTokenSecret, DataFactoryElement<bool> useEncryptedEndpoints, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal QuickBooksLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> companyId, DataFactoryElement<string> consumerKey, DataFactorySecret consumerSecret, DataFactorySecret accessToken, DataFactorySecret accessTokenSecret, DataFactorySecret refreshToken, DataFactoryElement<bool> useEncryptedEndpoints, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ConsumerSecret = consumerSecret;
             AccessToken = accessToken;
             AccessTokenSecret = accessTokenSecret;
+            RefreshToken = refreshToken;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "QuickBooks";
@@ -86,15 +88,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The company ID of the QuickBooks company to authorize. </summary>
         public DataFactoryElement<string> CompanyId { get; set; }
-        /// <summary> The consumer key for OAuth 1.0 authentication. </summary>
+        /// <summary> The consumer key for OAuth 2.0 authentication. </summary>
         public DataFactoryElement<string> ConsumerKey { get; set; }
-        /// <summary> The consumer secret for OAuth 1.0 authentication. </summary>
+        /// <summary> The consumer secret for OAuth 2.0 authentication. </summary>
         public DataFactorySecret ConsumerSecret { get; set; }
-        /// <summary> The access token for OAuth 1.0 authentication. </summary>
+        /// <summary> The access token for OAuth 2.0 authentication. </summary>
         public DataFactorySecret AccessToken { get; set; }
-        /// <summary> The access token secret for OAuth 1.0 authentication. </summary>
+        /// <summary> The access token secret is deprecated for OAuth 1.0 authentication. Only used for version 1.0. </summary>
         public DataFactorySecret AccessTokenSecret { get; set; }
-        /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
+        /// <summary> The refresh token for OAuth 2.0 authentication. </summary>
+        public DataFactorySecret RefreshToken { get; set; }
+        /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Only used for version 1.0. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

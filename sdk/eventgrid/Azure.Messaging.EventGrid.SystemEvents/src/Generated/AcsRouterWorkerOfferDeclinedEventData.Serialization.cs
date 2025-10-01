@@ -10,15 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferDeclined event. </summary>
     [JsonConverter(typeof(AcsRouterWorkerOfferDeclinedEventDataConverter))]
-    public partial class AcsRouterWorkerOfferDeclinedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterWorkerOfferDeclinedEventData>
+    public partial class AcsRouterWorkerOfferDeclinedEventData : AcsRouterWorkerEventData, IJsonModel<AcsRouterWorkerOfferDeclinedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterWorkerOfferDeclinedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRouterWorkerOfferDeclinedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +30,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsRouterWorkerOfferDeclinedEventData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(QueueId))
             {
@@ -49,86 +48,92 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsRouterWorkerOfferDeclinedEventData IJsonModel<AcsRouterWorkerOfferDeclinedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsRouterWorkerOfferDeclinedEventData IJsonModel<AcsRouterWorkerOfferDeclinedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsRouterWorkerOfferDeclinedEventData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AcsRouterEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsRouterWorkerOfferDeclinedEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement, options);
         }
 
-        internal static AcsRouterWorkerOfferDeclinedEventData DeserializeAcsRouterWorkerOfferDeclinedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AcsRouterWorkerOfferDeclinedEventData DeserializeAcsRouterWorkerOfferDeclinedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string queueId = default;
-            string offerId = default;
-            string workerId = default;
             string jobId = default;
             string channelReference = default;
             string channelId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string workerId = default;
+            string queueId = default;
+            string offerId = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("queueId"u8))
+                if (prop.NameEquals("jobId"u8))
                 {
-                    queueId = property.Value.GetString();
+                    jobId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerId"u8))
+                if (prop.NameEquals("channelReference"u8))
                 {
-                    offerId = property.Value.GetString();
+                    channelReference = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workerId"u8))
+                if (prop.NameEquals("channelId"u8))
                 {
-                    workerId = property.Value.GetString();
+                    channelId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"u8))
+                if (prop.NameEquals("workerId"u8))
                 {
-                    jobId = property.Value.GetString();
+                    workerId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelReference"u8))
+                if (prop.NameEquals("queueId"u8))
                 {
-                    channelReference = property.Value.GetString();
+                    queueId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelId"u8))
+                if (prop.NameEquals("offerId"u8))
                 {
-                    channelId = property.Value.GetString();
+                    offerId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AcsRouterWorkerOfferDeclinedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 workerId,
                 queueId,
                 offerId);
         }
 
-        BinaryData IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -138,15 +143,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsRouterWorkerOfferDeclinedEventData IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsRouterWorkerOfferDeclinedEventData IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsRouterWorkerOfferDeclinedEventData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AcsRouterEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement, options);
                     }
                 default:
@@ -154,35 +164,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AcsRouterWorkerOfferDeclinedEventData FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         internal partial class AcsRouterWorkerOfferDeclinedEventDataConverter : JsonConverter<AcsRouterWorkerOfferDeclinedEventData>
         {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsRouterWorkerOfferDeclinedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<AcsRouterWorkerOfferDeclinedEventData>>(model, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
             public override AcsRouterWorkerOfferDeclinedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement);
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
             }
         }
     }

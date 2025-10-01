@@ -13,7 +13,7 @@ using Azure;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> The result of the RenewLock operation. </summary>
     public partial class RenewLocksResult : IJsonModel<RenewLocksResult>
     {
         /// <param name="writer"> The JSON writer. </param>

@@ -47,18 +47,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
-        /// <param name="connectionString"> Connection string of the IoT hub. </param>
-        /// <param name="location"> ARM region of the IoT hub. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public IotHubDefinitionDescription(string connectionString, AzureLocation location)
-        {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
-            ConnectionString = connectionString;
-            Location = location;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
         /// <param name="applyAllocationPolicy"> flag for applying allocationPolicy or not for a given iot hub. </param>
         /// <param name="allocationWeight"> weight to apply for a given iot h. </param>
         /// <param name="name"> Host name of the IoT hub. </param>

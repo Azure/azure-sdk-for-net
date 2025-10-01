@@ -35,6 +35,16 @@ public partial class ContainerAppCustomDomainConfiguration : ProvisionableConstr
     private BicepValue<string>? _dnsSuffix;
 
     /// <summary>
+    /// Certificate stored in Azure Key Vault.
+    /// </summary>
+    public ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties 
+    {
+        get { Initialize(); return _certificateKeyVaultProperties!; }
+        set { Initialize(); AssignOrReplace(ref _certificateKeyVaultProperties, value); }
+    }
+    private ContainerAppCertificateKeyVaultProperties? _certificateKeyVaultProperties;
+
+    /// <summary>
     /// PFX or PEM blob.
     /// </summary>
     public BicepValue<BinaryData> CertificateValue 
@@ -97,6 +107,7 @@ public partial class ContainerAppCustomDomainConfiguration : ProvisionableConstr
         base.DefineProvisionableProperties();
         _customDomainVerificationId = DefineProperty<string>("CustomDomainVerificationId", ["customDomainVerificationId"], isOutput: true);
         _dnsSuffix = DefineProperty<string>("DnsSuffix", ["dnsSuffix"]);
+        _certificateKeyVaultProperties = DefineModelProperty<ContainerAppCertificateKeyVaultProperties>("CertificateKeyVaultProperties", ["certificateKeyVaultProperties"]);
         _certificateValue = DefineProperty<BinaryData>("CertificateValue", ["certificateValue"]);
         _certificatePassword = DefineProperty<string>("CertificatePassword", ["certificatePassword"]);
         _expireOn = DefineProperty<DateTimeOffset>("ExpireOn", ["expirationDate"], isOutput: true);

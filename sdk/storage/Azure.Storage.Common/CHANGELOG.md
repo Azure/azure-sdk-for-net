@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 12.24.0 (2025-07-14)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
 ## 12.25.0-beta.1 (2025-06-09)
 
 ### Features Added

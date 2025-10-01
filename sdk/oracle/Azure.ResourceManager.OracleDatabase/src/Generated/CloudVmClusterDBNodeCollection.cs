@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.OracleDatabase
     /// </summary>
     public partial class CloudVmClusterDBNodeCollection : ArmCollection, IEnumerable<CloudVmClusterDBNodeResource>, IAsyncEnumerable<CloudVmClusterDBNodeResource>
     {
-        private readonly ClientDiagnostics _cloudVmClusterDBNodeDBNodesClientDiagnostics;
-        private readonly DbNodesRestOperations _cloudVmClusterDBNodeDBNodesRestClient;
+        private readonly ClientDiagnostics _cloudVmClusterDBNodeDbNodesClientDiagnostics;
+        private readonly DbNodesRestOperations _cloudVmClusterDBNodeDbNodesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CloudVmClusterDBNodeCollection"/> class for mocking. </summary>
         protected CloudVmClusterDBNodeCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CloudVmClusterDBNodeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudVmClusterDBNodeDBNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterDBNodeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CloudVmClusterDBNodeResource.ResourceType, out string cloudVmClusterDBNodeDBNodesApiVersion);
-            _cloudVmClusterDBNodeDBNodesRestClient = new DbNodesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterDBNodeDBNodesApiVersion);
+            _cloudVmClusterDBNodeDbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterDBNodeResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CloudVmClusterDBNodeResource.ResourceType, out string cloudVmClusterDBNodeDbNodesApiVersion);
+            _cloudVmClusterDBNodeDbNodesRestClient = new DbNodesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterDBNodeDbNodesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbNodes_Get</description>
+        /// <description>DbNode_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbnodeocid, nameof(dbnodeocid));
 
-            using var scope = _cloudVmClusterDBNodeDBNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.Get");
+            using var scope = _cloudVmClusterDBNodeDbNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cloudVmClusterDBNodeDBNodesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudVmClusterDBNodeDbNodesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudVmClusterDBNodeResource(Client, response.Value), response.GetRawResponse());
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbNodes_Get</description>
+        /// <description>DbNode_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbnodeocid, nameof(dbnodeocid));
 
-            using var scope = _cloudVmClusterDBNodeDBNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.Get");
+            using var scope = _cloudVmClusterDBNodeDbNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.Get");
             scope.Start();
             try
             {
-                var response = _cloudVmClusterDBNodeDBNodesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken);
+                var response = _cloudVmClusterDBNodeDbNodesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudVmClusterDBNodeResource(Client, response.Value), response.GetRawResponse());
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbNodes_ListByCloudVmCluster</description>
+        /// <description>DbNode_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> An async collection of <see cref="CloudVmClusterDBNodeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudVmClusterDBNodeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterDBNodeDBNodesRestClient.CreateListByCloudVmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudVmClusterDBNodeDBNodesRestClient.CreateListByCloudVmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudVmClusterDBNodeResource(Client, CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(e)), _cloudVmClusterDBNodeDBNodesClientDiagnostics, Pipeline, "CloudVmClusterDBNodeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterDBNodeDbNodesRestClient.CreateListByParentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudVmClusterDBNodeDbNodesRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudVmClusterDBNodeResource(Client, CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(e)), _cloudVmClusterDBNodeDbNodesClientDiagnostics, Pipeline, "CloudVmClusterDBNodeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbNodes_ListByCloudVmCluster</description>
+        /// <description>DbNode_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="CloudVmClusterDBNodeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudVmClusterDBNodeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterDBNodeDBNodesRestClient.CreateListByCloudVmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudVmClusterDBNodeDBNodesRestClient.CreateListByCloudVmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudVmClusterDBNodeResource(Client, CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(e)), _cloudVmClusterDBNodeDBNodesClientDiagnostics, Pipeline, "CloudVmClusterDBNodeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterDBNodeDbNodesRestClient.CreateListByParentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudVmClusterDBNodeDbNodesRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudVmClusterDBNodeResource(Client, CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(e)), _cloudVmClusterDBNodeDbNodesClientDiagnostics, Pipeline, "CloudVmClusterDBNodeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbNodes_Get</description>
+        /// <description>DbNode_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbnodeocid, nameof(dbnodeocid));
 
-            using var scope = _cloudVmClusterDBNodeDBNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.Exists");
+            using var scope = _cloudVmClusterDBNodeDbNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cloudVmClusterDBNodeDBNodesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cloudVmClusterDBNodeDbNodesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbNodes_Get</description>
+        /// <description>DbNode_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbnodeocid, nameof(dbnodeocid));
 
-            using var scope = _cloudVmClusterDBNodeDBNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.Exists");
+            using var scope = _cloudVmClusterDBNodeDbNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cloudVmClusterDBNodeDBNodesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken: cancellationToken);
+                var response = _cloudVmClusterDBNodeDbNodesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,11 +296,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbNodes_Get</description>
+        /// <description>DbNode_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbnodeocid, nameof(dbnodeocid));
 
-            using var scope = _cloudVmClusterDBNodeDBNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.GetIfExists");
+            using var scope = _cloudVmClusterDBNodeDbNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cloudVmClusterDBNodeDBNodesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cloudVmClusterDBNodeDbNodesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<CloudVmClusterDBNodeResource>(response.GetRawResponse());
                 return Response.FromValue(new CloudVmClusterDBNodeResource(Client, response.Value), response.GetRawResponse());
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbNodes_Get</description>
+        /// <description>DbNode_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbnodeocid, nameof(dbnodeocid));
 
-            using var scope = _cloudVmClusterDBNodeDBNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.GetIfExists");
+            using var scope = _cloudVmClusterDBNodeDbNodesClientDiagnostics.CreateScope("CloudVmClusterDBNodeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cloudVmClusterDBNodeDBNodesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken: cancellationToken);
+                var response = _cloudVmClusterDBNodeDbNodesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbnodeocid, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<CloudVmClusterDBNodeResource>(response.GetRawResponse());
                 return Response.FromValue(new CloudVmClusterDBNodeResource(Client, response.Value), response.GetRawResponse());

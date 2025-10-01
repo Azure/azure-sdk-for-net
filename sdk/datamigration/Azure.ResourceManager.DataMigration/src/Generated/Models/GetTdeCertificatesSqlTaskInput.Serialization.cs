@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            SqlConnectionInfo connectionInfo = default;
-            FileShare backupFileShare = default;
+            DataMigrationSqlConnectionInfo connectionInfo = default;
+            DataMigrationFileShareInfo backupFileShare = default;
             IList<SelectedCertificateInput> selectedCertificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    connectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupFileShare"u8))
                 {
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
+                    backupFileShare = DataMigrationFileShareInfo.DeserializeDataMigrationFileShareInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedCertificates"u8))

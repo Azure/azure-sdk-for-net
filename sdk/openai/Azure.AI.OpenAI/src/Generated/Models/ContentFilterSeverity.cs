@@ -52,11 +52,11 @@ namespace Azure.AI.OpenAI
         /// <param name="value"> The value. </param>
         public static implicit operator ContentFilterSeverity(string value) => new ContentFilterSeverity(value);
 
-        /// <param name="obj"> The object to compare. </param>
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContentFilterSeverity other && Equals(other);
 
-        /// <param name="other"> The instance to compare. </param>
+        /// <inheritdoc/>
         public bool Equals(ContentFilterSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

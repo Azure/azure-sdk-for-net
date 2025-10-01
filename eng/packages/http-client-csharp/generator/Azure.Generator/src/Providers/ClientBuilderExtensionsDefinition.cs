@@ -8,12 +8,12 @@ using System.IO;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Extensions;
-using Azure.Generator.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using Azure.Generator.Visitors.Utilities;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
@@ -23,14 +23,15 @@ namespace Azure.Generator.Providers
     /// </summary>
     internal class ClientBuilderExtensionsDefinition : TypeProvider
     {
-        private readonly IEnumerable<ClientProvider> _clients;
+        private readonly IEnumerable<ClientProvider> _publicClients;
         private readonly string _resourceProviderName;
 
-        public ClientBuilderExtensionsDefinition(IEnumerable<ClientProvider> clients)
+        public ClientBuilderExtensionsDefinition(IEnumerable<ClientProvider> publicClients)
         {
-            _clients = clients;
+            _publicClients = publicClients;
             _resourceProviderName = TypeNameUtilities.GetResourceProviderName();
             AzureClientGenerator.Instance.AddTypeToKeep(this);
+            AzureClientGenerator.Instance.AddNonRootType(this);
         }
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
@@ -42,12 +43,12 @@ namespace Azure.Generator.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Public | TypeSignatureModifiers.Static | TypeSignatureModifiers.Partial;
 
-        protected override FormattableString Description => $"Extension methods to add clients to <see cref=\"{typeof(IAzureClientBuilder<,>)}\"/>.";
+        protected override FormattableString BuildDescription() => $"Extension methods to add clients to <see cref=\"{typeof(IAzureClientBuilder<,>)}\"/>.";
 
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>();
-            foreach (var client in _clients)
+            foreach (var client in _publicClients)
             {
                 if (client.ClientOptionsParameter == null)
                 {
@@ -69,7 +70,7 @@ namespace Azure.Generator.Providers
                 var methodReturnType = new CSharpType(typeof(IAzureClientBuilder<,>), client.Type,
                     client.ClientOptionsParameter.Type);
 
-                foreach (var constructor in client.Constructors)
+                foreach (var constructor in client.CanonicalView.Constructors)
                 {
                     if (!constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
                     {
@@ -156,7 +157,7 @@ namespace Azure.Generator.Providers
                 [.. constructorSignature.Parameters];
 
             return new FuncExpression(
-                isTokenCredential ? [options.AsExpression().Declaration, token.Declaration] : [options.AsExpression().Declaration],
+                isTokenCredential ? [options.AsVariable().Declaration, token.Declaration] : [options.AsVariable().Declaration],
                 New.Instance(client.Type, ctorArgs));
         }
 

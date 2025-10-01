@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="capabilityHostKind"> Kind of this capability host. </param>
         /// <param name="customerSubnet"> Customer subnet info to help set up this capability host. </param>
         /// <param name="provisioningState"> Provisioning state for the CapabilityHost. </param>
-        /// <param name="storageConnections"> List of Storage connections. </param>
-        /// <param name="threadStorageConnections"> List of Thread storage connections. </param>
-        /// <param name="vectorStoreConnections"> List of VectorStore connections. </param>
+        /// <param name="storageConnections"> List of connection names from those available in the account or project to be used as a storage resource. </param>
+        /// <param name="threadStorageConnections"> List of connection names from those available in the account or project to be used for Thread storage. </param>
+        /// <param name="vectorStoreConnections"> List of connection names from those available in the account or project to be used for vector database (e.g. CosmosDB). </param>
         internal CognitiveServicesCapabilityHostProperties(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> aiServicesConnections, CapabilityHostKind? capabilityHostKind, string customerSubnet, CapabilityHostProvisioningState? provisioningState, IList<string> storageConnections, IList<string> threadStorageConnections, IList<string> vectorStoreConnections) : base(description, tags, serializedAdditionalRawData)
         {
             AiServicesConnections = aiServicesConnections;
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Provisioning state for the CapabilityHost. </summary>
         [WirePath("provisioningState")]
         public CapabilityHostProvisioningState? ProvisioningState { get; }
-        /// <summary> List of Storage connections. </summary>
+        /// <summary> List of connection names from those available in the account or project to be used as a storage resource. </summary>
         [WirePath("storageConnections")]
         public IList<string> StorageConnections { get; set; }
-        /// <summary> List of Thread storage connections. </summary>
+        /// <summary> List of connection names from those available in the account or project to be used for Thread storage. </summary>
         [WirePath("threadStorageConnections")]
         public IList<string> ThreadStorageConnections { get; set; }
-        /// <summary> List of VectorStore connections. </summary>
+        /// <summary> List of connection names from those available in the account or project to be used for vector database (e.g. CosmosDB). </summary>
         [WirePath("vectorStoreConnections")]
         public IList<string> VectorStoreConnections { get; set; }
     }

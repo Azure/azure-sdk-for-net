@@ -11,7 +11,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20250603.2
+      ref: refs/tags/azure-sdk-build-tools_20250808.1
 
 parameters:
 - name: stages
@@ -40,9 +40,7 @@ extends:
         - 1ES.PT.Tag-refs/tags/canary
     settings:
       skipBuildTagsForGitHubPullRequests: true
-    ${{ if and(eq(variables['Build.DefinitionName'], 'net - core'), eq(variables['Build.SourceBranchName'], 'main'), eq(variables['System.TeamProject'], 'internal')) }}:
-      featureFlags:
-        autoBaseline: true
+      networkIsolationPolicy: Permissive
     sdl:
       ${{ if and(eq(variables['Build.DefinitionName'], 'net - core'), eq(variables['Build.SourceBranchName'], 'main'), eq(variables['System.TeamProject'], 'internal')) }}:
         autobaseline:
@@ -52,8 +50,8 @@ extends:
         exclude:
           - repository: azure-sdk-build-tools
       sourceAnalysisPool:
-        name: azsdk-pool-mms-win-2022-general
-        image: azsdk-pool-mms-win-2022-1espt
+        name: azsdk-pool
+        image: windows-2022
         os: windows
       binskim:
         # Exclude aot checking project, and imported azure-sdk-build-tools gpg/azcopy binaries
@@ -62,13 +60,16 @@ extends:
         analyzeTargetGlob: +:file|**/*.dll;+:file|**/*.exe;-:f|**/net452/Microsoft.Azure.KeyVault.Core.dll;-:f|**/net461/Microsoft.Azure.KeyVault.Core.dll;-:f|**/tools/NuGet.exe;-:f|**/tools/gpg/**/*.dll;-:f|**/tools/gpg/**/*.exe;-:f|**/tools/azcopy/**/*.exe;-:f|**/tools/azcopy/**/*.dll;-:f|**/aotcompatibility/**/*.exe
       # Turn off the build warnings caused by disabling some sdl checks
       createAdoIssuesForJustificationsForDisablement: false
-      eslint:
-        enabled: false
-        justificationForDisabling: 'ESLint injected task has failures because it uses an old version of mkdirp. We should not fail for tools not controlled by the repo. See: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=3499746'
       codeql:
         compiled:
           enabled: false
-          justificationForDisabling: CodeQL times our pipelines out by running for 2+ hours before being force canceled.
+          justificationForDisabling: "To reduce redundant CG runs across all our pipeline jobs we are disabling and only running in our main build job."
+      componentgovernance:
+        enabled: false
+        justificationForDisabling: "To reduce redundant CG runs across all our pipeline jobs we are disabling and only running in our main build job."
+      eslint:
+        enabled: false
+        justificationForDisabling: 'ESLint is interesting for this repo as it is .NET code mostly and any JS/TS in the repo is updated outside of this repo.'
       psscriptanalyzer:
         compiled: true
         break: true
@@ -76,6 +77,5 @@ extends:
       credscan:
         suppressionsFile: $(Build.SourcesDirectory)/eng/CredScanSuppression.json
         scanFolder: $(Build.SourcesDirectory)/credscan.tsv
-        toolVersion: 2.3.12.23
 
     stages: ${{ parameters.stages }}

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
-        internal AzurePowerShellScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azPowerShellVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind, serializedAdditionalRawData)
+        internal AzurePowerShellScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ScriptContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azPowerShellVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind, serializedAdditionalRawData)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -82,20 +82,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Container settings. </summary>
-        internal ContainerConfiguration ContainerSettings { get; set; }
-        /// <summary> Container group name, if not specified then the name will get auto-generated. Not specifying a 'containerGroupName' indicates the system to generate a unique name which might end up flagging an Azure Policy as non-compliant. Use 'containerGroupName' when you have an Azure Policy that expects a specific naming convention or when you want to fully control the name. 'containerGroupName' property must be between 1 and 63 characters long, must contain only lowercase letters, numbers, and dashes and it cannot start or end with a dash and consecutive dashes are not allowed. To specify a 'containerGroupName', add the following object to properties: { "containerSettings": { "containerGroupName": "contoso-container" } }. If you do not want to specify a 'containerGroupName' then do not add 'containerSettings' property. </summary>
-        [WirePath("properties.containerSettings.containerGroupName")]
-        public string ContainerGroupName
-        {
-            get => ContainerSettings is null ? default : ContainerSettings.ContainerGroupName;
-            set
-            {
-                if (ContainerSettings is null)
-                    ContainerSettings = new ContainerConfiguration();
-                ContainerSettings.ContainerGroupName = value;
-            }
-        }
-
+        [WirePath("properties.containerSettings")]
+        public ScriptContainerConfiguration ContainerSettings { get; set; }
         /// <summary> Storage Account settings. </summary>
         [WirePath("properties.storageAccountSettings")]
         public ScriptStorageConfiguration StorageAccountSettings { get; set; }

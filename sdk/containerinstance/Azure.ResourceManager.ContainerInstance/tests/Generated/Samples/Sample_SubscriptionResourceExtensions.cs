@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetContainerGroups_ContainerGroupsList()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupsList.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsList.json
             // this example is just showing the usage of "ContainerGroups_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUsagesWithLocation_ContainerUsage()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupUsage.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupUsage.json
             // this example is just showing the usage of "Location_ListUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCachedImagesWithLocation_CachedImages()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/CachedImagesList.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/CachedImagesList.json
             // this example is just showing the usage of "Location_ListCachedImages" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCapabilitiesWithLocation_GetCapabilities()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/CapabilitiesList.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/CapabilitiesList.json
             // this example is just showing the usage of "Location_ListCapabilities" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetContainerGroupProfiles_ContainerGroupProfilesList()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesList.json
-            // this example is just showing the usage of "ContainerGroupProfiles_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfilesList.json
+            // this example is just showing the usage of "CGProfiles_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

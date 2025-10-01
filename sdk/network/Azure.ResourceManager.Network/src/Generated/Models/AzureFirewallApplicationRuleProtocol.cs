@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Protocol type. </summary>
+        [WirePath("protocolType")]
         public AzureFirewallApplicationRuleProtocolType? ProtocolType { get; set; }
         /// <summary> Port number for the protocol, cannot be greater than 64000. This field is optional. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
     }
 }

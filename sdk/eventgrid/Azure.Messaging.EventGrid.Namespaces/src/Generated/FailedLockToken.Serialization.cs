@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> Failed LockToken information. </summary>
     public partial class FailedLockToken : IJsonModel<FailedLockToken>
     {
         /// <summary> Initializes a new instance of <see cref="FailedLockToken"/> for deserialization. </summary>
@@ -42,7 +43,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WritePropertyName("lockToken"u8);
             writer.WriteStringValue(LockToken);
             writer.WritePropertyName("error"u8);
-            JsonSerializer.Serialize(writer, Error);
+            ((IJsonModel<ResponseError>)Error).Write(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -97,7 +98,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    error = JsonSerializer.Deserialize<ResponseError>(prop.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureMessagingEventGridNamespacesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

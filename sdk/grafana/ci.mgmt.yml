@@ -1,6 +1,7 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
+
 pr:
   branches:
     include:
@@ -21,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Grafana
       safeName: AzureResourceManagerGrafana
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Grafana
+      ExpectedWarningsFilepath: None

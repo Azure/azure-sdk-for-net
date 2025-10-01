@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -47,33 +46,29 @@ namespace Azure.AI.Agents.Persistent
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
-        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="toolOutputs"/> is null. </exception>
-        internal SubmitToolOutputsToRunRequest(IEnumerable<ToolOutput> toolOutputs)
+        internal SubmitToolOutputsToRunRequest()
         {
-            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
-
-            ToolOutputs = toolOutputs.ToList();
+            ToolOutputs = new ChangeTrackingList<ToolOutput>();
+            ToolApprovals = new ChangeTrackingList<ToolApproval>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
         /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="toolApprovals"> A list of tool approvals allowing data to be sent to tools. </param>
         /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubmitToolOutputsToRunRequest(IReadOnlyList<ToolOutput> toolOutputs, bool? stream, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubmitToolOutputsToRunRequest(IReadOnlyList<ToolOutput> toolOutputs, IReadOnlyList<ToolApproval> toolApprovals, bool? stream, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ToolOutputs = toolOutputs;
+            ToolApprovals = toolApprovals;
             Stream = stream;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/> for deserialization. </summary>
-        internal SubmitToolOutputsToRunRequest()
-        {
-        }
-
         /// <summary> A list of tools for which the outputs are being submitted. </summary>
         public IReadOnlyList<ToolOutput> ToolOutputs { get; }
+        /// <summary> A list of tool approvals allowing data to be sent to tools. </summary>
+        public IReadOnlyList<ToolApproval> ToolApprovals { get; }
         /// <summary> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </summary>
         public bool? Stream { get; }
     }

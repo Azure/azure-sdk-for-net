@@ -81,20 +81,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> The private endpoint resource. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
-        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("privateLinkServiceConnectionState")]
         public CloudHsmClusterPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        [WirePath("provisioningState")]
         public CloudHsmClusterPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
         /// <summary> The group ids for the private endpoint resource. </summary>
-        [WirePath("groupIds")]
         public IReadOnlyList<string> GroupIds { get; }
     }
 }

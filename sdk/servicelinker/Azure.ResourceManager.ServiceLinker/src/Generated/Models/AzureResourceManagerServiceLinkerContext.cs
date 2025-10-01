@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
@@ -13,6 +15,38 @@ namespace Azure.ResourceManager.ServiceLinker
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AuthBaseInfo))]
+    [ModelReaderWriterBuildable(typeof(AzureKeyVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(AzureResourceBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(AzureResourceInfo))]
+    [ModelReaderWriterBuildable(typeof(ConfluentBootstrapServerInfo))]
+    [ModelReaderWriterBuildable(typeof(ConfluentSchemaRegistryInfo))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultSecretReferenceSecretInfo))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultSecretUriSecretInfo))]
+    [ModelReaderWriterBuildable(typeof(LinkerList))]
+    [ModelReaderWriterBuildable(typeof(LinkerResource))]
+    [ModelReaderWriterBuildable(typeof(LinkerResourceData))]
+    [ModelReaderWriterBuildable(typeof(LinkerResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(LinkerSecretStore))]
+    [ModelReaderWriterBuildable(typeof(LinkerValidateOperationResult))]
+    [ModelReaderWriterBuildable(typeof(LinkerValidationResultItemInfo))]
+    [ModelReaderWriterBuildable(typeof(RawValueSecretInfo))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SecretAuthInfo))]
+    [ModelReaderWriterBuildable(typeof(SecretBaseInfo))]
+    [ModelReaderWriterBuildable(typeof(ServicePrincipalCertificateAuthInfo))]
+    [ModelReaderWriterBuildable(typeof(ServicePrincipalSecretAuthInfo))]
+    [ModelReaderWriterBuildable(typeof(SourceConfiguration))]
+    [ModelReaderWriterBuildable(typeof(SourceConfigurationResult))]
+    [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityAuthInfo))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TargetServiceBaseInfo))]
+    [ModelReaderWriterBuildable(typeof(UnknownAuthInfoBase))]
+    [ModelReaderWriterBuildable(typeof(UnknownAzureResourcePropertiesBase))]
+    [ModelReaderWriterBuildable(typeof(UnknownSecretInfoBase))]
+    [ModelReaderWriterBuildable(typeof(UnknownTargetServiceBase))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentityAuthInfo))]
+    [ModelReaderWriterBuildable(typeof(VnetSolution))]
     public partial class AzureResourceManagerServiceLinkerContext : ModelReaderWriterContext
     {
     }

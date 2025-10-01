@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="maintenanceRedeployStatus"> The Maintenance Operation status on the virtual machine. </param>
         /// <param name="disks"> The virtual machine disk information. </param>
         /// <param name="extensions"> The extensions information. </param>
-        /// <param name="vmHealth"> The application health status for the VM, provided through Application Health Extension. </param>
+        /// <param name="vmHealth"> The health status for the VM. </param>
         /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
         /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
         /// <param name="statuses"> The resource status information. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<DiskInstanceView> Disks { get; }
         /// <summary> The extensions information. </summary>
         public IReadOnlyList<VirtualMachineExtensionInstanceView> Extensions { get; }
-        /// <summary> The application health status for the VM, provided through Application Health Extension. </summary>
+        /// <summary> The health status for the VM. </summary>
         internal VirtualMachineHealthStatus VmHealth { get; }
         /// <summary> The health status information for the VM. </summary>
         public InstanceViewStatus VmHealthStatus

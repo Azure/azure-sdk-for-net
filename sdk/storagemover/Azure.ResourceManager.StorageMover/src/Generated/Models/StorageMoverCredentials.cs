@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.StorageMover.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMoverCredentials"/>. </summary>
-        /// <param name="credentialType"> The Credentials type. </param>
+        /// <param name="type"> The Credentials type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMoverCredentials(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageMoverCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CredentialType = credentialType;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Credentials type. </summary>
-        internal CredentialType CredentialType { get; set; }
+        internal CredentialType Type { get; set; }
     }
 }

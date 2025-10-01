@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics;
-        private readonly IotDpsResourceRestOperations _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient;
+        private readonly ClientDiagnostics _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateEndpointConnectionCollection"/> class for mocking. </summary>
         protected DeviceProvisioningServicesPrivateEndpointConnectionCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeviceProvisioningServicesPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServicesPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeviceProvisioningServicesPrivateEndpointConnectionResource.ResourceType, out string deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceApiVersion);
-            _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient = new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceApiVersion);
+            _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServicesPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeviceProvisioningServicesPrivateEndpointConnectionResource.ResourceType, out string deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_CreateOrUpdatePrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_CreateOrUpdatePrivateEndpointConnection</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateOrUpdatePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdatePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_CreateOrUpdatePrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_CreateOrUpdatePrivateEndpointConnection</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateOrUpdatePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdatePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.Get");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.Get");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
+                var response = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListPrivateEndpointConnections</description>
+        /// <description>PrivateEndpointConnections_ListPrivateEndpointConnections</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(e)), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetAll", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(e)), _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListPrivateEndpointConnections</description>
+        /// <description>PrivateEndpointConnections_ListPrivateEndpointConnections</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(e)), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetAll", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(e)), _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -306,11 +306,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,11 +326,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.Exists");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -349,11 +349,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.Exists");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,11 +392,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,11 +412,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetIfExists");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<DeviceProvisioningServicesPrivateEndpointConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -437,11 +437,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -457,11 +457,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetIfExists");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<DeviceProvisioningServicesPrivateEndpointConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());

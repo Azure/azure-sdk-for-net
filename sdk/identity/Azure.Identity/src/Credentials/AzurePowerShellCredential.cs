@@ -44,6 +44,7 @@ namespace Azure.Identity
         internal const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module >= 2.2.0 is not installed.";
         internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
         internal const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
+    internal const string ClaimsChallengeLoginFormat = "Azure PowerShell authentication requires multi-factor authentication or additional claims. Please run '{0}' to re-authenticate with the required claims. After completing login, retry the operation.";
 
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePowerShellCredential"/>.
@@ -149,6 +150,18 @@ namespace Azure.Identity
 
             ScopeUtilities.ValidateScope(resource);
 
+            // The Az PowerShell module currently cannot automatically satisfy an MFA / claims challenge during non-interactive token acquisition.
+            // If a claims challenge is provided we surface an AuthenticationFailedException instructing the user to re-authenticate
+            // interactively with Connect-AzAccount including the -ClaimsChallenge argument. We intentionally do not translate this into
+            // a CredentialUnavailableException (even when part of a chain) so callers receive the explicit guidance to resolve the challenge.
+            if (!string.IsNullOrWhiteSpace(context.Claims))
+            {
+                string loginCommand = string.IsNullOrEmpty(tenantId)
+                    ? $"Connect-AzAccount -ClaimsChallenge '{context.Claims}'"
+                    : $"Connect-AzAccount -Tenant {tenantId} -ClaimsChallenge '{context.Claims}'";
+                throw new AuthenticationFailedException(string.Format(CultureInfo.InvariantCulture, ClaimsChallengeLoginFormat, loginCommand));
+            }
+
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
             using var processRunner = new ProcessRunner(
@@ -210,7 +223,8 @@ namespace Azure.Identity
 
         private static void ValidateResult(string output)
         {
-            if (output.IndexOf(@"<Property Name=""Token"" Type=""System.String"">", StringComparison.OrdinalIgnoreCase) < 0)
+            // Check for Token property in the XML output, regardless of the property type, to handle both legacy and new secure string format.
+            if (output.IndexOf(@"<Property Name=""Token""", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 throw new CredentialUnavailableException("PowerShell did not return a valid response.");
             }
@@ -261,16 +275,24 @@ if ($tenantId.Length -gt 0) {{
     $params['TenantId'] = '{tenantId}'
 }}
 
-$useSecureString = $m.Version -ge [version]'2.17.0'
-if ($useSecureString) {{
+# For Az.Accounts 2.17.0+ but below 5.0.0, explicitly request secure string
+if ($m.Version -ge [version]'2.17.0' -and $m.Version -lt [version]'5.0.0') {{
     $params['AsSecureString'] = $true
 }}
 
 $token = Get-AzAccessToken @params
 
 $customToken = New-Object -TypeName psobject
-if ($useSecureString) {{
-    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+
+# If the token is a SecureString, convert to plain text using recommended pattern
+if ($token.Token -is [System.Security.SecureString]) {{
+    $ssPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.Token)
+    try {{
+        $plainToken = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($ssPtr)
+    }} finally {{
+        [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ssPtr)
+    }}
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $plainToken
 }} else {{
     $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
 }}

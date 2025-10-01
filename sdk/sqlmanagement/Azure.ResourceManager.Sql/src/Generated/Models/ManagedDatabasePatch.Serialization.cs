@@ -157,6 +157,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ExtendedAccessibilityInfo))
+            {
+                writer.WritePropertyName("extendedAccessibilityInfo"u8);
+                writer.WriteObjectValue(ExtendedAccessibilityInfo, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -218,6 +223,7 @@ namespace Azure.ResourceManager.Sql.Models
             string lastBackupName = default;
             ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default;
             bool? isLedgerOn = default;
+            ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -427,6 +433,15 @@ namespace Azure.ResourceManager.Sql.Models
                             isLedgerOn = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("extendedAccessibilityInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            extendedAccessibilityInfo = ManagedDatabaseExtendedAccessibilityInfo.DeserializeManagedDatabaseExtendedAccessibilityInfo(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -460,6 +475,7 @@ namespace Azure.ResourceManager.Sql.Models
                 lastBackupName,
                 crossSubscriptionTargetManagedInstanceId,
                 isLedgerOn,
+                extendedAccessibilityInfo,
                 serializedAdditionalRawData);
         }
 

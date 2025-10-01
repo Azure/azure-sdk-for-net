@@ -23,7 +23,7 @@ namespace Azure.Generator.Tests.Visitors
         [SetUp]
         public void Setup()
         {
-            MockHelpers.LoadMockPlugin();
+            MockHelpers.LoadMockGenerator();
         }
 
         [Test]
@@ -31,19 +31,18 @@ namespace Azure.Generator.Tests.Visitors
         {
             // Arrange
             var visitor = new TestDistributedTracingVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                 "p1",
-                InputPrimitiveType.String,
-                kind: InputParameterKind.Method)
+                InputPrimitiveType.String)
             ];
             var basicOperation = InputFactory.Operation(
                 "foo",
                 parameters: parameters);
             var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
             var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             // Visit
@@ -63,7 +62,7 @@ namespace Azure.Generator.Tests.Visitors
         {
             // Arrange
             var visitor = new TestDistributedTracingVisitor();
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -94,12 +93,11 @@ namespace Azure.Generator.Tests.Visitors
         public void TestUpdatesSubClientFactoryMethods()
         {
             var visitor = new TestDistributedTracingVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                 "p1",
-                InputPrimitiveType.String,
-                kind: InputParameterKind.Method)
+                InputPrimitiveType.String)
             ];
             var basicOperation = InputFactory.Operation(
                 "foo",
@@ -107,7 +105,7 @@ namespace Azure.Generator.Tests.Visitors
             var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
             var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
             var childInputClient = InputFactory.Client("SubClient", parent: inputClient);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient, childInputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient, childInputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -131,19 +129,18 @@ namespace Azure.Generator.Tests.Visitors
             var visitor = new TestDistributedTracingVisitor();
 
             // load the input
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                 "p1",
-                InputFactory.Model("foo"),
-                kind: InputParameterKind.Method)
+                InputPrimitiveType.String)
             ];
             var basicOperation = InputFactory.Operation(
                 "foo",
                 parameters: parameters);
             var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
             var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
             // create the client provider
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -177,8 +174,8 @@ namespace Azure.Generator.Tests.Visitors
                     [
                         InputFactory.BasicServiceMethod(
                             "foo",
-                            InputFactory.Operation("foo", parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)]),
-                            parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)])
+                            InputFactory.Operation("foo", parameters: [InputFactory.BodyParameter("p1", InputPrimitiveType.String)]),
+                            parameters: [InputFactory.MethodParameter("p1", InputPrimitiveType.String)])
                     ]));
                 // sub client
                 yield return new TestCaseData(InputFactory.Client(
@@ -187,8 +184,8 @@ namespace Azure.Generator.Tests.Visitors
                     [
                         InputFactory.BasicServiceMethod(
                             "foo",
-                            InputFactory.Operation("foo", parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)]),
-                            parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)])
+                            InputFactory.Operation("foo", parameters: [InputFactory.BodyParameter("p1", InputPrimitiveType.String)]),
+                            parameters: [InputFactory.MethodParameter("p1", InputPrimitiveType.String)])
                     ],
                     parent: InputFactory.Client("parent")));
             }

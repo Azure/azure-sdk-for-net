@@ -6,28 +6,11 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    public partial class SettingLabel : IUtf8JsonSerializable
+    public partial class SettingLabel
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WriteEndObject();
-        }
-
         internal static SettingLabel DeserializeLabel(JsonElement element)
         {
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new SettingLabel(name);
+            return DeserializeSettingLabel(element, ModelSerializationExtensions.WireOptions);
         }
     }
 }

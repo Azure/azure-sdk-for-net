@@ -14,6 +14,38 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The KnowledgeAgent. </summary>
     public partial class KnowledgeAgent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgent"/>. </summary>
         /// <param name="name"> The name of the knowledge agent. </param>
         /// <param name="models">
@@ -21,17 +53,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="KnowledgeAgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="KnowledgeAgentAzureOpenAIModel"/>.
         /// </param>
-        /// <param name="targetIndexes"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="models"/> or <paramref name="targetIndexes"/> is null. </exception>
-        public KnowledgeAgent(string name, IEnumerable<KnowledgeAgentModel> models, IEnumerable<KnowledgeAgentTargetIndex> targetIndexes)
+        /// <param name="knowledgeSources"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="models"/> or <paramref name="knowledgeSources"/> is null. </exception>
+        public KnowledgeAgent(string name, IEnumerable<KnowledgeAgentModel> models, IEnumerable<KnowledgeSourceReference> knowledgeSources)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(models, nameof(models));
-            Argument.AssertNotNull(targetIndexes, nameof(targetIndexes));
+            Argument.AssertNotNull(knowledgeSources, nameof(knowledgeSources));
 
             Name = name;
             Models = models.ToList();
-            TargetIndexes = targetIndexes.ToList();
+            KnowledgeSources = knowledgeSources.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgent"/>. </summary>
@@ -41,20 +73,31 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="KnowledgeAgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="KnowledgeAgentAzureOpenAIModel"/>.
         /// </param>
-        /// <param name="targetIndexes"></param>
+        /// <param name="knowledgeSources"></param>
+        /// <param name="outputConfiguration"></param>
         /// <param name="requestLimits"> Guardrails to limit how much resources are utilized for a single agent retrieval request. </param>
+        /// <param name="retrievalInstructions"> Instructions considered by the knowledge agent when developing query plan. </param>
         /// <param name="eTag"> The ETag of the agent. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your agent definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your agent definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your agent definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="description"> The description of the agent. </param>
-        internal KnowledgeAgent(string name, IList<KnowledgeAgentModel> models, IList<KnowledgeAgentTargetIndex> targetIndexes, KnowledgeAgentRequestLimits requestLimits, string eTag, SearchResourceEncryptionKey encryptionKey, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeAgent(string name, IList<KnowledgeAgentModel> models, IList<KnowledgeSourceReference> knowledgeSources, KnowledgeAgentOutputConfiguration outputConfiguration, KnowledgeAgentRequestLimits requestLimits, string retrievalInstructions, string eTag, SearchResourceEncryptionKey encryptionKey, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Models = models;
-            TargetIndexes = targetIndexes;
+            KnowledgeSources = knowledgeSources;
+            OutputConfiguration = outputConfiguration;
             RequestLimits = requestLimits;
+            RetrievalInstructions = retrievalInstructions;
             _eTag = eTag;
             EncryptionKey = encryptionKey;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeAgent"/> for deserialization. </summary>
+        internal KnowledgeAgent()
+        {
         }
 
         /// <summary> The name of the knowledge agent. </summary>
@@ -65,10 +108,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// The available derived classes include <see cref="KnowledgeAgentAzureOpenAIModel"/>.
         /// </summary>
         public IList<KnowledgeAgentModel> Models { get; }
-        /// <summary> Gets the target indexes. </summary>
-        public IList<KnowledgeAgentTargetIndex> TargetIndexes { get; }
+        /// <summary> Gets the knowledge sources. </summary>
+        public IList<KnowledgeSourceReference> KnowledgeSources { get; }
+        /// <summary> Gets or sets the output configuration. </summary>
+        public KnowledgeAgentOutputConfiguration OutputConfiguration { get; set; }
         /// <summary> Guardrails to limit how much resources are utilized for a single agent retrieval request. </summary>
         public KnowledgeAgentRequestLimits RequestLimits { get; set; }
+        /// <summary> Instructions considered by the knowledge agent when developing query plan. </summary>
+        public string RetrievalInstructions { get; set; }
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your agent definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your agent definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your agent definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; set; }
         /// <summary> The description of the agent. </summary>

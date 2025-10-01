@@ -35,10 +35,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>StorageAppliances_Update</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
         /// </item>
@@ -49,9 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudStorageApplianceResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudStorageAppliancePatch patch, CancellationToken cancellationToken)
-        {
-            return await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
-        }
+            => await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Update properties of the provided storage appliance, or update tags associated with the storage appliance Properties and tag updates can be done independently.
@@ -65,10 +59,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>StorageAppliances_Update</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
         /// </item>
@@ -79,8 +69,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudStorageApplianceResource> Update(WaitUntil waitUntil, NetworkCloudStorageAppliancePatch patch, CancellationToken cancellationToken)
-        {
-            return Update(waitUntil, patch, null, null, cancellationToken);
-        }
+            => Update(waitUntil, patch, null, null, cancellationToken);
     }
 }

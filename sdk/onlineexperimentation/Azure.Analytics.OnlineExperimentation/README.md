@@ -11,7 +11,7 @@ Azure Online Experimentation is a managed service that enables developers to cre
 Install the Azure Online Experimentation client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Analytics.OnlineExperimentation
+dotnet add package Azure.Analytics.OnlineExperimentation --prerelease
 ```
 
 ### Prerequisites

@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.MySql
       safeName: AzureResourceManagerMySql
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.MySql
+      ExpectedWarningsFilepath: None

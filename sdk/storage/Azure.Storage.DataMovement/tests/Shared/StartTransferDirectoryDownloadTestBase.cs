@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Common;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -138,13 +139,15 @@ namespace Azure.Storage.DataMovement.Tests
             TContainerClient sourceContainer,
             string sourcePrefix,
             List<(string PathName, int Size)> itemSizes,
+            string directoryName = default,
             TransferManagerOptions transferManagerOptions = default,
             TransferOptions options = default,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            bool trailingSlash = false)
         {
             await SetupSourceDirectoryAsync(sourceContainer, sourcePrefix, itemSizes, cancellationToken);
 
-            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory(directoryName);
 
             // Set transfer options
             options ??= new TransferOptions();
@@ -156,7 +159,8 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             StorageResourceContainer sourceResource = GetStorageResourceContainer(sourceContainer, sourcePrefix);
-            StorageResourceContainer destinationResource = LocalFilesStorageResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
+            StorageResourceContainer destinationResource = LocalFilesStorageResourceProvider.FromDirectory(
+                disposingLocalDirectory.DirectoryPath + (trailingSlash ? Path.DirectorySeparatorChar : string.Empty));
 
             await new TransferValidator().TransferAndVerifyAsync(
                 sourceResource,
@@ -386,6 +390,49 @@ namespace Azure.Storage.DataMovement.Tests
                 sourcePrefix: "",
                 items.Select(name => (name, size)).ToList()).ConfigureAwait(false);
         }
+
+        [Test]
+        [TestCase("source=path@#%")]
+        [TestCase("source%21path%40%23%25")]
+        public async Task DownloadDirectoryAsync_SpecialChars(string prefix)
+        {
+            // Arrange
+            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
+            string directoryName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName(), prefix);
+
+            List<string> itemNames =
+            [
+                string.Join("/", prefix, "file=test!@#$%"),
+                string.Join("/", prefix, "file%3Dtest%26"),  // Already encoded
+                string.Join("/", prefix, "folder=bar", "subfile=test!@#$%"),
+                string.Join("/", prefix, "folder=bar", "subfile%3Dtest%26"),
+                string.Join("/", prefix, "folder%40bar", "different!file"),
+                string.Join("/", prefix, "space folder", "space file"),
+            ];
+
+            using CancellationTokenSource cancellationTokenSource = TestHelper.GetTimeoutTokenSource(30);
+            await DownloadDirectoryAndVerifyAsync(
+                test.Container,
+                prefix,
+                itemNames.Select(name => (name, Constants.KB)).ToList(),
+                directoryName: directoryName,
+                cancellationToken: cancellationTokenSource.Token);
+        }
+
+        [Test]
+        public async Task DownloadDirectoryAsync_TrailingSlash()
+        {
+            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
+
+            string[] items = { "file1", "file2", "dir1/file1" };
+
+            using CancellationTokenSource cancellationTokenSource = TestHelper.GetTimeoutTokenSource(30);
+            await DownloadDirectoryAndVerifyAsync(
+                test.Container,
+                string.Empty,
+                items.Select(name => (name, Constants.KB)).ToList(),
+                cancellationToken: cancellationTokenSource.Token);
+        }
         #endregion DirectoryDownloadTests
 
         #region Single Concurrency
@@ -429,6 +476,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 MaximumConcurrency = concurrency,
+                ErrorMode = TransferErrorMode.StopOnAnyFailure
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 
