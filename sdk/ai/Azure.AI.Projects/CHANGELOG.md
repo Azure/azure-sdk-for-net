@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2025-10-01)
 
 ### Features Added
 * Added convenience `CreateOrUpdate` methods for `AIProjectIndex` objects
