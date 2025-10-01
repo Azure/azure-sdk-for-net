@@ -4,7 +4,7 @@ param(
   [string] $StorageContainerName = 'public-vcpkg-container'
 )
 
-. "$PSScriptRoot/../common/scripts/Helpers/PSModule-Helpers.ps1"
+. "$PSScriptRoot/Helpers/PSModule-Helpers.ps1"
 
 Write-Host "`$env:PSModulePath = $($env:PSModulePath)"
 
@@ -20,7 +20,7 @@ else {
 $modulePaths = $env:PSModulePath -split $moduleSeperator
 $modulePaths = $modulePaths.Where({ !$_.StartsWith($hostedAgentModulePath) })
 $AzModuleCachePath = (Get-ChildItem "$hostedAgentModulePath/az_*" -Attributes Directory) -join $moduleSeperator
-if ($AzModuleCachePath -and $env.PSModulePath -notcontains $AzModuleCachePath) {
+if ($AzModuleCachePath -and $env:PSModulePath -notcontains $AzModuleCachePath) {
   $modulePaths += $AzModuleCachePath
 }
 
