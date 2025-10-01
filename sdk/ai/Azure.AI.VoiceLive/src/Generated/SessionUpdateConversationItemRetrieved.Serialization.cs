@@ -73,7 +73,7 @@ namespace Azure.AI.VoiceLive
             }
             ServerEventType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponseItem item = default;
+            SessionResponseItem item = default;
             string eventId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -88,7 +88,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = ResponseItem.DeserializeResponseItem(prop.Value, options);
+                    item = SessionResponseItem.DeserializeSessionResponseItem(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))

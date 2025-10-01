@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseFunctionCallOutputItem. </summary>
-    public partial class ResponseFunctionCallOutputItem : ResponseItem, IJsonModel<ResponseFunctionCallOutputItem>
+    /// <summary> A function call output item within a conversation. </summary>
+    public partial class ResponseFunctionCallOutputItem : SessionResponseItem, IJsonModel<ResponseFunctionCallOutputItem>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallOutputItem"/> for deserialization. </summary>
         internal ResponseFunctionCallOutputItem()
@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SessionResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseFunctionCallOutputItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -139,7 +139,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SessionResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseFunctionCallOutputItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

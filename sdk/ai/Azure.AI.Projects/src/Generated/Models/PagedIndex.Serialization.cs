@@ -39,7 +39,7 @@ namespace Azure.Core
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SearchIndex item in Value)
+            foreach (AIProjectIndex item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -91,17 +91,17 @@ namespace Azure.Core
             {
                 return null;
             }
-            IList<SearchIndex> value = default;
+            IList<AIProjectIndex> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SearchIndex> array = new List<SearchIndex>();
+                    List<AIProjectIndex> array = new List<AIProjectIndex>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndex.DeserializeSearchIndex(item, options));
+                        array.Add(AIProjectIndex.DeserializeAIProjectIndex(item, options));
                     }
                     value = array;
                     continue;
@@ -167,8 +167,7 @@ namespace Azure.Core
         public static explicit operator PagedIndex(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializePagedIndex(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

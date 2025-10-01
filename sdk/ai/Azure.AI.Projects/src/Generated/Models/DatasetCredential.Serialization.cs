@@ -80,13 +80,13 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            BlobReference blobReference = default;
+            AIProjectBlobReference blobReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("blobReference"u8))
                 {
-                    blobReference = BlobReference.DeserializeBlobReference(prop.Value, options);
+                    blobReference = AIProjectBlobReference.DeserializeAIProjectBlobReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -141,8 +141,7 @@ namespace Azure.AI.Projects
         public static explicit operator DatasetCredential(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeDatasetCredential(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

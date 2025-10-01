@@ -273,8 +273,7 @@ namespace Azure.Data.AppConfiguration
         public static explicit operator ConfigurationSetting(Response result)
         {
             using Response response = result;
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeConfigurationSetting(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEnEouDetection"/>, and <see cref="AzureSemanticMultilingualEouDetection"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEouDetectionEn"/>, and <see cref="AzureSemanticEouDetectionMultilingual"/>.
     /// </summary>
     public abstract partial class EouDetection
     {
@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="EouDetection"/>. </summary>
         /// <param name="model"></param>
-        private protected EouDetection(EOUDetectionModel model)
+        private protected EouDetection(EouDetectionModel model)
         {
             Model = model;
         }
@@ -29,13 +29,13 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="EouDetection"/>. </summary>
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EouDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EouDetection(EouDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Model. </summary>
-        internal EOUDetectionModel Model { get; set; }
+        internal EouDetectionModel Model { get; set; }
     }
 }

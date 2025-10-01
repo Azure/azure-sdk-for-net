@@ -39,7 +39,7 @@ namespace Azure.Core.Foundations
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AssetDeployment item in Value)
+            foreach (AIProjectDeployment item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -91,7 +91,7 @@ namespace Azure.Core.Foundations
             {
                 return null;
             }
-            IList<AssetDeployment> value = default;
+            IList<AIProjectDeployment> value = default;
             Uri nextLink = default;
             string clientRequestId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -99,10 +99,10 @@ namespace Azure.Core.Foundations
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AssetDeployment> array = new List<AssetDeployment>();
+                    List<AIProjectDeployment> array = new List<AIProjectDeployment>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AssetDeployment.DeserializeAssetDeployment(item, options));
+                        array.Add(AIProjectDeployment.DeserializeAIProjectDeployment(item, options));
                     }
                     value = array;
                     continue;
@@ -168,8 +168,7 @@ namespace Azure.Core.Foundations
         public static explicit operator PagedDeployment(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializePagedDeployment(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

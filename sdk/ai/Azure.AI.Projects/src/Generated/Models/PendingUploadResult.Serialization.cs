@@ -89,7 +89,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            BlobReference blobReference = default;
+            AIProjectBlobReference blobReference = default;
             string pendingUploadId = default;
             string version = default;
             PendingUploadType pendingUploadType = default;
@@ -98,7 +98,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("blobReference"u8))
                 {
-                    blobReference = BlobReference.DeserializeBlobReference(prop.Value, options);
+                    blobReference = AIProjectBlobReference.DeserializeAIProjectBlobReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pendingUploadId"u8))
@@ -168,8 +168,7 @@ namespace Azure.AI.Projects
         public static explicit operator PendingUploadResult(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializePendingUploadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
