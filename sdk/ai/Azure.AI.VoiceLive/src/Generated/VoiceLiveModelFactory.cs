@@ -658,7 +658,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> The response resource. </summary>
         /// <param name="id"> The unique ID of the response. </param>
-        /// <param name="object"> The object type, must be `realtime.response`. </param>
+        /// <param name="object"></param>
         /// <param name="status">
         /// The final status of the response.
         /// 
@@ -756,7 +756,7 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="object"></param>
+        /// <param name="object"> Gets the Object. </param>
         /// <returns> A new <see cref="VoiceLive.SessionResponseItem"/> instance for mocking. </returns>
         public static SessionResponseItem SessionResponseItem(string @type = default, string id = default, string @object = default)
         {
@@ -765,7 +765,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Base type for message item within a conversation. </summary>
         /// <param name="id"></param>
-        /// <param name="object"></param>
+        /// <param name="object"> Gets the Object. </param>
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
@@ -829,7 +829,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> A function call item within a conversation. </summary>
         /// <param name="id"></param>
-        /// <param name="object"></param>
+        /// <param name="object"> Gets the Object. </param>
         /// <param name="name"></param>
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
@@ -850,7 +850,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> A function call output item within a conversation. </summary>
         /// <param name="id"></param>
-        /// <param name="object"></param>
+        /// <param name="object"> Gets the Object. </param>
         /// <param name="callId"></param>
         /// <param name="output"></param>
         /// <returns> A new <see cref="VoiceLive.ResponseFunctionCallOutputItem"/> instance for mocking. </returns>
