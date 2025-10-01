@@ -27,14 +27,7 @@
     <IsAotCompatibleClientLibrary>false</IsAotCompatibleClientLibrary>
   </PropertyGroup>
   
-  <!-- Set AOT compatibility based on explicit IsAotCompatible property OR auto-detection for shipping libraries -->
-  <PropertyGroup Condition="'$(IsAotCompatible)' == 'true'">
-    <!-- Project explicitly sets IsAotCompatible=true -->
-    <IsAotCompatibleClientLibrary>true</IsAotCompatibleClientLibrary>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' != 'true' and '$(IsAotCompatible)' == ''">
-    <!-- Auto-detection for shipping libraries that don't explicitly set IsAotCompatible -->
+  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' != 'true'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
     <IsAotCompatibleClientLibrary>true</IsAotCompatibleClientLibrary>
   </PropertyGroup>
