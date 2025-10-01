@@ -393,7 +393,7 @@
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
 
       <!-- Format package info line for output -->
-      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(IsAotCompatibleClientLibrary)'</PackageInfoText>
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(AotCompatOptOut)'</PackageInfoText>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">

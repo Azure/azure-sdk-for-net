@@ -51,7 +51,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $isAotCompatible = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $AotCompatOptOut = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
@@ -77,8 +77,9 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         }
       }
       else {
-        # Value not set in CI.yml, use IsAotCompatible from csproj
-        $pkgProp.CIParameters["CheckAOTCompat"] = $isAotCompatible -eq 'true'
+        # Value not set in CI.yml, if not explicitly opted out of AOT compat, run the check
+        Write-Host "No CheckAOTCompat parameter found in CI.yml for $($pkgProp.Name), using IsAotCompatible from csproj - AotCompatOptOut: ($AotCompatOptOut)"
+        $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -eq 'false'
       }
 
       # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
@@ -112,7 +113,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
     else {
       # No CI.yml found, use IsAotCompatible from csproj for CheckAOTCompat
-      $pkgProp.CIParameters["CheckAOTCompat"] = $isAotCompatible -eq 'true'
+      $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -eq 'false'
       
       # If CheckAOTCompat is true but no CI.yml exists, set AOTTestInputs to "None"
       if ($pkgProp.CIParameters["CheckAOTCompat"]) {
