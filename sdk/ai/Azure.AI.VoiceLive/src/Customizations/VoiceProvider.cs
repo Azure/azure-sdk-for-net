@@ -12,12 +12,6 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public abstract class VoiceProvider
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        internal abstract BinaryData ToBinaryData();
-
         internal static VoiceProvider DeserializeVoiceProvider(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.TryGetProperty("type"u8, out JsonElement discriminator))

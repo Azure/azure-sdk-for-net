@@ -32,7 +32,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
+        /// 
         /// - For pcm16: 8000, 16000, 24000
+        /// 
         /// - For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
@@ -85,7 +87,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Input audio sampling rate in Hz. Available values:
+        /// 
         /// - For pcm16: 8000, 16000, 24000
+        /// 
         /// - For g711_alaw/g711_ulaw: 8000
         /// </summary>
         public int? InputAudioSamplingRate { get; set; }

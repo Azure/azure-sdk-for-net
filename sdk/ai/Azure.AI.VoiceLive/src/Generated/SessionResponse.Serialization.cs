@@ -76,20 +76,13 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(Voice))
             {
                 writer.WritePropertyName("voice"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Voice);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Voice))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(Voice, options);
             }
-            if (Optional.IsCollectionDefined(ModalitiesInternal))
+            if (Optional.IsCollectionDefined(Modalities))
             {
                 writer.WritePropertyName("modalities"u8);
                 writer.WriteStartArray();
-                foreach (InteractionModality item in ModalitiesInternal)
+                foreach (InteractionModality item in Modalities)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -108,14 +101,7 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(MaxOutputTokens))
             {
                 writer.WritePropertyName("max_output_tokens"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(MaxOutputTokens);
-#else
-                using (JsonDocument document = JsonDocument.Parse(MaxOutputTokens))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(MaxOutputTokens, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,11 +152,11 @@ namespace Azure.AI.VoiceLive
             IList<SessionResponseItem> output = default;
             ResponseTokenStatistics usage = default;
             string conversationId = default;
-            BinaryData voice = default;
-            IList<InteractionModality> modalitiesInternal = default;
+            VoiceProvider voice = default;
+            IList<InteractionModality> modalities = default;
             OutputAudioFormat? outputAudioFormat = default;
             float? temperature = default;
-            BinaryData maxOutputTokens = default;
+            MaxResponseOutputTokensOption maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -236,7 +222,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    voice = BinaryData.FromString(prop.Value.GetRawText());
+                    voice = VoiceProvider.DeserializeVoiceProvider(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("modalities"u8))
@@ -250,7 +236,7 @@ namespace Azure.AI.VoiceLive
                     {
                         array.Add(new InteractionModality(item.GetString()));
                     }
-                    modalitiesInternal = array;
+                    modalities = array;
                     continue;
                 }
                 if (prop.NameEquals("output_audio_format"u8))
@@ -277,7 +263,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    maxOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
+                    maxOutputTokens = MaxResponseOutputTokensOption.DeserializeMaxResponseOutputTokensOption(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -294,7 +280,7 @@ namespace Azure.AI.VoiceLive
                 usage,
                 conversationId,
                 voice,
-                modalitiesInternal ?? new ChangeTrackingList<InteractionModality>(),
+                modalities ?? new ChangeTrackingList<InteractionModality>(),
                 outputAudioFormat,
                 temperature,
                 maxOutputTokens,
