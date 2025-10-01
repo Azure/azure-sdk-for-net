@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Communication.CallAutomation;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication
 {
     /// <summary> A Microsoft Teams Phone user who is using a Communication Services resource to extend their Teams Phone set up. </summary>
-    public partial class TeamsExtensionUserIdentifierModel
+    internal partial class TeamsExtensionUserIdentifierModel
     {
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionUserIdentifierModel"/>. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams Extension user, i.e. the Entra ID object Id of the user. </param>
@@ -47,5 +48,7 @@ namespace Azure.Communication.CallAutomation
         public string TenantId { get; set; }
         /// <summary> The Communication Services resource Id. </summary>
         public string ResourceId { get; set; }
+        /// <summary> The cloud that the Microsoft Teams Extension user belongs to. By default 'public' if missing. </summary>
+        public CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }

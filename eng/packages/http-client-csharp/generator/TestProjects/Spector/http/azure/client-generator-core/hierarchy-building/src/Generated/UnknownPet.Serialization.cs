@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
 {
-    internal partial class UnknownPet : IJsonModel<Pet>
+    internal partial class UnknownPet : Pet, IJsonModel<Pet>
     {
         internal UnknownPet() => throw null;
 

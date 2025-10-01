@@ -35,7 +35,9 @@ public abstract partial class Specification : ModelBase
     public Dictionary<string, ModelBase> ModelNameMapping { get; } = [];
     public Dictionary<Type, ModelBase> ModelArmTypeMapping { get; } = [];
 
-    public Specification(string name, Type armEntryPoint)
+    internal bool IgnorePropertiesWithoutPath { get; }
+
+    public Specification(string name, Type armEntryPoint, bool ignorePropertiesWithoutPath = false)
         : base(
             name: name,
             ns: $"Azure.Provisioning.{name}",
@@ -44,6 +46,7 @@ public abstract partial class Specification : ModelBase
         Spec = this;
         DocComments = new XmlDocCommentReader(armEntryPoint.Assembly);
         TypeRegistry.Register(this);
+        IgnorePropertiesWithoutPath = ignorePropertiesWithoutPath;
     }
 
     public override string ToString() => $"<Specification {Name}>";

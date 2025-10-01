@@ -274,7 +274,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         public virtual AsyncPageable<AvsResourceSku> GetAvsSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateGetAvsSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AvsResourceSku.DeserializeAvsResourceSku(e), SkusClientDiagnostics, Pipeline, "MockableAvsSubscriptionResource.GetAvsSkus", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateGetAvsSkusNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvsResourceSku.DeserializeAvsResourceSku(e), SkusClientDiagnostics, Pipeline, "MockableAvsSubscriptionResource.GetAvsSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -299,7 +300,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         public virtual Pageable<AvsResourceSku> GetAvsSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateGetAvsSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AvsResourceSku.DeserializeAvsResourceSku(e), SkusClientDiagnostics, Pipeline, "MockableAvsSubscriptionResource.GetAvsSkus", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateGetAvsSkusNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvsResourceSku.DeserializeAvsResourceSku(e), SkusClientDiagnostics, Pipeline, "MockableAvsSubscriptionResource.GetAvsSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

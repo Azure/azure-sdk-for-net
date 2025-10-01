@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52801")]
         public async Task CreateStorageClassAsync()
         {
             var nfsStorageClassTypeProperties = new NfsStorageClassTypeProperties("172.23.1.4", "/");

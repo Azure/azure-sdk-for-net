@@ -25,5 +25,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier Ocid { get => new ResourceIdentifier(DatabaseOcid); }
+
+        /// <summary> The list of scheduled operations. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release, please use ScheduledOperationsList instead", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ScheduledOperationsType ScheduledOperations
+        {
+            get
+            {
+                throw new NotSupportedException("This property is obsolete and not supported, please use ScheduledOperationsList instead");
+            }
+            set
+            {
+                throw new NotSupportedException("This property is obsolete and not supported, please use ScheduledOperationsList instead");
+            }
+        }
     }
 }

@@ -1979,13 +1979,6 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.SummarizationOptions SummarizationOptions { get { throw null; } set { } }
     }
-    public partial class TeamsExtensionUserIdentifierModel
-    {
-        public TeamsExtensionUserIdentifierModel(string userId, string tenantId, string resourceId) { }
-        public string ResourceId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
-    }
     public partial class TeamsPhoneCallDetails
     {
         public TeamsPhoneCallDetails() { }

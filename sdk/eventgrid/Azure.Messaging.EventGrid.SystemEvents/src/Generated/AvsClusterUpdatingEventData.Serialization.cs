@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterUpdating event. </summary>
     [JsonConverter(typeof(AvsClusterUpdatingEventDataConverter))]
-    public partial class AvsClusterUpdatingEventData : IJsonModel<AvsClusterUpdatingEventData>
+    public partial class AvsClusterUpdatingEventData : AvsClusterEventData, IJsonModel<AvsClusterUpdatingEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AvsClusterUpdatingEventData"/> for deserialization. </summary>
         internal AvsClusterUpdatingEventData()
