@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StorageActions
 {
+    /// <summary></summary>
     public partial class StorageTaskResource : IJsonModel<StorageTaskData>
     {
-        private static StorageTaskData s_dataDeserializationInstance;
-        private static StorageTaskData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageTaskData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageTaskData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageTaskData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskData>)Data).Write(writer, options);
 
-        StorageTaskData IJsonModel<StorageTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageTaskData IJsonModel<StorageTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageTaskData>(Data, options, AzureResourceManagerStorageActionsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageTaskData IPersistableModel<StorageTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageTaskData>(data, options, AzureResourceManagerStorageActionsContext.Default);
 
-        string IPersistableModel<StorageTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageTaskData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

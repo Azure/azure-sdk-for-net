@@ -41,7 +41,7 @@ namespace MgmtTypeSpec
         internal BarQuotaProperties Properties { get; set; }
 
         /// <summary> enabled. </summary>
-        public object BarQuotaLeft
+        public int? BarQuotaLeft
         {
             get
             {
@@ -49,7 +49,7 @@ namespace MgmtTypeSpec
             }
             set
             {
-                Properties = new BarQuotaProperties(value);
+                Properties = value.HasValue ? new BarQuotaProperties(value.Value) : default;
             }
         }
     }

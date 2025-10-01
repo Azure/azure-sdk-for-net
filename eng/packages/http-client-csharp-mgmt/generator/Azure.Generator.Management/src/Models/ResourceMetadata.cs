@@ -10,15 +10,17 @@ namespace Azure.Generator.Management.Models
 {
     internal record ResourceMetadata(
         string ResourceIdPattern,
+        string ResourceName,
         string ResourceType,
         InputModelType ResourceModel,
         ResourceScope ResourceScope,
         IReadOnlyList<ResourceMethod> Methods,
         string? SingletonResourceName,
         string? ParentResourceId,
-        string ResourceName)
+        IReadOnlyList<string> ChildResourceIds)
     {
-        internal static ResourceMetadata DeserializeResourceMetadata(IReadOnlyDictionary<string, BinaryData> args, InputModelType inputModel)
+        // the childResourceIds parameter will be populated by the caller of this method later
+        internal static ResourceMetadata DeserializeResourceMetadata(IReadOnlyDictionary<string, BinaryData> args, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
         {
             string? resourceIdPattern = null;
             string? resourceType = null;
@@ -48,6 +50,12 @@ namespace Azure.Generator.Management.Models
                 {
                     resourceScope = scope;
                 }
+
+                //TODO: handle Extension resource in emitter
+                if (resourceIdPattern is not null && (resourceIdPattern.StartsWith("/{resourceUri}/") || resourceIdPattern.StartsWith("/{scope}/")))
+                {
+                    resourceScope = ResourceScope.Extension;
+                }
             }
 
             if (args.TryGetValue("methods", out var operationsData))
@@ -71,13 +79,14 @@ namespace Azure.Generator.Management.Models
 
             return new(
                 resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
+                resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
                 resourceType ?? throw new InvalidOperationException("resourceType cannot be null"),
                 inputModel,
                 resourceScope ?? throw new InvalidOperationException("resourceScope cannot be null"),
                 methods,
                 singletonResourceName,
                 parentResource,
-                resourceName ?? throw new InvalidOperationException("resourceName cannot be null"));
+                childResourceIds);
         }
     }
 }

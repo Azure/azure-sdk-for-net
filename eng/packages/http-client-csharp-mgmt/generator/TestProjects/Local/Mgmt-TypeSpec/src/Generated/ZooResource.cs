@@ -22,7 +22,7 @@ namespace MgmtTypeSpec
     /// <summary>
     /// A class representing a Zoo along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ZooResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource (TODO: add parent resource information).
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetZoos method.
     /// </summary>
     public partial class ZooResource : ArmResource
     {
@@ -433,7 +433,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -481,7 +481,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = Get(cancellationToken).Value.Data;
+                    ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -528,7 +528,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ZooResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
@@ -571,7 +571,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = Get(cancellationToken).Value.Data;
+                    ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ZooResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
@@ -613,7 +613,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -659,7 +659,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = Get(cancellationToken).Value.Data;
+                    ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

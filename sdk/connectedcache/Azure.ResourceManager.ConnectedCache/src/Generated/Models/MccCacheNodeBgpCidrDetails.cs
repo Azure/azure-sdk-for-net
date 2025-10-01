@@ -49,11 +49,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeBgpCidrDetails"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        internal MccCacheNodeBgpCidrDetails(string location)
+        internal MccCacheNodeBgpCidrDetails(AzureLocation location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
             Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
         }
@@ -67,7 +64,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeBgpCidrDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MccCacheNodeBgpCidrsConfiguration properties, IReadOnlyDictionary<string, string> tags, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MccCacheNodeBgpCidrDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MccCacheNodeBgpCidrsConfiguration properties, IReadOnlyDictionary<string, string> tags, AzureLocation location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Tags = tags;
@@ -91,6 +88,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
     }
 }

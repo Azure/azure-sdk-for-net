@@ -44,14 +44,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> PrivateIPAddress of the network interface IP Configuration. </summary>
+        [WirePath("properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
         /// <summary> The private IP address allocation method. </summary>
+        [WirePath("properties.privateIPAllocationMethod")]
         public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Reference to the subnet resource. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
@@ -66,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Reference to the PublicIP resource. </summary>
         internal WritableSubResource PublicIPAddress { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.publicIPAddress.id")]
         public ResourceIdentifier PublicIPAddressId
         {
             get => PublicIPAddress is null ? default : PublicIPAddress.Id;
@@ -80,6 +85,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Reference to the application gateway private link configuration. </summary>
         internal WritableSubResource PrivateLinkConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.privateLinkConfiguration.id")]
         public ResourceIdentifier PrivateLinkConfigurationId
         {
             get => PrivateLinkConfiguration is null ? default : PrivateLinkConfiguration.Id;
@@ -92,6 +98,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

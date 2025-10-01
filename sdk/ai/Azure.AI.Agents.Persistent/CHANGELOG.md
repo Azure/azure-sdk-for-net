@@ -1,15 +1,39 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
-- Added delete operation for `ThreadMessages`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.5 (2025-09-18)
+
+### Bugs Fixed
+- Fix issue with image block serialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/52571)
+
+## 1.2.0-beta.4 (2025-09-05)
+
+### Features Added
+- Updated `Microsoft.Extensions.AI.Abstractions` dependency to version 9.8.0.
+- Added support of `FileSearchTool` and `CodeInterpreterTool` for `PersistentAgentsChatClient`.
+- Make `Azure.AI.Agents.Persistent` compatible with [ahead-of-time compilation process (AOT)](https://learn.microsoft.com/aspnet/core/fundamentals/native-aot).
+- Improved the way `RequireApproval` is being set. See the [issue](https://github.com/Azure/azure-sdk-for-net/issues/52213).
+
+### Bugs Fixed
+- Fix issues related to `ResponseFormat` when using `PersistentAgentsChatClient` with Structured Outputs.
+- Fix handling of streaming update of unexpected type [issue](https://github.com/Azure/azure-sdk-for-net/issues/52407).
+
+## 1.2.0-beta.3 (2025-08-22)
+
+### Features Added
+- Added delete operation for `ThreadMessages`.
+- Add `RunStepDeltaCustomBingGroundingToolCall`, describing `BingCustomSearchTool` updates in streaming scenario.
+- Add `RunStepDeltaMicrosoftFabricToolCall`, describing `FabricTool` updates in streaming scenario.
+- Add `RunStepDeltaSharepointToolCall`, describing `SharepointTool` updates in streaming scenario.
 
 ## 1.2.0-beta.2 (2025-08-13)
 

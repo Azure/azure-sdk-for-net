@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -158,6 +163,7 @@ namespace Azure.ResourceManager.AppContainers
             ContainerAppExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             string managedBy = default;
+            ContainerAppKind? kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -202,6 +208,15 @@ namespace Azure.ResourceManager.AppContainers
                 if (property.NameEquals("managedBy"u8))
                 {
                     managedBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new ContainerAppKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -384,6 +399,7 @@ namespace Azure.ResourceManager.AppContainers
                 extendedLocation,
                 identity,
                 managedBy,
+                kind,
                 provisioningState,
                 runningStatus,
                 managedEnvironmentId,
@@ -533,6 +549,21 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         builder.AppendLine($"'{ManagedBy}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    builder.AppendLine($"'{Kind.Value.ToString()}'");
                 }
             }
 

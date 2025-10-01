@@ -12,8 +12,8 @@ namespace _Specs_.Azure.ClientGenerator.Core.Usage
 {
     [ModelReaderWriterBuildable(typeof(InputModel))]
     [ModelReaderWriterBuildable(typeof(OutputModel))]
-    [ModelReaderWriterBuildable(typeof(RoundTripModel))]
     [ModelReaderWriterBuildable(typeof(ResultModel))]
+    [ModelReaderWriterBuildable(typeof(RoundTripModel))]
     public partial class _Specs_AzureClientGeneratorCoreUsageContext : ModelReaderWriterContext
     {
     }

@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(ManagedHsmRegionsListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmResource))]
     [ModelReaderWriterBuildable(typeof(ManagedHSMSecurityDomainProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedHsmServiceTagRule))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmSku))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmVirtualNetworkRule))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]

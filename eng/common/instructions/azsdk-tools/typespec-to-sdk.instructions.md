@@ -1,7 +1,11 @@
 ---
 description: 'Generate SDKs from TypeSpec'
 ---
-Your goal is to guide user through the process of generating SDKs from TypeSpec projects. Show all the high level steps to the user to ensure they understand the flow. Use the provided tools to perform actions and gather information as needed.
+Your goal is to guide the user through the process of generating SDKs from TypeSpec projects. **Before starting**, show all the high level steps to the user and ask: 
+
+> "Would you like to begin the SDK generation process now? (yes/no)"
+
+Wait for the user to respond with a confirmation before proceeding to Step 1. Use the provided tools to perform actions and gather information as needed.
 
 ## Step 1: Identify TypeSpec Project
 **Goal**: Locate the TypeSpec project root path
@@ -26,17 +30,17 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 3: Verify Authentication and Repository Status
 **Goal**: Ensure user is authenticated and working in correct repository
 **Actions**:
-1. Run `GetGitHubUserDetails` to verify login status
+1. Run `azsdk_get_github_user_details` to verify login status
 2. If not logged in, prompt: "Please login to GitHub using `gh auth login`"
 3. Once logged in, display user details to confirm identity
-4. Run `CheckIfSpecInPublicRepo` to verify repository
+4. Run `azsdk_check_typespec_project_in_public_repo` to verify repository
 5. If not in public repo, inform: "Please make spec changes in Azure/azure-rest-api-specs public repo to generate SDKs"
 **Success Criteria**: User authenticated and working in public Azure repo
 
 ## Step 4: Review and Commit Changes
 **Goal**: Stage and commit TypeSpec modifications
 **Actions**:
-1. Run `GetModifiedTypeSpecProjects` to identify changes
+1. Run `azsdk_get_modified_typespec_projects` to identify changes
 2. If no changes found, inform: "No TypeSpec projects were modified in current branch"
 3. Display all modified files (excluding `.github` and `.vscode` folders)
 4. Prompt user: "Please review the modified files. Do you want to commit these changes? (yes/no)"
@@ -53,17 +57,19 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 **Goal**: Determine how to generate SDKs
 **Actions**:
 1. Present options: "How would you like to generate SDKs?"
-    - Option A: "Generate SDK locally". This is currently supported only for Python. Do not recommend this for other languages.
+    - Option A: "Generate SDK locally".
     - Option B: "Use SDK generation pipeline"
 2. Based on selection:
-    - If Option A: Refer to #file:create-sdk-locally.instructions.md and then proceed to Step 6
+    - If Option A: 
+        - Follow #file:./local-sdk-workflow.instructions.md to generate and compile the SDK.
+        - After SDK has been generated, to continue the SDK release, users can create the SDK pull request manually then proceed to Step 9.
     - If Option B: Continue to Step 6
 **Success Criteria**: SDK generation method selected
 
 ## Step 6: Create Specification Pull Request
 **Goal**: Create PR for TypeSpec changes if not already created
 **Actions**:
-1. Check if spec PR already exists using `GetPullRequestForCurrentBranch`
+1. Check if spec PR already exists using `azsdk_get_pull_request_link_for_current_branch`
 2. If PR exists, display PR details and proceed to Step 7
 3. If no PR exists:
     - Refer to #file:create-spec-pullrequest.instructions.md
@@ -86,7 +92,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 8: Show Generated SDK PRs
 **Goal**: Display all created SDK pull requests
 **Actions**:
-1. Run `GetSDKPullRequestDetails` to fetch generated SDK PR info.
+1. Run `azsdk_get_sdk_pull_request_link` to fetch generated SDK PR info.
 
 ## Step 9: Create release plan
 **Goal**: Create a release plan for the generated SDKs

@@ -93,6 +93,7 @@ namespace Azure.AI.Agents.Persistent
                     case "function": return RunStepDeltaFunctionToolCall.DeserializeRunStepDeltaFunctionToolCall(element, options);
                     case "mcp": return RunStepDeltaMcpToolCall.DeserializeRunStepDeltaMcpToolCall(element, options);
                     case "openapi": return RunStepDeltaOpenAPIToolCall.DeserializeRunStepDeltaOpenAPIToolCall(element, options);
+                    case "sharepoint_grounding": return RunStepDeltaSharepointToolCall.DeserializeRunStepDeltaSharepointToolCall(element, options);
                 }
             }
             return UnknownRunStepDeltaToolCall.DeserializeUnknownRunStepDeltaToolCall(element, options);

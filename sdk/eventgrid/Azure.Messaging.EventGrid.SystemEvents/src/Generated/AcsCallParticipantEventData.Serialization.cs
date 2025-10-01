@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all participant events. </summary>
     [JsonConverter(typeof(AcsCallParticipantEventDataConverter))]
-    public partial class AcsCallParticipantEventData : IJsonModel<AcsCallParticipantEventData>
+    public partial class AcsCallParticipantEventData : AcsCallingEventProperties, IJsonModel<AcsCallParticipantEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsCallParticipantEventData"/> for deserialization. </summary>
         internal AcsCallParticipantEventData()

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.12.0 (2025-09-19)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-07-01' to 'package-2024-10-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cbfe154470792d8aea255885a4a96609603982cc/specification/network/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.47.3 to 1.48.0
+
+## 1.11.3 (2025-08-21)
+
+### Features Added
+
+- Added `WirePath` attributes to all properties in all models for provisioning library to consume.
 
 ## 1.11.2 (2025-08-11)
 

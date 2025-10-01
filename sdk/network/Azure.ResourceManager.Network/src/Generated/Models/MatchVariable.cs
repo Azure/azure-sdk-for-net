@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Match Variable. </summary>
+        [WirePath("variableName")]
         public WebApplicationFirewallMatchVariable VariableName { get; set; }
         /// <summary> The selector of match variable. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
     }
 }

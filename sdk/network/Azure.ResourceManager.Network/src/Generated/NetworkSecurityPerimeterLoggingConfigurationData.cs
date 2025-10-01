@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The log categories to enable in the NSP logging configuration. </summary>
+        [WirePath("properties.enabledLogCategories")]
         public IList<string> EnabledLogCategories { get; }
         /// <summary> The version of the NSP logging configuration. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
     }
 }

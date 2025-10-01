@@ -1,5 +1,25 @@
 # Release History
 
+## 1.0.0 (2025-10-01)
+
+### Features Added
+* Added convenience `CreateOrUpdate` methods for `AIProjectIndex` objects
+
+### Breaking Changes
+* Name changes:
+  * `AssetDeployment` has been renamed to `AIProjectDeployment`
+  * `BlobReference` has been renamed to `AIProjectBlobReference`
+  * `ConnectionProperties` has been renamed to `AIProjectConnection`
+  * `FileDatasetVersion` has been renamed to `FileDataset`
+  * `FolderDatasetVersion` has been renamed to `FolderDataset`
+  * `SasCredential` has been renamed to `BlobReferenceSasCredential`
+  * `SearchIndex` has been renamed to `AIProjectIndex`
+* Removed `GetOpenAIClient` method. Look at Inference samples for how to get the client now.
+* All other `Get*Client` methods have been removed. Use the `AIProjectClient` properties `Connections`, `Datasets`, `Deployments`, and `Indexes` instead.
+
+### Bugs Fixed
+* Properly handle secret key population for `AIProjectConnectionCustomCredential`, [see GitHub issue 52355](https://github.com/Azure/azure-sdk-for-net/issues/52355).
+
 ## 1.0.0-beta.11 (2025-08-20)
 
 ### Features Added

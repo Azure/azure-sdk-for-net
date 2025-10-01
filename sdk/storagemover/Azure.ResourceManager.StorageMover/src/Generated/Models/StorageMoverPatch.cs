@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.StorageMover.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMoverPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="description"> A description for the Storage Mover. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMoverPatch(IDictionary<string, string> tags, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageMoverPatch(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             Description = description;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> A description for the Storage Mover. </summary>
         public string Description { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }
