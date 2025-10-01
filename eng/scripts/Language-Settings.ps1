@@ -52,6 +52,9 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     }
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $isAotCompatible = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
+    
+    Write-Host "Package ${pkgName}: isAotCompatible='$isAotCompatible'" -ForegroundColor Cyan
+    
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
@@ -63,6 +66,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp.ArtifactName = $pkgName
     $pkgProp.IncludedForValidation = $false
     $pkgProp.DirectoryPath = ($pkgProp.DirectoryPath)
+    $pkgProp.IsAotCompatibleClientLibrary = $isAotCompatible
 
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
@@ -74,11 +78,14 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         $parsedBool = $null
         if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
           $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
+          Write-Host "  CheckAOTCompat from CI.yml: $parsedBool" -ForegroundColor Green
         }
       }
       else {
         # Value not set in CI.yml, use IsAotCompatible from csproj
-        $pkgProp.CIParameters["CheckAOTCompat"] = $isAotCompatible -eq 'true'
+        $aotCompatValue = $isAotCompatible -eq 'true'
+        $pkgProp.CIParameters["CheckAOTCompat"] = $aotCompatValue
+        Write-Host "  CheckAOTCompat from csproj: $aotCompatValue" -ForegroundColor Green
       }
 
       # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
@@ -112,7 +119,9 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
     else {
       # No CI.yml found, use IsAotCompatible from csproj for CheckAOTCompat
-      $pkgProp.CIParameters["CheckAOTCompat"] = $isAotCompatible -eq 'true'
+      $aotCompatValue = $isAotCompatible -eq 'true'
+      $pkgProp.CIParameters["CheckAOTCompat"] = $aotCompatValue
+      Write-Host "  No CI.yml - CheckAOTCompat from csproj: $aotCompatValue" -ForegroundColor Green
       
       # If CheckAOTCompat is true but no CI.yml exists, set AOTTestInputs to "None"
       if ($pkgProp.CIParameters["CheckAOTCompat"]) {

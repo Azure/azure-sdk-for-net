@@ -27,9 +27,16 @@
     <IsAotCompatibleClientLibrary>false</IsAotCompatibleClientLibrary>
   </PropertyGroup>
   
-  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' != 'true'">
+  <!-- Set AOT compatibility based on explicit IsAotCompatible property OR auto-detection for shipping libraries -->
+  <PropertyGroup Condition="'$(IsAotCompatible)' == 'true'">
+    <!-- Project explicitly sets IsAotCompatible=true -->
+    <IsAotCompatibleClientLibrary>true</IsAotCompatibleClientLibrary>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' != 'true' and '$(IsAotCompatible)' == ''">
+    <!-- Auto-detection for shipping libraries that don't explicitly set IsAotCompatible -->
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
-    <IsAotCompatibleClientLibrary Condition="'$(IsAotCompatible)' == 'true'">true</IsAotCompatibleClientLibrary>
+    <IsAotCompatibleClientLibrary>true</IsAotCompatibleClientLibrary>
   </PropertyGroup>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->

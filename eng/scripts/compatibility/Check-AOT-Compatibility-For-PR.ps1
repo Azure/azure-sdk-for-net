@@ -35,9 +35,15 @@ $filteredPackages = Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Fil
 
 $failedAotChecks = $false
 foreach ($package in $filteredPackages) {
-    Write-Host "Processing package: $($package.ArtifactName) and ci param value is $($package.CIParameters.CheckAOTCompat)"
-    if ($package.CIParameters.CheckAOTCompat) {
-        Write-Host "Running Check-AOT-Compatibility.ps1 for Package: $($package.ArtifactName) Service $($package.ServiceDirectory)"
+    Write-Host "Processing package: $($package.ArtifactName)" -ForegroundColor Cyan
+    Write-Host "  IsAotCompatibleClientLibrary: '$($package.IsAotCompatibleClientLibrary)'" -ForegroundColor White
+    Write-Host "  CIParameters.CheckAOTCompat: '$($package.CIParameters.CheckAOTCompat)'" -ForegroundColor White
+    # Check both old and new ways to determine if AOT compatibility check should run
+    $shouldRunAotCheck = $package.CIParameters.CheckAOTCompat -eq $true -or $package.IsAotCompatibleClientLibrary -eq "true" -or $package.IsAotCompatibleClientLibrary -eq $true
+    
+    Write-Host "  Should run AOT check: $shouldRunAotCheck" -ForegroundColor $(if ($shouldRunAotCheck) { "Green" } else { "Yellow" })
+    
+    if ($shouldRunAotCheck) {
         
         # Check if AOTTestInputs exists and has ExpectedWarningsFilePath, otherwise use "None"
         $expectedWarningsFilePath = "None"
