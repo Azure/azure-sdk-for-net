@@ -815,7 +815,7 @@ V12
 
 ```C# Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 Stream targetStream = new MemoryStream();
 await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);
