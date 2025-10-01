@@ -1,0 +1,35 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/recoveryservicesdatareplication
+    - sdk/recoveryservicesdatareplication/ci.yml
+    - sdk/recoveryservicesdatareplication/Azure.ResourceManager.RecoveryServicesDataReplication
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/recoveryservicesdatareplication
+    - sdk/recoveryservicesdatareplication/ci.yml
+    - sdk/recoveryservicesdatareplication/Azure.ResourceManager.RecoveryServicesDataReplication
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: recoveryservicesdatareplication
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.ResourceManager.RecoveryServicesDataReplication
+      safeName: AzureResourceManagerRecoveryServicesDataReplication
