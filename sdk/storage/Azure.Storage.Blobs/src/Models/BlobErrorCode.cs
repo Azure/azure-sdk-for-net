@@ -14,6 +14,7 @@ namespace Azure.Storage.Blobs.Models
     {
         private const string SnaphotOperationRateExceededValue = "SnaphotOperationRateExceeded";
         private const string IncrementalCopyOfEralierVersionSnapshotNotAllowedValue = "IncrementalCopyOfEralierVersionSnapshotNotAllowed";
+        private const string IncrementalCopyOfEarlierVersionSnapshotNotAllowedValue = "IncrementalCopyOfEarlierVersionSnapshotNotAllowed";
 
         /// <summary> SnaphotOperationRateExceeded. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -22,6 +23,10 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> IncrementalCopyOfEralierVersionSnapshotNotAllowed. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get; } = new BlobErrorCode(IncrementalCopyOfEralierVersionSnapshotNotAllowedValue);
+
+        /// <summary> IncrementalCopyOfEarlierVersionSnapshotNotAllowed. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobErrorCode IncrementalCopyOfEarlierVersionSnapshotNotAllowed { get; } = new BlobErrorCode(IncrementalCopyOfEarlierVersionSnapshotNotAllowedValue);
 
         /// <summary> Overloading equality for BlobErrorCode==string </summary>
         public static bool operator ==(BlobErrorCode code, string value) => code.Equals(value);
