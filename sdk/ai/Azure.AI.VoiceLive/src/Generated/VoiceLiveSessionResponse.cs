@@ -26,7 +26,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
+        /// 
         /// - For pcm16: 8000, 16000, 24000
+        /// 
         /// - For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
@@ -49,6 +51,54 @@ namespace Azure.AI.VoiceLive
             Agent = agent;
             Id = id;
         }
+
+        /// <summary> The model for the session. </summary>
+        public string Model { get; set; }
+
+        /// <summary> The modalities to be used in the session. </summary>
+        public IList<InteractionModality> Modalities { get; }
+
+        /// <summary> The animation configuration for the session. </summary>
+        public AnimationOptions Animation { get; set; }
+
+        /// <summary> Optional instructions to guide the model's behavior throughout the session. </summary>
+        public string Instructions { get; set; }
+
+        /// <summary>
+        /// Input audio sampling rate in Hz. Available values:
+        /// 
+        /// - For pcm16: 8000, 16000, 24000
+        /// 
+        /// - For g711_alaw/g711_ulaw: 8000
+        /// </summary>
+        public int? InputAudioSamplingRate { get; set; }
+
+        /// <summary> Input audio format. Default is 'pcm16'. </summary>
+        public InputAudioFormat? InputAudioFormat { get; set; }
+
+        /// <summary> Output audio format. Default is 'pcm16'. </summary>
+        public OutputAudioFormat? OutputAudioFormat { get; set; }
+
+        /// <summary> Configuration for input audio noise reduction. </summary>
+        public AudioNoiseReduction InputAudioNoiseReduction { get; set; }
+
+        /// <summary> Configuration for echo cancellation during server-side audio processing. </summary>
+        public AudioEchoCancellation InputAudioEchoCancellation { get; set; }
+
+        /// <summary> Configuration for avatar streaming and behavior during the session. </summary>
+        public AvatarConfiguration Avatar { get; set; }
+
+        /// <summary> Configuration for input audio transcription. </summary>
+        public AudioInputTranscriptionOptions InputAudioTranscription { get; set; }
+
+        /// <summary> Types of timestamps to include in audio response content. </summary>
+        public IList<AudioTimestampType> OutputAudioTimestampTypes { get; }
+
+        /// <summary> Configuration for tools to be used during the session, if applicable. </summary>
+        public IList<VoiceLiveToolDefinition> Tools { get; }
+
+        /// <summary> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </summary>
+        public float? Temperature { get; set; }
 
         /// <summary> The unique identifier for the session. </summary>
         public string Id { get; }
