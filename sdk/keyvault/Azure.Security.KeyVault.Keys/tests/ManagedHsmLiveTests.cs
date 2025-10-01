@@ -123,6 +123,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_6, Max = KeyClientOptions.ServiceVersion.V7_6)] // TODO: Remove Max once https://github.com/Azure/azure-sdk-for-net/issues/52962 is resolved.
         public async Task GetKeyAttestationWithHSM()
         {
             string keyName = Recording.GenerateId();
@@ -144,6 +145,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_6, Max = KeyClientOptions.ServiceVersion.V7_6)] // TODO: Remove Max once https://github.com/Azure/azure-sdk-for-net/issues/52962 is resolved.
         public async Task GetKeyAttestationWithVersion()
         {
             string keyName = Recording.GenerateId();
