@@ -1012,7 +1012,6 @@ namespace Azure.AI.VoiceLive
         public string Id { get { throw null; } }
         public Azure.AI.VoiceLive.MaxResponseOutputTokensOption MaxOutputTokens { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.InteractionModality> Modalities { get { throw null; } }
-        public string Object { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.SessionResponseItem> Output { get { throw null; } }
         public Azure.AI.VoiceLive.OutputAudioFormat? OutputAudioFormat { get { throw null; } }
         public Azure.AI.VoiceLive.SessionResponseStatus? Status { get { throw null; } }
@@ -1034,7 +1033,6 @@ namespace Azure.AI.VoiceLive
     {
         internal SessionResponseItem() { }
         public string Id { get { throw null; } }
-        public string Object { get { throw null; } }
         protected virtual Azure.AI.VoiceLive.SessionResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.VoiceLive.SessionResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

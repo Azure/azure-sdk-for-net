@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="SessionResponse"/>. </summary>
         /// <param name="id"> The unique ID of the response. </param>
-        /// <param name="object"> The object type, must be `realtime.response`. </param>
+        /// <param name="object"></param>
         /// <param name="status">
         /// The final status of the response.
         /// 
@@ -80,9 +80,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> The unique ID of the response. </summary>
         public string Id { get; }
-
-        /// <summary> The object type, must be `realtime.response`. </summary>
-        public string Object { get; }
 
         /// <summary>
         /// The final status of the response.
