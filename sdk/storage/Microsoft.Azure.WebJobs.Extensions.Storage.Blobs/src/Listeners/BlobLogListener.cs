@@ -162,7 +162,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             // List the blobs using the prefix
             BlobContainerClient container = blobClient.GetBlobContainerClient(LogContainer);
-            var blobs = container.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: cancellationToken).ConfigureAwait(false);
+            var blobs = container.GetBlobsAsync(BlobTraits.Metadata, BlobStates.None, prefix, cancellationToken).ConfigureAwait(false);
 
             // iterate through each blob and figure the start and end times in the metadata
             // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.

@@ -4,9 +4,11 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
@@ -51,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             await TestHelpers.Await(async () =>
             {
-                var pageable = _fixture.OutputContainer2.GetBlobsAsync(prefix: "blob1");
+                var pageable = _fixture.OutputContainer2.GetBlobsAsync(BlobTraits.None, BlobStates.None, prefix: "blob1", CancellationToken.None);
                 var enumerator = pageable.GetAsyncEnumerator();
                 var result = await enumerator.MoveNextAsync() && enumerator.Current.Properties.ContentLength > 0;
                 if (result)

@@ -317,7 +317,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 // sub directories.
                 string prefix = context.Prefix;
                 var container = context.Container;
-                IAsyncEnumerable<BlobItem> blobItems = container.GetBlobsAsync(prefix: prefix, cancellationToken: cancellationToken);
+                IAsyncEnumerable<BlobItem> blobItems = container.GetBlobsAsync(BlobTraits.None, BlobStates.None, prefix, cancellationToken);
 
                 // create an IEnumerable<T> of the correct type, performing any required conversions on the blobs
                 var list = await ConvertBlobs(blobItems, container).ConfigureAwait(false);
