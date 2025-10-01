@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
+using Azure.AI.Speech.Transcription; // Added explicit using
 
 namespace Azure.AI.Speech.Transcription.Samples
 {

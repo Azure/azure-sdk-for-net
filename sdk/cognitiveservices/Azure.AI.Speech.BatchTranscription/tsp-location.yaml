@@ -1,5 +1,5 @@
 directory: specification/cognitiveservices/Speech.BatchTranscription
-commit: 4fa48ba3dfdf8ae1eccfca1875b462c6d1c0c53e
+commit: 6c3a54248d9f8a269cd1aefc91bf472d2bf51f17
 repo: Azure/azure-rest-api-specs
 additionalDirectories: []
 
