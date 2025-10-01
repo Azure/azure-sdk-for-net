@@ -142,18 +142,19 @@ if ($relatedTypeSpecProjectFolder) {
                     exit $LASTEXITCODE
                 }
             }
+            
+            # Use tsp-client from pinned version by running from tsp-client directory
+            $tspclientCommand = "npm exec --no -- tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+            if ($swaggerDir) {
+                $tspclientCommand += " --local-spec-repo $typespecFolder"
+            }
+            Write-Host $tspclientCommand
+            Invoke-Expression $tspclientCommand
         }
         finally {
             Pop-Location
         }
         
-        $tspclientCommand = "Push-Location '$tspClientDir'; npm exec --no -- tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
-        if ($swaggerDir) {
-            $tspclientCommand += " --local-spec-repo $typespecFolder"
-        }
-        $tspclientCommand += "; Pop-Location"
-        Write-Host $tspclientCommand
-        Invoke-Expression $tspclientCommand
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
           Write-Host "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."

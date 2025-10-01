@@ -47,7 +47,12 @@ function Get-Mgmt-TspCommand {
     )
     Install-TspClient
     
-    $command = "cd `"$tspClientDir`" && npx tsp compile `"$specFile`""
+    # Change to tsp-client directory to use pinned version, then run tsp compile
+    if ($IsLinux -or $IsMacOs) {
+        $command = "cd '$tspClientDir' && npx tsp compile '$specFile'"
+    } else {
+        $command = "pushd `"$tspClientDir`" && npx tsp compile `"$specFile`" && popd"
+    }
     $command += " --trace @azure-typespec/http-client-csharp-mgmt"
     $command += " --emit `"$repoRoot/..`""
     $configFile = Join-Path $generationDir "tspconfig.yaml"

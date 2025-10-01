@@ -108,25 +108,29 @@ try {
         }
     }
     
-    # Use tsp from pinned version in eng/common/tsp-client
-    $typespecCompileCommand = "Push-Location '$tspClientDir'; npx tsp compile '$mainTypeSpecFile' --emit $emitterName$emitterAdditionalOptions"
-    if ($TypespecAdditionalOptions) {
-        $options = $TypespecAdditionalOptions.Split(";");
-        foreach ($option in $options) {
-            $typespecCompileCommand += " --option $emitterName.$option"
+    # Use tsp from pinned version in eng/common/tsp-client by changing to that directory
+    Push-Location $tspClientDir
+    try {
+        $typespecCompileCommand = "npx tsp compile '$mainTypeSpecFile' --emit $emitterName$emitterAdditionalOptions"
+        if ($TypespecAdditionalOptions) {
+            $options = $TypespecAdditionalOptions.Split(";");
+            foreach ($option in $options) {
+                $typespecCompileCommand += " --option $emitterName.$option"
+            }
         }
+
+        if ($SaveInputs) {
+            $typespecCompileCommand += " --option $emitterName.save-inputs=true"
+        }
+
+        Write-Host($typespecCompileCommand)
+        Invoke-Expression $typespecCompileCommand
+        
+        if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
-
-    if ($SaveInputs) {
-        $typespecCompileCommand += " --option $emitterName.save-inputs=true"
+    finally {
+        Pop-Location
     }
-    
-    $typespecCompileCommand += "; Pop-Location"
-
-    Write-Host($typespecCompileCommand)
-    Invoke-Expression $typespecCompileCommand
-
-    if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 finally {
     Pop-Location
