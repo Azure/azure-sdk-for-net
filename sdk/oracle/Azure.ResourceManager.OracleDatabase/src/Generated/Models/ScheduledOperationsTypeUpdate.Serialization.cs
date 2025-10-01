@@ -34,8 +34,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(ScheduledOperationsTypeUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("dayOfWeek"u8);
-            writer.WriteObjectValue(DayOfWeek, options);
+            if (Optional.IsDefined(DayOfWeek))
+            {
+                writer.WritePropertyName("dayOfWeek"u8);
+                writer.WriteObjectValue<OracleDatabaseDayOfWeekUpdate>(DayOfWeek, options);
+            }
             if (Optional.IsDefined(AutoStartOn))
             {
                 writer.WritePropertyName("scheduledStartTime"u8);
@@ -92,6 +95,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("dayOfWeek"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     dayOfWeek = OracleDatabaseDayOfWeekUpdate.DeserializeOracleDatabaseDayOfWeekUpdate(property.Value, options);
                     continue;
                 }

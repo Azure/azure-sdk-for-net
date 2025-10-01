@@ -37,7 +37,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         public LambdaTestHyperExecuteOrganizationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -97,7 +100,9 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     {
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus?), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails offerDetails = null) { throw null; }
         public static Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData LambdaTestHyperExecuteOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch LambdaTestHyperExecuteOrganizationPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties LambdaTestHyperExecuteOrganizationProperties(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails marketplace = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails user = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState? provisioningState = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState?), int? partnerLicensesSubscribed = default(int?), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties = null) { throw null; }
+        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 LambdaTestHyperExecuteSingleSignOnPropertiesV2(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType type = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState? state = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState?), string enterpriseAppId = null, string uri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null) { throw null; }
     }
     public partial class LambdaTestHyperExecuteMarketplaceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>
     {
@@ -105,7 +110,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails OfferDetails { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -129,6 +137,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -141,7 +150,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public string PublisherId { get { throw null; } set { } }
         public string TermId { get { throw null; } set { } }
         public string TermUnit { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -152,7 +164,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     {
         public LambdaTestHyperExecuteOfferPartnerProperties(int licensesSubscribed) { }
         public int LicensesSubscribed { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -175,6 +190,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -183,7 +199,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public LambdaTestHyperExecuteOrganizationPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -198,7 +217,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 SingleSignOnProperties { get { throw null; } set { } }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails User { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -213,7 +235,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState? State { get { throw null; } set { } }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType Type { get { throw null; } set { } }
         public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -236,6 +261,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -254,6 +280,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType right) { throw null; }
         public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -265,7 +292,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public string LastName { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
         public string Upn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

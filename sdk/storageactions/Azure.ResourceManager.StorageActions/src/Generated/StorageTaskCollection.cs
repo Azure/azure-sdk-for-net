@@ -255,8 +255,20 @@ namespace Azure.ResourceManager.StorageActions
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _storageTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StorageTaskData> response = Response.FromValue(StorageTaskData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StorageTaskData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageTaskData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageTaskData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -284,8 +296,20 @@ namespace Azure.ResourceManager.StorageActions
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _storageTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageTaskData> response = Response.FromValue(StorageTaskData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StorageTaskData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageTaskData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageTaskData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -313,8 +337,20 @@ namespace Azure.ResourceManager.StorageActions
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _storageTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StorageTaskData> response = Response.FromValue(StorageTaskData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StorageTaskData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageTaskData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageTaskData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<StorageTaskResource>(response.GetRawResponse());
@@ -346,8 +382,20 @@ namespace Azure.ResourceManager.StorageActions
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _storageTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageTaskData> response = Response.FromValue(StorageTaskData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StorageTaskData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageTaskData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageTaskData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<StorageTaskResource>(response.GetRawResponse());
@@ -374,7 +422,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StorageTaskResource> IAsyncEnumerable<StorageTaskResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             DisplayName = displayName;
             HighCapacityDatabaseStorageInput = highCapacityDatabaseStorageInput;
+            AttachedShapeAttributes = new ChangeTrackingList<ExascaleStorageShapeAttribute>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultProperties"/>. </summary>
@@ -71,8 +73,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="vmClusterCount"> The number of Exadata VM clusters used the Exadata Database Storage Vault. </param>
         /// <param name="ocid"> The OCID of the Exadata Database Storage Vault. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="exadataInfrastructureId"> Cloud Exadata infrastructure ID. </param>
+        /// <param name="attachedShapeAttributes"> The shapeAttribute of the Exadata VM cluster(s) associated with the Exadata Database Storage Vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, ResourceIdentifier exadataInfrastructureId, IReadOnlyList<ExascaleStorageShapeAttribute> attachedShapeAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdditionalFlashCacheInPercent = additionalFlashCacheInPercent;
             Description = description;
@@ -86,6 +90,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             VmClusterCount = vmClusterCount;
             Ocid = ocid;
             OciUri = ociUri;
+            ExadataInfrastructureId = exadataInfrastructureId;
+            AttachedShapeAttributes = attachedShapeAttributes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -128,5 +134,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string Ocid { get; }
         /// <summary> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </summary>
         public Uri OciUri { get; }
+        /// <summary> Cloud Exadata infrastructure ID. </summary>
+        public ResourceIdentifier ExadataInfrastructureId { get; set; }
+        /// <summary> The shapeAttribute of the Exadata VM cluster(s) associated with the Exadata Database Storage Vault. </summary>
+        public IReadOnlyList<ExascaleStorageShapeAttribute> AttachedShapeAttributes { get; }
     }
 }

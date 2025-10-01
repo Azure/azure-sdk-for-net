@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
 {
-    public partial class Dog : IJsonModel<Dog>
+    public partial class Dog : Pet, IJsonModel<Dog>
     {
         internal Dog() => throw null;
 

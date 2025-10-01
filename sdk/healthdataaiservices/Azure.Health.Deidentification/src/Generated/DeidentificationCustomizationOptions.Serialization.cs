@@ -43,6 +43,11 @@ namespace Azure.Health.Deidentification
                 writer.WritePropertyName("surrogateLocale"u8);
                 writer.WriteStringValue(SurrogateLocale);
             }
+            if (Optional.IsDefined(InputLocale))
+            {
+                writer.WritePropertyName("inputLocale"u8);
+                writer.WriteStringValue(InputLocale);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -87,6 +92,7 @@ namespace Azure.Health.Deidentification
             }
             string redactionFormat = default;
             string surrogateLocale = default;
+            string inputLocale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -100,12 +106,17 @@ namespace Azure.Health.Deidentification
                     surrogateLocale = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("inputLocale"u8))
+                {
+                    inputLocale = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeidentificationCustomizationOptions(redactionFormat, surrogateLocale, additionalBinaryDataProperties);
+            return new DeidentificationCustomizationOptions(redactionFormat, surrogateLocale, inputLocale, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

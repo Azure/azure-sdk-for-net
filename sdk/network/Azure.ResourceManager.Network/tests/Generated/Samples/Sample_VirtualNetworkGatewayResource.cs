@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkScalableGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkScalableGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayDelete.json
             // this example is just showing the usage of "VirtualNetworkGateways_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVirtualNetworkGatewayTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayUpdateTags.json
             // this example is just showing the usage of "VirtualNetworkGateways_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetConnections_VirtualNetworkGatewaysListConnections()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewaysListConnections.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewaysListConnections.json
             // this example is just showing the usage of "VirtualNetworkGateways_ListConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Reset_ResetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayReset.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayReset.json
             // this example is just showing the usage of "VirtualNetworkGateways_Reset" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResetVpnClientSharedKey_ResetVpnClientSharedKey()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayResetVpnClientSharedKey.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayResetVpnClientSharedKey.json
             // this example is just showing the usage of "VirtualNetworkGateways_ResetVpnClientSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GenerateVpnClientPackage_GenerateVPNClientPackage()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGenerateVpnClientPackage.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGenerateVpnClientPackage.json
             // this example is just showing the usage of "VirtualNetworkGateways_Generatevpnclientpackage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GenerateVpnProfile_GenerateVirtualNetworkGatewayVPNProfile()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGenerateVpnProfile.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGenerateVpnProfile.json
             // this example is just showing the usage of "VirtualNetworkGateways_GenerateVpnProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetVpnProfilePackageUrl_GetVirtualNetworkGatewayVPNProfilePackageURL()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGetVpnProfilePackageUrl.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGetVpnProfilePackageUrl.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetVpnProfilePackageUrl" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetBgpPeerStatus_GetVirtualNetworkGatewayBGPPeerStatus()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGetBGPPeerStatus.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGetBGPPeerStatus.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetBgpPeerStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task SupportedVpnDevices_ListVirtualNetworkGatewaySupportedVPNDevices()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewaySupportedVpnDevice.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewaySupportedVpnDevice.json
             // this example is just showing the usage of "VirtualNetworkGateways_SupportedVpnDevices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLearnedRoutes_GetVirtualNetworkGatewayLearnedRoutes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayLearnedRoutes.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayLearnedRoutes.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetLearnedRoutes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAdvertisedRoutes_GetVirtualNetworkGatewayAdvertisedRoutes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGetAdvertisedRoutes.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGetAdvertisedRoutes.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetAdvertisedRoutes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResiliencyInformation_GetVirtualNetworkGatewayResiliencyInformation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGetResiliencyInformation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGetResiliencyInformation.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetResiliencyInformation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetRoutesInformation_GetVirtualNetworkGatewayRoutesInformation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGetRoutesInformation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGetRoutesInformation.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetRoutesInformation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task SetVpnclientIPsecParameters_SetVirtualNetworkGatewayVpnClientIpsecParameters()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewaySetVpnClientIpsecParameters.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewaySetVpnClientIpsecParameters.json
             // this example is just showing the usage of "VirtualNetworkGateways_SetVpnclientIPsecParameters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetVpnclientIPsecParameters_GetVirtualNetworkGatewayVpnClientIpsecParameters()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGetVpnClientIpsecParameters.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGetVpnClientIpsecParameters.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientIPsecParameters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayWithFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayStartPacketCaptureFilterData.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayStartPacketCaptureFilterData.json
             // this example is just showing the usage of "VirtualNetworkGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayWithoutFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayStartPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayStartPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StopPacketCapture_StopPacketCaptureOnVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayStopPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayStopPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGateways_StopPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFailoverAllTestDetails_VirtualNetworkGatewayGetFailoverAllTestsDetails()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGetFailoverAllTestsDetails.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGetFailoverAllTestsDetails.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetFailoverAllTestDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFailoverSingleTestDetails_VirtualNetworkGatewayGetFailoverSingleTestDetails()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGetFailoverSingleTestDetails.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGetFailoverSingleTestDetails.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetFailoverSingleTestDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartExpressRouteSiteFailoverSimulation_VirtualNetworkGatewayStartSiteFailoverSimulation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayStartSiteFailoverSimulation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayStartSiteFailoverSimulation.json
             // this example is just showing the usage of "VirtualNetworkGateways_StartExpressRouteSiteFailoverSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StopExpressRouteSiteFailoverSimulation_VirtualNetworkGatewayStopSiteFailoverSimulation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayStopSiteFailoverSimulation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayStopSiteFailoverSimulation.json
             // this example is just showing the usage of "VirtualNetworkGateways_StopExpressRouteSiteFailoverSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -760,7 +760,7 @@ IsVerified = true,
         [Ignore("Only validating compilation of examples")]
         public async Task GetVpnclientConnectionHealth_GetVirtualNetworkGatewayVpnclientConnectionHealth()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayGetVpnclientConnectionHealth.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayGetVpnclientConnectionHealth.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientConnectionHealth" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -787,7 +787,7 @@ IsVerified = true,
         [Ignore("Only validating compilation of examples")]
         public async Task DisconnectVirtualNetworkGatewayVpnConnections_DisconnectVpnConnectionsFromVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewaysDisconnectP2sVpnConnections.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewaysDisconnectP2sVpnConnections.json
             // this example is just showing the usage of "VirtualNetworkGateways_DisconnectVirtualNetworkGatewayVpnConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -817,7 +817,7 @@ IsVerified = true,
         [Ignore("Only validating compilation of examples")]
         public async Task InvokePrepareMigration_VirtualNetworkGatewayPrepareMigration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayPrepareMigration.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayPrepareMigration.json
             // this example is just showing the usage of "VirtualNetworkGateways_InvokePrepareMigration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -847,7 +847,7 @@ IsVerified = true,
         [Ignore("Only validating compilation of examples")]
         public async Task InvokeExecuteMigration_VirtualNetworkGatewayExecuteMigration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayExecuteMigration.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayExecuteMigration.json
             // this example is just showing the usage of "VirtualNetworkGateways_InvokeExecuteMigration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -873,7 +873,7 @@ IsVerified = true,
         [Ignore("Only validating compilation of examples")]
         public async Task InvokeCommitMigration_VirtualNetworkGatewayCommitMigration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayCommitMigration.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayCommitMigration.json
             // this example is just showing the usage of "VirtualNetworkGateways_InvokeCommitMigration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -899,7 +899,7 @@ IsVerified = true,
         [Ignore("Only validating compilation of examples")]
         public async Task InvokeAbortMigration_VirtualNetworkGatewayAbortMigration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VirtualNetworkGatewayAbortMigration.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkGatewayAbortMigration.json
             // this example is just showing the usage of "VirtualNetworkGateways_InvokeAbortMigration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

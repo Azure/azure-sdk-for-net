@@ -169,9 +169,14 @@ namespace Azure.Storage.Blobs
             V2025_07_05 = 27,
 
             /// <summary>
-            /// 2025-11-05 service version.
+            /// The 2025-11-05 service version.
             /// </summary>
-            V2025_11_05 = 28
+            V2025_11_05 = 28,
+
+            /// <summary>
+            /// The 2026-02-06 service version.
+            /// </summary>
+            V2026_02_06 = 29
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -249,31 +254,6 @@ namespace Azure.Storage.Blobs
 
             this.Initialize();
             AddHeadersAndQueryParameters();
-        }
-
-        /// <summary>
-        /// Initializes new instance of <see cref="BlobClientOptions"/>
-        /// with the same values.
-        /// </summary>
-        /// <param name="options"></param>
-        internal BlobClientOptions(BlobClientOptions options)
-            : base(options.Diagnostics)
-        {
-            Transport = options.Transport;
-            RetryPolicy = options.RetryPolicy;
-            Version = options.Version;
-            CustomerProvidedKey = options.CustomerProvidedKey;
-            EncryptionScope = options.EncryptionScope;
-            GeoRedundantSecondaryUri = options.GeoRedundantSecondaryUri;
-            TransferValidation = options.TransferValidation;
-            TrimBlobNameSlashes = options.TrimBlobNameSlashes;
-            Request100ContinueOptions = options.Request100ContinueOptions;
-            _clientSideEncryptionOptions = options._clientSideEncryptionOptions;
-            Retry.Mode = options.Retry.Mode;
-            Retry.MaxRetries = options.Retry.MaxRetries;
-            Retry.MaxDelay = options.Retry.MaxDelay;
-            Retry.NetworkTimeout = options.Retry.NetworkTimeout;
-            Retry.Delay = options.Retry.Delay;
         }
 
         /// <summary>

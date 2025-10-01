@@ -31,6 +31,7 @@ namespace Azure.Generator.Management.Primitives
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToInheritableSystemTypeMap = new Dictionary<string, CSharpType>()
         {
             ["Azure.ResourceManager.CommonTypes.ProxyResource"] = typeof(ResourceData),
+            ["Azure.ResourceManager.CommonTypes.ExtensionResource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.Resource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.TrackedResource"] = typeof(TrackedResourceData),
         };

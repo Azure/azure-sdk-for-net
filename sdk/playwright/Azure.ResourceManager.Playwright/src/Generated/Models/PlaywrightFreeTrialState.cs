@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
-    /// <summary> The free-trial state. </summary>
+    /// <summary> The free trial state. </summary>
     public readonly partial struct PlaywrightFreeTrialState : IEquatable<PlaywrightFreeTrialState>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Playwright.Models
         private const string ExpiredValue = "Expired";
         private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary> The free-trial is Active. </summary>
+        /// <summary> The free trial is active and available for use. </summary>
         public static PlaywrightFreeTrialState Active { get; } = new PlaywrightFreeTrialState(ActiveValue);
-        /// <summary> The free-trial is Expired. </summary>
+        /// <summary> The free trial has expired and is no longer available. </summary>
         public static PlaywrightFreeTrialState Expired { get; } = new PlaywrightFreeTrialState(ExpiredValue);
-        /// <summary> The free-trial is Not Applicable. </summary>
+        /// <summary> The free trial is not applicable for this resource. </summary>
         public static PlaywrightFreeTrialState NotApplicable { get; } = new PlaywrightFreeTrialState(NotApplicableValue);
         /// <summary> Determines if two <see cref="PlaywrightFreeTrialState"/> values are the same. </summary>
         public static bool operator ==(PlaywrightFreeTrialState left, PlaywrightFreeTrialState right) => left.Equals(right);

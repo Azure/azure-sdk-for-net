@@ -165,7 +165,7 @@
 - CallSource has been flattened out.
 - CallInvite model replaces previous models for handling outbound calls.
 
-## 1.0.0-beta.1 (2022-11-07)  **Deprecated** - This version is no longer supported and won't receive updates.
+## 1.0.0-beta.1 (2022-11-07)
 This is a refresh of Azure Communication Service's Calling-Server library. It is now called Call Automation. Call Automation enables developers to build call workflows. Personalise customer interactions by listening to call events and take actions based on your business logic. For more information, please see the [README][read_me].
 
 This is a Public Preview version, so breaking changes are possible in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
