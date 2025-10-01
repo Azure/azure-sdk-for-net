@@ -14,7 +14,7 @@ $vcpkgBinarySourceSas = New-AzStorageContainerSASToken `
   -Context $ctx `
   -ExpiryTime (Get-Date).AddHours(1)
 
-Write-Host "Ensure redaction of SAS tokens in logs"
+# Ensure redaction of SAS tokens in logs
 Write-Host "##vso[task.setvariable variable=VCPKG_BINARY_SAS_TOKEN;issecret=true;]$vcpkgBinarySourceSas"
 
 Write-Host "Setting vcpkg binary cache to read and write"
