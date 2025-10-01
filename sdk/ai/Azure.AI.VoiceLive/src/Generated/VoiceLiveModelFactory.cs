@@ -50,7 +50,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
+        /// 
         /// - For pcm16: 8000, 16000, 24000
+        /// 
         /// - For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
@@ -659,6 +661,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
         /// The final status of the response.
+        /// 
         /// One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
         /// </param>
         /// <param name="statusDetails"> Additional details about the status. </param>
@@ -679,7 +682,7 @@ namespace Azure.AI.VoiceLive
         /// the `conversation_id` will be an id like `conv_1234`.
         /// </param>
         /// <param name="voice"> supported voice identifiers and configurations. </param>
-        /// <param name="modalitiesInternal">
+        /// <param name="modalities">
         /// The set of modalities the model used to respond. If there are multiple modalities,
         /// the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
         /// could be responding in either text or audio.
@@ -688,13 +691,13 @@ namespace Azure.AI.VoiceLive
         /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
         /// <param name="maxOutputTokens">
         /// Maximum number of output tokens for a single assistant response,
-        /// inclusive of tool calls, that was used in this response.
+        ///     inclusive of tool calls, that was used in this response.
         /// </param>
         /// <returns> A new <see cref="VoiceLive.SessionResponse"/> instance for mocking. </returns>
-        public static SessionResponse SessionResponse(string id = default, string @object = default, SessionResponseStatus? status = default, ResponseStatusDetails statusDetails = default, IEnumerable<SessionResponseItem> output = default, ResponseTokenStatistics usage = default, string conversationId = default, BinaryData voice = default, IEnumerable<InteractionModality> modalitiesInternal = default, OutputAudioFormat? outputAudioFormat = default, float? temperature = default, BinaryData maxOutputTokens = default)
+        public static SessionResponse SessionResponse(string id = default, string @object = default, SessionResponseStatus? status = default, ResponseStatusDetails statusDetails = default, IEnumerable<SessionResponseItem> output = default, ResponseTokenStatistics usage = default, string conversationId = default, VoiceProvider voice = default, IEnumerable<InteractionModality> modalities = default, OutputAudioFormat? outputAudioFormat = default, float? temperature = default, MaxResponseOutputTokensOption maxOutputTokens = default)
         {
             output ??= new ChangeTrackingList<SessionResponseItem>();
-            modalitiesInternal ??= new ChangeTrackingList<InteractionModality>();
+            modalities ??= new ChangeTrackingList<InteractionModality>();
 
             return new SessionResponse(
                 id,
@@ -705,7 +708,7 @@ namespace Azure.AI.VoiceLive
                 usage,
                 conversationId,
                 voice,
-                modalitiesInternal.ToList(),
+                modalities.ToList(),
                 outputAudioFormat,
                 temperature,
                 maxOutputTokens,
@@ -1017,7 +1020,6 @@ namespace Azure.AI.VoiceLive
         /// detected in the audio buffer. This can happen any time audio is added to the
         /// buffer (unless speech is already detected). The client may want to use this
         /// event to interrupt audio playback or provide visual feedback to the user.
-        /// 
         /// The client should expect to receive a `input_audio_buffer.speech_stopped` event
         /// when speech stops. The `item_id` property is the ID of the user message item
         /// that will be created when speech stops and will also be included in the
@@ -1049,14 +1051,14 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Returned when a conversation item is created. There are several scenarios that produce this event:
-        ///   - The server is generating a Response, which if successful will produce
-        ///     either one or two Items, which will be of type `message`
-        ///     (role `assistant`) or type `function_call`.
-        ///   - The input audio buffer has been committed, either by the client or the
-        ///     server (in `server_vad` mode). The server will take the content of the
-        ///     input audio buffer and add it to a new user message Item.
-        ///   - The client has sent a `conversation.item.create` event to add a new Item
-        ///     to the Conversation.
+        /// - The server is generating a Response, which if successful will produce
+        /// either one or two Items, which will be of type `message`
+        /// (role `assistant`) or type `function_call`.
+        /// - The input audio buffer has been committed, either by the client or the
+        /// server (in `server_vad` mode). The server will take the content of the
+        /// input audio buffer and add it to a new user message Item.
+        /// - The client has sent a `conversation.item.create` event to add a new Item
+        /// to the Conversation.
         /// </summary>
         /// <param name="eventId"></param>
         /// <param name="previousItemId">
@@ -1076,7 +1078,6 @@ namespace Azure.AI.VoiceLive
         /// committed by the client or server (in `server_vad` mode). Transcription runs
         /// asynchronously with Response creation, so this event may come before or after
         /// the Response events.
-        /// 
         /// VoiceLive API models accept audio natively, and thus input transcription is a
         /// separate process run on a separate ASR (Automatic Speech Recognition) model.
         /// The transcript may diverge somewhat from the model's interpretation, and
@@ -1123,7 +1124,6 @@ namespace Azure.AI.VoiceLive
         /// Returned when an earlier assistant audio message item is truncated by the
         /// client with a `conversation.item.truncate` event. This event is used to
         /// synchronize the server's understanding of the audio with the client's playback.
-        /// 
         /// This action will truncate the audio and remove the server-side text transcript
         /// to ensure there is no text in the context that hasn't been heard by the user.
         /// </summary>
