@@ -60,7 +60,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
-    $pkgProp.IsAotCompatible = ($isAotCompatible -eq 'true')
+    $pkgProp.PackageIsAotCompatible = ($isAotCompatible -eq 'true')
     $pkgProp.ArtifactName = $pkgName
     $pkgProp.IncludedForValidation = $false
     $pkgProp.DirectoryPath = ($pkgProp.DirectoryPath)
