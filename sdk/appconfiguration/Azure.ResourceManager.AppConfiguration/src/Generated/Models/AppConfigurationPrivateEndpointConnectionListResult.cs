@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> A list of private endpoint connections. </summary>
+    /// <summary> The response of a PrivateEndpointConnection list operation. </summary>
     internal partial class AppConfigurationPrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionListResult"/>. </summary>
-        internal AppConfigurationPrivateEndpointConnectionListResult()
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AppConfigurationPrivateEndpointConnectionListResult(IEnumerable<AppConfigurationPrivateEndpointConnectionData> value)
         {
-            Value = new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> The collection value. </param>
-        /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationPrivateEndpointConnectionListResult(IReadOnlyList<AppConfigurationPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppConfigurationPrivateEndpointConnectionListResult(IReadOnlyList<AppConfigurationPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The collection value. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionListResult"/> for deserialization. </summary>
+        internal AppConfigurationPrivateEndpointConnectionListResult()
+        {
+        }
+
+        /// <summary> The PrivateEndpointConnection items on this page. </summary>
         public IReadOnlyList<AppConfigurationPrivateEndpointConnectionData> Value { get; }
-        /// <summary> The URI that can be used to request the next set of paged results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_KeyValuesGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresGetKeyValue.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresGetKeyValue.json
             // this example is just showing the usage of "KeyValues_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_KeyValuesDelete()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresDeleteKeyValue.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresDeleteKeyValue.json
             // this example is just showing the usage of "KeyValues_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_KeyValuesCreateOrUpdate()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresCreateKeyValue.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresCreateKeyValue.json
             // this example is just showing the usage of "KeyValues_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
