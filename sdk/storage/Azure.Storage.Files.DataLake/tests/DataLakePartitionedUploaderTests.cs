@@ -57,6 +57,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task UploadsStreamInBlocksIfLengthNotAvailable()
         {
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             TestStream content = new TestStream(_async, null, TestStream.Read(0, 10));
             TrackingArrayPool testPool = new TrackingArrayPool();
             AppendSink sink = new AppendSink();
@@ -66,14 +67,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new Uri("http://mock"),
                 new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
-            SetupInternalStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink, cts);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
                 transferValidation: s_validationNone,
                 arrayPool: testPool);
-            Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
+            Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
             Assert.AreEqual(1, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
@@ -85,6 +86,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task UploadsStreamInBlocksIfLengthIsOverTheLimit()
         {
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             PredictableStream content = new PredictableStream(30);
             TrackingArrayPool testPool = new TrackingArrayPool();
             AppendSink sink = new AppendSink();
@@ -92,14 +94,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
-            SetupInternalStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink, cts);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 },
                 transferValidation: s_validationNone,
                 arrayPool: testPool);
-            Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
+            Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
             Assert.AreEqual(2, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
@@ -108,6 +110,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task UploadsStreamInBlocksUnderSize()
         {
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             TestStream content = new TestStream(_async, null,
                 TestStream.Read(0, 10),
                 TestStream.Read(1, 10)
@@ -118,14 +121,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
-            SetupInternalStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink, cts);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 10 },
                 transferValidation: s_validationNone,
                 arrayPool: testPool);
-            Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
+            Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
             Assert.AreEqual(2, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
@@ -138,6 +141,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task MergesLotsOfSmallBlocks()
         {
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             TestStream content = new TestStream(_async, null,
                 Enumerable.Range(1, 250).Select(b => TestStream.Read((byte)b, b)).ToArray()
             );
@@ -148,14 +152,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
-            SetupInternalStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink, cts);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
                 transferValidation: s_validationNone,
                 arrayPool: testPool);
-            Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
+            Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
             Assert.AreEqual(1, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
@@ -167,6 +171,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task SmallMaxWriteSize()
         {
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             TestStream content = new TestStream(_async, null,
                 Enumerable.Range(1, 1000).Select(b => TestStream.Read((byte)b, 2)).ToArray()
             );
@@ -177,14 +182,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
-            SetupInternalStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink, cts);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 100 },
                 transferValidation: s_validationNone,
                 arrayPool: testPool);
-            Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
+            Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
             Assert.AreEqual(s_response, info);
             Assert.AreEqual(0, testPool.CurrentCount);
@@ -201,6 +206,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task MergesBlocksUntilTheyReachOverHalfMaxSize()
         {
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             TestStream content = new TestStream(_async, null,
                 TestStream.Read(0, 5),
                 TestStream.Read(1, 5),
@@ -211,14 +217,14 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
-            SetupInternalStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink, cts);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 10 },
                 transferValidation: s_validationNone,
                 arrayPool: testPool);
-            Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
+            Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
             Assert.AreEqual(2, sink.Appended.Count);
             // First two should be merged
@@ -234,6 +240,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
         public async Task CanHandleLongAppendBufferedUpload()
         {
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             const long blockSize = int.MaxValue + 1024L;
             const int numBlocks = 2;
             Stream content = new Storage.Tests.Shared.PredictableStream(numBlocks * blockSize);
@@ -243,7 +250,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
             clientMock.SetupGet(c => c.ClientConfiguration.ClientOptions.Version).CallBase();
-            SetupInternalStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink, cts);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
@@ -255,7 +262,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 },
                 transferValidation: default,
                 arrayPool: testPool);
-            Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
+            Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
             Assert.AreEqual(s_response, info);
             foreach (var block in sink.Appended.Values)
@@ -264,10 +271,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        private async Task<Response<PathInfo>> InvokeUploadAsync(PartitionedUploader<DataLakeFileUploadOptions, PathInfo> uploader, Stream content)
-        {
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            return await uploader.UploadInternal(
+        private async Task<Response<PathInfo>> InvokeUploadAsync(
+            PartitionedUploader<DataLakeFileUploadOptions, PathInfo> uploader,
+            Stream content,
+            CancellationTokenSource cts)
+            => await uploader.UploadInternal(
                 content,
                 expectedContentLength: default,
                 new DataLakeFileUploadOptions
@@ -280,11 +288,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 s_progress,
                 _async,
                 cts.Token);
-        }
 
-        private void SetupInternalStaging(Mock<DataLakeFileClient> clientMock, AppendSink sink)
+        private void SetupInternalStaging(
+            Mock<DataLakeFileClient> clientMock,
+            AppendSink sink,
+            CancellationTokenSource cts)
         {
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             clientMock.Setup(
                 c => c.CreateInternal(
                     IsAny<PathResourceType>(),
