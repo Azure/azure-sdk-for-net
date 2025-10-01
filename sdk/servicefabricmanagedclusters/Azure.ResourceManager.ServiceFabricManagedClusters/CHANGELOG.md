@@ -15,12 +15,6 @@ Nodetype features
 Service Endpoint
 - NetworkIdentifier
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.0-beta.3 (2025-06-23)
 
 ### Features Added
