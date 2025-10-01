@@ -1194,15 +1194,15 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class MediaStreamingOptions
     {
-        public MediaStreamingOptions(Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType, Azure.Communication.CallAutomation.MediaStreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.MediaStreamingTransport)) { }
+        public MediaStreamingOptions(System.Uri transportUri, Azure.Communication.CallAutomation.MediaStreamingContent contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType, Azure.Communication.CallAutomation.MediaStreamingTransport transportType = default(Azure.Communication.CallAutomation.MediaStreamingTransport), bool? startMediaStreaming = default(bool?)) { }
         public Azure.Communication.CallAutomation.AudioFormat? AudioFormat { get { throw null; } set { } }
         public bool? EnableBidirectional { get { throw null; } set { } }
         public bool? EnableDtmfTones { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingAudioChannel MediaStreamingAudioChannel { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingContent MediaStreamingContent { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.MediaStreamingContent MediaStreamingContent { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingTransport MediaStreamingTransport { get { throw null; } }
-        public bool? StartMediaStreaming { get { throw null; } set { } }
-        public System.Uri TransportUri { get { throw null; } set { } }
+        public bool? StartMediaStreaming { get { throw null; } }
+        public System.Uri TransportUri { get { throw null; } }
     }
     public partial class MediaStreamingStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -2066,18 +2066,17 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TranscriptionOptions
     {
-        public TranscriptionOptions(Azure.Communication.CallAutomation.TranscriptionTransport streamingTransport = default(Azure.Communication.CallAutomation.TranscriptionTransport)) { }
-        public TranscriptionOptions(string locale, Azure.Communication.CallAutomation.TranscriptionTransport streamingTransport = default(Azure.Communication.CallAutomation.TranscriptionTransport)) { }
+        public TranscriptionOptions(System.Uri transportUri, string locale, bool? startTranscription = default(bool?), Azure.Communication.CallAutomation.TranscriptionTransport transcriptionTransport = default(Azure.Communication.CallAutomation.TranscriptionTransport)) { }
         public bool? EnableIntermediateResults { get { throw null; } set { } }
         public bool? IsSentimentAnalysisEnabled { get { throw null; } set { } }
         public string Locale { get { throw null; } }
         public System.Collections.Generic.IList<string> Locales { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } set { } }
         public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
-        public bool? StartTranscription { get { throw null; } set { } }
+        public bool? StartTranscription { get { throw null; } }
         public Azure.Communication.CallAutomation.SummarizationOptions SummarizationOptions { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.TranscriptionTransport TranscriptionTransport { get { throw null; } set { } }
-        public System.Uri TransportUri { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TranscriptionTransport TranscriptionTransport { get { throw null; } }
+        public System.Uri TransportUri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TranscriptionResultState : System.IEquatable<Azure.Communication.CallAutomation.TranscriptionResultState>
