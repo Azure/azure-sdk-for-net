@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.2 (2025-10-01)
 
 ### Features Added
 - Add support for read receipt and typing indicator.
