@@ -51,12 +51,17 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $isAotCompatible = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $isAotCompatible, $debugIsShippingLibrary, $debugAotCompatOptOut, $debugTargetFramework, $debugIsAotCompatible = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
     }
-    Write-Host "Got isAotCompatible from csproj and value is $isAotCompatible"
+    Write-Host "Package: $pkgName"
+    Write-Host "  IsAotCompatible (final): $isAotCompatible"
+    Write-Host "  IsShippingLibrary: $debugIsShippingLibrary"
+    Write-Host "  AotCompatOptOut: $debugAotCompatOptOut"
+    Write-Host "  TargetFramework: $debugTargetFramework"
+    Write-Host "  IsAotCompatible (raw): $debugIsAotCompatible"
 
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
