@@ -166,7 +166,7 @@ AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credentia
 
 ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
-if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
+if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
 {
     throw new InvalidOperationException("Invalid URI.");
 }
