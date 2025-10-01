@@ -60,10 +60,12 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
-    $pkgProp.PackageIsAotCompatible = ($isAotCompatible -eq 'true')
     $pkgProp.ArtifactName = $pkgName
     $pkgProp.IncludedForValidation = $false
     $pkgProp.DirectoryPath = ($pkgProp.DirectoryPath)
+
+    # Store IsAotCompatible from csproj in CIParameters for later use
+    $pkgProp.CIParameters["IsAotCompatible"] = ($isAotCompatible -eq 'true')
 
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
@@ -79,7 +81,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
       else {
         # Value not set in CI.yml, use IsAotCompatible from csproj
-        $pkgProp.CIParameters["CheckAOTCompat"] = $pkgProp.IsAotCompatible
+        $pkgProp.CIParameters["CheckAOTCompat"] = $pkgProp.CIParameters["IsAotCompatible"]
       }
 
       # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
@@ -113,7 +115,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
     else {
       # No CI.yml found, use IsAotCompatible from csproj for CheckAOTCompat
-      $pkgProp.CIParameters["CheckAOTCompat"] = $pkgProp.IsAotCompatible
+      $pkgProp.CIParameters["CheckAOTCompat"] = $pkgProp.CIParameters["IsAotCompatible"]
       
       # If CheckAOTCompat is true but no CI.yml exists, set AOTTestInputs to "None"
       if ($pkgProp.CIParameters["CheckAOTCompat"]) {
