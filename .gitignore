@@ -181,7 +181,3 @@ TempTypeSpecFiles/
 
 # Common toolchain intermediate files
 temp
-git/ 
-package-lock.json 
-package.json 
-git 
