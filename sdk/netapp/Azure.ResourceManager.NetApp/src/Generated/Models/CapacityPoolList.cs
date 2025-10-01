@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of capacity pool resources. </summary>
+    /// <summary>
+    /// List of capacity pool resources
+    /// Serialized Name: CapacityPoolList
+    /// </summary>
     internal partial class CapacityPoolList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolList"/>. </summary>
-        /// <param name="value"> List of Capacity pools. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// List of Capacity pools
+        /// Serialized Name: CapacityPoolList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of results.
+        /// Serialized Name: CapacityPoolList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CapacityPoolList(IReadOnlyList<CapacityPoolData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Capacity pools. </summary>
+        /// <summary>
+        /// List of Capacity pools
+        /// Serialized Name: CapacityPoolList.value
+        /// </summary>
         public IReadOnlyList<CapacityPoolData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
+        /// <summary>
+        /// URL to get the next set of results.
+        /// Serialized Name: CapacityPoolList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
