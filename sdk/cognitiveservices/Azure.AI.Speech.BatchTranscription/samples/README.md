@@ -4,8 +4,7 @@ languages:
 - csharp
 products:
 - azure
-- azure-cognitive-services
-- azure-ai-speech-batchtranscription
+- azure-ai-services
 name: Azure AI Speech BatchTranscription samples for .NET
 description: Samples for the Azure.AI.Speech.BatchTranscription client library
 ---
