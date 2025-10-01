@@ -665,6 +665,14 @@ namespace Azure.AI.Agents.Persistent
         public static bool operator !=(Azure.AI.Agents.Persistent.ListSortOrder left, Azure.AI.Agents.Persistent.ListSortOrder right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MCPApproval
+    {
+        public MCPApproval(Azure.AI.Agents.Persistent.MCPApprovalPerTool perToolApproval) { }
+        public MCPApproval(string trust) { }
+        public bool AlwaysApprove { get { throw null; } }
+        public bool NeverApprove { get { throw null; } }
+        public Azure.AI.Agents.Persistent.MCPApprovalPerTool PerToolApproval { get { throw null; } }
+    }
     public partial class MCPApprovalPerTool : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>
     {
         public MCPApprovalPerTool() { }
@@ -706,7 +714,7 @@ namespace Azure.AI.Agents.Persistent
         public MCPToolResource(string serverLabel) { }
         public MCPToolResource(string serverLabel, System.Collections.Generic.IDictionary<string, string> headers) { }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
-        public System.BinaryData RequireApproval { get { throw null; } set { } }
+        public Azure.AI.Agents.Persistent.MCPApproval RequireApproval { get { throw null; } set { } }
         public string ServerLabel { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.MCPToolResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

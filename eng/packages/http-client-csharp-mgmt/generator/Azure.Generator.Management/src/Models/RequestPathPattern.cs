@@ -31,13 +31,17 @@ namespace Azure.Generator.Management.Models
         public static readonly RequestPathPattern Subscription = new("/subscriptions/{subscriptionId}");
         public static readonly RequestPathPattern Tenant = new(string.Empty);
 
-        public static RequestPathPattern GetFromScope(ResourceScope scope)
+        public static RequestPathPattern GetFromScope(ResourceScope scope, RequestPathPattern? path = null)
         {
             return scope switch
             {
                 ResourceScope.ResourceGroup => ResourceGroup,
                 ResourceScope.Subscription => Subscription,
                 ResourceScope.ManagementGroup => ManagementGroup,
+                ResourceScope.Extension =>
+                    path is null
+                        ? throw new InvalidOperationException("Extension scope requires a path parameter.")
+                        : new RequestPathPattern(path._segments.Take(1)),
                 ResourceScope.Tenant => Tenant,
                 _ => throw new InvalidOperationException($"Unhandled scope {scope}"),
             };
@@ -77,17 +81,23 @@ namespace Azure.Generator.Management.Models
         /// <returns></returns>
         public bool IsAncestorOf(RequestPathPattern other)
         {
+            // Ancestor detection: compare only constant segments, skip variable segments.
             // To be the parent of other, you must at least be shorter than other.
             if (other.Count <= Count)
                 return false;
             for (int i = 0; i < Count; i++)
             {
-                // we need the segment to be identical when strict is true (which is the default value)
-                // when strict is false, we also need the segment to be identical if it is constant.
-                // but if it is a reference, we only require they have the same type, do not require they have the same variable name.
-                // This case happens a lot during the management group parent detection - different RP calls this different things
-                if (!this[i].Equals(other[i]))
+                if (this[i].IsConstant)
+                {
+                    if (!this[i].Equals(other[i]))
+                        return false;
+                }
+                else // variable segment
+                {
+                    if (!other[i].IsConstant)
+                        continue;
                     return false;
+                }
             }
             return true;
         }

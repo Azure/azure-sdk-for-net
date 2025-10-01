@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceTelemetry event. </summary>
     [JsonConverter(typeof(IotHubDeviceTelemetryEventDataConverter))]
-    public partial class IotHubDeviceTelemetryEventData : IJsonModel<IotHubDeviceTelemetryEventData>
+    public partial class IotHubDeviceTelemetryEventData : DeviceTelemetryEventProperties, IJsonModel<IotHubDeviceTelemetryEventData>
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/> for deserialization. </summary>
         internal IotHubDeviceTelemetryEventData()

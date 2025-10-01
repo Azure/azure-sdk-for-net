@@ -142,6 +142,26 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("peerTrafficConfiguration"u8);
                 writer.WriteObjectValue(PeerTrafficConfiguration, options);
             }
+            if (Optional.IsDefined(IngressConfiguration))
+            {
+                writer.WritePropertyName("ingressConfiguration"u8);
+                writer.WriteObjectValue(IngressConfiguration, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -190,6 +210,9 @@ namespace Azure.ResourceManager.AppContainers
             string infrastructureResourceGroup = default;
             ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
             ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration = default;
+            ManagedEnvironmentIngressConfiguration ingressConfiguration = default;
+            IReadOnlyList<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections = default;
+            ContainerAppPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -394,6 +417,38 @@ namespace Azure.ResourceManager.AppContainers
                             peerTrafficConfiguration = ManagedEnvironmentPropertiesPeerTrafficConfiguration.DeserializeManagedEnvironmentPropertiesPeerTrafficConfiguration(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("ingressConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ingressConfiguration = ManagedEnvironmentIngressConfiguration.DeserializeManagedEnvironmentIngressConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ContainerAppPrivateEndpointConnectionData> array = new List<ContainerAppPrivateEndpointConnectionData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContainerAppPrivateEndpointConnectionData.DeserializeContainerAppPrivateEndpointConnectionData(item, options));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new ContainerAppPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -429,6 +484,9 @@ namespace Azure.ResourceManager.AppContainers
                 infrastructureResourceGroup,
                 peerAuthentication,
                 peerTrafficConfiguration,
+                ingressConfiguration,
+                privateEndpointConnections ?? new ChangeTrackingList<ContainerAppPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
                 serializedAdditionalRawData);
         }
 
@@ -918,6 +976,59 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     builder.Append("    peerTrafficConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PeerTrafficConfiguration, options, 4, false, "    peerTrafficConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngressConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ingressConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IngressConfiguration))
+                {
+                    builder.Append("    ingressConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IngressConfiguration, options, 4, false, "    ingressConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    if (PrivateEndpointConnections.Any())
+                    {
+                        builder.Append("    privateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
+                {
+                    builder.Append("    publicNetworkAccess: ");
+                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
                 }
             }
 

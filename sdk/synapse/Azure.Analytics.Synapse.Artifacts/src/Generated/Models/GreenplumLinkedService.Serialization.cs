@@ -119,11 +119,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("commandTimeout"u8);
                 writer.WriteObjectValue<object>(CommandTimeout);
             }
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
-            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -156,7 +151,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object sslMode = default;
             object connectionTimeout = default;
             object commandTimeout = default;
-            SecretBase password = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -328,15 +322,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             commandTimeout = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("password"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -361,8 +346,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 database,
                 sslMode,
                 connectionTimeout,
-                commandTimeout,
-                password);
+                commandTimeout);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -917,6 +918,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.PaidBurstingMaxIops,
                 provisionedMaxBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableDirectoryLease: options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -973,6 +975,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.PaidBurstingMaxIops,
                 provisionedMaxBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableDirectoryLease: options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1034,6 +1037,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableDirectoryLease: default,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1095,6 +1099,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableDirectoryLease: default,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1423,6 +1428,193 @@ namespace Azure.Storage.Files.Shares
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareServiceClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region GetUserDelegationKey
+        /// <summary>
+        /// The <see cref="GetUserDelegationKey"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="ShareSasBuilder"/>.
+        /// </summary>
+        /// <param name="startsOn">
+        /// Start time for the key's validity, with null indicating an
+        /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
+        /// </param>
+        /// <param name="expiresOn">
+        /// Expiration of the key's validity.  The time should be specified
+        /// in UTC.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
+        /// the service replication statistics.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Response<UserDelegationKey> GetUserDelegationKey(
+            DateTimeOffset? startsOn,
+            DateTimeOffset expiresOn,
+            CancellationToken cancellationToken = default) =>
+            GetUserDelegationKeyInternal(
+                startsOn,
+                expiresOn,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="ShareSasBuilder"/>.
+        /// </summary>
+        /// <param name="startsOn">
+        /// Start time for the key's validity, with null indicating an
+        /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
+        /// </param>
+        /// <param name="expiresOn">
+        /// Expiration of the key's validity.  The time should be specified
+        /// in UTC.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
+        /// the service replication statistics.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+            DateTimeOffset? startsOn,
+            DateTimeOffset expiresOn,
+            CancellationToken cancellationToken = default) =>
+            await GetUserDelegationKeyInternal(
+                startsOn,
+                expiresOn,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKeyInternal"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="ShareSasBuilder"/>.
+        /// </summary>
+        /// <param name="startsOn">
+        /// Start time for the key's validity, with null indicating an
+        /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
+        /// </param>
+        /// <param name="expiresOn">
+        /// Expiration of the key's validity.  The time should be specified
+        /// in UTC.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="async"/>
+        /// <returns>
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
+        /// the service replication statistics.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        private async Task<Response<UserDelegationKey>> GetUserDelegationKeyInternal(
+            DateTimeOffset? startsOn,
+            DateTimeOffset expiresOn,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareServiceClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(GetUserDelegationKeyInternal),
+                    message: $"{nameof(startsOn)}: {startsOn}\n" +
+                             $"{nameof(expiresOn)}: {expiresOn}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareServiceClient)}.{nameof(GetUserDelegationKey)}");
+
+                try
+                {
+                    scope.Start();
+
+                    if (startsOn.HasValue && startsOn.Value.Offset != TimeSpan.Zero)
+                    {
+                        throw Errors.InvalidDateTimeUtc(nameof(startsOn));
+                    }
+
+                    if (expiresOn.Offset != TimeSpan.Zero)
+                    {
+                        throw Errors.InvalidDateTimeUtc(nameof(expiresOn));
+                    }
+
+                    KeyInfo keyInfo = new KeyInfo(expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture))
+                    {
+                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture)
+                    };
+
+                    ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ServiceRestClient.GetUserDelegationKeyAsync(
+                            keyInfo: keyInfo,
+                            cancellationToken: cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ServiceRestClient.GetUserDelegationKey(
+                            keyInfo: keyInfo,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(GetUserDelegationKeyInternal));
                     scope.Dispose();
                 }
             }

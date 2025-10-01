@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             string vaultName = "swaggerExample";
             RecoveryServicesVaultData data = new RecoveryServicesVaultData(new AzureLocation("West US"))
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Properties = new RecoveryServicesVaultProperties
                 {
                     PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
                 },
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };
             ArmOperation<RecoveryServicesVaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, data);
@@ -87,13 +87,6 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             string vaultName = "swaggerExample";
             RecoveryServicesVaultData data = new RecoveryServicesVaultData(new AzureLocation("West US"))
             {
-                Identity = new ManagedServiceIdentity("UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi")] = new UserAssignedIdentity()
-},
-                },
                 Properties = new RecoveryServicesVaultProperties
                 {
                     Encryption = new VaultPropertiesEncryption
@@ -107,6 +100,13 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                     },
                     PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
                     ResourceGuardOperationRequests = { "/subscriptions/38304e13-357e-405e-9e9a-220351dcce8c/resourcegroups/ankurResourceGuard1/providers/Microsoft.DataProtection/resourceGuards/ResourceGuard38-1/modifyEncryptionSettings/default" },
+                },
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi")] = new UserAssignedIdentity()
+},
                 },
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };
@@ -146,13 +146,6 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             string vaultName = "swaggerExample";
             RecoveryServicesVaultData data = new RecoveryServicesVaultData(new AzureLocation("West US"))
             {
-                Identity = new ManagedServiceIdentity("UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi")] = new UserAssignedIdentity()
-},
-                },
                 Properties = new RecoveryServicesVaultProperties
                 {
                     Encryption = new VaultPropertiesEncryption
@@ -165,6 +158,13 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                         InfrastructureEncryption = InfrastructureEncryptionState.Enabled,
                     },
                     PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
+                },
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi")] = new UserAssignedIdentity()
+},
                 },
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };
@@ -204,7 +204,6 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             string vaultName = "swaggerExample";
             RecoveryServicesVaultData data = new RecoveryServicesVaultData(new AzureLocation("West US"))
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Properties = new RecoveryServicesVaultProperties
                 {
                     PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
@@ -223,6 +222,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                         },
                     },
                 },
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };
             ArmOperation<RecoveryServicesVaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, data);
@@ -261,7 +261,6 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             string vaultName = "swaggerExample";
             RecoveryServicesVaultData data = new RecoveryServicesVaultData(new AzureLocation("West US"))
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Properties = new RecoveryServicesVaultProperties
                 {
                     PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
@@ -271,6 +270,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                         CrossRegionRestore = CrossRegionRestore.Enabled,
                     },
                 },
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };
             ArmOperation<RecoveryServicesVaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, data);
@@ -309,7 +309,6 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             string vaultName = "swaggerExample";
             RecoveryServicesVaultData data = new RecoveryServicesVaultData(new AzureLocation("West US"))
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Properties = new RecoveryServicesVaultProperties
                 {
                     PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
@@ -325,6 +324,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                         },
                     },
                 },
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };
             ArmOperation<RecoveryServicesVaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, data);
@@ -363,16 +363,16 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             string vaultName = "swaggerExample";
             RecoveryServicesVaultData data = new RecoveryServicesVaultData(new AzureLocation("West US"))
             {
+                Properties = new RecoveryServicesVaultProperties
+                {
+                    PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
+                },
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
 [new ResourceIdentifier("/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi")] = new UserAssignedIdentity()
 },
-                },
-                Properties = new RecoveryServicesVaultProperties
-                {
-                    PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
                 },
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };

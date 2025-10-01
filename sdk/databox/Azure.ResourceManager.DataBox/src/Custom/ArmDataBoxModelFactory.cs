@@ -104,5 +104,17 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType, DataBoxJobTransferType transferType, string country, AzureLocation location)
             => SkuAvailabilityValidationContent(deviceType, transferType, country, location, null);
+
+        /// <summary> Initializes a new instance of <see cref="Models.MitigateJobContent"/>. </summary>
+        /// <param name="customerResolutionCode"> Resolution code for the job. </param>
+        /// <param name="serialNumberCustomerResolutionMap"> Serial number and the customer resolution code corresponding to each serial number. </param>
+        /// <returns> A new <see cref="Models.MitigateJobContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MitigateJobContent MitigateJobContent(CustomerResolutionCode customerResolutionCode, IDictionary<string, CustomerResolutionCode> serialNumberCustomerResolutionMap)
+        {
+            serialNumberCustomerResolutionMap ??= new Dictionary<string, CustomerResolutionCode>();
+
+            return new MitigateJobContent(customerResolutionCode, serialNumberCustomerResolutionMap, serializedAdditionalRawData: null);
+        }
     }
 }

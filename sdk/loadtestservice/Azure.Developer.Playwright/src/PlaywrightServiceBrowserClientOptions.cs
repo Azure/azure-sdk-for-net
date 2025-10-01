@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace Azure.Developer.Playwright
 {
     /// <summary>
-    /// Options to configure the requests to the Playwright service browser client.
+    /// Options to configure the requests to the Playwright Workspaces browser client.
     /// </summary>
     public class PlaywrightServiceBrowserClientOptions : ClientOptions
     {
@@ -23,7 +23,7 @@ namespace Azure.Developer.Playwright
 
         private OSPlatform? _os;
         /// <summary>
-        /// Gets or sets the operating system for Playwright service.
+        /// Gets or sets the operating system for Playwright Workspaces.
         /// </summary>
         public OSPlatform OS
         {
@@ -184,7 +184,7 @@ namespace Azure.Developer.Playwright
         }
 
         /// <summary>
-        /// Gets the service endpoint for Playwright service.
+        /// Gets the service endpoint for Playwright Workspaces.
         /// </summary>
         public string? ServiceEndpoint
         {
@@ -192,7 +192,7 @@ namespace Azure.Developer.Playwright
             set => _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), value);
         }
 
-        private const ServiceVersion Latest = ServiceVersion.V2025_07_01_Preview;
+        private const ServiceVersion Latest = ServiceVersion.V2025_09_01;
 
         internal string VersionString { get; }
 
@@ -202,9 +202,9 @@ namespace Azure.Developer.Playwright
         public enum ServiceVersion
         {
             /// <summary>
-            /// The Playwright service browser client API version 2025-07-01-preview.
+            /// The Playwright Workspaces browser client API version 2025-09-01.
             /// </summary>
-            V2025_07_01_Preview = 1,
+            V2025_09_01 = 1,
         }
 
         internal string? AuthToken
@@ -234,7 +234,7 @@ namespace Azure.Developer.Playwright
             _clientUtility = clientUtility ?? new ClientUtilities(_environment);
             VersionString = serviceVersion switch
             {
-                ServiceVersion.V2025_07_01_Preview => "2025-07-01-preview",
+                ServiceVersion.V2025_09_01 => "2025-09-01",
                 _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
             };
         }

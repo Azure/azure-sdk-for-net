@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageDeleted event. </summary>
     [JsonConverter(typeof(AcsChatMessageDeletedEventDataConverter))]
-    public partial class AcsChatMessageDeletedEventData : IJsonModel<AcsChatMessageDeletedEventData>
+    public partial class AcsChatMessageDeletedEventData : AcsChatMessageEventBaseProperties, IJsonModel<AcsChatMessageDeletedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageDeletedEventData"/> for deserialization. </summary>
         internal AcsChatMessageDeletedEventData()
