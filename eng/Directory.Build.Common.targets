@@ -23,8 +23,13 @@
   </PropertyGroup>
 
   <!-- AOT Compatibility Properties -->
+  <PropertyGroup>
+    <IsAotCompatibleClientLibrary>false</IsAotCompatibleClientLibrary>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' != 'true'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
+    <IsAotCompatibleClientLibrary Condition="'$(IsAotCompatible)' == 'true'">true</IsAotCompatibleClientLibrary>
   </PropertyGroup>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
@@ -386,19 +391,9 @@
 
       <!-- Parse out the service directory based on the relative path to the sdk folder -->
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
-      
-      <!-- Check if IsAotCompatible is set to true in the project -->
-      <PackageIsAotCompatible>false</PackageIsAotCompatible>
-      <PackageIsAotCompatible Condition="'$(IsAotCompatible)' == 'true'">true</PackageIsAotCompatible>
-      
-      <!-- Debug information -->
-      <DebugIsShippingLibrary>$(IsShippingLibrary)</DebugIsShippingLibrary>
-      <DebugAotCompatOptOut>$(AotCompatOptOut)</DebugAotCompatOptOut>
-      <DebugTargetFramework>$(TargetFramework)</DebugTargetFramework>
-      <DebugIsAotCompatible>$(IsAotCompatible)</DebugIsAotCompatible>
-      
+
       <!-- Format package info line for output -->
-      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(PackageIsAotCompatible)' '$(DebugIsShippingLibrary)' '$(DebugAotCompatOptOut)' '$(DebugTargetFramework)' '$(DebugIsAotCompatible)'</PackageInfoText>
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(IsAotCompatibleClientLibrary)'</PackageInfoText>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
