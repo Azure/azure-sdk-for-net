@@ -57,6 +57,63 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RuntimeUpdateApplicationUpgradeContent"/>. </summary>
+        /// <param name="name"> The name of the application, including the 'fabric:' URI scheme. </param>
+        /// <param name="upgradeKind"> The kind of the upgrade. </param>
+        /// <param name="applicationHealthPolicy"> Defines a health policy used to evaluate the health of an application or one of its children entities. </param>
+        /// <param name="updateDescription"> Describes the parameters for updating a rolling upgrade of application or cluster and a monitoring policy. </param>
+        /// <returns> A new <see cref="Models.RuntimeUpdateApplicationUpgradeContent"/> instance for mocking. </returns>
+        public static RuntimeUpdateApplicationUpgradeContent RuntimeUpdateApplicationUpgradeContent(string name = null, RuntimeUpgradeKind upgradeKind = default, RuntimeApplicationHealthPolicy applicationHealthPolicy = null, RuntimeRollingUpgradeUpdateMonitoringPolicy updateDescription = null)
+        {
+            return new RuntimeUpdateApplicationUpgradeContent(name, upgradeKind, applicationHealthPolicy, updateDescription, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RuntimeApplicationHealthPolicy"/>. </summary>
+        /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
+        /// <param name="maxPercentUnhealthyDeployedApplications">
+        /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
+        /// The percentage represents the maximum tolerated percentage of deployed applications that can be unhealthy before the application is considered in error.
+        /// This is calculated by dividing the number of unhealthy deployed applications over the number of nodes where the application is currently deployed on in the cluster.
+        /// The computation rounds up to tolerate one failure on small numbers of nodes. Default percentage is zero.
+        /// </param>
+        /// <param name="defaultServiceTypeHealthPolicy"> The health policy used by default to evaluate the health of a service type. </param>
+        /// <param name="serviceTypeHealthPolicyMap"> The map with service type health policy per service type name. The map is empty by default. </param>
+        /// <returns> A new <see cref="Models.RuntimeApplicationHealthPolicy"/> instance for mocking. </returns>
+        public static RuntimeApplicationHealthPolicy RuntimeApplicationHealthPolicy(bool considerWarningAsError = default, int maxPercentUnhealthyDeployedApplications = default, RuntimeServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = null, IDictionary<string, RuntimeServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = null)
+        {
+            serviceTypeHealthPolicyMap ??= new Dictionary<string, RuntimeServiceTypeHealthPolicy>();
+
+            return new RuntimeApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RuntimeRollingUpgradeUpdateMonitoringPolicy"/>. </summary>
+        /// <param name="rollingUpgradeMode"> The mode used to monitor health during a rolling upgrade. </param>
+        /// <param name="forceRestart"> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </param>
+        /// <param name="replicaSetCheckTimeoutInMilliseconds"> The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues. When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues. The timeout is reset at the start of each upgrade domain. Valid values are between 0 and 42949672925 inclusive. (unsigned 32-bit integer). </param>
+        /// <param name="failureAction"> The compensating action to perform when a Monitored upgrade encounters monitoring policy or health policy violations. Invalid indicates the failure action is invalid. Rollback specifies that the upgrade will start rolling back automatically. Manual indicates that the upgrade will switch to UnmonitoredManual upgrade mode. </param>
+        /// <param name="healthCheckWaitDurationInMilliseconds"> The amount of time to wait after completing an upgrade domain before applying health policies. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
+        /// <param name="healthCheckStableDurationInMilliseconds"> The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
+        /// <param name="healthCheckRetryTimeoutInMilliseconds"> The amount of time to retry health evaluation when the application or cluster is unhealthy before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
+        /// <param name="upgradeTimeoutInMilliseconds"> The amount of time the overall upgrade has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
+        /// <param name="upgradeDomainTimeoutInMilliseconds"> The amount of time each upgrade domain has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
+        /// <param name="instanceCloseDelayDurationInSeconds"> Duration in seconds, to wait before a stateless instance is closed, to allow the active requests to drain gracefully. This would be effective when the instance is closing during the application/cluster upgrade, only for those instances which have a non-zero delay duration configured in the service description. </param>
+        /// <returns> A new <see cref="Models.RuntimeRollingUpgradeUpdateMonitoringPolicy"/> instance for mocking. </returns>
+        public static RuntimeRollingUpgradeUpdateMonitoringPolicy RuntimeRollingUpgradeUpdateMonitoringPolicy(RuntimeRollingUpgradeMode rollingUpgradeMode = default, bool? forceRestart = null, long? replicaSetCheckTimeoutInMilliseconds = null, RuntimeFailureAction? failureAction = null, string healthCheckWaitDurationInMilliseconds = null, string healthCheckStableDurationInMilliseconds = null, string healthCheckRetryTimeoutInMilliseconds = null, string upgradeTimeoutInMilliseconds = null, string upgradeDomainTimeoutInMilliseconds = null, long? instanceCloseDelayDurationInSeconds = null)
+        {
+            return new RuntimeRollingUpgradeUpdateMonitoringPolicy(
+                rollingUpgradeMode,
+                forceRestart,
+                replicaSetCheckTimeoutInMilliseconds,
+                failureAction,
+                healthCheckWaitDurationInMilliseconds,
+                healthCheckStableDurationInMilliseconds,
+                healthCheckRetryTimeoutInMilliseconds,
+                upgradeTimeoutInMilliseconds,
+                upgradeDomainTimeoutInMilliseconds,
+                instanceCloseDelayDurationInSeconds,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
