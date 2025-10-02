@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly StorageAnalyticsLogParser _parser;
         private readonly ILogger<BlobListener> _logger;
 
-        private BlobLogListener(BlobServiceClient blobClient, ILogger<BlobListener> logger)
+        public BlobLogListener(BlobServiceClient blobClient, ILogger<BlobListener> logger)
         {
             _blobClient = blobClient;
 
