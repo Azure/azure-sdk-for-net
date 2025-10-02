@@ -221,7 +221,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -289,7 +289,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(

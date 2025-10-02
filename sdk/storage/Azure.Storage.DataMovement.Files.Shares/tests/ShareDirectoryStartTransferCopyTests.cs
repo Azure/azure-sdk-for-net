@@ -792,7 +792,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -886,7 +886,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -980,7 +980,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Act and Assert
             TransferOperation transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
@@ -1044,7 +1044,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -1126,7 +1126,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -1226,7 +1226,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -1326,7 +1326,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -1398,7 +1398,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -1484,7 +1484,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions managerOptions = new TransferManagerOptions() { MaximumConcurrency = 1 };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceResource,
@@ -1577,7 +1577,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions managerOptions = new TransferManagerOptions() { MaximumConcurrency = 1 };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceResource,
@@ -1672,7 +1672,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Act and Assert
             if (sourceProtocol == ShareProtocol.Smb && destProtocol == ShareProtocol.Smb)
@@ -1760,7 +1760,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Act and Assert
             if (sourceProtocol == ShareProtocol.Nfs && destProtocol == ShareProtocol.Nfs)
@@ -1848,7 +1848,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -1917,7 +1917,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -2016,7 +2016,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions(){ MaximumConcurrency = 1 };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             if (filePermissions == true)
             {
@@ -2098,7 +2098,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions(){ MaximumConcurrency = 1 };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             if (filePermissions == true)
             {
@@ -2186,7 +2186,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 MaximumConcurrency = 1,
             };
-            TransferManager transferManager = new TransferManager(managerOptions);
+            await using TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(

@@ -568,7 +568,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItem destinationResource = GetStorageResourceItem(objectClient);
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
-            TransferManager transferManager = new TransferManager();
+            await using TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -625,7 +625,7 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
             StorageResource sourceResource = LocalFilesStorageResourceProvider.FromFile(newSourceFile);
             StorageResourceItem destinationResource = GetStorageResourceItem(objectClient);
-            TransferManager transferManager = new TransferManager();
+            await using TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
