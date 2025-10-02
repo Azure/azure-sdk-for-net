@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
-    public partial class InformaticaServerlessFetchConfigProperties : IUtf8JsonSerializable, IJsonModel<InformaticaServerlessFetchConfigProperties>
+    /// <summary> InfaServerlessFetchConfigProperties for the fetch all serverless API as received from informatica API response. </summary>
+    public partial class InformaticaServerlessFetchConfigProperties : IJsonModel<InformaticaServerlessFetchConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformaticaServerlessFetchConfigProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaServerlessFetchConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessFetchConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessFetchConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InformaticaServerlessFetchConfigProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
@@ -104,15 +105,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WritePropertyName("serverlessArmResourceId"u8);
                 writer.WriteStringValue(ServerlessArmResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,22 +122,27 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
-        InformaticaServerlessFetchConfigProperties IJsonModel<InformaticaServerlessFetchConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaServerlessFetchConfigProperties IJsonModel<InformaticaServerlessFetchConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformaticaServerlessFetchConfigProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessFetchConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessFetchConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InformaticaServerlessFetchConfigProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInformaticaServerlessFetchConfigProperties(document.RootElement, options);
         }
 
-        internal static InformaticaServerlessFetchConfigProperties DeserializeInformaticaServerlessFetchConfigProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InformaticaServerlessFetchConfigProperties DeserializeInformaticaServerlessFetchConfigProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,94 +161,92 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             string subscriptionId = default;
             string region = default;
             ResourceIdentifier serverlessArmResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("subnet"u8))
+                if (prop.NameEquals("subnet"u8))
                 {
-                    subnet = property.Value.GetString();
+                    subnet = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationType"u8))
+                if (prop.NameEquals("applicationType"u8))
                 {
-                    applicationType = property.Value.GetString();
+                    applicationType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroupName"u8))
+                if (prop.NameEquals("resourceGroupName"u8))
                 {
-                    resourceGroupName = property.Value.GetString();
+                    resourceGroupName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("advancedCustomProperties"u8))
+                if (prop.NameEquals("advancedCustomProperties"u8))
                 {
-                    advancedCustomProperties = property.Value.GetString();
+                    advancedCustomProperties = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supplementaryFileLocation"u8))
+                if (prop.NameEquals("supplementaryFileLocation"u8))
                 {
-                    supplementaryFileLocation = property.Value.GetString();
+                    supplementaryFileLocation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("platform"u8))
+                if (prop.NameEquals("platform"u8))
                 {
-                    platform = property.Value.GetString();
+                    platform = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    tags = property.Value.GetString();
+                    tags = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vnet"u8))
+                if (prop.NameEquals("vnet"u8))
                 {
-                    vnet = property.Value.GetString();
+                    vnet = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("executionTimeout"u8))
+                if (prop.NameEquals("executionTimeout"u8))
                 {
-                    executionTimeout = property.Value.GetString();
+                    executionTimeout = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeUnits"u8))
+                if (prop.NameEquals("computeUnits"u8))
                 {
-                    computeUnits = property.Value.GetString();
+                    computeUnits = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"u8))
+                if (prop.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"u8))
+                if (prop.NameEquals("region"u8))
                 {
-                    region = property.Value.GetString();
+                    region = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverlessArmResourceId"u8))
+                if (prop.NameEquals("serverlessArmResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    serverlessArmResourceId = new ResourceIdentifier(property.Value.GetString());
+                    serverlessArmResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InformaticaServerlessFetchConfigProperties(
                 subnet,
                 applicationType,
@@ -258,13 +262,16 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 subscriptionId,
                 region,
                 serverlessArmResourceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<InformaticaServerlessFetchConfigProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessFetchConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InformaticaServerlessFetchConfigProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessFetchConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -274,15 +281,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
-        InformaticaServerlessFetchConfigProperties IPersistableModel<InformaticaServerlessFetchConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessFetchConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaServerlessFetchConfigProperties IPersistableModel<InformaticaServerlessFetchConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformaticaServerlessFetchConfigProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaServerlessFetchConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeInformaticaServerlessFetchConfigProperties(document.RootElement, options);
                     }
                 default:
@@ -290,6 +302,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InformaticaServerlessFetchConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

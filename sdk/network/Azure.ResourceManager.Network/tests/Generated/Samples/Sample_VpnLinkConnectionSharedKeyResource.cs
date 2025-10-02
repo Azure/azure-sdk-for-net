@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VpnSiteLinkConnectionDefaultSharedKeyGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VpnSiteLinkConnectionDefaultSharedKeyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VpnSiteLinkConnectionDefaultSharedKeyGet.json
             // this example is just showing the usage of "VpnLinkConnections_GetDefaultSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VpnSiteLinkConnectionDefaultSharedKeyPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VpnSiteLinkConnectionDefaultSharedKeyPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VpnSiteLinkConnectionDefaultSharedKeyPut.json
             // this example is just showing the usage of "VpnLinkConnections_SetOrInitDefaultSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDefaultSharedKey_VpnSiteLinkConnectionDefaultSharedKeyList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VpnSiteLinkConnectionDefaultSharedKeyList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VpnSiteLinkConnectionDefaultSharedKeyList.json
             // this example is just showing the usage of "VpnLinkConnections_ListDefaultSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

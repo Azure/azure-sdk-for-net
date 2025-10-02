@@ -247,8 +247,20 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FooData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FooData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FooData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,8 +288,20 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FooData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FooData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FooData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,8 +329,20 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FooData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FooData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FooData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<FooResource>(response.GetRawResponse());
@@ -338,8 +374,20 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FooData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FooData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FooData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<FooResource>(response.GetRawResponse());

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_FlexComponentsGetMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/FlexComponents_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/FlexComponents_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "FlexComponent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // for more information of creating OracleFlexComponentResource, please refer to the document of OracleFlexComponentResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
-            string flexComponentName = "flexComponent";
+            string flexComponentName = "flexname1";
             ResourceIdentifier oracleFlexComponentResourceId = OracleFlexComponentResource.CreateResourceIdentifier(subscriptionId, location, flexComponentName);
             OracleFlexComponentResource oracleFlexComponent = client.GetOracleFlexComponentResource(oracleFlexComponentResourceId);
 

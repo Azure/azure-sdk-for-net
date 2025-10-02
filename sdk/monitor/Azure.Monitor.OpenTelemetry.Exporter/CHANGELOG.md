@@ -4,6 +4,8 @@
 
 ### Features Added
 
+* Added mapping for `enduser.pseudo.id` attribute to `user_Id`
+
 * Added support for configuring sampling via OpenTelemetry environment
   variables:
   * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`,

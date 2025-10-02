@@ -8,8 +8,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The SessionUpdateInputAudioBufferSpeechStarted. </summary>
-    public partial class SessionUpdateInputAudioBufferSpeechStarted
+    /// <summary> The SessionUpdateInputAudioBufferSpeechStopped. </summary>
+    public partial class SessionUpdateInputAudioBufferSpeechStopped
     {
         /// <summary>
         /// Time from the start of all audio written to the buffer during the
@@ -17,8 +17,8 @@ namespace Azure.AI.VoiceLive
         /// beginning of audio sent to the model, and thus includes the
         /// `prefix_padding_ms` configured in the Session.
         /// </summary>
-        public TimeSpan AudioStart { get => TimeSpan.FromMilliseconds(AudioStartMs); }
+        public TimeSpan AudioEnd { get => TimeSpan.FromMilliseconds(AudioEndMs); }
 
-        internal int AudioStartMs { get; }
+        internal int AudioEndMs { get; }
     }
 }

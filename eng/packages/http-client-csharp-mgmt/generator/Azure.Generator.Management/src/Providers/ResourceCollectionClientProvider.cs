@@ -348,7 +348,6 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_get.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
                 result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync));
             }
 
@@ -366,7 +365,6 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_get.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
                 var existsMethodProvider = new ExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(existsMethodProvider);
             }
@@ -385,7 +383,6 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_get.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
                 var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(getIfExistsMethodProvider);
             }

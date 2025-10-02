@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheImportJobPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="adminStatus"> The administrative status of the import job. Possible values: 'Active', 'Cancel'. Passing in a value of 'Cancel' will cancel the current active import job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCacheImportJobPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageCacheImportJobPatch(IDictionary<string, string> tags, ImportJobAdminStatus? adminStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            AdminStatus = adminStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> The administrative status of the import job. Possible values: 'Active', 'Cancel'. Passing in a value of 'Cancel' will cancel the current active import job. </summary>
+        public ImportJobAdminStatus? AdminStatus { get; set; }
     }
 }

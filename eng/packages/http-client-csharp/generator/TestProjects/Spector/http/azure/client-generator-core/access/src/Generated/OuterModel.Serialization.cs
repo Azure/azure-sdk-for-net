@@ -12,7 +12,7 @@ using Azure;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
-    public partial class OuterModel : IJsonModel<OuterModel>
+    public partial class OuterModel : BaseModel, IJsonModel<OuterModel>
     {
         internal OuterModel() => throw null;
 

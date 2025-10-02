@@ -55,6 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Others
             SemanticConventions.AttributeEnduserId,
+            SemanticConventions.AttributeEnduserPseudoId,
             "microsoft.client.ip"
         };
 
@@ -68,6 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public string? AzureNamespace { get; private set; } = null;
 
         public string? EndUserId { get; private set; } = null;
+
+        public string? EndUserPseudoId { get; private set; } = null;
 
         public ActivityTagsProcessor()
         {
@@ -105,6 +108,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             break;
                         case SemanticConventions.AttributeEnduserId:
                             EndUserId = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeEnduserPseudoId:
+                            EndUserPseudoId = tag.Value.ToString();
                             continue;
                     }
 

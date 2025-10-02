@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ImageDeleted event. </summary>
     [JsonConverter(typeof(ContainerRegistryImageDeletedEventDataConverter))]
-    public partial class ContainerRegistryImageDeletedEventData : IJsonModel<ContainerRegistryImageDeletedEventData>
+    public partial class ContainerRegistryImageDeletedEventData : ContainerRegistryEventData, IJsonModel<ContainerRegistryImageDeletedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryImageDeletedEventData"/> for deserialization. </summary>
         internal ContainerRegistryImageDeletedEventData()

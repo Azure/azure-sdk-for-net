@@ -10,46 +10,48 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.WeightsAndBiases;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmWeightsAndBiasesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="WeightsAndBiases.WeightsAndBiasesInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="WeightsAndBiases.WeightsAndBiasesInstanceData"/> instance for mocking. </returns>
-        public static WeightsAndBiasesInstanceData WeightsAndBiasesInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WeightsAndBiasesInstanceProperties properties = null, ManagedServiceIdentity identity = null)
+        public static WeightsAndBiasesInstanceData WeightsAndBiasesInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WeightsAndBiasesInstanceProperties properties = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new WeightsAndBiasesInstanceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                identity,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WeightsAndBiasesInstanceProperties"/>. </summary>
+        /// <summary> Properties specific to Instance. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <returns> A new <see cref="Models.WeightsAndBiasesInstanceProperties"/> instance for mocking. </returns>
-        public static WeightsAndBiasesInstanceProperties WeightsAndBiasesInstanceProperties(WeightsAndBiasesMarketplaceDetails marketplace = null, WeightsAndBiasesUserDetails user = null, WeightsAndBiasesProvisioningState? provisioningState = null, WeightsAndBiasesPartnerProperties partnerProperties = null, WeightsAndBiasesSingleSignOnPropertiesV2 singleSignOnProperties = null)
+        public static WeightsAndBiasesInstanceProperties WeightsAndBiasesInstanceProperties(WeightsAndBiasesMarketplaceDetails marketplace = default, WeightsAndBiasesUserDetails user = default, WeightsAndBiasesProvisioningState? provisioningState = default, WeightsAndBiasesPartnerProperties partnerProperties = default, WeightsAndBiasesSingleSignOnPropertiesV2 singleSignOnProperties = default)
         {
             return new WeightsAndBiasesInstanceProperties(
                 marketplace,
@@ -57,17 +59,48 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 provisioningState,
                 partnerProperties,
                 singleSignOnProperties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WeightsAndBiasesMarketplaceDetails"/>. </summary>
+        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.WeightsAndBiasesMarketplaceDetails"/> instance for mocking. </returns>
-        public static WeightsAndBiasesMarketplaceDetails WeightsAndBiasesMarketplaceDetails(string subscriptionId = null, WeightsAndBiasesMarketplaceSubscriptionStatus? subscriptionStatus = null, WeightsAndBiasesOfferDetails offerDetails = null)
+        public static WeightsAndBiasesMarketplaceDetails WeightsAndBiasesMarketplaceDetails(string subscriptionId = default, WeightsAndBiasesMarketplaceSubscriptionStatus? subscriptionStatus = default, WeightsAndBiasesOfferDetails offerDetails = default)
         {
-            return new WeightsAndBiasesMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
+            return new WeightsAndBiasesMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties specific to Single Sign On Resource. </summary>
+        /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
+        /// <param name="state"> State of the Single Sign On for the resource. </param>
+        /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
+        /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
+        /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
+        /// <returns> A new <see cref="Models.WeightsAndBiasesSingleSignOnPropertiesV2"/> instance for mocking. </returns>
+        public static WeightsAndBiasesSingleSignOnPropertiesV2 WeightsAndBiasesSingleSignOnPropertiesV2(WeightsAndBiasesSingleSignOnType @type = default, WeightsAndBiasesSingleSignOnState? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
+        {
+            aadDomains ??= new ChangeTrackingList<string>();
+
+            return new WeightsAndBiasesSingleSignOnPropertiesV2(
+                @type,
+                state,
+                enterpriseAppId,
+                uri,
+                aadDomains.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the Instance Resource. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.WeightsAndBiasesInstancePatch"/> instance for mocking. </returns>
+        public static WeightsAndBiasesInstancePatch WeightsAndBiasesInstancePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new WeightsAndBiasesInstancePatch(tags, identity, additionalBinaryDataProperties: null);
         }
     }
 }

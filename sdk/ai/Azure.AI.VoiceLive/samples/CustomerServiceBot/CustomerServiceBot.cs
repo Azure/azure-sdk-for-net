@@ -126,11 +126,11 @@ public class CustomerServiceBot : IDisposable
         var azureVoice = new AzureStandardVoice(_voice);
 
         // Create strongly typed turn detection configuration
-        var turnDetectionConfig = new ServerVad
+        var turnDetectionConfig = new ServerVadTurnDetection
         {
             Threshold = 0.5f,
-            PrefixPaddingMs = 300,
-            SilenceDurationMs = 500
+            PrefixPadding = TimeSpan.FromMilliseconds(300),
+            SilenceDuration = TimeSpan.FromMilliseconds(500)
         };
 
         // Create conversation session options with function tools
@@ -139,15 +139,15 @@ public class CustomerServiceBot : IDisposable
             Model = _model,
             Instructions = _instructions,
             Voice = azureVoice,
-            InputAudioFormat = AudioFormat.Pcm16,
-            OutputAudioFormat = AudioFormat.Pcm16,
+            InputAudioFormat = InputAudioFormat.Pcm16,
+            OutputAudioFormat = OutputAudioFormat.Pcm16,
             TurnDetection = turnDetectionConfig
         };
 
         // Ensure modalities include audio
         sessionOptions.Modalities.Clear();
-        sessionOptions.Modalities.Add(InputModality.Text);
-        sessionOptions.Modalities.Add(InputModality.Audio);
+        sessionOptions.Modalities.Add(InteractionModality.Text);
+        sessionOptions.Modalities.Add(InteractionModality.Audio);
 
         // Add function tools for customer service operations
         sessionOptions.Tools.Add(CreateCheckOrderStatusTool());
@@ -157,7 +157,7 @@ public class CustomerServiceBot : IDisposable
         sessionOptions.Tools.Add(CreateUpdateShippingAddressTool());
 
 
-        await _session!.ConfigureConversationSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
+        await _session!.ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
 
         _logger.LogInformation("Session configuration sent with {ToolCount} customer service tools", sessionOptions.Tools.Count);
     }
@@ -521,7 +521,7 @@ public class CustomerServiceBot : IDisposable
                     functionName, callId, arguments);
             }
         }
-        else if (outputItemAdded.Item is ResponseMessageItem messageItem &&
+        else if (outputItemAdded.Item is SessionResponseMessageItem messageItem &&
             messageItem.Role == ResponseMessageRole.Assistant)
         {
             // Keep track of the items that are from the assistant, so we know how to display the conversation.

@@ -15,6 +15,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         {
             APPLICATIONINSIGHTS_CONNECTION_STRING,
             APPLICATIONINSIGHTS_STATSBEAT_DISABLED,
+            APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW,
+            APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL,
             FUNCTIONS_WORKER_RUNTIME,
             LOCALAPPDATA,
             TEMP,
@@ -45,6 +47,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// <see href="https://learn.microsoft.com/azure/azure-monitor/app/statsbeat"/>.
         /// </remarks>
         public const string APPLICATIONINSIGHTS_STATSBEAT_DISABLED = "APPLICATIONINSIGHTS_STATSBEAT_DISABLED";
+
+        /// <summary>
+        /// Available for users to enable customer SDK stats preview feature.
+        /// </summary>
+        /// <remarks>
+        /// Customer SDK stats provide insights into SDK success/failure/retry counts.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW = "APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW";
+
+        /// <summary>
+        /// Available for users to configure customer SDK stats export interval in seconds.
+        /// </summary>
+        /// <remarks>
+        /// Default is 900 seconds (15 minutes). Minimum recommended is 60 seconds.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL = "APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL";
 
         /// <summary>
         /// INTERNAL ONLY. Used by Statsbeat to identify if the Exporter is running within Azure Functions.

@@ -40,9 +40,9 @@ internal static class BicepTypeMapping
         type == typeof(ResourceIdentifier) ? "string" :
         type == typeof(ResourceType) ? "string" :
         type == typeof(AzureLocation) ? "string" :
-        type.IsSubclassOf(typeof(Enum)) ? "string" :
-        type.IsSubclassOf(typeof(System.Collections.IEnumerable)) ? "array" :
-        type.IsSubclassOf(typeof(System.Collections.IDictionary)) ? "object" :
+        typeof(Enum).IsAssignableFrom(type) ? "string" :
+        typeof(System.Collections.IDictionary).IsAssignableFrom(type) ? "object" :
+        typeof(System.Collections.IEnumerable).IsAssignableFrom(type) ? "array" :
         null;
 
     /// <summary>
@@ -71,8 +71,10 @@ internal static class BicepTypeMapping
             IPAddress a => a.ToString(),
             ETag e => e.ToString(),
             ResourceIdentifier i => i.ToString(),
+            AzureLocation azureLocation => azureLocation.ToString(),
+            ResourceType rt => rt.ToString(),
             Enum e => GetEnumValue(e),
-            // Extensible enums like Azure.Location
+            // Other extensible enums like AzureLocation (AzureLocation has been handled above)
             // TODO: Can we either tag or special case all that we care about because ValueType is too broad
             ValueType ee => ee.ToString()!,
             _ => throw new InvalidOperationException($"Cannot convert {value} to a literal Bicep string.")
@@ -108,13 +110,16 @@ internal static class BicepTypeMapping
             IPAddress a => BicepSyntax.Value(ToLiteralString(a, format)),
             ETag e => BicepSyntax.Value(ToLiteralString(e, format)),
             ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i, format)),
+            AzureLocation azureLocation => BicepSyntax.Value(ToLiteralString(azureLocation, format)),
+            ResourceType rt => BicepSyntax.Value(ToLiteralString(rt, format)),
             Enum e => BicepSyntax.Value(ToLiteralString(e, format)),
-            ProvisionableConstruct c => CompileNestedConstruct(c),
+            // we call this method on IBicepValue to convert this into an expression instead of statements
+            ProvisionableConstruct c => ((IBicepValue)c).Compile(),
             IDictionary<string, IBicepValue> d =>
                 d is IBicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToObject(d),
             IEnumerable seq =>
                 seq is IBicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToArray(seq.OfType<object>()),
-            // Extensible enums like Azure.Location
+            // Other extensible enums like AzureLocation (AzureLocation has been handled above)
             ValueType ee => BicepSyntax.Value(ToLiteralString(ee, format)),
             // Unwrap BicepValue after collections so it doesn't loop forever
             IBicepValue v when (v.Kind == BicepValueKind.Expression) => v.Expression!,
@@ -163,26 +168,6 @@ internal static class BicepTypeMapping
                 values[pair.Key] = ToBicep(pair.Value, format);
             }
             return BicepSyntax.Object(values);
-        }
-
-        BicepExpression CompileNestedConstruct(ProvisionableConstruct construct)
-        {
-            IList<BicepStatement> statements = [.. construct.Compile()];
-            if (statements.Count != 1)
-            {
-                throw new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it contains multiple statements.");
-            }
-            // TODO -- this is a workaround until https://github.com/Azure/azure-sdk-for-net/issues/52277 is resolved
-            if (statements[0] is ResourceStatement resource)
-            {
-                // handle the case when we are using a resource as property of other resources
-                return resource.Body;
-            }
-            if (statements[0] is not ExpressionStatement expr)
-            {
-                throw new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it compiles to {statements[0]} instead.");
-            }
-            return expr.Expression;
         }
     }
 
