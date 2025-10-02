@@ -85,7 +85,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-Auto-generated code samples are available in the [tests/Generated/Samples](tests/Generated/Samples) directory.
+Auto-generated code samples are available in the [tests/Generated/Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitiveservices/Azure.AI.Speech.BatchTranscription/tests/Generated/Samples) directory.
 
 ## Troubleshooting
 
