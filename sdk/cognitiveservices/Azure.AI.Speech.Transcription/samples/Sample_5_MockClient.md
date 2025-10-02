@@ -79,32 +79,40 @@ var mockResponseContent = @"{
             ""offsetMilliseconds"": 0,
             ""durationMilliseconds"": 5000,
             ""text"": ""This is a test transcription"",
-            ""words"": []
+            ""words"": [],
+            ""locale"": ""en-US"",
+            ""confidence"": 0.95
         }
     ]
 }";
 
+// Create options with a mock transport
 var mockTransport = new MockTransport(new MockResponse(200)
 {
-    ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(mockResponseContent))
+    ContentStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(mockResponseContent))
 });
 
-var clientOptions = new TranscriptionClientOptions
-{
-    Transport = mockTransport
-};
+TranscriptionClientOptions options = new TranscriptionClientOptions();
+options.Transport = mockTransport;
 
+// Create client with mock transport
 Uri endpoint = new Uri("https://mock.api.cognitive.microsoft.com/");
 AzureKeyCredential credential = new AzureKeyCredential("mock-key");
+TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
 
-var client = new TranscriptionClient(endpoint, credential, clientOptions);
+// Make a request - it will use the mock response
+using var audioStream = new MemoryStream(new byte[] { 0x00, 0x01, 0x02 });
+TranscribeRequestContent request = new TranscribeRequestContent
+{
+    Audio = audioStream
+};
 
-// Use the client - it will return the mock response
-using var audioStream = new MemoryStream(new byte[] { 0x00, 0x01 });
-var request = new TranscribeRequestContent { Audio = audioStream };
-var response = await client.TranscribeAsync(request);
+Response<TranscriptionResult> response = await client.TranscribeAsync(request);
 
-Console.WriteLine($"Mock result: {response.Value.PhrasesByChannel.First().Text}");
+// Verify the mock response was returned
+Console.WriteLine($"Duration: {response.Value.Duration}");
+var phrases = response.Value.PhrasesByChannel.First();
+Console.WriteLine($"Transcription: {phrases.Text}");
 ```
 
 ## Mock Error Scenarios
@@ -113,31 +121,37 @@ Test error handling by mocking error responses.
 
 ```C# Snippet:MockErrorScenarios
 // Create a mock transport that returns an error
-var errorResponse = new MockResponse(401); // Unauthorized
-errorResponse.SetContent(@"{""error"": {""code"": ""Unauthorized"", ""message"": ""Invalid API key""}}");
-
-var mockTransport = new MockTransport(errorResponse);
-
-var clientOptions = new TranscriptionClientOptions
+var mockTransport = new MockTransport(new MockResponse(401)
 {
-    Transport = mockTransport
-};
+    ContentStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(
+        @"{""error"": {""code"": ""Unauthorized"", ""message"": ""Invalid API key""}}"
+    ))
+});
 
-var client = new TranscriptionClient(
-    new Uri("https://mock.api.cognitive.microsoft.com/"),
-    new AzureKeyCredential("invalid-key"),
-    clientOptions);
+TranscriptionClientOptions options = new TranscriptionClientOptions();
+options.Transport = mockTransport;
 
+Uri endpoint = new Uri("https://mock.api.cognitive.microsoft.com/");
+AzureKeyCredential credential = new AzureKeyCredential("invalid-key");
+TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
+
+// Test error handling
 try
 {
-    using var audioStream = new MemoryStream(new byte[] { 0x00 });
-    var request = new TranscribeRequestContent { Audio = audioStream };
+    using var audioStream = new MemoryStream(new byte[] { 0x00, 0x01, 0x02 });
+    TranscribeRequestContent request = new TranscribeRequestContent
+    {
+        Audio = audioStream
+    };
+
     await client.TranscribeAsync(request);
+    Assert.Fail("Expected RequestFailedException was not thrown");
 }
-catch (RequestFailedException ex) when (ex.Status == 401)
+catch (RequestFailedException ex)
 {
-    Console.WriteLine($"Successfully caught mock error: {ex.Message}");
-    // Test your error handling logic here
+    // Verify error handling works correctly
+    Assert.AreEqual(401, ex.Status);
+    Console.WriteLine($"Successfully caught error: {ex.Message}");
 }
 ```
 

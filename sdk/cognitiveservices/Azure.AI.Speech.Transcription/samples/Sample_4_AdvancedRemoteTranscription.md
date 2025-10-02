@@ -71,14 +71,13 @@ foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
 Transcribe audio files stored in Azure Blob Storage using SAS URLs.
 
 ```C# Snippet:TranscribeFromBlobStorage
-// Generate a SAS URL for your blob in Azure Storage
-string blobSasUrl = "https://yourstorageaccount.blob.core.windows.net/audiofiles/sample.wav?sv=2021-06-08&ss=b&srt=o&sp=r&se=2024-12-31T23:59:59Z&st=2024-01-01T00:00:00Z&spr=https&sig=YOUR_SAS_TOKEN";
-
-Uri blobUri = new Uri(blobSasUrl);
+// Azure Blob Storage URL with SAS token for access
+Uri blobSasUrl = new Uri(
+    "https://mystorageaccount.blob.core.windows.net/audio-files/recording.wav?sv=2021-06-08&st=...");
 
 TranscriptionOptions options = new TranscriptionOptions
 {
-    AudioUrl = blobUri
+    AudioUrl = blobSasUrl
 };
 
 TranscribeRequestContent request = new TranscribeRequestContent
@@ -93,7 +92,7 @@ Console.WriteLine($"Transcribed audio from Azure Blob Storage");
 Console.WriteLine($"Duration: {result.Duration}");
 
 var channelPhrases = result.PhrasesByChannel.First();
-Console.WriteLine($"Transcription:\n{channelPhrases.Text}");
+Console.WriteLine($"\nFull Transcription:\n{channelPhrases.Text}");
 ```
 
 ## Transcribe Remote File with Options
@@ -101,18 +100,22 @@ Console.WriteLine($"Transcription:\n{channelPhrases.Text}");
 Combine remote file transcription with transcription options like locale and diarization.
 
 ```C# Snippet:TranscribeRemoteFileWithOptions
-Uri audioUrl = new Uri("https://example.com/audio/meeting.wav");
+Uri audioUrl = new Uri("https://example.com/audio/spanish-interview.mp3");
 
+// Configure transcription options for remote audio
 TranscriptionOptions options = new TranscriptionOptions
 {
     AudioUrl = audioUrl,
-    Locales = { "en-US" },
+    ProfanityFilterMode = ProfanityFilterMode.Masked,
     Diarization = new TranscriptionDiarizationOptions
     {
         Enabled = true,
-        MaxSpeakers = 5
+        MaxSpeakers = 2
     }
 };
+
+// Add Spanish locale
+options.Locales.Add("es-ES");
 
 TranscribeRequestContent request = new TranscribeRequestContent
 {
@@ -122,13 +125,13 @@ TranscribeRequestContent request = new TranscribeRequestContent
 Response<TranscriptionResult> response = await client.TranscribeAsync(request);
 TranscriptionResult result = response.Value;
 
-Console.WriteLine($"Transcribed meeting from URL with speaker diarization");
-foreach (var channelPhrases in result.PhrasesByChannel)
+Console.WriteLine("Remote transcription with options:");
+Console.WriteLine($"Duration: {result.Duration}");
+
+var channelPhrases = result.PhrasesByChannel.First();
+foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
 {
-    foreach (var phrase in channelPhrases.Phrases)
-    {
-        Console.WriteLine($"[Speaker {phrase.Speaker}] {phrase.Text}");
-    }
+    Console.WriteLine($"Speaker {phrase.Speaker}: {phrase.Text}");
 }
 ```
 
@@ -137,35 +140,43 @@ foreach (var channelPhrases in result.PhrasesByChannel)
 Process multiple audio files from different sources in parallel.
 
 ```C# Snippet:TranscribeMultipleRemoteFiles
-string[] audioUrls = new[]
+// List of audio files to transcribe
+Uri[] audioUrls = new[]
 {
-    "https://example.com/audio/file1.wav",
-    "https://example.com/audio/file2.wav",
-    "https://example.com/audio/file3.wav"
+    new Uri("https://example.com/audio/file1.wav"),
+    new Uri("https://example.com/audio/file2.wav"),
+    new Uri("https://example.com/audio/file3.wav")
 };
 
-var transcriptionTasks = audioUrls.Select(async url =>
-{
-    var options = new TranscriptionOptions
+// Create tasks for parallel transcription
+Task<Response<TranscriptionResult>>[] transcriptionTasks = audioUrls
+    .Select(url =>
     {
-        AudioUrl = new Uri(url)
-    };
+        TranscriptionOptions options = new TranscriptionOptions
+        {
+            AudioUrl = url
+        };
 
-    var request = new TranscribeRequestContent { Options = options };
-    var response = await client.TranscribeAsync(request);
+        TranscribeRequestContent request = new TranscribeRequestContent
+        {
+            Options = options
+        };
 
-    return new
-    {
-        Url = url,
-        Result = response.Value
-    };
-});
+        return client.TranscribeAsync(request);
+    })
+    .ToArray();
 
-var results = await Task.WhenAll(transcriptionTasks);
+// Wait for all transcriptions to complete
+Response<TranscriptionResult>[] responses = await Task.WhenAll(transcriptionTasks);
 
-foreach (var result in results)
+// Process results
+for (int i = 0; i < responses.Length; i++)
 {
-    Console.WriteLine($"\nFile: {result.Url}");
-    Console.WriteLine($"Transcription: {result.Result.PhrasesByChannel.First().Text}");
+    TranscriptionResult result = responses[i].Value;
+    Console.WriteLine($"\nFile {i + 1} ({audioUrls[i]}):");
+    Console.WriteLine($"Duration: {result.Duration}");
+
+    var channelPhrases = result.PhrasesByChannel.First();
+    Console.WriteLine($"Text: {channelPhrases.Text}");
 }
 ```

@@ -9,7 +9,7 @@ To create a TranscriptionClient, you will need the service endpoint and credenti
 ```C# Snippet:CreateTranscriptionClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
 AzureKeyCredential credential = new("your apikey");
-TranscriptionClientOptions options = new TranscriptionClientOptions(TranscriptionClientOptions.ServiceVersion.V2024_11_15);
+TranscriptionClientOptions options = new TranscriptionClientOptions(TranscriptionClientOptions.ServiceVersion.V2025_10_15);
 TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
 ```
 
@@ -25,8 +25,11 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     var options = new TranscriptionOptions();
     options.Locales.Add("en-US");
 
-    var request = new TranscribeRequest(fileStream);
-    request.options = options;
+    var request = new TranscribeRequestContent
+    {
+        Audio = fileStream,
+        Options = options
+    };
 
     var response = await client.TranscribeAsync(request);
 
@@ -48,10 +51,13 @@ If no mapping is given, the default model for the locale is used.
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions();
-    requestOptions.Models.Add("en-US", new Uri("https://myaccount.api.cognitive.microsoft.com/speechtotext/models/your-model-uuid"));
+    options.Models.Add("en-US", new Uri("https://myaccount.api.cognitive.microsoft.com/speechtotext/models/your-model-uuid"));
 
-    var request = new TranscribeRequest(fileStream);
-    request.options = options;
+    var request = new TranscribeRequestContent
+    {
+        Audio = fileStream,
+        Options = options
+    };
 
     var response = await client.TranscribeAsync(request);
 
@@ -73,8 +79,11 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     var options = new TranscriptionOptions();
     options.ProfanityFilterMode = ProfanityFilterMode.Masked;
 
-    var request = new TranscribeRequest(fileStream);
-    request.options = options;
+    var request = new TranscribeRequestContent
+    {
+        Audio = fileStream,
+        Options = options
+    };
 
     var response = await client.TranscribeAsync(request);
 
@@ -96,15 +105,18 @@ If not specified, multiple channels are merged and transcribed jointly. Only up 
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions();
-    options.ActiveChannels.Add(0);
+    options.Channels.Add(0);
 
-    var request = new TranscribeRequest(fileStream);
-    request.options = options;
+    var request = new TranscribeRequestContent
+    {
+        Audio = fileStream,
+        Options = options
+    };
 
     var response = await client.TranscribeAsync(request);
 
     Console.WriteLine($"File Duration: {response.Value.Duration}");
-    foreach (var phrase in response.Value.PhrasesByChannel.First(p => p.Channel == 1)().Phrases)
+    foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
     {
         Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
     }
@@ -125,10 +137,13 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     diarizationOptions.MaxSpeakers = 2;
 
     var options = new TranscriptionOptions();
-    options.DiarizationOptions = diarizationOptions;
+    options.Diarization = diarizationOptions;
 
-    var request = new TranscribeRequest(fileStream);
-    request.options = options;
+    var request = new TranscribeRequestContent
+    {
+        Audio = fileStream,
+        Options = options
+    };
 
     var response = await client.TranscribeAsync(request);
 
