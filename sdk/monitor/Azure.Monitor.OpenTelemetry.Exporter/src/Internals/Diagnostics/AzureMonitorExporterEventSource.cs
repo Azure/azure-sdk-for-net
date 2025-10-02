@@ -487,13 +487,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void CustomerSdkStatsInitializationFailed(string exceptionMessage) => WriteEvent(48, exceptionMessage);
 
         [Event(51, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {1}. Not user actionable.", Level = EventLevel.Error)]
-        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(46, previousCollectedTime, recentCollectedTime);
+        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(51, previousCollectedTime, recentCollectedTime);
 
         [Event(52, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {1}. Not user actionable.", Level = EventLevel.Error)]
-        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(47, previousCollectedValue, recentCollectedValue);
+        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(52, previousCollectedValue, recentCollectedValue);
 
         [Event(53, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
-        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(48, period, diffValue, calculatedValue, processorCount, normalizedValue);
+        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(53, period, diffValue, calculatedValue, processorCount, normalizedValue);
 
         [NonEvent]
         public void FailedToCollectProcessPrivateBytes(System.Exception ex)
@@ -505,7 +505,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         }
 
         [Event(54, Message = "Failed to collect Process Private Bytes due to an exception. {0}", Level = EventLevel.Warning)]
-        public void FailedToCollectProcessPrivateBytes(string exceptionMessage) => WriteEvent(49, exceptionMessage);
+        public void FailedToCollectProcessPrivateBytes(string exceptionMessage) => WriteEvent(54, exceptionMessage);
 
         [NonEvent]
         public void FailedToCalculateRequestRate(Exception ex)
