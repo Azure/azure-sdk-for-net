@@ -36,6 +36,11 @@ If your library requires authentication for use, such as for Azure services, inc
 
 For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
+<!--
+TODO: Add Service API versions section when manual samples are created
+First, create tests/Samples/SampleSnippets.cs with the CreateBatchTranscriptionClientForSpecificApiVersion snippet,
+then uncomment this section and remove the space in "Snip pet:" below.
+
 ### Service API versions
 
 The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
@@ -46,16 +51,17 @@ You have the flexibility to explicitly select a supported service API version wh
 
 For example,
 
-```C# Snippet:Create<YourService>ClientForSpecificApiVersion
-Uri endpoint = new Uri("<your endpoint>");
-DefaultAzureCredential credential = new DefaultAzureCredential();
-<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
-var client = new <YourService>Client(endpoint, credential, options);
+```C# Snip pet:CreateBatchTranscriptionClientForSpecificApiVersion
+Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
+AzureKeyCredential credential = new("your apikey");
+BatchTranscriptionClientOptions options = new BatchTranscriptionClientOptions(BatchTranscriptionClientOptions.ServiceVersion.V2025_10_15);
+BatchTranscriptionClient client = new BatchTranscriptionClient(endpoint, credential, options);
 ```
 
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
 
 Always ensure that the chosen API version is fully supported and operational for your specific use case and that it aligns with the service's versioning policy.
+-->
 
 ## Key concepts
 

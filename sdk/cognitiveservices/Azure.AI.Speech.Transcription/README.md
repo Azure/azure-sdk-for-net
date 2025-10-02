@@ -46,11 +46,11 @@ You have the flexibility to explicitly select a supported service API version wh
 
 For example,
 
-```C# Snippet:Create<YourService>ClientForSpecificApiVersion
-Uri endpoint = new Uri("<your endpoint>");
-DefaultAzureCredential credential = new DefaultAzureCredential();
-<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
-var client = new <YourService>Client(endpoint, credential, options);
+```C# Snippet:CreateTranscriptionClientForSpecificApiVersion
+Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
+AzureKeyCredential credential = new("your apikey");
+TranscriptionClientOptions options = new TranscriptionClientOptions(TranscriptionClientOptions.ServiceVersion.V2025_10_15);
+TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
 ```
 
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
