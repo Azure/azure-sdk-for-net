@@ -62,5 +62,8 @@ namespace Azure.Communication.CallAutomation
         /// The Custom Context which contains SIP and voip headers.
         /// </summary>
         public CustomCallingContext CustomCallingContext { get; }
+
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? IsLoopbackAudioEnabled { get; set; }
     }
 }

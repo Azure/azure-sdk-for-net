@@ -13,16 +13,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
     public class CallAutomationClientTests : CallAutomationTestBase
     {
         private readonly MediaStreamingOptions _mediaStreamingConfiguration = new MediaStreamingOptions(
-            new Uri("https://websocket"),
-            MediaStreamingContent.Audio,
-            MediaStreamingAudioChannel.Mixed,
-            MediaStreamingTransport.Websocket);
+             new Uri("https://websocket"),
+             MediaStreamingContent.Audio,
+             MediaStreamingAudioChannel.Mixed,
+             MediaStreamingTransport.Websocket);
 
         private readonly TranscriptionOptions _transcriptionConfiguration = new TranscriptionOptions(
-            new Uri("https://websocket"),
-            "en-CA",
-            true,
-            TranscriptionTransport.Websocket);
+             new Uri("https://websocket"),
+             "en-CA",
+             true,
+             TranscriptionTransport.Websocket);
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)

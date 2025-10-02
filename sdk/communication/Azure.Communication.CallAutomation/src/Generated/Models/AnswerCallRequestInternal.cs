@@ -34,7 +34,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
         /// <param name="mediaStreamingOptions"> Media Streaming Options. </param>
         /// <param name="transcriptionOptions"> Transcription Options. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
+        /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, bool? enableLoopbackAudio)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
@@ -44,6 +45,7 @@ namespace Azure.Communication.CallAutomation
             AnsweredBy = answeredBy;
             MediaStreamingOptions = mediaStreamingOptions;
             TranscriptionOptions = transcriptionOptions;
+            EnableLoopbackAudio = enableLoopbackAudio;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -62,5 +64,7 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
         /// <summary> Transcription Options. </summary>
         public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
     }
 }

@@ -42,7 +42,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
         /// <param name="mediaStreamingOptions"> Media Streaming Options. </param>
         /// <param name="transcriptionOptions"> Transcription Options. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MicrosoftTeamsAppIdentifierModel teamsAppSource, CustomCallingContextInternal customCallingContext, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
+        /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MicrosoftTeamsAppIdentifierModel teamsAppSource, CustomCallingContextInternal customCallingContext, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, bool? enableLoopbackAudio)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -55,6 +56,7 @@ namespace Azure.Communication.CallAutomation
             CustomCallingContext = customCallingContext;
             MediaStreamingOptions = mediaStreamingOptions;
             TranscriptionOptions = transcriptionOptions;
+            EnableLoopbackAudio = enableLoopbackAudio;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -82,5 +84,7 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
         /// <summary> Transcription Options. </summary>
         public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
     }
 }

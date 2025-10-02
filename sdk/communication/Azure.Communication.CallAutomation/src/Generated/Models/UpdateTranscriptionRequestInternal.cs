@@ -23,12 +23,18 @@ namespace Azure.Communication.CallAutomation
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        internal UpdateTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri)
+        /// <param name="piiRedactionOptions"> PII redaction configuration options. </param>
+        /// <param name="enableSentimentAnalysis"> Indicating if sentiment analysis should be used. </param>
+        /// <param name="summarizationOptions"> Summarization configuration options. </param>
+        internal UpdateTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri, PiiRedactionOptionsInternal piiRedactionOptions, bool? enableSentimentAnalysis, SummarizationOptionsInternal summarizationOptions)
         {
             Locale = locale;
             SpeechModelEndpointId = speechModelEndpointId;
             OperationContext = operationContext;
             OperationCallbackUri = operationCallbackUri;
+            PiiRedactionOptions = piiRedactionOptions;
+            EnableSentimentAnalysis = enableSentimentAnalysis;
+            SummarizationOptions = summarizationOptions;
         }
 
         /// <summary> Defines new locale for transcription. </summary>
@@ -42,5 +48,11 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
+        /// <summary> PII redaction configuration options. </summary>
+        public PiiRedactionOptionsInternal PiiRedactionOptions { get; set; }
+        /// <summary> Indicating if sentiment analysis should be used. </summary>
+        public bool? EnableSentimentAnalysis { get; set; }
+        /// <summary> Summarization configuration options. </summary>
+        public SummarizationOptionsInternal SummarizationOptions { get; set; }
     }
 }

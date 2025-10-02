@@ -38,6 +38,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("audioFormat"u8);
                 writer.WriteStringValue(AudioFormat.Value.ToString());
             }
+            if (Optional.IsDefined(EnableDtmfTones))
+            {
+                writer.WritePropertyName("enableDtmfTones"u8);
+                writer.WriteBooleanValue(EnableDtmfTones.Value);
+            }
             writer.WriteEndObject();
         }
 
