@@ -250,7 +250,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public void SetFeatureFlagReadOnlyFlagError()
+        public void SetReadOnlyFlagError()
         {
             var response = new MockResponse(409);
 
@@ -479,7 +479,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request2 = mockTransport.Requests[1];
             Assert.AreEqual(RequestMethod.Get, request2.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/feature-management/ff?api-version={s_version}&After=5", request2.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/feature-management/ff?after=5&api-version={s_version}", request2.Uri.ToString());
             AssertRequestCommon(request1);
         }
 
@@ -616,7 +616,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             FeatureFlagClient service = CreateTestService(mockTransport);
 
-            FeatureFlag flag = await service.SetFeatureFlagReadOnlyAsync(testFlag.Name, testFlag.Label, true);
+            FeatureFlag flag = await service.SetReadOnlyAsync(testFlag.Name, testFlag.Label, true);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -646,7 +646,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             FeatureFlagClient service = CreateTestService(mockTransport);
 
-            FeatureFlag flag = await service.SetFeatureFlagReadOnlyAsync(testFlag.Name, testFlag.Label, false);
+            FeatureFlag flag = await service.SetReadOnlyAsync(testFlag.Name, testFlag.Label, false);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -661,7 +661,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var expectedName = "abc";
             var expectedLabel = "def";
             var expectedEnabled = true;
-            var expectedContent = @$"{{""name"":""{expectedName}"",""label"":""{expectedLabel}"",""enabled"":""{expectedEnabled}""}}";
+            var expectedContent = @$"{{""name"":""{expectedName}"",""label"":""{expectedLabel}"",""enabled"":{expectedEnabled}}}";
 
             var client = new FeatureFlagClient(
                 s_connectionString,
@@ -734,20 +734,66 @@ namespace Azure.Data.AppConfiguration.Tests
         private void SerializeRequestFeatureFlag(ref Utf8JsonWriter json, FeatureFlag flag)
         {
             json.WriteStartObject();
-            json.WriteString("label", flag.Label);
-            json.WriteString("description", flag.Description);
-            json.WriteBoolean("enabled", flag.Enabled ?? false);
+            if (flag.Enabled.HasValue)
+            {
+                json.WriteBoolean("enabled", flag.Enabled.Value);
+            }
+            if (!string.IsNullOrEmpty(flag.Label))
+            {
+                json.WriteString("label", flag.Label);
+            }
+            if (!string.IsNullOrEmpty(flag.Description))
+            {
+                json.WriteString("description", flag.Description);
+            }
+            if (!string.IsNullOrEmpty(flag.Alias))
+            {
+                json.WriteString("alias", flag.Alias);
+            }
+            if (flag.Conditions != null)
+            {
+                json.WritePropertyName("conditions");
+                ((IJsonModel<FeatureFlagConditions>)flag.Conditions).Write(json, ModelSerializationExtensions.WireOptions);
+            }
+            if (flag.Variants != null && flag.Variants.Count > 0)
+            {
+                json.WriteStartArray("variants");
+                foreach (var variant in flag.Variants)
+                {
+                    ((IJsonModel<FeatureFlagVariantDefinition>)variant).Write(json, ModelSerializationExtensions.WireOptions);
+                }
+                json.WriteEndArray();
+            }
+            if (flag.Allocation != null)
+            {
+                json.WritePropertyName("allocation");
+                ((IJsonModel<FeatureFlagAllocation>)flag.Allocation).Write(json, ModelSerializationExtensions.WireOptions);
+            }
+            if (flag.Telemetry != null)
+            {
+                json.WritePropertyName("telemetry");
+                ((IJsonModel<FeatureFlagTelemetryConfiguration>)flag.Telemetry).Write(json, ModelSerializationExtensions.WireOptions);
+            }
             if (flag.Tags != null && flag.Tags.Count > 0)
             {
                 json.WriteStartObject("tags");
                 foreach (KeyValuePair<string, string> tag in flag.Tags)
                 {
-                    json.WriteString(tag.Key, tag.Value);
+                    if (tag.Value == null)
+                    {
+                        json.WriteNull(tag.Key);
+                    }
+                    else
+                    {
+                        json.WriteString(tag.Key, tag.Value);
+                    }
                 }
                 json.WriteEndObject();
             }
             if (flag.IsReadOnly.HasValue)
+            {
                 json.WriteBoolean("locked", flag.IsReadOnly.Value);
+            }
             json.WriteEndObject();
         }
 

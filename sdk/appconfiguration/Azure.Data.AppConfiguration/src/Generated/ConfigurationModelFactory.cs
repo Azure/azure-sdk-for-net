@@ -117,43 +117,6 @@ namespace Azure.Data.AppConfiguration
             return new SettingLabel(name, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A feature flag. </summary>
-        /// <param name="name"> The name of the feature flag. </param>
-        /// <param name="enabled"> The enabled state of the feature flag. </param>
-        /// <param name="label"> The label the feature flag belongs to. </param>
-        /// <param name="description"> The description of the feature flag. </param>
-        /// <param name="alias"> The alias of the feature flag. </param>
-        /// <param name="conditions"> The conditions of the feature flag. </param>
-        /// <param name="variants"> The variants of the feature flag. </param>
-        /// <param name="allocation"> The allocation of the feature flag. </param>
-        /// <param name="telemetry"> The telemetry settings of the feature flag. </param>
-        /// <param name="tags"> The tags of the feature flag. </param>
-        /// <param name="isReadOnly"> Indicates whether the feature flag is locked. </param>
-        /// <param name="lastModified"> A date representing the last time the feature flag was modified. </param>
-        /// <param name="eTag"> An ETag indicating the state of a configuration setting within a configuration store. </param>
-        /// <returns> A new <see cref="AppConfiguration.FeatureFlag"/> instance for mocking. </returns>
-        public static FeatureFlag FeatureFlag(string name = default, bool? enabled = default, string label = default, string description = default, string @alias = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariantDefinition> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetryConfiguration telemetry = default, IDictionary<string, string> tags = default, bool? isReadOnly = default, DateTimeOffset? lastModified = default, ETag eTag = default)
-        {
-            variants ??= new ChangeTrackingList<FeatureFlagVariantDefinition>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new FeatureFlag(
-                name,
-                enabled,
-                label,
-                description,
-                @alias,
-                conditions,
-                variants.ToList(),
-                allocation,
-                telemetry,
-                tags,
-                isReadOnly,
-                lastModified,
-                eTag,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The conditions that must be met for the feature flag to be enabled. </summary>
         /// <param name="requirementType"> The requirement type for the conditions. </param>
         /// <param name="filters"> The filters that will conditionally enable or disable the flag. </param>

@@ -18,26 +18,25 @@ namespace Azure.Data.AppConfiguration
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FeatureFlag"/>. </summary>
-        public FeatureFlag()
-        {
-            Variants = new ChangeTrackingList<FeatureFlagVariantDefinition>();
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FeatureFlag"/>. </summary>
         /// <param name="name"> The name of the feature flag. </param>
         /// <param name="enabled"> The enabled state of the feature flag. </param>
         /// <param name="label"> The label the feature flag belongs to. </param>
         /// <param name="description"> The description of the feature flag. </param>
         /// <param name="alias"> The alias of the feature flag. </param>
         /// <param name="conditions"> The conditions of the feature flag. </param>
-        /// <param name="variants"> The variants of the feature flag. </param>
+        /// <param name="variants"> A list of variant definitions for the feature flag. </param>
         /// <param name="allocation"> The allocation of the feature flag. </param>
         /// <param name="telemetry"> The telemetry settings of the feature flag. </param>
-        /// <param name="tags"> The tags of the feature flag. </param>
-        /// <param name="isReadOnly"> Indicates whether the feature flag is locked. </param>
-        /// <param name="lastModified"> A date representing the last time the feature flag was modified. </param>
-        /// <param name="eTag"> An ETag indicating the state of a configuration setting within a configuration store. </param>
+        /// <param name="tags">
+        /// A dictionary of tags used to assign additional properties to a feature flag.
+        ///     These can be used to indicate how a feature flag may be applied.
+        /// </param>
+        /// <param name="isReadOnly">
+        /// A value indicating whether the feature flag is read only.
+        ///     A read only feature flag may not be modified until it is made writable.
+        /// </param>
+        /// <param name="lastModified"> The last time a modifying operation was performed on the given feature flag. </param>
+        /// <param name="eTag"> An ETag indicating the state of a feature flag within a configuration store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FeatureFlag(string name, bool? enabled, string label, string description, string @alias, FeatureFlagConditions conditions, IList<FeatureFlagVariantDefinition> variants, FeatureFlagAllocation allocation, FeatureFlagTelemetryConfiguration telemetry, IDictionary<string, string> tags, bool? isReadOnly, DateTimeOffset? lastModified, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -75,22 +74,10 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The conditions of the feature flag. </summary>
         public FeatureFlagConditions Conditions { get; set; }
 
-        /// <summary> The variants of the feature flag. </summary>
-        public IList<FeatureFlagVariantDefinition> Variants { get; }
-
         /// <summary> The allocation of the feature flag. </summary>
         public FeatureFlagAllocation Allocation { get; set; }
 
         /// <summary> The telemetry settings of the feature flag. </summary>
         public FeatureFlagTelemetryConfiguration Telemetry { get; set; }
-
-        /// <summary> The tags of the feature flag. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> Indicates whether the feature flag is locked. </summary>
-        public bool? IsReadOnly { get; set; }
-
-        /// <summary> A date representing the last time the feature flag was modified. </summary>
-        public DateTimeOffset? LastModified { get; }
     }
 }

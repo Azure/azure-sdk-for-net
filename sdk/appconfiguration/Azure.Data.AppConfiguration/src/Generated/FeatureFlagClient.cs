@@ -849,13 +849,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetFeatureFlagRevisions(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual Response GetRevisions(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.GetFeatureFlagRevisions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.GetRevisions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFeatureFlagRevisionsRequest(name, label, after, @select, tags, syncToken, matchConditions, context);
+                using HttpMessage message = CreateGetRevisionsRequest(name, label, after, @select, tags, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -892,13 +892,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<Response> GetRevisionsAsync(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.GetFeatureFlagRevisions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.GetRevisions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFeatureFlagRevisionsRequest(name, label, after, @select, tags, syncToken, matchConditions, context);
+                using HttpMessage message = CreateGetRevisionsRequest(name, label, after, @select, tags, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -927,9 +927,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<FeatureFlagListResult> GetFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response<FeatureFlagListResult> GetRevisions(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetFeatureFlagRevisions(name, label, after, @select, tags, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetRevisions(name, label, after, @select, tags, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((FeatureFlagListResult)result, result);
         }
 
@@ -952,9 +952,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<FeatureFlagListResult>> GetFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<FeatureFlagListResult>> GetRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetFeatureFlagRevisionsAsync(name, label, after, @select, tags, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetRevisionsAsync(name, label, after, @select, tags, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((FeatureFlagListResult)result, result);
         }
 
@@ -983,13 +983,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CheckFeatureFlagRevisions(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
+        internal virtual Response CheckRevisions(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.CheckFeatureFlagRevisions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.CheckRevisions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckFeatureFlagRevisionsRequest(name, label, after, @select, tags, context);
+                using HttpMessage message = CreateCheckRevisionsRequest(name, label, after, @select, tags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1024,13 +1024,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CheckFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
+        internal virtual async Task<Response> CheckRevisionsAsync(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.CheckFeatureFlagRevisions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.CheckRevisions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckFeatureFlagRevisionsRequest(name, label, after, @select, tags, context);
+                using HttpMessage message = CreateCheckRevisionsRequest(name, label, after, @select, tags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1057,9 +1057,9 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response CheckFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        internal virtual Response CheckRevisions(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
         {
-            return CheckFeatureFlagRevisions(name, label, after, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return CheckRevisions(name, label, after, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> Requests the headers and status of the given resource. </summary>
@@ -1079,9 +1079,9 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> CheckFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> CheckRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
         {
-            return await CheckFeatureFlagRevisionsAsync(name, label, after, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await CheckRevisionsAsync(name, label, after, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1099,13 +1099,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response PutFeatureFlagLock(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual Response CreateReadOnlyLock(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.PutFeatureFlagLock");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.CreateReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePutFeatureFlagLockRequest(name, label, syncToken, matchConditions, context);
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(name, label, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1130,13 +1130,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> PutFeatureFlagLockAsync(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<Response> CreateReadOnlyLockAsync(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.PutFeatureFlagLock");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.CreateReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePutFeatureFlagLockRequest(name, label, syncToken, matchConditions, context);
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(name, label, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1153,9 +1153,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<FeatureFlag> PutFeatureFlagLock(string name, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response<FeatureFlag> CreateReadOnlyLock(string name, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = PutFeatureFlagLock(name, label, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CreateReadOnlyLock(name, label, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((FeatureFlag)result, result);
         }
 
@@ -1166,9 +1166,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<FeatureFlag>> PutFeatureFlagLockAsync(string name, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<FeatureFlag>> CreateReadOnlyLockAsync(string name, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await PutFeatureFlagLockAsync(name, label, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CreateReadOnlyLockAsync(name, label, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((FeatureFlag)result, result);
         }
 
@@ -1187,13 +1187,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeleteFeatureFlagLock(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual Response DeleteReadOnlyLock(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.DeleteFeatureFlagLock");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.DeleteReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFeatureFlagLockRequest(name, label, syncToken, matchConditions, context);
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(name, label, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1218,13 +1218,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeleteFeatureFlagLockAsync(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<Response> DeleteReadOnlyLockAsync(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.DeleteFeatureFlagLock");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureFlagClient.DeleteReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFeatureFlagLockRequest(name, label, syncToken, matchConditions, context);
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(name, label, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1241,9 +1241,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<FeatureFlag> DeleteFeatureFlagLock(string name, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response<FeatureFlag> DeleteReadOnlyLock(string name, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = DeleteFeatureFlagLock(name, label, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = DeleteReadOnlyLock(name, label, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((FeatureFlag)result, result);
         }
 
@@ -1254,9 +1254,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<FeatureFlag>> DeleteFeatureFlagLockAsync(string name, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<FeatureFlag>> DeleteReadOnlyLockAsync(string name, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await DeleteFeatureFlagLockAsync(name, label, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await DeleteReadOnlyLockAsync(name, label, syncToken, matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((FeatureFlag)result, result);
         }
     }

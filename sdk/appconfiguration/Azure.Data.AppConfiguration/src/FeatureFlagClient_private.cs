@@ -17,14 +17,14 @@ namespace Azure.Data.AppConfiguration
     {
         private const string AcceptDateTimeFormat = "R";
 
-        private static Response<FeatureFlag> CreateFeatureFlagResponse(Response response)
+        private static Response<FeatureFlag> CreateResponse(Response response)
         {
             var options = ModelReaderWriterOptions.Json;
             FeatureFlag result = FeatureFlag.DeserializeFeatureFlag(response.Content.ToObjectFromJson<JsonElement>(), options);
             return Response.FromValue(result, response);
         }
 
-        private static Response<FeatureFlag> CreateFeatureFlagResourceModifiedResponse(Response response)
+        private static Response<FeatureFlag> CreateResourceModifiedResponse(Response response)
         {
             return new NoBodyResponse<FeatureFlag>(response);
         }
@@ -47,7 +47,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private HttpMessage CreateNextGetFeatureFlagsRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<FeatureFlagFields> @select, MatchConditions matchConditions, RequestContext context)
+        private HttpMessage CreateNextGetFeatureFlagsRequest(string nextLink, string syncToken, string acceptDatetime, MatchConditions matchConditions, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        private HttpMessage CreateNextGetFeatureFlagRevisionsRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<FeatureFlagFields> @select, RequestContext context)
+        private HttpMessage CreateNextGetRevisionsRequest(string nextLink, string syncToken, string acceptDatetime, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

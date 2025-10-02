@@ -126,6 +126,9 @@ namespace Azure.Data.AppConfiguration
             internal set => _tags = value;
         }
 
+        /// <summary> The description of the key-value. </summary>
+        public string Description { get; set; }
+
         /// <summary>
         /// Check if two ConfigurationSetting instances are equal.
         /// </summary>

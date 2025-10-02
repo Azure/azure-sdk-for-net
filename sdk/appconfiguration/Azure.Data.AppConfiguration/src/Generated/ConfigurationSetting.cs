@@ -56,8 +56,5 @@ namespace Azure.Data.AppConfiguration
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The description of the key-value. </summary>
-        public string Description { get; set; }
     }
 }

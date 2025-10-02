@@ -45,7 +45,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// The fields of the <see cref="FeatureFlag"/> to retrieve for each setting in the retrieved group.
         /// </summary>
-        public IList<SnapshotFields> Fields { get; }
+        public FeatureFlagFields Fields { get; set; } = FeatureFlagFields.All;
 
         /// <summary>
         /// Indicates the point in time in the revision history of the selected <see cref="FeatureFlag"/> entities to retrieve.

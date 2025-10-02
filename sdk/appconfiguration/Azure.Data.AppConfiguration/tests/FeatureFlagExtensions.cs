@@ -32,7 +32,7 @@ namespace Azure.Data.AppConfiguration.Tests
             );
 
             // Copy variants
-            if (featureFlag.Variants != null)
+            if (featureFlag.Variants != null && featureFlag.Variants.Count > 0)
             {
                 foreach (var variant in featureFlag.Variants)
                 {

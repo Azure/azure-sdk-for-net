@@ -60,7 +60,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
+        /// Initializes a new instance of the <see cref="FeatureFlagClient"/> class.
         /// </summary>
         /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
         /// <param name="credential">The token credential used to sign requests.</param>
@@ -81,7 +81,7 @@ namespace Azure.Data.AppConfiguration
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
+        /// <summary> Initializes a new instance of FeatureFlagClient. </summary>
         /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
@@ -89,7 +89,7 @@ namespace Azure.Data.AppConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
+        /// <summary> Initializes a new instance of FeatureFlagClient. </summary>
         /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
@@ -109,7 +109,7 @@ namespace Azure.Data.AppConfiguration
             _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
+        /// <summary> Initializes a new instance of FeatureFlagClient. </summary>
         /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
@@ -173,7 +173,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
         public virtual async Task<Response<FeatureFlag>> AddFeatureFlagAsync(FeatureFlag flag, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddFeatureFlag)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(AddFeatureFlag)}");
             scope.AddAttribute(OTelAttributeKey, flag?.Name);
             scope.Start();
 
@@ -197,7 +197,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
         public virtual Response<FeatureFlag> AddFeatureFlag(FeatureFlag flag, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddFeatureFlag)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(AddFeatureFlag)}");
             scope.AddAttribute(OTelAttributeKey, flag?.Name);
             scope.Start();
 
@@ -254,7 +254,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<FeatureFlag>> SetFeatureFlagAsync(FeatureFlag flag, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(flag, nameof(flag));
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetFeatureFlag)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(SetFeatureFlag)}");
             scope.AddAttribute(OTelAttributeKey, flag?.Name);
             scope.Start();
 
@@ -283,7 +283,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<FeatureFlag> SetFeatureFlag(FeatureFlag flag, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(flag, nameof(flag));
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetFeatureFlag)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(SetFeatureFlag)}");
             scope.AddAttribute(OTelAttributeKey, flag?.Name);
             scope.Start();
 
@@ -361,7 +361,7 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response> DeleteFeatureFlagAsync(string name, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteFeatureFlag)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(DeleteFeatureFlag)}");
             scope.AddAttribute(OTelAttributeKey, name);
             scope.Start();
 
@@ -389,7 +389,7 @@ namespace Azure.Data.AppConfiguration
 
         private Response DeleteFeatureFlag(string name, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteFeatureFlag)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(DeleteFeatureFlag)}");
             scope.AddAttribute(OTelAttributeKey, name);
             scope.Start();
 
@@ -512,7 +512,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="FeatureFlag"/>.</returns>
         internal virtual async Task<Response<FeatureFlag>> GetFeatureFlagAsync(string name, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetFeatureFlag)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(GetFeatureFlag)}");
             scope.AddAttribute(OTelAttributeKey, name);
             scope.Start();
 
@@ -527,8 +527,8 @@ namespace Azure.Data.AppConfiguration
 
                 return response.Status switch
                 {
-                    200 => CreateFeatureFlagResponse(response),
-                    304 => CreateFeatureFlagResourceModifiedResponse(response),
+                    200 => CreateResponse(response),
+                    304 => CreateResourceModifiedResponse(response),
                     _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
                 };
             }
@@ -550,7 +550,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="FeatureFlag"/>.</returns>
         internal virtual Response<FeatureFlag> GetFeatureFlag(string name, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetFeatureFlag)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(GetFeatureFlag)}");
             scope.AddAttribute(OTelAttributeKey, name);
             scope.Start();
 
@@ -564,8 +564,8 @@ namespace Azure.Data.AppConfiguration
 
                 return response.Status switch
                 {
-                    200 => CreateFeatureFlagResponse(response),
-                    304 => CreateFeatureFlagResourceModifiedResponse(response),
+                    200 => CreateResponse(response),
+                    304 => CreateResourceModifiedResponse(response),
                     _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
                 };
             }
@@ -611,7 +611,7 @@ namespace Azure.Data.AppConfiguration
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
             var tags = selector.TagsFilter;
-            IEnumerable<FeatureFlagFields> fieldsSplit = selector.Fields.Split();
+            IEnumerable<string> fieldsString = selector.Fields.Split();
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
@@ -619,15 +619,17 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
             {
-                return CreateGetFeatureFlagsRequest(name, label, _syncToken, null, dateTime, fieldsSplit, conditions, tags, context);
+                var test = CreateGetFeatureFlagsRequest(name, label, _syncToken, null, dateTime, fieldsString, conditions, tags, context);
+                return test;
             }
 
             HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
             {
-                return CreateNextGetFeatureFlagsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, label, _syncToken, null, dateTime, fieldsSplit, conditions, tags, context);
+                var test = CreateNextGetFeatureFlagsRequest(nextLink, _syncToken, dateTime, conditions, context);
+                return test;
             }
 
-            return new ConditionalPageableImplementation<FeatureFlag>(FirstPageRequest, NextPageRequest, ParseGetGetFeatureFlagsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetFeatureFlags", context);
+            return new ConditionalPageableImplementation<FeatureFlag>(FirstPageRequest, NextPageRequest, ParseGetGetFeatureFlagsResponse, Pipeline, ClientDiagnostics, "FeatureFlagClient.GetFeatureFlags", context);
         }
 
         /// <summary>
@@ -639,7 +641,7 @@ namespace Azure.Data.AppConfiguration
         public virtual AsyncPageable<FeatureFlag> GetRevisionsAsync(string nameFilter, string labelFilter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nameFilter, nameof(nameFilter));
-            return GetRevisionsAsync(ConfigurationModelFactory.FeatureFlagSelector { NameFilter = nameFilter, LabelFilter = labelFilter }, cancellationToken);
+            return GetRevisionsAsync(new FeatureFlagSelector { NameFilter = nameFilter, LabelFilter = labelFilter }, cancellationToken);
         }
 
         /// <summary>
@@ -651,7 +653,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Pageable<FeatureFlag> GetRevisions(string nameFilter, string labelFilter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nameFilter, nameof(nameFilter));
-            return GetRevisions(ConfigurationModelFactory.FeatureFlagSelector { NameFilter = nameFilter, LabelFilter = labelFilter }, cancellationToken);
+            return GetRevisions(new FeatureFlagSelector { NameFilter = nameFilter, LabelFilter = labelFilter }, cancellationToken);
         }
 
         /// <summary>
@@ -667,11 +669,11 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
             var tags = selector.TagsFilter;
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<FeatureFlagFields> fieldsSplit = selector.Fields.Split();
+            IEnumerable<string> fieldsSplit = selector.Fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFeatureFlagRevisionsRequest(name, label, null, fieldsSplit, tags, _syncToken, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetFeatureFlagRevisionsRequest(name, label, nextLink, fieldsSplit, tags, _syncToken, null, context);
-            return PageableHelpers.CreateAsyncPageable<FeatureFlag>(FirstPageRequest, NextPageRequest, element => FeatureFlag.DeserializeFeatureFlag(element, default), ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(name, label, null, fieldsSplit, tags, _syncToken, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsRequest(name, label, nextLink, fieldsSplit, tags, _syncToken, null, context);
+            return PageableHelpers.CreateAsyncPageable<FeatureFlag>(FirstPageRequest, NextPageRequest, element => FeatureFlag.DeserializeFeatureFlag(element, default), ClientDiagnostics, Pipeline, "FeatureFlagClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -687,12 +689,11 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
             var tags = selector.TagsFilter;
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<FeatureFlagFields> fieldsSplit = selector.Fields.Split();
-            IEnumerable<string> fieldsString = selector.Fields.SplitAsStrings();
+            IEnumerable<string> fieldsString = selector.Fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFeatureFlagRevisionsRequest(name, label, null, fieldsSplit, tags, _syncToken, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetFeatureFlagsRequest(nextLink, name, label, _syncToken, null, dateTime, fieldsSplit, null, context);
-            return PageableHelpers.CreatePageable<FeatureFlag>(FirstPageRequest, NextPageRequest, element => FeatureFlag.DeserializeFeatureFlag(element, default), ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(name, label, null, fieldsString, tags, _syncToken, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetRevisionsRequest(nextLink, _syncToken, dateTime, context);
+            return PageableHelpers.CreatePageable<FeatureFlag>(FirstPageRequest, NextPageRequest, element => FeatureFlag.DeserializeFeatureFlag(element, default), ClientDiagnostics, Pipeline, "FeatureFlagClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -701,10 +702,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name">The primary identifier of the feature flag.</param>
         /// <param name="isReadOnly">If true, the <see cref="FeatureFlag"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<FeatureFlag>> SetFeatureFlagReadOnlyAsync(string name, bool isReadOnly, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureFlag>> SetReadOnlyAsync(string name, bool isReadOnly, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return await SetFeatureFlagReadOnlyAsync(name, default, isReadOnly, cancellationToken).ConfigureAwait(false);
+            return await SetReadOnlyAsync(name, default, isReadOnly, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -713,10 +714,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name">The primary identifier of the feature flag.</param>
         /// <param name="isReadOnly">If true, the <see cref="FeatureFlag"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<FeatureFlag> SetFeatureFlagReadOnly(string name, bool isReadOnly, CancellationToken cancellationToken = default)
+        public virtual Response<FeatureFlag> SetReadOnly(string name, bool isReadOnly, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return SetFeatureFlagReadOnly(name, default, isReadOnly, cancellationToken);
+             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            return SetReadOnlyAsync(name, default, default, isReadOnly, false, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -726,18 +727,75 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">A label used to group this feature flag with others.</param>
         /// <param name="isReadOnly">If true, the <see cref="FeatureFlag"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<FeatureFlag>> SetFeatureFlagReadOnlyAsync(string name, string label, bool isReadOnly, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureFlag>> SetReadOnlyAsync(string name, string label, bool isReadOnly, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            return await SetReadOnlyAsync(name, label, default, isReadOnly, true, cancellationToken).ConfigureAwait(false);
+        }
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetFeatureFlagReadOnly)}");
+        /// <summary>
+        /// Sets an existing <see cref="FeatureFlag"/> to read only or read write state in the configuration store.
+        /// </summary>
+        /// <param name="name">The primary identifier of the feature flag.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="isReadOnly">If true, the <see cref="FeatureFlag"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<FeatureFlag> SetReadOnly(string name, string label, bool isReadOnly, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            return SetReadOnlyAsync(name, label, default, isReadOnly, false, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Sets an existing <see cref="FeatureFlag"/> to read only or read write state in the configuration store.
+        /// </summary>
+        /// <param name="flag">The <see cref="FeatureFlag"/> to update.</param>
+        /// <param name="onlyIfUnchanged">If set to true and the feature flag exists in the configuration store, update the flag
+        /// if the passed-in <see cref="FeatureFlag"/> is the same version as the one in the configuration store. The flag versions
+        /// are the same if their ETag fields match.  If the two flags are different versions, this method will throw an exception to indicate
+        /// that the flag in the configuration store was modified since it was last obtained by the client.</param>
+        /// <param name="isReadOnly">If true, the <see cref="FeatureFlag"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<FeatureFlag>> SetReadOnlyAsync(FeatureFlag flag, bool isReadOnly, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(flag, nameof(flag));
+            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.ETag } : default;
+            return await SetReadOnlyAsync(flag.Name, flag.Label, requestOptions, isReadOnly, true, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Sets an existing <see cref="FeatureFlag"/> to read only or read write state in the configuration store.
+        /// </summary>
+        /// <param name="flag">The <see cref="FeatureFlag"/> to update.</param>
+        /// <param name="onlyIfUnchanged">If set to true and the feature flag exists in the configuration store, update the flag
+        /// if the passed-in <see cref="FeatureFlag"/> is the same version as the one in the configuration store. The flag versions
+        /// are the same if their ETag fields match.  If the two flags are different versions, this method will throw an exception to indicate
+        /// that the flag in the configuration store was modified since it was last obtained by the client.</param>
+        /// <param name="isReadOnly">If true, the <see cref="FeatureFlag"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<FeatureFlag> SetReadOnly(FeatureFlag flag, bool isReadOnly, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(flag, nameof(flag));
+            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.ETag } : default;
+            return SetReadOnlyAsync(flag.Name, flag.Label, requestOptions, isReadOnly, false, cancellationToken).EnsureCompleted();
+        }
+
+        private async ValueTask<Response<FeatureFlag>> SetReadOnlyAsync(string name, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(SetReadOnly)}");
             scope.AddAttribute(OTelAttributeKey, name);
             scope.Start();
 
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-                return await PutOrDeleteLockAsync(name, label, default, isReadOnly, context).ConfigureAwait(false);
+                using Response response = async ? await ToCreateAsyncResponse(name, label, requestOptions, isReadOnly, context).ConfigureAwait(false) : ToCreateResponse(name, label, requestOptions, isReadOnly, context);
+
+                return response.Status switch
+                {
+                    200 => CreateResponse(response),
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser()),
+                };
             }
             catch (Exception e)
             {
@@ -746,70 +804,30 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// Sets an existing <see cref="FeatureFlag"/> to read only or read write state in the configuration store.
-        /// </summary>
-        /// <param name="name">The primary identifier of the feature flag.</param>
-        /// <param name="label">A label used to group this feature flag with others.</param>
-        /// <param name="isReadOnly">If true, the <see cref="FeatureFlag"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<FeatureFlag> SetFeatureFlagReadOnly(string name, string label, bool isReadOnly, CancellationToken cancellationToken = default)
+        private async Task<Response> ToCreateAsyncResponse(string name, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-            return PutOrDeleteLock(name, label, default, isReadOnly, context);
-        }
-
-        /// <summary>
-        /// Sets an existing <see cref="FeatureFlag"/> to read only or read write state in the configuration store.
-        /// </summary>
-        /// <param name="flag">The <see cref="FeatureFlag"/> to update.</param>
-        /// <param name="onlyIfUnchanged">If set to true and the feature flag exists in the configuration store, update the flag
-        /// if the passed-in <see cref="FeatureFlag"/> is the same version as the one in the configuration store. The flag versions
-        /// are the same if their ETag fields match.  If the two flags are different versions, this method will throw an exception to indicate
-        /// that the flag in the configuration store was modified since it was last obtained by the client.</param>
-        /// <param name="isReadOnly">If true, the <see cref="FeatureFlag"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<FeatureFlag>> SetFeatureFlagReadOnlyAsync(FeatureFlag flag, bool isReadOnly, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(flag, nameof(flag));
-            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.ETag } : default;
-            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-            return await PutOrDeleteLockAsync(flag.Name, flag.Label, requestOptions, isReadOnly, context).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Sets an existing <see cref="FeatureFlag"/> to read only or read write state in the configuration store.
-        /// </summary>
-        /// <param name="flag">The <see cref="FeatureFlag"/> to update.</param>
-        /// <param name="onlyIfUnchanged">If set to true and the feature flag exists in the configuration store, update the flag
-        /// if the passed-in <see cref="FeatureFlag"/> is the same version as the one in the configuration store. The flag versions
-        /// are the same if their ETag fields match.  If the two flags are different versions, this method will throw an exception to indicate
-        /// that the flag in the configuration store was modified since it was last obtained by the client.</param>
-        /// <param name="isReadOnly">If true, the <see cref="FeatureFlag"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<FeatureFlag> SetFeatureFlagReadOnly(FeatureFlag flag, bool isReadOnly, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(flag, nameof(flag));
-            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.ETag } : default;
-            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-            return PutOrDeleteLock(flag.Name, flag.Label, requestOptions, isReadOnly, context);
-        }
-
-        private async Task<Response<FeatureFlag>> PutOrDeleteLockAsync(string name, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
-        {
-            Response<FeatureFlag> response = isReadOnly
-                ? await PutFeatureFlagLockAsync(name, label, matchConditions: requestOptions, cancellationToken: context.CancellationToken).ConfigureAwait(false)
-                : await DeleteFeatureFlagLockAsync(name, label, matchConditions: requestOptions, cancellationToken: context.CancellationToken).ConfigureAwait(false);
+            Response response = isReadOnly
+                ? await CreateReadOnlyLockAsync(name, label, _syncToken, requestOptions, context).ConfigureAwait(false)
+                : await DeleteReadOnlyLockAsync(name, label, _syncToken, requestOptions, context).ConfigureAwait(false);
             return response;
         }
 
-        private Response<FeatureFlag> PutOrDeleteLock(string name, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
+        private Response ToCreateResponse(string name, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
         {
-            Response<FeatureFlag> response = isReadOnly
-                ? PutFeatureFlagLock(name, label, matchConditions: requestOptions, cancellationToken: context.CancellationToken)
-                : DeleteFeatureFlagLock(name, label, matchConditions: requestOptions, cancellationToken: context.CancellationToken);
+            Response response = isReadOnly
+                ? CreateReadOnlyLock(name, label, _syncToken, requestOptions, context)
+                : DeleteReadOnlyLock(name, label, _syncToken, requestOptions, context);
             return response;
+        }
+
+        /// <summary>
+        /// Adds an external synchronization token to ensure service requests receive up-to-date values.
+        /// </summary>
+        /// <param name="token">The synchronization token value.</param>
+        public virtual void UpdateSyncToken(string token)
+        {
+            Argument.AssertNotNull(token, nameof(token));
+            _syncTokenPolicy.AddToken(token);
         }
 
         private static RequestContext CreateRequestContext(ErrorOptions errorOptions, CancellationToken cancellationToken)

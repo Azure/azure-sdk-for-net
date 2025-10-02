@@ -270,7 +270,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateGetRevisionsRequest(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -288,7 +288,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("After", after, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<FeatureFlagFields> changeTrackingList && changeTrackingList.IsUndefined))
+            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", null, true);
             }
@@ -315,7 +315,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCheckFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateCheckRevisionsRequest(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -333,7 +333,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("After", after, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<FeatureFlagFields> changeTrackingList && changeTrackingList.IsUndefined))
+            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", null, true);
             }
@@ -351,7 +351,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreatePutFeatureFlagLockRequest(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCreateReadOnlyLockRequest(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -378,7 +378,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateDeleteFeatureFlagLockRequest(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteReadOnlyLockRequest(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
