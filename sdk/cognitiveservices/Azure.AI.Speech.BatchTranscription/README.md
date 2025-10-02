@@ -39,7 +39,7 @@ For example, include details on obtaining an account key and endpoint URI, setti
 <!--
 TODO: Add Service API versions section when manual samples are created
 First, create tests/Samples/SampleSnippets.cs with the CreateBatchTranscriptionClientForSpecificApiVersion snippet,
-then uncomment this section and remove the space in "Snip pet:" below.
+then uncomment this section.
 
 ### Service API versions
 
@@ -51,12 +51,11 @@ You have the flexibility to explicitly select a supported service API version wh
 
 For example,
 
-```C# Snip pet:CreateBatchTranscriptionClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
-AzureKeyCredential credential = new("your apikey");
-BatchTranscriptionClientOptions options = new BatchTranscriptionClientOptions(BatchTranscriptionClientOptions.ServiceVersion.V2025_10_15);
-BatchTranscriptionClient client = new BatchTranscriptionClient(endpoint, credential, options);
-```
+    C# Snippet:CreateBatchTranscriptionClientForSpecificApiVersion
+    Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
+    AzureKeyCredential credential = new("your apikey");
+    BatchTranscriptionClientOptions options = new BatchTranscriptionClientOptions(BatchTranscriptionClientOptions.ServiceVersion.V2025_10_15);
+    BatchTranscriptionClient client = new BatchTranscriptionClient(endpoint, credential, options);
 
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
 
