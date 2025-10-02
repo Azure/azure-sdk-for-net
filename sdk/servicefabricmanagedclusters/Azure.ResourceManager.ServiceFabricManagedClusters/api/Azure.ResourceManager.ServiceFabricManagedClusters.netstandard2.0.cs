@@ -72,6 +72,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource> Update(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource>> UpdateAsync(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation UpdateUpgrade(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateUpgradeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceFabricManagedApplicationTypeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource>, System.Collections.IEnumerable
     {
@@ -627,6 +629,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku NodeTypeSupportedSku(string name = null, string tier = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension NodeTypeVmssExtension(string name = null, string publisher = null, string vmssExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = default(bool?), System.BinaryData settings = null, System.BinaryData protectedSettings = null, string forceUpdateTag = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null, string provisioningState = null, bool? isAutomaticUpgradeEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmssExtensionSetupOrder> setupOrder = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus ResourceAzStatus(string resourceName = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), bool? isZoneResilient = default(bool?), string details = null) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy RuntimeApplicationHealthPolicy(bool considerWarningAsError = false, int maxPercentUnhealthyDeployedApplications = 0, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = null) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy RuntimeRollingUpgradeUpdateMonitoringPolicy(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode rollingUpgradeMode = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode), bool? forceRestart = default(bool?), long? replicaSetCheckTimeoutInMilliseconds = default(long?), Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction? failureAction = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction?), string healthCheckWaitDurationInMilliseconds = null, string healthCheckStableDurationInMilliseconds = null, string healthCheckRetryTimeoutInMilliseconds = null, string upgradeTimeoutInMilliseconds = null, string upgradeDomainTimeoutInMilliseconds = null, long? instanceCloseDelayDurationInSeconds = default(long?)) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent RuntimeUpdateApplicationUpgradeContent(string name = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind upgradeKind = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind), Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy applicationHealthPolicy = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy updateDescription = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, string version = null, System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy upgradePolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo> managedIdentities = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo> managedIdentities = null, string provisioningState = null, string version = null, System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy upgradePolicy = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData ServiceFabricManagedApplicationTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string provisioningState = null) { throw null; }
@@ -1620,6 +1625,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RuntimeApplicationHealthPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy>
+    {
+        public RuntimeApplicationHealthPolicy(bool considerWarningAsError, int maxPercentUnhealthyDeployedApplications) { }
+        public bool ConsiderWarningAsError { get { throw null; } }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy { get { throw null; } set { } }
+        public int MaxPercentUnhealthyDeployedApplications { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy> ServiceTypeHealthPolicyMap { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuntimeFailureAction : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuntimeFailureAction(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction Manual { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction Rollback { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RuntimeResumeApplicationUpgradeContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>
     {
         public RuntimeResumeApplicationUpgradeContent() { }
@@ -1630,6 +1667,89 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuntimeRollingUpgradeMode : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuntimeRollingUpgradeMode(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode Monitored { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode UnmonitoredAuto { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode UnmonitoredManual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RuntimeRollingUpgradeUpdateMonitoringPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy>
+    {
+        public RuntimeRollingUpgradeUpdateMonitoringPolicy(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode rollingUpgradeMode) { }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction? FailureAction { get { throw null; } set { } }
+        public bool? ForceRestart { get { throw null; } set { } }
+        public string HealthCheckRetryTimeoutInMilliseconds { get { throw null; } set { } }
+        public string HealthCheckStableDurationInMilliseconds { get { throw null; } set { } }
+        public string HealthCheckWaitDurationInMilliseconds { get { throw null; } set { } }
+        public long? InstanceCloseDelayDurationInSeconds { get { throw null; } set { } }
+        public long? ReplicaSetCheckTimeoutInMilliseconds { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode RollingUpgradeMode { get { throw null; } }
+        public string UpgradeDomainTimeoutInMilliseconds { get { throw null; } set { } }
+        public string UpgradeTimeoutInMilliseconds { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RuntimeServiceTypeHealthPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy>
+    {
+        public RuntimeServiceTypeHealthPolicy(int maxPercentUnhealthyServices, int maxPercentUnhealthyPartitionsPerService, int maxPercentUnhealthyReplicasPerPartition) { }
+        public int MaxPercentUnhealthyPartitionsPerService { get { throw null; } }
+        public int MaxPercentUnhealthyReplicasPerPartition { get { throw null; } }
+        public int MaxPercentUnhealthyServices { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RuntimeUpdateApplicationUpgradeContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent>
+    {
+        public RuntimeUpdateApplicationUpgradeContent(string name, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind upgradeKind) { }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy ApplicationHealthPolicy { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy UpdateDescription { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind UpgradeKind { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuntimeUpgradeKind : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuntimeUpgradeKind(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind Rolling { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ServiceFabricManagedApplicationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch>
     {
