@@ -484,15 +484,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
                 .Build();
 
+            const int expectedRequestCount = 5;
+            const int expectedExceptionCount = 3;
+
+            // Record start time for rate calculations
+            var testStartTime = DateTimeOffset.UtcNow;
+
             // Generate multiple request activities to increment the RequestRate counter.
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < expectedRequestCount; i++)
             {
                 using var a = activitySource.StartActivity("Req", ActivityKind.Server);
                 a?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
             }
 
-            // Generate a few thrown (and caught) exceptions to trigger System.Runtime "dotnet.exceptions" counter where available.
-            for (int i = 0; i < 3; i++)
+            // Generate a few thrown (and caught) exceptions to trigger exception rate metric
+            for (int i = 0; i < expectedExceptionCount; i++)
             {
                 try
                 {
@@ -507,6 +513,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             tracerProvider?.ForceFlush();
             WaitForActivityExport(traceTelemetryItems);
 
+            // Add a meaningful delay to allow gauge calculations to have a proper time window
+            Thread.Sleep(1000); // 1 second to get a measurable rate
+
+            var testEndTime = DateTimeOffset.UtcNow;
+            var actualTimeWindowSeconds = (testEndTime - testStartTime).TotalSeconds;
+
             standardMetricCustomProcessor._meterProvider?.ForceFlush();
 
             // We expect multiple metric telemetry items now (at least one per perf counter plus request duration histogram).
@@ -519,25 +531,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var requestRate = FindMetric(PerfCounterConstants.RequestRateMetricIdValue);
             Assert.NotNull(requestRate);
-            Assert.True(requestRate!.Metrics[0].Value >= 1, "Request rate should be >= 1");
+            // Calculate expected rate: requests per second over the actual time window
+            var expectedRequestRate = expectedRequestCount / actualTimeWindowSeconds;
+            // Allow for some tolerance due to timing variations (±20%)
+            var tolerance = expectedRequestRate * 0.2;
+            Assert.True(Math.Abs(requestRate!.Metrics[0].Value - expectedRequestRate) <= tolerance,
+                $"Request rate should be approximately {expectedRequestRate:F2} req/sec (±{tolerance:F2}), actual: {requestRate.Metrics[0].Value:F2}");
 
             var privateBytes = FindMetric(PerfCounterConstants.ProcessPrivateBytesMetricIdValue);
             Assert.NotNull(privateBytes);
-            Assert.True(privateBytes!.Metrics[0].Value >= 0);
+            Assert.True(privateBytes!.Metrics[0].Value > 0, "Process private bytes should be > 0");
 
             var cpu = FindMetric(PerfCounterConstants.ProcessCpuMetricIdValue);
             Assert.NotNull(cpu);
-            Assert.True(cpu!.Metrics[0].Value >= 0);
+            Assert.True(cpu!.Metrics[0].Value >= 0, "CPU usage should be >= 0");
 
             var cpuNormalized = FindMetric(PerfCounterConstants.ProcessCpuNormalizedMetricIdValue);
             Assert.NotNull(cpuNormalized);
-            Assert.True(cpuNormalized!.Metrics[0].Value >= 0);
+            Assert.True(cpuNormalized!.Metrics[0].Value >= 0, "Normalized CPU usage should be >= 0");
+            Assert.True(cpuNormalized.Metrics[0].Value <= 100, "Normalized CPU usage should be <= 100%");
 
             // Exception rate metric may not be available on all target frameworks/runtimes; assert only if present.
             var exceptionRate = FindMetric(PerfCounterConstants.ExceptionRateMetricIdValue);
             if (exceptionRate != null)
             {
-                Assert.True(exceptionRate.Metrics[0].Value >= 0);
+                // Calculate expected exception rate: exceptions per second over the actual time window
+                var expectedExceptionRate = expectedExceptionCount / actualTimeWindowSeconds;
+                var exceptionTolerance = expectedExceptionRate * 0.2;
+                Assert.True(Math.Abs(exceptionRate.Metrics[0].Value - expectedExceptionRate) <= exceptionTolerance,
+                    $"Exception rate should be approximately {expectedExceptionRate:F2} exceptions/sec (±{exceptionTolerance:F2}), actual: {exceptionRate.Metrics[0].Value:F2}");
             }
         }
 
