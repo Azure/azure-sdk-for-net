@@ -964,6 +964,11 @@ namespace Azure.Communication.CallAutomation
         public string UpdatedType { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogUpdated Deserialize(string content) { throw null; }
     }
+    public partial class DtmfData : Azure.Communication.CallAutomation.StreamingData
+    {
+        public DtmfData(string data) { }
+        public string Data { get { throw null; } }
+    }
     public partial class DtmfResult : Azure.Communication.CallAutomation.RecognizeResult
     {
         internal DtmfResult() { }
@@ -2055,15 +2060,12 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TranscriptionMetadata : Azure.Communication.CallAutomation.StreamingData
     {
-        public TranscriptionMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("callConnectionId")]
-        public string CallConnectionId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("correlationId")]
-        public string CorrelationId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("locale")]
-        public string Locale { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
-        public string TranscriptionSubscriptionId { get { throw null; } set { } }
+        internal TranscriptionMetadata() { }
+        public string CallConnectionId { get { throw null; } }
+        public string CorrelationId { get { throw null; } }
+        public string Locale { get { throw null; } }
+        public string SpeechRecognitionModelEndpointId { get { throw null; } }
+        public string TranscriptionSubscriptionId { get { throw null; } }
     }
     public partial class TranscriptionOptions
     {
