@@ -83,12 +83,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-<!--
 ## Examples
 
-TODO: Add examples section when manual samples are created.
-You can familiarize yourself with different APIs using samples.
--->
+Auto-generated code samples are available in the [tests/Generated/Samples](tests/Generated/Samples) directory.
 
 ## Troubleshooting
 
