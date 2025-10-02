@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Samples
             string filePath;
             Uri blobUri;
             BlobsStorageResourceProvider blobs;
-            TransferManager transferManager;
+            await using TransferManager transferManager = new TransferManager();
             #endregion
 
             // Create a temporary Lorem Ipsum file on disk to upload
@@ -79,7 +79,6 @@ namespace Azure.Storage.DataMovement.Samples
 
             try
             {
-                transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
 
                 #region Snippet:DataMovementMigration_UploadSingleFile
@@ -104,7 +103,7 @@ namespace Azure.Storage.DataMovement.Samples
             string directoryPath, blobDirectoryPath;
             Uri containerUri;
             BlobsStorageResourceProvider blobs;
-            TransferManager transferManager;
+            await using TransferManager transferManager = new TransferManager();
             #endregion
 
             // Create a temporary populated directory on disk to upload
@@ -129,7 +128,6 @@ namespace Azure.Storage.DataMovement.Samples
 
             try
             {
-                transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
 
                 #region Snippet:DataMovementMigration_UploadBlobDirectory
@@ -157,7 +155,7 @@ namespace Azure.Storage.DataMovement.Samples
             string filePath;
             Uri blobUri;
             BlobsStorageResourceProvider blobs;
-            TransferManager transferManager;
+            await using TransferManager transferManager = new TransferManager();
             #endregion
 
             // Create a temporary populated directory on disk to upload
@@ -186,7 +184,6 @@ namespace Azure.Storage.DataMovement.Samples
                 await container.GetBlobClient(blobName)
                     .UploadAsync(BinaryData.FromString(SampleFileContent));
 
-                transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
 
                 #region Snippet:DataMovementMigration_DownloadBlob
@@ -211,7 +208,7 @@ namespace Azure.Storage.DataMovement.Samples
             string directoryPath, blobDirectoryPath;
             Uri containerUri;
             BlobsStorageResourceProvider blobs;
-            TransferManager transferManager;
+            await using TransferManager transferManager = new TransferManager();
             #endregion
 
             // Create a temporary populated directory on disk to upload
@@ -236,7 +233,6 @@ namespace Azure.Storage.DataMovement.Samples
 
             try
             {
-                transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
 
                 #region Snippet:DataMovementMigration_DownloadBlobDirectory
@@ -263,7 +259,7 @@ namespace Azure.Storage.DataMovement.Samples
             // these values provided by your code
             Uri srcBlobUri, dstBlobUri;
             BlobsStorageResourceProvider blobs;
-            TransferManager transferManager;
+            await using TransferManager transferManager = new TransferManager();
             #endregion
 
             // Get account and shared key access
@@ -295,7 +291,6 @@ namespace Azure.Storage.DataMovement.Samples
                 await container.GetBlobClient(srcBlobName)
                     .UploadAsync(BinaryData.FromString(SampleFileContent));
 
-                transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
 
                 #region Snippet:DataMovementMigration_CopyBlobToBlob
@@ -320,7 +315,7 @@ namespace Azure.Storage.DataMovement.Samples
             Uri blobUri, fileUri;
             BlobsStorageResourceProvider blobs;
             ShareFilesStorageResourceProvider files;
-            TransferManager transferManager;
+            await using TransferManager transferManager = new TransferManager();
             #endregion
 
             // Get account and shared key access
@@ -357,7 +352,6 @@ namespace Azure.Storage.DataMovement.Samples
                 share = new ShareClient(accountUri, credential);
                 await share.CreateIfNotExistsAsync();
 
-                transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
                 files = new ShareFilesStorageResourceProvider(credential);
 

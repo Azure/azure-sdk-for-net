@@ -296,7 +296,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             List<VerifyObjectCopyFromUriInfo> copyObjectInfo = new List<VerifyObjectCopyFromUriInfo>(objectCount);
             // Initialize transfer manager
-            TransferManager transferManager = new TransferManager(transferManagerOptions);
+            await using TransferManager transferManager = new TransferManager(transferManagerOptions);
 
             // Upload set of VerifyCopyFromUriInfo Remote Objects to Copy
             for (int i = 0; i < objectCount; i++)
@@ -582,7 +582,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItem destinationResource = GetDestinationStorageResourceItem(destinationClient);
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
-            TransferManager transferManager = new TransferManager();
+            await using TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -642,7 +642,7 @@ namespace Azure.Storage.DataMovement.Tests
                 objectLength: size);
             StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
             StorageResourceItem destinationResource = GetDestinationStorageResourceItem(destinationClient);
-            TransferManager transferManager = new TransferManager();
+            await using TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(

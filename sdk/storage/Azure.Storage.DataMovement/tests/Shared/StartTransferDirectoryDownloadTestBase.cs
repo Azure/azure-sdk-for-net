@@ -242,7 +242,7 @@ namespace Azure.Storage.DataMovement.Tests
             await SetupSourceDirectoryAsync(test.Container, sourceDirectoryName, new(), cancellationTokenSource.Token);
 
             // Initialize transferManager
-            TransferManager transferManager = new TransferManager();
+            await using TransferManager transferManager = new TransferManager();
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
 
@@ -459,7 +459,7 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task<TransferOperation> CreateStartTransfer(
             TContainerClient containerClient,
             string destinationFolder,
-            int concurrency,
+            TransferManager transferManager,
             TransferOptions options = default,
             int size = Constants.KB,
             CancellationToken cancellationToken = default)
@@ -472,19 +472,26 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer sourceResource = GetStorageResourceContainer(containerClient, sourcePrefix);
             StorageResource destinationResource = LocalFilesStorageResourceProvider.FromDirectory(destinationFolder);
 
-            // Create Transfer Manager with single threaded operation
-            TransferManagerOptions managerOptions = new TransferManagerOptions()
-            {
-                MaximumConcurrency = concurrency,
-                ErrorMode = TransferErrorMode.StopOnAnyFailure
-            };
-            TransferManager transferManager = new TransferManager(managerOptions);
-
             // Start transfer and await for completion.
             return await transferManager.StartTransferAsync(
                 sourceResource,
                 destinationResource,
                 options).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// For usage, please dispose of the TransferManager after use.
+        /// </summary>
+        /// <param name="concurrency">Concurrency to set in TransferManagerOptions.</param>
+        /// <returns>Valid TransferManager that needs to be disposed after use.</returns>
+        private TransferManager CreateTransferManager(int concurrency = default)
+        {
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = concurrency,
+                ErrorMode = TransferErrorMode.StopOnAnyFailure
+            };
+            return new TransferManager(managerOptions);
         }
 
         [Test]
@@ -496,13 +503,16 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
             using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
+            // Create Transfer Manager with single threaded operation
+            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
+
             // Create transfer to do a AwaitCompletion
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferOperation transfer = await CreateStartTransfer(
                 test.Container,
                 destinationFolder,
-                1,
+                transferManager,
                 options: options,
                 cancellationToken: cancellationTokenSource.Token);
 
@@ -529,6 +539,9 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
             using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
+            // Create Transfer Manager with single threaded operation
+            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
+
             TransferOptions options = new TransferOptions()
             {
                 CreationMode = StorageResourceCreationMode.FailIfExists
@@ -542,7 +555,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = await CreateStartTransfer(
                 test.Container,
                 destinationFolder,
-                1,
+                transferManager,
                 options: options,
                 cancellationToken: cancellationTokenSource.Token);
 
@@ -570,6 +583,9 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
             using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
+            // Create Transfer Manager with single threaded operation
+            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
+
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
@@ -584,7 +600,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = await CreateStartTransfer(
                 test.Container,
                 destinationFolder,
-                1,
+                transferManager,
                 options: options,
                 cancellationToken: cancellationTokenSource.Token);
 
@@ -612,6 +628,9 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
             using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
+            // Create Transfer Manager with single threaded operation
+            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
+
             TransferOptions options = new TransferOptions()
             {
                 CreationMode = StorageResourceCreationMode.FailIfExists,
@@ -627,7 +646,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = await CreateStartTransfer(
                 test.Container,
                 destinationFolder,
-                1,
+                transferManager,
                 options: options,
                 size: Constants.KB * 4,
                 cancellationToken: cancellationTokenSource.Token);

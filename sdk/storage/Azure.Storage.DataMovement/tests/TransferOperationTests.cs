@@ -170,10 +170,11 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
 
+            await using TransferManager transferManager = new TransferManager();
             TransferOperation transfer = new TransferOperation(
                 id: transferId,
                 status: InProgressStatus);
-            transfer.TransferManager = new TransferManager();
+            transfer.TransferManager = transferManager;
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
             try

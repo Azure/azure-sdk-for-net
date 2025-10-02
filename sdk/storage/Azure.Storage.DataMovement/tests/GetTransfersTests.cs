@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             // Arrange
-            TransferManager manager = new TransferManager(GetDefaultManagerOptions(testDirectory.DirectoryPath));
+            await using TransferManager manager = new TransferManager(GetDefaultManagerOptions(testDirectory.DirectoryPath));
 
             // Act
             IList<TransferOperation> transfers = await manager.GetTransfersAsync().ToListAsync();
@@ -80,7 +80,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
-            TransferManager manager = factory.BuildTransferManager(storedTransfers);
+            await using TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
             IList<TransferOperation> result = await manager.GetTransfersAsync().ToListAsync();
@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
-            TransferManager manager = factory.BuildTransferManager(storedTransfers);
+            await using TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
             TransferStatus[] status = { new TransferStatus(state, hasFailedItems, hasSkippedItems) };
@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
-            TransferManager manager = factory.BuildTransferManager(storedTransfers);
+            await using TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
             TransferStatus[] statuses = new TransferStatus[] {
@@ -190,7 +190,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
-            TransferManager manager = factory.BuildTransferManager(storedTransfers);
+            await using TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act - With a transfer status not in the above stored transfers
             TransferStatus[] statuses = new TransferStatus[] { new TransferStatus(TransferState.Stopping, true, false) };
@@ -218,7 +218,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(test.DirectoryPath)
             };
-            TransferManager manager = new TransferManager(options);
+            await using TransferManager manager = new TransferManager(options);
 
             // Act
             IList<TransferOperation> result = await manager.GetTransfersAsync().ToListAsync();
@@ -260,7 +260,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(test.DirectoryPath)
             };
-            TransferManager manager = new TransferManager(options);
+            await using TransferManager manager = new TransferManager(options);
 
             // Act
             IList<TransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
@@ -299,7 +299,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(test.DirectoryPath)
             };
-            TransferManager manager = new TransferManager(options);
+            await using TransferManager manager = new TransferManager(options);
 
             // Act
             IList<TransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
