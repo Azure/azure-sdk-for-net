@@ -923,6 +923,8 @@ function GetSDKProjectFolder()
             $csharpOpts = $yml["options"]["@azure-tools/typespec-csharp"]
         } elseif ($yml["options"] -And $yml["options"]["@azure-typespec/http-client-csharp"]) {
             $csharpOpts = $yml["options"]["@azure-typespec/http-client-csharp"]
+        } elseif ($yml["options"] -And $yml["options"]["@azure-typespec/http-client-csharp-mgmt"]) {
+            $csharpOpts = $yml["options"]["@azure-typespec/http-client-csharp-mgmt"]
         }
         
         if ($csharpOpts) {
