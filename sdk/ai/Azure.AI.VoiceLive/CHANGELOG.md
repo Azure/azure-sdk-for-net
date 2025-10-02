@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
-
-### Features Added
+## 1.0.0 (2025-10-01)
 
 ### Breaking Changes
 
@@ -23,8 +21,6 @@
 
 - **VoiceProvider changes:**
   - Removed internal `ToBinaryData()` method
-
-### Bugs Fixed
 
 ### Other Changes
 
