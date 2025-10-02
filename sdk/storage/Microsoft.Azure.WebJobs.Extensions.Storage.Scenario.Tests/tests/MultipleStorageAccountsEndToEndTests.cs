@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             await TestHelpers.Await(async () =>
             {
-                var pageable = _fixture.OutputContainer2.GetBlobsAsync(new GetBlobsOptions() { Prefix = "blob1" } );
+                var pageable = _fixture.OutputContainer2.GetBlobsAsync(new GetBlobsOptions() { Prefix = "blob1" });
                 var enumerator = pageable.GetAsyncEnumerator();
                 var result = await enumerator.MoveNextAsync() && enumerator.Current.Properties.ContentLength > 0;
                 if (result)
