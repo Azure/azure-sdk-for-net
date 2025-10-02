@@ -1122,6 +1122,7 @@ function Get-ReleasePlansForCPEXAttestation($releasePlanWorkItemId = $null, $tar
   $fields += "Custom.ProductType"
   $fields += "Custom.DataScope"
   $fields += "Custom.MgmtScope"
+  $fields += "Custom.ProductName"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
 
@@ -1161,6 +1162,7 @@ function Get-TriagesForCPEXAttestation($triageWorkItemId = $null, $targetService
   $fields += "Custom.MgmtScope"
   $fields += "Custom.DataplaneAttestationStatus"
   $fields += "Custom.ManagementPlaneAttestationStatus"
+  $fields += "Custom.ProductName"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
 
