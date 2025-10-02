@@ -20,6 +20,7 @@ namespace Azure.Data.AppConfiguration
         private static Response<FeatureFlag> CreateResponse(Response response)
         {
             var options = ModelReaderWriterOptions.Json;
+
             FeatureFlag result = FeatureFlag.DeserializeFeatureFlag(response.Content.ToObjectFromJson<JsonElement>(), options);
             return Response.FromValue(result, response);
         }

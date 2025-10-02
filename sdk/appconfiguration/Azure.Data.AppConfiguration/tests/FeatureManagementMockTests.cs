@@ -661,7 +661,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var expectedName = "abc";
             var expectedLabel = "def";
             var expectedEnabled = true;
-            var expectedContent = @$"{{""name"":""{expectedName}"",""label"":""{expectedLabel}"",""enabled"":{expectedEnabled}}}";
+            var expectedContent = @$"{{""name"":""{expectedName}"",""label"":""{expectedLabel}"",""enabled"":{(expectedEnabled ? "true" : "false")}}}";
 
             var client = new FeatureFlagClient(
                 s_connectionString,
