@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     // if new blob were detected we want to GetScaleStatus return scale out vote at least once
                     if (Interlocked.Equals(_threadSafeWritesDetectedValue, 1))
                     {
-                        _logger.LogInformation($"Recent writes were detectd but GetScaleStatus was not called. Waiting GetScaleStatus to call.");
+                        _logger.LogInformation($"Recent writes were detected but GetScaleStatus was not called. Waiting GetScaleStatus to call.");
                         return new ScaleMetrics();
                     }
 
