@@ -61,11 +61,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="branchId"> The ID of the branch this role belongs to. </param>
         /// <param name="permissions"> Permissions assigned to the role. </param>
         /// <param name="isSuperUser"> Indicates whether the role has superuser privileges. </param>
-        /// <param name="roleName"> Name of the role. </param>
-        /// <param name="lastUpdated"> Timestamp indicating when the role was last updated. </param>
-        /// <param name="owns"> Databases name associated with the role. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonRoleProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string branchId, IList<string> permissions, bool? isSuperUser, string roleName, string lastUpdated, string owns, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonRoleProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string branchId, IList<string> permissions, bool? isSuperUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -75,9 +72,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             BranchId = branchId;
             Permissions = permissions;
             IsSuperUser = isSuperUser;
-            RoleName = roleName;
-            LastUpdated = lastUpdated;
-            Owns = owns;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -97,11 +91,5 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         public IList<string> Permissions { get; }
         /// <summary> Indicates whether the role has superuser privileges. </summary>
         public bool? IsSuperUser { get; set; }
-        /// <summary> Name of the role. </summary>
-        public string RoleName { get; set; }
-        /// <summary> Timestamp indicating when the role was last updated. </summary>
-        public string LastUpdated { get; }
-        /// <summary> Databases name associated with the role. </summary>
-        public string Owns { get; }
     }
 }

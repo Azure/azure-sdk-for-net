@@ -60,13 +60,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="projectId"> The ID of the project this endpoint belongs to. </param>
         /// <param name="branchId"> The ID of the branch this endpoint belongs to. </param>
         /// <param name="endpointType"> The type of the endpoint. </param>
-        /// <param name="endpointId"> Unique identifier for the compute endpoint. </param>
-        /// <param name="computeName"> Name of the compute endpoint. </param>
-        /// <param name="status"> The current status of the compute endpoint. </param>
-        /// <param name="lastActive"> The timestamp when the compute endpoint was last active. </param>
-        /// <param name="size"> The compute units size range for autoscaling (MinCU-MaxCU). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonEndpointProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string branchId, EndpointType? endpointType, string endpointId, string computeName, EndpointStatus? status, string lastActive, AutoscalingSize size, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonEndpointProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string branchId, EndpointType? endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -76,11 +71,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             ProjectId = projectId;
             BranchId = branchId;
             EndpointType = endpointType;
-            EndpointId = endpointId;
-            ComputeName = computeName;
-            Status = status;
-            LastActive = lastActive;
-            Size = size;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,15 +90,5 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         public string BranchId { get; set; }
         /// <summary> The type of the endpoint. </summary>
         public EndpointType? EndpointType { get; set; }
-        /// <summary> Unique identifier for the compute endpoint. </summary>
-        public string EndpointId { get; set; }
-        /// <summary> Name of the compute endpoint. </summary>
-        public string ComputeName { get; set; }
-        /// <summary> The current status of the compute endpoint. </summary>
-        public EndpointStatus? Status { get; }
-        /// <summary> The timestamp when the compute endpoint was last active. </summary>
-        public string LastActive { get; }
-        /// <summary> The compute units size range for autoscaling (MinCU-MaxCU). </summary>
-        public AutoscalingSize Size { get; set; }
     }
 }

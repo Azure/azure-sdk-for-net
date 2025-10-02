@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NeonEndpoint"/>. </summary>
-        public NeonEndpoint()
+        internal NeonEndpoint()
         {
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public NeonEndpointProperties Properties { get; set; }
+        public NeonEndpointProperties Properties { get; }
     }
 }

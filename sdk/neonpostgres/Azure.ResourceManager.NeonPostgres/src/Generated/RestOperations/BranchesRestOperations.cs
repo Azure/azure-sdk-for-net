@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NeonPostgres
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-06-23-preview";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -450,124 +450,6 @@ namespace Azure.ResourceManager.NeonPostgres
                         BranchListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BranchListResult.DeserializeBranchListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreatePreflightRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, PreflightCheckContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Neon.Postgres/organizations/", false);
-            uri.AppendPath(organizationName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/branches/", false);
-            uri.AppendPath(branchName, true);
-            uri.AppendPath("/preflight", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreatePreflightRequest(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, PreflightCheckContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Neon.Postgres/organizations/", false);
-            uri.AppendPath(organizationName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/branches/", false);
-            uri.AppendPath(branchName, true);
-            uri.AppendPath("/preflight", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Action to validate preflight checks. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
-        /// <param name="projectName"> The name of the Project. </param>
-        /// <param name="branchName"> The name of the Branch. </param>
-        /// <param name="content"> Parameters for preflight checks. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PreflightCheckResult>> PreflightAsync(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, PreflightCheckContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreatePreflightRequest(subscriptionId, resourceGroupName, organizationName, projectName, branchName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PreflightCheckResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PreflightCheckResult.DeserializePreflightCheckResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Action to validate preflight checks. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
-        /// <param name="projectName"> The name of the Project. </param>
-        /// <param name="branchName"> The name of the Branch. </param>
-        /// <param name="content"> Parameters for preflight checks. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PreflightCheckResult> Preflight(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, PreflightCheckContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreatePreflightRequest(subscriptionId, resourceGroupName, organizationName, projectName, branchName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PreflightCheckResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PreflightCheckResult.DeserializePreflightCheckResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
