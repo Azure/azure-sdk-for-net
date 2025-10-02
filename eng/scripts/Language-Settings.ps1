@@ -78,8 +78,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
       else {
         # Value not set in CI.yml, if not explicitly opted out of AOT compat, run the check
-        $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -eq 'false'
-        Write-Host "Package $($pkgProp.ArtifactName) does not have CheckAOTCompat set in its CI.yml, defaulting to ! aot opt out ($($AotCompatOptOut)) from csproj: $($pkgProp.CIParameters["CheckAOTCompat"])"
+        $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -ne 'true'
+        Write-Host "Package $($pkgProp.ArtifactName) does not have CheckAOTCompat set in its CI.yml, defaulting to aot opt out ($($AotCompatOptOut)) from csproj: $($pkgProp.CIParameters["CheckAOTCompat"])"
       }
 
       # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
