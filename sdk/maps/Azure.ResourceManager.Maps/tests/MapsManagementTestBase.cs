@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Maps.Tests
             if (useDefaults)
             {
                 Assert.AreEqual("East US", account.Location.DisplayName);
-                Assert.AreEqual(MapsSkuName.S0, account.Sku.Name);
+                Assert.AreEqual(MapsSkuName.G2, account.Sku.Name);
 
                 Assert.NotNull(account.Tags);
                 Assert.NotNull(account.Properties.UniqueId);
