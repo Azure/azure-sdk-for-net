@@ -71,6 +71,110 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
+        /// Initializes a new instance of CodeTransparencyClient. The client will download its own
+        /// TLS CA cert to perform server cert authentication.
+        /// If the CA changes then there is a TTL which will help healing the long lived clients.
+        /// </summary>
+        /// <param name="transparentStatementCoseSign1Bytes"> The transparent statement COSE_Sign1 bytes containing embedded receipts. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="InvalidOperationException"> Thrown when no receipts are found, receipts have different issuers, issuer is not found, or issuer is not a valid host name. </exception>
+        public CodeTransparencyClient(byte[] transparentStatementCoseSign1Bytes, CodeTransparencyClientOptions options = default)
+            : this(GetEndpointFromTransparentStatement(transparentStatementCoseSign1Bytes), null, options)
+        {
+        }
+
+        private static Uri GetEndpointFromTransparentStatement(byte[] transparentStatementCoseSign1Bytes)
+        {
+            // get all receipts from the transparent statement
+            var receiptList = GetReceiptsFromTransparentStatementStatic(transparentStatementCoseSign1Bytes);
+            if (receiptList.Count == 0)
+            {
+                throw new InvalidOperationException("No receipts found in the transparent statement.");
+            }
+            // get receipt issuer from the receipts. expect the same issuer in all receipts
+            // iterate over receipts and get the issuer, if it is different then throw
+            string issuer = string.Empty;
+            foreach (var receipt in receiptList)
+            {
+                string currentIssuer = GetReceiptIssuerHostStatic(receipt);
+                if (string.IsNullOrEmpty(issuer))
+                {
+                    issuer = currentIssuer;
+                }
+                else if (!issuer.Equals(currentIssuer, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    throw new InvalidOperationException("Receipts have different issuers.");
+                }
+            }
+            if (string.IsNullOrEmpty(issuer))
+            {
+                throw new InvalidOperationException("Issuer not found in receipts.");
+            }
+
+            // create endpoint from the issuer
+            if (!Uri.TryCreate($"https://{issuer}", UriKind.Absolute, out Uri endpoint))
+            {
+                throw new InvalidOperationException($"Issuer '{issuer}' is not a valid host name.");
+            }
+            return endpoint;
+        }
+
+        private static List<byte[]> GetReceiptsFromTransparentStatementStatic(byte[] transparentStatementCoseSign1Bytes)
+        {
+            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(transparentStatementCoseSign1Bytes);
+
+            if (!coseSign1Message.UnprotectedHeaders.
+                TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts),
+                out CoseHeaderValue embeddedReceipts))
+            {
+                throw new InvalidOperationException("embeddedReceipts not found");
+            }
+
+            CborReader cborReader = new CborReader(embeddedReceipts.EncodedValue);
+            cborReader.ReadStartArray();
+
+            var receiptList = new List<byte[]>();
+            while (cborReader.PeekState() != CborReaderState.EndArray)
+            {
+                receiptList.Add(cborReader.ReadByteString());
+            }
+            cborReader.ReadEndArray();
+
+            return receiptList;
+        }
+
+        private static string GetReceiptIssuerHostStatic(byte[] receiptBytes)
+        {
+            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(receiptBytes);
+
+            if (!coseSign1Message.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseReceiptCwtMapLabel), out CoseHeaderValue cwtMap))
+            {
+                throw new InvalidOperationException("CWT-MAP not found in receipt.");
+            }
+
+            string issuer = string.Empty;
+
+            CborReader cborReader = new CborReader(cwtMap.EncodedValue.ToArray());
+            cborReader.ReadStartMap();
+            while (cborReader.PeekState() != CborReaderState.EndMap)
+            {
+                int key = cborReader.ReadInt32();
+                if (key == CcfReceipt.CoseReceiptCwtIssLabel)
+                    issuer = cborReader.ReadTextString();
+                else
+                    cborReader.SkipValue();
+            }
+            cborReader.ReadEndMap();
+
+            if (string.IsNullOrEmpty(issuer))
+            {
+                throw new InvalidOperationException("Issuer not found in receipt.");
+            }
+
+            return issuer;
+        }
+
+        /// <summary>
         /// Creates the transport option which will pull a custom TLS CA for the verification purposes.
         /// The CA is hosted in the confidential ledger identity service which in turn gets populated
         /// with the cert when the CCF enclave application boots.
@@ -266,26 +370,11 @@ namespace Azure.Security.CodeTransparency
         {
             List<Exception> failures = new List<Exception>();
 
-            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(transparentStatementCoseSign1Bytes);
-
-            // Embedded receipt bytes contain receipt under the map with key as 394 and the value as the receipt bytes
-            // See https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-10.html#name-transparent-statements
-            if (!coseSign1Message.UnprotectedHeaders.
-                TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts),
-                out CoseHeaderValue embeddedReceipts))
+            var receiptList = GetReceiptsFromTransparentStatementStatic(transparentStatementCoseSign1Bytes);
+            if (receiptList.Count == 0)
             {
-                throw new InvalidOperationException("embeddedReceipts not found");
+                throw new InvalidOperationException("No receipts found in the transparent statement.");
             }
-
-            CborReader cborReader = new CborReader(embeddedReceipts.EncodedValue);
-            cborReader.ReadStartArray();
-
-            var receiptList = new List<byte[]>();
-            while (cborReader.PeekState() != CborReaderState.EndArray)
-            {
-                receiptList.Add(cborReader.ReadByteString());
-            }
-            cborReader.ReadEndArray();
 
             // Get the input signed statement bytes from the transparent statement
             // by removing the unprotected headers and encoding the message again
@@ -319,26 +408,7 @@ namespace Azure.Security.CodeTransparency
         /// <returns>The service certificate key (JWK)</returns>
         private JsonWebKey GetServiceCertificateKey(byte[] receiptBytes)
         {
-            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(receiptBytes);
-
-            if (!coseSign1Message.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseReceiptCwtMapLabel), out CoseHeaderValue cwtMap))
-            {
-                throw new InvalidOperationException("CWT-MAP not found in receipt.");
-            }
-
-            string issuer = string.Empty;
-
-            CborReader cborReader = new CborReader(cwtMap.EncodedValue.ToArray());
-            cborReader.ReadStartMap();
-            while (cborReader.PeekState() != CborReaderState.EndMap)
-            {
-                int key = cborReader.ReadInt32();
-                if (key == CcfReceipt.CoseReceiptCwtIssLabel)
-                    issuer = cborReader.ReadTextString();
-                else
-                    cborReader.SkipValue();
-            }
-            cborReader.ReadEndMap();
+            string issuer = GetReceiptIssuerHostStatic(receiptBytes);
 
             // Validate issuer and CTS instance are matching
             if (!issuer.Equals(_endpoint.Host, StringComparison.InvariantCultureIgnoreCase))
@@ -361,6 +431,8 @@ namespace Azure.Security.CodeTransparency
             {
                 keysDict[jsonWebKey.Kid] = jsonWebKey;
             }
+
+            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(receiptBytes);
 
             if (!coseSign1Message.ProtectedHeaders.TryGetValue(CoseHeaderLabel.KeyIdentifier, out CoseHeaderValue receiptKid))
             {
