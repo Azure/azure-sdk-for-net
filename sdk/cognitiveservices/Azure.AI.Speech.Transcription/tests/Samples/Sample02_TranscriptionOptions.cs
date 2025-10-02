@@ -26,7 +26,6 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("your-api-key");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            #region Snippet:TranscribeWithLocales
             string audioFilePath = "path/to/audio.wav";
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
@@ -50,7 +49,6 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 Console.WriteLine($"[{phrase.Offset}] {phrase.Text}");
             }
-            #endregion Snippet:TranscribeWithLocales
         }
 
         /// <summary>
@@ -100,7 +98,6 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("your-api-key");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            #region Snippet:TranscribeWithDiarization
             string audioFilePath = "path/to/conversation.wav";
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
@@ -130,7 +127,6 @@ namespace Azure.AI.Speech.Transcription.Samples
                 // Speaker information is included in the phrase
                 Console.WriteLine($"Speaker {phrase.Speaker}: {phrase.Text}");
             }
-            #endregion Snippet:TranscribeWithDiarization
         }
 
         /// <summary>

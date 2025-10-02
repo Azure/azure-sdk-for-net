@@ -104,7 +104,6 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("your-api-key");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            #region Snippet:TranscribeLocalFileAsync
             // Path to your local audio file
             string audioFilePath = "path/to/audio.wav";
 
@@ -132,7 +131,6 @@ namespace Azure.AI.Speech.Transcription.Samples
                 Console.WriteLine($"[{phrase.Offset} - {phrase.Offset + phrase.Duration}] {phrase.Text}");
                 Console.WriteLine($"  Confidence: {phrase.Confidence:F2}");
             }
-            #endregion Snippet:TranscribeLocalFileAsync
         }
 
         /// <summary>

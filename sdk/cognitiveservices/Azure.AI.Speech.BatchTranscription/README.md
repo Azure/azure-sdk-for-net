@@ -6,7 +6,7 @@ Use the client library for to:
 
 * [Get secret](https://docs.microsoft.com/azure)
 
-[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
+[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs]
 
   [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitiveservices/Azure.AI.Speech.BatchTranscription/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
@@ -83,9 +83,12 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
+<!--
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitiveservices/Azure.AI.Speech.BatchTranscription/samples).
+TODO: Add examples section when manual samples are created.
+You can familiarize yourself with different APIs using samples.
+-->
 
 ## Troubleshooting
 
