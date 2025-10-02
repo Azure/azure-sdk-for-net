@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Grafana.Samples
             string workspaceName = "myWorkspace";
             ManagedGrafanaData data = new ManagedGrafanaData(new AzureLocation("West US"))
             {
-                SkuName = "Standard",
                 Properties = new ManagedGrafanaProperties
                 {
                     PublicNetworkAccess = GrafanaPublicNetworkAccess.Enabled,
@@ -88,6 +87,7 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
 },
                     GrafanaMajorVersion = "9",
                 },
+                SkuName = "Standard",
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Tags =
 {

@@ -15,12 +15,15 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary>
+    /// A class representing a Zoo along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ZooResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetZoos method.
+    /// </summary>
     public partial class ZooResource : ArmResource
     {
         private readonly ClientDiagnostics _zoosClientDiagnostics;
@@ -50,12 +53,11 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ZooResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _zoosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string zooApiVersion);
-            _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion);
+            _zoosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             _zooRecommendationClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string zooApiVersion0);
-            _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion0);
+            _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -97,6 +99,34 @@ namespace MgmtTypeSpec
 
         /// <summary> Get a Zoo. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ZooResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ZooResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a Zoo. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ZooResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.Get");
@@ -123,11 +153,12 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a Zoo. </summary>
+        /// <summary> Delete a Zoo. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ZooResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.GetAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.Delete");
             scope.Start();
             try
             {
@@ -135,14 +166,14 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _zoosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_zoosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return Response.FromValue(new ZooResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -180,12 +211,16 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Delete a Zoo. </summary>
+        /// <summary> Update a Zoo. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ZooResource>> UpdateAsync(WaitUntil waitUntil, ZooPatch patch, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.DeleteAsync");
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.Update");
             scope.Start();
             try
             {
@@ -193,12 +228,18 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_zoosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
+                    new ZooOperationSource(Client),
+                    _zoosClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -248,16 +289,12 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Update a Zoo. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <summary> A synchronous resource action. </summary>
+        /// <param name="maxpagesize"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ZooResource>> UpdateAsync(WaitUntil waitUntil, ZooPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ZooAddressListListResult>> ZooAddressListAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.UpdateAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.ZooAddressList");
             scope.Start();
             try
             {
@@ -265,20 +302,14 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooPatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
-                    new ZooOperationSource(Client),
-                    _zoosClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                HttpMessage message = _zoosRestClient.CreateZooAddressListRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ZooAddressListListResult> response = Response.FromValue(ZooAddressListListResult.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return response;
             }
             catch (Exception e)
             {
@@ -290,44 +321,9 @@ namespace MgmtTypeSpec
         /// <summary> A synchronous resource action. </summary>
         /// <param name="maxpagesize"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<SubResource> ZooAddressList(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Response<ZooAddressListListResult> ZooAddressList(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ZoosZooAddressListCollectionResultOfT(
-                _zoosRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxpagesize,
-                context);
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="maxpagesize"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<SubResource> ZooAddressListAsyncAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ZoosZooAddressListAsyncCollectionResultOfT(
-                _zoosRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxpagesize,
-                context);
-        }
-
-        /// <summary> A synchronous resource action. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Models.ZooRecommendation> Recommend(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _zooRecommendationClientDiagnostics.CreateScope("ZooResource.Recommend");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.ZooAddressList");
             scope.Start();
             try
             {
@@ -335,9 +331,9 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zooRecommendationRestClient.CreateRecommendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _zoosRestClient.CreateZooAddressListRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.ZooRecommendation> response = Response.FromValue(Models.ZooRecommendation.FromResponse(result), result);
+                Response<ZooAddressListListResult> response = Response.FromValue(ZooAddressListListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -355,7 +351,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Models.ZooRecommendation>> RecommendAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _zooRecommendationClientDiagnostics.CreateScope("ZooResource.RecommendAsync");
+            using DiagnosticScope scope = _zooRecommendationClientDiagnostics.CreateScope("ZooResource.Recommend");
             scope.Start();
             try
             {
@@ -365,6 +361,34 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _zooRecommendationRestClient.CreateRecommendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Models.ZooRecommendation> response = Response.FromValue(Models.ZooRecommendation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> A synchronous resource action. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Models.ZooRecommendation> Recommend(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _zooRecommendationClientDiagnostics.CreateScope("ZooResource.Recommend");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _zooRecommendationRestClient.CreateRecommendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
                 Response<Models.ZooRecommendation> response = Response.FromValue(Models.ZooRecommendation.FromResponse(result), result);
                 if (response.Value == null)
                 {
@@ -409,7 +433,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -457,7 +481,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = Get(cancellationToken).Value.Data;
+                    ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -504,7 +528,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ZooResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
@@ -547,7 +571,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = Get(cancellationToken).Value.Data;
+                    ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ZooResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
@@ -589,7 +613,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -635,7 +659,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    ZooData current = Get(cancellationToken).Value.Data;
+                    ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

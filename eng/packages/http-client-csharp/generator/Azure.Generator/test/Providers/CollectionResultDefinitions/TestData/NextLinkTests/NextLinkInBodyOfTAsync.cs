@@ -36,24 +36,27 @@ namespace Samples
         public override async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::Samples.Models.Cat>> AsPages(string continuationToken, int? pageSizeHint)
         {
             global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
-            do
+            while (true)
             {
-                global::Azure.Response response = await this.GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
+                global::Azure.Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if ((response is null))
                 {
                     yield break;
                 }
-                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
-                nextPage = responseWithType.NextCat;
-                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), nextPage?.AbsoluteUri, response);
+                global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)result.Cats), nextPage?.AbsoluteUri, response);
+                nextPage = result.NextCat;
+                if ((nextPage == null))
+                {
+                    yield break;
+                }
             }
-            while ((nextPage != null));
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
+        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
             global::Azure.Core.HttpMessage message = (nextLink != null) ? _client.CreateNextGetCatsRequest(nextLink, _context) : _client.CreateGetCatsRequest(_context);
             using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");

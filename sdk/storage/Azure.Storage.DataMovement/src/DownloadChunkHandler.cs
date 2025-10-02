@@ -9,7 +9,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DownloadChunkHandler : IAsyncDisposable
+    internal class DownloadChunkHandler
     {
         #region Delegate Definitions
         public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream, long expectedLength, bool initial);
@@ -94,18 +94,18 @@ namespace Azure.Storage.DataMovement
             _isChunkHandlerRunning = true;
         }
 
-        public async ValueTask DisposeAsync()
+        public async ValueTask CleanUpAsync()
         {
             _isChunkHandlerRunning = false;
-            await _downloadRangeProcessor.DisposeAsync().ConfigureAwait(false);
+            await _downloadRangeProcessor.CleanUpAsync().ConfigureAwait(false);
         }
 
-        public async ValueTask QueueChunkAsync(QueueDownloadChunkArgs args)
+        public async ValueTask QueueChunkAsync(QueueDownloadChunkArgs args, CancellationToken cancellationToken = default)
         {
-            await _downloadRangeProcessor.QueueAsync(args).ConfigureAwait(false);
+            await _downloadRangeProcessor.QueueAsync(args, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task ProcessDownloadRange(QueueDownloadChunkArgs args, CancellationToken cancellationToken = default)
+        private async Task ProcessDownloadRange(QueueDownloadChunkArgs args)
         {
             try
             {

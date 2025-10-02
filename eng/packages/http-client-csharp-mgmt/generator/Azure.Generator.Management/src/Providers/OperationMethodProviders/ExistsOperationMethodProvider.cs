@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -15,44 +16,46 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class ExistsOperationMethodProvider(
         ResourceCollectionClientProvider collection,
+        RequestPathPattern contextualPath,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
-        MethodProvider convenienceMethod,
-        bool isAsync) : ResourceOperationMethodProvider(collection, collection.ContextualPath, restClientInfo, method, convenienceMethod, isAsync)
+        bool isAsync)
+        : ResourceOperationMethodProvider(
+            collection,
+            contextualPath,
+            restClientInfo,
+            method,
+            isAsync,
+            methodName: isAsync ? "ExistsAsync" : "Exists",
+            description: $"Checks to see if the resource exists in azure.")
     {
-        protected override MethodSignature CreateSignature()
+        protected override CSharpType BuildReturnType()
         {
-            var returnType = new CSharpType(typeof(Response<>), typeof(bool))
+            return new CSharpType(typeof(Response<>), typeof(bool))
                 .WrapAsync(_isAsync);
-
-            return new MethodSignature(
-                _isAsync ? "ExistsAsync" : "Exists",
-                $"Checks to see if the resource exists in azure.",
-                _convenienceMethod.Signature.Modifiers,
-                returnType,
-                _convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(),
-                _convenienceMethod.Signature.Attributes,
-                _convenienceMethod.Signature.GenericArguments,
-                _convenienceMethod.Signature.GenericParameterConstraints,
-                _convenienceMethod.Signature.ExplicitInterface,
-                _convenienceMethod.Signature.NonDocumentComment);
         }
 
-        protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
+        protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
         {
             // For Exists methods, we check if Value is not null and return a boolean
-            var returnValueExpression = responseVariable.Property("Value").NotEqual(Null);
+            var returnValueExpression = responseVariable.Value().NotEqual(Null);
 
             return [
                 Return(
-                    Static(typeof(Response)).Invoke(
-                        nameof(Response.FromValue),
+                    ResponseSnippets.FromValue(
                         returnValueExpression,
-                        responseVariable.Invoke("GetRawResponse")
+                        responseVariable.GetRawResponse()
                     )
                 )
             ];
+        }
+
+        protected override IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
+            VariableExpression messageVariable,
+            VariableExpression contextVariable,
+            out ScopedApi<Response> responseVariable)
+        {
+            return BuildExistsOperationPipelineProcessing(messageVariable, contextVariable, out responseVariable);
         }
     }
 }

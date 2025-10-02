@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -22,7 +23,8 @@ namespace Azure.Generator.Management.Utilities
             ScopedApi<ResourceIdentifier> idProperty,
             IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression requestContext,
-            IReadOnlyList<ParameterProvider> methodParameters)
+            IReadOnlyList<ParameterProvider> methodParameters,
+            TypeProvider? enclosingType = null)
         {
             var arguments = new List<ValueExpression>();
             // here we always assume that the parameter name matches the parameter name in the request path.
@@ -32,6 +34,11 @@ namespace Azure.Generator.Management.Utilities
                 if (contextualPath.TryGetContextualParameter(parameter, out var contextualParameter))
                 {
                     arguments.Add(Convert(contextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
+                }
+                //Find matching parameter from pathFieldsParameters if enclosing type is ResourceCollectionClientProvider
+                else if (enclosingType is ResourceCollectionClientProvider collectionProvider && collectionProvider.TryGetPrivateFieldParameter(parameter, out var matchingField) && matchingField != null)
+                {
+                    arguments.Add(matchingField);
                 }
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {
@@ -52,9 +59,18 @@ namespace Azure.Generator.Management.Utilities
                 }
                 else
                 {
-                    arguments.Add(methodParameters.Single(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName));
+                    var methodParam = methodParameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
+                    if (methodParam != null)
+                    {
+                        arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
+                    }
+                    else
+                    {
+                        arguments.Add(Null);
+                    }
                 }
             }
+
             return arguments;
 
             static ValueExpression Convert(ValueExpression expression, CSharpType fromType, CSharpType toType)
@@ -67,6 +83,11 @@ namespace Azure.Generator.Management.Utilities
                 if (toType.IsFrameworkType && toType.FrameworkType == typeof(Guid))
                 {
                     return Static<Guid>().Invoke(nameof(Guid.Parse), expression);
+                }
+
+                if (fromType.IsEnum && toType.FrameworkType == typeof(string))
+                {
+                    return expression.InvokeToString();
                 }
 
                 // other unhandled cases, we will add when we need them in the future.

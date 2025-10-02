@@ -668,8 +668,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual AsyncPageable<FaultSimulation> GetFaultSimulationAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListFaultSimulationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterResource.GetFaultSimulation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterResource.GetFaultSimulation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -698,8 +697,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual Pageable<FaultSimulation> GetFaultSimulation(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListFaultSimulationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterResource.GetFaultSimulation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterResource.GetFaultSimulation", "value", null, cancellationToken);
         }
 
         /// <summary>

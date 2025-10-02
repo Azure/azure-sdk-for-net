@@ -1,15 +1,38 @@
 # Release History
 
-## 12.3.0-beta.1 (Unreleased)
+## 12.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed an issue that could cause an exception when trying to resume a transfer that contained resources with special characters in the name.
+- Resolved memory leak issue with `CancellationTokenSource` usage not being properly disposed, namely in the following areas:
+    - `TransferOperation` disposes the `CancellationTokenSource` after transfer reaches a `Completed` or `Paused` state
+    - `TransferManager` uses a `CancellationTokenSource` also does not link the`CancellationToken` passed to it's methods
+    - Removed usage of `CancellationTokenSource` from handling the chunking of large transfers. This only affects transfers that cannot be completed in one request.
+- Fixed bug where cached referenced `TransferOperation`s from the `TransferManager` were not being cleared on dispose.
+- Fixed bug where referenced `TransferOperation` from the transfers stored in the `TransferManager` after they reach a `Completed` or `Paused` state where not being removed.
 
 ### Other Changes
+
+## 12.3.0-beta.1 (2025-09-16)
+
+### Features Added
+- Added support for NFS -> SMB and SMB -> NFS Share-to-Share copy transfers.
+
+### Bugs Fixed
+- Fixed property/permission/metadata preservation when overwriting an existing directory for SMB and NFS transfers.
+
+## 12.2.2 (2025-09-10)
+
+### Bugs Fixed
+- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
+
+## 12.2.1 (2025-08-06)
+
+### Bugs Fixed
+- Fixed an issue that could cause an exception when trying to resume a transfer that contained resources with special characters in the name.
 
 ## 12.2.0 (2025-07-21)
 

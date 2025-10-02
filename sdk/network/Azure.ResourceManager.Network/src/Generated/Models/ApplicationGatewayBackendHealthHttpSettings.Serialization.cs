@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -124,6 +126,59 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings, servers ?? new ChangeTrackingList<ApplicationGatewayBackendHealthServer>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendHttpSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backendHttpSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackendHttpSettings))
+                {
+                    builder.Append("  backendHttpSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BackendHttpSettings, options, 2, false, "  backendHttpSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Servers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  servers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Servers))
+                {
+                    if (Servers.Any())
+                    {
+                        builder.Append("  servers: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Servers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  servers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthHttpSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -132,6 +187,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthHttpSettings)} does not support writing '{options.Format}' format.");
             }

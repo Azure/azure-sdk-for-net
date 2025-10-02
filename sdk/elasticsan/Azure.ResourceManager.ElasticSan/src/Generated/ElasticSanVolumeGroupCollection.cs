@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Create</description>
+        /// <description>VolumeGroup_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Create</description>
+        /// <description>VolumeGroup_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -245,11 +245,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumeGroups</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_ListByElasticSan</description>
+        /// <description>VolumeGroup_ListByElasticSan</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -276,11 +276,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumeGroups</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_ListByElasticSan</description>
+        /// <description>VolumeGroup_ListByElasticSan</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

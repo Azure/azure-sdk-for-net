@@ -79,6 +79,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     case "mcp": return RunStepDeltaMCPObject.DeserializeRunStepDeltaMCPObject(element, options);
                     case "message_creation": return RunStepDeltaMessageCreation.DeserializeRunStepDeltaMessageCreation(element, options);
+                    case "openapi": return RunStepDeltaOpenAPIObject.DeserializeRunStepDeltaOpenAPIObject(element, options);
                     case "tool_calls": return RunStepDeltaToolCallObject.DeserializeRunStepDeltaToolCallObject(element, options);
                 }
             }

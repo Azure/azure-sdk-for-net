@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -25,7 +27,7 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// Response containing search results from an index.
     /// </summary>
-    public class SearchResults<T>
+    public abstract class SearchResults<T>
     {
         /// <summary>
         /// The total count of results found by the search operation, or null
@@ -89,12 +91,9 @@ namespace Azure.Search.Documents.Models
         /// The SearchClient used to fetch the next page of results.  This is
         /// only used when paging.
         /// </summary>
-        private SearchClient _pagingClient;
+        private protected SearchClient _pagingClient;
 
-        /// <summary>
-        /// Initializes a new instance of the SearchResults class.
-        /// </summary>
-        internal SearchResults() { }
+        private protected SearchResults() { }
 
         /// <summary>
         /// Get all of the <see cref="SearchResult{T}"/>s synchronously.
@@ -138,24 +137,7 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>The next page of SearchResults.</returns>
-        internal async Task<SearchResults<T>> GetNextPageAsync(bool async, CancellationToken cancellationToken)
-        {
-            SearchResults<T> next = null;
-            if (_pagingClient != null && NextOptions != null)
-            {
-                next = async ?
-                    await _pagingClient.SearchAsync<T>(
-                        NextOptions.SearchText,
-                        NextOptions,
-                        cancellationToken)
-                        .ConfigureAwait(false) :
-                    _pagingClient.Search<T>(
-                        NextOptions.SearchText,
-                        NextOptions,
-                        cancellationToken);
-            }
-            return next;
-        }
+        internal abstract Task<SearchResults<T>> GetNextPageAsync(bool async, CancellationToken cancellationToken);
 
         #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
@@ -172,6 +154,7 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>Deserialized SearchResults.</returns>
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         internal static async Task<SearchResults<T>> DeserializeAsync(
             Stream json,
             ObjectSerializer serializer,
@@ -186,7 +169,62 @@ namespace Azure.Search.Documents.Models
 
             JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
 
-            SearchResults<T> results = new SearchResults<T>();
+            SearchResults<T> results = new SearchResultsWithReflection<T>();
+            await DeserializeEnvelope(doc, async, results, (JsonElement element, bool async) =>
+            {
+                return SearchResult<T>.DeserializeAsync(
+                    element,
+                    serializer,
+                    defaultSerializerOptions,
+                    async,
+                    cancellationToken);
+            }).ConfigureAwait(false);
+            return results;
+        }
+
+        /// <summary>
+        /// Deserialize the SearchResults.
+        /// </summary>
+        /// <param name="json">A JSON stream.</param>
+        /// <param name="typeInfo">Metadata about the type to deserialize.</param>
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>Deserialized SearchResults.</returns>
+        internal static async Task<SearchResults<T>> DeserializeAsync(
+            Stream json,
+            JsonTypeInfo<T> typeInfo,
+            ObjectSerializer serializer,
+            bool async,
+            CancellationToken cancellationToken)
+#pragma warning restore CS1572
+        {
+            // Parse the JSON
+            using JsonDocument doc = async ?
+                await JsonDocument.ParseAsync(json, cancellationToken: cancellationToken).ConfigureAwait(false) :
+                JsonDocument.Parse(json);
+
+            SearchResults<T> results = new SearchResultsWithTypeInfo<T>(typeInfo);
+            await DeserializeEnvelope(doc, async, results, (JsonElement element, bool async) =>
+            {
+                return SearchResult<T>.DeserializeAsync(
+                    element,
+                    serializer,
+                    typeInfo,
+                    async,
+                    cancellationToken);
+            }).ConfigureAwait(false);
+            return results;
+        }
+
+        private static async Task DeserializeEnvelope(JsonDocument doc, bool async, SearchResults<T> results, Func<JsonElement, bool, Task<SearchResult<T>>> deserializeValue)
+        {
             results.SemanticSearch = new SemanticSearchResults();
             foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
             {
@@ -309,18 +347,16 @@ namespace Azure.Search.Documents.Models
                 {
                     foreach (JsonElement element in prop.Value.EnumerateArray())
                     {
-                        SearchResult<T> result = await SearchResult<T>.DeserializeAsync(
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                        SearchResult<T> result = await deserializeValue(
                             element,
-                            serializer,
-                            defaultSerializerOptions,
-                            async,
-                            cancellationToken)
+                            async)
                             .ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                         results.Values.Add(result);
                     }
                 }
             }
-            return results;
         }
     }
 
@@ -505,7 +541,7 @@ namespace Azure.Search.Documents.Models
             double? coverage,
             Response rawResponse)
         {
-            var results = new SearchResults<T>()
+            var results = new SearchResultsWithReflection<T>()
             {
                 TotalCount = totalCount,
                 Coverage = coverage,
@@ -537,7 +573,7 @@ namespace Azure.Search.Documents.Models
             Response rawResponse,
             SemanticSearchResults semanticSearch)
         {
-            var results = new SearchResults<T>()
+            var results = new SearchResultsWithReflection<T>()
             {
                 TotalCount = totalCount,
                 Coverage = coverage,
@@ -571,7 +607,7 @@ namespace Azure.Search.Documents.Models
             SemanticSearchResults semanticSearch,
             DebugInfo debugInfo)
         {
-            var results = new SearchResults<T>()
+            var results = new SearchResultsWithReflection<T>()
             {
                 TotalCount = totalCount,
                 Coverage = coverage,

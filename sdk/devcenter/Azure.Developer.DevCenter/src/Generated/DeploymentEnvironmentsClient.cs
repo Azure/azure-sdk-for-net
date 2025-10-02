@@ -101,7 +101,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets an environment
+        /// [Protocol Method] Gets an environment.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -145,7 +145,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets an environment
+        /// [Protocol Method] Gets an environment.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -223,7 +223,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the specified catalog within the project
+        /// [Protocol Method] Gets the specified catalog within the project.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -265,7 +265,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the specified catalog within the project
+        /// [Protocol Method] Gets the specified catalog within the project.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -919,7 +919,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Lists all environment types configured for a project. </summary>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -935,7 +935,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Lists all environment types configured for a project. </summary>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -965,7 +965,7 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -996,7 +996,7 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>

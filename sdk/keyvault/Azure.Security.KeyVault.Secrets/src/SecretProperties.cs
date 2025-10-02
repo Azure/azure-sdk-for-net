@@ -20,6 +20,7 @@ namespace Azure.Security.KeyVault.Secrets
         private const string ManagedPropertyName = "managed";
         private const string AttributesPropertyName = "attributes";
         private const string TagsPropertyName = "tags";
+        private const string PreviousVersionPropertyName = "previousVersion";
 
         private static readonly JsonEncodedText s_contentTypePropertyNameBytes = JsonEncodedText.Encode(ContentTypePropertyName);
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
@@ -88,6 +89,12 @@ namespace Azure.Security.KeyVault.Secrets
         /// If this secret is backing a Key Vault certificate, the value will be true.
         /// </summary>
         public bool Managed { get; internal set; }
+
+        /// <summary>
+        /// Gets the version of the previous certificate, if applicable. Applies only to certificates created after June 1, 2025.
+        /// Certificates created before this date are not retroactively updated.
+        /// </summary>
+        public string PreviousVersion { get; internal set; }
 
         /// <summary>
         /// Gets the key identifier of a key backing a Key Vault certificate if this secret is backing a Key Vault certificate.
@@ -195,6 +202,10 @@ namespace Azure.Security.KeyVault.Secrets
                         Tags[tag.Name] = tag.Value.GetString();
                     }
                     break;
+
+                case PreviousVersionPropertyName:
+                    PreviousVersion = prop.Value.GetString();
+                    break;
             }
         }
 
@@ -229,6 +240,8 @@ namespace Azure.Security.KeyVault.Secrets
             // KeyId is read-only don't serialize
 
             // Managed is read-only don't serialize
+
+            // PreviousVersion is read-only don't serialize
         }
 
         void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);

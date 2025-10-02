@@ -51,6 +51,8 @@ namespace Azure.Storage.DataMovement
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal Azure.Storage.DataMovement.StorageResourceContainerProperties ResourceProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected internal virtual System.Threading.Tasks.Task CreateAsync(bool overwrite, Azure.Storage.DataMovement.StorageResourceContainerProperties sourceProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal virtual System.Threading.Tasks.Task CreateIfNotExistsAsync(Azure.Storage.DataMovement.StorageResourceContainerProperties sourceProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract System.Threading.Tasks.Task CreateIfNotExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));

@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Cdn
       safeName: AzureResourceManagerCdn
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Cdn
+      ExpectedWarningsFilepath: None

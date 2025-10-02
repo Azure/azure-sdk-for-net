@@ -12,7 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DefaultAzureCredential"/> authentication flow and requests made to Azure Identity services.
     /// </summary>
-    public class DefaultAzureCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class DefaultAzureCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private struct UpdateTracker<T>
         {
@@ -150,6 +150,7 @@ namespace Azure.Identity
         /// <see cref="VisualStudioCodeCredential"/>. The default is null and will authenticate users to their default tenant.
         /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string VisualStudioCodeTenantId
         {
             get => _visualStudioCodeTenantId.Value;
@@ -183,6 +184,8 @@ namespace Azure.Identity
         /// the cache, the SharedTokenCacheCredential won't be used for authentication.
         /// Defaults to the value of environment variable <c>AZURE_USERNAME</c>.
         /// </remarks>
+        [Obsolete("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string SharedTokenCacheUsername { get; set; } = EnvironmentVariables.Username;
 
         /// <summary>
@@ -302,7 +305,9 @@ namespace Azure.Identity
                 dacClone._sharedTokenCacheTenantId = _sharedTokenCacheTenantId;
                 dacClone._visualStudioTenantId = _visualStudioTenantId;
                 dacClone._visualStudioCodeTenantId = _visualStudioCodeTenantId;
+#pragma warning disable CS0618 // Type or member is obsolete
                 dacClone.SharedTokenCacheUsername = SharedTokenCacheUsername;
+#pragma warning restore CS0618 // Type or member is obsolete
                 dacClone.InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId;
                 dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;

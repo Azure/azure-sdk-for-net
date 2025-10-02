@@ -13,18 +13,18 @@ namespace BasicTypeSpec
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ThingModel))]
-    [ModelReaderWriterBuildable(typeof(RoundTripModel))]
-    [ModelReaderWriterBuildable(typeof(ModelWithRequiredNullableProperties))]
     [ModelReaderWriterBuildable(typeof(FriendModel))]
-    [ModelReaderWriterBuildable(typeof(RenamedModel))]
-    [ModelReaderWriterBuildable(typeof(ReturnsAnonymousModelResponse))]
+    [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenHeaderResponseResponse))]
+    [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenResponse))]
+    [ModelReaderWriterBuildable(typeof(ListWithHeaderNextLinkResponse))]
     [ModelReaderWriterBuildable(typeof(ListWithNextLinkResponse))]
     [ModelReaderWriterBuildable(typeof(ListWithStringNextLinkResponse))]
-    [ModelReaderWriterBuildable(typeof(ListWithHeaderNextLinkResponse))]
-    [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenResponse))]
-    [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenHeaderResponseResponse))]
+    [ModelReaderWriterBuildable(typeof(ModelWithRequiredNullableProperties))]
     [ModelReaderWriterBuildable(typeof(PageThingModel))]
+    [ModelReaderWriterBuildable(typeof(RenamedModel))]
+    [ModelReaderWriterBuildable(typeof(ReturnsAnonymousModelResponse))]
+    [ModelReaderWriterBuildable(typeof(RoundTripModel))]
+    [ModelReaderWriterBuildable(typeof(ThingModel))]
     public partial class BasicTypeSpecContext : ModelReaderWriterContext
     {
     }

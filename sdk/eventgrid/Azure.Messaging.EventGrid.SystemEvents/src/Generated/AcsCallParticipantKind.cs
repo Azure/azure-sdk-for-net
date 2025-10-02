@@ -14,47 +14,72 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsCallParticipantKind : IEquatable<AcsCallParticipantKind>
     {
         private readonly string _value;
+        /// <summary> Attendee. </summary>
+        private const string AttendeeValue = "Attendee";
+        /// <summary> Presenter. </summary>
+        private const string PresenterValue = "Presenter";
+        /// <summary> Organizer. </summary>
+        private const string OrganizerValue = "Organizer";
+        /// <summary> Consumer. </summary>
+        private const string ConsumerValue = "Consumer";
+        /// <summary> Collaborator. </summary>
+        private const string CollaboratorValue = "Collaborator";
 
         /// <summary> Initializes a new instance of <see cref="AcsCallParticipantKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsCallParticipantKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AttendeeValue = "Attendee";
-        private const string PresenterValue = "Presenter";
-        private const string OrganizerValue = "Organizer";
-        private const string ConsumerValue = "Consumer";
-        private const string CollaboratorValue = "Collaborator";
+            _value = value;
+        }
 
         /// <summary> Attendee. </summary>
         public static AcsCallParticipantKind Attendee { get; } = new AcsCallParticipantKind(AttendeeValue);
+
         /// <summary> Presenter. </summary>
         public static AcsCallParticipantKind Presenter { get; } = new AcsCallParticipantKind(PresenterValue);
+
         /// <summary> Organizer. </summary>
         public static AcsCallParticipantKind Organizer { get; } = new AcsCallParticipantKind(OrganizerValue);
+
         /// <summary> Consumer. </summary>
         public static AcsCallParticipantKind Consumer { get; } = new AcsCallParticipantKind(ConsumerValue);
+
         /// <summary> Collaborator. </summary>
         public static AcsCallParticipantKind Collaborator { get; } = new AcsCallParticipantKind(CollaboratorValue);
+
         /// <summary> Determines if two <see cref="AcsCallParticipantKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsCallParticipantKind left, AcsCallParticipantKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcsCallParticipantKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsCallParticipantKind left, AcsCallParticipantKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsCallParticipantKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcsCallParticipantKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcsCallParticipantKind(string value) => new AcsCallParticipantKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcsCallParticipantKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcsCallParticipantKind?(string value) => value == null ? null : new AcsCallParticipantKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsCallParticipantKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcsCallParticipantKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

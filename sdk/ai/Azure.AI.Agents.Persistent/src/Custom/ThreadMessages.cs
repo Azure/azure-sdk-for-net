@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -140,7 +141,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            var jsonString = JsonSerializer.Serialize(content, StringSerializerContext.Default.String);
+            BinaryData contentJson = BinaryData.FromString(jsonString);
 
             return await CreateMessageAsync(
                 threadId,
@@ -181,7 +183,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            var jsonString = JsonSerializer.Serialize(content, StringSerializerContext.Default.String);
+            BinaryData contentJson = BinaryData.FromString(jsonString);
 
             // Reuse the existing generated method internally by converting the string to BinaryData.
             return CreateMessage(
@@ -246,7 +249,8 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
+            var jsonString = JsonSerializer.Serialize(contentBlocks, JsonElementSerializer.Default.ListJsonElement);
+            BinaryData serializedBlocks = BinaryData.FromString(jsonString);
 
             return await CreateMessageAsync(
                 threadId,
@@ -310,7 +314,8 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
+            var jsonString = JsonSerializer.Serialize(jsonElements, JsonElementSerializer.Default.ListJsonElement);
+            BinaryData serializedBlocks = BinaryData.FromString(jsonString);
 
             return CreateMessage(
                 threadId,
@@ -486,6 +491,58 @@ namespace Azure.AI.Agents.Persistent
                 before: before,
                 context: context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
+        }
+
+        /// <summary> Deletes a thread message. </summary>
+        /// <param name="threadId"> The ID of the thread to delete. </param>
+        /// <param name="messageId">The ID of the message to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> DeleteMessage(
+            string threadId,
+            string messageId,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.DeleteThread");
+            scope.Start();
+            Response<MessageDeletionStatus> baseResponse
+                = InternalDeleteMessage(
+                    threadId:threadId,
+                    messageId: messageId,
+                    cancellationToken: cancellationToken);
+            bool simplifiedValue =
+                baseResponse.GetRawResponse() != null
+                && !baseResponse.GetRawResponse().IsError
+                && baseResponse.Value != null
+                && baseResponse.Value.Deleted;
+            return Response.FromValue(simplifiedValue, baseResponse.GetRawResponse());
+        }
+
+        /// <summary> Deletes a thread message. </summary>
+        /// <param name="threadId"> The ID of the thread to delete. </param>
+        /// <param name="messageId">The ID of the message to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> DeleteMessageAsync(
+            string threadId,
+            string messageId,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.DeleteThread");
+            scope.Start();
+            Response<MessageDeletionStatus> baseResponse
+                = await InternalDeleteMessageAsync(
+                    threadId: threadId,
+                    messageId: messageId,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            bool simplifiedValue =
+                baseResponse.GetRawResponse() != null
+                && !baseResponse.GetRawResponse().IsError
+                && baseResponse.Value != null
+                && baseResponse.Value.Deleted;
+            return Response.FromValue(simplifiedValue, baseResponse.GetRawResponse());
         }
     }
 }

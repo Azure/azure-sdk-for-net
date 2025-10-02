@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (ApplicationId != null || ApplicationSecret != null)
                 {
-                    return new AzureActiveDirectoryApplicationCredentials(ApplicationId, ApplicationSecret);
+                    return new AzureActiveDirectoryApplicationCredentials(ApplicationId, ApplicationSecret, serializedAdditionalRawData: null);
                 }
 
                 return null;

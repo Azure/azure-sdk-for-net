@@ -1,4 +1,5 @@
 directory: specification/ai/Azure.AI.Agents
-commit: 58c1fb79809ce142f4c653afd9d0cbbb12b52152
+commit: 068c0b9f0ec0ba79eeabd1ab4e85922b69f0fad5
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/emitter-package.json
 additionalDirectories: 

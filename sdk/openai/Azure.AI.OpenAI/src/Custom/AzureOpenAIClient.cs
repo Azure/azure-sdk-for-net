@@ -302,6 +302,8 @@ public partial class AzureOpenAIClient : OpenAIClient
             [
                 CreateAddUserAgentHeaderPolicy(options),
                 CreateAddClientRequestIdHeaderPolicy(),
+                CreateAddUserDefinedDefaultHeadersPolicy(options),
+                CreateAddUserDefinedDefaultQueryParametersPolicy(options),
             ],
             perTryPolicies:
             [
@@ -346,6 +348,37 @@ public partial class AzureOpenAIClient : OpenAIClient
                     ? existingHeader
                     : Guid.NewGuid().ToString().ToLowerInvariant();
                 request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
+            }
+        });
+    }
+
+    private static PipelinePolicy CreateAddUserDefinedDefaultHeadersPolicy(AzureOpenAIClientOptions options = null)
+    {
+        return new GenericActionPipelinePolicy(request =>
+        {
+            if (request?.Headers is not null && options?.DefaultHeaders?.Count > 0 == true)
+            {
+                foreach (KeyValuePair<string, string> defaultHeaderPair in options.DefaultHeaders)
+                {
+                    request.Headers.Add(defaultHeaderPair.Key, defaultHeaderPair.Value);
+                }
+            }
+        });
+    }
+
+    private static PipelinePolicy CreateAddUserDefinedDefaultQueryParametersPolicy(AzureOpenAIClientOptions options = null)
+    {
+        return new GenericActionPipelinePolicy(request =>
+        {
+            if (request?.Uri is not null && options?.DefaultQueryParameters?.Count > 0 == true)
+            {
+                ClientUriBuilder uriBuilder = new();
+                uriBuilder.Reset(request.Uri);
+                foreach (KeyValuePair<string, string> defaultQueryParameter in options.DefaultQueryParameters)
+                {
+                    uriBuilder.AppendQuery(defaultQueryParameter.Key, defaultQueryParameter.Value, escape: true);
+                }
+                request.Uri = uriBuilder.ToUri();
             }
         });
     }

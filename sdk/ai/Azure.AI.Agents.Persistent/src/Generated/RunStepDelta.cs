@@ -54,7 +54,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stepDetails">
         /// The details of the run step.
         /// Please note <see cref="RunStepDeltaDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepDeltaMCPObject"/>, <see cref="RunStepDeltaMessageCreation"/> and <see cref="RunStepDeltaToolCallObject"/>.
+        /// The available derived classes include <see cref="RunStepDeltaMCPObject"/>, <see cref="RunStepDeltaMessageCreation"/>, <see cref="RunStepDeltaOpenAPIObject"/> and <see cref="RunStepDeltaToolCallObject"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RunStepDelta(RunStepDeltaDetail stepDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -66,7 +66,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// The details of the run step.
         /// Please note <see cref="RunStepDeltaDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepDeltaMCPObject"/>, <see cref="RunStepDeltaMessageCreation"/> and <see cref="RunStepDeltaToolCallObject"/>.
+        /// The available derived classes include <see cref="RunStepDeltaMCPObject"/>, <see cref="RunStepDeltaMessageCreation"/>, <see cref="RunStepDeltaOpenAPIObject"/> and <see cref="RunStepDeltaToolCallObject"/>.
         /// </summary>
         public RunStepDeltaDetail StepDetails { get; }
     }

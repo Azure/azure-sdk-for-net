@@ -59,6 +59,11 @@ internal partial class AzureRealtimeSession : RealtimeSession
         clientWebSocket.Options.SetRequestHeader("openai-beta", $"realtime=v1");
         clientWebSocket.Options.SetRequestHeader("x-ms-client-request-id", clientRequestId);
 
+        foreach (KeyValuePair<string, string> defaultHeaderPair in _defaultHeaders)
+        {
+            clientWebSocket.Options.SetRequestHeader(defaultHeaderPair.Key, defaultHeaderPair.Value);
+        }
+
         try
         {
             clientWebSocket.Options.SetRequestHeader("User-Agent", _userAgent);

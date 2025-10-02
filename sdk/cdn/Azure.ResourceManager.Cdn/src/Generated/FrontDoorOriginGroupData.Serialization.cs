@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
             }
+            if (Optional.IsDefined(Authentication))
+            {
+                writer.WritePropertyName("authentication"u8);
+                writer.WriteObjectValue(Authentication, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -114,6 +119,7 @@ namespace Azure.ResourceManager.Cdn
             HealthProbeSettings healthProbeSettings = default;
             int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             EnabledState? sessionAffinityState = default;
+            OriginAuthenticationProperties authentication = default;
             FrontDoorProvisioningState? provisioningState = default;
             FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -195,6 +201,15 @@ namespace Azure.ResourceManager.Cdn
                             sessionAffinityState = new EnabledState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("authentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authentication = OriginAuthenticationProperties.DeserializeOriginAuthenticationProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -232,6 +247,7 @@ namespace Azure.ResourceManager.Cdn
                 healthProbeSettings,
                 trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
                 sessionAffinityState,
+                authentication,
                 provisioningState,
                 deploymentStatus,
                 serializedAdditionalRawData);

@@ -73,7 +73,7 @@ namespace Azure.Generator.Management.Providers
             var body = new MethodBodyStatement[]
             {
                 UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream))]), out var documentVariable),
-                Declare("data", _resource.ResourceData.Type, Static(_resource.ResourceData.Type).Invoke($"Deserialize{_resource.ResourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), New.Instance<ModelReaderWriterOptions>(Literal("W"))), out var dataVariable),
+                Declare("data", _resource.ResourceData.Type, Static(_resource.ResourceData.Type).Invoke($"Deserialize{_resource.ResourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>()), out var dataVariable),
                 Return(New.Instance(_resource.Type, [_clientField, dataVariable])),
             };
             return new MethodProvider(signature, body, this);

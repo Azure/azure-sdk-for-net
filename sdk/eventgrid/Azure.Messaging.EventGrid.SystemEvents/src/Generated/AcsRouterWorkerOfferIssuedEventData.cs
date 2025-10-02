@@ -14,29 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterWorkerOfferIssuedEventData : AcsRouterWorkerEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferIssuedEventData"/>. </summary>
-        /// <param name="workerLabels"> Router Worker Offer Issued Worker Labels. </param>
-        /// <param name="workerTags"> Router Worker Offer Issued Worker Tags. </param>
-        /// <param name="jobLabels"> Router Worker Offer Issued Job Labels. </param>
-        /// <param name="jobTags"> Router Worker Offer Issued Job Tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerLabels"/>, <paramref name="workerTags"/>, <paramref name="jobLabels"/> or <paramref name="jobTags"/> is null. </exception>
-        internal AcsRouterWorkerOfferIssuedEventData(IReadOnlyDictionary<string, string> workerLabels, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags)
+        internal AcsRouterWorkerOfferIssuedEventData()
         {
-            Argument.AssertNotNull(workerLabels, nameof(workerLabels));
-            Argument.AssertNotNull(workerTags, nameof(workerTags));
-            Argument.AssertNotNull(jobLabels, nameof(jobLabels));
-            Argument.AssertNotNull(jobTags, nameof(jobTags));
-
-            WorkerLabels = workerLabels;
-            WorkerTags = workerTags;
-            JobLabels = jobLabels;
-            JobTags = jobTags;
+            WorkerLabels = new ChangeTrackingDictionary<string, string>();
+            WorkerTags = new ChangeTrackingDictionary<string, string>();
+            JobLabels = new ChangeTrackingDictionary<string, string>();
+            JobTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferIssuedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
         /// <param name="queueId"> Router Worker Offer Issued Queue Id. </param>
         /// <param name="offerId"> Router Worker Offer Issued Offer Id. </param>
@@ -47,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="workerTags"> Router Worker Offer Issued Worker Tags. </param>
         /// <param name="jobLabels"> Router Worker Offer Issued Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Issued Job Tags. </param>
-        internal AcsRouterWorkerOfferIssuedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string workerId, string queueId, string offerId, int? jobPriority, IReadOnlyDictionary<string, string> workerLabels, DateTimeOffset? offeredOn, DateTimeOffset? expiresOn, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, serializedAdditionalRawData, workerId)
+        internal AcsRouterWorkerOfferIssuedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId, string queueId, string offerId, int? jobPriority, IReadOnlyDictionary<string, string> workerLabels, DateTimeOffset? offeredOn, DateTimeOffset? expiresOn, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
         {
             QueueId = queueId;
             OfferId = offerId;
@@ -60,27 +50,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             JobTags = jobTags;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferIssuedEventData"/> for deserialization. </summary>
-        internal AcsRouterWorkerOfferIssuedEventData()
-        {
-        }
-
         /// <summary> Router Worker Offer Issued Queue Id. </summary>
         public string QueueId { get; }
+
         /// <summary> Router Worker Offer Issued Offer Id. </summary>
         public string OfferId { get; }
+
         /// <summary> Router Worker Offer Issued Job Priority. </summary>
         public int? JobPriority { get; }
+
         /// <summary> Router Worker Offer Issued Worker Labels. </summary>
         public IReadOnlyDictionary<string, string> WorkerLabels { get; }
+
         /// <summary> Router Worker Offer Issued Time in UTC. </summary>
         public DateTimeOffset? OfferedOn { get; }
+
         /// <summary> Router Worker Offer Issued Expiration Time in UTC. </summary>
         public DateTimeOffset? ExpiresOn { get; }
+
         /// <summary> Router Worker Offer Issued Worker Tags. </summary>
         public IReadOnlyDictionary<string, string> WorkerTags { get; }
+
         /// <summary> Router Worker Offer Issued Job Labels. </summary>
         public IReadOnlyDictionary<string, string> JobLabels { get; }
+
         /// <summary> Router Worker Offer Issued Job Tags. </summary>
         public IReadOnlyDictionary<string, string> JobTags { get; }
     }

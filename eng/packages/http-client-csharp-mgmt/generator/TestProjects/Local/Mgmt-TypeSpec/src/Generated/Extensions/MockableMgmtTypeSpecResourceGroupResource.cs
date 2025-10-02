@@ -16,7 +16,7 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary></summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecResourceGroupResource for mocking. </summary>
@@ -44,11 +44,11 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            return GetFoos().Get(fooName, cancellationToken);
+            return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Foo. </summary>
@@ -57,11 +57,11 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
+        public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
+            return GetFoos().Get(fooName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>. </summary>
@@ -69,6 +69,39 @@ namespace MgmtTypeSpec.Mocking
         public virtual FooSettingsResource GetFooSettings()
         {
             return new FooSettingsResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
+        }
+
+        /// <summary> Gets a collection of Bazs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Bazs and their operations over a BazResource. </returns>
+        public virtual BazCollection GetBazs()
+        {
+            return GetCachedClient(client => new BazCollection(client, Id));
+        }
+
+        /// <summary> Get a Baz. </summary>
+        /// <param name="bazName"> The name of the Baz. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bazName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bazName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BazResource>> GetBazAsync(string bazName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bazName, nameof(bazName));
+
+            return await GetBazs().GetAsync(bazName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Baz. </summary>
+        /// <param name="bazName"> The name of the Baz. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bazName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bazName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BazResource> GetBaz(string bazName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bazName, nameof(bazName));
+
+            return GetBazs().Get(bazName, cancellationToken);
         }
 
         /// <summary> Gets a collection of Zoos in the <see cref="ResourceGroupResource"/>. </summary>
@@ -84,11 +117,11 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ZooResource> GetZoo(string zooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ZooResource>> GetZooAsync(string zooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            return GetZoos().Get(zooName, cancellationToken);
+            return await GetZoos().GetAsync(zooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Zoo. </summary>
@@ -97,11 +130,46 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ZooResource>> GetZooAsync(string zooName, CancellationToken cancellationToken = default)
+        public virtual Response<ZooResource> GetZoo(string zooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            return await GetZoos().GetAsync(zooName, cancellationToken).ConfigureAwait(false);
+            return GetZoos().Get(zooName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of JobResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
+        public virtual JobResourceCollection GetJobResources()
+        {
+            return GetCachedClient(client => new JobResourceCollection(client, Id));
+        }
+
+        /// <summary> Gets information about the specified job. </summary>
+        /// <param name="jobName"> The name of the JobResource. </param>
+        /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<JobResource>> GetJobResourceAsync(string jobName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            return await GetJobResources().GetAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about the specified job. </summary>
+        /// <param name="jobName"> The name of the JobResource. </param>
+        /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<JobResource> GetJobResource(string jobName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            return GetJobResources().Get(jobName, expand, cancellationToken);
         }
     }
 }

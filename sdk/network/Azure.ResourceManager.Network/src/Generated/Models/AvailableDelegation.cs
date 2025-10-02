@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the service and resource. </summary>
+        [WirePath("serviceName")]
         public string ServiceName { get; }
         /// <summary> The actions permitted to the service upon delegation. </summary>
+        [WirePath("actions")]
         public IReadOnlyList<string> Actions { get; }
     }
 }

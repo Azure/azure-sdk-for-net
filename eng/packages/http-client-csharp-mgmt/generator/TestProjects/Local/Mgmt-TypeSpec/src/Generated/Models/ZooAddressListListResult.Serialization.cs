@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.Resources.Models;
@@ -16,7 +17,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Paged collection of ZooAddress items. </summary>
-    internal partial class ZooAddressListListResult : IJsonModel<ZooAddressListListResult>
+    public partial class ZooAddressListListResult : IJsonModel<ZooAddressListListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ZooAddressListListResult"/> for deserialization. </summary>
         internal ZooAddressListListResult()
@@ -50,7 +51,7 @@ namespace MgmtTypeSpec.Models
                     writer.WriteNullValue();
                     continue;
                 }
-                JsonSerializer.Serialize(item);
+                ((IJsonModel<SubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -116,7 +117,7 @@ namespace MgmtTypeSpec.Models
                         }
                         else
                         {
-                            array.Add(item.Deserialize<SubResource>());
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default));
                         }
                     }
                     value = array;

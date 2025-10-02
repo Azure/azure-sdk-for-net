@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.2.1 (2025-09-23)
+
+### Features Added
+
+- Make `Azure.ResourceManager.EventHubs` AOT-compatible
+
 ## 1.2.0 (2025-06-13)
 
 ### Features Added
