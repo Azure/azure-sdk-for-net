@@ -1,10 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Diagnostics.Tracing;
+using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
@@ -14,6 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal sealed class StandardMetricsExtractionProcessor : BaseProcessor<Activity>
     {
+        [ThreadStatic] private static bool t_handlingFirstChanceException;
         private bool _disposed;
         private AzureMonitorResource? _resource;
 
@@ -27,7 +30,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly ObservableGauge<long> _processPrivateBytesGauge;
         private readonly ObservableGauge<double> _processCpuGauge;
         private readonly ObservableGauge<double> _processCpuNormalizedGauge;
-        private readonly Counter<long> _requestRate;
+        private readonly ObservableGauge<double> _requestRateGauge;
+        private readonly ObservableGauge<double> _exceptionRateGauge;
 
         private readonly Process _process = Process.GetCurrentProcess();
         private readonly int _processorCount = Environment.ProcessorCount;
@@ -38,6 +42,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private double _cachedRawCpuValue = 0;
         private double _cachedNormalizedCpuValue = 0;
         private bool _cpuCalculationValid = false;
+
+        // Request rate tracking
+        private long _requestCount = 0;
+        private DateTimeOffset _lastRequestRateCalculationTime = DateTimeOffset.UtcNow;
+        private long _lastRequestCount = 0;
+
+        // Exception rate tracking
+        private long _exceptionCount = 0;
+        private DateTimeOffset _lastExceptionRateCalculationTime = DateTimeOffset.UtcNow;
+        private long _lastExceptionCount = 0;
 
         internal static readonly IReadOnlyDictionary<string, string> s_standardMetricNameMapping = new Dictionary<string, string>()
         {
@@ -59,12 +73,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
                 .AddMeter(PerfCounterConstants.PerfCounterMeterName)
                 .AddMeter("System.Runtime")
-                .AddView("dotnet.exceptions", new MetricStreamConfiguration
-                {
-                    Name = PerfCounterConstants.ExceptionRateName,
-                    TagKeys = []
-                })
-                .AddView("dotnet.*", MetricStreamConfiguration.Drop)
                 .AddReader(new PeriodicExportingMetricReader(metricExporter)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
@@ -74,10 +82,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _dependencyDuration = _standardMetricMeter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
 
             _perfCounterMeter = new Meter(PerfCounterConstants.PerfCounterMeterName);
-            _requestRate = _perfCounterMeter.CreateCounter<long>(PerfCounterConstants.RequestRateInstrumentationName);
+            _requestRateGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.RequestRateInstrumentationName, () => GetRequestRate());
             _processPrivateBytesGauge = _perfCounterMeter.CreateObservableGauge<long>(PerfCounterConstants.ProcessPrivateBytesInstrumentationName, () => GetProcessPrivateBytes());
             _processCpuGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ProcessCpuInstrumentationName, () => GetProcessCPU());
             _processCpuNormalizedGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ProcessCpuNormalizedInstrumentationName, () => GetProcessCPUNormalized());
+            _exceptionRateGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ExceptionRateName, () => GetExceptionRate());
+
+            AppDomain.CurrentDomain.FirstChanceException += (source, e) =>
+            {
+                // Avoid recursion if the listener itself throws an exception while recording the measurement
+                // in its `OnMeasurementRecorded` callback.
+                if (t_handlingFirstChanceException)
+                    return;
+
+                t_handlingFirstChanceException = true;
+
+                // Increment exception count for rate calculation
+                Interlocked.Increment(ref _exceptionCount);
+
+                t_handlingFirstChanceException = false;
+            };
+
             InitializeCpuBaseline();
         }
 
@@ -90,6 +115,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
                     ReportRequestDurationMetric(activity);
                 }
+
+                // Increment request count for rate calculation
+                Interlocked.Increment(ref _requestCount);
             }
             if (activity.Kind == ActivityKind.Client || activity.Kind == ActivityKind.Internal || activity.Kind == ActivityKind.Producer)
             {
@@ -123,7 +151,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Report metric
             _requestDuration.Record(activity.Duration.TotalMilliseconds, tags);
-            _requestRate.Add(1);
         }
 
         private void ReportDependencyDurationMetric(Activity activity)
@@ -199,6 +226,66 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             EnsureCpuCalculation();
             return _cachedNormalizedCpuValue;
+        }
+
+        private double GetRequestRate()
+        {
+            try
+            {
+                var now = DateTimeOffset.UtcNow;
+                var currentRequestCount = Interlocked.Read(ref _requestCount);
+
+                // Calculate rate for the duration since last calculation
+                var timeDifferenceSeconds = (now - _lastRequestRateCalculationTime).TotalSeconds;
+                var requestDifference = currentRequestCount - _lastRequestCount;
+
+                double currentRate = 0;
+                if (timeDifferenceSeconds > 0)
+                {
+                    currentRate = requestDifference / timeDifferenceSeconds;
+                }
+
+                // Update for next calculation
+                _lastRequestRateCalculationTime = now;
+                _lastRequestCount = currentRequestCount;
+
+                return Math.Max(0, currentRate);
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.FailedToCalculateRequestRate(ex);
+                return 0;
+            }
+        }
+
+        private double GetExceptionRate()
+        {
+            try
+            {
+                var now = DateTimeOffset.UtcNow;
+                var currentExceptionCount = Interlocked.Read(ref _exceptionCount);
+
+                // Calculate rate for the duration since last calculation
+                var timeDifferenceSeconds = (now - _lastExceptionRateCalculationTime).TotalSeconds;
+                var exceptionDifference = currentExceptionCount - _lastExceptionCount;
+
+                double currentRate = 0;
+                if (timeDifferenceSeconds > 0)
+                {
+                    currentRate = exceptionDifference / timeDifferenceSeconds;
+                }
+
+                // Update for next calculation
+                _lastExceptionRateCalculationTime = now;
+                _lastExceptionCount = currentExceptionCount;
+
+                return Math.Max(0, currentRate);
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.FailedToCalculateExceptionRate(ex);
+                return 0;
+            }
         }
 
         private void EnsureCpuCalculation()

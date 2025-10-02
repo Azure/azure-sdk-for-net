@@ -506,5 +506,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(54, Message = "Failed to collect Process Private Bytes due to an exception. {0}", Level = EventLevel.Warning)]
         public void FailedToCollectProcessPrivateBytes(string exceptionMessage) => WriteEvent(49, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToCalculateRequestRate(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToCalculateRequestRate(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(55, Message = "Failed to calculate request rate due to an exception. {0}", Level = EventLevel.Warning)]
+        public void FailedToCalculateRequestRate(string exceptionMessage) => WriteEvent(55, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToCalculateExceptionRate(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToCalculateExceptionRate(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(56, Message = "Failed to calculate exception rate due to an exception. {0}", Level = EventLevel.Warning)]
+        public void FailedToCalculateExceptionRate(string exceptionMessage) => WriteEvent(56, exceptionMessage);
     }
 }
