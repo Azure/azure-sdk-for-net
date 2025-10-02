@@ -12,8 +12,6 @@
 
 ### Other Changes
 
-- Deprecated `BrowserCustomizationOptions.UseEmbeddedWebView` property. This option requires additional dependencies on Microsoft.Identity.Client.Desktop and is no longer supported. Consider using brokered authentication instead.
-
 ## 1.16.0 (2025-09-09)
 
 ### Features Added
