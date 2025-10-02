@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 .Setup(c => c.GetBlobContainerClient("$logs"))
                 .Returns(containerClientMock.Object);
 
-            var listener = CreateBlobLogListener(blobServiceClientMock.Object);
+            var listener = new BlobLogListener(blobServiceClientMock.Object, NullLogger<BlobListener>.Instance);
 
             // Act
             bool result = await listener.HasBlobWritesAsync(CancellationToken.None, hoursWindow: 1);
@@ -113,22 +113,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             BlobPath singlePath = validPaths.Single();
             Assert.AreEqual("sample-container", singlePath.ContainerName);
             Assert.AreEqual(@"""0x8D199A96CB71468""/sample-blob.txt", singlePath.BlobName);
-        }
-
-        private static BlobLogListener CreateBlobLogListener(BlobServiceClient serviceClient)
-        {
-            var logger = NullLogger<BlobListener>.Instance;
-            var ctor = typeof(BlobLogListener)
-                .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
-                                binder: null,
-                                types: new[] { typeof(BlobServiceClient), typeof(ILogger<BlobListener>) },
-                                modifiers: null);
-            if (ctor == null)
-            {
-                throw new InvalidOperationException("BlobLogListener non-public constructor not found.");
-            }
-
-            return (BlobLogListener)ctor.Invoke(new object[] { serviceClient, logger });
         }
 
         private static class BlobItemFactory
