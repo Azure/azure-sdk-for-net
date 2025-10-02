@@ -17,9 +17,19 @@ namespace Azure.Data.AppConfiguration
     [ModelReaderWriterBuildable(typeof(ConfigurationSetting))]
     [ModelReaderWriterBuildable(typeof(ConfigurationSettingsFilter))]
     [ModelReaderWriterBuildable(typeof(ConfigurationSnapshot))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlag))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagAllocation))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagConditions))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagFilter))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagListResult))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagTelemetryConfiguration))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagVariantDefinition))]
+    [ModelReaderWriterBuildable(typeof(GroupAllocation))]
+    [ModelReaderWriterBuildable(typeof(PercentileAllocation))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SettingLabel))]
     [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
+    [ModelReaderWriterBuildable(typeof(UserAllocation))]
     public partial class AzureDataAppConfigurationContext : ModelReaderWriterContext
     {
     }

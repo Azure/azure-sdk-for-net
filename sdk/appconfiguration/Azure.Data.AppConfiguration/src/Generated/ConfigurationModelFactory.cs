@@ -16,6 +16,49 @@ namespace Azure.Data.AppConfiguration
     public static partial class ConfigurationModelFactory
     {
 
+        /// <summary> A key-value pair representing application settings. </summary>
+        /// <param name="key">
+        /// The primary identifier of the configuration setting.
+        ///     A <see cref="ConfigurationSetting.Key"/> is used together with a <see cref="ConfigurationSetting.Label"/> to uniquely identify a configuration setting.
+        /// </param>
+        /// <param name="label">
+        /// A value used to group configuration settings.
+        ///     A <see cref="ConfigurationSetting.Label"/> is used together with a <see cref="ConfigurationSetting.Key"/> to uniquely identify a configuration setting.
+        /// </param>
+        /// <param name="contentType">
+        /// The content type of the configuration setting's value.
+        ///     Providing a proper content-type can enable transformations of values when they are retrieved by applications.
+        /// </param>
+        /// <param name="value"> The configuration setting's value. </param>
+        /// <param name="lastModified"> The last time a modifying operation was performed on the given configuration setting. </param>
+        /// <param name="tags">
+        /// A dictionary of tags used to assign additional properties to a configuration setting.
+        ///     These can be used to indicate how a configuration setting may be applied.
+        /// </param>
+        /// <param name="description"> The description of the key-value. </param>
+        /// <param name="isReadOnly">
+        /// A value indicating whether the configuration setting is read only.
+        ///     A read only configuration setting may not be modified until it is made writable.
+        /// </param>
+        /// <param name="eTag"> An ETag indicating the state of a configuration setting within a configuration store. </param>
+        /// <returns> A new <see cref="AppConfiguration.ConfigurationSetting"/> instance for mocking. </returns>
+        public static ConfigurationSetting ConfigurationSetting(string key = default, string label = default, string contentType = default, string value = default, DateTimeOffset? lastModified = default, IDictionary<string, string> tags = default, string description = default, bool? isReadOnly = default, ETag eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConfigurationSetting(
+                key,
+                label,
+                contentType,
+                value,
+                lastModified,
+                tags,
+                description,
+                isReadOnly,
+                eTag,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
@@ -27,9 +70,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="sizeInBytes"> The size in bytes of the snapshot. </param>
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
+        /// <param name="description"> The description of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <returns> A new <see cref="AppConfiguration.ConfigurationSnapshot"/> instance for mocking. </returns>
-        public static ConfigurationSnapshot ConfigurationSnapshot(string name = default, ConfigurationSnapshotStatus? status = default, IEnumerable<ConfigurationSettingsFilter> filters = default, SnapshotComposition? snapshotComposition = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, TimeSpan? retentionPeriod = default, long? sizeInBytes = default, long? itemCount = default, IDictionary<string, string> tags = default, ETag eTag = default)
+        public static ConfigurationSnapshot ConfigurationSnapshot(string name = default, ConfigurationSnapshotStatus? status = default, IEnumerable<ConfigurationSettingsFilter> filters = default, SnapshotComposition? snapshotComposition = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, TimeSpan? retentionPeriod = default, long? sizeInBytes = default, long? itemCount = default, IDictionary<string, string> tags = default, string description = default, ETag eTag = default)
         {
             filters ??= new ChangeTrackingList<ConfigurationSettingsFilter>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -45,6 +89,7 @@ namespace Azure.Data.AppConfiguration
                 sizeInBytes,
                 itemCount,
                 tags,
+                description,
                 eTag,
                 additionalBinaryDataProperties: null);
         }
@@ -64,12 +109,149 @@ namespace Azure.Data.AppConfiguration
             return new ConfigurationSettingsFilter(key, label, tags.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Labels are used to group key-values. </summary>
+        /// <summary> Labels are used to group key values or feature flags. </summary>
         /// <param name="name"> The name of the label. </param>
         /// <returns> A new <see cref="AppConfiguration.SettingLabel"/> instance for mocking. </returns>
         public static SettingLabel SettingLabel(string name = default)
         {
             return new SettingLabel(name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A feature flag. </summary>
+        /// <param name="name"> The name of the feature flag. </param>
+        /// <param name="enabled"> The enabled state of the feature flag. </param>
+        /// <param name="label"> The label the feature flag belongs to. </param>
+        /// <param name="description"> The description of the feature flag. </param>
+        /// <param name="alias"> The alias of the feature flag. </param>
+        /// <param name="conditions"> The conditions of the feature flag. </param>
+        /// <param name="variants"> The variants of the feature flag. </param>
+        /// <param name="allocation"> The allocation of the feature flag. </param>
+        /// <param name="telemetry"> The telemetry settings of the feature flag. </param>
+        /// <param name="tags"> The tags of the feature flag. </param>
+        /// <param name="isReadOnly"> Indicates whether the feature flag is locked. </param>
+        /// <param name="lastModified"> A date representing the last time the feature flag was modified. </param>
+        /// <param name="eTag"> An ETag indicating the state of a configuration setting within a configuration store. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlag"/> instance for mocking. </returns>
+        public static FeatureFlag FeatureFlag(string name = default, bool? enabled = default, string label = default, string description = default, string @alias = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariantDefinition> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetryConfiguration telemetry = default, IDictionary<string, string> tags = default, bool? isReadOnly = default, DateTimeOffset? lastModified = default, ETag eTag = default)
+        {
+            variants ??= new ChangeTrackingList<FeatureFlagVariantDefinition>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FeatureFlag(
+                name,
+                enabled,
+                label,
+                description,
+                @alias,
+                conditions,
+                variants.ToList(),
+                allocation,
+                telemetry,
+                tags,
+                isReadOnly,
+                lastModified,
+                eTag,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The conditions that must be met for the feature flag to be enabled. </summary>
+        /// <param name="requirementType"> The requirement type for the conditions. </param>
+        /// <param name="filters"> The filters that will conditionally enable or disable the flag. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagConditions"/> instance for mocking. </returns>
+        public static FeatureFlagConditions FeatureFlagConditions(RequirementType? requirementType = default, IEnumerable<FeatureFlagFilter> filters = default)
+        {
+            filters ??= new ChangeTrackingList<FeatureFlagFilter>();
+
+            return new FeatureFlagConditions(requirementType, filters.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag Filter object. </summary>
+        /// <param name="name"> Gets the name of the feature filter. </param>
+        /// <param name="parameters"> Gets the parameters of the feature filter. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagFilter"/> instance for mocking. </returns>
+        public static FeatureFlagFilter FeatureFlagFilter(string name = default, IDictionary<string, object> parameters = default)
+        {
+            parameters ??= new ChangeTrackingDictionary<string, object>();
+
+            return new FeatureFlagFilter(name, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag Variants object. </summary>
+        /// <param name="name"> The name of the variant. </param>
+        /// <param name="value"> The value of the variant. </param>
+        /// <param name="contentType"> The content type of the value stored within the key-value. </param>
+        /// <param name="statusOverride"> Determines if the variant should override the status of the flag. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagVariantDefinition"/> instance for mocking. </returns>
+        public static FeatureFlagVariantDefinition FeatureFlagVariantDefinition(string name = default, string value = default, string contentType = default, StatusOverride? statusOverride = default)
+        {
+            return new FeatureFlagVariantDefinition(name, value, contentType, statusOverride, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines how to allocate variants based on context. </summary>
+        /// <param name="defaultWhenDisabled"> The default variant to use when disabled. </param>
+        /// <param name="defaultWhenEnabled"> The default variant to use when enabled but not allocated. </param>
+        /// <param name="percentile"> Allocates percentiles to variants. </param>
+        /// <param name="user"> Allocates users to variants. </param>
+        /// <param name="group"> Allocates groups to variants. </param>
+        /// <param name="seed"> The seed used for random allocation. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagAllocation"/> instance for mocking. </returns>
+        public static FeatureFlagAllocation FeatureFlagAllocation(string defaultWhenDisabled = default, string defaultWhenEnabled = default, IEnumerable<PercentileAllocation> percentile = default, IEnumerable<UserAllocation> user = default, IEnumerable<GroupAllocation> @group = default, string seed = default)
+        {
+            percentile ??= new ChangeTrackingList<PercentileAllocation>();
+            user ??= new ChangeTrackingList<UserAllocation>();
+            @group ??= new ChangeTrackingList<GroupAllocation>();
+
+            return new FeatureFlagAllocation(
+                defaultWhenDisabled,
+                defaultWhenEnabled,
+                percentile.ToList(),
+                user.ToList(),
+                @group.ToList(),
+                seed,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag PercentileAllocation object. </summary>
+        /// <param name="variant"> The variant to allocate these percentiles to. </param>
+        /// <param name="from"> The lower bounds for this percentile allocation. </param>
+        /// <param name="to"> The upper bounds for this percentile allocation. </param>
+        /// <returns> A new <see cref="AppConfiguration.PercentileAllocation"/> instance for mocking. </returns>
+        public static PercentileAllocation PercentileAllocation(string variant = default, int @from = default, int to = default)
+        {
+            return new PercentileAllocation(variant, @from, to, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag UserAllocation object. </summary>
+        /// <param name="variant"> The variant to allocate these percentiles to. </param>
+        /// <param name="users"> The users to get this variant. </param>
+        /// <returns> A new <see cref="AppConfiguration.UserAllocation"/> instance for mocking. </returns>
+        public static UserAllocation UserAllocation(string variant = default, IEnumerable<string> users = default)
+        {
+            users ??= new ChangeTrackingList<string>();
+
+            return new UserAllocation(variant, users.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag GroupAllocation object. </summary>
+        /// <param name="variant"> The variant to allocate these percentiles to. </param>
+        /// <param name="groups"> The groups to get this variant. </param>
+        /// <returns> A new <see cref="AppConfiguration.GroupAllocation"/> instance for mocking. </returns>
+        public static GroupAllocation GroupAllocation(string variant = default, IEnumerable<string> groups = default)
+        {
+            groups ??= new ChangeTrackingList<string>();
+
+            return new GroupAllocation(variant, groups.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag Telemetry object. </summary>
+        /// <param name="enabled"> The enabled state of the telemetry. </param>
+        /// <param name="metadata"> The metadata to include on outbound telemetry. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagTelemetryConfiguration"/> instance for mocking. </returns>
+        public static FeatureFlagTelemetryConfiguration FeatureFlagTelemetryConfiguration(bool enabled = default, IDictionary<string, string> metadata = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FeatureFlagTelemetryConfiguration(enabled, metadata, additionalBinaryDataProperties: null);
         }
     }
 }

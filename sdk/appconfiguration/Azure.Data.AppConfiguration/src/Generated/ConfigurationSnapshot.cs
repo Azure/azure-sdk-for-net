@@ -40,9 +40,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="sizeInBytes"> The size in bytes of the snapshot. </param>
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
+        /// <param name="description"> The description of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, TimeSpan? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, TimeSpan? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, string description, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;
@@ -54,8 +55,12 @@ namespace Azure.Data.AppConfiguration
             SizeInBytes = sizeInBytes;
             ItemCount = itemCount;
             Tags = tags;
+            Description = description;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The description of the snapshot. </summary>
+        public string Description { get; set; }
     }
 }

@@ -7,17 +7,17 @@ using System.Threading;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class AsyncConditionalPageable : AsyncPageable<ConfigurationSetting>
+    internal class AsyncConditionalPageable<T> : AsyncPageable<T>
     {
-        private readonly ConditionalPageableImplementation _implementation;
+        private readonly ConditionalPageableImplementation<T> _implementation;
 
-        public AsyncConditionalPageable(ConditionalPageableImplementation implementation)
+        public AsyncConditionalPageable(ConditionalPageableImplementation<T> implementation)
         {
             _implementation = implementation;
         }
 
-        public override IAsyncEnumerator<ConfigurationSetting> GetAsyncEnumerator(CancellationToken cancellationToken = default) => _implementation.GetAsyncEnumerator(cancellationToken);
-        public override IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPagesAsync(Array.Empty<MatchConditions>(), continuationToken, pageSizeHint, default);
-        public IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPagesAsync(conditions, continuationToken, pageSizeHint, default);
+        public override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default) => _implementation.GetAsyncEnumerator(cancellationToken);
+        public override IAsyncEnumerable<Page<T>> AsPages(string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPagesAsync(Array.Empty<MatchConditions>(), continuationToken, pageSizeHint, default);
+        public IAsyncEnumerable<Page<T>> AsPages(IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPagesAsync(conditions, continuationToken, pageSizeHint, default);
     }
 }
